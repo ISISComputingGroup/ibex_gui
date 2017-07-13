@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import java.util.Calendar;
 import java.util.Optional;
 
+import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
