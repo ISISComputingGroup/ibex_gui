@@ -7,7 +7,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
  org.eclipse.core.runtime,
- com.google.common,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  org.csstudio.utility.pvmanager,
