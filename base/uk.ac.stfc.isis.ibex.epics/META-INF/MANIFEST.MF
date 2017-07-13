@@ -17,7 +17,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  com.google.gson;visibility:=reexport,
  org.diirt.vtype;bundle-version="3.1.5",
  org.diirt.util;bundle-version="3.1.5",
- com.google.guava
+ com.google.guava,
+ org.diirt.datasource
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

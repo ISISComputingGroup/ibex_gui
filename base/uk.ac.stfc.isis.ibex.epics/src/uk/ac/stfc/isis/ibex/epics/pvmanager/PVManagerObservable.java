@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.epics.pvmanager;
 
+import org.diirt.datasource.PVManager;
+import org.diirt.datasource.PVReader;
+import org.diirt.datasource.PVReaderEvent;
+import org.diirt.datasource.PVReaderListener;
 import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
