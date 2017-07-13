@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.trends.databrowser2.Messages;
@@ -32,8 +33,11 @@ import org.csstudio.trends.databrowser2.model.ModelListener;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
-import org.csstudio.trends.databrowser2.ui.Plot;
+import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.nebula.visualization.xygraph.figures.Trace;
+import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
+import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -82,7 +86,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */
-    private Plot plot;
+    private ModelBasedPlot plot;
 
     /** Model of the currently active Data Browser plot or <code>null</code>. */
     private Model model;
@@ -156,7 +160,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             controller.start();
         } catch (Exception ex) {
             MessageDialog.openError(parent.getShell(), Messages.Error,
-                    NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
+                    NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
 
     }
@@ -213,9 +217,10 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
 
         // Create plot with basic configuration
-        plot = Plot.forCanvas(canvas);
-        plot.getXYGraph().setTitle(getPlotTitle());
-        plot.setToolbarVisible(false);
+        plot = new ModelBasedPlot(canvas);
+        // E4 disabled
+        //plot.getXYGraph().setTitle(getPlotTitle());
+        //plot.setToolbarVisible(false);
     }
 
     /**
@@ -339,8 +344,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             return;
         }
 
-        XYGraph xygraph = plot.getXYGraph();
-
         Model newModel;
         if (model == null) {
             newModel = new Model();
@@ -356,14 +359,17 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
 
-        // Create trace for waveform
-        final Trace trace = new Trace(newItem.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
-                new BeamStatusGraphDataProvider());
-        trace.setLineWidth(newItem.getLineWidth());
-        trace.setPointStyle(PointStyle.POINT);
-        trace.setPointSize(1);
+        // E4 disabled
+        // XYGraph xygraph = plot.getXYGraph();
+        
+		// Create trace for waveform
+        //final Trace trace = new Trace(newItem.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
+        //        new BeamStatusGraphDataProvider());
+        //trace.setLineWidth(newItem.getLineWidth());
+        //trace.setPointStyle(PointStyle.POINT);
+        //trace.setPointSize(1);
         // Add to graph
-        xygraph.addTrace(trace);
+        //xygraph.addTrace(trace);
         }
 
     private void setTimeRangeDaily() {
@@ -462,23 +468,11 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     @Override
-    public void changedColors() {
-    }
-
-    @Override
-    public void changedUpdatePeriod() {
-    }
-
-    @Override
     public void changedArchiveRescale() {
     }
 
     @Override
     public void changedTimerange() {
-    }
-
-    @Override
-    public void changedAxis(AxisConfig axis) {
     }
 
     @Override
@@ -498,14 +492,40 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     @Override
-    public void changedXYGraphConfig() {
-    }
-
-    @Override
     public void itemRefreshRequested(PVItem item) {
     }
 
-    @Override
-    public void cursorDataChanged() {
-    }
-    }
+	@Override
+	public void changeTimeAxisConfig() {
+	}
+
+	@Override
+	public void changedAxis(Optional<AxisConfig> arg0) {		
+	}
+
+	@Override
+	public void changedColorsOrFonts() {		
+	}
+
+	@Override
+	public void changedLayout() {		
+	}
+
+	@Override
+	public void changedSaveChangesBehavior(boolean arg0) {
+		
+	}
+
+	@Override
+	public void changedTiming() {
+		
+	}
+
+	@Override
+	public void changedTitle() {
+	}
+
+	@Override
+	public void selectedSamplesChanged() {	
+	}
+}

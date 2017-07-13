@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
- com.google.gson;bundle-version="2.1.0",
- com.google.guava
+ com.google.guava,
+ org.diirt.datasource;bundle-version="3.1.5"
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,

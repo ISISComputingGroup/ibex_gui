@@ -19,15 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VDouble;
-import org.epics.vtype.VEnum;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VLong;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VShort;
-import org.epics.vtype.VString;
-import org.epics.vtype.VType;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VDouble;
+import org.diirt.vtype.VEnum;
+import org.diirt.vtype.VInt;
+import org.diirt.vtype.VLong;
+import org.diirt.vtype.VNumber;
+import org.diirt.vtype.VShort;
+import org.diirt.vtype.VString;
+import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
