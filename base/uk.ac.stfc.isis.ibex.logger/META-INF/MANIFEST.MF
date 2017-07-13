@@ -10,6 +10,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: org.apache.logging.log4j,
+ org.apache.logging.log4j.core.config.plugins,
  uk.ac.stfc.isis.ibex.logger
 Bundle-ClassPath: lib/log4j/log4j-api-2.0.1.jar,
  lib/log4j/log4j-api-2.0.1-javadoc.jar,
