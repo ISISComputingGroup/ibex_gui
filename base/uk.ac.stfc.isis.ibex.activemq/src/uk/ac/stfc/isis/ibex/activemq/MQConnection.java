@@ -42,8 +42,6 @@ public class MQConnection extends ModelObject implements Runnable {
 
     private static final String PROTOCOL = "tcp:";
 
-    private static final int JMS_PORT = 61616;
-
     /** JMS Server URL */
     private String jmsUrl;
 
@@ -249,7 +247,7 @@ public class MQConnection extends ModelObject implements Runnable {
         }
 
         String oldjmsUrl = jmsUrl;
-        jmsUrl = PROTOCOL + host + ":" + JMS_PORT;
+        jmsUrl = PROTOCOL + host + ":" + ActiveMQ.JMS_PORT;
         
         if (oldjmsUrl != null && !jmsUrl.equals(oldjmsUrl)) {
             // Disconnect and reconnect
