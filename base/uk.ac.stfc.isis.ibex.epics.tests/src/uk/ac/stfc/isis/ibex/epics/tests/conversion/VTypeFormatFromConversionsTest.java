@@ -22,17 +22,17 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import org.epics.util.array.ListByte;
-import org.epics.util.array.ListFloat;
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VDouble;
-import org.epics.vtype.VFloatArray;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VLong;
-import org.epics.vtype.VShort;
-import org.epics.vtype.VString;
-import org.epics.vtype.VType;
-import org.epics.vtype.ValueFactory;
+import org.diirt.util.array.ListByte;
+import org.diirt.util.array.ListFloat;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VDouble;
+import org.diirt.vtype.VFloatArray;
+import org.diirt.vtype.VInt;
+import org.diirt.vtype.VLong;
+import org.diirt.vtype.VShort;
+import org.diirt.vtype.VString;
+import org.diirt.vtype.VType;
+import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -42,8 +42,6 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 /**
  * This class is responsible for testing the various from conversions.
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename",
-	"checkstyle:methodname" })
 public class VTypeFormatFromConversionsTest {
 
     // Byte array values missing as unable to produce from ValueFactory

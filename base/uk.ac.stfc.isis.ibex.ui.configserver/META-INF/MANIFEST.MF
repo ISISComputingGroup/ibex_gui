@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
  org.eclipse.swt,
- uk.ac.stfc.isis.ibex.validators
+ uk.ac.stfc.isis.ibex.validators,
+ com.google.guava
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.configserver.commands,

@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.databinding,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.alarm,
- org.diirt.vtype;bundle-version="3.1.5"
+ org.diirt.vtype;bundle-version="3.1.5",
+ com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;

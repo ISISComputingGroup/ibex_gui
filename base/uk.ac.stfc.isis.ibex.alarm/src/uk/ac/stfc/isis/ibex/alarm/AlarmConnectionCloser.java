@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.alarm;
 import java.lang.reflect.Field;
 
 import javax.jms.Connection;
+import javax.jms.JMSException;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;

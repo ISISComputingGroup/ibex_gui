@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.devicescreens;visibility:=reexport,
  uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics,
- com.google.gson;bundle-version="2.1.0"
+ com.google.gson;bundle-version="2.1.0",
+ com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.synoptic,
