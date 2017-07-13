@@ -5,7 +5,6 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: uk.ac.stfc.isis.ibex.epics.tests.observing
-Require-Bundle: uk.ac.stfc.isis.ibex.epics,
- org.mockito,
+Export-Package: uk.ac.stfc.isis.ibex.epics.tests.observing;uses:="uk.ac.stfc.isis.ibex.epics.observing"
+Require-Bundle: org.mockito,
  org.junit

@@ -29,10 +29,8 @@ import org.mockito.Mockito;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
-import uk.ac.stfc.isis.ibex.epics.tests.observing.TestHelpers;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class SwitchableObservableTest {
 
     private Observer<String> mockObserver;

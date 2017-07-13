@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
