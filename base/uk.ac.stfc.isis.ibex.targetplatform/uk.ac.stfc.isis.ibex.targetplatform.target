@@ -251,7 +251,6 @@
 <repository location="http://download.eclipse.org/releases/mars"/>
 </location>
 </locations>
-<includeBundles/>
 <environment>
 <os>win32</os>
 <ws>win32</ws>

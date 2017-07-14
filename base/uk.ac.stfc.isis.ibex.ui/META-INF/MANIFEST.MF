@@ -11,7 +11,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding;visibility:=reexport,
  org.eclipse.core.databinding.beans;visibility:=reexport,
  org.eclipse.core.databinding.property;bundle-version="1.4.100";visibility:=reexport,
- org.eclipse.swt
+ org.eclipse.swt,
+ uk.ac.stfc.isis.ibex.model,
+ uk.ac.stfc.isis.ibex.alarm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.wb.swt,
  org.mihalis.opal,
