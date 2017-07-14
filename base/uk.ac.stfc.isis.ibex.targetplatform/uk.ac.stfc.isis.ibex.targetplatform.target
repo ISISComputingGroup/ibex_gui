@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="196">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="198">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.python.pydev.feature.feature.group" version="5.8.0.201706061859"/>
 <repository location="http://pydev.org/updates"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.swt.tools.feature.feature.group" version="3.104.2.v20160128-0900"/>
-<unit id="org.eclipse.pde.source.feature.group" version="3.11.2.v20160212-1500"/>
-<unit id="org.eclipse.rcp.feature.group" version="4.5.2.v20160212-1500"/>
-<unit id="org.eclipse.osgi.compatibility.plugins.feature.feature.group" version="1.0.0.v20150202-1328"/>
-<unit id="org.eclipse.jdt.feature.group" version="3.11.2.v20160212-1500"/>
-<unit id="org.eclipse.sdk.examples.source.feature.group" version="3.5.501.v20160212-1500"/>
-<unit id="org.eclipse.rcp.source.feature.group" version="4.5.2.v20160212-1500"/>
-<unit id="org.eclipse.jdt.source.feature.group" version="3.11.2.v20160212-1500"/>
-<unit id="org.eclipse.pde.feature.group" version="3.11.2.v20160212-1500"/>
-<unit id="org.eclipse.sdk.tests.feature.group" version="4.5.2.v20160212-2125"/>
-<unit id="org.eclipse.platform.ide" version="4.5.2.M20160212-1500"/>
-<unit id="org.eclipse.test.feature.group" version="3.7.0.v20150428-2048"/>
-<unit id="org.eclipse.e4.core.tools.feature.source.feature.group" version="4.5.1.v20160129-0959"/>
-<unit id="org.eclipse.sdk.ide" version="4.5.2.M20160212-1500"/>
-<unit id="org.eclipse.platform.sdk" version="4.5.2.M20160212-1500"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="1.0.0.201605312033"/>
@@ -30,19 +12,6 @@
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.rap.feature.feature.group" version="3.0.2.20160201-1220"/>
-<unit id="org.eclipse.rap.sdk.feature.feature.group" version="3.0.2.20160201-1220"/>
-<unit id="org.eclipse.rap.tools.feature.feature.group" version="3.0.2.20160209-0600"/>
-<unit id="org.eclipse.gef4.fx.sdk.feature.group" version="0.1.0.201506081138"/>
-<unit id="org.eclipse.gef4.common.sdk.feature.group" version="0.1.0.201506081138"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.2.v20160208-0841"/>
-<unit id="org.eclipse.fx.ide.feature.feature.group" version="2.1.0.201508240705"/>
-<unit id="org.eclipse.gef4.graph.sdk.feature.group" version="0.1.0.201506081138"/>
-<unit id="org.eclipse.gef4.layout.sdk.feature.group" version="0.1.0.201506081138"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.1.201508170204"/>
-<repository location="http://download.eclipse.org/releases/mars"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.slf4j.nop.source" version="1.7.2.v201212060727"/>
@@ -248,7 +217,41 @@
 <unit id="org.epics.pvdata.source" version="4.0.3"/>
 <repository location="http://download.controlsystemstudio.org/updates/4.4"/>
 </location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.swt.tools.feature.feature.group" version="3.104.2.v20160128-0900"/>
+<unit id="org.eclipse.pde.source.feature.group" version="3.11.2.v20160212-1500"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.5.2.v20160212-1500"/>
+<unit id="org.eclipse.osgi.compatibility.plugins.feature.feature.group" version="1.0.0.v20150202-1328"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.11.2.v20160212-1500"/>
+<unit id="org.eclipse.sdk.examples.source.feature.group" version="3.5.501.v20160212-1500"/>
+<unit id="org.eclipse.rcp.source.feature.group" version="4.5.2.v20160212-1500"/>
+<unit id="org.eclipse.jdt.source.feature.group" version="3.11.2.v20160212-1500"/>
+<unit id="org.eclipse.pde.feature.group" version="3.11.2.v20160212-1500"/>
+<unit id="org.eclipse.sdk.tests.feature.group" version="4.5.2.v20160212-2125"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.2.v20160202-2102"/>
+<unit id="org.eclipse.platform.ide" version="4.5.2.M20160212-1500"/>
+<unit id="org.eclipse.test.feature.group" version="3.7.0.v20150428-2048"/>
+<unit id="org.eclipse.e4.core.tools.feature.source.feature.group" version="4.5.1.v20160129-0959"/>
+<unit id="org.eclipse.sdk.ide" version="4.5.2.M20160212-1500"/>
+<unit id="org.eclipse.platform.sdk" version="4.5.2.M20160212-1500"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rap.feature.feature.group" version="3.0.2.20160201-1220"/>
+<unit id="org.eclipse.rap.sdk.feature.feature.group" version="3.0.2.20160201-1220"/>
+<unit id="org.eclipse.rap.tools.feature.feature.group" version="3.0.2.20160209-0600"/>
+<unit id="org.eclipse.gef4.fx.sdk.feature.group" version="0.1.0.201506081138"/>
+<unit id="org.eclipse.gef4.common.sdk.feature.group" version="0.1.0.201506081138"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.2.v20160208-0841"/>
+<unit id="org.eclipse.fx.ide.feature.feature.group" version="2.1.0.201508240705"/>
+<unit id="org.eclipse.gef4.graph.sdk.feature.group" version="0.1.0.201506081138"/>
+<unit id="org.eclipse.gef4.layout.sdk.feature.group" version="0.1.0.201506081138"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.2.v20160202-2102"/>
+<repository location="http://download.eclipse.org/releases/mars"/>
+</location>
 </locations>
+<includeBundles/>
 <environment>
 <os>win32</os>
 <ws>win32</ws>
