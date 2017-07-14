@@ -14,6 +14,7 @@ pipeline {
   stages {  
     stage("Checkout") {
       steps {
+        echo "Branch: ${env.BRANCH_NAME}"
         checkout scm
       }
     }
@@ -22,7 +23,7 @@ pipeline {
       steps {
         bat '''
             cd build
-            set DEPLOY=YES
+            set DEPLOY=NO
             jenkins_build.bat"
             '''
       }
