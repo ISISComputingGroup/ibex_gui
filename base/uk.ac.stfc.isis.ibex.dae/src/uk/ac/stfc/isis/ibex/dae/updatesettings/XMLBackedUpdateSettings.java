@@ -19,116 +19,82 @@
 
 package uk.ac.stfc.isis.ibex.dae.updatesettings;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import org.apache.logging.log4j.Logger;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.XMLBackedPeriodSettings;
+import uk.ac.stfc.isis.ibex.dae.xml.EnumNode;
+import uk.ac.stfc.isis.ibex.dae.xml.IntegerNode;
+import uk.ac.stfc.isis.ibex.dae.xml.XmlFile;
+import uk.ac.stfc.isis.ibex.dae.xml.XmlNode;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Gets the DAE update settings from XML.
+ */
 public class XMLBackedUpdateSettings extends UpdateSettings {
-	private static final String XPATH_TO_AUTOSAVE_FREQ = "/Cluster/U32[Name=' Frequency']/Val";
-	private static final String XPATH_TO_AUTOSAVE_UNITS = "/Cluster/EW[Name='Units']/Val";	
-	
-	private Node autosaveUnits;
-	private Node autosaveFrequency;
+    private static final Logger LOG = IsisLog.getLogger(XMLBackedPeriodSettings.class);
 
-	private final XPath xpath = XPathFactory.newInstance().newXPath();
-	private Document doc;
-		
+    private EnumNode<AutosaveUnit> autosaveUnits =
+            new EnumNode<>("/Cluster/U32[Name=' Frequency']/Val", AutosaveUnit.class);
+    private IntegerNode autosaveFrequency = new IntegerNode("/Cluster/EW[Name='Units']/Val");
+
+    private final XmlFile xmlFile;
+    private final List<XmlNode<?>> nodes = new ArrayList<>();
+
+    /**
+     * Constructor. Creates the xml structure that backs the UpdateSettings.
+     */
+    public XMLBackedUpdateSettings() {
+        nodes.add(autosaveFrequency);
+        nodes.add(autosaveUnits);
+
+        xmlFile = new XmlFile(nodes);
+    }
+
+    /**
+     * Updates the setting based on some xml.
+     * 
+     * @param xml
+     *            the xml to update the settings with
+     */
 	public void setXml(String xml) {
-		try {
-			buildDocument(xml);
-			updateNodes();
-			initialiseFromXml();
-		} catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
-			e.printStackTrace();
-		}
+        xmlFile.setXml(xml);
+        initialiseFromXml();
 	}
 	
+    /**
+     * Gets the xml from file.
+     * 
+     * @return the xml
+     */
 	public String xml() {
-		if (doc == null) {
-			return "";
-		}
-		
-		TransformerFactory tf = TransformerFactory.newInstance();
-		Transformer transformer;
-		try {
-			transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			StringWriter writer = new StringWriter();
-			transformer.transform(new DOMSource(doc), new StreamResult(writer));
-			String output = writer.getBuffer().toString();
-			
-			return output;
-		} catch (TransformerException e) {
-			return "";
-		}
+        return xmlFile.toString();
 	}	
 	
 	@Override
 	public void setAutosaveFrequency(int value) {
 		super.setAutosaveFrequency(value);
-		
-		if (doc == null) { 
-			return; 
-		}
-		setInt(autosaveFrequency, value);
+        autosaveFrequency.setValue(value);
 	}
 	
 	@Override
 	public void setAutosaveUnits(AutosaveUnit value) {
 		super.setAutosaveUnits(value);
-		
-		if (doc == null) { 
-			return; 
-		}
-		setInt(autosaveUnits, value.ordinal());
+        autosaveUnits.setValue(value);
 	}
 	
-	private static void setInt(Node node, int value) {
-		node.setTextContent(String.format("%d", value));
-	}
-	
-	private void buildDocument(String xml) throws ParserConfigurationException, SAXException, IOException {
-	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder builder = factory.newDocumentBuilder();    
-	    InputSource source = new InputSource(new StringReader(xml));
+    private void initialiseFromXml() {
+        for (XmlNode<?> node : nodes) {
+            if (node == null || node.value() == null) {
+                LOG.info("Error, Update Settings were not initialised correctly from the XML.");
+                return;
+            }
+        }
 	    
-	    doc = builder.parse(source);
-	}
-	
-	private void initialiseFromXml() {
-		super.setAutosaveFrequency(Integer.parseInt(autosaveFrequency.getTextContent()));
-		
-		int index = Integer.parseInt(autosaveUnits.getTextContent());
-		super.setAutosaveUnits(AutosaveUnit.values()[index]);
+        super.setAutosaveFrequency(autosaveFrequency.value());
+        super.setAutosaveUnits(autosaveUnits.value());
 	}	
-	
-	private void updateNodes() throws XPathExpressionException {
-		autosaveFrequency = getNode(XPATH_TO_AUTOSAVE_FREQ);
-		autosaveUnits = getNode(XPATH_TO_AUTOSAVE_UNITS);
-	}
-	
-	private Node getNode(String expression) throws XPathExpressionException {
-		NodeList nodes = (NodeList) xpath.compile(expression).evaluate(doc, XPathConstants.NODESET);	
-		return nodes.item(0);
-	}
 }
