@@ -21,18 +21,18 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.assertEquals;
 
-import org.epics.util.array.ListByte;
-import org.epics.util.array.ListFloat;
-import org.epics.util.text.NumberFormats;
-import org.epics.vtype.Display;
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VDouble;
-import org.epics.vtype.VEnum;
-import org.epics.vtype.VFloatArray;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VType;
-import org.epics.vtype.ValueFactory;
+import org.diirt.util.array.ListByte;
+import org.diirt.util.array.ListFloat;
+import org.diirt.util.text.NumberFormats;
+import org.diirt.vtype.Display;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VDouble;
+import org.diirt.vtype.VEnum;
+import org.diirt.vtype.VFloatArray;
+import org.diirt.vtype.VInt;
+import org.diirt.vtype.VNumber;
+import org.diirt.vtype.VType;
+import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -42,7 +42,6 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 /**
  * This class is responsible for testing the various to conversions.
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname" })
 public class VTypeFormatToConversionsTest {
 
 	// Byte array values missing as unable to produce from ValueFactory

@@ -6,25 +6,17 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.dae.DaeUI
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets,
  uk.ac.stfc.isis.ibex.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
- com.google.common,
- org.eclipse.draw2d,
- org.eclipse.core.databinding,
- org.eclipse.jface.databinding,
- org.eclipse.core.databinding.property;bundle-version="1.4.100",
- org.eclipse.core.databinding.beans,
  org.eclipse.nebula.visualization.xygraph;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.log;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.log;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.epics,
- uk.ac.stfc.isis.ibex.activemq,
- org.eclipse.swt,
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ org.eclipse.gef;bundle-version="3.10.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae

@@ -17,34 +17,32 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching.tests;
+package uk.ac.stfc.isis.ibex.epics.tests.switching;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
-import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
-@SuppressWarnings("checkstyle:methodname")
-public class NothingSwitcherTest {
+public class ClosingSwitcherTest {
     
     private static final String PV_PREFIX = "PREFIX:";
     private static final String PV_ADDRESS = PV_PREFIX + "SUFFIX";
     private static final String PV_ADDRESS_2 = PV_PREFIX + "SUFFIX_2";
 
     private ObservableFactory obsFactory;
-    private NothingSwitcher nothingSwitcher;
+    private ClosingSwitcher closingSwitcher;
     private ClosableObservable<String> closableCachingObservable;
     private ClosableObservable<String> closableCachingObservable2;
     private ChannelType<String> channelType;
@@ -64,18 +62,18 @@ public class NothingSwitcherTest {
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);
         when(channelType.reader(PV_ADDRESS_2)).thenReturn(closableCachingObservable2);
 
-        nothingSwitcher = new NothingSwitcher();
+        closingSwitcher = new ClosingSwitcher();
 
         InstrumentSwitchers instrumentSwitchers = mock(InstrumentSwitchers.class);
-        when(instrumentSwitchers.getObservableSwitcher(OnInstrumentSwitch.NOTHING)).thenReturn(nothingSwitcher);
+        when(instrumentSwitchers.getObservableSwitcher(OnInstrumentSwitch.CLOSE)).thenReturn(closingSwitcher);
 
-        obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING, instrumentSwitchers);
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
     }
 
     @Test
     public void switcher_with_no_observables_does_nothing_when_switching() {
         // Act
-        nothingSwitcher.switchInstrument(instrumentInfo);
+        closingSwitcher.switchInstrument(instrumentInfo);
     }
 
     @Test
@@ -85,27 +83,82 @@ public class NothingSwitcherTest {
                 PV_ADDRESS);
 
         // Assert
-        assertTrue(nothingSwitcher.getSwitchables().contains(switchable));
-    }
-
-     @Test
-    public void switching_does_not_unregister_observable_from_switcher() {
-        // Act
-        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
-        nothingSwitcher.switchInstrument(instrumentInfo);
-
-        // Assert
-        assertEquals(1, nothingSwitcher.getSwitchables().size());
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable));
     }
 
     @Test
-    public void switching_does_not_unregister_multiple_observables_from_switcher() {
+    public void switching_calls_close_on_observable() {
+        // Act
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        verify(closableCachingObservable, Mockito.atLeast(1)).close();
+    }
+
+    @Test
+    public void switching_unregisters_observable_from_switcher() {
+        // Act
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertEquals(0, closingSwitcher.getSwitchables().size());
+    }
+
+    @Test
+    public void switching_unregisters_multiple_observables_from_switcher() {
         // Act
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS_2);
-        nothingSwitcher.switchInstrument(instrumentInfo);
+        closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
-        assertEquals(2, nothingSwitcher.getSwitchables().size());
+        assertEquals(0, closingSwitcher.getSwitchables().size());
     }
+
+    @Test
+    public void switching_twice_correctly_switches_observables_added_after_first_switch() {
+        // Act
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS_2);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        verify(closableCachingObservable2, Mockito.atLeast(1)).close();
+    }
+
+    @Test
+    public void closing_observable_manually_unregisters_observable_from_switcher() {
+        // Act
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        SwitchableObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+
+        switchable.close();
+
+        // Assert
+        assertFalse(closingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
+    }
+
+    @Test
+    public void closing_observable_manually_twice_does_nothing() {
+        // Act
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        SwitchableObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+
+        switchable.close();
+        switchable.close();
+
+        // Assert
+        assertFalse(closingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
+    }
+
 }

@@ -70,5 +70,6 @@ def archiveCheckstyleResults() {
           defaultEncoding: "",
           healthy: "",
           pattern: "**/target/checkstyle-result.xml",
-          unHealthy: ""])
+          unHealthy: "",
+          usePreviousBuildAsReference: true])
 }

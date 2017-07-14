@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching.tests;
+package uk.ac.stfc.isis.ibex.epics.tests.switching;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.tests.observing.TestHelpers;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class SwitchableObservableTest {
 
     private Observer<String> mockObserver;
