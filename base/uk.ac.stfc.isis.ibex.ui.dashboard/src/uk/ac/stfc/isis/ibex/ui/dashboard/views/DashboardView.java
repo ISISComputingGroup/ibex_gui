@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.dashboard.views;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -42,8 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 /**
  * The dashboard view.
  */
-@SuppressWarnings("checkstyle:magicnumber")
-public class DashboardView extends ViewPart implements ISizeProvider {
+public class DashboardView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
     private static final int FIXED_WIDTH = 600;
@@ -63,7 +65,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 
-	@Override
+	@PostConstruct
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(3, false);
 		glParent.marginHeight = 0;
@@ -97,27 +99,11 @@ public class DashboardView extends ViewPart implements ISizeProvider {
         times.setLayoutData(timesGridData);
 	}
 	
-	@Override
+	@PreDestroy
 	public void dispose() {
-		super.dispose();
 		bannerModel.close();
 		titleModel.close();
 		monitorsModel.close();
 		timesModel.close();
-	}
-
-	@Override
-	public int getSizeFlags(boolean width) {
-		return SWT.MIN | SWT.MAX;
-	}
-
-	@Override
-	public int computePreferredSize(boolean width, int availableParallel,
-			int availablePerpendicular, int preferredResult) {
-		return  width ? FIXED_WIDTH : FIXED_HEIGHT;
-	}
-
-	@Override
-	public void setFocus() {		
 	}
 }

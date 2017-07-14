@@ -22,5 +22,4 @@ Require-Bundle: org.eclipse.ui,
  com.google.gson
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard,
- uk.ac.stfc.isis.ibex.ui.dashboard.views
+Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard.views
