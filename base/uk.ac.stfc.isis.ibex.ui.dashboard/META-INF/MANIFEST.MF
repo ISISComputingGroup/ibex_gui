@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Dashboard
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.dashboard;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: uk.ac.stfc.isis.ibex.ui.dashboard.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.databinding,
