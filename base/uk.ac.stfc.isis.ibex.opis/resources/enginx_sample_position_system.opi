@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>529</width>
+    <width>517</width>
     <x>6</x>
     <name>Sample Position</name>
     <y>78</y>
@@ -1300,7 +1300,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>90</width>
-      <x>360</x>
+      <x>347</x>
       <name>Label_7</name>
       <y>6</y>
       <foreground_color>
@@ -1351,7 +1351,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>360</x>
+      <x>347</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>42</y>
@@ -1404,7 +1404,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>360</x>
+      <x>347</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>72</y>
@@ -1457,7 +1457,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>360</x>
+      <x>347</x>
       <name>LED_2</name>
       <data_type>0</data_type>
       <y>102</y>
@@ -1510,7 +1510,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>360</x>
+      <x>347</x>
       <name>LED_3</name>
       <data_type>0</data_type>
       <y>132</y>
@@ -1563,7 +1563,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>360</x>
+      <x>347</x>
       <name>LED_4</name>
       <data_type>0</data_type>
       <y>162</y>
@@ -1606,13 +1606,29 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button</name>
       <y>41</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1646,13 +1662,29 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button</name>
       <y>71</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1686,13 +1718,29 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button_2</name>
       <y>101</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1726,13 +1774,29 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button_3</name>
       <y>131</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1766,13 +1830,29 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button_4</name>
       <y>161</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1800,19 +1880,35 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(P)SAMPOS:S:GOING:SP</pv_name>
+      <pv_name>$(P)SAMPOS:STOP:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
       <width>67</width>
-      <x>420</x>
+      <x>407</x>
       <name>Button_4</name>
       <y>204</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 != 1:
+    pv.setValue(1)
+
+else:
+    pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
