@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import java.util.Calendar;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
@@ -35,9 +37,6 @@ import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
 import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
-import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -52,8 +51,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -103,9 +100,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     /** Current plot time span in milliseconds. */
     private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
-    /** Title for the plot. */
-    private static final String PLOT_TITLE = "Beam Current";
-
     /** Custom magenta colour for high-contrast plot traces. */
     private static final RGB MAGENTA = new RGB(255, 0, 170);
 
@@ -119,7 +113,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final RGB DEFAULT = new RGB(0, 0, 0);
 
     /** {@inheritDoc} */
-    @Override
+    @PostConstruct
     protected void doCreatePartControl(final Composite parent) {
         // Arrange disposal
         parent.addDisposeListener(new DisposeListener() {
@@ -140,11 +134,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         createTimeRangeRadioButtons(graphPanel);
         createBeamStatusPlot(graphPanel);
-
-        BeamStatusPanel statusPanel =
-                new BeamStatusPanel(parent, SWT.BORDER | SWT.V_SCROLL);
-        GridData gdStatus = new GridData(SWT.CENTER, SWT.CENTER, false, true);
-        statusPanel.setLayoutData(gdStatus);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);
@@ -402,16 +391,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      */
     private long getTimeRangeInMilliseconds() {
         return currentPlotTimespanMilliseconds;
-    }
-
-    /**
-     * Used by the specific implementation to define the time range in
-     * milliseconds for the plot.
-     * 
-     * @return time range of the plot in milliseconds
-     */
-    private String getPlotTitle() {
-        return PLOT_TITLE;
     }
 
     /**

@@ -28,7 +28,7 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="70">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.beamstatus/uk.ac.stfc.isis.ibex.e4.ui.beamstatus.views.BeamStatusView" label="Active perspective"/>
+              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusPanel" label="Beam Current"/>
             </children>
           </children>
         </children>
