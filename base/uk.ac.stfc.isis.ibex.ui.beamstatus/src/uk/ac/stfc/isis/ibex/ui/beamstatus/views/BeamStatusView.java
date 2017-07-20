@@ -23,10 +23,10 @@ import java.util.Calendar;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.trends.databrowser2.Messages;
-import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -39,8 +39,6 @@ import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.RGB;
@@ -60,9 +58,7 @@ import org.eclipse.swt.widgets.Shell;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
-	
-	private Shell shell;
+public class BeamStatusView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -114,39 +110,34 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
     /** Default colour for undefined plot traces. */
     private static final RGB DEFAULT = new RGB(0, 0, 0);
+    
+    /** Shell for opening error dialogs. */
+    private Shell shell;
 
-    /** {@inheritDoc} */
-    @PostConstruct
-    protected void doCreatePartControl(final Composite parent) {
-        // Arrange disposal
-        parent.addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(DisposeEvent e) {
-
-                // Be ignorant of any change of the current model after
-                // this view is disposed.
-                if (model != null) {
-                    model.removeListener(BeamStatusView.this);
-                }
-            }
-        });
+    @PostConstruct 
+    public void createPartControl(final Composite parent) {
         
+    	// Remember what shell we're using
         shell = parent.getShell();
+        
+        // Create the view model
+        configureModel();
 
+        // Create the basic panel
         parent.setLayout(new GridLayout(2, false));
         Composite graphPanel = new Composite(parent, SWT.NONE);
         graphPanel.setLayout(new GridLayout(1, false));
         graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        // Add the radio buttons
         createTimeRangeRadioButtons(graphPanel);
+        
+        // Create the basic plot
         createBeamStatusPlot(graphPanel);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);
         selectPV(SYNCH_BEAM_CURRENT_PV);
-
-        if (model != null && model.getAxisCount() > 0) {
-            setAxisProperties(model.getAxis(model.getAxisCount() - 1));
-        }
 
         // Create and start controller
         try {
@@ -248,7 +239,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private void setYAxisRange(AxisConfig axis) {
         axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
         axis.setAutoScale(false);
-        model.setArchiveRescale(ArchiveRescale.NONE);
     }
 
     /**
@@ -260,22 +250,14 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         axis.setColor(new RGB(0, 0, 0));
     }
 
-    @Override
-    protected void updateModel(final Model oldModel, final Model newModel) {
-        if (newModel == null) {
-            return;
-        }
-
-        model = newModel;
-        if (oldModel != newModel) {
-            if (oldModel != null) {
-                oldModel.removeListener(this);
-            }
-
-            if (newModel != null) {
-                newModel.addListener(this);
-            }
-        }
+    protected void configureModel() {
+    	model = new Model();
+    	model.addListener(this);
+        model.setArchiveRescale(ArchiveRescale.NONE);
+        AxisConfig axis = new AxisConfig("Beam current");
+        setAxisProperties(axis);
+        model.addAxis(axis);
+        updateModelTimeRange();
     }
 
     /**
@@ -323,27 +305,15 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      */
     protected void selectPV(final PVItem newItem) {
 
-        // No or unknown PV name?
-        if (newItem == null) {
-            return;
-            }
-
-        // Delete all existing traces
-        if (plot == null) {
+        // PV unknown or plot does not exist
+        if (newItem == null || plot == null) {
             return;
         }
-
-        Model newModel;
-        if (model == null) {
-            newModel = new Model();
-        } else {
-            newModel = model;
-        }
-        updateModel(newModel, newModel);
+        
         try {
-            newModel.addItem(newItem);
             newItem.useDefaultArchiveDataSources();
-            newModel.setTimerange(getStartSpec(), getEndSpec());
+            model.addItem(newItem);
+            model.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
@@ -372,14 +342,10 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     private void updateModelTimeRange() {
-        if (model == null) {
-            System.out.println("Unable to set model time range. Model is null");
-        } else {
-            try {
-                model.setTimerange(getStartSpec(), getEndSpec());
-            } catch (Exception ex) {
-                MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
-            }
+    	try {
+            model.setTimerange(getStartSpec(), getEndSpec());
+        } catch (Exception ex) {
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
     }
 
@@ -428,6 +394,13 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      */
     private String getEndSpec() {
         return getCalendarSpec(getTimeRangeInMilliseconds());
+    }
+    
+    @PreDestroy
+    public void dispose() {
+    	if (model != null) {
+    		model.removeListener(this);
+    	}
     }
 
     // Following methods are defined as they are mandatory to fulfil
@@ -505,9 +478,5 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
 	@Override
 	public void selectedSamplesChanged() {	
-	}
-
-	@Override
-	public void setFocus() {		
 	}
 }
