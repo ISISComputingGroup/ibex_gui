@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,20 +31,20 @@ import org.eclipse.swt.widgets.ExpandItem;
 /**
  * The parent composite for the beam statistics widgets.
  */
-@SuppressWarnings("checkstyle:magicnumber")
-public class StatsPanel extends Composite {
+public class StatsPanel {
 
     /**
      * The constructor.
      * 
      * @param parent the parent
      * @param style the SWT style
+     * @return 
      */
-    public StatsPanel(Composite parent, int style) {
-        super(parent, SWT.NONE);
-        setLayout(new GridLayout(1, false));
+	@PostConstruct
+    public void createPartControl(Composite parent) {
+        parent.setLayout(new GridLayout(1, false));
 
-        ExpandBar expandBar = new ExpandBar(this, SWT.FILL);
+        ExpandBar expandBar = new ExpandBar(parent, SWT.FILL);
         expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
         ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);

@@ -51,6 +51,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -60,6 +61,8 @@ import org.eclipse.swt.widgets.Composite;
  * (e.g. hourly, daily)
  */
 public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
+	
+	private Shell shell;
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -127,6 +130,8 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
                 }
             }
         });
+        
+        shell = parent.getShell();
 
         parent.setLayout(new GridLayout(2, false));
         Composite graphPanel = new Composite(parent, SWT.NONE);
@@ -145,10 +150,10 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
         // Create and start controller
         try {
-            controller = new Controller(parent.getShell(), model, plot);
+            controller = new Controller(shell, model, plot);
             controller.start();
         } catch (Exception ex) {
-            MessageDialog.openError(parent.getShell(), Messages.Error,
+            MessageDialog.openError(shell, Messages.Error,
                     NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
 
@@ -256,11 +261,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     @Override
-    public void setFocus() {
-            return;
-        }
-
-    @Override
     protected void updateModel(final Model oldModel, final Model newModel) {
         if (newModel == null) {
             return;
@@ -311,9 +311,9 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             newItem.setColor(rgb);
             selectPV(newItem);
         } catch (Exception ex) {
-            MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
-            }
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
+    }
 
     /**
      * Add this PV to the model for inclusion in the plot.
@@ -345,7 +345,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             newItem.useDefaultArchiveDataSources();
             newModel.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception ex) {
-            MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
         // E4 disabled
@@ -378,8 +378,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             try {
                 model.setTimerange(getStartSpec(), getEndSpec());
             } catch (Exception ex) {
-                MessageDialog.openError(getSite().getShell(), Messages.Error,
-                        NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+                MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
             }
         }
     }
@@ -506,5 +505,9 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
 	@Override
 	public void selectedSamplesChanged() {	
+	}
+
+	@Override
+	public void setFocus() {		
 	}
 }

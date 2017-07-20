@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.model,
  org.diirt.util,
  org.csstudio.trends.databrowser2;bundle-version="4.2.4",
- org.csstudio.apputil;bundle-version="3.0.2"
+ org.csstudio.apputil;bundle-version="3.0.2",
+ org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views

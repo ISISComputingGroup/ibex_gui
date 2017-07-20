@@ -29,6 +29,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
@@ -43,7 +45,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * This page displays the MCR news text. The setText method is used to refresh
  * the MCR news content.
  */
-public class McrNewsPanel extends Composite {
+public class McrNewsPanel {
     private static final int FONT_SIZE = 10;
     private static final int NEWS_FIELD_HEIGHT = 155;
 
@@ -54,22 +56,23 @@ public class McrNewsPanel extends Composite {
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
     private Text txtTheMcrNews;
-
+    
     /**
      * Constructor for the MCR News Panel.
      * 
      * @param parent Parent composite
      * @param style SWT Style
+     * @return 
      */
-    public McrNewsPanel(Composite parent, int style) {
-        super(parent, style);
-        setLayout(new GridLayout(1, false));
-
-        txtTheMcrNews = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+    @PostConstruct
+    public void createPartControl(Composite parent) {
+        txtTheMcrNews = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
         Color backgroundColor = txtTheMcrNews.getBackground();
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
+        
+        parent.setLayout(new GridLayout(1, false));
 
         GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
         gdNews.heightHint = NEWS_FIELD_HEIGHT;

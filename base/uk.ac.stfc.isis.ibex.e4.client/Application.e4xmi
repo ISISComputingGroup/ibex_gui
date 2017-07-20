@@ -28,7 +28,15 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="70">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusPanel" label="Beam Current"/>
+              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam current graph"/>
+            </children>
+            <children xsi:type="basic:PartSashContainer" xmi:id="_QrDYQG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3" containerData="30">
+              <children xsi:type="basic:PartStack" xmi:id="_ROxJUG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2" containerData="30">
+                <children xsi:type="basic:Part" xmi:id="_R54i4G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.mcrnews" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.McrNewsPanel" label="MCR news"/>
+              </children>
+              <children xsi:type="basic:PartStack" xmi:id="_Rihy0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4" containerData="70">
+                <children xsi:type="basic:Part" xmi:id="_SJvj0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beaminformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.StatsPanel" label="Beam information"/>
+              </children>
             </children>
           </children>
         </children>
