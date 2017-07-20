@@ -26,7 +26,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
+import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.Messages;
+import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -58,7 +60,7 @@ import org.eclipse.swt.widgets.Shell;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView implements ModelListener {
+public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -82,7 +84,7 @@ public class BeamStatusView implements ModelListener {
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */
-    private ModelBasedPlot plot;
+    private ModelBasedPlot modelPlot;
 
     /** Model of the currently active Data Browser plot or <code>null</code>. */
     private Model model;
@@ -114,8 +116,16 @@ public class BeamStatusView implements ModelListener {
     /** Shell for opening error dialogs. */
     private Shell shell;
 
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam Current";
+
     @PostConstruct 
-    public void createPartControl(final Composite parent) {
+    public void draw(Composite parent) {
+    	super.createPartControl(parent);
+    }
+    
+    @Override
+    public void doCreatePartControl(final Composite parent) {
         
     	// Remember what shell we're using
         shell = parent.getShell();
@@ -135,13 +145,14 @@ public class BeamStatusView implements ModelListener {
         // Create the basic plot
         createBeamStatusPlot(graphPanel);
 
-        selectPV(TS1_BEAM_CURRENT_PV);
-        selectPV(TS2_BEAM_CURRENT_PV);
-        selectPV(SYNCH_BEAM_CURRENT_PV);
+        // TODO Disabled until connection to archive engine is fixed
+        // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
+        //	addTrace(generatePVItem(pv));
+        // }
 
         // Create and start controller
         try {
-            controller = new Controller(shell, model, plot);
+            controller = new Controller(shell, model, modelPlot);
             controller.start();
         } catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error,
@@ -202,10 +213,10 @@ public class BeamStatusView implements ModelListener {
         final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
 
         // Create plot with basic configuration
-        plot = new ModelBasedPlot(canvas);
-        // E4 disabled
-        //plot.getXYGraph().setTitle(getPlotTitle());
-        //plot.setToolbarVisible(false);
+        modelPlot = new ModelBasedPlot(canvas);
+        RTTimePlot rtPlot = modelPlot.getPlot();
+        rtPlot.showToolbar(false);
+        rtPlot.setTitle(Optional.of(PLOT_TITLE));
     }
 
     /**
@@ -267,7 +278,8 @@ public class BeamStatusView implements ModelListener {
      * @param pvAddress
      *            Name of the PV to add to the plot
      */
-    private void selectPV(final String pvAddress) {
+    @SuppressWarnings("unused")
+	private PVItem generatePVItem(final String pvAddress) {
         try {
             PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
             String displayName;
@@ -291,9 +303,10 @@ public class BeamStatusView implements ModelListener {
             }
             newItem.setDisplayName(displayName);
             newItem.setColor(rgb);
-            selectPV(newItem);
+            return newItem;
         } catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
+            return null;
         }
     }
 
@@ -303,10 +316,10 @@ public class BeamStatusView implements ModelListener {
      * @param newItem
      *            PV to add to the plot
      */
-    protected void selectPV(final PVItem newItem) {
+    protected void addTrace(final PVItem newItem) {
 
         // PV unknown or plot does not exist
-        if (newItem == null || plot == null) {
+        if (newItem == null || modelPlot == null) {
             return;
         }
         
@@ -317,19 +330,7 @@ public class BeamStatusView implements ModelListener {
         } catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
-
-        // E4 disabled
-        // XYGraph xygraph = plot.getXYGraph();
-        
-		// Create trace for waveform
-        //final Trace trace = new Trace(newItem.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
-        //        new BeamStatusGraphDataProvider());
-        //trace.setLineWidth(newItem.getLineWidth());
-        //trace.setPointStyle(PointStyle.POINT);
-        //trace.setPointSize(1);
-        // Add to graph
-        //xygraph.addTrace(trace);
-        }
+    }
 
     private void setTimeRangeDaily() {
         currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
@@ -478,5 +479,14 @@ public class BeamStatusView implements ModelListener {
 
 	@Override
 	public void selectedSamplesChanged() {	
+	}
+
+	@Override
+	protected void updateModel(Model arg0, Model arg1) {
+		
+	}
+
+	@Override
+	public void setFocus() {		
 	}
 }
