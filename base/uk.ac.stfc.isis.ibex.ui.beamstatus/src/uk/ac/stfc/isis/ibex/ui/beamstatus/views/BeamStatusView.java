@@ -28,7 +28,6 @@ import javax.annotation.PreDestroy;
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.Messages;
-import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -60,7 +59,7 @@ import org.eclipse.swt.widgets.Shell;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
+public class BeamStatusView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -120,12 +119,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final String PLOT_TITLE = "Beam Current";
 
     @PostConstruct 
-    public void draw(Composite parent) {
-    	super.createPartControl(parent);
-    }
-    
-    @Override
-    public void doCreatePartControl(final Composite parent) {
+    public void createPartControl(final Composite parent) {
         
     	// Remember what shell we're using
         shell = parent.getShell();
@@ -155,8 +149,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             controller = new Controller(shell, model, modelPlot);
             controller.start();
         } catch (Exception ex) {
-            MessageDialog.openError(shell, Messages.Error,
-                    NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
     }
@@ -479,14 +472,5 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
 	@Override
 	public void selectedSamplesChanged() {	
-	}
-
-	@Override
-	protected void updateModel(Model arg0, Model arg1) {
-		
-	}
-
-	@Override
-	public void setFocus() {		
 	}
 }
