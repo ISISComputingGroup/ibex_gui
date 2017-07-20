@@ -128,16 +128,14 @@ public class BeamStatusView implements ModelListener {
         configureModel();
 
         // Create the basic panel
-        parent.setLayout(new GridLayout(2, false));
-        Composite graphPanel = new Composite(parent, SWT.NONE);
-        graphPanel.setLayout(new GridLayout(1, false));
-        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        parent.setLayout(new GridLayout(1, false));
+        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         // Add the radio buttons
-        createTimeRangeRadioButtons(graphPanel);
+        createTimeRangeRadioButtons(parent);
         
         // Create the basic plot
-        createBeamStatusPlot(graphPanel);
+        createBeamStatusPlot(parent);
 
         // TODO Disabled until connection to archive engine is fixed
         // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
