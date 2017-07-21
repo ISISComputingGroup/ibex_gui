@@ -17,6 +17,6 @@ public class AlarmsView extends PerspectiveView {
 
 	@Override @PostConstruct
 	public void draw(Composite parent) {
-		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "icons/Alarms.png");
+		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "screenshots/Alarms.png");
 	}	
 }

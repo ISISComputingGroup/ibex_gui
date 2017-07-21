@@ -18,6 +18,6 @@ public class DAEView extends PerspectiveView {
 	@Override @PostConstruct
 	public void draw(Composite parent) {
 		System.out.println("Drawing DAE");
-		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "icons/DAE.png");
+		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "screenshots/DAE.png");
 	}	
 }

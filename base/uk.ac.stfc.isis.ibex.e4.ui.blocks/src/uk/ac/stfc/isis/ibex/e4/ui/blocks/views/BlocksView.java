@@ -16,6 +16,6 @@ public class BlocksView extends PrototypeView {
 
 	@Override @PostConstruct
 	public void draw(Composite parent) {
-		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "icons/Blocks.png");
+		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "screenshots/Blocks.png");
 	}	
 }

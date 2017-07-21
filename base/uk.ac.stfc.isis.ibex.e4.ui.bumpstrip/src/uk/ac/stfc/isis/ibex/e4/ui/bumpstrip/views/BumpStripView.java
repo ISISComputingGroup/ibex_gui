@@ -16,6 +16,6 @@ public class BumpStripView extends PrototypeView {
 
 	@Override @PostConstruct
 	public void draw(Composite parent) {
-		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "icons/BumpStrip.png");
+		this.createPartControl(parent, "uk.ac.stfc.isis.ibex.e4.ui", "screenshots/BumpStrip.png");
 	}	
 }

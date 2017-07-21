@@ -38,9 +38,9 @@ public class PerspectiveSwitcherView {
 		toolBar = new ToolBar(composite, SWT.VERTICAL);
 		toolBar.setFont(LABEL_FONT);
 		
-		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", "icons/AlarmIcon.png", app, partService, modelService, true);
-		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", "icons/BeamStatusIcon.png", app, partService, modelService, false);
-		addPerspectiveShortcut("DAE", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae", "icons/DAEIcon.png", app, partService, modelService, false);
+		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", "screenshots/AlarmIcon.png", app, partService, modelService, true);
+		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", "screenshots/BeamStatusIcon.png", app, partService, modelService, false);
+		addPerspectiveShortcut("DAE", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae", "screenshots/DAEIcon.png", app, partService, modelService, false);
 	}
 
 	public void addPerspectiveShortcut(String name, String partId, String iconPath, MApplication app, EPartService partService, EModelService modelService, boolean selected) {

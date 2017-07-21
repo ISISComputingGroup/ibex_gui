@@ -35,7 +35,7 @@ public class ConfigEditorDialog extends Dialog {
 
 		Label prototype = new Label(parent, SWT.NONE);
 		GridData gd_prototype = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		Image img = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.e4.ui", "icons/ConfigEditor.png");
+		Image img = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.e4.ui", "screenshots/ConfigEditor.png");
 		prototype.setImage(img);
 		prototype.setLayoutData(gd_prototype);
 
