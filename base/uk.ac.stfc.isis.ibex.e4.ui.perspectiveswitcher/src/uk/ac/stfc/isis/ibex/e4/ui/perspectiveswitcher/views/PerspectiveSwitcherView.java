@@ -31,7 +31,6 @@ public class PerspectiveSwitcherView {
 
 	@PostConstruct
 	public void draw(Composite parent, MApplication app, EPartService partService, EModelService modelService) {
-		System.out.println("Drawing perspective switcher...");
 		Composite composite = new Composite(parent, SWT.None);
 		composite.setLayout(new GridLayout());
 		
