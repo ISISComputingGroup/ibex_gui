@@ -28,14 +28,14 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="70">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam current graph"/>
+              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam current history"/>
             </children>
             <children xsi:type="basic:PartSashContainer" xmi:id="_QrDYQG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3" containerData="30">
               <children xsi:type="basic:PartStack" xmi:id="_ROxJUG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2" containerData="30">
                 <children xsi:type="basic:Part" xmi:id="_R54i4G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.mcrnews" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.McrNewsPanel" label="MCR news"/>
               </children>
               <children xsi:type="basic:PartStack" xmi:id="_Rihy0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4" containerData="70">
-                <children xsi:type="basic:Part" xmi:id="_SJvj0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beaminformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.StatsPanel" label="Beam information"/>
+                <children xsi:type="basic:Part" xmi:id="_SJvj0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beaminformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.StatsPanel" label="Current beam information"/>
               </children>
             </children>
           </children>
@@ -90,7 +90,7 @@
       <children xsi:type="basic:Part" xmi:id="__nbWUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
       <children xsi:type="basic:PartSashContainer" xmi:id="_4zdIIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_unc14GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-          <children xsi:type="basic:Part" xmi:id="_wHSQ8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Dashboard"/>
+          <children xsi:type="basic:Part" xmi:id="_wHSQ8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_u7qyYGIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
           <children xsi:type="basic:Part" xmi:id="_wYri8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
