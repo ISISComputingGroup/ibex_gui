@@ -43,12 +43,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -154,12 +152,7 @@ public class BeamStatusView implements ModelListener {
 
     private void createTimeRangeRadioButtons(final Composite parent) {
         Composite controlsComposite = new Composite(parent, SWT.NONE);
-
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = false;
-        layoutData.horizontalAlignment = SWT.CENTER;
-        controlsComposite.setLayoutData(layoutData);
-
+        controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
         controlsComposite.setLayout(new RowLayout());
 
         Button dailyButton = new Button(controlsComposite, SWT.RADIO);
@@ -184,30 +177,19 @@ public class BeamStatusView implements ModelListener {
     }
 
     private void createBeamStatusPlot(final Composite parent) {
-        // The canvas has to be wrapped in a composite so that the canvas has
-        // (0,0) coordinate.
-        // This is a work around for the inconsistency between
-        // figure.getBounds() and gc.getclipping().
         Composite plotComposite = new Composite(parent, SWT.NONE);
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.grabExcessVerticalSpace = true;
-        layoutData.horizontalAlignment = SWT.FILL;
-        layoutData.verticalAlignment = SWT.FILL;
-        plotComposite.setLayoutData(layoutData);
-
-        plotComposite.setLayout(new FillLayout());
-
-        // Double_BUFFERED is required to force RAP to use NativeGraphicsSource.
-        // By default, it uses BufferedGraphicsSource which has problem to
-        // render it in web browser.
-        final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
-
+        plotComposite.setLayout(new GridLayout(1, false));
+        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                
         // Create plot with basic configuration
-        modelPlot = new ModelBasedPlot(canvas);
+        modelPlot = new ModelBasedPlot(plotComposite);
         RTTimePlot rtPlot = modelPlot.getPlot();
-        rtPlot.showToolbar(false);
         rtPlot.setTitle(Optional.of(PLOT_TITLE));
+        rtPlot.setEnabled(false);
+        // TODO: Doesn't seem to actually hide the toolbar. Can we do that?
+        rtPlot.showToolbar(false);
+        rtPlot.showLegend(true);
+        rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 
     /**
@@ -217,39 +199,11 @@ public class BeamStatusView implements ModelListener {
      *            The axis configuration whose properties will be updated.
      */
     private void setAxisProperties(AxisConfig axisConfig) {
-        setYAxisName(axisConfig);
-        setYAxisColor(axisConfig);
-        setYAxisRange(axisConfig);
-    }
-
-    /**
-     * Sets the title for the given axis.
-     * 
-     * @param axis
-     *            The axis configuration whose properties will be updated.
-     */
-    private void setYAxisName(AxisConfig axis) {
-        axis.setName(Y_AXIS_TITLE);
-    }
-
-    /**
-     * Sets the range for the given axis.
-     * 
-     * @param axis
-     *            The axis configuration whose properties will be updated.
-     */
-    private void setYAxisRange(AxisConfig axis) {
-        axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
-        axis.setAutoScale(false);
-    }
-
-    /**
-     * Sets the colour for the given axis.
-     * 
-     * @param axis The axis configuration whose properties will be updated.
-     */
-    private void setYAxisColor(AxisConfig axis) {
-        axis.setColor(new RGB(0, 0, 0));
+        axisConfig.setName(Y_AXIS_TITLE);
+        axisConfig.useAxisName(true);
+        axisConfig.setRange(CURRENT_LOWER, CURRENT_UPPER);
+        axisConfig.setAutoScale(false);
+        axisConfig.setColor(new RGB(0, 0, 0));
     }
 
     protected void configureModel() {
