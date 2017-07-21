@@ -44,7 +44,7 @@ public class StatsPanel {
     public void createPartControl(Composite parent) {
         parent.setLayout(new GridLayout(1, false));
 
-        ExpandBar expandBar = new ExpandBar(parent, SWT.FILL);
+        ExpandBar expandBar = new ExpandBar(parent, SWT.FILL | SWT.V_SCROLL);
         expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
         ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);

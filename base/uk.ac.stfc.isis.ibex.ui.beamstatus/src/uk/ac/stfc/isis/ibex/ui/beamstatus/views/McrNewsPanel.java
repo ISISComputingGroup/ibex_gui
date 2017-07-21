@@ -47,7 +47,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public class McrNewsPanel {
     private static final int FONT_SIZE = 10;
-    private static final int NEWS_FIELD_HEIGHT = 155;
 
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
     private static final String GET_NEWS_FAILED_MESSAGE =
@@ -55,7 +54,7 @@ public class McrNewsPanel {
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
-    private Text txtTheMcrNews;
+    private Text newsText;
     
     /**
      * Constructor for the MCR News Panel.
@@ -66,20 +65,18 @@ public class McrNewsPanel {
      */
     @PostConstruct
     public void createPartControl(Composite parent) {
-        txtTheMcrNews = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-        Color backgroundColor = txtTheMcrNews.getBackground();
-        txtTheMcrNews.setEditable(false);
-        txtTheMcrNews.setBackground(backgroundColor);
-        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
-        
         parent.setLayout(new GridLayout(1, false));
+        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        newsText = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+        Color backgroundColor = newsText.getBackground();
+        newsText.setEditable(false);
+        newsText.setBackground(backgroundColor);
+        newsText.setText("The MCR news will load shortly. If this message persists, please contact support.");
+        newsText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
-        gdNews.heightHint = NEWS_FIELD_HEIGHT;
-        txtTheMcrNews.setLayoutData(gdNews);
-
-        final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
-        txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
+        final String currentFontName = newsText.getFont().getFontData()[0].getName();
+        newsText.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
 
         updateNews().run();
         startTimer();
@@ -91,13 +88,13 @@ public class McrNewsPanel {
      * @param text A String containing the MCR news.
      */
     public void setText(String text) {
-        int topIndex = txtTheMcrNews.getTopIndex();
-        Point selection = txtTheMcrNews.getSelection();
+        int topIndex = newsText.getTopIndex();
+        Point selection = newsText.getSelection();
 
-        txtTheMcrNews.setText(text);
+        newsText.setText(text);
 
-        txtTheMcrNews.setSelection(selection);
-        txtTheMcrNews.setTopIndex(topIndex);
+        newsText.setSelection(selection);
+        newsText.setTopIndex(topIndex);
     }
 
     private void startTimer() {
