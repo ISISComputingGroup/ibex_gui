@@ -579,10 +579,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>../Motor/details.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <M>$(P)$(MM_MOMENTUM)</M>
+            <MM>$(P)$(MM_MOMENTUM)</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1197,10 +1197,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>../Motor/details.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <M>$(P)$(MM_EMU)</M>
+            <MM>$(P)$(MM_EMU)</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1377,10 +1377,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>../Motor/details.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <M>$(P)$(MM_MuSR)</M>
+            <MM>$(P)$(MM_MuSR)</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1645,10 +1645,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>../Motor/details.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <M>$(P)$(MM_HiFi)</M>
+            <MM>$(P)$(MM_HiFi)</MM>
           </macros>
           <replace>1</replace>
           <description></description>
