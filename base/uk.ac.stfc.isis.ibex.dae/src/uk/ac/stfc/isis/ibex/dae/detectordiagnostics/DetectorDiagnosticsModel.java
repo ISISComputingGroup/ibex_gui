@@ -23,16 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
@@ -42,17 +47,24 @@ import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * The Detector diagnostics model, which provides connections 
  * to the PVs holding the detector diagnostics data.
  */
-public class DetectorDiagnosticsModel {
+public final class DetectorDiagnosticsModel extends ModelObject {
     
-    private static final Logger LOG = IsisLog.getLogger(DetectorDiagnosticsModel.class);
-    
-    private final DetectorDiagnosticsViewModel viewModel;
+    /** convert seconds to ms */
+    private static final int S_TO_MS = 1000;
 
+    /** Time to delay before telling server that we want diagnostic enabled */
+    private static final int TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S = 60;
+
+    private static final Logger LOG = IsisLog.getLogger(DetectorDiagnosticsModel.class);
+
+    private static DetectorDiagnosticsModel instance;
+    
     /**
      * The observable for count rates.
      */
@@ -100,22 +112,43 @@ public class DetectorDiagnosticsModel {
 
     private SwitchableObservable<Boolean> diagnosticsEnabledObservable;
 
+    private Job detectorDiagnosticsEnabledJob;
+
+    private String writeToEnableDiagnosticError = "";
+
+    protected boolean errorLoggedInJob;
+
+    private Subscription diagnosticsEnabledSubscription;
+
     /**
      * Constructor.
      * 
      * @param viewModel the view model
      */
-    public DetectorDiagnosticsModel(final DetectorDiagnosticsViewModel viewModel) {    
-        this.viewModel = viewModel;
-
-        setUpWritables();  
+    private DetectorDiagnosticsModel() {
+        setUpWritables();
+        createDetectorDiagnosticsEnabledJob();
     }
-    
+
+    /**
+     * Gets the single instance of DetectorDiagnosticsModel.
+     *
+     * @return single instance of DetectorDiagnosticsModel
+     */
+    public static DetectorDiagnosticsModel getInstance() {
+        if (DetectorDiagnosticsModel.instance == null) {
+            DetectorDiagnosticsModel.instance = new DetectorDiagnosticsModel();
+        }
+        return DetectorDiagnosticsModel.instance;
+
+    }
+
     private void setUpWritables() {
         
         writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
         
-        diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:SP"));
+        diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(),
+                InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:FOR"));
         spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
         period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
         startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
@@ -123,50 +156,34 @@ public class DetectorDiagnosticsModel {
         integralTimeRangeTo = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));
         integralTimeRangeFrom = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));
         maxFrames = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));
-        
-    }
-    
-    private void setDiagnosticsEnabled(final boolean enabled) {
-
-        try {
-            diagnosticsEnabled.write(booleanToInt(enabled));
-        } catch (IOException e) {
-            diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>() {
-
-                @Override
-                public void write(Integer value) {
-                    // This is only ever called once the PV is writable so can use uncheckedWrite
-                    diagnosticsEnabled.uncheckedWrite(value);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    handleWriteException(e);
-                }
- 
-                @Override
-                public void onCanWriteChanged(boolean canWrite) {
-                    if (canWrite) {
-                        write(booleanToInt(enabled));
-                    }  
-                }
-                    
-            });
-        }
     }
     
     /**
-     * Helper function that converts a boolean into 1 or 0.
-     * 
-     * @param bool the boolean to convert
-     * @return 1 if bool evaluates to true, 0 otherwise
+     * Creates a detector diagnostics job. The job will periodically tell the
+     * server that the client is using the detector diagnostics and so they
+     * should not be turned off. The job is not started. Once started the job
+     * will reschedule itself until it is cancelled.
      */
-    private Integer booleanToInt(Boolean bool) {
-        if (bool) {
-            return 1;
-        } else {
-            return 0;
-        }
+    private void createDetectorDiagnosticsEnabledJob() {
+        detectorDiagnosticsEnabledJob = new Job("Detector Diagnostics Enabled") {
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+                try {
+                    diagnosticsEnabled.write(TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S * 2);
+                    setWriteToEnableDiagnosticError("");
+                    errorLoggedInJob = false;
+                } catch (IOException e) {
+                    setWriteToEnableDiagnosticError("Can not enable detector diagnostics on this instrument.");
+                    if (!errorLoggedInJob) {
+                        LOG.info("Diagnostics can not be enabled because " + e.getMessage());
+                        errorLoggedInJob = true;
+                    }
+                }
+                schedule(TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S * S_TO_MS);
+                return Status.OK_STATUS;
+            }
+        };
+        rescheduleDetectorDiagnosticJobOnCanWriteChange();
     }
     
     /**
@@ -261,11 +278,12 @@ public class DetectorDiagnosticsModel {
     }
     
     /**
-     * Start observing.
+     * Bind the view model to the model.
+     * 
+     * @param viewModel
+     *            the view model to bind to
      */
-    public void startObserving() {
-        
-        setDiagnosticsEnabled(true);
+    public void bind(final IDetectorDiagnosticsViewModelBinding viewModel) {
         
         observableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
         
@@ -383,14 +401,15 @@ public class DetectorDiagnosticsModel {
     }
     
     /**
-     * Stop observing.
+     * Close the model, use close instance instead
      */
-    public void stopObserving() {
+    private void close() {
+        setDetectorDiagnosticsEnabled(false);
+        diagnosticsEnabledSubscription.removeObserver();
         spectrumNumbers.close();
         countRate.close();
         integral.close();
         maxSpecBinCount.close();
-
     }
     
     private List<Double> convertPrimitiveDoubleArrayToList(final double[] array) {
@@ -431,4 +450,97 @@ public class DetectorDiagnosticsModel {
         }
     }
 
+    /**
+     * Enable or disable the detector diagnostics.
+     * 
+     * @param enabled
+     *            true to enable the diagnostics; false to disable
+     */
+    public void setDetectorDiagnosticsEnabled(boolean enabled) {
+        if (enabled) {
+            if (detectorDiagnosticsEnabledJob.getState() == Job.NONE) {
+                detectorDiagnosticsEnabledJob.schedule();
+            }
+        } else {
+            detectorDiagnosticsEnabledJob.cancel();
+        }
+    }
+
+    /**
+     * @return the write to enable diagnostic error; Blank if none
+     */
+    public String getWriteToEnableDiagnosticError() {
+        return writeToEnableDiagnosticError;
+    }
+
+    /**
+     * Set the error that occurred when trying to write to Enable Diagnostic
+     * Error; blank for no error.
+     * 
+     * @param error
+     *            the last error that happened when Enable Diagnostics was
+     *            written to; blank for no error
+     */
+    public void setWriteToEnableDiagnosticError(String error) {
+        firePropertyChange("writeToEnableDiagnosticError", this.writeToEnableDiagnosticError,
+                this.writeToEnableDiagnosticError = error);
+    }
+
+    /**
+     * Close the instance of the model.
+     */
+    public static void closeInstance() {
+        if (DetectorDiagnosticsModel.instance != null) {
+            DetectorDiagnosticsModel.instance.close();
+        }
+    }
+
+    /**
+     * Create a listener which will immediately reschedule the detector
+     * diagnostics job (if it is already scheduled) if the PV becomes writable.
+     * This means that the detector diagnostics will be immediately enabled if
+     * possible instead of having to wait for the scheduled job to run. This
+     * will happen on instrument change.
+     * 
+     */
+    private void rescheduleDetectorDiagnosticJobOnCanWriteChange() {
+        diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new ConfigurableWriter<Integer, Integer>() {
+
+            @Override
+            public void write(Integer value) throws IOException {
+                //
+            }
+
+            @Override
+            public void uncheckedWrite(Integer value) {
+                //
+            }
+
+            @Override
+            public void onError(Exception e) {
+                //
+            }
+
+            @Override
+            public void onCanWriteChanged(boolean canWrite) {
+                if (canWrite) {
+                    if (detectorDiagnosticsEnabledJob.getState() == Job.WAITING
+                            || detectorDiagnosticsEnabledJob.getState() == Job.SLEEPING) {
+                        detectorDiagnosticsEnabledJob.cancel();
+                        detectorDiagnosticsEnabledJob.schedule();
+                    }
+                }
+            }
+
+            @Override
+            public boolean canWrite() {
+                return false;
+            }
+
+            @Override
+            public Subscription writeTo(Writable<Integer> writable) {
+                return null;
+            }
+        });
+    }
 }

@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -35,8 +36,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewModelBinding;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 
 /**
@@ -45,7 +47,6 @@ import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 @SuppressWarnings("checkstyle:magicnumber")
 public class DetectorDiagnosticsPanel extends Composite {
     
-    private DetectorDiagnosticsViewModel model = DetectorDiagnosticsViewModel.getInstance();
     private DataBindingContext bindingContext = new DataBindingContext();
     private Combo comboSpectraTypeSelector;
     private Spinner spinnerPeriodSelector;
@@ -59,6 +60,7 @@ public class DetectorDiagnosticsPanel extends Composite {
     private static final int MAX_SPECTRA_NUMBER = 1000000;
     private static final int MAX_SPECTRA_PERIODS = Integer.MAX_VALUE;
     private static final int MAX_FRAMES = Integer.MAX_VALUE;
+    private Label errorLabel;
     
     /**
      * Constructor.
@@ -68,9 +70,7 @@ public class DetectorDiagnosticsPanel extends Composite {
      */
     public DetectorDiagnosticsPanel(Composite parent, int style) {
         super(parent, style);
-        
         setLayout(new GridLayout(1, true));
-        // setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
         Composite container = new Composite(this, SWT.NONE);
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
@@ -121,13 +121,17 @@ public class DetectorDiagnosticsPanel extends Composite {
         spinnerMaximumFrames.setMaximum(MAX_FRAMES);
         spinnerMaximumFrames.setLayoutData(centeredGridItem);
         
+        errorLabel = new Label(this, SWT.LEAD);
+        GridData labelLayoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        errorLabel.setLayoutData(labelLayoutData);
+        errorLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+
         DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(this, SWT.NONE, SWT.NONE);
         table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         table.setLayoutData(layout);
         
-        bind();
  
     }
     
@@ -138,7 +142,13 @@ public class DetectorDiagnosticsPanel extends Composite {
         label.setAlignment(SWT.CENTER);
     }
     
-    private void bind() {
+    /**
+     * Set the model to bind to for the panel.
+     * 
+     * @param model
+     *            the detector diagnostics model
+     */
+    public void setModel(IDetectorDiagnosticsViewModelBinding model) {
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboSpectraTypeSelector), BeanProperties.value("spectraType").observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(comboSpectraTypeSelector), BeanProperties.value("diagnosticsEnabled").observe(model));
         
@@ -158,7 +168,12 @@ public class DetectorDiagnosticsPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerIntegralTimeRangeTo), BeanProperties.value("diagnosticsEnabled").observe(model)); 
         
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerMaximumFrames), BeanProperties.value("maxFrames").observe(model));  
-        bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerMaximumFrames), BeanProperties.value("diagnosticsEnabled").observe(model)); 
+        bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerMaximumFrames),
+                BeanProperties.value("diagnosticsEnabled").observe(model));
+
+        bindingContext.bindValue(SWTObservables.observeText(errorLabel),
+                BeanProperties.value("writeToEnableDiagnosticError").observe(model));
+
     }
     
     private String[] getDropdownMenuItemsArray() {

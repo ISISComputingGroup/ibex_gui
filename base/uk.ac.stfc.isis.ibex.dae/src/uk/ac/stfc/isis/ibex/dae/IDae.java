@@ -25,30 +25,80 @@ import uk.ac.stfc.isis.ibex.dae.spectra.Spectra;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * The Interface providing Dae observable, writables and methods.
+ */
 public interface IDae {
+
+    /**
+     * @return An observable on a string with the name of the instrument.
+     */
 	ForwardingObservable<String> instrument();
 	
+    /**
+     * @return An observable on a string with the run number.
+     */
 	ForwardingObservable<String> runNumber();
 
+    /**
+     * @return An observable on a string with the status of the run.
+     */
 	ForwardingObservable<DaeRunState> runState();
 
+    /**
+     * @return an observable on whether the DAE is running
+     */
 	ForwardingObservable<Boolean> isRunning();
 	
+    /**
+     * 
+     * @return the isis cycle number observable
+     */
 	ForwardingObservable<String> isisCycle();
 
+    /**
+     * @return An observable on a string giving the title for the current run.
+     */
 	ForwardingObservable<String> title();
 
+    /**
+     * @return An observable on a boolean giving whether or not to display the
+     *         title on the webpage.
+     */
     ForwardingObservable<Boolean> displayTitle();
 
+    /**
+     * @return the writable for setting the run title
+     */
 	Writable<String> setTitle();
 
+    /**
+     * @return An writable to set whether or not to display the title on the
+     *         webpage.
+     */
     Writable<Long> setDisplayTitle();
 		
+    /**
+     * 
+     * @return observable for the vetos
+     */
 	ForwardingObservable<String> vetos();
 		
+    /**
+     * 
+     * @return experimental setup model
+     */
 	ExperimentSetup experimentSetup();
 
+    /**
+     * 
+     * @return spectra model
+     */
 	Spectra spectra();
 		
+    /**
+     * @return the DAE actions
+     */
 	DaeActions actions();
+
 }

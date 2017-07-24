@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -117,15 +116,11 @@ public class RBLookupPanel extends Composite {
 			}
 		});
 		
-		btnOnDate.addSelectionListener(new SelectionListener() {
+        btnOnDate.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				viewModel.setDateEnabled(btnOnDate.getSelection());
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
 		

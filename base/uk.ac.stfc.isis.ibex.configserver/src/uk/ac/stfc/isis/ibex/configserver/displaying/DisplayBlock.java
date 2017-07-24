@@ -56,13 +56,13 @@ public class DisplayBlock extends ModelObject {
      * The current low limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String lowlimit;
+    private String lowlimit = "";
 
     /**
      * The current high limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String highlimit;
+    private String highlimit = "";
 
     /**
      * Specifies whether the block is currently under run-control. This can be
