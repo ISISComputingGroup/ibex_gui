@@ -48,8 +48,8 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 public class DashboardView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
-    private static final int FIXED_WIDTH = 600;
-    private static final int FIXED_HEIGHT = 300;
+    private static final int FIXED_WIDTH = 500;
+    private static final int FIXED_HEIGHT = 225;
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
@@ -72,7 +72,7 @@ public class DashboardView {
 		scrolledComposite.setExpandVertical(true);
 		Composite dashboardControl = new Composite(scrolledComposite, SWT.NONE);
 		scrolledComposite.setContent(dashboardControl);
-        scrolledComposite.setMinSize(new Point(FIXED_HEIGHT, FIXED_WIDTH));
+        scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
 		
         GridLayout dashboardLayout = new GridLayout(3, false);
 		dashboardLayout.marginHeight = 0;
@@ -95,7 +95,7 @@ public class DashboardView {
 		
 		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
         GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        monitorsLayoutGridData.widthHint = 325;
+        monitorsLayoutGridData.widthHint = FIXED_WIDTH/2;
         monitors.setLayoutData(monitorsLayoutGridData);
 		
 		Label separator3 = new Label(dashboardControl, SWT.SEPARATOR | SWT.VERTICAL);
