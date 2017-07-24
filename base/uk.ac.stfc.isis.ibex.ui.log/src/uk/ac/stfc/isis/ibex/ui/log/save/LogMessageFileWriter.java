@@ -65,6 +65,12 @@ public class LogMessageFileWriter {
 
 	/**
      * Save the list of log messages to a log file.
+     * 
+     * @param messages
+     *            The list of messages to save.
+     * @param filename
+     *            The file to save the messages to.
+     * @return true if the save was successful.
      */
 	public boolean saveLogFile(List<LogMessage> messages, String filename) {
 		PrintWriter out = null;
@@ -87,8 +93,12 @@ public class LogMessageFileWriter {
 	}
 
 	/**
-	 * Return a string representation of the log file list.
-	 */
+     * Return a string representation of the log file list.
+     * 
+     * @param messages
+     *            The messages to represent as strings.
+     * @return A string representing the given messages.
+     */
 	public String getLogFileText(List<LogMessage> messages) {
 		// Determine how wide each column needs to be
 		calculateWidths(messages);

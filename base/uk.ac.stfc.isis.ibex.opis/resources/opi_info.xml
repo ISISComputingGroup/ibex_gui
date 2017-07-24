@@ -799,5 +799,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Superlogics</key>
+			<value>
+				<type>MERCURY</type>
+				<path>superlogics.opi</path>
+				<description>The OPI for the Superlogics data acquisition system.</description>
+				<macros>
+					<macro>
+						<name>SPRLG</name>
+						<description>The Superlogics PV prefix (e.g. SPRLG_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>

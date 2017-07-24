@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Banner
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.banner;singleton=true
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.banner;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.banner.Banner
 Require-Bundle: org.eclipse.core.runtime,

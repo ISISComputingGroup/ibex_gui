@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * This action will begin a new run on the DAE.
+ */
 public final class Begin extends DaeAction {
 
 	private static final Collection<DaeRunState> ALLOWED = new ArrayList<>();
@@ -33,6 +36,16 @@ public final class Begin extends DaeAction {
 		ALLOWED.add(DaeRunState.SETUP);
 	}
 	
+    /**
+     * Constructor for the begin action.
+     * 
+     * @param target
+     *            The PV that must be written to to begin the run.
+     * @param inStateTransition
+     *            An observable to check the DAE is not transitioning.
+     * @param runState
+     *            An observable on the current state of the PV.
+     */
 	public Begin(Writable<String> target,
 			ForwardingObservable<Boolean> inStateTransition,
 			ForwardingObservable<DaeRunState> runState) {
