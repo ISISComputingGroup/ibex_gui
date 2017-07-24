@@ -49,6 +49,7 @@ public class PerspectiveSwitcherView {
 		this.partService = partService;
 		this.modelService = modelService;		
 		
+		// TODO: Perspectives should not be hard coded. Use snippets and an extension point to define these
 		addPerspectiveShortcut("Alarms", PERSPECTIVE_PLUGIN_PREFIX + "alarms", "Alarms.png", false);
 		addPerspectiveShortcut("Beam status", PERSPECTIVE_PLUGIN_PREFIX + "beamstatus", "BeamStatus.png", true);
 		addPerspectiveShortcut("DAE", PERSPECTIVE_PLUGIN_PREFIX + "dae", "DAE.png", false);

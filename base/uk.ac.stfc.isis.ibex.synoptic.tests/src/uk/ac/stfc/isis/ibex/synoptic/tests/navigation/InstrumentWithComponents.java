@@ -48,7 +48,6 @@ public class InstrumentWithComponents implements Synoptic {
 	
 	@Override
     public SynopticDescription getDescription() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
