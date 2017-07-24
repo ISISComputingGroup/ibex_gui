@@ -24,6 +24,14 @@ public class PerspectiveSwitcherView {
 
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private ToolBar toolBar;
+	
+	private MApplication app;
+	private EPartService partService;
+	private EModelService modelService;
+	
+	private static final String PLUGIN_WITH_PERSPECTIVE_ICONS = "uk.ac.stfc.isis.ibex.e4.ui";
+	private static final String PERSPECTIVE_FOLDER_PREFIX = "perspectiveIcons/";
+	private static final String PERSPECTIVE_PLUGIN_PREFIX = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.";
 
 	@Inject
 	public PerspectiveSwitcherView() {
@@ -37,16 +45,20 @@ public class PerspectiveSwitcherView {
 		toolBar = new ToolBar(composite, SWT.VERTICAL);
 		toolBar.setFont(LABEL_FONT);
 		
-		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", "perspectiveIcons/Alarms.png", app, partService, modelService, true);
-		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", "perspectiveIcons/BeamStatus.png", app, partService, modelService, false);
-		addPerspectiveShortcut("DAE", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae", "perspectiveIcons/DAE.png", app, partService, modelService, false);
+		this.app = app;
+		this.partService = partService;
+		this.modelService = modelService;		
+		
+		addPerspectiveShortcut("Alarms", PERSPECTIVE_PLUGIN_PREFIX + "alarms", "Alarms.png", false);
+		addPerspectiveShortcut("Beam status", PERSPECTIVE_PLUGIN_PREFIX + "beamstatus", "BeamStatus.png", true);
+		addPerspectiveShortcut("DAE", PERSPECTIVE_PLUGIN_PREFIX + "dae", "DAE.png", false);
 	}
 
-	public void addPerspectiveShortcut(String name, String partId, String iconPath, MApplication app, EPartService partService, EModelService modelService, boolean selected) {
+	private void addPerspectiveShortcut(String name, String partId, String iconFile, boolean selected) {
 		ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
 		shortcut.setText(name);
 		shortcut.setToolTipText(name);
-		Image img = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.e4.ui", iconPath);
+		Image img = ResourceManager.getPluginImage(PLUGIN_WITH_PERSPECTIVE_ICONS, PERSPECTIVE_FOLDER_PREFIX + iconFile);
 		shortcut.setImage(img);
 		shortcut.setSelection(selected);
 		shortcut.addSelectionListener(new SelectionAdapter() {
