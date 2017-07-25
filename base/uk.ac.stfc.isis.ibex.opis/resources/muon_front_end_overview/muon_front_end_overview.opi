@@ -172,7 +172,8 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ2</PSNAME>
-        <PV_ROOT>$(P)DFKPS_04</PV_ROOT>
+        <DFKPS>DFKPS_04</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -297,7 +298,8 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ1</PSNAME>
-        <PV_ROOT>$(P)DFKPS_03</PV_ROOT>
+        <DFKPS>DFKPS_03</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -340,9 +342,9 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ3</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:1</PV_ROOT>
         <IOC_NUM>01</IOC_NUM>
         <PS_NUM>1</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -385,7 +387,8 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UB1</PSNAME>
-        <PV_ROOT>$(P)DFKPS_10</PV_ROOT>
+        <DFKPS>DFKPS_10</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -428,9 +431,9 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ4</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:2</PV_ROOT>
         <IOC_NUM>01</IOC_NUM>
         <PS_NUM>2</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -473,7 +476,8 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ5</PSNAME>
-        <PV_ROOT>$(P)DFKPS_05</PV_ROOT>
+        <DFKPS>DFKPS_05</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -516,9 +520,9 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ6</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:3</PV_ROOT>
-        <IOC_NAME>01</IOC_NAME>
+        <IOC_NUM>01</IOC_NUM>
         <PS_NUM>3</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -611,7 +615,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ8</PSNAME>
-        <PV_ROOT>$(P)DFKPS_07</PV_ROOT>
+        <DFKPS>DFKPS_07</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -654,7 +659,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ7</PSNAME>
-        <PV_ROOT>$(P)DFKPS_06</PV_ROOT>
+        <DFKPS>DFKPS_06</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -697,7 +703,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UB2</PSNAME>
-        <PV_ROOT>$(P)DFKPS_11</PV_ROOT>
+        <DFKPS>DFKPS_11</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -740,7 +747,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ9</PSNAME>
-        <PV_ROOT>$(P)DFKPS_08</PV_ROOT>
+        <DFKPS>DFKPS_08</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -783,9 +791,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ10</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:4</PV_ROOT>
         <IOC_NUM>01</IOC_NUM>
         <PS_NUM>4</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -828,9 +836,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPARATOR</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:6</PV_ROOT>
         <IOC_NUM>01</IOC_NUM>
         <PS_NUM>6</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -873,7 +881,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ11</PSNAME>
-        <PV_ROOT>$(P)DFKPS_09</PV_ROOT>
+        <DFKPS>DFKPS_09</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -916,9 +925,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ12</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:5</PV_ROOT>
         <IOC_NUM>01</IOC_NUM>
         <PS_NUM>5</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1001,7 +1010,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_A</PSNAME>
-        <PV_ROOT>$(P)DFKPS_01</PV_ROOT>
+        <DFKPS>DFKPS_01</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1044,9 +1054,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13A</PSNAME>
-        <PV_ROOT>$(P)GENESYS_02:1</PV_ROOT>
         <IOC_NUM>02</IOC_NUM>
         <PS_NUM>1</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1089,9 +1099,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14A</PSNAME>
-        <PV_ROOT>$(P)GENESYS_02:2</PV_ROOT>
         <IOC_NUM>02</IOC_NUM>
         <PS_NUM>2</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1134,9 +1144,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15A</PSNAME>
-        <PV_ROOT>$(P)GENESYS_02:3</PV_ROOT>
         <IOC_NUM>02</IOC_NUM>
         <PS_NUM>3</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1269,9 +1279,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13B</PSNAME>
-        <PV_ROOT>$(P)GENESYS_03:1</PV_ROOT>
         <IOC_NUM>03</IOC_NUM>
         <PS_NUM>1</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1314,9 +1324,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14B</PSNAME>
-        <PV_ROOT>$(P)GENESYS_03:2</PV_ROOT>
         <IOC_NUM>03</IOC_NUM>
         <PS_NUM>2</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1449,7 +1459,8 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_C</PSNAME>
-        <PV_ROOT>$(P)DFKPS_02</PV_ROOT>
+        <DFKPS>DFKPS_02</DFKPS>
+        <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1492,9 +1503,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13C</PSNAME>
-        <PV_ROOT>$(P)GENESYS_04:1</PV_ROOT>
         <IOC_NUM>04</IOC_NUM>
         <PS_NUM>1</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1537,9 +1548,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14C</PSNAME>
-        <PV_ROOT>$(P)GENESYS_04:2</PV_ROOT>
         <IOC_NUM>04</IOC_NUM>
         <PS_NUM>2</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1582,9 +1593,9 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15C</PSNAME>
-        <PV_ROOT>$(P)GENESYS_04:3</PV_ROOT>
         <IOC_NUM>04</IOC_NUM>
         <PS_NUM>3</PS_NUM>
+        <PV_ROOT>$(P)GENESYS_$(IOC_NUM):$(PS_NUM)</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
