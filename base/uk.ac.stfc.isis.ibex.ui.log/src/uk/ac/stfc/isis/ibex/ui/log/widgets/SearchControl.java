@@ -25,7 +25,6 @@ import java.util.GregorianCalendar;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -168,15 +167,11 @@ public class SearchControl extends Canvas {
 		dtFromDate.setEnabled(false);
 		dtFromTime.setEnabled(false);
 
-		chkFrom.addSelectionListener(new SelectionListener() {
+        chkFrom.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dtFromDate.setEnabled(chkFrom.getSelection());
 				dtFromTime.setEnabled(chkFrom.getSelection());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
 
@@ -193,15 +188,11 @@ public class SearchControl extends Canvas {
 		dtToDate.setEnabled(false);
 		dtToTime.setEnabled(false);
 
-		chkTo.addSelectionListener(new SelectionListener() {
+        chkTo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dtToDate.setEnabled(chkTo.getSelection());
 				dtToTime.setEnabled(chkTo.getSelection());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
 		

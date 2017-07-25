@@ -22,26 +22,45 @@ package uk.ac.stfc.isis.ibex.dashboard;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The bundle activator for the back end implementation of the dashboard.
+ */
 public class Dashboard implements BundleActivator {
 
     private static Dashboard instance;
 	private static BundleContext context;
 
+    /**
+     * @return The singleton instance of the dashboard.
+     */
     public static Dashboard getInstance() { 
     	return instance; 
     }
 	
 	private final DashboardObservables observables;
 	
+    /**
+     * Constructor for the dashboard, creates the singleton and the observables.
+     */
 	public Dashboard() {
 		instance = this;
         observables = new DashboardObservables();
 	}
  
+    /**
+     * Get the observables for the dashboard.
+     * 
+     * @return The observables for the dashboard.
+     */
 	public DashboardObservables observables() {
 		return observables;
 	}
 	
+    /**
+     * Get the context for the bundle.
+     * 
+     * @return The context for the bundle.
+     */
 	static BundleContext getContext() {
 		return context;
 	}

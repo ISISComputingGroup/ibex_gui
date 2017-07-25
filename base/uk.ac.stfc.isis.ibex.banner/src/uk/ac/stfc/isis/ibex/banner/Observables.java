@@ -52,8 +52,18 @@ public class Observables {
 		}
 	};
 
+    /**
+     * Observable for the PV that holds a description of what items should be on
+     * the banner.
+     */
     public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
+    /**
+     * Observable for the PV that gives the motion status of the motors.
+     */
     public final ForwardingObservable<InMotionState> inMotion;
+    /**
+     * Writable connected to the PV that will stop all motors in motion.
+     */
     public final Writable<Long> stop;
 	
     /**

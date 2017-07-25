@@ -24,7 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Class that allows the front end to be bound to it.
+ * Class that allows other objects to be bound to it.
  */
 public abstract class ModelObject implements IModelObject {
 	
@@ -78,6 +78,16 @@ public abstract class ModelObject implements IModelObject {
     	changeSupport.removePropertyChangeListener(propertyName, listener);
     }
     
+    /**
+     * Fires a property change to tell bound objects that a value has changed.
+     * 
+     * @param propertyName
+     *            The property that is changing.
+     * @param oldValue
+     *            The old value of the property.
+     * @param newValue
+     *            The new value of the property.
+     */
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {    
     	changeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }     	    
@@ -96,6 +106,14 @@ public abstract class ModelObject implements IModelObject {
     	};
     }
     
+    /**
+     * Returns a change listener that refires events from the specified
+     * property.
+     * 
+     * @param field
+     *            The property to refire events from.
+     * @return The change listener that does the refiring.
+     */
 	protected PropertyChangeListener raiseEventsFor(final String field) {
 		return new PropertyChangeListener() {	
 			@Override

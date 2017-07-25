@@ -84,11 +84,36 @@ public class DaeObservables {
      * An observable on a integer giving the number of raw frames for this run.
      */
     public final ForwardingObservable<Integer> rawFrames;
+
+    /**
+     * An observable on the monitor counts for the run.
+     */
     public final ForwardingObservable<Integer> monitorCounts;
+
+    /**
+     * An observable on the good current for this run.
+     */
     public final ForwardingObservable<Number> goodCurrent;
+
+    /**
+     * An observable on the length of time that the current run has been going.
+     */
     public final ForwardingObservable<String> runTime;
+
+    /**
+     * An observable on the current period of the run.
+     */
     public final ForwardingObservable<Integer> currentPeriod;
+
+    /**
+     * An observable on the total periods in the run.
+     */
     public final ForwardingObservable<Integer> totalPeriods;
+
+    /**
+     * An observable on whether the DAE is currently transitioning between
+     * states.
+     */
     public final ForwardingObservable<Boolean> inStateTransition;
     public final ForwardingObservable<String> daeSettings;
     public final ForwardingObservable<String> hardwarePeriods;

@@ -25,7 +25,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
-import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -44,7 +44,7 @@ public class EditableRunControlSettingTest {
 		when(mockRunControlServer.blockRunControlLowLimitSetter(blockName)).thenReturn(mockWriter);
 
 		// Object we are really testing
-		EditableRunControlSetting setting = new EditableRunControlSetting(blockName, mockRunControlServer);
+		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
 		setting.setLowLimit("0");
@@ -67,7 +67,7 @@ public class EditableRunControlSettingTest {
 		when(mockRunControlServer.blockRunControlHighLimitSetter(blockName)).thenReturn(mockWriter);
 
 		// Object we are really testing
-		EditableRunControlSetting setting = new EditableRunControlSetting(blockName, mockRunControlServer);
+		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
 		setting.setHighLimit("100");
@@ -90,7 +90,7 @@ public class EditableRunControlSettingTest {
 		when(mockRunControlServer.blockRunControlEnabledSetter(blockName)).thenReturn(mockWriter);
 
 		// Object we are really testing
-		EditableRunControlSetting setting = new EditableRunControlSetting(blockName, mockRunControlServer);
+		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
 		setting.setEnabled(true);
@@ -113,7 +113,7 @@ public class EditableRunControlSettingTest {
 		when(mockRunControlServer.blockRunControlEnabledSetter(blockName)).thenReturn(mockWriter);
 
 		// Object we are really testing
-		EditableRunControlSetting setting = new EditableRunControlSetting(blockName, mockRunControlServer);
+		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
 		setting.setEnabled(false);
