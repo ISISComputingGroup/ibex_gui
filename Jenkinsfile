@@ -21,9 +21,22 @@ pipeline {
     
     stage("Build") {
       steps {
+        script {
+            env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
+            env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
+            echo "git commit: ${env.GIT_COMMIT}"
+            echo "git branch: ${env.GIT_BRANCH}"
+            if (env.GIT_BRANCH.startsWith("Release")) {
+                env.IS_RELEASE = "YES"
+            }
+            else {
+                env.IS_RELEASE = "NO"
+            }
+        }
+        
         bat '''
             cd build
-            set DEPLOY=NO
+            set DEPLOY=${env.IS_RELEASE}
             jenkins_build.bat"
             '''
       }
