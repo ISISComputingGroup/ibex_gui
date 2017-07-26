@@ -34,11 +34,11 @@ pipeline {
             }
         }
         
-        bat '''
+        bat """
             cd build
             set DEPLOY=${env.IS_RELEASE}
             jenkins_build.bat"
-            '''
+            """
       }
     }
     
