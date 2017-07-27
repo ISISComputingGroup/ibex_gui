@@ -23,10 +23,9 @@ pipeline {
       steps {
         script {
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
-            env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.GIT_BRANCH}"
-            if (env.GIT_BRANCH.startsWith("Release")) {
+            echo "git branch: ${env.BRANCH_NAME}"
+            if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
             }
             else {
