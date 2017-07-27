@@ -787,5 +787,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Fermi chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>fermi_chopper.opi</path>
+				<description>The OPI for the fermi chopper.</description>
+				<macros>
+					<macro>
+						<name>FERMCHOP</name>
+						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
