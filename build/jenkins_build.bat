@@ -23,7 +23,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Whether to deploy
 set EXIT=YES
-if "%DEPLOY%" == "YES" set EXIT=NO
+REM if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
 if "%EXIT%" == "YES" exit
 
@@ -37,8 +37,8 @@ python.exe purge_archive_client.py
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
-    set RELEASE_VERSION=%GIT_BRANCH:~15%
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
+    set RELEASE_VERSION=%GIT_BRANCH:~8%
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
