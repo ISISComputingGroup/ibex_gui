@@ -27,9 +27,11 @@ pipeline {
             echo "git branch: ${env.BRANCH_NAME}"
             if (env.BRANCH_NAME != null && env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
+                env.IS_DEPLOY = "NO"
             }
             else {
                 env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "YES"
             }
         }
         
@@ -38,6 +40,7 @@ pipeline {
             set GIT_COMMIT=${env.GIT_COMMIT}
             set GIT_BRANCH=${env.BRANCH_NAME}
             set RELEASE=${env.IS_RELEASE}
+            set DEPLOY=${env.IS_DEPLOY}
             jenkins_build.bat"
             """
       }
