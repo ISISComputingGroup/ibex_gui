@@ -25,7 +25,7 @@ pipeline {
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
             echo "git branch: ${env.BRANCH_NAME}"
-            if (env.BRANCH_NAME.startsWith("Release")) {
+            if (env.BRANCH_NAME != null && env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
             }
             else {
@@ -35,7 +35,9 @@ pipeline {
         
         bat """
             cd build
-            set DEPLOY=${env.IS_RELEASE}
+            set GIT_COMMIT=${env.GIT_COMMIT}
+            set GIT_BRANCH=${env.BRANCH_NAME}
+            set RELEASE=${env.IS_RELEASE}
             jenkins_build.bat"
             """
       }
