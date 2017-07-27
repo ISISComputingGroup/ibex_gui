@@ -23,7 +23,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Whether to deploy
 set EXIT=YES
-REM if "%DEPLOY%" == "YES" set EXIT=NO
+if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
 if "%EXIT%" == "YES" exit
 
