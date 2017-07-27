@@ -154,10 +154,11 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	}
 	
 	private void initialiseFromXml() {
-        if (setupSource == null || periodFile == null || periodType == null || softwarePeriods == null
-                || hardwarePeriods == null || outputDelay == null) {
-            LOG.info("Error, Period Settings were not initialised correctly from the XML.");
-            return;
+        for (XmlNode<?> node : nodes) {
+            if (node == null || node.value() == null) {
+                LOG.info("Error, Period Settings were not initialised correctly from the XML.");
+                return;
+            }
         }
 
 		super.setSetupSource(setupSource.value());
