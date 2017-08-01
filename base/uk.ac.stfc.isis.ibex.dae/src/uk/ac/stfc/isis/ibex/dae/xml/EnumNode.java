@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.dae.xml;
 
-import org.w3c.dom.Node;
-
 public class EnumNode<E extends Enum<E>> extends XmlNode<E> {
 
 	private Class<E> enumType;
@@ -36,9 +34,7 @@ public class EnumNode<E extends Enum<E>> extends XmlNode<E> {
 			return null;
 		}
 		
-        Node node = node();
-        String content = node.getTextContent();
-        int index = Integer.parseInt(content);
+        int index = Integer.parseInt(node().getTextContent());
         try {
             return enumType.getEnumConstants()[index];
         } catch (ArrayIndexOutOfBoundsException e) {
