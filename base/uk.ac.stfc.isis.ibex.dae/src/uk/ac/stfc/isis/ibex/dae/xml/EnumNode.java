@@ -35,7 +35,11 @@ public class EnumNode<E extends Enum<E>> extends XmlNode<E> {
 		}
 		
 		int index = Integer.parseInt(node().getTextContent());
-		return enumType.getEnumConstants()[index];
+        try {
+            return enumType.getEnumConstants()[index];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
 	}
 
 	@Override
