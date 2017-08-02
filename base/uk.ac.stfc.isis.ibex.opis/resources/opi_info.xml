@@ -777,7 +777,7 @@
 			<key>Muon Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
-				<path>muon_front_end_overviews/muon_front_end_overview.opi</path>
+				<path>muon_overviews/muon_front_end_overview.opi</path>
 				<description>The OPI for the Muon front end.</description>
 				<macros>
 					<macro>
@@ -803,7 +803,7 @@
 			<key>Riken Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
-				<path>muon_front_end_overviews/riken_front_end_overview.opi</path>
+				<path>muon_overviews/riken_front_end_overview.opi</path>
 				<description>The OPI for the Riken front end. No properties required.</description>
 			</value>
 		</entry>
