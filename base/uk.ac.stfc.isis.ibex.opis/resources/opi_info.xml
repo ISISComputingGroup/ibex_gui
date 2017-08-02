@@ -777,7 +777,7 @@
 			<key>Muon Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
-				<path>muon_front_end_overview/muon_front_end_overview.opi</path>
+				<path>muon_front_end_overviews/muon_front_end_overview.opi</path>
 				<description>The OPI for the Muon front end.</description>
 				<macros>
 					<macro>
@@ -797,6 +797,14 @@
 						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
 					</macro>
 				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Riken Front End Overview</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_front_end_overviews/riken_front_end_overview.opi</path>
+				<description>The OPI for the Riken front end. No properties required.</description>
 			</value>
 		</entry>
 		<entry>

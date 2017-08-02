@@ -2010,7 +2010,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSNAME>RQ16</PSNAME>
+        <PSNAME>RQ17</PSNAME>
         <RKNUM>01</RKNUM>
         <DFKPS>RKNPS_$(RKNUM):$(PSNAME)</DFKPS>
         <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
@@ -2055,7 +2055,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSNAME>RQ17</PSNAME>
+        <PSNAME>RB4</PSNAME>
         <RKNUM>01</RKNUM>
         <DFKPS>RKNPS_$(RKNUM):$(PSNAME)</DFKPS>
         <PV_ROOT>$(P)$(DFKPS)</PV_ROOT>
@@ -2208,7 +2208,7 @@ $(pv_value)</tooltip>
     <wuid>-1b883441:15d998dcb19:-73ae</wuid>
     <transparent>false</transparent>
     <points>
-      <point x="552" y="228" />
+      <point x="558" y="228" />
       <point x="588" y="228" />
     </points>
     <fill_arrow>true</fill_arrow>
@@ -2237,8 +2237,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="30" green="144" blue="255" />
     </background_color>
-    <width>37</width>
-    <x>552</x>
+    <width>31</width>
+    <x>558</x>
     <name>Polyline_3</name>
     <y>228</y>
     <fill_level>0.0</fill_level>
