@@ -796,6 +796,32 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Muon Front End Overview</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_front_end_overview/muon_front_end_overview.opi</path>
+				<description>The OPI for the Muon front end.</description>
+				<macros>
+					<macro>
+						<name>MM_EMU</name>
+						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
+					</macro>
+					<macro>
+						<name>MM_MUSR</name>
+						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
+					</macro>
+					<macro>
+						<name>MM_HIFI</name>
+						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
+					</macro>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Superlogics</key>
 			<value>
 				<type>MERCURY</type>
@@ -810,6 +836,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Fermi chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>fermi_chopper.opi</path>
+				<description>The OPI for the fermi chopper.</description>
+				<macros>
+					<macro>
+						<name>FERMCHOP</name>
+						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>  
+		<entry>
 			<key>EnginX 3rd Jaw</key>
 			<value>
 				<type>JAWS</type>
@@ -820,15 +860,16 @@
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>                    
+
+					<macro>
+						<name>M1</name>
+						<description>The motor PV relating to the North/South motor (e.g. MTR0601).</description>
+					</macro>
+					<macro>
+						<name>M2</name>
+						<description>The motor PV relating to the West/East motor (e.g. MTR0602).</description>
+					</macro>
 				</macros>
-				<macro>
-					<name>M1</name>
-					<description>The motor PV relating to the North/South motor (e.g. MTR0601).</description>
-				</macro>
-				<macro>
-					<name>M2</name>
-					<description>The motor PV relating to the West/East motor (e.g. MTR0602).</description>
-				</macro>
 			</value>
 		</entry>        
 	</opis>

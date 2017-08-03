@@ -52,6 +52,8 @@ public abstract class Switcher {
 
     /**
      * Just used for testing so far.
+     * 
+     * @return a collection of switchable observables
      */
     public Collection<Switchable> getSwitchables() {
         return switchables;
