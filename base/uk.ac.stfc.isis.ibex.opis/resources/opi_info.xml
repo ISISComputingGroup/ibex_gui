@@ -809,5 +809,27 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>EnginX 3rd Jaw</key>
+			<value>
+				<type>JAWS</type>
+				<path>jaws/enginx_jaws/jaw_overview.opi</path>
+				<description>The OPI for the 3rd Enginx Jawset.</description>
+				<macros>
+                    <macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>                    
+				</macros>
+				<macro>
+					<name>M1</name>
+					<description>The motor PV relating to the North/South motor (e.g. MTR0601).</description>
+				</macro>
+				<macro>
+					<name>M2</name>
+					<description>The motor PV relating to the West/East motor (e.g. MTR0602).</description>
+				</macro>
+			</value>
+		</entry>        
 	</opis>
 </descriptions>

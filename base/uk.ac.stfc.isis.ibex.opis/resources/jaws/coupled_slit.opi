@@ -799,7 +799,7 @@ widget.setPropertyValue("text",str(lim));]]></scriptText>
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>775</width>
+    <width>571</width>
     <x>6</x>
     <name>Label</name>
     <y>6</y>
