@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,19 +34,35 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathExpressionException;
+
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+/**
+ * A generic representation of an xml file with a number of nodes.
+ */
 public class XmlFile {
 	
 	private final List<XmlNode<?>> nodes;
 	private Document doc;
 
+    /**
+     * Creates the file with initial nodes.
+     * 
+     * @param nodes
+     *            The nodes to start with
+     */
 	public XmlFile(List<XmlNode<?>> nodes) {
 		this.nodes = nodes;
 	}
 	
+    /**
+     * Set the xml string that this file is based on.
+     * 
+     * @param xml
+     *            The xml string.
+     */
 	public void setXml(String xml) {
 		try {
 			buildDocument(xml);

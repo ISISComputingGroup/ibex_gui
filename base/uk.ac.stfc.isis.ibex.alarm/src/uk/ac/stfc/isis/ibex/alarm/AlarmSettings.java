@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
+import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -84,6 +85,6 @@ public class AlarmSettings {
      * @return The URLs settings string corresponding to the given instrument.
      */
     private static String buildJmsUrl(String hostName) {
-        return "failover:(tcp://" + hostName + ":61616)";
+        return "failover:(tcp://" + hostName + ":" + ActiveMQ.JMS_PORT + ")";
     }
 }

@@ -86,7 +86,7 @@ public class AlarmTest {
      * @return The URLs settings string corresponding to the given instrument.
      */
     private static String buildJmsUrl(String hostName) {
-        return "failover:(tcp://" + hostName + ":61616)";
+        return "failover:(tcp://" + hostName + ":39990)";
     }
 
     // These settings represent the defaults, as set in
