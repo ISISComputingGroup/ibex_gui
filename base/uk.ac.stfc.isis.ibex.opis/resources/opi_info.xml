@@ -835,5 +835,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Cybaman</key>
+			<value>
+				<type>GONIOMETER</type>
+				<path>cybaman.opi</path>
+				<description>The OPI for the cybaman.</description>
+				<macros>
+					<macro>
+						<name>CYBAMAN</name>
+						<description>The cybaman PV prefix (e.g. CYBAMAN_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
