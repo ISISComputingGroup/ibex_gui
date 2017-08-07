@@ -14,18 +14,13 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
- uk.ac.stfc.isis.ibex.ui.blocks.presentation,
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics,
- org.eclipse.swt,
  uk.ac.stfc.isis.ibex.validators,
  com.google.guava,
  org.eclipse.e4.core.di.annotations,
  org.eclipse.e4.ui.model.workbench,
- org.eclipse.e4.ui.di
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: org.eclipse.core.expressions,
- uk.ac.stfc.isis.ibex.preferences,
- uk.ac.stfc.isis.ibex.runcontrol,
+ org.eclipse.e4.ui.di,
  uk.ac.stfc.isis.ibex.synoptic
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

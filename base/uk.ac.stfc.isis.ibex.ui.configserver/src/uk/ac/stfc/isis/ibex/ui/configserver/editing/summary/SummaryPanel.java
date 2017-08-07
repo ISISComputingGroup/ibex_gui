@@ -48,7 +48,6 @@ import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 /**
  * The panel that holds general misc information about the configuration.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {
 	private Text txtName;
 	private Text txtDescription;
