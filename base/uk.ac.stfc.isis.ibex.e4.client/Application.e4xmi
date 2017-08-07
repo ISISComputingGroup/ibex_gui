@@ -51,16 +51,16 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_9gU0oGbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="Configuration" mnemonics="C">
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_6I3jYHkQEeeB_6PupPeR6A" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.0" label="View or Edit Current Configuration (set by menu item)" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler"/>
-        <children xsi:type="menu:Menu" xmi:id="_WCK6gGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.configurations" label="Configurations">
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_YFonEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_ZvsVIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.load" label="Load"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_aVTjoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_a6AMIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete"/>
+        <children xsi:type="menu:Menu" xmi:id="_WCK6gGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.configurations" label="Configurations" mnemonics="f">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_YFonEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Open a dialogue to create a new configuration" mnemonics="N" command="_dBXa0HtXEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_ZvsVIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.load" label="Load" tooltip="Select and load a new configuration into the instrument" mnemonics="L" command="_McQNQHtYEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_aVTjoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Select and edit an existing configuration" mnemonics="E" command="_FgXuUHtaEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_a6AMIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and deleted a configuration" mnemonics="D" command="_kcuRwHtaEeeIzM7lvAxMoQ"/>
         </children>
-        <children xsi:type="menu:Menu" xmi:id="_W44gEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components">
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_bjqNIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_cI9SkGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_cpZGIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete"/>
+        <children xsi:type="menu:Menu" xmi:id="_W44gEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components" mnemonics="p">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_bjqNIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Create a new component" mnemonics="N" command="_jpCRYHtiEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_cI9SkGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Edit and existing component" mnemonics="E" command="_kNSN8HtiEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_cpZGIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Delete an existing component" mnemonics="D" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_DPuvMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
@@ -104,8 +104,22 @@
   <children xsi:type="basic:Dialog" xmi:id="_ysm88GbXEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.dialog.editcurrentconfig" toBeRendered="false" selectedElement="_uqpG4GbYEeeM7uzkT_ViHQ" label="Edit current configuration">
     <children xsi:type="basic:Part" xmi:id="_uqpG4GbYEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.editcurrentconfig" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.configeditor/uk.ac.stfc.isis.ibex.e4.ui.configeditor.ConfigEditorDialog" label="Edit current configuration (part)"/>
   </children>
-  <handlers xmi:id="_WpVV4GbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.editCurrentConfiguration" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
-  <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.command.editCurrentConfig" commandName="Edit current configuration"/>
+  <handlers xmi:id="_WpVV4GbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.current" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
+  <handlers xmi:id="_ZReosHtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewConfigHandler" command="_dBXa0HtXEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_pO1AwHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.load" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.LoadConfigHandler" command="_McQNQHtYEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_Nm2tQHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditConfigHandler" command="_FgXuUHtaEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_vbnBMHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteConfigsHandler" command="_kcuRwHtaEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_gHbWYHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewComponentHandler" command="_jpCRYHtiEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_lXgI4HtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler" command="_kNSN8HtiEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_lxEfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponentsHandler" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.current" commandName="Edit or View current configuration" description="Edit or view current configuration depending on permissions"/>
+  <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration in ibex" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_McQNQHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.load" commandName="Load configuration" description="Select and load a new configuration into the instrument" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_FgXuUHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.edit" commandName="Edit configuration" description="Select and edit an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_kcuRwHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.delete" commandName="Delete configuration" description="Delete an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component in ibex" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_kNSN8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit component" description="Select and edit an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
@@ -113,4 +127,6 @@
   <addons xmi:id="_2jV5NWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_2jV5NmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
   <addons xmi:id="_2jV5N2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <categories xmi:id="_La_dMHtbEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.category.configuration" name="Configuration CRUD" description="Configuration creation, read, update, deletion"/>
+  <categories xmi:id="_DlkfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.category.component" name="Component CRUD" description="Component creation, read, update, deletion"/>
 </application:Application>
