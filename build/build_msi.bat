@@ -5,7 +5,13 @@ set MYDIR=%~dp0
 REM FILESROOT is the directory above the "Client" directory
 set FILESROOT=%1
 
-set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.10\bin
+if exist "c:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" {
+	set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.10\bin
+} else  (
+	if exist "c:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" {
+		set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.11\bin
+	}
+}
 
 set IBEXMAJOR=1
 set IBEXMINOR=0
