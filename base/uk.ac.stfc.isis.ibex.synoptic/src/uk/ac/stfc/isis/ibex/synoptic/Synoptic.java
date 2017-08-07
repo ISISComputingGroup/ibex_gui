@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
@@ -160,7 +161,12 @@ public class Synoptic extends Closer implements BundleActivator {
      */
     public SynopticInfo getDefaultSynoptic() {
         SynopticInfo defaultSynoptic = null;
-        for (SynopticInfo info : variables.available.getValue()) {
+        //TODO this appears to be null on first access. I.e. when you open the config this should probably be bound
+        Collection<SynopticInfo> infos = variables.available.getValue();
+        if (infos == null) {
+        	return null;
+        }
+		for (SynopticInfo info : infos) {
             if (info.isDefault()) {
                 defaultSynoptic = info;
                 break;

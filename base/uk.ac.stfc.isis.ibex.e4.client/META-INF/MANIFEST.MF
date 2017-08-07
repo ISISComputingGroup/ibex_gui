@@ -7,10 +7,10 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.e4.ui.alarms;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.beamstatus;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.e4.ui.configeditor;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.bumpstrip;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dashboard;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.beamstatus;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.ui.beamstatus;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: ISIS

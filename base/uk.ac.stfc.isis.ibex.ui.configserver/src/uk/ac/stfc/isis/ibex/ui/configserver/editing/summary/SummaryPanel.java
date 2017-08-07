@@ -174,6 +174,10 @@ public class SummaryPanel extends Composite {
 	}
 
     private void selectDefaultSynoptic() {
-        cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
+    	//TODO John what if this comes back with null
+        SynopticInfo defaultSynoptic = Synoptic.getInstance().getDefaultSynoptic();
+        if (defaultSynoptic != null) {
+        	cmboSynoptic.setSelection(new StructuredSelection(defaultSynoptic.name()));
+        }
     }
 }

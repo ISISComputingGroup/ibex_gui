@@ -106,12 +106,7 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                try {
-                    new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
-                } catch (ExecutionException e) {
-                    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                            "Unable to edit block.");
-                }
+                new EditBlockHandler(block.getName()).execute(null); //TODO John this should be passing a shell not null, probably right click menus are different anyway                
             }
         };
 	}

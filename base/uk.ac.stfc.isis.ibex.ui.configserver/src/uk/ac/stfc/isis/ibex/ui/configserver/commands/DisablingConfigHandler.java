@@ -4,7 +4,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
  * This class is a specific type of ConfigHandler that will disable the command
- * if the underlying PV becomes read-only.
+ * if the underlying PV becomes read-only. E.g. for loading configurations.
  *
  * @param <T> The type of data expected from the underlying PV
  */
@@ -21,7 +21,7 @@ public abstract class DisablingConfigHandler<T> extends ConfigHandler<T> {
 
 	@Override
 	public void canWriteChanged(boolean canWrite) {
-		setBaseEnabled(canWrite);		
+		setCanExecute(canWrite);		
 	}
 
 }

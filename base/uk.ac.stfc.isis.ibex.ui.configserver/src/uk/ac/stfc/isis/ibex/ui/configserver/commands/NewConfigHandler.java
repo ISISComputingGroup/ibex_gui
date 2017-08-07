@@ -19,9 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -47,23 +47,26 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 	}
 
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	/**
+	 * Open the new config dialogue.
+	 *
+	 * @param shell the shell
+	 */
+	@Execute
+    public void execute(Shell shell) {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsBlankConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), configurationViewModels);
+            openDialog(shell, config.getValue(), configurationViewModels);
 		}
-		
-		return null;
 	}
 	
-    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+    private void openDialog(Shell shell, EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
         config.setIsComponent(false);
         EditConfigDialog editDialog =
-                new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels, false);
+                new EditConfigDialog(shell, TITLE, SUB_TITLE, config, true, configurationViewModels, false);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
