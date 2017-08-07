@@ -6,7 +6,7 @@ set PYTHON=C:\Python27
 set PYTHON_HOME=C:\Python27
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 set GENIEPYTHONDIR=c:\Installers\genie_python
-set ZIPLOCATION=c:\Installers\client_zip
+
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
