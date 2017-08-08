@@ -835,5 +835,19 @@
 				</macros>
 			</value>
 		</entry>
+    <entry>
+    	<key>Zoom FINS PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>PLCZoomVacuum.opi</path>
+				<description>The OPI for the Omron FINS PLC for the ZOOM vacuum.</description>
+				<macros>
+					<macro>
+						<name>Q</name>
+						<description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>    
 	</opis>
 </descriptions>
