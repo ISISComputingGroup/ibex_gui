@@ -17,11 +17,24 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.model;
+package uk.ac.stfc.isis.ibex.instrument.channels;
 
-public class DefaultValue<T> extends UpdatedValue<T> {
-		
-	public DefaultValue(T value) {
-		setValue(value);
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Channels;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
+
+/**
+ * A channel type for reading arrays of doubles.
+ */
+public class DoubleArrayChannel implements ChannelType<double[]> {
+
+	@Override
+	public ClosableObservable<double[]> reader(String address) {
+		return Channels.Doubles.arrayReader(address);
+	}
+
+	@Override
+    public BaseWritable<double[]> writer(String address) {
+		throw new UnsupportedOperationException();
 	}
 }

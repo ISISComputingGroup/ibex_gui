@@ -24,8 +24,8 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -120,7 +120,7 @@ public class DataAcquisitionPanel extends Composite {
         wiringTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         wiringTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        Label lblWiringSpacer = new Label(wiringTablePanel, SWT.NONE);
+        new Label(wiringTablePanel, SWT.NONE);
 
         Label lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
         lblWiringChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -146,7 +146,7 @@ public class DataAcquisitionPanel extends Composite {
         detectorTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         detectorTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        Label lblDetectorSpacer = new Label(detectorTablePanel, SWT.NONE);
+        new Label(detectorTablePanel, SWT.NONE);
 
         Label lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
         lblDetectorChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -172,7 +172,7 @@ public class DataAcquisitionPanel extends Composite {
         spectraTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         spectraTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        Label lblSpectraSpacer = new Label(spectraTablePanel, SWT.NONE);
+        new Label(spectraTablePanel, SWT.NONE);
 
         Label lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
         lblSpectraChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -328,36 +328,24 @@ public class DataAcquisitionPanel extends Composite {
         autosaveUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         autosaveUnits.setItems(AutosaveUnit.allToString().toArray(new String[0]));
 
-        wiringTableSelector.addSelectionListener(new SelectionListener() {
+        wiringTableSelector.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setNewWiringTable(wiringTableSelector.getText());
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
         });
 
-        detectorTableSelector.addSelectionListener(new SelectionListener() {
+        detectorTableSelector.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setNewDetectorTable(detectorTableSelector.getText());
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
         });
 
-        spectraTableSelector.addSelectionListener(new SelectionListener() {
+        spectraTableSelector.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setNewSpectraTable(spectraTableSelector.getText());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
     }

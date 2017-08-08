@@ -228,7 +228,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Act
-        ForwardingObservable result = variables.defaultReaderRemote(address);
+        ForwardingObservable<String> result = variables.defaultReaderRemote(address);
         
         // Assert
         assertSame(mockSwitchableObservable, result);
@@ -245,7 +245,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Act
-        ForwardingObservable result = variables.defaultReaderRemoteWithoutUnits(address);
+        ForwardingObservable<String> result = variables.defaultReaderRemoteWithoutUnits(address);
 
         // Assert
         assertSame(mockSwitchableObservable, result);

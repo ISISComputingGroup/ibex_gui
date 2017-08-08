@@ -103,6 +103,14 @@ public class Channels {
 		public static ClosableObservable<Integer> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.fromVInt());
 		}
+		
+		public static ClosableObservable<int[]> arrayReader(String pvAddress) {
+            return convertObservablePV(pvAddress, VType.class, VTypeFormat.fromVIntegerArray());
+        }
+		
+		public static BaseWritable<Integer> writer(String pvAddress) {
+            return new PVManagerWritable<>(new PVInfo<>(pvAddress, Integer.class));
+        }
 	}
 	
 	/**
@@ -125,6 +133,10 @@ public class Channels {
         public static BaseWritable<Double> writer(String pvAddress) {
 			return new PVManagerWritable<>(new PVInfo<>(pvAddress, Double.class));
 		}
+        
+        public static ClosableObservable<double[]> arrayReader(String pvAddress) {
+            return convertObservablePV(pvAddress, VType.class, VTypeFormat.fromVDoubleArray());
+        }
 	}
 
 	/**

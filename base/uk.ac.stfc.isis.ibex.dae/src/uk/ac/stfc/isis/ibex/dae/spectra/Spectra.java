@@ -34,14 +34,12 @@ public class Spectra extends Closer {
 
 	public Spectra(DaeObservables observables) {
 		this.observables = observables;
-		
-        for (int spectrumNumber = 1; spectrumNumber <= MAX_SPECTRUM_NUMBER; spectrumNumber++) {
-            addSpectrum(spectrumNumber, 1);
-        }
-
 	}
 
 	public List<? extends UpdatableSpectrum> spectra() {
+        while (spectra.size() < MAX_SPECTRUM_NUMBER) {
+            addSpectrum(spectra.size() + 1, 1);
+        }
 		return spectra;
 	}
 

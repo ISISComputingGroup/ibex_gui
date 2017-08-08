@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Enum containing the possible timing sources for the DAE.
+ */
 public enum DaeTimingSource {
     /**
      * The isis timing source.
@@ -33,7 +36,8 @@ public enum DaeTimingSource {
      */
     INTERNAL_TEST_CLOCK("Internal Test Clock"),
     /**
-     * The SMP timing source.
+     * The SMP (secondary master pulse) timing source. This source is usually a
+     * chopper plugged into the SMP socket.
      */
     SMP("SMP"),
     /**
@@ -63,10 +67,21 @@ public enum DaeTimingSource {
 		}
 	}
 	
+    /**
+     * Defines a singular timing source with it's human readable name.
+     * 
+     * @param text
+     *            The human readable name of the timing source.
+     */
 	DaeTimingSource(String text) {
 		this.text = text;
 	}
-	 
+
+    /**
+     * Get an array of all the possible timing sources.
+     * 
+     * @return An array of strings containing the possible timing sources.
+     */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}

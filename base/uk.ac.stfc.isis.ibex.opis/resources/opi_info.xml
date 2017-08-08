@@ -774,7 +774,69 @@
 			</value>
 		</entry>
 		<entry>
-			<key>Zoom FINS PLC</key>
+			<key>Muon Front End Overview</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_overviews/muon_front_end_overview.opi</path>
+				<description>The OPI for the Muon front end.</description>
+				<macros>
+					<macro>
+						<name>MM_EMU</name>
+						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
+					</macro>
+					<macro>
+						<name>MM_MUSR</name>
+						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
+					</macro>
+					<macro>
+						<name>MM_HIFI</name>
+						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
+					</macro>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Riken Front End Overview</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_overviews/riken_front_end_overview.opi</path>
+				<description>The OPI for the Riken front end. No properties required.</description>
+			</value>
+		</entry>
+		<entry>
+			<key>Superlogics</key>
+			<value>
+				<type>MERCURY</type>
+				<path>superlogics.opi</path>
+				<description>The OPI for the Superlogics data acquisition system.</description>
+				<macros>
+					<macro>
+						<name>SPRLG</name>
+						<description>The Superlogics PV prefix (e.g. SPRLG_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Fermi chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>fermi_chopper.opi</path>
+				<description>The OPI for the fermi chopper.</description>
+				<macros>
+					<macro>
+						<name>FERMCHOP</name>
+						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+    <entry>
+    	<key>Zoom FINS PLC</key>
 			<value>
 				<type>PLC</type>
 				<path>PLCZoomVacuum.opi</path>
@@ -786,6 +848,6 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
+		</entry>    
 	</opis>
 </descriptions>
