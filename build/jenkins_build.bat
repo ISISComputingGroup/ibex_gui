@@ -6,7 +6,7 @@ set PYTHON=C:\Python27
 set PYTHON_HOME=C:\Python27
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 set GENIEPYTHONDIR=c:\Installers\genie_python
-set ZIPLOCATION=c:\Installers\client_zip
+
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
@@ -37,8 +37,8 @@ python.exe purge_archive_client.py
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
-    set RELEASE_VERSION=%GIT_BRANCH:~15%
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
+    set RELEASE_VERSION=%GIT_BRANCH:~8%
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
