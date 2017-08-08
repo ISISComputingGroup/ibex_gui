@@ -764,7 +764,7 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>amint2l/amint2l.opi</path>
-				<description>The OPI for the Omron FINS PLC for the ZOOM vacuum</description>
+				<description>The OPI for the Applied Measurements Int2-L pressure measurement system.</description>
 				<macros>
 					<macro>
 						<name>AMINT2L</name>
@@ -840,7 +840,7 @@
 			<value>
 				<type>PLC</type>
 				<path>PLCZoomVacuum.opi</path>
-				<description>The OPI for the Applied Measurements Int2-L pressure measurement system.</description>
+				<description>The OPI for the Omron FINS PLC for the ZOOM vacuum.</description>
 				<macros>
 					<macro>
 						<name>Q</name>
