@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 import org.csstudio.alarm.beast.ui.alarmtree.Activator;
 import org.csstudio.alarm.beast.ui.alarmtree.GUI;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
@@ -38,8 +37,7 @@ public class AlarmView extends ViewPart {
     final public static String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 
     private AlarmClientModel model;
-
-    private GUI gui = null;
+    private GUI gui;
 
     @Override
     public void createPartControl(final Composite parent)
@@ -51,21 +49,30 @@ public class AlarmView extends ViewPart {
 		}
         
         gui = new GUI(parent, model, getViewSite());
+        
+        // There's nothing on the default menu we currently want
+        gui.getTreeViewer().getTree().setMenu(null);
+        
+        // Gives choice of "Annunciator" and "Instrument". We definitely want the latter
         model.setConfigurationName("Instrument", null);
+        
+        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
         getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
     }
 
     @Override
     public void setFocus()
     {
-        if (gui != null)
-            gui.setFocus();
+    	gui.setFocus();
     }
     
     @Override
     public void dispose() {
     	super.dispose();
-        model.release();
+    	if (model!=null)
+    	{
+    		model.release();
+    	}
         model = null;
     }
 }
