@@ -26,20 +26,12 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="uk.ac.stfc.isis.ibex.product.application"
+            application="uk.ac.stfc.isis.ibex.e4.product.application"
             name="IBEX">
          <property
                name="appName"
                value="IBEX">
          </property>
-   <property
-         name="aboutImage"
-         value="icons/IBEX-icon-web64.gif">
-   </property>
-   <property
-         name="windowImages"
-         value="icons/IBEX-icon-web16.gif,icons/IBEX-icon-web32.gif,icons/IBEX-icon-web48.gif,icons/IBEX-icon-web64.gif">
-   </property>
 	 </product>
    </extension>
       <extension

@@ -50,9 +50,7 @@ public class PerspectiveSwitcherView {
 		this.modelService = modelService;		
 		
 		// TODO: Perspectives should not be hard coded. Use snippets and an extension point to define these
-		addPerspectiveShortcut("Alarms", PERSPECTIVE_PLUGIN_PREFIX + "alarms", "Alarms.png", false);
-		addPerspectiveShortcut("Beam status", PERSPECTIVE_PLUGIN_PREFIX + "beamstatus", "BeamStatus.png", true);
-		addPerspectiveShortcut("DAE", PERSPECTIVE_PLUGIN_PREFIX + "dae", "DAE.png", false);
+		addPerspectiveShortcut("Alarms", PERSPECTIVE_PLUGIN_PREFIX + "alarms", "Alarms.png", true);
 	}
 
 	private void addPerspectiveShortcut(String name, String partId, String iconFile, boolean selected) {
@@ -66,7 +64,12 @@ public class PerspectiveSwitcherView {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 		        MPerspective element = (MPerspective) modelService.find(partId, app);
-		        partService.switchPerspective(element);
+		        if (element != null) {
+		        	partService.switchPerspective(element);
+		        }
+		        else {
+		        	System.out.println("Unable to find perspective part: " + partId);
+		        }
 			}	
 		});
 	}

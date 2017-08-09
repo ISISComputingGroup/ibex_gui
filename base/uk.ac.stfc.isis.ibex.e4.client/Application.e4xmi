@@ -8,82 +8,15 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="75">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.alarms/uk.ac.stfc.isis.ibex.e4.ui.alarms.views.AlarmsView" label="Alarms"/>
-            </children>
-          </children>
-        </children>
-      </children>
-      <children xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" label="DAE">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
-          <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
-            <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="75">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.dae/uk.ac.stfc.isis.ibex.e4.ui.dae.views.DAEView" label="DAE"/>
-            </children>
-          </children>
-        </children>
-      </children>
-      <children xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam status">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
-          <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
-            <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="70">
-              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam current history"/>
-            </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_QrDYQG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3" containerData="30">
-              <children xsi:type="basic:PartStack" xmi:id="_ROxJUG0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2" containerData="30">
-                <children xsi:type="basic:Part" xmi:id="_R54i4G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.mcrnews" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.McrNewsPanel" label="MCR news"/>
-              </children>
-              <children xsi:type="basic:PartStack" xmi:id="_Rihy0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4" containerData="70">
-                <children xsi:type="basic:Part" xmi:id="_SJvj0G0bEeeaIsn9qkHbBw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beaminformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.StatsPanel" label="Current beam information"/>
-              </children>
+              <children xsi:type="advanced:Placeholder" xmi:id="_OrOewHzjEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_9zpdoHziEee7XtTTU-lRdw"/>
             </children>
           </children>
         </children>
       </children>
     </children>
     <mainMenu xmi:id="_3TEoMGbLEeeM7uzkT_ViHQ" elementId="org.eclipse.ui.main.menu">
-      <children xsi:type="menu:Menu" xmi:id="_CWMfIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ibex" label="IBEX" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_P4Pu4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.switchinstrument" label="Switch instrument"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_Rab6YGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.restoredefaultview" label="Restore default view"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_SiBNgGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.managermode" label="Manager mode"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_TtFScGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.exit" label="Exit"/>
-      </children>
       <children xsi:type="menu:Menu" xmi:id="_9gU0oGbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="Configuration" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Diw4MGbMEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.editCurrentConfig" label="Edit current configuration" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
-        <children xsi:type="menu:Menu" xmi:id="_WCK6gGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.configurations" label="Configurations">
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_YFonEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_ZvsVIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.load" label="Load"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_aVTjoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_a6AMIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete"/>
-        </children>
-        <children xsi:type="menu:Menu" xmi:id="_W44gEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components">
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_bjqNIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_cI9SkGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_cpZGIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete"/>
-        </children>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_DPuvMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete"/>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_Dm7HMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ioc" label="IOC" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_gCw1sGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs"/>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_D1o4oGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.run-control" label="Run-Control" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_hT8JsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.viewrun-controlsettings" label="View run-control settings"/>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_EEcwsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.preferences" label="Preferences" mnemonics="">
-        <children xsi:type="menu:Menu" xmi:id="_jS04QGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.coloursettings" label="Colour settings">
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_kIsJQGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.standardcolourscheme" label="Standard colour scheme"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_lr4aUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.alternativecolourscheme1" label="Alternative colour scheme 1"/>
-        </children>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_EQzKoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.help" label="Help" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_n7iv0GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_okwE4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.usermanual" label="User manual"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ptAtcGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.consolelog" label="Console log"/>
       </children>
     </mainMenu>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_shoY4GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0" accessibilityPhrase="">
@@ -97,6 +30,7 @@
         </children>
       </children>
     </sharedElements>
+    <sharedElements xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarms"/>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>

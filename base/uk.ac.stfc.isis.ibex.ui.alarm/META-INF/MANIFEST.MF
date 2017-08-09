@@ -7,7 +7,6 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.ui.alarm.Alarms
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument,
  org.csstudio.alarm.beast.ui;bundle-version="3.2.0",
  org.csstudio.alarm.beast;bundle-version="3.2.3",
