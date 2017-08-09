@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.e4.product;
 
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
@@ -31,6 +32,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
+    }
+    
+    @Override
+    protected void fillStatusLine(IStatusLineManager statusLine) {
+    	statusLine.removeAll();
+    	statusLine.update(true);
     }
     
 }

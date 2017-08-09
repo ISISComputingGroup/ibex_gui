@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.product;
+package uk.ac.stfc.isis.ibex.e4.product;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,13 +30,14 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-@SuppressWarnings("checkstyle:magicnumber")
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     private static final int MIN_WINDOW_HEIGHT = 800;
@@ -48,16 +49,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	@Override
     public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
-        return new uk.ac.stfc.isis.ibex.product.ApplicationActionBarAdvisor(configurer);
+        return new ApplicationActionBarAdvisor(configurer);
     }
     
     @Override
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         
-        configurer.setShowStatusLine(true);   
+        configurer.setShowStatusLine(false);
         configurer.setShowCoolBar(false);
-        configurer.setShowFastViewBars(false);
     }
     
     @Override
