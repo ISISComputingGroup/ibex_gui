@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.product;
+package uk.ac.stfc.isis.ibex.e4.product;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -27,7 +27,6 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.ui.perspectives.Startup;
 
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
@@ -38,12 +37,12 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	
     @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
-        return new ApplicationWorkbenchWindowAdvisor(configurer);
+        return new WorkbenchWindowAdvisor(configurer);
     }
 
 	@Override
     public String getInitialWindowPerspectiveId() {
-		return Startup.ID;
+		return null;
 	}
 	
 	@Override

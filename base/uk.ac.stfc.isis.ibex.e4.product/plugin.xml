@@ -9,58 +9,7 @@
                class="uk.ac.stfc.isis.ibex.e4.product.Application">
          </run>
       </application>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-   </extension>
-   <extension
-         point="org.eclipse.ui.views">
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-   </extension>
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="uk.ac.stfc.isis.ibex.product.application"
-            name="IBEX">
-         <property
-               name="appName"
-               value="IBEX">
-         </property>
-   <property
-         name="aboutImage"
-         value="icons/IBEX-icon-web64.gif">
-   </property>
-   <property
-         name="windowImages"
-         value="icons/IBEX-icon-web16.gif,icons/IBEX-icon-web32.gif,icons/IBEX-icon-web48.gif,icons/IBEX-icon-web64.gif">
-   </property>
-	 </product>
-   </extension>
-      <extension
-         point="org.eclipse.ui.activities">
-         <activity id="uk.ac.stfc.isis.ibex.rcp.activity" name="Hidden activities"/>
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern=".*/org.eclipse.search.*"/>
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern="org.eclipse.ui.window.preferences"/>         
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern=".*/org.eclipse.ui.cheatsheets.*"/>         
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern="org.eclipse.ui.window.showKeyAssist"/>	   
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" isEqualityPattern="false" pattern="org\.eclipse\..*[Pp]erspective.*"/>	   
-		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern="org.csstudio.security.ui.*"/>  
-   </extension>
-	<extension
-	 	point="org.eclipse.ui.perspectiveExtensions">
-	    <perspectiveExtension
-	     targetID="*">
-	         <hiddenMenuItem id="org.eclipse.ui.run"></hiddenMenuItem>
-	         <hiddenMenuItem id="navigate"></hiddenMenuItem>
-	     </perspectiveExtension>
-	 </extension>
-   
+   </extension>   
 </plugin>
 
 

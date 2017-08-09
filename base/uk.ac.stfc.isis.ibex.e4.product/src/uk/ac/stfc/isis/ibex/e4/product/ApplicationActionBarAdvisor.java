@@ -17,14 +17,10 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.product;
+package uk.ac.stfc.isis.ibex.e4.product;
 
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
-
-import uk.ac.stfc.isis.ibex.ui.statusbar.StatusLineConfigLabel;
-
 
 /**
  * An action bar advisor is responsible for creating, adding, and disposing of
@@ -35,14 +31,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);        
-    }
-    
-    @Override
-    protected void fillStatusLine(IStatusLineManager statusLine) {
-    	statusLine.removeAll();
-    	StatusLineConfigLabel statusItem = new StatusLineConfigLabel("CurrentConfigTitle");
-    	statusLine.add(statusItem);
-    	statusLine.update(true);
     }
     
 }
