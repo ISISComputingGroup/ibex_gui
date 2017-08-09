@@ -822,6 +822,16 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Engin-X sample postioning system</key>
+			<value>
+				<type>SAMPLESTACK</type>
+				<path>enginx_sample_position_system.opi</path>
+				<description>The OPI for the Engin-X sample positioning system.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+	    <entry>
 			<key>Fermi chopper</key>
 			<value>
 				<type>CHOPPER</type>
@@ -835,7 +845,7 @@
 				</macros>
 			</value>
 		</entry>
-    <entry>
+        <entry>
     	<key>Zoom FINS PLC</key>
 			<value>
 				<type>PLC</type>
