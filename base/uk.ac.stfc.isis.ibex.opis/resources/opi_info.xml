@@ -831,7 +831,7 @@
 				</macros>
 			</value>
 		</entry>
-	    <entry>
+		<entry>
 			<key>Fermi chopper</key>
 			<value>
 				<type>CHOPPER</type>
@@ -846,7 +846,7 @@
 			</value>
 		</entry>
         <entry>
-    	<key>Zoom FINS PLC</key>
+        	<key>Zoom FINS PLC</key>
 			<value>
 				<type>PLC</type>
 				<path>PLCZoomVacuum.opi</path>
