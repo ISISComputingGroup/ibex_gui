@@ -4,7 +4,7 @@ pipeline {
 
   // agent defines where the pipeline will run.
   agent {  
-    label "gui"
+    label "ndw1575"
   }
   
   triggers {
