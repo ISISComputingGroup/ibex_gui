@@ -30,7 +30,7 @@
          id="IBEX_client"
          point="org.eclipse.core.runtime.products">
       <product
-            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            application="uk.ac.stfc.isis.ibex.e4.product.application"
             name="IBEX">
          <property
                name="appName"
