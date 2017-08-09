@@ -9,7 +9,7 @@
                class="uk.ac.stfc.isis.ibex.e4.product.Application">
          </run>
       </application>
-   </extension>   
+   </extension>
 </plugin>
 
 
