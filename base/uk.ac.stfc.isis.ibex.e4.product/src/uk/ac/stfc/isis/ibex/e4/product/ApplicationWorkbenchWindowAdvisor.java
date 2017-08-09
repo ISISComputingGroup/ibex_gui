@@ -55,8 +55,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     @Override
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-        
-        configurer.setShowStatusLine(false);
         configurer.setShowCoolBar(false);
     }
     

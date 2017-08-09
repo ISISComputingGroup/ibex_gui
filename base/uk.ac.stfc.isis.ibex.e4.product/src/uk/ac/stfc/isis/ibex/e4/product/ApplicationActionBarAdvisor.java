@@ -33,11 +33,5 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
     }
-    
-    @Override
-    protected void fillStatusLine(IStatusLineManager statusLine) {
-    	statusLine.removeAll();
-    	statusLine.update(true);
-    }
-    
+        
 }
