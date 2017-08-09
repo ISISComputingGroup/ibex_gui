@@ -49,11 +49,10 @@ public class AlarmView extends ViewPart {
 		} catch (Exception e) {
             Logger.getLogger(Activator.ID).log(Level.SEVERE, "Cannot load alarm model", e); //$NON-NLS-1$
 		}
-        // Have model, create GUI
+        
         gui = new GUI(parent, model, getViewSite());
-        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
         model.setConfigurationName("Instrument", null);
-        toolbar.add(new RefreshAction());
+        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
     }
 
     @Override
@@ -61,5 +60,12 @@ public class AlarmView extends ViewPart {
     {
         if (gui != null)
             gui.setFocus();
+    }
+    
+    @Override
+    public void dispose() {
+    	super.dispose();
+        model.release();
+        model = null;
     }
 }
