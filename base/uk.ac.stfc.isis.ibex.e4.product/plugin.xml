@@ -6,7 +6,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="uk.ac.stfc.isis.ibex.product.Application">
+               class="uk.ac.stfc.isis.ibex.e4.product.Application">
          </run>
       </application>
    </extension>

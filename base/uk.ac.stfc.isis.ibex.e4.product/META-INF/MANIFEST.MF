@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CSS ISIS
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.product;singleton:=true
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.product;singleton:=true
 Bundle-Version: 0.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.product.Activator
 Require-Bundle: org.eclipse.ui,
