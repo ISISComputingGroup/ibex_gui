@@ -33,7 +33,6 @@
 <unit id="org.csstudio.pvmanager.feature.feature.group" version="3.3.0.201708071707"/>
 <unit id="org.csstudio.pvmanager.pva.feature.feature.group" version="3.3.2.201708071707"/>
 <unit id="org.csstudio.utilities.feature.feature.group" version="3.2.1.201708071707"/>
->>>>>>> master
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/CSStudio_P2_3_3_10"/>
 </location>
 </locations>
