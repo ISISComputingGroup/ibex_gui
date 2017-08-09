@@ -16,6 +16,7 @@
 
 - [ ] Is the code of an acceptable quality?
 - [ ] Does the code conform to the [coding standards](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/GUI-Coding-Conventions)? Is it well structured with small focussed classes/methods/functions?
+- [ ] Have no new checkstyle warnings been introduced? Check via Jenkins
 - [ ] Are there unit tests in place? Are the unit tests small and test the a class in isolation?
 - [ ] Are there automated [system tests](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/System-Testing-with-RCPTT) in place? Do they test a minimal set of functionality and leave the gui as close as possible to its original state?
 - [ ] Has the [manual system tests spreadsheet](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Manual-system-tests) been updated?

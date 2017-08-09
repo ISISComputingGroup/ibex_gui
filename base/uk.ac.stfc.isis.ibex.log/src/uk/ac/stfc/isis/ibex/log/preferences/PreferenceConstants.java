@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.log.preferences;
  * Constant definitions for plug-in preferences.
  */
 public final class PreferenceConstants {
-    /** The port to connect to for reading the log messages from jms. **/
-    public static final String P_JMS_PORT = "jmsPort";
     /** The ActiveMQ topic that the messages arrive on. **/
     public static final String P_JMS_TOPIC = "jmsTopic";
     
@@ -37,8 +35,6 @@ public final class PreferenceConstants {
     /** Whether or not minor messages count to the log counter. **/
     public static final String P_MINOR_MESSAGE = "msgMinor";
 
-    /** The default for the JMS port. **/
-    public static final Integer DEFAULT_JMS_PORT = 61616;
     /** The default for the JMS topic. **/
     public static final String DEFAULT_JMS_TOPIC = "iocLogs";
     

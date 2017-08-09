@@ -306,8 +306,17 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-4512a98b:15acc09f017:-7d73</wuid>
       <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <scripts>
+        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+          <scriptName>EmbeddedScript</scriptName>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+widget.getPV().setValue("Position")
+]]></scriptText>
+          <pv trig="true">$(PV_ROOT)DISABLE</pv>
+        </path>
+      </scripts>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>27</height>
       <border_width>1</border_width>
       <scale_options>
@@ -335,9 +344,9 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <items>
+        <s>Position</s>
         <s>Stress</s>
         <s>Strain</s>
-        <s>Position</s>
       </items>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
@@ -352,7 +361,17 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-4512a98b:15acc09f017:-7d6c</wuid>
       <pv_value />
-      <scripts />
+      <scripts>
+        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+          <scriptName>EmbeddedScript</scriptName>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+widget.getPV().setValue("Stress")
+
+]]></scriptText>
+          <pv trig="true">$(PV_ROOT)DISABLE</pv>
+        </path>
+      </scripts>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <height>27</height>
       <border_width>1</border_width>
@@ -381,9 +400,9 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <items>
+        <s>Position</s>
         <s>Stress</s>
         <s>Strain</s>
-        <s>Position</s>
       </items>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
