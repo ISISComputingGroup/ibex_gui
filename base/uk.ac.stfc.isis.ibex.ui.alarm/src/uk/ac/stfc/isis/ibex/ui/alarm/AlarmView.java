@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.csstudio.alarm.beast.ui.alarmtree.Activator;
 import org.csstudio.alarm.beast.ui.alarmtree.GUI;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.jface.action.IToolBarManager;
@@ -43,8 +47,7 @@ public class AlarmView extends ViewPart {
         try {
 			model = AlarmClientModel.getInstance();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            Logger.getLogger(Activator.ID).log(Level.SEVERE, "Cannot load alarm model", e); //$NON-NLS-1$
 		}
         // Have model, create GUI
         gui = new GUI(parent, model, getViewSite());
