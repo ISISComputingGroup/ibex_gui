@@ -20,6 +20,10 @@
          id="uk.ac.stfc.isis.ibex.feature.css"
          version="0.0.0"/>
 
+   <includes
+         id="uk.ac.stfc.isis.ibex.feature.spies"
+         version="0.0.0"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.e4.client"
          download-size="0"
