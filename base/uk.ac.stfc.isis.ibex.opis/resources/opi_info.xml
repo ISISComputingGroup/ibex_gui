@@ -799,7 +799,7 @@
 			<key>Muon Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
-				<path>muon_front_end_overview/muon_front_end_overview.opi</path>
+				<path>muon_overviews/muon_front_end_overview.opi</path>
 				<description>The OPI for the Muon front end.</description>
 				<macros>
 					<macro>
@@ -822,6 +822,14 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Riken Front End Overview</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_overviews/riken_front_end_overview.opi</path>
+				<description>The OPI for the Riken front end. No properties required.</description>
+			</value>
+		</entry>
+		<entry>
 			<key>Superlogics</key>
 			<value>
 				<type>MERCURY</type>
@@ -832,6 +840,16 @@
 						<name>SPRLG</name>
 						<description>The Superlogics PV prefix (e.g. SPRLG_01).</description>
 					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Engin-X sample postioning system</key>
+			<value>
+				<type>SAMPLESTACK</type>
+				<path>enginx_sample_position_system.opi</path>
+				<description>The OPI for the Engin-X sample positioning system.</description>
+				<macros>
 				</macros>
 			</value>
 		</entry>
@@ -868,17 +886,22 @@
 						<name>M2</name>
 						<description>The motor PV relating to the West/East motor (e.g. MTR0602).</description>
 					</macro>                
-
-					<macro>
-						<name>M1</name>
-						<description>The motor PV relating to the North/South motor (e.g. MTR0601).</description>
-					</macro>
-					<macro>
-						<name>M2</name>
-						<description>The motor PV relating to the West/East motor (e.g. MTR0602).</description>
-					</macro>
 				</macros>
 			</value>
 		</entry>        
+        <entry>
+        	<key>Zoom FINS PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>PLCZoomVacuum.opi</path>
+				<description>The OPI for the Omron FINS PLC for the ZOOM vacuum.</description>
+				<macros>
+					<macro>
+						<name>Q</name>
+						<description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>    
 	</opis>
 </descriptions>
