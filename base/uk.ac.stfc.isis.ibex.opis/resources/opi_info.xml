@@ -835,5 +835,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>IEG system</key>
+			<value>
+				<type>OTHER</type>
+				<path>ieg_system.opi</path>
+				<description>The OPI for the gas exchange system.</description>
+				<macros>
+					<macro>
+						<name>IEG</name>
+						<description>The gas exchange system PV prefix (e.g. IEG_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
