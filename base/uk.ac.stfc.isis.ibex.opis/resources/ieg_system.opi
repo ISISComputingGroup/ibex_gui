@@ -124,7 +124,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>139</height>
+    <height>67</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -142,10 +142,10 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>463</width>
+    <width>307</width>
     <x>6</x>
     <name>Readings</name>
-    <y>216</y>
+    <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -185,7 +185,7 @@
       <width>96</width>
       <x>6</x>
       <name>Label_2</name>
-      <y>48</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -221,7 +221,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):PRESSURE</pv_name>
+      <pv_name>$(PV_ROOT):PRESSURE:GUI.OSV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -237,7 +237,7 @@ $(pv_value)</tooltip>
       <width>163</width>
       <x>114</x>
       <name>Text Update_1</name>
-      <y>48</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -256,7 +256,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>139</height>
+    <height>271</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -274,10 +274,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>565</width>
+    <width>307</width>
     <x>6</x>
     <name>Operation Mode</name>
-    <y>78</y>
+    <y>144</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -317,7 +317,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_2</name>
-      <y>48</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -369,7 +369,7 @@ $(pv_value)</tooltip>
       <width>163</width>
       <x>114</x>
       <name>Text Update</name>
-      <y>48</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -381,13 +381,13 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>2</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-3495742c:15dcbe01bf4:-7d26</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Error:</text>
+      <text>Status:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -406,10 +406,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>96</width>
+      <width>73</width>
       <x>6</x>
       <name>Label_3</name>
-      <y>78</y>
+      <y>210</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -458,10 +458,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>163</width>
-      <x>114</x>
+      <width>193</width>
+      <x>60</x>
       <name>Text Update_2</name>
-      <y>78</y>
+      <y>210</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -501,7 +501,7 @@ $(pv_value)</tooltip>
       <width>127</width>
       <x>6</x>
       <name>Button_1</name>
-      <y>6</y>
+      <y>30</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -512,7 +512,7 @@ $(pv_value)</tooltip>
 
 pv = widget.getPV(); 
 
-pv.setValue(8)
+pv.setValue(1)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
@@ -551,9 +551,9 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>127</width>
-      <x>138</x>
+      <x>6</x>
       <name>Button_1</name>
-      <y>6</y>
+      <y>66</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -564,7 +564,7 @@ $(pv_value)</tooltip>
 
 pv = widget.getPV(); 
 
-pv.setValue(8)
+pv.setValue(2)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
@@ -603,9 +603,9 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>127</width>
-      <x>270</x>
+      <x>6</x>
       <name>Button_1</name>
-      <y>6</y>
+      <y>102</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -616,7 +616,7 @@ $(pv_value)</tooltip>
 
 pv = widget.getPV(); 
 
-pv.setValue(8)
+pv.setValue(3)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
@@ -655,9 +655,9 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>127</width>
-      <x>402</x>
+      <x>6</x>
       <name>Button_1</name>
-      <y>6</y>
+      <y>138</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -668,7 +668,7 @@ $(pv_value)</tooltip>
 
 pv = widget.getPV(); 
 
-pv.setValue(8)
+pv.setValue(4)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
@@ -677,6 +677,310 @@ pv.setValue(8)
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4bb8b3c4:15ddfc9071e:-7fe5</wuid>
+      <pv_value />
+      <text>Abort</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>28</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):ABORT</pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>127</width>
+      <x>6</x>
+      <name>Button_4</name>
+      <y>174</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(1)
+]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules>
+        <rule name="Rule" prop_id="pv_value" out_exp="true">
+          <exp bool_exp="pvInt0 == 1">
+            <value>1</value>
+          </exp>
+          <exp bool_exp="1 == 1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):MODE</pv>
+        </rule>
+      </rules>
+      <effect_3d>true</effect_3d>
+      <bit>-1</bit>
+      <enabled>false</enabled>
+      <wuid>4bb8b3c4:15ddfc9071e:-7f0f</wuid>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>25</height>
+      <on_label>ON</on_label>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):MODE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>LED</widget_type>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <square_led>false</square_led>
+      <width>25</width>
+      <x>144</x>
+      <name>LED</name>
+      <data_type>0</data_type>
+      <y>31</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_boolean_label>false</show_boolean_label>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <off_label>OFF</off_label>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules>
+        <rule name="Rule" prop_id="pv_value" out_exp="true">
+          <exp bool_exp="pvInt0 == 2">
+            <value>1</value>
+          </exp>
+          <exp bool_exp="1 == 1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):MODE</pv>
+        </rule>
+      </rules>
+      <effect_3d>true</effect_3d>
+      <bit>-1</bit>
+      <enabled>false</enabled>
+      <wuid>4bb8b3c4:15ddfc9071e:-78f3</wuid>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>25</height>
+      <on_label>ON</on_label>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):MODE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>LED</widget_type>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <square_led>false</square_led>
+      <width>25</width>
+      <x>144</x>
+      <name>LED</name>
+      <data_type>0</data_type>
+      <y>67</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_boolean_label>false</show_boolean_label>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <off_label>OFF</off_label>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules>
+        <rule name="Rule" prop_id="pv_value" out_exp="true">
+          <exp bool_exp="pvInt0 == 3">
+            <value>1</value>
+          </exp>
+          <exp bool_exp="1 == 1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):MODE</pv>
+        </rule>
+      </rules>
+      <effect_3d>true</effect_3d>
+      <bit>-1</bit>
+      <enabled>false</enabled>
+      <wuid>4bb8b3c4:15ddfc9071e:-78ec</wuid>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>25</height>
+      <on_label>ON</on_label>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):MODE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>LED</widget_type>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <square_led>false</square_led>
+      <width>25</width>
+      <x>144</x>
+      <name>LED_2</name>
+      <data_type>0</data_type>
+      <y>103</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_boolean_label>false</show_boolean_label>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <off_label>OFF</off_label>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules>
+        <rule name="Rule" prop_id="pv_value" out_exp="true">
+          <exp bool_exp="pvInt0 == 4">
+            <value>1</value>
+          </exp>
+          <exp bool_exp="1 == 1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):MODE</pv>
+        </rule>
+      </rules>
+      <effect_3d>true</effect_3d>
+      <bit>-1</bit>
+      <enabled>false</enabled>
+      <wuid>4bb8b3c4:15ddfc9071e:-78e5</wuid>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>25</height>
+      <on_label>ON</on_label>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):MODE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>LED</widget_type>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <square_led>false</square_led>
+      <width>25</width>
+      <x>144</x>
+      <name>LED_3</name>
+      <data_type>0</data_type>
+      <y>139</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_boolean_label>false</show_boolean_label>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <off_label>OFF</off_label>
     </widget>
   </widget>
 </display>
