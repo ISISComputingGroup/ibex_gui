@@ -7,10 +7,9 @@ set FILESROOT=%1
 
 if exist "c:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" {
 	set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.10\bin
-} else  (
-	if exist "c:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" {
-		set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.11\bin
-	}
+}
+if exist "c:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" {
+	set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.11\bin
 }
 
 set IBEXMAJOR=1
