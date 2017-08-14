@@ -870,6 +870,14 @@
 						<name>IEG</name>
 						<description>The gas exchange system PV prefix (e.g. IEG_01).</description>
 					</macro>
+					<macro>
+						<name>TPG26X</name>
+						<description>The TPG (bin presure reading) PV prefix (e.g. TPG26X_01).</description>
+					</macro>
+					<macro>
+						<name>TPGGAUGE</name>
+						<description>The TPG pressure gauge being used for bin pressure (e.g. 1).</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
