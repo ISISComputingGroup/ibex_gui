@@ -813,5 +813,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>HIFI Cryomagnet PSU</key>
+			<value>
+				<type>HFMAGPSU</type>
+				<path>hifiCryomagPSU.opi</path>
+				<description>OPI for the HIFI Cryomagnet Power Supply</description>
+				<macros>
+					<macro>
+						<name>HFMAGPSU</name>
+						<description>The Hifi Cryomagnet PSU prefix</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
