@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.dialogs;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
@@ -28,14 +31,24 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.e4.ui.services.IServiceConstants;
 
+/**
+ * The Class WaitForDialog which shows a dialogue which indicates the GUI is waiting for the instrument.
+ */
 public class WaitForDialog extends Dialog {
 	
 	private static final Point INITIAL_SIZE = new Point(250, 100);
 	
-	public WaitForDialog(Shell parentShell) {
+	/**
+	 * Instantiates a new wait for dialog.
+	 *
+	 * @param parentShell the parent shell
+	 */
+	@Inject
+	public WaitForDialog(@Named (IServiceConstants.ACTIVE_SHELL) Shell parentShell) {
 		super(parentShell);
-	    super.setShellStyle(SWT.ALPHA);	  
+	    super.setShellStyle(SWT.ALPHA);
 	}
 
 	@Override
@@ -53,20 +66,32 @@ public class WaitForDialog extends Dialog {
 	
 	@Override
 	public int open() {
-		getParentShell().setEnabled(false);        
+		
+		Shell parentShell = getParentShell();
+		if (parentShell != null) {
+			parentShell.setEnabled(false);
+		}
 		return super.open();
 	}
 	
 	@Override
 	public boolean close() {
-		getParentShell().setEnabled(true);	
-
+		Shell parentShell = getParentShell();
+		if (parentShell != null) {
+			getParentShell().setEnabled(true);
+		}
 		return super.close();
 	}
 
+	/**
+	 * Sets the cursor.
+	 *
+	 * @param cursorType the new cursor
+	 */
 	public void setCursor(int cursorType) {
 		Cursor cursor = Display.getDefault().getSystemCursor(cursorType);
-		Shell activeShell = Display.getDefault().getActiveShell();
+		
+		Shell activeShell = getParentShell();
 		if (activeShell != null) {
 			activeShell.setCursor(cursor);
 		}

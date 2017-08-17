@@ -104,6 +104,7 @@
   <children xsi:type="basic:Dialog" xmi:id="_ysm88GbXEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.dialog.editcurrentconfig" toBeRendered="false" selectedElement="_uqpG4GbYEeeM7uzkT_ViHQ" label="Edit current configuration">
     <children xsi:type="basic:Part" xmi:id="_uqpG4GbYEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.editcurrentconfig" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.configeditor/uk.ac.stfc.isis.ibex.e4.ui.configeditor.ConfigEditorDialog" label="Edit current configuration (part)"/>
   </children>
+  <handlers xmi:id="_sXmmEHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.waitfor" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui/uk.ac.stfc.isis.ibex.ui.WaitFor" command="_bjIjUHz5EeeSXZfE9ugy5A"/>
   <handlers xmi:id="_WpVV4GbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.current" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
   <handlers xmi:id="_ZReosHtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewConfigHandler" command="_dBXa0HtXEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_pO1AwHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.load" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.LoadConfigHandler" command="_McQNQHtYEeeIzM7lvAxMoQ"/>
@@ -120,6 +121,7 @@
   <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component in ibex" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kNSN8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit component" description="Select and edit an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_bjIjUHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.waitfor" commandName="Wait for Instrument" description="Command indicating that the client is waiting for the instrument"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

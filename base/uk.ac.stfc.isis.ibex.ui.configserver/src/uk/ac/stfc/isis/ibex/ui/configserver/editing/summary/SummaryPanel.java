@@ -26,6 +26,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -101,7 +102,7 @@ public class SummaryPanel extends Composite {
 		
         cmboSynoptic = new ComboViewer(cmpSummary, SWT.READ_ONLY);
 		cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cmboSynoptic.setContentProvider(new ObservableContentProvider());
+		cmboSynoptic.setContentProvider(new ArrayContentProvider());
 		
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -128,9 +129,6 @@ public class SummaryPanel extends Composite {
 	}
 
 	private void setBindings() {
-		String selectedSynoptic = config.getSynoptic();
-		System.out.println("Initial selectedSynoptic: " + selectedSynoptic);
-
         DataBindingContext bindingContext = new DataBindingContext();
 		
 		UpdateValueStrategy descValidator = new UpdateValueStrategy();
@@ -226,14 +224,14 @@ public class SummaryPanel extends Composite {
 			 */
 			private String getDefaultSelection(Collection<SynopticInfo> value) {
 				if (value == null) {
-					return "";
+					return null;
 				}
 				for (SynopticInfo info : value) {
 					if (info.isDefault()) {
 						return info.name();
 					}
 				}
-				return "";
+				return null;
 			}
 			
 			@Override

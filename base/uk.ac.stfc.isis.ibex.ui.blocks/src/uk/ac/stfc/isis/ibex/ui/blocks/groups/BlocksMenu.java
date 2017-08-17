@@ -106,7 +106,7 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                new EditBlockHandler(block.getName()).execute(null); //TODO John this should be passing a shell not null, probably right click menus are different anyway                
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct                
             }
         };
 	}
