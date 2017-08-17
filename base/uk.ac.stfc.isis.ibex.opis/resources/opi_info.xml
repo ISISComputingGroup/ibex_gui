@@ -163,7 +163,7 @@
 			<key>Jaws</key>
 			<value>
 				<type>UNCONFIRMED</type>
-				<path>Jaws.opi</path>
+				<path>jaws/Jaws.opi</path>
 				<description>The OPI for a Jaw set.</description>
 				<macros>
                     <macro>
@@ -469,7 +469,7 @@
 			<key>Slit 1</key>
 			<value>
 				<type>JAWS</type>
-				<path>slit1.opi</path>
+				<path>jaws/slit1.opi</path>
 				<description>The OPI for a 2D set of rectangular jaws controlled by 4 motors.</description>
 				<macros>
                     <macro>
@@ -491,6 +491,28 @@
                     <macro>
 						<name>M4</name>
 						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>        
+		<entry>
+			<key>Coupled Slit</key>
+			<value>
+				<type>JAWS</type>
+				<path>jaws/coupled_slit.opi</path>
+				<description>The OPI for a 2D set of rectangular jaws controlled by 2 motors.</description>
+				<macros>
+                    <macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>                    
+					<macro>
+						<name>M1</name>
+						<description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
+					</macro>
+					<macro>
+						<name>M2</name>
+						<description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
 					</macro>
 				</macros>
 			</value>
@@ -743,7 +765,7 @@
 			<key>Polaris jaw set</key>
 			<value>
 				<type>JAWS</type>
-				<path>polaris_jaws/Jaws_polaris.opi</path>
+				<path>jaws/polaris_jaws/Jaws_polaris.opi</path>
 				<description>The OPI for the Polaris jaw set. No properties required.</description>
 				<macros>
 				</macros>
@@ -822,6 +844,16 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Engin-X sample postioning system</key>
+			<value>
+				<type>SAMPLESTACK</type>
+				<path>enginx_sample_position_system.opi</path>
+				<description>The OPI for the Engin-X sample positioning system.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Fermi chopper</key>
 			<value>
 				<type>CHOPPER</type>
@@ -834,7 +866,35 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
+		</entry>  
+		<entry>
+			<key>EnginX 3rd Jaw</key>
+			<value>
+				<type>JAWS</type>
+				<path>jaws/enginx_jaws/jaw_overview.opi</path>
+				<description>The OPI for the 3rd Enginx Jawset.</description>
+				<macros>
+                    <macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>            
+				</macros>
+			</value>
+		</entry>        
+        <entry>
+        	<key>Zoom FINS PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>PLCZoomVacuum.opi</path>
+				<description>The OPI for the Omron FINS PLC for the ZOOM vacuum.</description>
+				<macros>
+					<macro>
+						<name>Q</name>
+						<description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>    
 		<entry>
 			<key>Cybaman</key>
 			<value>

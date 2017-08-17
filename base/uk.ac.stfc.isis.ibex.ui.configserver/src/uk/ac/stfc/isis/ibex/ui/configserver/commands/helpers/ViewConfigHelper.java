@@ -42,14 +42,11 @@ public class ViewConfigHelper extends ConfigHelper {
         this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         
         title = "View Configuration";
-        currentSubTitle = "Viewing the current configuration";
     }
 
     /**
      * Opens the dialog.
      * 
-     * @param subTitle
-     *            the window sub-title
      * @param config
      *            the configuration to edit
      * @param isCurrent
@@ -58,11 +55,14 @@ public class ViewConfigHelper extends ConfigHelper {
      *            Open the dialog with blocks tab open
      */
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+    protected void openDialog(EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst) {
+    	final String configName = getConfigDisplayName(config, isCurrent);
+        final String subTitle = "Viewing the " + configName + " configuration";
         config.setIsComponent(false);
+
         ConfigDetailsDialog dialog =
-                new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
+                new ConfigDetailsDialog(shell, title, subTitle, config, false, configurationViewModels);
         dialog.open();
     }
 }
