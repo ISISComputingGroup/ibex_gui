@@ -24,6 +24,7 @@
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.2.201708081247"/>
 <unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="3.2.1.201702101113"/>
 <unit id="org.csstudio.boy.feature.feature.group" version="3.2.1.201708032359"/>
 <unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="3.2.2.201702101113"/>
