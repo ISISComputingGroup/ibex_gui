@@ -493,21 +493,21 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="uk.ac.stfc.isis.ibex.configserver"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.alarm"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="uk.ac.stfc.isis.ibex.validators"
          download-size="0"
@@ -670,6 +670,13 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.blocks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.configserver"
          download-size="0"
          install-size="0"
          version="0.0.0"
