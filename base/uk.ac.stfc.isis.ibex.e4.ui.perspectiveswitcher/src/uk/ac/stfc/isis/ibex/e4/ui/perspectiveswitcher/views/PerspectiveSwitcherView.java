@@ -56,11 +56,12 @@ public class PerspectiveSwitcherView {
 	}
 	
 	private void addSeparator() {
-		new Label(toolBar, SWT.HORIZONTAL | SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 	}
 
 	private void addResetCurrentPerspectiveShortcut() {
-		// TODO Auto-generated method stub
-		
+		ToolItem shortcut = new ToolItem(toolBar, SWT.NONE);
+		shortcut.setText("Reset perspective");
+		shortcut.setToolTipText("Sets the layout of the current perspective back to its default");		
 	}
 }
