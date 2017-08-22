@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -37,6 +38,8 @@ public class PerspectiveSwitcherView {
 		
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 		addPerspectiveShortcuts();
+		addSeparator();
+		addResetCurrentPerspectiveShortcut();
 	}
 
 	private void addPerspectiveShortcuts() {		
@@ -50,5 +53,14 @@ public class PerspectiveSwitcherView {
 			shortcut.setData(PerspectiveSelectionAdapter.ID_KEY, perspective.getElementId());
 			shortcut.addSelectionListener(selectionAdapter);
 		}
+	}
+	
+	private void addSeparator() {
+		new Label(toolBar, SWT.HORIZONTAL | SWT.SEPARATOR);
+	}
+
+	private void addResetCurrentPerspectiveShortcut() {
+		// TODO Auto-generated method stub
+		
 	}
 }
