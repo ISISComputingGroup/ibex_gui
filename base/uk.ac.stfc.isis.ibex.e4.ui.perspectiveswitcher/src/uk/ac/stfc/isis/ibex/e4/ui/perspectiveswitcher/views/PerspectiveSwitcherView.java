@@ -10,7 +10,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -46,7 +45,8 @@ public class PerspectiveSwitcherView {
 		PerspectiveSelectionAdapter selectionAdapter = new PerspectiveSelectionAdapter(perspectivesProvider);
 		for (MPerspective perspective : perspectivesProvider.getPerspectives()) {
 			ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
-			shortcut.setText(perspective.getLabel());
+			// TODO: E4 creates an orphan of some perspectives where the label is surrounded by <>. I haven't found a way to stop it.
+			shortcut.setText(perspective.getLabel().replace("<","").replace(">",""));
 			shortcut.setToolTipText(perspective.getTooltip());
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
 			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
