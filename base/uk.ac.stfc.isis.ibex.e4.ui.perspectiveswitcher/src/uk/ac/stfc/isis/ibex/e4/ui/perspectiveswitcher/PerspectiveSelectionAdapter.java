@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.ToolItem;
 public class PerspectiveSelectionAdapter extends SelectionAdapter {
 
 	private final PerspectivesProvider provider;
+	public static final String ID_KEY = "TARGET_ID";
 
 	public PerspectiveSelectionAdapter(PerspectivesProvider provider) {
 		super();
@@ -16,7 +17,7 @@ public class PerspectiveSelectionAdapter extends SelectionAdapter {
 	
 	@Override
 	public void widgetSelected(SelectionEvent event) {
-		String targetElementId = (String) ((ToolItem) event.getSource()).getData("TARGET_ID");
+		String targetElementId = (String) ((ToolItem) event.getSource()).getData(ID_KEY);
 		MPerspective element = provider.getPerspective(targetElementId);
 	    if (element != null) {
 	      	provider.getPartService().switchPerspective(element);

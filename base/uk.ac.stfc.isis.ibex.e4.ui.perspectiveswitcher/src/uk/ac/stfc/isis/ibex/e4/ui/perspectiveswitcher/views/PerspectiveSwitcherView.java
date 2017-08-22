@@ -23,7 +23,6 @@ public class PerspectiveSwitcherView {
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private ToolBar toolBar;
 	private PerspectivesProvider perspectivesProvider; 
-	private static final String INITIALLY_ACTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms.<Alarms>";
 
 	public PerspectiveSwitcherView() {
 	}
@@ -47,8 +46,8 @@ public class PerspectiveSwitcherView {
 			shortcut.setText(perspective.getLabel());
 			shortcut.setToolTipText(perspective.getTooltip());
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
-			shortcut.setSelection(perspective.getElementId()==INITIALLY_ACTIVE_ID);
-			shortcut.setData("TARGET_ID", perspective.getElementId());
+			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
+			shortcut.setData(PerspectiveSelectionAdapter.ID_KEY, perspective.getElementId());
 			shortcut.addSelectionListener(selectionAdapter);
 		}
 	}

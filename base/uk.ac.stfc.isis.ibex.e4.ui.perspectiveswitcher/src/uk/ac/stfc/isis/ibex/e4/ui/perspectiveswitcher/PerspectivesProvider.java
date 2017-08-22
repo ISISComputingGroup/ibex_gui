@@ -3,25 +3,23 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 public class PerspectivesProvider {
 	
 	private final EPartService partService;
-	private final MApplication app;
-	private final EModelService modelService;
 	private List<MPerspective> perspectives = new ArrayList<MPerspective>();
+	private MPerspectiveStack perspectivesStack;
 	
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
 		this.partService = partService;
-		this.app = app;
-		this.modelService = modelService;
 		this.perspectives =  modelService.findElements(app, null, MPerspective.class, null);
+		this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
 	}
 	
 	public EPartService getPartService() {
@@ -39,5 +37,9 @@ public class PerspectivesProvider {
 	
 	public MPerspective getPerspective(String elementId) {
 		return perspectives.stream().filter(p-> matchPerspectivesById(p, elementId)).findAny().get();
+	}
+	
+	public boolean isSelected(MPerspective perspective) {
+		return perspectivesStack.getSelectedElement().equals(perspective);		
 	}
 }
