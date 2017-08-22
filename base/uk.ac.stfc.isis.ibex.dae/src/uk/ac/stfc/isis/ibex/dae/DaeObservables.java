@@ -276,7 +276,7 @@ public class DaeObservables {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("INSTNAME")));
         runState = obsFactory.getSwitchableObservable(new EnumChannel<>(DaeRunState.class),
-                InstrumentUtils.addPrefix(DAE.endWith("RUNSTATE_STR")));
+                InstrumentUtils.addPrefix(DAE.endWith("RUNSTATE")));
         runNumber = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("RUNNUMBER")));
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
