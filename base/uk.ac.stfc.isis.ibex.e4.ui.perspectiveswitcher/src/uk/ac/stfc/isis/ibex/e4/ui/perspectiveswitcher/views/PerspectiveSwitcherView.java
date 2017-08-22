@@ -22,6 +22,7 @@ public class PerspectiveSwitcherView {
 
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private ToolBar toolBar;
+	// TODO: Refactor this into a proper viewModel
 	private PerspectivesProvider perspectivesProvider; 
 
 	public PerspectiveSwitcherView() {
