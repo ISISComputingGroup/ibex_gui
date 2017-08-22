@@ -261,6 +261,15 @@ public class ResourceManager extends SWTResourceManager {
 		}
 		return null;
 	}
+	
+	public static Image getPluginImageFromUri(String uri) {
+		try {
+			return getPluginImageFromUrl(new URL(uri));
+		} catch (MalformedURLException e) {
+			return null;
+		}
+	}
+	
 	/**
 	 * Returns an {@link Image} based on given {@link URL}.
 	 */

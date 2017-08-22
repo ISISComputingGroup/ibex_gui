@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
-import javax.inject.Inject;
-
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -9,10 +7,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
@@ -20,20 +15,16 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSelectionAdapter;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
+
 public class PerspectiveSwitcherView {
 
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private ToolBar toolBar;
-	
-	private MApplication app;
-	private EPartService partService;
-	private EModelService modelService;
-	
-	private static final String PLUGIN_WITH_PERSPECTIVE_ICONS = "uk.ac.stfc.isis.ibex.e4.ui";
-	private static final String PERSPECTIVE_FOLDER_PREFIX = "perspectiveIcons/";
-	private static final String PERSPECTIVE_PLUGIN_PREFIX = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.";
+	private PerspectivesProvider perspectivesProvider; 
+	private static final String INITIALLY_ACTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms.<Alarms>";
 
-	@Inject
 	public PerspectiveSwitcherView() {
 	}
 
@@ -45,32 +36,20 @@ public class PerspectiveSwitcherView {
 		toolBar = new ToolBar(composite, SWT.VERTICAL);
 		toolBar.setFont(LABEL_FONT);
 		
-		this.app = app;
-		this.partService = partService;
-		this.modelService = modelService;		
-		
-		// TODO: Perspectives should not be hard coded. Use snippets and an extension point to define these
-		addPerspectiveShortcut("Alarms", PERSPECTIVE_PLUGIN_PREFIX + "alarms", "Alarms.png", true);
+		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
+		addPerspectiveShortcuts();
 	}
 
-	private void addPerspectiveShortcut(String name, String partId, String iconFile, boolean selected) {
-		ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
-		shortcut.setText(name);
-		shortcut.setToolTipText(name);
-		Image img = ResourceManager.getPluginImage(PLUGIN_WITH_PERSPECTIVE_ICONS, PERSPECTIVE_FOLDER_PREFIX + iconFile);
-		shortcut.setImage(img);
-		shortcut.setSelection(selected);
-		shortcut.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent event) {
-		        MPerspective element = (MPerspective) modelService.find(partId, app);
-		        if (element != null) {
-		        	partService.switchPerspective(element);
-		        }
-		        else {
-		        	System.out.println("Unable to find perspective part: " + partId);
-		        }
-			}	
-		});
+	private void addPerspectiveShortcuts() {		
+		PerspectiveSelectionAdapter selectionAdapter = new PerspectiveSelectionAdapter(perspectivesProvider);
+		for (MPerspective perspective : perspectivesProvider.getPerspectives()) {
+			ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
+			shortcut.setText(perspective.getLabel());
+			shortcut.setToolTipText(perspective.getTooltip());
+			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
+			shortcut.setSelection(perspective.getElementId()==INITIALLY_ACTIVE_ID);
+			shortcut.setData("TARGET_ID", perspective.getElementId());
+			shortcut.addSelectionListener(selectionAdapter);
+		}
 	}
 }

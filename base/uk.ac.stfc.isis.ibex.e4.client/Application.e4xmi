@@ -3,12 +3,22 @@
   <children xsi:type="basic:TrimmedWindow" xmi:id="_X1-d4GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow.0" iconURI="">
     <tags>shellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_YXsD0GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0" selectedElement="_Zam5YGGWEee2EOm7UkHWHg">
-      <children xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms">
+      <children xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm.png">
         <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
-            <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="75">
+            <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="">
               <children xsi:type="advanced:Placeholder" xmi:id="_OrOewHzjEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_9zpdoHziEee7XtTTU-lRdw"/>
+            </children>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_-Y_6EIctEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam Status" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.beamstatus/icons/status_32x24.png">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ENhdcIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3">
+          <children xsi:type="advanced:Placeholder" xmi:id="_FZDccIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_HX2EYIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.4" containerData="70" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_IZXy0IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2">
+              <children xsi:type="advanced:Placeholder" xmi:id="_Iz7A0IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_Wtrl8IcuEeeB45r8U07FRg"/>
             </children>
           </children>
         </children>
@@ -65,7 +75,7 @@
       <children xsi:type="menu:MenuSeparator" xmi:id="_1qIX8H3WEee2jZQhjWIQ1g" elementId="navigate" toBeRendered="false" visible="false"/>
       <children xsi:type="menu:Menu" xmi:id="_2N6acH3WEee2jZQhjWIQ1g" elementId="help" toBeRendered="false" visible="false" label="Help"/>
     </mainMenu>
-    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_shoY4GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0" accessibilityPhrase="">
+    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_shoY4GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.bannerControls" accessibilityPhrase="">
       <children xsi:type="basic:Part" xmi:id="__nbWUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
       <children xsi:type="basic:PartSashContainer" xmi:id="_4zdIIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_unc14GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
@@ -77,6 +87,7 @@
       </children>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarms"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_Wtrl8IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.ui.beamStatusView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam Status"/>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>

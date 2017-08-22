@@ -1,26 +1,28 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.ToolItem;
 
 public class PerspectiveSelectionAdapter extends SelectionAdapter {
-	
-	private PerspectiveInfo perspective;
 
-	public PerspectiveSelectionAdapter(PerspectiveInfo perspective) {
+	private final PerspectivesProvider provider;
+
+	public PerspectiveSelectionAdapter(PerspectivesProvider provider) {
 		super();
-		this.perspective = perspective;
+		this.provider = provider;
 	}
 	
 	@Override
 	public void widgetSelected(SelectionEvent event) {
-		// How do we open a perspective from an event?
-		// MPerspective element = (MPerspective) modelService.find(perspective.getPartID(), app);
-	    // if (element != null) {
-	    //  	partService.switchPerspective(element);
-	    // } 
-	    // else {
-	    //  	System.out.println("Unable to find perspective part: " + perspective.getPartID());
-	    // }
+		String targetElementId = (String) ((ToolItem) event.getSource()).getData("TARGET_ID");
+		MPerspective element = provider.getPerspective(targetElementId);
+	    if (element != null) {
+	      	provider.getPartService().switchPerspective(element);
+	    }
+	    else {
+	      	System.out.println("Unable to find perspective part with ID: " + targetElementId);
+	    }
 	}
 }
