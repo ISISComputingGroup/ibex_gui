@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -18,7 +18,11 @@ public class PerspectivesProvider {
 	
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
 		this.partService = partService;
-		this.perspectives =  modelService.findElements(app, null, MPerspective.class, null);
+		this.perspectives =  modelService
+				.findElements(app, null, MPerspective.class, null)
+				.stream()
+				.filter(p -> p.isVisible())
+				.collect(Collectors.toList());
 		this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
 	}
 	

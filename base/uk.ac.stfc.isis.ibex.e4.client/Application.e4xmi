@@ -23,6 +23,26 @@
           </children>
         </children>
       </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_btLvUIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" visible="false" label="DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ohPQoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.6">
+          <children xsi:type="advanced:Placeholder" xmi:id="_pHrlkIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_pej0gIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7" containerData="70" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_svsOEIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.5">
+              <children xsi:type="advanced:Placeholder" xmi:id="_tIRGIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.7" ref="_uB3noIf-EeeTH-lQyXhh9A"/>
+            </children>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" visible="false" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_32x24.png">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_OcdgIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
+          <children xsi:type="advanced:Placeholder" xmi:id="_O-8iIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.4" containerData="30" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_PymMoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" containerData="70" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_RFwdoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4">
+              <children xsi:type="advanced:Placeholder" xmi:id="_RaqWoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.5" ref="_rvX2AIf9EeeTH-lQyXhh9A"/>
+            </children>
+          </children>
+        </children>
+      </children>
     </children>
     <mainMenu xmi:id="_3TEoMGbLEeeM7uzkT_ViHQ" elementId="org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_CWMfIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ibex" label="IBEX" mnemonics="">
@@ -88,6 +108,8 @@
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarms"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_Wtrl8IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.ui.beamStatusView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam Status"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_rvX2AIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Web Links"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.DaeView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="DAE"/>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
