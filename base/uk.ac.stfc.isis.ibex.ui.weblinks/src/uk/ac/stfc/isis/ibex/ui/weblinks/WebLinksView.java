@@ -20,7 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.weblinks;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
@@ -41,9 +44,17 @@ public class WebLinksView extends ViewPart {
 	}
 	
 	@Override
-	public void createPartControl(Composite parent) {
-        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new WebLinksPanel(parent, SWT.NONE);
+	public void createPartControl(Composite parent) {        
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+        
+		Composite webLinksPanel = new Composite(scrolledComposite, SWT.NONE);
+		webLinksPanel.setLayout(new GridLayout(1, false));
+		scrolledComposite.setContent(webLinksPanel);
+        
+        WebLinksPanel panel = new WebLinksPanel(webLinksPanel, SWT.NONE);
+        scrolledComposite.setMinSize(panel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	@Override
