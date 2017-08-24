@@ -15,9 +15,13 @@ public class PerspectivesProvider {
 	private final EPartService partService;
 	private List<MPerspective> perspectives = new ArrayList<MPerspective>();
 	private MPerspectiveStack perspectivesStack;
+	private MApplication app;
+	private EModelService modelService;
 	
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
 		this.partService = partService;
+		this.app = app;
+		this.modelService = modelService;
 		this.perspectives =  modelService
 				.findElements(app, null, MPerspective.class, null)
 				.stream()
@@ -28,6 +32,14 @@ public class PerspectivesProvider {
 	
 	public EPartService getPartService() {
 		return partService;
+	}
+	
+	public EModelService getModelService() {
+		return modelService;
+	}
+	
+	public MApplication getApp() {
+		return app;
 	}
 
 	public List<MPerspective> getPerspectives() {

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSelectionAdapter;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
@@ -63,6 +64,7 @@ public class PerspectiveSwitcherView {
 	private void addResetCurrentPerspectiveShortcut() {
 		ToolItem shortcut = new ToolItem(toolBar, SWT.NONE);
 		shortcut.setText("Reset perspective");
-		shortcut.setToolTipText("Sets the layout of the current perspective back to its default");		
+		shortcut.setToolTipText("Sets the layout of the current perspective back to its default");	
+		shortcut.addSelectionListener(new PerspectiveResetAdapter(perspectivesProvider));	
 	}
 }
