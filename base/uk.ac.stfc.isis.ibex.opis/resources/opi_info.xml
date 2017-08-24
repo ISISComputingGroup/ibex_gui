@@ -792,11 +792,11 @@
 			<value>
 				<type>BEAMSTOP</type>
 				<path>xyBeamstop.opi</path>
-				<description>The OPI for the X-Y Beamstop. No properties required.</description>
+				<description>The OPI for the XY Beamstop. No properties required.</description>
 				<macros>
 					<macro>
 						<name>XYBEAMSTOP</name>
-						<description>The X-Y Beamstop PV prefix (e.g. XYBEAMSTOP_01).</description>
+						<description>The XY Beamstop PV prefix (e.g. MOT).</description>
 					</macro>
 				</macros>
 			</value>
