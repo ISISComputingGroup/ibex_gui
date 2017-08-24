@@ -4,7 +4,7 @@ pipeline {
 
   // agent defines where the pipeline will run.
   agent {  
-    label "ndhspare53"
+    label "ndw1757"
   }
   
   triggers {
@@ -21,11 +21,28 @@ pipeline {
     
     stage("Build") {
       steps {
-        bat '''
+        script {
+            env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
+            echo "git commit: ${env.GIT_COMMIT}"
+            echo "git branch: ${env.BRANCH_NAME}"
+            if (env.BRANCH_NAME != null && env.BRANCH_NAME.startsWith("Release")) {
+                env.IS_RELEASE = "YES"
+                env.IS_DEPLOY = "NO"
+            }
+            else {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "YES"
+            }
+        }
+        
+        bat """
             cd build
-            set DEPLOY=NO
+            set GIT_COMMIT=${env.GIT_COMMIT}
+            set GIT_BRANCH=${env.BRANCH_NAME}
+            set RELEASE=${env.IS_RELEASE}
+            set DEPLOY=${env.IS_DEPLOY}
             jenkins_build.bat"
-            '''
+            """
       }
     }
     

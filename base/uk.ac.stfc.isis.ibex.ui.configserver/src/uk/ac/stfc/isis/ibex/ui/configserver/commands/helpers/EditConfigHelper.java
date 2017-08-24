@@ -49,15 +49,17 @@ public class EditConfigHelper extends ConfigHelper {
         this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         
         title = "Edit Configuration";
-        currentSubTitle = "Editing the current configuration";
     }
 
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+    protected void openDialog(EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst) {
         config.setIsComponent(false);
+        final String configName = getConfigDisplayName(config, isCurrent);
+        final String subTitle = "Editing the " + configName + " configuration";
+
         EditConfigDialog dialog =
-                new EditConfigDialog(shell, title, currentSubTitle, config, false, configurationViewModels,
+                new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
                         editBlockFirst);
         if (dialog.open() == Window.OK) {
             if (dialog.doAsComponent()) {
