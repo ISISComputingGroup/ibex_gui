@@ -186,7 +186,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <border_width>1</border_width>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:X:SP</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:SP</pv_name>
           <selector_type>0</selector_type>
           <border_color>
             <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
@@ -242,7 +242,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <border_width>1</border_width>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:SP</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:SP</pv_name>
           <selector_type>0</selector_type>
           <border_color>
             <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
@@ -410,7 +410,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <border_width>1</border_width>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:TWEAK</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:TWEAK</pv_name>
           <selector_type>0</selector_type>
           <border_color>
             <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
@@ -466,7 +466,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <border_width>1</border_width>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:X:TWEAK</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:TWEAK</pv_name>
           <selector_type>0</selector_type>
           <border_color>
             <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
@@ -645,7 +645,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:X.RBV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X.RBV</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -696,7 +696,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:Y.RBV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y.RBV</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -744,7 +744,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:X:TWEAK:CALC</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:TWEAK:CALC</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -758,7 +758,7 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="WRITE_PV">
-              <pv_name>$(P)$(XYBEAMSTOP):ARM:X:TWEAK:CALC.PROC</pv_name>
+              <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:TWEAK:CALC.PROC</pv_name>
               <value>1</value>
               <timeout>10</timeout>
               <description></description>
@@ -791,7 +791,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:X:TWEAK:DECREMENT</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:TWEAK:DECREMENT</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -805,7 +805,7 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="WRITE_PV">
-              <pv_name>$(P)$(XYBEAMSTOP):ARM:X:TWEAK:DECREMENT.PROC</pv_name>
+              <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:X:TWEAK:DECREMENT.PROC</pv_name>
               <value>1</value>
               <timeout>10</timeout>
               <description></description>
@@ -838,7 +838,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:TWEAK:CALC</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:TWEAK:CALC</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -852,7 +852,7 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="WRITE_PV">
-              <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:TWEAK:CALC.PROC</pv_name>
+              <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:TWEAK:CALC.PROC</pv_name>
               <value>1</value>
               <timeout>10</timeout>
               <description></description>
@@ -885,7 +885,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:TWEAK:DECREMENT</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:TWEAK:DECREMENT</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -899,7 +899,7 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="WRITE_PV">
-              <pv_name>$(P)$(XYBEAMSTOP):ARM:Y:TWEAK:DECREMENT.PROC</pv_name>
+              <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:Y:TWEAK:DECREMENT.PROC</pv_name>
               <value>1</value>
               <timeout>10</timeout>
               <description></description>
@@ -1056,7 +1056,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:STORE:INV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:STORE:INV</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1109,7 +1109,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:STORE</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:STORE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1161,7 +1161,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):ARM:STORE:SP</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):ARM:STORE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -1338,7 +1338,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):SHUTTERS:INV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):SHUTTERS:INV</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1391,7 +1391,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):SHUTTERS</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):SHUTTERS</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1443,7 +1443,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):SHUTTERS:SP</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):SHUTTERS:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -1691,7 +1691,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0101.RBV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0101.RBV</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1742,7 +1742,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0102.RBV</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0102.RBV</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1849,7 +1849,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0101.LLM</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0101.LLM</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1956,7 +1956,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0102.LLM</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0102.LLM</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2063,7 +2063,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0101.HLM</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0101.HLM</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2170,7 +2170,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(P)$(XYBEAMSTOP):MTR0102.HLM</pv_name>
+          <pv_name>$(P)$(XYSHUTTERARMBEAMSTOP):MTR0102.HLM</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />

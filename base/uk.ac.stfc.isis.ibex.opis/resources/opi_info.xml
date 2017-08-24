@@ -22,11 +22,11 @@
 			</value>
 		</entry>
 		<entry>
-			<key>Beam-stop</key>
+			<key>XY Beam-stop</key>
 			<value>
 				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
-				<description>The OPI for the beam-stop. No properties required.</description>
+				<description>The OPI for the XY beam-stop. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -844,15 +844,15 @@
 			</value>
 		</entry>
 		<entry>
-			<key>XY Beam-stop</key>
+			<key>XY Shutter Arm Beam-stop</key>
 			<value>
 				<type>BEAMSTOP</type>
-				<path>xyBeamstop.opi</path>
-				<description>The OPI for the XY Beam-stop. No properties required.</description>
+				<path>xyShutterArmBeamstop.opi</path>
+				<description>The OPI for the XY Arm Beam-stop with a shutter.</description>
 				<macros>
 					<macro>
-						<name>XYBEAMSTOP</name>
-						<description>The XY Beamstop PV prefix (e.g. MOT).</description>
+						<name>XYSHUTTERARMBEAMSTOP</name>
+						<description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
 					</macro>
 				</macros>
 			</value>
