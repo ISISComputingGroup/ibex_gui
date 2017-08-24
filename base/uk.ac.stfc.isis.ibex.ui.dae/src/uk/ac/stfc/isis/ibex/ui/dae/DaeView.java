@@ -159,7 +159,6 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		lblTitle.setText("DAE Control Program");
 		
 		CTabFolder tabFolder = new CTabFolder(container, SWT.BORDER);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
         TabIsShownListener.createAndRegister(this, tabFolder, this);
 
@@ -179,8 +178,9 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		
 		Composite experimentalSetupComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmExperimentSetup.setControl(experimentalSetupComposite);
-		experimentalSetupComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+        experimentalSetupComposite.setLayout(new GridLayout(1, false));
 		experimentSetup = new ExperimentSetup(experimentalSetupComposite, SWT.NONE);
+        experimentSetup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		CTabItem tbtmRunInformation = new CTabItem(tabFolder, SWT.NONE);
 		tbtmRunInformation.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/info.png"));
@@ -222,26 +222,17 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		vetosPanel = new VetosPanel(vetosComposite, SWT.NONE);
 		vetosPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		
+        GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        tabFolder.setLayoutData(tabFolderGridData);
+
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
-        scrolledComposite.setMinSize(new Point(600, 500));
-		
-		Composite composite = new Composite(container, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
-		GridData gdComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gdComposite.widthHint = 600;
-		composite.setLayoutData(gdComposite);
-		
-		Label label = new Label(composite, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-
+        Point size = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        scrolledComposite.setMinSize(size);
 	}
 
 	/**

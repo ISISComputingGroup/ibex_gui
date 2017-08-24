@@ -50,6 +50,12 @@ public class ExperimentSetup extends Composite {
 	
 	private final int timeToDisplayDialog = 2;
 	
+    /**
+     * SWT isn't good at computing the height of this control and so truncates
+     * it if the screen gets too small. This is the number of pixels to add to
+     * the computed size to make sure that doesn't happen.
+     */
+
 	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
 	
     /**
@@ -70,7 +76,6 @@ public class ExperimentSetup extends Composite {
 		setLayout(gridLayout);
 		
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
@@ -98,9 +103,14 @@ public class ExperimentSetup extends Composite {
 		periods = new PeriodsPanel(periodsComposite, SWT.NONE);
 		
 		tabFolder.setSelection(0);
+        GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        // Don't let the tab folder shrink vertically or controls can start
+        // disappearing
+        tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+        tabFolder.setLayoutData(tabFolderGridData);
 		
 		Composite sendChangesComposite = new Composite(this, SWT.NONE);
-		sendChangesComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        sendChangesComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		sendChangesComposite.setLayout(new GridLayout(1, false));
 		
 		RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
