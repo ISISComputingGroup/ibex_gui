@@ -788,11 +788,11 @@
 			</value>
 		</entry>
 		<entry>
-			<key>XY Beamstop</key>
+			<key>XY Beam-stop</key>
 			<value>
 				<type>BEAMSTOP</type>
 				<path>xyBeamstop.opi</path>
-				<description>The OPI for the XY Beamstop. No properties required.</description>
+				<description>The OPI for the XY Beam-stop. No properties required.</description>
 				<macros>
 					<macro>
 						<name>XYBEAMSTOP</name>
