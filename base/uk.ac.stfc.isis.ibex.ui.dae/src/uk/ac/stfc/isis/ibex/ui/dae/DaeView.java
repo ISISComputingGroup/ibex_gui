@@ -221,9 +221,6 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		
 		vetosPanel = new VetosPanel(vetosComposite, SWT.NONE);
 		vetosPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-        GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        tabFolder.setLayoutData(tabFolderGridData);
 
 		createActions();
 		initializeToolBar();
@@ -231,11 +228,11 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
+        tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         Point tabSize = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point titleSize = titleComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point compositeSize = new Point(tabSize.x + titleSize.x, tabSize.y + titleSize.y);
-
         scrolledComposite.setMinSize(compositeSize);
 	}
 
