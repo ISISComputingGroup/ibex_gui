@@ -49,13 +49,6 @@ public class ExperimentSetup extends Composite {
 	private PeriodsPanel periods;
 	
 	private final int timeToDisplayDialog = 2;
-	
-    /**
-     * SWT isn't good at computing the height of this control and so truncates
-     * it if the screen gets too small. This is the number of pixels to add to
-     * the computed size to make sure that doesn't happen.
-     */
-
 	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
 	
     /**
