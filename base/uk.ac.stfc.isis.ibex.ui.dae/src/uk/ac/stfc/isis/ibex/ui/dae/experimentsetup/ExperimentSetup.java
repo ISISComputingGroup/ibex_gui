@@ -69,9 +69,9 @@ public class ExperimentSetup extends Composite {
 	public ExperimentSetup(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
-		gridLayout.marginHeight = 0;
-		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
+        gridLayout.marginHeight = 0;
+        gridLayout.verticalSpacing = 5;
+        gridLayout.marginWidth = 0;
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
@@ -108,23 +108,19 @@ public class ExperimentSetup extends Composite {
         // disappearing
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
-		
-		Composite sendChangesComposite = new Composite(this, SWT.NONE);
-        sendChangesComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		sendChangesComposite.setLayout(new GridLayout(1, false));
-		
-		RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
-		SendChangesButton btnSendChanges = new SendChangesButton(sendChangesComposite, SWT.NONE, rsvm.actions().begin);
-		btnSendChanges.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (viewModel != null) {
+
+        RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
+        SendChangesButton btnSendChanges = new SendChangesButton(this, SWT.NONE, rsvm.actions().begin);
+        btnSendChanges.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (viewModel != null) {
                     viewModel.updateDae();
-				}
-				sendingChanges.open();
-			}
-		});
-		btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+                }
+                sendingChanges.open();
+            }
+        });
+        btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
 	}
 	

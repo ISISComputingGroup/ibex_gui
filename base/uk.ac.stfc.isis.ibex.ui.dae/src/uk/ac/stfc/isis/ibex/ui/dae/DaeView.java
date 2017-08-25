@@ -231,8 +231,13 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
-        Point size = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        scrolledComposite.setMinSize(size);
+
+        Point tabSize = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        Point titleSize = titleComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        Point compositeSize = new Point(tabSize.x + titleSize.x, tabSize.y + titleSize.y);
+
+        // size.y += 20;
+        scrolledComposite.setMinSize(compositeSize);
 	}
 
 	/**
