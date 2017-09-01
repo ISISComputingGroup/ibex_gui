@@ -650,7 +650,7 @@
 				<macros>
 					<macro>
 						<name>MOT</name>
-						<description>The PV for this slit set's motor (e.g. MOT).</description>
+						<description>The PV for this slit set's motor (e.g. MOT:MTR0101).</description>
 					</macro>
 				</macros>
 			</value>
