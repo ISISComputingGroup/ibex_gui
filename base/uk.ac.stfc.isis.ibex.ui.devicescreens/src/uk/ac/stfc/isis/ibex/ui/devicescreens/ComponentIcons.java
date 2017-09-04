@@ -133,6 +133,8 @@ public final class ComponentIcons {
                 return "rotating_sample_changer";
             case STRESS_RIG:
                 return "stress_rig";
+            case HE_LEVEL_GAUGE:
+                return "he_level_gauge";
             default:
                 return "cog";
         }

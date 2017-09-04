@@ -113,6 +113,10 @@
          install-size="0"
          version="0.0.0"/>
 
+   <includes
+         id="org.csstudio.trends.databrowser2.opiwidget.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.help"
          download-size="0"
