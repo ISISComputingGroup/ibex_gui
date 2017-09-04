@@ -24,7 +24,6 @@ public class PerspectiveSwitcherView {
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 	private ToolBar toolBar;
-	// TODO: Refactor this into a proper viewModel
 	private PerspectivesProvider perspectivesProvider; 
 
 	public PerspectiveSwitcherView() {
