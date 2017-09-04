@@ -54,6 +54,9 @@
       <children xsi:type="menu:MenuSeparator" xmi:id="_1qIX8H3WEee2jZQhjWIQ1g" elementId="navigate" toBeRendered="false" visible="false"/>
       <children xsi:type="menu:Menu" xmi:id="_2N6acH3WEee2jZQhjWIQ1g" elementId="help" toBeRendered="false" visible="false" label="Help"/>
     </mainMenu>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1QYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
@@ -74,13 +77,13 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
       <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.bannerControls" containerData="30" accessibilityPhrase="">
-        <children xsi:type="basic:Part" xmi:id="_RgW1QYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_WqCL4JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" containerData="15" ref="_RgW1QYjKEee8_tONW2Z5Qw"/>
         <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_RgW1Q4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-            <children xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_McahUJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_RgW1RYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
-            <children xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_Sp6lYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
           </children>
         </children>
       </children>
@@ -94,13 +97,13 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_-Y_6EIctEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam Status" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.beamstatus/icons/status_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ENhdcIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3">
       <children xsi:type="basic:PartSashContainer" xmi:id="_orVuIIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.bannerControls" containerData="30" accessibilityPhrase="">
-        <children xsi:type="basic:Part" xmi:id="_orVuIYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_dRMtIJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" containerData="15" ref="_RgW1QYjKEee8_tONW2Z5Qw"/>
         <children xsi:type="basic:PartSashContainer" xmi:id="_orVuIojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_orVuI4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-            <children xsi:type="basic:Part" xmi:id="_orVuJIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_kS5OQJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.4" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_orVuJYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
-            <children xsi:type="basic:Part" xmi:id="_orVuJojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_lOLKwJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.5" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
           </children>
         </children>
       </children>
@@ -114,13 +117,13 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_btLvUIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" label="DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ohPQoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.6">
       <children xsi:type="basic:PartSashContainer" xmi:id="_pg6EMIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.bannerControls" containerData="30" accessibilityPhrase="">
-        <children xsi:type="basic:Part" xmi:id="_pg6EMYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_mmXswJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" containerData="15" ref="_RgW1QYjKEee8_tONW2Z5Qw"/>
         <children xsi:type="basic:PartSashContainer" xmi:id="_pg6EMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_pg6EM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-            <children xsi:type="basic:Part" xmi:id="_pg6ENIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_oxUhYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.7" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_pg6ENYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
-            <children xsi:type="basic:Part" xmi:id="_pg6ENojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_p15j0JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.8" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
           </children>
         </children>
       </children>
@@ -134,13 +137,13 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_OcdgIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
       <children xsi:type="basic:PartSashContainer" xmi:id="_rBCaMIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.bannerControls" containerData="30" accessibilityPhrase="">
-        <children xsi:type="basic:Part" xmi:id="_rBCaMYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_rnDYYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" containerData="15" ref="_RgW1QYjKEee8_tONW2Z5Qw"/>
         <children xsi:type="basic:PartSashContainer" xmi:id="_rBCaMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="60" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_rBCaM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-            <children xsi:type="basic:Part" xmi:id="_rBCaNIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_uEhgYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.10" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_rBCaNYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
-            <children xsi:type="basic:Part" xmi:id="_rBCaNojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_whUS8JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.11" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
           </children>
         </children>
       </children>
