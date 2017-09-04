@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -17,6 +18,8 @@ public class PerspectivesProvider {
 	private MPerspectiveStack perspectivesStack;
 	private MApplication app;
 	private EModelService modelService;
+	
+    private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 	
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
 		this.partService = partService;
@@ -57,5 +60,19 @@ public class PerspectivesProvider {
 	
 	public boolean isSelected(MPerspective perspective) {
 		return perspectivesStack.getSelectedElement().equals(perspective);		
+	}
+
+	public MPerspectiveStack getTopLevelStack() {
+		return (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID, app);
+	}
+	
+	public List<MPerspective> getInitialPerspectives() {
+		List<MPerspective> perspectives = new ArrayList<MPerspective>();
+        for (MUIElement snippet : app.getSnippets()) {
+            if (snippet instanceof MPerspective) {
+                perspectives.add((MPerspective) modelService.cloneSnippet(app, snippet.getElementId(), null));                
+            }
+        }
+        return perspectives;
 	}
 }

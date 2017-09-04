@@ -5,10 +5,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
+
 public class PerspectiveResetAdapter extends SelectionAdapter {
 
 	private final PerspectivesProvider provider;
-    private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 
 	public PerspectiveResetAdapter(PerspectivesProvider provider) {
 		super();
@@ -17,7 +18,7 @@ public class PerspectiveResetAdapter extends SelectionAdapter {
 	
 	@Override
 	public void widgetSelected(SelectionEvent event) {
-        MPerspectiveStack perspectiveStack = (MPerspectiveStack) provider.getModelService().find(MAIN_PERSPECTIVE_STACK_ID, provider.getApp());
+        MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
         perspectiveStack.getSelectedElement().setVisible(true);
         perspectiveStack.setVisible(true);

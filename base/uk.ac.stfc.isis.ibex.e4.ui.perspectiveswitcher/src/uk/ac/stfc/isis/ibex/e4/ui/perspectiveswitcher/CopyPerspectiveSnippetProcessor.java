@@ -2,10 +2,12 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
 /**
  * Copies all snippet perspectives to perspective stack called "MainPerspectiveStack" In order to register/reset perspective and not have to sync two copies in
@@ -13,11 +15,12 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
  * 
  */
 public class CopyPerspectiveSnippetProcessor {
-    private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 
     @Execute
-    public void execute(EModelService modelService, MApplication application) {
-        MPerspectiveStack perspectiveStack = (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID, application);
+    public void execute(MApplication app, EPartService partService, EModelService modelService) {
+    	
+    	PerspectivesProvider perspectivesProvider = new PerspectivesProvider(app, partService, modelService);    	
+        MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
 
         // Only do this when no other children, or the restored workspace state will be overwritten.
         if (!perspectiveStack.getChildren().isEmpty())
@@ -25,15 +28,12 @@ public class CopyPerspectiveSnippetProcessor {
 
         // clone each snippet that is a perspective and add the cloned perspective into the main PerspectiveStack
         boolean isFirst = true;
-        for (MUIElement snippet : application.getSnippets()) {
-            if (snippet instanceof MPerspective) {
-                MPerspective perspectiveClone = (MPerspective) modelService.cloneSnippet(application, snippet.getElementId(), null);
-                perspectiveStack.getChildren().add(perspectiveClone);
-                if (isFirst) {
-                    perspectiveStack.setSelectedElement(perspectiveClone);
-                    isFirst = false;
-                }
-            }
+        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
+           perspectiveStack.getChildren().add(perspective);
+           if (isFirst) {
+        	   perspectiveStack.setSelectedElement(perspective);
+               isFirst = false;
+           }
         }
     }
 }
