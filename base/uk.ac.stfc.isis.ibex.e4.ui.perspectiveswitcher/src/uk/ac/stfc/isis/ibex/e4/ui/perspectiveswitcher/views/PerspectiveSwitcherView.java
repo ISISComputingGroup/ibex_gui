@@ -63,7 +63,7 @@ public class PerspectiveSwitcherView {
 
 	private void addResetCurrentPerspectiveShortcut() {
 		ToolItem shortcut = new ToolItem(toolBar, SWT.NONE);
-		shortcut.setText("Reset perspective");
+		shortcut.setText("Reset layout");
 		shortcut.setToolTipText("Sets the layout of the current perspective back to its default");	
 		shortcut.addSelectionListener(new PerspectiveResetAdapter(perspectivesProvider));
 		shortcut.setImage(ResourceManager.getPluginImageFromUri(RESET_PERSPECTIVE_URI));
