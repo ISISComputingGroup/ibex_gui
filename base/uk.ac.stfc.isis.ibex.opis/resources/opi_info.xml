@@ -895,5 +895,33 @@
 				</macros>
 			</value>
 		</entry>    
+		<entry>
+			<key>Cybaman</key>
+			<value>
+				<type>GONIOMETER</type>
+				<path>cybaman.opi</path>
+				<description>The OPI for the cybaman.</description>
+				<macros>
+					<macro>
+						<name>CYBAMAN</name>
+						<description>The cybaman PV prefix (e.g. CYBAMAN_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>HLG</key>
+			<value>
+				<type>HE_LEVEL_GAUGE</type>
+				<path>hlg.opi</path>
+				<description>The OPI for the helium level guage.</description>
+				<macros>
+					<macro>
+						<name>HLG</name>
+						<description>The HLG PV prefix (e.g. HLG_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
