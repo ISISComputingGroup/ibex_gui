@@ -898,7 +898,7 @@
 		<entry>
 			<key>IEG system</key>
 			<value>
-				<type>OTHER</type>
+				<type>GAS_EXCHANGE</type>
 				<path>ieg_system.opi</path>
 				<description>The OPI for the gas exchange system.</description>
 				<macros>
