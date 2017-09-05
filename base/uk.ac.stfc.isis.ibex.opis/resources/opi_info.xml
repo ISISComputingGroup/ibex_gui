@@ -896,6 +896,28 @@
 			</value>
 		</entry>    
 		<entry>
+			<key>IEG system</key>
+			<value>
+				<type>GAS_EXCHANGE</type>
+				<path>ieg_system.opi</path>
+				<description>The OPI for the gas exchange system.</description>
+				<macros>
+					<macro>
+						<name>IEG</name>
+						<description>The gas exchange system PV prefix (e.g. IEG_01).</description>
+					</macro>
+					<macro>
+						<name>TPG26X</name>
+						<description>The TPG (bin presure reading) PV prefix (e.g. TPG26X_01).</description>
+					</macro>
+					<macro>
+						<name>TPGGAUGE</name>
+						<description>The TPG pressure gauge being used for bin pressure (e.g. 1).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Cybaman</key>
 			<value>
 				<type>GONIOMETER</type>
