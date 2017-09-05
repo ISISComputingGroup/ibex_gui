@@ -117,7 +117,10 @@ public enum ComponentType {
     /** Zoom sample stack. */
     ZOOM_SAMPLE_STACK,
     /** Sample changer for HRPD/POLARIS/GEM. */
-    ROT_SAMPLE_CHANGER;
+    ROT_SAMPLE_CHANGER,
+    /** Helium Level Gauge.*/
+    HE_LEVEL_GAUGE;
+
 	
 	private Target target;
 
