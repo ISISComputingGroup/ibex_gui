@@ -800,6 +800,8 @@
 			</value>
 		</entry>
 		<entry>
+		
+		
 			<key>Superlogics</key>
 			<value>
 				<type>MERCURY</type>
@@ -817,7 +819,7 @@
 			<key>HIFI Cryomagnet PSU</key>
 			<value>
 				<type>HFMAGPSU</type>
-				<path>hifiCryomagPSU.opi</path>
+				<path>HFMAGPSU/hifiCryomagPSU.opi</path>
 				<description>OPI for the HIFI Cryomagnet Power Supply</description>
 				<macros>
 					<macro>
