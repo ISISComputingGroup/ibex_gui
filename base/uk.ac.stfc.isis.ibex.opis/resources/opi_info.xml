@@ -894,6 +894,16 @@
 					</macro>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+        	<key>Engin-X collimators</key>
+			<value>
+				<type>JAWS</type>
+				<path>enginx_collimators/enginx_collimators.opi</path>
+				<description>The OPI for the Engin-X collimators.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>    
 		<entry>
 			<key>IEG system</key>
