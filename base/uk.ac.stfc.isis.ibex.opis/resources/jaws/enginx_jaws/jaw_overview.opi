@@ -2,7 +2,7 @@
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <show_close_button>true</show_close_button>
   <rules />
-  <wuid>-1c84b6f2:1420e6d43bf:-7403</wuid>
+  <wuid>-6481ba46:15da75156dd:-7f18</wuid>
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts />
@@ -19,30 +19,30 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <background_color>
-    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    <color red="240" green="240" blue="240" />
   </background_color>
   <width>800</width>
   <x>-1</x>
-  <name>$(NAME)</name>
+  <name></name>
   <grid_space>6</grid_space>
   <show_ruler>true</show_ruler>
   <y>-1</y>
   <snap_to_geometry>true</snap_to_geometry>
   <foreground_color>
-    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    <color red="192" green="192" blue="192" />
   </foreground_color>
   <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Jaws.opi</opi_file>
+    <opi_file>../coupled_slit.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>-1b177848:14212da2f74:-73cd</wuid>
+    <wuid>-6481ba46:15da75156dd:-7d70</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>457</height>
-    <border_width>1</border_width>
+    <height>349</height>
+    <border_width>0</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -61,7 +61,7 @@
       <color red="240" green="240" blue="240" />
     </background_color>
     <zoom_to_fit>false</zoom_to_fit>
-    <width>643</width>
+    <width>595</width>
     <x>6</x>
     <name>Linking Container</name>
     <y>6</y>
@@ -73,7 +73,7 @@
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </font>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
     <toggle_button>false</toggle_button>
     <border_style>0</border_style>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -82,12 +82,12 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
-    <wuid>23373536:1425af424d3:-7f45</wuid>
+    <wuid>-6481ba46:15da75156dd:-7cd4</wuid>
     <pv_value />
-    <text>View Motors</text>
+    <text>Calibrate Jaws</text>
     <scripts />
     <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>30</height>
+    <height>34</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -98,23 +98,19 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <pv_name></pv_name>
     <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
-    <widget_type>Action Button</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
-    </background_color>
-    <width>127</width>
+    <widget_type>Button</widget_type>
+    <width>139</width>
     <x>6</x>
-    <name>Action Button</name>
-    <y>468</y>
+    <name>Button</name>
+    <y>372</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
-        <path>slit_motors.opi</path>
+        <path>jaw_calibration.opi</path>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -123,7 +119,7 @@ $(pv_value)</tooltip>
       </action>
     </actions>
     <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
     </font>
   </widget>
 </display>

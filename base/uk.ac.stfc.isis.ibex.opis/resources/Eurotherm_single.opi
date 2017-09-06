@@ -1208,15 +1208,15 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_2_visible>true</axis_2_visible>
     <trace_0_name>TEMPERATURE</trace_0_name>
     <axis_2_minimum>0.0</axis_2_minimum>
-    <trace_0_update_mode>0</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_1_x_pv></trace_1_x_pv>
     <wuid>-335c4d15:141df6bc595:-7aad</wuid>
     <transparent>false</transparent>
-    <trace_1_update_mode>0</trace_1_update_mode>
+    <trace_1_update_mode>4</trace_1_update_mode>
     <axis_0_title_font>
       <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </axis_0_title_font>
-    <trace_2_update_mode>0</trace_2_update_mode>
+    <trace_2_update_mode>4</trace_2_update_mode>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
@@ -1236,7 +1236,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_scale_font>
       <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
     </axis_0_scale_font>
-    <trigger_pv>sim://ramp(0,1,0.5)</trigger_pv>
+    <trigger_pv>$(P)CS:IOC:$(EURO):DEVIOS:HEARTBEAT</trigger_pv>
     <widget_type>XY Graph</widget_type>
     <trace_2_line_width>1</trace_2_line_width>
     <axis_1_axis_color>
