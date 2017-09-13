@@ -100,6 +100,8 @@ public enum ComponentType {
     SCIMAG3D,
     /** Stress rig component type. */
     STRESS_RIG,
+    /** Gas exchange system. */
+    GAS_EXCHANGE,
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */

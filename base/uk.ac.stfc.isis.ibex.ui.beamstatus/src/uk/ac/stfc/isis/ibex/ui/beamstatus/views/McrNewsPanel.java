@@ -48,7 +48,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 public class McrNewsPanel {
     private static final int FONT_SIZE = 10;
 
-    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+    private static final String MCR_NEWS_PAGE_URL = "https://www.isis.stfc.ac.uk/gallery/mcrnews.txt";
     private static final String GET_NEWS_FAILED_MESSAGE =
             "Unable to load MCR news. \nTarget URL: " + MCR_NEWS_PAGE_URL + "\nError: ";
 

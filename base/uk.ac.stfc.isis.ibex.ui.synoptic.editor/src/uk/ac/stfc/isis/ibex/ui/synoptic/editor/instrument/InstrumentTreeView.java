@@ -132,6 +132,11 @@ public class InstrumentTreeView extends Composite {
         		    public void dragStart(DragSourceEvent event) {
                         currentDragSource = synopticViewModel.getSelectedComponents();
         		    }
+                    
+                    @Override
+                    public void dragSetData(DragSourceEvent event) {
+                    	event.data = "Data";
+                    }
 
         		    @Override
         		    public void dragFinished(DragSourceEvent event) {
