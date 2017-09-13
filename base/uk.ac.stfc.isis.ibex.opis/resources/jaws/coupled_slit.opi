@@ -160,8 +160,8 @@ elif width > 100:
 widget.setPropertyValue("width", width)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):HGAP.DRBV</pv>
-          <pv trig="true">$(P)$(J):HGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):HGAP</pv>
+          <pv trig="true">$(P)$(J):HGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -239,8 +239,8 @@ widget.setPropertyValue("width", width)
 widget.setPropertyValue("x", TR_X - width)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):HGAP.DRBV</pv>
-          <pv trig="true">$(P)$(J):HGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):HGAP</pv>
+          <pv trig="true">$(P)$(J):HGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -319,8 +319,8 @@ widget.setPropertyValue("height", height)
 
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):VGAP.DRBV</pv>
-          <pv trig="false">$(P)$(J):VGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):VGAP</pv>
+          <pv trig="false">$(P)$(J):VGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -400,8 +400,8 @@ widget.setPropertyValue("height", height)
 widget.setPropertyValue("y", BL_Y - height)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):VGAP.DRBV</pv>
-          <pv trig="true">$(P)$(J):VGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):VGAP</pv>
+          <pv trig="true">$(P)$(J):VGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -508,7 +508,7 @@ $(pv_value)</tooltip>
 lim =  PVUtil.getDouble(pvs[0]) / 2
 
 widget.setPropertyValue("text",str(lim));]]></scriptText>
-          <pv trig="true">$(P)$(J):VGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):VGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -610,7 +610,7 @@ $(pv_value)</tooltip>
 lim =  PVUtil.getDouble(pvs[0]) / 2
 
 widget.setPropertyValue("text",str(lim));]]></scriptText>
-          <pv trig="true">$(P)$(J):VGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):VGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -671,7 +671,7 @@ $(pv_value)</tooltip>
 lim =  PVUtil.getDouble(pvs[0]) / 2
 
 widget.setPropertyValue("text",str(lim));]]></scriptText>
-          <pv trig="true">$(P)$(J):HGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):HGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -732,7 +732,7 @@ $(pv_value)</tooltip>
 lim =  PVUtil.getDouble(pvs[0]) / 2
 
 widget.setPropertyValue("text",str(lim));]]></scriptText>
-          <pv trig="true">$(P)$(J):HGAP.HLM</pv>
+          <pv trig="true">$(P)$(J):HGAP:SP.DRVH</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -918,7 +918,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)$(J):VGAP.DRBV</pv_name>
+      <pv_name>$(P)$(J):VGAP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1066,7 +1066,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)$(J):HGAP.DRBV</pv_name>
+      <pv_name>$(P)$(J):HGAP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />

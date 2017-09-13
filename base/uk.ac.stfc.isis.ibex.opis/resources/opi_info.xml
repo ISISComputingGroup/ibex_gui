@@ -642,31 +642,15 @@
 			</value>
 		</entry>
 		<entry>
-			<key>muon_front_end</key>
+			<key>Slits (single motor)</key>
 			<value>
-				<type>MUON_FRONT_END</type>
-				<path>muon_front_end.opi</path>
-				<description>The OPI for the Muon front end momentum slits and barndoors.</description>
+				<type>JAWS</type>
+				<path>slits_single_motor.opi</path>
+				<description>The OPI for a slit set with one degree of  freedom.</description>
 				<macros>
 					<macro>
-						<name>BARNDOORS</name>
-						<description>Barndoors PV prefix (e.g. MOT).</description>
-					</macro>
-					<macro>
-						<name>MM_EMU</name>
-						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
-					</macro>
-					<macro>
-						<name>MM_MUSR</name>
-						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
-					</macro>
-					<macro>
-						<name>MM_HIFI</name>
-						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
-					</macro>
-					<macro>
-						<name>MM_MOMENTUM</name>
-						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
+						<name>MOT</name>
+						<description>The PV for this slit set's motor (e.g. MOT:MTR0101).</description>
 					</macro>
 				</macros>
 			</value>
@@ -892,6 +876,16 @@
 						<name>Q</name>
 						<description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
 					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+        	<key>Engin-X collimators</key>
+			<value>
+				<type>JAWS</type>
+				<path>enginx_collimators/enginx_collimators.opi</path>
+				<description>The OPI for the Engin-X collimators.</description>
+				<macros>
 				</macros>
 			</value>
 		</entry>    
