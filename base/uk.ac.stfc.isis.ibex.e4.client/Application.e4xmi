@@ -56,7 +56,7 @@
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.blocks/uk.ac.stfc.isis.ibex.e4.ui.blocks.views.BlocksView" label="Blocks"/>
-    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1QYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.bumpstrip/uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views.BumpStripView" label="Bump strip"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1QYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.bumpstrip" containerData="15" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.banner/uk.ac.stfc.isis.ibex.ui.banner.views.BannerView" label="Bump strip"/>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>

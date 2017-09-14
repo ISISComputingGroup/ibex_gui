@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -30,7 +32,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -51,7 +52,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
  * View of the spangle banner containing various instrument status messages.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BannerView extends ViewPart implements ISizeProvider {
+public class BannerView implements ISizeProvider {
 
     /**
      * Standard constructor.
@@ -83,7 +84,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Indicator inMotion;
     private Control motionControl;
 
-    @Override
+    @PostConstruct
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(5, false);
         glParent.marginRight = 2;
@@ -121,10 +122,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
         motionControl.setLayoutData(gdMotionControl);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 
     @Override
     public int getSizeFlags(boolean width) {
@@ -135,10 +132,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
     public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
             int preferredResult) {
         return width ? 0 : FIXED_HEIGHT;
-    }
-
-    @Override
-    public void setFocus() {
     }
 
     /**
