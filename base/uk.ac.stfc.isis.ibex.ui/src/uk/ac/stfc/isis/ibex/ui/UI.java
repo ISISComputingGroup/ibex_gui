@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -31,7 +30,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class UI extends AbstractUIPlugin implements IStartup {
+public class UI extends AbstractUIPlugin {
 
     /**
      * The plug-in ID.
@@ -50,6 +49,11 @@ public class UI extends AbstractUIPlugin implements IStartup {
 	public UI() {
 	}
 	
+	/**
+	 * Switch perspectives.
+	 *
+	 * @param perspectiveID the perspective ID to switch to
+	 */
 	public void switchPerspective(final String perspectiveID) {
 		Display.getDefault().syncExec(new Runnable() {
 		    @Override
@@ -104,8 +108,4 @@ public class UI extends AbstractUIPlugin implements IStartup {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
-	@Override
-	public void earlyStartup() {
-        waiting = new WaitFor();
-	}
 }

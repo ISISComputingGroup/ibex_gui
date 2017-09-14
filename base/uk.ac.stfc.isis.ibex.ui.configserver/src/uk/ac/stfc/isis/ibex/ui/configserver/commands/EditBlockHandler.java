@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
 
@@ -43,9 +43,13 @@ public final class EditBlockHandler extends EditConfigHandler {
         this.blockName = blockName;
     }
 
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        new EditBlockHelper(shell(), SERVER).createDialog(blockName);
-        return null;
+    /**
+     * Open the edit block dialogue.
+     * 
+     * @param shell shell to open
+     */
+    @Execute
+    public void execute(Shell shell) {
+        new EditBlockHelper(shell, SERVER).createDialog(blockName);
     }
 }

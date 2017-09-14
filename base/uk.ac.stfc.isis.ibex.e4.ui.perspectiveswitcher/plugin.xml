@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" name="Perspective switcher" schema="schema/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.exsd"/>
-
-
+   <extension id="MainAppModel" point="org.eclipse.e4.workbench.model">
+       <processor beforefragment="false" class="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.CopyPerspectiveSnippetProcessor"/>
+   </extension>
 </plugin>
