@@ -787,5 +787,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Lakeshore 460</key>
+			<value>
+				<type>OTHER</type>
+				<path>lakeshore460.opi</path>
+				<description>The OPI for the Superlogics data acquisition system.</description>
+				<macros>
+					<macro>
+						<name>LKSH460</name>
+						<description>The Lakeshore460 PV prefix (e.g. LKSH460_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
