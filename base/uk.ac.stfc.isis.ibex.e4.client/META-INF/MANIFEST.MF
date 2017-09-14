@@ -5,8 +5,7 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-
  version="1.0.0",uk.ac.stfc.isis.ibex.e4.ui.blocks;bundle-version="1.0
  .0",uk.ac.stfc.isis.ibex.e4.ui.dae;bundle-version="1.0.0",uk.ac.stfc.
- isis.ibex.e4.ui.beamstatus;bundle-version="1.0.0",uk.ac.stfc.isis.ibe
- x.e4.ui.bumpstrip;bundle-version="1.0.0",uk.ac.stfc.isis.ibex.ui.dash
+ isis.ibex.e4.ui.beamstatus;bundle-version="1.0.0",uk.ac.stfc.isis.ibex.ui.dash
  board;bundle-version="1.0.0",uk.ac.stfc.isis.ibex.ui.beamstatus;bundl
  e-version="1.0.0",uk.ac.stfc.isis.ibex.ui.alarm;bundle-version="1.0.0
  ",uk.ac.stfc.isis.ibex.ui.weblinks;bundle-version="1.0.0",uk.ac.stfc.
