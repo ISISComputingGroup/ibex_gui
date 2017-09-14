@@ -22,12 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.blocks.views;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -41,7 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
  * The overall view that holds the information on the blocks in the main ISIS
  * perspective.
  */
-public class BlocksView extends ViewPart implements ISizeProvider {
+public class BlocksView implements ISizeProvider {
 
     /**
      * The default constructor.
@@ -91,7 +93,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}		
 	};	
 
-	@Override
+    @PostConstruct
 	public void createPartControl(final Composite parent) {
 		
 		GridLayout glParent = new GridLayout(1, false);
@@ -111,26 +113,23 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		configSubscription = CONFIG.addObserver(configObserver);
 	}
 
-	@Override
+    @PreDestroy
 	public void dispose() {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
 	};
 	
-	@Override
-	public int getSizeFlags(boolean width) {
-		return width ? SWT.NONE : SWT.MIN | SWT.MAX;
-	}
+    // TODO: Is this required?
+    @Override
+    public int getSizeFlags(boolean width) {
+        return width ? SWT.NONE : SWT.MIN | SWT.MAX;
+    }
 
-	@Override
-	public int computePreferredSize(boolean width, int availableParallel,
-			int availablePerpendicular, int preferredResult) {
-		return  width ? 0 : FIXED_HEIGHT;
-	}
-
-	@Override
-	public void setFocus() {
-	}
+    @Override
+    public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
+            int preferredResult) {
+        return width ? 0 : FIXED_HEIGHT;
+    }
 
 }
