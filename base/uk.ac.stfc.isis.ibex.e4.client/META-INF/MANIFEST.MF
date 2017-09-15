@@ -2,8 +2,7 @@ Manifest-Version: 1.0
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client;singleton:=true
 Bundle-Name: IBEX
 Bundle-Version: 1.0.0.qualifier
-Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-
- version="1.0.0",uk.ac.stfc.isis.ibex.e4.ui.blocks;bundle-version="1.0
+Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0
  .0",uk.ac.stfc.isis.ibex.e4.ui.dae;bundle-version="1.0.0",uk.ac.stfc.
  isis.ibex.e4.ui.beamstatus;bundle-version="1.0.0",uk.ac.stfc.isis.ibe
  x.ui.dashboard;bundle-version="1.0.0",uk.ac.stfc.isis.ibex.ui.beamsta
