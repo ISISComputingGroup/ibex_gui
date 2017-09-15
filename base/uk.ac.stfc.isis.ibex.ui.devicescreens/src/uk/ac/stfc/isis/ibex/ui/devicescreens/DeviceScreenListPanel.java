@@ -81,7 +81,7 @@ public class DeviceScreenListPanel extends Composite {
 
         configureDevScreensButton = new Button(this, SWT.NONE);
         configureDevScreensButton.setText("Edit Device Screens");
-        GridData gdconfigureDevScreensButton = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+        GridData gdconfigureDevScreensButton = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
         configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
 
         configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
