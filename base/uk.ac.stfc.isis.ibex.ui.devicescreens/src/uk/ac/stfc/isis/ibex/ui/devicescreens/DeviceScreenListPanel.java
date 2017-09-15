@@ -79,6 +79,24 @@ public class DeviceScreenListPanel extends Composite {
         GridLayout compositeLayout = new GridLayout(1, true);
         this.setLayout(compositeLayout);
 
+        configureDevScreensButton = new Button(this, SWT.NONE);
+        configureDevScreensButton.setText("Edit Device Screens");
+        GridData gdconfigureDevScreensButton = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
+
+        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    configureDeviceScreensHandler.execute(new ExecutionEvent());
+                } catch (ExecutionException ex) {
+                    LOG.catching(ex);
+                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+                }
+            }
+        });
+
         deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
         GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         deviceScreenList.setLayoutData(devicesListLayout);
@@ -98,25 +116,6 @@ public class DeviceScreenListPanel extends Composite {
                     }
                 }
 
-            }
-        });
-
-
-        configureDevScreensButton = new Button(this, SWT.NONE);
-        configureDevScreensButton.setText("Edit Device Screens");
-        GridData gdconfigureDevScreensButton = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
-        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
-
-        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                try {
-                    configureDeviceScreensHandler.execute(new ExecutionEvent());
-                } catch (ExecutionException ex) {
-                    LOG.catching(ex);
-                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-                }
             }
         });
 
