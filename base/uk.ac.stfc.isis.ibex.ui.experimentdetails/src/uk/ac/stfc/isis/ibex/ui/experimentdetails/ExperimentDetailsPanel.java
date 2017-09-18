@@ -46,16 +46,14 @@ import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends Composite {
 	
-	private final ViewModel viewModel = new ViewModel();
+    private final ViewModel viewModel = ViewModel.getInstance();
 	
 	private final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	
-	private final ParametersTable sampleParameters;
-	private final ParametersTable beamParameters;
-	private final UserDetailsTable userDetails;
+
+    private UserDetailsTable userDetails;
 	private Label lblRbNumber;
-	private Label lblSampleParameters;
-	private Label lblBeamlineParameters;
+
+
 	private Label lblExperimentTeam;
 	private WritableObservingTextBox rbNumber;
 	private Button btnUpdateUserDetails;
@@ -72,19 +70,28 @@ public class ExperimentDetailsPanel extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new GridLayout(5, false));
 		
-		lblRbNumber = new Label(composite, SWT.NONE);
+        experimentTeam(composite);
+
+        bind();
+    }
+
+    /**
+     * @param parent
+     */
+    private void experimentTeam(Composite parent) {
+        lblRbNumber = new Label(parent, SWT.NONE);
 		lblRbNumber.setText("RB Number");
 		
-		rbNumber = new WritableObservingTextBox(composite, SWT.NONE, viewModel.rbNumber);
+        rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
 		GridData gdRbNumber = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gdRbNumber.minimumWidth = 100;
 		gdRbNumber.widthHint = 100;
 		rbNumber.setLayoutData(gdRbNumber);
 		
-		btnRBLookup = new Button(composite, SWT.NONE);
+        btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+        new Label(parent, SWT.NONE);
+        new Label(parent, SWT.NONE);
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -96,14 +103,14 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		
-		lblExperimentTeam = new Label(composite, SWT.NONE);
+        lblExperimentTeam = new Label(parent, SWT.NONE);
 		lblExperimentTeam.setText("Experiment Team");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+        new Label(parent, SWT.NONE);
+        new Label(parent, SWT.NONE);
+        new Label(parent, SWT.NONE);
+        new Label(parent, SWT.NONE);
 		
-		userDetails = new EditableUserDetailsTable(composite, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
+        userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
 		GridData gdUserDetails = new GridData(SWT.LEFT, SWT.FILL, false, true, 2, 1);
 		gdUserDetails.heightHint = 110;
 		gdUserDetails.minimumHeight = 110;
@@ -119,7 +126,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		
-		experimentTeamButtons = new Composite(composite, SWT.NONE);
+        experimentTeamButtons = new Composite(parent, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 		
 		GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
@@ -169,62 +176,9 @@ public class ExperimentDetailsPanel extends Composite {
         btnUpdateUserDetails.setText("Set");
 		btnUpdateUserDetails.setLayoutData(gdDetailsButtons);
 		
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		
-		lblSampleParameters = new Label(composite, SWT.NONE);
-		lblSampleParameters.setText("Sample Parameters");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		
-		sampleParameters = new ParametersTable(composite, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
-		GridData gdSampleParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
-        gdSampleParameters.widthHint = 600;
-        gdSampleParameters.minimumWidth = 600;
-		gdSampleParameters.minimumHeight = 150;
-		gdSampleParameters.heightHint = 150;
-		sampleParameters.setLayoutData(gdSampleParameters);
-		sampleParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
-		
-		updateSampleParameters();
-		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				updateSampleParameters();
-				
-			}
-		});
-		new Label(composite, SWT.NONE);
-		
-		lblBeamlineParameters = new Label(composite, SWT.NONE);
-		lblBeamlineParameters.setText("Beamline Parameters");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		
-		beamParameters = new ParametersTable(composite, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		GridData gdBeamParameters = new GridData(SWT.LEFT, SWT.FILL, true, true, 4, 1);
-        gdBeamParameters.widthHint = 600;
-        gdBeamParameters.minimumWidth = 600;
-		gdBeamParameters.minimumHeight = 200;
-		gdBeamParameters.heightHint = 200;
-		beamParameters.setLayoutData(gdBeamParameters);
-		beamParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
-		
-		updateBeamParameters();
-		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				updateBeamParameters();
-			}
-		});
-	
-		bind();
-	}
+        new Label(parent, SWT.NONE);
+        new Label(parent, SWT.NONE);
+    }
 	
 	private void bind() {
 		DataBindingContext bindingContext = new DataBindingContext();
@@ -232,15 +186,6 @@ public class ExperimentDetailsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnUpdateUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		
-		viewModel.rbNumber.canSetText().addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				boolean canSet = (boolean) event.getNewValue();
-				beamParameters.enableEditing(canSet);
-				sampleParameters.enableEditing(canSet);
-			}
-		});
 	}
 	
 	private void updateUserDetails() {
@@ -248,24 +193,6 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void run() {
 				userDetails.setRows(viewModel.model.getUserDetails());
-			}	
-		});
-	}
-
-	protected void updateSampleParameters() {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				sampleParameters.setRows(viewModel.model.getSampleParameters());
-			}	
-		});
-	}
-	
-	protected void updateBeamParameters() {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				beamParameters.setRows(viewModel.model.getBeamParameters());
 			}	
 		});
 	}

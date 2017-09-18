@@ -150,6 +150,8 @@
       <children xsi:type="basic:PartSashContainer" xmi:id="_c_MskJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.11" containerData="70">
         <children xsi:type="basic:PartStack" xmi:id="_ft68oJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.8">
           <children xsi:type="basic:Part" xmi:id="_gSTcEJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.experimentdetails/uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsView" label="Experiment Details"/>
+          <children xsi:type="basic:Part" xmi:id="_bVfXQJxmEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beamlineparameters" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.experimentdetails/uk.ac.stfc.isis.ibex.ui.experimentdetails.BeamlineParametersPanel" label="Beamline Parameters"/>
+          <children xsi:type="basic:Part" xmi:id="_7kO9YJxrEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.sampleparameters" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.experimentdetails/uk.ac.stfc.isis.ibex.ui.experimentdetails.SampleParametersPanel" label="Sample Parameters"/>
         </children>
       </children>
     </children>
