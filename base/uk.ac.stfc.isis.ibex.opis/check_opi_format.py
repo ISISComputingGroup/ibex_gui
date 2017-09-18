@@ -231,11 +231,16 @@ class CheckOpiFormat:
                              "/" + self.widget_xpath + "Label']/text"
 
         for name in root.xpath(container_name_xpath):
-            words = name.text
+            text = name.text
+            if text is None or len(text)==0:
+                continue
 
             # Check last character in the string is a colon
-            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-                and not any(s in words for s in self.ignore):
+            last_character_is_colon = text[-1:] != ":"
+            ends_in_ellipsis = len(text)>= 3 and text[-3:]=="..."
+            text_is_numeric = text.isdigit()
+            is_ignored = any(s==text for s in self.ignore)
+            if  not last_character_is_colon and not ends_in_ellipsis and not text_is_numeric and not is_ignored:
                     err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                         + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                     self.errors.append(err)
