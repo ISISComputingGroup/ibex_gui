@@ -29,7 +29,6 @@ import org.eclipse.swt.dnd.TransferData;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -40,46 +39,43 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  * - performDrop drag - finishedDrag
  */
 public class ComponentDropListener extends ViewerDropAdapter {
-	private final InstrumentTreeView view;
-	private final SynopticViewModel instrument;
+	private final SynopticViewModel synopticViewModel;
 
     /**
      * Instantiates a new component drop listener.
      *
      * @param viewer
      *            the tree viewer that has this listener
-     * @param view
-     *            the overall view that contains the tree
-     * @param instrument
+     * @param synopticViewModel
      *            the instrument synoptic
      */
-    public ComponentDropListener(TreeViewer viewer, InstrumentTreeView view,
-			SynopticViewModel instrument) {
+    public ComponentDropListener(TreeViewer viewer, SynopticViewModel synopticViewModel) {
         super(viewer);
-        this.view = view;
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 	}
 
 	@Override
 	public void drop(DropTargetEvent event) {
+		Collection<ComponentDescription> sourceComponents = this.synopticViewModel.getSelectedComponents();
+		
 		// If drop is not valid, do nothing
-		if (!validateDrop(event)) {
+		if (!validateDrop(event, sourceComponents)) {
 			return;
 		}
 
-		Collection<ComponentDescription> sourceComponents = view.getCurrentDragSource();
+		 
 		ComponentDescription targetComponent = (ComponentDescription) determineTarget(event);
 		int location = this.determineLocation(event);
 		
         // Drop on to viewer makes items appears at the end of the list
         if (targetComponent == null) {
-            List<ComponentDescription> components = instrument.getSynoptic().components();
+            List<ComponentDescription> components = synopticViewModel.getSynoptic().components();
             targetComponent = components.get(components.size() - 1);
             location = LOCATION_AFTER;
         }
 
 		for (ComponentDescription sourceComponent : sourceComponents) {
-			SynopticParentDescription sourceParent = instrument.getParent(sourceComponent);
+			SynopticParentDescription sourceParent = synopticViewModel.getParent(sourceComponent);
 			
 			// remove component from parent's list of components
 			if (location == LOCATION_BEFORE || location == LOCATION_AFTER
@@ -89,7 +85,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	
 			if (location == LOCATION_BEFORE || location == LOCATION_AFTER) {
 				// Get the parent of the target component - fail if null
-				SynopticParentDescription targetParent = instrument.getParent(targetComponent);
+				SynopticParentDescription targetParent = synopticViewModel.getParent(targetComponent);
 				int position = targetParent.components().indexOf(
 						targetComponent);
 				if (location == LOCATION_AFTER) {
@@ -119,7 +115,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
      */
 	@Override
 	public boolean performDrop(Object data) {
-		instrument.broadcastInstrumentUpdate(UpdateTypes.MOVE_COMPONENT);
+		synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.MOVE_COMPONENT);
 		return true;
 	}
 
@@ -127,11 +123,11 @@ public class ComponentDropListener extends ViewerDropAdapter {
      * Validate whether a component can be dropped.
      * 
      * @param event the drop event
+	 * @param sourceComponents components to be dropped
      * @return true if it can be dropped; false otherwise
      */
-	public boolean validateDrop(DropTargetEvent event) {
-		// Fail if the component being dragged is null
-		Collection<ComponentDescription> sourceComponents = view.getCurrentDragSource();
+	public boolean validateDrop(DropTargetEvent event, Collection<ComponentDescription> sourceComponents) {
+		// Fail if the components being dragged are null
 		if (sourceComponents == null) {
 			return false;
 		}
@@ -141,7 +137,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
         // not already at the end
 		Object targetObject = determineTarget(event);
         if (targetObject == null) {
-            List<ComponentDescription> components = instrument.getSynoptic().components();
+            List<ComponentDescription> components = synopticViewModel.getSynoptic().components();
             ComponentDescription lastComponent = components.get(components.size() - 1);
             return !sourceComponents.contains(lastComponent);
         }
@@ -181,9 +177,8 @@ public class ComponentDropListener extends ViewerDropAdapter {
      * @return true, if drop is valid; false otherwise
      */
 	@Override
-	public boolean validateDrop(Object target, int operation,
-			TransferData transferType) {
+	public boolean validateDrop(Object target, int operation, TransferData transferType) {
 		DropTargetEvent event = getCurrentEvent();
-		return validateDrop(event);
+		return validateDrop(event, this.synopticViewModel.getSelectedComponents());
 	}
 }
