@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final int NUMBER_OF_ROWS = 8;
-    private static final int NUMBER_OF_FIELDS = 3;
+    private static final int MIN_ROWS = 5;
     private Label title;
 
     /**
@@ -80,7 +80,7 @@ public class Group extends Composite {
         // name, one for value, one for
         // run control status, and for every column but the last we need a
         // divider label column
-        GridLayout layout = new GridLayout(NUMBER_OF_FIELDS * numberOfColumns + (numberOfColumns - 1), false);
+        GridLayout layout = new GridLayout(numberOfColumns + (numberOfColumns - 1), false);
         layout.verticalSpacing = 5;
         this.setLayout(layout);
         this.setBackground(WHITE);
@@ -91,11 +91,9 @@ public class Group extends Composite {
         title.setFont(titleFont);
 
         // For the title row, fill with blanks
-        for (int i = 0; i < (NUMBER_OF_FIELDS + 1) * numberOfColumns - 2; i++) {
+        for (int i = 0; i < numberOfColumns; i++) {
             labelMaker(this, SWT.NONE, "", "", titleFont);
         }
-
-        DataBindingContext bindingContext = new DataBindingContext();
 
         // Loop over the rows and columns. The GridLayout is filled with labels
         // across rows first, then moving on to
@@ -103,92 +101,27 @@ public class Group extends Composite {
         // are always filled.
         for (int i = 0; i < NUMBER_OF_ROWS; i++) {
             for (int j = 0; j < numberOfColumns; j++) {
+            	
                 int position = i + j * NUMBER_OF_ROWS;
 
                 if (position >= blocksList.size()) {
                     // put blank labels in these name and value columns
-                    for (int k = 0; k < NUMBER_OF_FIELDS; k++) {
-                        labelMaker(this, SWT.NONE, "", "", null);
-                    }
+                    labelMaker(this, SWT.NONE, "", "", null);
                     break;
                 }
-
-                DisplayBlock currentBlock = blocksList.get(position);
-
+                
+            	DisplayBlock currentBlock = blocksList.get(position);
+                
+                GroupRow row = new GroupRow(this, SWT.RIGHT, currentBlock);
+                row.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+                
                 GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
-
-                Label blockName =
-                        labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
-                blockName.setMenu(fullMenu.get());
-                blockName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-
-                // additional container to hold value label to draw a border around it
-                Composite valueContainer = new Composite(this, SWT.CENTER);
-                GridLayout valueContainerLayout = new GridLayout(1, false);
-                valueContainerLayout.marginWidth = 2;
-                valueContainerLayout.marginHeight = 2;
-                valueContainerLayout.verticalSpacing = 0;
-                valueContainerLayout.horizontalSpacing = 0;
-                valueContainer.setLayout(valueContainerLayout);
-
-                GridData gdValueContainer = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-                gdValueContainer.widthHint = 79;
-                gdValueContainer.heightHint = 19;
-                valueContainer.setLayoutData(gdValueContainer);
-
-                Label blockValue =
-                        labelMaker(valueContainer, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(),
-                                null);
-                blockValue.setMenu(fullMenu.get());
-                GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
-                gdValue.widthHint = 75;
-                blockValue.setLayoutData(gdValue);
-                blockValue.setVisible(true);
-                valueContainer.pack();
-
-                Label blockStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
-                FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
-                Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
-                blockStatus.setFont(boldFont);
-                GridData gdStatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-                gdStatus.widthHint = 17;
-                blockStatus.setLayoutData(gdStatus);
-
+                row.setMenu(fullMenu.get());
 
                 if (j < numberOfColumns - 1) {
                     // insert divider label
                     labelMaker(this, SWT.NONE, "   |   ", "", null);
                 }
-
-                bindingContext.bindValue(WidgetProperties.text().observe(blockValue),
-                        BeanProperties.value("value").observe(currentBlock));
-
-                bindingContext.bindValue(WidgetProperties.visible().observe(blockStatus),
-                        BeanProperties.value("enabled").observe(currentBlock));
-
-                UpdateValueStrategy symbolStrategy = new UpdateValueStrategy();
-                symbolStrategy.setConverter(new RunControlSymbolConverter());
-
-                bindingContext.bindValue(WidgetProperties.text().observe(blockStatus),
-                        BeanProperties.value("runcontrolState").observe(currentBlock), null, symbolStrategy);
-
-                UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
-                fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
-
-                bindingContext.bindValue(WidgetProperties.foreground().observe(blockStatus),
-                        BeanProperties.value("runcontrolState").observe(currentBlock), null, fgColourStrategy);
-
-                UpdateValueStrategy bgColourStrategy = new UpdateValueStrategy();
-                bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
-
-                bindingContext.bindValue(WidgetProperties.background().observe(blockStatus),
-                        BeanProperties.value("runcontrolState").observe(currentBlock), null, bgColourStrategy);
-
-                UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
-                borderStrategy.setConverter(new BlockStatusBorderColourConverter());
-
-                bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
-                        BeanProperties.value("blockState").observe(currentBlock), null, borderStrategy);
             }
         }
     }
