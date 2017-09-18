@@ -6,9 +6,7 @@
     <mainMenu xmi:id="_3TEoMGbLEeeM7uzkT_ViHQ" elementId="org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_CWMfIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ibex" label="IBEX" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_P4Pu4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.switchinstrument" label="Switch instrument" command="_QRQe4JojEeeX2q28a93CXA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_Rab6YGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.restoredefaultview" label="Restore default view"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_SiBNgGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.managermode" label="Manager mode" command="_5YCA0JxFEeeX2q28a93CXA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_TtFScGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.exit" label="Exit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_9gU0oGbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="Configuration" mnemonics="C">
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_6I3jYHkQEeeB_6PupPeR6A" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.0" label="View or Edit Current Configuration (set by menu item)" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler"/>
@@ -132,6 +130,26 @@
       <children xsi:type="basic:PartSashContainer" xmi:id="_pej0gIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_svsOEIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.5">
           <children xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.DaeView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="DAE"/>
+        </children>
+      </children>
+    </children>
+  </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_kv6hwJxPEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_lIeywJxPEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30">
+        <children xsi:type="advanced:Placeholder" xmi:id="_Q4DUkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" containerData="15" ref="_RgW1QYjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_Tlr_gJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.10" containerData="60" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_Ux1pkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.6" containerData="32">
+            <children xsi:type="advanced:Placeholder" xmi:id="_WBVikJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.13" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_X0AaEJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.7" containerData="68">
+            <children xsi:type="advanced:Placeholder" xmi:id="_Yt0-AJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.14" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_c_MskJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.11" containerData="70">
+        <children xsi:type="basic:PartStack" xmi:id="_ft68oJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.8">
+          <children xsi:type="basic:Part" xmi:id="_gSTcEJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.experimentdetails/uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsView" label="Experiment Details"/>
         </children>
       </children>
     </children>

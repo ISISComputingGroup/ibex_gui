@@ -19,27 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
+import javax.inject.Inject;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 
-public class ExperimentDetailsView extends ViewPart {
+public class ExperimentDetailsView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.experimentdetails.experimentdetailsview";
-		
-	public ExperimentDetailsView() {
-	}
 
-	@SuppressWarnings("unused")
-	@Override
+    @SuppressWarnings("unused")
+    @Inject
 	public void createPartControl(Composite parent) {
-		parent.setLayout(new FillLayout(SWT.HORIZONTAL));
+        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 		ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
-	}
-
-	@Override
-	public void setFocus() {
-
 	}
 
 }

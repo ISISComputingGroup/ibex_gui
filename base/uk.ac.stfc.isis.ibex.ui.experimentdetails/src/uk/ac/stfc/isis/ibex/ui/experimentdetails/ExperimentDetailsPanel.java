@@ -66,7 +66,7 @@ public class ExperimentDetailsPanel extends Composite {
 	private Button btnRBLookup;
 	
 	public ExperimentDetailsPanel(Composite parent, int style) {
-		super(parent, style);
+        super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Composite composite = new Composite(this, SWT.NONE);
