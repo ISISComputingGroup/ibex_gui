@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -66,7 +66,7 @@ public class BannerView implements ISizeProvider {
      * View ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
-    private static final int FIXED_HEIGHT = 35;
+    private static final int FIXED_HEIGHT = 80;
     private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
@@ -84,7 +84,7 @@ public class BannerView implements ISizeProvider {
     private Indicator inMotion;
     private Control motionControl;
 
-    @PostConstruct
+    @Inject
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(5, false);
         glParent.marginRight = 2;
@@ -121,7 +121,6 @@ public class BannerView implements ISizeProvider {
         gdMotionControl.widthHint = 100;
         motionControl.setLayoutData(gdMotionControl);
     }
-
 
     @Override
     public int getSizeFlags(boolean width) {
