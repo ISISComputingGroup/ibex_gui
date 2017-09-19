@@ -52,9 +52,9 @@ public class GroupsPanel extends Composite {
 	
 	private boolean showHiddenBlocks = false;
 	
+	private final int minHeight = 150;
+	
 	private Collection<DisplayGroup> displayGroups;
-
-	private static final int GROUP_HEIGHT = 235;
 	
     /**
      * Constructor for the groups panel.
@@ -68,10 +68,12 @@ public class GroupsPanel extends Composite {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL);
+		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL | SWT.V_SCROLL);
 		mainComposite = new Composite(scrolledComposite, SWT.NONE);
 		mainComposite.setLayout(new GridLayout(1, false));
 		scrolledComposite.setContent(mainComposite);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setMinHeight(125);
 		
 		configureMenu();
 		//Leave text blank
@@ -169,8 +171,7 @@ public class GroupsPanel extends Composite {
 	private Group groupWidget(DisplayGroup group) {
         Group groupWidget = new Group(mainComposite, SWT.NONE, group, this);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd.heightHint = GROUP_HEIGHT;
-		gd.minimumHeight = gd.heightHint;
+		gd.minimumHeight = minHeight; // TODO right number
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
         groupWidget.setMenu(contextMenu);

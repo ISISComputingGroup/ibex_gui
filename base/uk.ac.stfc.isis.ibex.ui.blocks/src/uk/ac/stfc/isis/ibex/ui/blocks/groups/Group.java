@@ -22,18 +22,16 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -50,7 +48,14 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final int MIN_ROWS = 5;
+    private static final int ROW_HEIGHT = 24;
     private Label title;
+    
+    private int numColumns;
+    
+    private List<DisplayBlock> blocksList;
+    private GridLayout glGroup;
+    
 
     /**
      * Provides the display of groups.
@@ -65,7 +70,7 @@ public class Group extends Composite {
 
         // Add the blocks to the list if they are visible, or if
         // showHiddenBlocks is true
-        List<DisplayBlock> blocksList = new ArrayList<>();
+        blocksList = new ArrayList<>();
         for (DisplayBlock block : group.blocks()) {
             if (block.getIsVisible() || panel.showHiddenBlocks()) {
                 blocksList.add(block);
@@ -86,14 +91,9 @@ public class Group extends Composite {
         title = labelMaker(this, SWT.NONE, group.name(), "", null);
         Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
         title.setFont(titleFont);
-
-        Composite groupBlocks = new Composite(this, SWT.NONE);
-        RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
-        rowLayout.fill = true;
-        rowLayout.fill = true;
-        groupBlocks.setLayout(rowLayout);
-        groupBlocks.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
         
+        Composite groupBlocks = new Composite(this, SWT.NONE);
+
         // Loop over the rows and columns. The GridLayout is filled with labels
         // across rows first, then moving on to
         // the next column. So blank labels need to be inserted so that columns
@@ -102,13 +102,43 @@ public class Group extends Composite {
             	
             	DisplayBlock currentBlock = blocksList.get(i);
                 
-                GroupRow row = new GroupRow(groupBlocks, SWT.RIGHT, currentBlock);
+                GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
                 
                 GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
                 row.setMenu(fullMenu.get());
         }
-    }
+        glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
+        groupBlocks.setLayout(glGroup);
+        groupBlocks.setBackground(WHITE);
 
+		this.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				final Composite source = (Composite) e.getSource();
+				Rectangle r = source.getClientArea();
+				glGroup.numColumns = computeNumColumns(r.height);
+				Display.getDefault().asyncExec(new Runnable() {  
+					@Override
+		            public void run() {
+						try {
+							source.layout();
+							source.pack();
+							source.getParent().layout();
+							source.getParent().pack();
+						} catch (SWTException e) {
+							// TODO handle this
+						}
+					}
+				});
+			}
+		});
+	}
+
+    private int computeNumColumns(int height) {
+        int numRows = Math.max(height / ROW_HEIGHT, MIN_ROWS);
+        int numColumns = (blocksList.size() / numRows) + 1;
+        return numColumns;
+    }
+    
     private Font getEditedLabelFont(Label label, int size, int style) {
         final String currentFontName = label.getFont().getFontData()[0].getName();
         return SWTResourceManager.getFont(currentFontName, size, style);

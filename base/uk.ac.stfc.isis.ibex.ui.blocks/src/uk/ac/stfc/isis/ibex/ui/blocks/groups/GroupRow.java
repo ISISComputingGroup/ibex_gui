@@ -37,6 +37,7 @@ public class GroupRow extends Composite {
         layout.marginWidth = 0;
         this.setLayout(layout);
         this.setBackground(WHITE);
+        this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
         lblName =
                 labelMaker(this, SWT.NONE, block.getName() + ": ", block.getDescription(), null);
@@ -57,7 +58,7 @@ public class GroupRow extends Composite {
         valueContainer.setLayoutData(gdValueContainer);
 
         lblValue =
-                labelMaker(valueContainer, SWT.RIGHT, block.getValue(), block.getDescription(),
+                labelMaker(valueContainer, SWT.CENTER, block.getValue(), block.getDescription(),
                         null);
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;
