@@ -27,7 +27,6 @@ import java.beans.PropertyChangeListener;
 import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -49,13 +48,7 @@ public class SampleParametersPanel {
 
         viewModel = ViewModel.getInstance();
         
-        sampleParameters = new ParametersTable(parent);
-        GridData gdSampleParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
-        gdSampleParameters.widthHint = 600;
-        gdSampleParameters.minimumWidth = 600;
-        gdSampleParameters.minimumHeight = 200;
-        gdSampleParameters.heightHint = 200;
-        sampleParameters.setLayoutData(gdSampleParameters);
+        sampleParameters = new ParametersTable(parent, SWT.BEGINNING);
         sampleParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
         
         updateSampleParameters();
@@ -63,7 +56,6 @@ public class SampleParametersPanel {
             @Override
             public void propertyChange(PropertyChangeEvent arg0) {
                 updateSampleParameters();
-                
             }
         });
 
@@ -74,7 +66,6 @@ public class SampleParametersPanel {
                 sampleParameters.enableEditing(canSet);
             }
         });
-        new Label(parent, SWT.NONE);
     }
 
     protected void updateSampleParameters() {

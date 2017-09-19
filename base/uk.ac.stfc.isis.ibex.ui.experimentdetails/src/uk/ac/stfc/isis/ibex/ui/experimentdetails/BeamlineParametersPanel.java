@@ -27,7 +27,6 @@ import java.beans.PropertyChangeListener;
 import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -39,7 +38,6 @@ public class BeamlineParametersPanel {
 
     private ParametersTable beamParameters;
     private Label lblBeamlineParameters;
-
     private final ViewModel viewModel;
 
     /**
@@ -50,16 +48,7 @@ public class BeamlineParametersPanel {
 
         viewModel = ViewModel.getInstance();
 
-        beamParameters = new ParametersTable(parent);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        GridData gdBeamParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
-        gdBeamParameters.widthHint = 600;
-        gdBeamParameters.minimumWidth = 600;
-        gdBeamParameters.minimumHeight = 200;
-        gdBeamParameters.heightHint = 200;
-        beamParameters.setLayoutData(gdBeamParameters);
+        beamParameters = new ParametersTable(parent, SWT.BEGINNING);
         beamParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
 
         updateBeamParameters();

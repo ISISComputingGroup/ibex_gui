@@ -22,11 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -44,7 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class ExperimentDetailsPanel extends Composite {
+public class ExperimentDetailsPanel extends ScrolledComposite {
 	
     private final ViewModel viewModel = ViewModel.getInstance();
 	
@@ -63,14 +66,19 @@ public class ExperimentDetailsPanel extends Composite {
 	private Button btnRemoveUserDetails;
 	private Button btnRBLookup;
 	
-	public ExperimentDetailsPanel(Composite parent, int style) {
-        super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayout(new GridLayout(5, false));
-		
+    @Inject
+    public ExperimentDetailsPanel(Composite parent) {
+        super(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+
+        setMinSize(300, 300);
+        setExpandHorizontal(true);
+        setExpandVertical(true);
+        setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
+
+        Composite composite = new Composite(this, SWT.NONE);
+        composite.setLayout(new GridLayout(5, false));
         experimentTeam(composite);
+        setContent(composite);
 
         bind();
     }
@@ -83,10 +91,7 @@ public class ExperimentDetailsPanel extends Composite {
 		lblRbNumber.setText("RB Number");
 		
         rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
-		GridData gdRbNumber = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gdRbNumber.minimumWidth = 100;
-		gdRbNumber.widthHint = 100;
-		rbNumber.setLayoutData(gdRbNumber);
+        rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
@@ -111,12 +116,7 @@ public class ExperimentDetailsPanel extends Composite {
         new Label(parent, SWT.NONE);
 		
         userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
-		GridData gdUserDetails = new GridData(SWT.LEFT, SWT.FILL, false, true, 2, 1);
-		gdUserDetails.heightHint = 110;
-		gdUserDetails.minimumHeight = 110;
-        gdUserDetails.widthHint = 600;
-        gdUserDetails.minimumWidth = 600;
-		userDetails.setLayoutData(gdUserDetails);
+        userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		updateUserDetails();
 		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
