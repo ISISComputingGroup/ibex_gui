@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -48,7 +49,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-    private static final int NUMBER_OF_ROWS = 8;
     private static final int MIN_ROWS = 5;
     private Label title;
 
@@ -72,16 +72,13 @@ public class Group extends Composite {
             }
         }
 
-        // Calculate number of columns we need, each column holding one block
-        // with a name and value
-        int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
-
         // For each block we need three columns in the grid layout, one for
         // name, one for value, one for
         // run control status, and for every column but the last we need a
         // divider label column
-        GridLayout layout = new GridLayout(numberOfColumns + (numberOfColumns - 1), false);
+        GridLayout layout = new GridLayout(1, false);
         layout.verticalSpacing = 5;
+        
         this.setLayout(layout);
         this.setBackground(WHITE);
 
@@ -90,39 +87,25 @@ public class Group extends Composite {
         Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
         title.setFont(titleFont);
 
-        // For the title row, fill with blanks
-        for (int i = 0; i < numberOfColumns; i++) {
-            labelMaker(this, SWT.NONE, "", "", titleFont);
-        }
-
+        Composite groupBlocks = new Composite(this, SWT.NONE);
+        RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
+        rowLayout.fill = true;
+        rowLayout.fill = true;
+        groupBlocks.setLayout(rowLayout);
+        groupBlocks.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+        
         // Loop over the rows and columns. The GridLayout is filled with labels
         // across rows first, then moving on to
         // the next column. So blank labels need to be inserted so that columns
         // are always filled.
-        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
-            for (int j = 0; j < numberOfColumns; j++) {
+        for (int i = 0; i < blocksList.size(); i++) {
             	
-                int position = i + j * NUMBER_OF_ROWS;
-
-                if (position >= blocksList.size()) {
-                    // put blank labels in these name and value columns
-                    labelMaker(this, SWT.NONE, "", "", null);
-                    break;
-                }
+            	DisplayBlock currentBlock = blocksList.get(i);
                 
-            	DisplayBlock currentBlock = blocksList.get(position);
-                
-                GroupRow row = new GroupRow(this, SWT.RIGHT, currentBlock);
-                row.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+                GroupRow row = new GroupRow(groupBlocks, SWT.RIGHT, currentBlock);
                 
                 GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
                 row.setMenu(fullMenu.get());
-
-                if (j < numberOfColumns - 1) {
-                    // insert divider label
-                    labelMaker(this, SWT.NONE, "   |   ", "", null);
-                }
-            }
         }
     }
 

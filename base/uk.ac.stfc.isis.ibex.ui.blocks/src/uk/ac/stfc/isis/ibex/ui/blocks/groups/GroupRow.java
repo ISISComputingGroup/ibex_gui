@@ -40,7 +40,7 @@ public class GroupRow extends Composite {
         
         lblName =
                 labelMaker(this, SWT.NONE, block.getName() + ": ", block.getDescription(), null);
-        lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
         // additional container to hold value label to draw a border around it
         Composite valueContainer = new Composite(this, SWT.CENTER);
