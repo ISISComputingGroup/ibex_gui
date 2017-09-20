@@ -23,14 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -46,126 +47,190 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
-    private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-    private static final int MIN_ROWS = 5;
-    private static final int ROW_HEIGHT = 24;
-    private Label title;
-    
-    private int numColumns;
-    
-    private List<DisplayBlock> blocksList;
-    private GridLayout glGroup;
-    
+	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+	private static final int ROW_HEIGHT = 30;
+	private Label title;
+	private Composite groupBlocks;
 
-    /**
-     * Provides the display of groups.
-     * 
-     * @param parent a widget which will be the parent of the new instance
-     * @param style the style of widget to construct
-     * @param group the group to be displayed
-     * @param panel The panel that shows the groups and blocks. 
-     */
-    public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel) {
-        super(parent, style | SWT.BORDER);
+	private int numColumns;
+	private int numRows;
 
-        // Add the blocks to the list if they are visible, or if
-        // showHiddenBlocks is true
-        blocksList = new ArrayList<>();
-        for (DisplayBlock block : group.blocks()) {
-            if (block.getIsVisible() || panel.showHiddenBlocks()) {
-                blocksList.add(block);
-            }
-        }
+	private List<Control> rows;
+	private List<DisplayBlock> blocksList;
+	private GridLayout glGroup;
 
-        // For each block we need three columns in the grid layout, one for
-        // name, one for value, one for
-        // run control status, and for every column but the last we need a
-        // divider label column
-        GridLayout layout = new GridLayout(1, false);
-        layout.verticalSpacing = 5;
-        
-        this.setLayout(layout);
-        this.setBackground(WHITE);
+	/**
+	 * Provides the display of groups.
+	 * 
+	 * @param parent
+	 *            a widget which will be the parent of the new instance
+	 * @param style
+	 *            the style of widget to construct
+	 * @param group
+	 *            the group to be displayed
+	 * @param panel
+	 *            The panel that shows the groups and blocks.
+	 */
+	public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel) {
+		super(parent, style | SWT.BORDER);
 
-        // In the first column put the title in
-        title = labelMaker(this, SWT.NONE, group.name(), "", null);
-        Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
-        title.setFont(titleFont);
-        
-        Composite groupBlocks = new Composite(this, SWT.NONE);
+		// Add the blocks to the list if they are visible, or if
+		// showHiddenBlocks is true
+		blocksList = new ArrayList<>();
+		for (DisplayBlock block : group.blocks()) {
+			if (block.getIsVisible() || panel.showHiddenBlocks()) {
+				blocksList.add(block);
+			}
+		}
 
-        // Loop over the rows and columns. The GridLayout is filled with labels
-        // across rows first, then moving on to
-        // the next column. So blank labels need to be inserted so that columns
-        // are always filled.
-        for (int i = 0; i < blocksList.size(); i++) {
-            	
-            	DisplayBlock currentBlock = blocksList.get(i);
-                
-                GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
-                
-                GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
-                row.setMenu(fullMenu.get());
-        }
-        glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
-        groupBlocks.setLayout(glGroup);
-        groupBlocks.setBackground(WHITE);
+		rows = new ArrayList<Control>();
+
+		// For each block we need three columns in the grid layout, one for
+		// name, one for value, one for
+		// run control status, and for every column but the last we need a
+		// divider label column
+		GridLayout layout = new GridLayout(1, false);
+		layout.verticalSpacing = 5;
+
+		this.setLayout(layout);
+		this.setBackground(WHITE);
+
+		// In the first column put the title in
+		title = labelMaker(this, SWT.NONE, group.name(), "", null);
+		Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
+		title.setFont(titleFont);
+
+		groupBlocks = new Composite(this, SWT.NONE);
+
+		// Loop over the rows and columns. The GridLayout is filled with labels
+		// across rows first, then moving on to
+		// the next column. So blank labels need to be inserted so that columns
+		// are always filled.
+		for (int i = 0; i < blocksList.size(); i++) {
+
+			DisplayBlock currentBlock = blocksList.get(i);
+
+			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
+			rows.add(row);
+
+			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
+			row.setMenu(fullMenu.get());
+		}
+		for (int i = 0; i < blocksList.size(); i++) {
+			Label spacer = new Label(groupBlocks, SWT.NONE);
+			spacer.setLayoutData(new GridData());
+			rows.add(spacer);
+		}
+		glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
+		groupBlocks.setLayout(glGroup);
+		groupBlocks.setBackground(WHITE);
+		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				final Composite source = (Composite) e.getSource();
-				Rectangle r = source.getClientArea();
-				glGroup.numColumns = computeNumColumns(r.height);
-				Display.getDefault().asyncExec(new Runnable() {  
-					@Override
-		            public void run() {
-						try {
-							source.layout();
-							source.pack();
-							source.getParent().layout();
-							source.getParent().pack();
-						} catch (SWTException e) {
-							// TODO handle this
-						}
-					}
-				});
+				Composite source = (Composite) e.getSource();
+				relayout(source);
 			}
 		});
 	}
 
-    private int computeNumColumns(int height) {
-        int numRows = Math.max(height / ROW_HEIGHT, MIN_ROWS);
-        int numColumns = (blocksList.size() / numRows) + 1;
-        return numColumns;
-    }
-    
-    private Font getEditedLabelFont(Label label, int size, int style) {
-        final String currentFontName = label.getFont().getFontData()[0].getName();
-        return SWTResourceManager.getFont(currentFontName, size, style);
-    }
+	/**
+	 * Rearranges the layout of elements in the group according to the new size of the composite.
+	 * 
+	 * @param group The group which has been resized
+	 */
+	private void relayout(final Composite group) {
+		Rectangle r = group.getClientArea();
+		glGroup.numColumns = computeNumColumns(r.height);
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				hideSpacers();
+				reorderRows();
+				group.getParent().layout();
+				group.getParent().pack();
+			}
+		});
+	}
 
-    private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
-        Label label = new Label(composite, style);
-        if (text != null) {
-            label.setText(text);
-        }
+	/**
+	 * Calculates how many columns are required to display all blocks based on the new height of the group composite.
+	 * 
+	 * @param height The height of the composite containing the blocks
+	 * @return The required number of columns
+	 */
+	private int computeNumColumns(int height) {
+		numRows = Math.max(height / ROW_HEIGHT, 1);
+		numColumns = (blocksList.size() / numRows) + 1;
+		return numColumns;
+	}
+	
+	/**
+	 * Excludes / includes as many spacers as needed for layout considerations.
+	 */
+	private void hideSpacers() {
+		int emptyCells = numRows * numColumns - blocksList.size();
+		for (int i = blocksList.size(); i < rows.size(); i++) {
+			GridData data = (GridData) rows.get(i).getLayoutData();
+			if (i < blocksList.size() + emptyCells - 1) {
+				data.exclude = false;
+			} else {
+				data.exclude = true;
+			}
+		}
+	}
 
-        label.setBackground(WHITE);
+	/**
+	 * Goes through group cells in order and finds the right block (or a spacer)
+	 * to be moved there.
+	 */
+	private void reorderRows() {
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				int pos = row + (numRows * col);
+				Control prevElement = null;
+				// First element never moves
+				if (pos == 0) {
+					continue;
+				}
+				if (col == 0) {
+					// last element of previous row
+					prevElement = rows.get((numColumns - 1) * numRows + (row - 1));
+				} else {
+					prevElement = rows.get(pos - numRows);
+				}
+				rows.get(pos).moveBelow(prevElement);
+			}
+		}
+	}
 
-        if (toolTip != null) {
-            label.setToolTipText(toolTip);
-        }
+	private Font getEditedLabelFont(Label label, int size, int style) {
+		final String currentFontName = label.getFont().getFontData()[0].getName();
+		return SWTResourceManager.getFont(currentFontName, size, style);
+	}
 
-        if (font != null) {
-            label.setFont(font);
-        }
+	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
+		Label label = new Label(composite, style);
+		if (text != null) {
+			label.setText(text);
+		}
 
-        return label;
-    }
+		label.setBackground(WHITE);
 
-    @Override
-    public void setMenu(Menu menu) {
-        super.setMenu(menu);
-        title.setMenu(menu);
-    }
+		if (toolTip != null) {
+			label.setToolTipText(toolTip);
+		}
+
+		if (font != null) {
+			label.setFont(font);
+		}
+
+		return label;
+	}
+
+	@Override
+	public void setMenu(Menu menu) {
+		super.setMenu(menu);
+		title.setMenu(menu);
+	}
 }

@@ -52,7 +52,7 @@ public class GroupsPanel extends Composite {
 	
 	private boolean showHiddenBlocks = false;
 	
-	private final int minHeight = 150;
+	private final int minHeight = 100;
 	
 	private Collection<DisplayGroup> displayGroups;
 	
