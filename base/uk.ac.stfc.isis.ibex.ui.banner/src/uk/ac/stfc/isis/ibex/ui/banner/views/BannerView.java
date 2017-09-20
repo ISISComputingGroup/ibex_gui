@@ -22,16 +22,16 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.ISizeProvider;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -52,13 +52,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
  * View of the spangle banner containing various instrument status messages.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BannerView implements ISizeProvider {
-
-    /**
-     * Standard constructor.
-     */
-    public BannerView() {
-    }
+public class BannerView {
 
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
@@ -66,7 +60,6 @@ public class BannerView implements ISizeProvider {
      * View ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
-    private static final int FIXED_HEIGHT = 80;
     private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
@@ -84,53 +77,61 @@ public class BannerView implements ISizeProvider {
     private Indicator inMotion;
     private Control motionControl;
 
-    @Inject
-    public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(5, false);
-        glParent.marginRight = 2;
-        glParent.horizontalSpacing = 8;
-        glParent.verticalSpacing = 0;
-        glParent.marginWidth = 0;
-        parent.setLayout(glParent);
+    @PostConstruct
+    public void draw(Composite parent) {
+        parent.setBackground(new Color(Display.getCurrent(), 255, 0, 0));
+//        
+        GridLayout layout = new GridLayout(10, false);
+        layout.verticalSpacing = 0;
+        layout.marginTop = 0;
+        layout.marginBottom = 0;
+        layout.marginHeight = 0;
+        parent.setLayout(layout);
 
-        bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
-        bannerItemPanel.setLayout(glBannerItemPanel = new GridLayout(1, false));
-        bannerItemPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        glBannerItemPanel.marginHeight = 3;
+        Composite myComposite = new Composite(parent, SWT.NONE);
+
+        myComposite.setLayout(new GridLayout(20, false));
+        myComposite.setLayoutData(new GridData(SWT.END, SWT.FILL, false, true));
+        myComposite.setBackground(new Color(Display.getCurrent(), 0, 255, 0));
+
+        parent.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+
+//        GridLayout layout = new GridLayout(1, false);
+//        layout.verticalSpacing = 0;
+//        layout.marginHeight = 0;
+//        layout.marginBottom = 0;
+//        layout.marginTop = 0;
+//        myComposite.setLayout(layout);
+//        myComposite.setLayoutData(new GridData(SWT.END, SWT.FILL, true, false));
+
+        bannerItemPanel = new Composite(myComposite, SWT.END);
+        bannerItemPanel.setLayout(glBannerItemPanel = new GridLayout(5, false));
+        bannerItemPanel.setLayoutData(new GridData(SWT.END, SWT.BEGINNING, false, false, 1, 1));
+        glBannerItemPanel.marginHeight = 0;
         glBannerItemPanel.horizontalSpacing = 15;
+        bannerItemPanel.setLayout(glBannerItemPanel);
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
 
-        managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
-        GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        managerMode = new Indicator(bannerItemPanel, SWT.NONE, managerModeModel, ALARM_FONT);
+        GridData gdManagerMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
         gdManagerMode.widthHint = 210;
         managerMode.setLayoutData(gdManagerMode);
 
-        batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
-        GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        batonUser = new Indicator(bannerItemPanel, SWT.NONE, batonUserModel, ALARM_FONT);
+        GridData gdBatonUser = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
         gdBatonUser.widthHint = 210;
         batonUser.setLayoutData(gdBatonUser);
 
-        inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
-        GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        inMotion = new Indicator(bannerItemPanel, SWT.NONE, inMotionModel, ALARM_FONT);
+        GridData gdInMotion = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
         gdInMotion.widthHint = 170;
         inMotion.setLayoutData(gdInMotion);
 
-        motionControl = new Control(parent, SWT.NONE, motionModel, ALARM_FONT);
+        motionControl = new Control(bannerItemPanel, SWT.NONE, motionModel, ALARM_FONT);
         GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdMotionControl.widthHint = 100;
         motionControl.setLayoutData(gdMotionControl);
-    }
-
-    @Override
-    public int getSizeFlags(boolean width) {
-        return SWT.MIN | SWT.MAX;
-    }
-
-    @Override
-    public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
-            int preferredResult) {
-        return width ? 0 : FIXED_HEIGHT;
     }
 
     /**
@@ -160,7 +161,7 @@ public class BannerView implements ISizeProvider {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
+                GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1);
                 gdBannerItem.widthHint = ITEM_WIDTH;
 
                 for (IndicatorModel model : models) {
@@ -178,9 +179,7 @@ public class BannerView implements ISizeProvider {
 
     private void addSeparator(Composite parent) {
         Label sep = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
-        GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
-        gdSep.heightHint = 20;
-        sep.setLayoutData(gdSep);
+        sep.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1));
     }
 
     /**
