@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
+
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -17,6 +18,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 
+/**
+ * Class for grouping information on a single block into one composite.
+ */
 public class GroupRow extends Composite {
 	
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
@@ -24,15 +28,23 @@ public class GroupRow extends Composite {
     private static final int VALUE_HEIGHT = 17;
     private static final int VALUE_WIDTH_MARGIN = 4;
     private static final int VALUE_HEIGHT_MARGIN = 2;
+    private static final int NUM_ELEMENTS = 3;
     
     private Label lblName;
     private Label lblValue;
     private Label lblStatus;
 
+    /**
+     * The constructor.
+     * 
+     * @param parent The parent composite
+     * @param style The SWT style parameter
+     * @param block The observed block
+     */
 	public GroupRow(Composite parent, int style, DisplayBlock block) {
 		super(parent, style);
 		
-        GridLayout layout = new GridLayout(3, false);
+        GridLayout layout = new GridLayout(NUM_ELEMENTS, false);
         layout.marginHeight = 0;
         layout.marginWidth = 0;
         this.setLayout(layout);

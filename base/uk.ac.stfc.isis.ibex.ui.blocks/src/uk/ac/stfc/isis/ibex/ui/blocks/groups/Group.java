@@ -116,9 +116,14 @@ public class Group extends Composite {
 			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
 			row.setMenu(fullMenu.get());
 		}
+		// Add enough spacers to fill all empty spaces in the last column. These
+		// are then simply hidden / unhidden as needed to prevent having to
+		// add/remove elements to the layout post initialisation
 		for (int i = 0; i < blocksList.size(); i++) {
 			Label spacer = new Label(groupBlocks, SWT.NONE);
-			spacer.setLayoutData(new GridData());
+			GridData data = new GridData();
+			data.exclude = true;
+			spacer.setLayoutData(data);
 			rows.add(spacer);
 		}
 		glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
