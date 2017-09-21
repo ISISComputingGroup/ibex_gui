@@ -147,11 +147,11 @@ public class Group extends Composite {
 	private void relayout(final Composite group) {
 		Rectangle r = group.getClientArea();
 		glGroup.numColumns = computeNumColumns(r.height);
+		hideSpacers();
+		reorderRows();
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				hideSpacers();
-				reorderRows();
 				group.getParent().layout();
 				group.getParent().pack();
 			}
