@@ -129,7 +129,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.experimentdetails/icons/file148_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_kv6hwJxPEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Tlr_gJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.10" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_Ux1pkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.6" containerData="32">
