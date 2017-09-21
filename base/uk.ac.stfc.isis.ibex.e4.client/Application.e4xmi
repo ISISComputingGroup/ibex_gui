@@ -119,10 +119,12 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_p15j0JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.8" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
         </children>
       </children>
-      <children xsi:type="basic:PartSashContainer" xmi:id="_pej0gIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_svsOEIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.5">
-          <children xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.DaeView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="DAE"/>
-        </children>
+      <children xsi:type="basic:PartStack" xmi:id="_svsOEIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.5" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.runsummary" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary" label="Run Summary"/>
+        <children xsi:type="basic:Part" xmi:id="_QGpWsJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.experimentsetup" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup" label="Experiment Setup"/>
+        <children xsi:type="basic:Part" xmi:id="_q1_uMJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.runinformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel" label="Run Information"/>
+        <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.spectraplots" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.spectra.SpectraPlotsPanel" label="Spectra Plots"/>
+        <children xsi:type="basic:Part" xmi:id="_aWGE4J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.detectordiagnostics" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel" label="Detector Diagnostics"/>
       </children>
     </children>
   </snippets>
