@@ -129,7 +129,7 @@ public class Group extends Composite {
 		glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
-		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
@@ -190,7 +190,8 @@ public class Group extends Composite {
 	 * to be moved there.
 	 */
 	private void reorderRows() {
-		for (int row = 0; row < numRows; row++) {
+		int maxRow = Math.min(numRows, rows.size());
+		for (int row = 0; row < maxRow; row++) {
 			for (int col = 0; col < numColumns; col++) {
 				int pos = row + (numRows * col);
 				Control prevElement = null;
