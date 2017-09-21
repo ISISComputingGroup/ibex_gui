@@ -48,7 +48,8 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	private static final int ROW_HEIGHT = 30;
+	private static final int TITLE_HEIGHT = 30;
+	private static final int ROW_HEIGHT = 24;
 	private Label title;
 	private Composite groupBlocks;
 
@@ -165,7 +166,7 @@ public class Group extends Composite {
 	 * @return The required number of columns
 	 */
 	private int computeNumColumns(int height) {
-		numRows = Math.max(height / ROW_HEIGHT, 1);
+		numRows = Math.max((height - TITLE_HEIGHT) / ROW_HEIGHT, 1);
 		numColumns = (blocksList.size() / numRows) + 1;
 		return numColumns;
 	}
