@@ -24,48 +24,4 @@
             name="Exit IBEX Client">
       </command>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-     <menuContribution
-        allPopups="false"
-        locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="instrumentMenu"
-               label="IBEX"
-               mnemonic="X">
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.instrumentHandler"
-                  label="Switch Instrument"
-                  mnemonic="S"
-                  style="push"
-                  tooltip="Switch the view to a different instrument.">
-            </command>
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
-                  label="Restore Default View"
-                  mnemonic="R"
-                  style="push"
-                  tooltip="Swith the view back to the default.">
-            </command>
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
-                  label="Manager mode"
-                  mnemonic="M"
-                  style="push"
-                  tooltip="Enter or exit manager mode.">
-            </command>
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
-                  label="Exit IBEX Client"
-                  mnemonic="E"
-                  style="push"
-                  tooltip="Close the IBEX Client">
-            </command>
-         </menu>
-     </menuContribution>
-   </extension>    
 </plugin>
