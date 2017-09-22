@@ -65,6 +65,16 @@ public class PvValidatorTest {
     }
 
     @Test
+    public void GIVEN_pv_address_with_dash_WHEN_validate_THEN_valid() {
+        // Arrange
+        String testAddress = "va_:l-d.fi_:eld";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
     public void GIVEN_pv_address_two_field_WHEN_validate_THEN_error() {
         // Arrange
         String testAddress = "invalid.field.field";
