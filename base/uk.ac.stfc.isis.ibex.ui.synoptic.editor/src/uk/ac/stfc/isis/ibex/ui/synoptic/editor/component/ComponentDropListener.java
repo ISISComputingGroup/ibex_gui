@@ -58,7 +58,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	public void drop(DropTargetEvent event) {
 		Collection<ComponentDescription> sourceComponents = this.synopticViewModel.getSelectedComponents();
 		
-		// If drop is not valid, do nothing
+		// If drop is not valid, do nothing	
 		if (!validateDrop(event, sourceComponents)) {
 			return;
 		}
