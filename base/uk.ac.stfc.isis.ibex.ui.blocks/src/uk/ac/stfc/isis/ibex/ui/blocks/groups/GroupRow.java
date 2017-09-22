@@ -70,7 +70,7 @@ public class GroupRow extends Composite {
         valueContainer.setLayoutData(gdValueContainer);
 
         lblValue =
-                labelMaker(valueContainer, SWT.CENTER, block.getValue(), block.getDescription(),
+                labelMaker(valueContainer, SWT.RIGHT, block.getValue(), block.getDescription(),
                         null);
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;

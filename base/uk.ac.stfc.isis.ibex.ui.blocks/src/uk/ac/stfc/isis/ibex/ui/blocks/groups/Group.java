@@ -128,6 +128,7 @@ public class Group extends Composite {
 			rows.add(spacer);
 		}
 		glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
+		glGroup.horizontalSpacing = 20;
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
 		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
