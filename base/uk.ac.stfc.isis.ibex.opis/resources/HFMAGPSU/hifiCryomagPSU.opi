@@ -123,12 +123,20 @@ $(pv_value)</tooltip>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV()
-
 pv.setValue("ZERO")
 
-pause = display.getWidget("pause_ramp").getPV()
-
+# set mid target to zero value
+'''
+mid_widget = display.getWidget("hidden_mid").getPV()
+zero_val = display.getWidget("zero_value").getPV()
+zero_val = PVUtil.getDouble(zero_val)
+mid_widget.setValue(zero_val)
+'''
+# start ramping
+pause = display.getWidget("ramp_to_target").getPV()
 pause.setValue("OFF")
+
+
 
 
 ]]></scriptText>
@@ -296,7 +304,7 @@ pv.setValue("ON")
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <visible>false</visible>
+        <visible>true</visible>
         <border_color>
           <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
         </border_color>
@@ -666,15 +674,15 @@ $(pv_value)</tooltip>
               <path></path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-pv = widget.getPV()
-
 mid_val = display.getWidget("set_mid").getValue()
 mid_set = display.getWidget("hidden_mid").getPV()
 mid_set.setValue(mid_val)
 
-ramp_set = display.getWidget("hidden_ramp_target").getPV()
-ramp_set.setValue("MID")
+target = display.getWidget("hidden_ramp_target").getPV()
+target.setValue("MID")
 
+
+pv = widget.getPV()
 pv.setValue("OFF")
 
 ]]></scriptText>
@@ -1185,9 +1193,11 @@ output = PVUtil.getDouble(output)
 rate = display.getWidget("ramp_rate").getPV()
 rate = PVUtil.getDouble(rate)
 target = display.getWidget("set_mid").getValue()
-
-time = (abs(target - output)) / rate
-time = round(time, 1)
+if rate != 0:
+	time = (abs(target - output)) / rate
+	time = round(time, 1)
+else:
+	time = 0
 
 if pause == 'OFF':
 	widget.setPropertyValue("text", time)
@@ -1460,7 +1470,7 @@ $(pv_value)</tooltip>
               <keep_wh_ratio>false</keep_wh_ratio>
             </scale_options>
             <visible>true</visible>
-            <pv_name></pv_name>
+            <pv_name>$(PV_ROOT)_01:ERRORMESSAGE</pv_name>
             <vertical_alignment>1</vertical_alignment>
             <border_color>
               <color red="0" green="128" blue="255" />
@@ -1513,7 +1523,7 @@ $(pv_value)</tooltip>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <visible>false</visible>
+          <visible>true</visible>
           <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
@@ -1602,7 +1612,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <visible>true</visible>
+        <visible>false</visible>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -2309,7 +2319,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT)_01:ZERO</pv_name>
           <border_color>
             <color red="0" green="0" blue="0" />
           </border_color>
@@ -2323,7 +2333,7 @@ $(pv_value)</tooltip>
             <color red="255" green="255" blue="255" />
           </background_color>
           <password_input>false</password_input>
-          <name>Text_3</name>
+          <name>zero_value</name>
           <width>88</width>
           <x>267</x>
           <y>162</y>
@@ -2700,8 +2710,8 @@ $(pv_value)</tooltip>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <visible>false</visible>
-          <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT)_01:ZERO</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
