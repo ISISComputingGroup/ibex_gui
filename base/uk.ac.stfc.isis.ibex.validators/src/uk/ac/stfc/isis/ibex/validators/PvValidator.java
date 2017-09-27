@@ -28,8 +28,15 @@ package uk.ac.stfc.isis.ibex.validators;
  */
 public class PvValidator {
 
+    /**
+     * Message displayed when the PV name in invalid.
+     */
     public static final String ADDRESS_FORMAT =
             "PV Address invalid, use only letters, numbers, underscores, dashes and colons";
+
+    /**
+     * Message displayed when the PV name is empty.
+     */
     public static final String ADDRESS_EMPTY = "PV Address invalid, must not be empty";    
     private static final String NO_ERROR = "";
 
