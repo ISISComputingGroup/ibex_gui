@@ -105,7 +105,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)_01:RAMPTARGET:SP</pv_name>
+      <pv_name>$(PV_ROOT)_01:PAUSE:SP</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -122,21 +122,15 @@ $(pv_value)</tooltip>
           <path></path>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-pv = widget.getPV()
-pv.setValue("ZERO")
-
 # set mid target to zero value
-'''
+
 mid_widget = display.getWidget("hidden_mid").getPV()
-zero_val = display.getWidget("zero_value").getPV()
-zero_val = PVUtil.getDouble(zero_val)
+zero = display.getWidget("zero_value").getPV()
+zero_val = PVUtil.getDouble(zero)
 mid_widget.setValue(zero_val)
-'''
-# start ramping
-pause = display.getWidget("ramp_to_target").getPV()
-pause.setValue("OFF")
 
-
+pv = widget.getPV()
+pv.setValue("OFF")
 
 
 ]]></scriptText>
@@ -304,7 +298,7 @@ pv.setValue("ON")
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <visible>true</visible>
+        <visible>false</visible>
         <border_color>
           <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
         </border_color>
@@ -680,7 +674,6 @@ mid_set.setValue(mid_val)
 
 target = display.getWidget("hidden_ramp_target").getPV()
 target.setValue("MID")
-
 
 pv = widget.getPV()
 pv.setValue("OFF")
@@ -1523,7 +1516,7 @@ $(pv_value)</tooltip>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <visible>true</visible>
+          <visible>false</visible>
           <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
@@ -1612,7 +1605,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <visible>false</visible>
+        <visible>true</visible>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -2710,7 +2703,7 @@ $(pv_value)</tooltip>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <visible>true</visible>
+          <visible>false</visible>
           <pv_name>$(PV_ROOT)_01:ZERO</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
