@@ -44,6 +44,10 @@ public class PvValidatorTest {
         assertTrue(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_with_field_WHEN_validate_THEN_valid() {
         // Arrange
@@ -54,6 +58,10 @@ public class PvValidatorTest {
         assertTrue(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_with_non_alpha_character_WHEN_validate_THEN_valid() {
         // Arrange
@@ -64,6 +72,10 @@ public class PvValidatorTest {
         assertTrue(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_with_dash_WHEN_validate_THEN_valid() {
         // Arrange
@@ -74,6 +86,10 @@ public class PvValidatorTest {
         assertTrue(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_two_field_WHEN_validate_THEN_error() {
         // Arrange
@@ -84,6 +100,10 @@ public class PvValidatorTest {
         assertFalse(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_blank_field_WHEN_validate_THEN_error() {
         // Arrange
@@ -94,6 +114,10 @@ public class PvValidatorTest {
         assertFalse(addressValid.validatePvAddress(testAddress));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
+     */
     @Test
     public void GIVEN_pv_address_just_field_WHEN_validate_THEN_error() {
         // Arrange
@@ -150,6 +174,10 @@ public class PvValidatorTest {
         assertEquals(expected, addressValid.getErrorMessage());
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getErrorMessage()}.
+     */
     @Test
     public void get_message_for_empty_address_string() {
         // Arrange
