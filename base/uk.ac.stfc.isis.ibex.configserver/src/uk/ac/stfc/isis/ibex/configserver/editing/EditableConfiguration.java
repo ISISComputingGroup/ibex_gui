@@ -60,6 +60,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** The property change identifier associated with editing groups. */
     public static final String EDITABLE_GROUPS = "editableGroups";
 
+    /**
+     * The description text for an ioc if the description cannot be retrieved
+     * from the server.
+     */
+    private static final String UNKNOWN_IOC_TEXT = "Unknown";
+
     /** The default group name text to apply to new groups. */
     private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
     /** The default Name to apply to groups. */
@@ -195,7 +201,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         EditableIoc editableIoc;
 
         if (generalIOC == null) {
-            editableIoc = new EditableIoc(ioc, "Unknown");
+            editableIoc = new EditableIoc(ioc, UNKNOWN_IOC_TEXT);
         } else {
             editableIoc = new EditableIoc(ioc, generalIOC.getDescription());
             editableIoc.setAvailableMacros(generalIOC.getAvailableMacros());
