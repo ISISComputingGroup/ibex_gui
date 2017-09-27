@@ -191,9 +191,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     private EditableIoc convertIoc(Ioc ioc) {
         final EditableIoc generalIOC = iocMap.get(ioc.getName());
-        EditableIoc editableIOC = new EditableIoc(ioc, generalIOC.getDescription());
-        editableIOC.setAvailableMacros(generalIOC.getAvailableMacros());
-        return editableIOC;
+
+        EditableIoc editableIoc;
+
+        if (generalIOC == null) {
+            editableIoc = new EditableIoc(ioc, "Unknown");
+        } else {
+            editableIoc = new EditableIoc(ioc, generalIOC.getDescription());
+            editableIoc.setAvailableMacros(generalIOC.getAvailableMacros());
+        }
+
+        return editableIoc;
     }
 
     private void updateComponents() {
