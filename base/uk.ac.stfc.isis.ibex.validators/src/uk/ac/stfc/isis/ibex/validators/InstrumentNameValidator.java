@@ -30,7 +30,7 @@ public class InstrumentNameValidator {
      * Error message for wrong instrument name formatting.
      */
     public static final String NAME_FORMAT_MSG =
-            "Instrument name can only contain letters, numbers and underscores.";
+            "Instrument name can only contain letters, numbers, dashes and underscores.";
 
     /**
      * Error message for empty instrument name.
@@ -68,7 +68,7 @@ public class InstrumentNameValidator {
         } else if (nameIsKnown(instrumentName)) {
             isValid = true;
             setErrorMessage(NO_ERROR_MSG);
-        } else if (!(instrumentName.matches("[a-zA-Z0-9_]*$"))) {
+        } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {
             setErrorMessage(NAME_FORMAT_MSG);
         } else {
             isValid = true;
