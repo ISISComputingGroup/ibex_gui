@@ -81,7 +81,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** The IOCs associated with the components. */
     private final List<EditableIoc> componentIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
-    private final List<EditableGroup> editableGroups = new ArrayList<>();
+    private List<EditableGroup> editableGroups = new ArrayList<>();
     /** The blocks associated with the configuration. */
     private final List<EditableBlock> editableBlocks = new ArrayList<>();
     /**
@@ -166,6 +166,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Group group : config.getGroups()) {
             editableGroups.add(new EditableGroup(this, group));
         }
+
+        editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 
         for (EditableIoc ioc : allIocs) {
             iocMap.put(ioc.getName(), ioc);
@@ -449,7 +451,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return The editable groups associated with the configuration
      */
     public Collection<EditableGroup> getEditableGroups() {
-        return new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
+        return new ArrayList<>(editableGroups);
     }
 
     /**
