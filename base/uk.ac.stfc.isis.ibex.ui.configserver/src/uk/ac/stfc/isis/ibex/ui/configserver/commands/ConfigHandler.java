@@ -137,8 +137,10 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
     public void onError(Exception ex) {
         Logger.getGlobal().log(Level.SEVERE, "Exception while executing configserver command", ex);
 
-        MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                ex.getMessage());
+        MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                "Error",
+                "An error occured while performing that action. Error was:\n" + ex.toString()
+                        + "\nPlease see the error log for more details.");
     }
 	
 }
