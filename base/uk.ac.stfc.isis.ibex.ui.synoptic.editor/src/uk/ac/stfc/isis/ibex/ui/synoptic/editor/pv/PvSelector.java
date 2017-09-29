@@ -46,7 +46,9 @@ public class PvSelector extends DisablingConfigHandler<Configuration> {
 		super(SERVER.setCurrentConfig());
 	}
 
-	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
 		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.currentConfig());
@@ -56,6 +58,12 @@ public class PvSelector extends DisablingConfigHandler<Configuration> {
 		}
 	}
 	
+    /**
+     * Opens the dialog.
+     * 
+     * @param config
+     *            the configuration
+     */
 	private void openDialog(EditableConfiguration config) {
 		PvSelectorDialog dialog = new PvSelectorDialog(null, config, "");	
 		if (dialog.open() == Window.OK) {

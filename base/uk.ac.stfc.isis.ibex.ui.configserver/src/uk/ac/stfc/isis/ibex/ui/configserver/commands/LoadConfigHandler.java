@@ -49,6 +49,9 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         configs = new HashMap<String, Configuration>();
 	}	
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         updateObservers();

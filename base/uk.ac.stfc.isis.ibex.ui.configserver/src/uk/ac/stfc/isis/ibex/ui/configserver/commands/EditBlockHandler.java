@@ -42,6 +42,9 @@ public final class EditBlockHandler extends EditConfigHandler {
         this.blockName = blockName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void safeExecute(ExecutionEvent event) {
         new EditBlockHelper(shell(), SERVER).createDialog(blockName);

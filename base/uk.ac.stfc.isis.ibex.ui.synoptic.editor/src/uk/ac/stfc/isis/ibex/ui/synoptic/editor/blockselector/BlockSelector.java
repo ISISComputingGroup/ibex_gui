@@ -46,7 +46,9 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 		super(SERVER.setCurrentConfig());
 	}
 
-	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAvailableBlocks();

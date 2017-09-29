@@ -44,6 +44,9 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 		super(SERVER.deleteComponents());
 	}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void safeExecute(ExecutionEvent event) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());

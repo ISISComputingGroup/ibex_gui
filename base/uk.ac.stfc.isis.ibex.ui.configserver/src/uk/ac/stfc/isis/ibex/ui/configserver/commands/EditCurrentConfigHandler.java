@@ -81,7 +81,9 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
 
-	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());

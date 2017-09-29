@@ -38,6 +38,9 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 		super(SERVER.deleteConfigs());
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations",

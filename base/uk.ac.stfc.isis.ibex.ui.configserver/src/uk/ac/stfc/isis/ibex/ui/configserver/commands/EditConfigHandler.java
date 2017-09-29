@@ -41,7 +41,9 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 		super(SERVER.saveAs());
 	}
 
-		
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         ConfigSelectionDialog selectionDialog =

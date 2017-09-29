@@ -45,6 +45,9 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
 		super(SERVER.saveAs());
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     public void safeExecute(ExecutionEvent event) {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
