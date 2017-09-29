@@ -193,7 +193,7 @@ $(pv_value)</tooltip>
       <widget_type>Button</widget_type>
       <width>115</width>
       <x>0</x>
-      <name>Button</name>
+      <name>StartRunButton</name>
       <y>5</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -246,7 +246,7 @@ $(pv_value)</tooltip>
       <widget_type>Button</widget_type>
       <width>115</width>
       <x>120</x>
-      <name>Button_1</name>
+      <name>StopRunButton</name>
       <y>5</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -340,7 +340,7 @@ pv.setValue(1)
       </background_color>
       <width>127</width>
       <x>0</x>
-      <name>Label_4</name>
+      <name>CurrentPositionLabel</name>
       <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -392,7 +392,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>132</x>
-      <name>SourceRBV</name>
+      <name>CurrentPositionRBV</name>
       <y>9</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -432,7 +432,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>127</width>
       <x>0</x>
-      <name>Label_5</name>
+      <name>ModeLabel</name>
       <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -484,7 +484,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>132</x>
-      <name>SourceRBV_1</name>
+      <name>ModeRBV</name>
       <y>39</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -524,7 +524,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>127</width>
       <x>0</x>
-      <name>Label_6</name>
+      <name>SweptAngleLabel</name>
       <y>66</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -576,7 +576,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>132</x>
-      <name>SourceRBV_2</name>
+      <name>SweptAngleRBV</name>
       <y>69</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -616,7 +616,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>127</width>
       <x>0</x>
-      <name>Label_6</name>
+      <name>OperatingFrequencyLabel</name>
       <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -668,7 +668,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>132</x>
-      <name>SourceRBV_2</name>
+      <name>OperatingFrequencyRBV</name>
       <y>99</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -708,7 +708,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>127</width>
       <x>0</x>
-      <name>Label_6</name>
+      <name>CurrentCycleLabel</name>
       <y>126</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -760,7 +760,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>132</x>
-      <name>SourceRBV_2</name>
+      <name>CurrentCycleRBV</name>
       <y>129</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -840,7 +840,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>133</width>
       <x>0</x>
-      <name>SourceLabel</name>
+      <name>SweptAngleLabel_1</name>
       <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -892,7 +892,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>138</x>
-      <name>SourceRBV</name>
+      <name>SweptAngleSPRBV</name>
       <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -932,7 +932,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>133</width>
       <x>0</x>
-      <name>CurrentComplianceLabel</name>
+      <name>ThreadLabel</name>
       <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -984,7 +984,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>138</x>
-      <name>CurrentComplianceRBV</name>
+      <name>ThreadSPRBV</name>
       <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1024,7 +1024,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>133</width>
       <x>0</x>
-      <name>VoltageComplicanceLabel</name>
+      <name>OperatingFrequencyLabel_1</name>
       <y>66</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1076,7 +1076,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>138</x>
-      <name>VoltageComplianceRBV</name>
+      <name>OperatingFrequencyRBV</name>
       <y>66</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1109,7 +1109,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>true</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>CurrentComplianceSP</name>
+      <name>ThreadInput</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1165,7 +1165,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>true</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>VoltageComplianceSP</name>
+      <name>OperatingFrequencyInput</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1221,7 +1221,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>true</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>CurrentComplianceSP_1</name>
+      <name>SweptAngleInput</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1324,7 +1324,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>133</width>
       <x>0</x>
-      <name>CurrentComplianceLabel</name>
+      <name>MotorStepsLabel</name>
       <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1376,7 +1376,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>138</x>
-      <name>CurrentComplianceRBV</name>
+      <name>MotorStepsSPRBV</name>
       <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1416,7 +1416,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>133</width>
       <x>0</x>
-      <name>VoltageComplicanceLabel</name>
+      <name>MountingRadiusLabel</name>
       <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1468,7 +1468,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>97</width>
       <x>138</x>
-      <name>VoltageComplianceRBV</name>
+      <name>MountingRadiusSPRBV</name>
       <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1493,7 +1493,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):I:COMPLIANCE:SP</pv_name>
+      <pv_name></pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1501,7 +1501,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>true</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>CurrentComplianceSP</name>
+      <name>MotorStepsInput</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1557,7 +1557,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>true</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>VoltageComplianceSP</name>
+      <name>MountingRadiusInput</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
