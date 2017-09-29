@@ -953,5 +953,15 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>OscillatingCollimator</key>
+			<value>
+				<type>OSCILLATING_COLLIMATOR</type>
+				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
+				<description>The OPI for the LET oscillating collimator.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
