@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
@@ -51,7 +50,7 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
 	}	
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+    public void safeExecute(ExecutionEvent event) {
         updateObservers();
         ConfigSelectionDialog dialog =
                 new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false, false);
@@ -63,10 +62,9 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
             } else {
                 new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-                execute(event);
+                safeExecute(event);
             }
 		}
-		return null;
 	}
 
     private void updateObservers() {

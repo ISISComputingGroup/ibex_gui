@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
@@ -44,7 +43,7 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 
 		
 	@Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         ConfigSelectionDialog selectionDialog =
                 new ConfigSelectionDialog(shell(), TITLE, SERVER.configsInfo().getValue(), false, true);
         EditConfigHelper helper = new EditConfigHelper(shell(), SERVER);
@@ -58,8 +57,6 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
                 helper.createDialog(configName, false);
             }
 		}
-		
-		return null;
 	}
 	
     private boolean editCurrentConfigConfirmDialog(String configName) {

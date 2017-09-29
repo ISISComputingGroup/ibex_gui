@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -48,7 +47,7 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsBlankConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
@@ -56,8 +55,6 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 		if (Awaited.returnedValue(config, 1)) {
             openDialog(config.getValue(), configurationViewModels);
 		}
-		
-		return null;
 	}
 	
     private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {

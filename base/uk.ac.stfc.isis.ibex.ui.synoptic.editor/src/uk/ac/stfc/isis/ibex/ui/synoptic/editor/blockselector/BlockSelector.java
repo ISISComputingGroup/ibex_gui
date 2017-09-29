@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
 import java.util.Collection;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -49,7 +48,7 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+    public void safeExecute(ExecutionEvent event) {
         Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAvailableBlocks();
 		
         BlockSelectorDialog dialog = new BlockSelectorDialog(null, availableBlocks);
@@ -58,8 +57,6 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 			pvAddress = dialog.getPVAddress();
             confirmed = true;
 		}
-
-        return null;
 	}
 	
     /**
