@@ -978,7 +978,7 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>false</wrap_words>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
@@ -1070,7 +1070,7 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>false</wrap_words>
-      <format_type>6</format_type>
+      <format_type>0</format_type>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
@@ -1125,7 +1125,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -1181,7 +1181,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>6</format_type>
+      <format_type>0</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -1237,7 +1237,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -1370,7 +1370,7 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>false</wrap_words>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
@@ -1462,7 +1462,7 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>false</wrap_words>
-      <format_type>6</format_type>
+      <format_type>0</format_type>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
@@ -1517,7 +1517,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -1573,7 +1573,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>6</format_type>
+      <format_type>0</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
