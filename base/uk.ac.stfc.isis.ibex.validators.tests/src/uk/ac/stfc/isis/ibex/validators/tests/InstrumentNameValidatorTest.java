@@ -41,6 +41,10 @@ public class InstrumentNameValidatorTest {
         knownValidNames.add("valid1");
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_alphanumeric_name_with_prefix_is_validated_THEN_name_is_valid() {
         // Arrange
@@ -51,6 +55,24 @@ public class InstrumentNameValidatorTest {
         assertTrue(valid.validateInstrumentName(name));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
+    @Test
+    public void WHEN_alphanumeric_name_with_dash_and_with_prefix_is_validated_THEN_name_is_valid() {
+        // Arrange
+        String name = PREFIX + "valid-123";
+        InstrumentNameValidator valid = new InstrumentNameValidator(knownValidNames);
+
+        // Act - Assert
+        assertTrue(valid.validateInstrumentName(name));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_known_valid_name_without_prefix_is_validated_THEN_name_is_valid() {
         // Arrange
@@ -61,6 +83,10 @@ public class InstrumentNameValidatorTest {
         assertTrue(valid.validateInstrumentName(name));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_non_alphanumeric_name_is_validated_THEN_name_is_invalid() {
         // Arrange
@@ -71,6 +97,10 @@ public class InstrumentNameValidatorTest {
         assertFalse(valid.validateInstrumentName(name));
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_valid_name_is_validated_THEN_message_is_correct() {
         // Arrange
@@ -85,6 +115,10 @@ public class InstrumentNameValidatorTest {
         assertEquals(expected, valid.getErrorMessage());
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_non_alphanumeric_name_is_validated_THEN_message_is_correct() {
         // Arrange
@@ -99,6 +133,10 @@ public class InstrumentNameValidatorTest {
         assertEquals(expected, valid.getErrorMessage());
     }
 
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator#validateInstrumentName(java.lang.String)}.
+     */
     @Test
     public void WHEN_empty_name_is_validated_THEN_message_is_correct() {
         // Arrange

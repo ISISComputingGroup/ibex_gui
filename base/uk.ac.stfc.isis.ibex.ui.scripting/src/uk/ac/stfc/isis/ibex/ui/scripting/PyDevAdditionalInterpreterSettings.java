@@ -31,8 +31,36 @@ import org.python.pydev.ui.pythonpathconf.InterpreterNewCustomEntriesAdapter;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
+/**
+ * The Class PyDevAdditionalInterpreterSettings adds interpreter settings to the pydev class so it will work with epics.
+ */
 public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntriesAdapter {
-		
+	
+	private static final String PREFERENCE_STORE_ID_FOR_EPICS_LIBS = "org.csstudio.platform.libs.epics";
+	final IPreferencesService prefs;
+	Instrument instrumentBundle;
+	
+	/**
+	 * Instantiates a new pyDev additional interpreter settings.
+	 * 
+	 * This constructor is usually used for testing only
+	 *
+	 * @param iPreferencesService the iPreferences service to use
+	 * @param instrumentBundle the instrument bundle to use to get details from
+	 */
+	public PyDevAdditionalInterpreterSettings(IPreferencesService iPreferencesService, Instrument instrumentBundle) {
+		prefs = iPreferencesService;
+		this.instrumentBundle = instrumentBundle;
+	}
+	
+	/**
+	 * Instantiates a new pyDev additional interpreter settings.
+	 * 
+	 */
+	public PyDevAdditionalInterpreterSettings() {
+		this(Platform.getPreferencesService(), Instrument.getInstance());
+	}
+	
 	@Override
 	public Collection<String> getAdditionalEnvVariables() {
 		List<String> entriesToAdd = new ArrayList<String>();
@@ -54,7 +82,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	private String pvPrefix() {
-		return "MYPVPREFIX=" + Instrument.getInstance().currentInstrument().pvPrefix();
+		return "MYPVPREFIX=" + instrumentBundle.currentInstrument().pvPrefix();
 	}
 	
 	private String epicsBasePath() {
@@ -72,21 +100,22 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		}
 	}
 	
-	// Get the channel access environment variables from EPICS preferences
+	/**
+	 *  Get the channel access environment variables from EPICS preferences
+	 *  
+	 * @return list of environment variables and their settings
+	 */
 	private List<String> epicsEnvironment() {
-		String id = "org.csstudio.platform.libs.epics";		
-        final IPreferencesService prefs = Platform.getPreferencesService();
 		List<String> epicsEnv = new ArrayList<String>();
 
-        final String addList = prefs.getString(id, "addr_list", null, null);
+        final String addList = prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
         epicsEnv.add("EPICS_CA_ADDR_LIST=" + addList);
         
-        final String autoAddr = Boolean.toString(
-                prefs.getBoolean(id, "auto_addr_list", true, null));
+        final String autoAddr = prefs.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
         epicsEnv.add("EPICS_CA_AUTO_ADDR_LIST=" + autoAddr);
         
         final String maxArrayBytes =
-                prefs.getString(id, "max_array_bytes", "16384", null);
+                prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
         epicsEnv.add("EPICS_CA_MAX_ARRAY_BYTES=" + maxArrayBytes);
         
         return epicsEnv;

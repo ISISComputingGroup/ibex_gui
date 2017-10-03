@@ -255,6 +255,9 @@
 		<module>../uk.ac.stfc.isis.ibex.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
+		
+		
+		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 	</modules>
 </project>
 
