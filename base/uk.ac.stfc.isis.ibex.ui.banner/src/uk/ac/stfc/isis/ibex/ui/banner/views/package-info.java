@@ -17,6 +17,6 @@
  */
 
 /**
- * The view for the dashboard.
+ * The view for the banner (formally bumpstrip).
  */
-package uk.ac.stfc.isis.ibex.e4.ui.bumpstrip.views;
+package uk.ac.stfc.isis.ibex.ui.banner.views;

@@ -19,21 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.runinformation;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class RunInformationPanel extends Composite {
+public class RunInformationPanel {
 
 	private Label instrument;
 	private Label runStatus;
@@ -72,12 +75,17 @@ public class RunInformationPanel extends Composite {
 	private Label monitorTo;
 
 	private DataBindingContext bindingContext;
+    private DaeViewModel viewModel;
 
-	public RunInformationPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+    public RunInformationPanel() {
+        this.viewModel = DaeUI.getDefault().viewModel();
+    }
+
+    @PostConstruct
+    public void createPart(Composite parent) {
+        parent.setLayout(new GridLayout(1, false));
 		
-		Group grpSetup = new Group(this, SWT.NONE);
+        Group grpSetup = new Group(parent, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSetup.setText("Setup");
 		GridLayout glGrpSetup = new GridLayout(6, false);
@@ -300,7 +308,7 @@ public class RunInformationPanel extends Composite {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
-		Group titleGroup = new Group(this, SWT.NONE);
+        Group titleGroup = new Group(parent, SWT.NONE);
 		titleGroup.setLayout(new GridLayout(2, false));
 		titleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
@@ -324,7 +332,7 @@ public class RunInformationPanel extends Composite {
 		users.setLayoutData(gdUsers);
 		users.setText("UNKNOWN");
 		
-		Group grpPeriods = new Group(this, SWT.NONE);
+        Group grpPeriods = new Group(parent, SWT.NONE);
 		GridLayout glGrpPeriods = new GridLayout(6, false);
 		glGrpPeriods.horizontalSpacing = 20;
 		grpPeriods.setLayout(glGrpPeriods);
@@ -417,7 +425,7 @@ public class RunInformationPanel extends Composite {
 		new Label(grpPeriods, SWT.NONE);
 		new Label(grpPeriods, SWT.NONE);
 		
-		Group grpMonitor = new Group(this, SWT.NONE);
+        Group grpMonitor = new Group(parent, SWT.NONE);
 		GridLayout glGrpMonitor = new GridLayout(6, false);
 		glGrpMonitor.horizontalSpacing = 20;
 		grpMonitor.setLayout(glGrpMonitor);
@@ -485,6 +493,8 @@ public class RunInformationPanel extends Composite {
 		monitorTo.setText("UNKNOWN");
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
+
+        setModel(viewModel);
 	}
 	
 	public void setModel(DaeViewModel viewModel) {
