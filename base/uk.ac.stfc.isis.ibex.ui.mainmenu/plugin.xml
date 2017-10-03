@@ -3,25 +3,5 @@
 <plugin>
    <extension
          point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
-            name="Select an instrument">
-      </command>
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
-            name="Restore default perspective">
-      </command>
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
-            name="Manager mode">
-      </command>
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
-            name="Exit IBEX Client">
-      </command>
    </extension>
 </plugin>
