@@ -16,37 +16,39 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 
 /**
- *
+ *	Panel for Beamline parameters.
  */
 public class BeamlineParametersPanel {
 
     private ParametersTable beamParameters;
-    private Label lblBeamlineParameters;
     private final ViewModel viewModel;
 
     /**
-     * @param parent
+     * Instantiates a new beamline parameters panel.
      */
-    @Inject
-    public BeamlineParametersPanel(Composite parent) {
-
-        viewModel = ViewModel.getInstance();
+    public BeamlineParametersPanel() {
+    	viewModel = ViewModel.getInstance();
+    }
+    
+    /**
+     * Creates controls.
+     * 
+     * @param parent parent composite
+     */
+    @PostConstruct
+    public void cCreateControls(Composite parent) {
 
         beamParameters = new ParametersTable(parent, SWT.BEGINNING);
         beamParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
@@ -68,6 +70,9 @@ public class BeamlineParametersPanel {
         });
     }
 
+    /**
+     * Update beam parameters from the model (uses the GUI thread).
+     */
     protected void updateBeamParameters() {
         Display.getDefault().asyncExec(new Runnable() {
             @Override

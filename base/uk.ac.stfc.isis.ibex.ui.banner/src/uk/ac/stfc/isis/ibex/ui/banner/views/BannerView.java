@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -81,8 +81,13 @@ public class BannerView {
     private Indicator batonUser;
     private Indicator inMotion;
     private Control motionControl;
-
-    @Inject
+    
+    /**
+     * Create the controls for the part.
+     * 
+     * @param parent parent panel to add controls to
+     */
+    @PostConstruct
     public void createPartControl(Composite parent) {
 
         GridLayout glParent = new GridLayout(10, false);

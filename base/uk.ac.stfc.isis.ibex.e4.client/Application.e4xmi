@@ -61,9 +61,6 @@
       <children xsi:type="menu:ToolControl" xmi:id="_bOFmUJ04Eeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.1" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.banner/uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"/>
     </trimBars>
   </children>
-  <children xsi:type="basic:Dialog" xmi:id="_ysm88GbXEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.dialog.editcurrentconfig" toBeRendered="false" selectedElement="_uqpG4GbYEeeM7uzkT_ViHQ" label="Edit current configuration">
-    <children xsi:type="basic:Part" xmi:id="_uqpG4GbYEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.editcurrentconfig" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.configeditor/uk.ac.stfc.isis.ibex.e4.ui.configeditor.ConfigEditorDialog" label="Edit current configuration (part)"/>
-  </children>
   <handlers xmi:id="_sXmmEHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.waitfor" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui/uk.ac.stfc.isis.ibex.ui.WaitFor" command="_bjIjUHz5EeeSXZfE9ugy5A"/>
   <handlers xmi:id="_WpVV4GbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.current" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
   <handlers xmi:id="_ZReosHtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewConfigHandler" command="_dBXa0HtXEeeIzM7lvAxMoQ"/>

@@ -29,7 +29,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISizeProvider;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -43,7 +42,7 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
  * The overall view that holds the information on the blocks in the main ISIS
  * perspective.
  */
-public class BlocksView implements ISizeProvider {
+public class BlocksView {
 
     /**
      * The default constructor.
@@ -55,8 +54,6 @@ public class BlocksView implements ISizeProvider {
      * The view ID.
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-
-    private static final int FIXED_HEIGHT = 250;
 
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
@@ -93,6 +90,10 @@ public class BlocksView implements ISizeProvider {
 		}		
 	};	
 
+	/**
+	 * Create the controls within the blocks view.
+	 * @param parent parent of the blocks view
+	 */
     @PostConstruct
 	public void createPartControl(final Composite parent) {
 		
@@ -113,23 +114,13 @@ public class BlocksView implements ISizeProvider {
 		configSubscription = CONFIG.addObserver(configObserver);
 	}
 
+    /**
+     * Dispose of observers when blocks view is destroyed.
+     */
     @PreDestroy
 	public void dispose() {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
 	};
-	
-    // TODO: Is this required?
-    @Override
-    public int getSizeFlags(boolean width) {
-        return width ? SWT.NONE : SWT.MIN | SWT.MAX;
-    }
-
-    @Override
-    public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
-            int preferredResult) {
-        return width ? 0 : FIXED_HEIGHT;
-    }
-
 }
