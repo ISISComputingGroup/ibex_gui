@@ -29,19 +29,16 @@ public class SendMessageDetails {
 
     private boolean isSent;
     private String failureReason;
-    private String messageId;
 
     /**
      * Creates the message details when the send fails.
      *
      * @param failureReason
      *            the failure reason
-     * @param messageId
-     *            the message id
      * @return the failure send message details
      */
-    public static SendMessageDetails createSendFail(String failureReason, String messageId) {
-        return new SendMessageDetails(false, failureReason, messageId);
+    public static SendMessageDetails createSendFail(String failureReason) {
+        return new SendMessageDetails(false, failureReason);
     }
 
     /**
@@ -51,8 +48,8 @@ public class SendMessageDetails {
      *            the message id
      * @return the send message details
      */
-    public static SendMessageDetails createSendSuccess(String messageId) {
-        return new SendMessageDetails(true, "", messageId);
+    public static SendMessageDetails createSendSuccess(String response) {
+        return new SendMessageDetails(true, response);
     }
 
     /**
@@ -65,11 +62,10 @@ public class SendMessageDetails {
      * @param messageId
      *            the message id sent to JMS to coordinate messages and replies
      */
-    public SendMessageDetails(boolean isSent, String failureReason, String messageId) {
+    public SendMessageDetails(boolean isSent, String failureReason) {
         super();
         this.isSent = isSent;
         this.failureReason = failureReason;
-        this.messageId = messageId;
     }
 
     /**
@@ -84,20 +80,6 @@ public class SendMessageDetails {
      */
     public String getFailureReason() {
         return failureReason;
-    }
-
-    /**
-     * Message has the same message ID.
-     * 
-     * @param messageId
-     *            the message ID to check
-     * @return true if has the same message id; false otherwise
-     */
-    public boolean hasMessageId(String messageId) {
-        if (messageId == null) {
-            return false;
-        }
-        return this.messageId.equals(messageId);
     }
 
 }

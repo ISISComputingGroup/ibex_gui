@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.activemq,
  uk.ac.stfc.isis.ibex.nicos,
  uk.ac.stfc.isis.ibex.epics
+Bundle-ClassPath: ., lib/jeromq-0.4.2.jar

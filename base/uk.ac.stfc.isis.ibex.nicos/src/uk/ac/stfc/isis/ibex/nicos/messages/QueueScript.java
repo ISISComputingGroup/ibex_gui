@@ -21,14 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.Arrays;
+
 /**
  * Serialisable class to queue a script in Nicos.
  */
-public class QueueScript implements NicosSendMessage {
-    
-    String command = "queue";
-    String name;
-    String code;
+public class QueueScript extends NicosSendMessage {
     
     /**
      * Constructor.
@@ -39,8 +37,8 @@ public class QueueScript implements NicosSendMessage {
      *            code in script
      */
     public QueueScript(String name, String code) {
-        this.name = name;
-        this.code = code;
+        this.command = "queue";
+        this.parameters = Arrays.asList(name, code);
     }
         
 }

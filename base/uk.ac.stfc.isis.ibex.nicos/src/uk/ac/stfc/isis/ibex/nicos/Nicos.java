@@ -55,7 +55,7 @@ public class Nicos extends AbstractUIPlugin {
     public NicosModel getModel() {
         if (model == null) {
             sendReceiveQueue = ActiveMQ.getInstance().openSendReceiveQueue("ss_admin", "username", "password");
-            model = new NicosModel(sendReceiveQueue);
+            model = new NicosModel(new ZMQSession());
         }
         return model;
 	}

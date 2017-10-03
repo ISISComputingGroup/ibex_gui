@@ -18,28 +18,20 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
-import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
-import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 
 /**
  * The model that holds the connection to nicos.
  */
-public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveMessage> {
+public class NicosModel extends ModelObject {
 
     private static final Logger LOG = IsisLog.getLogger(NicosModel.class);
 
@@ -48,7 +40,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      */
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
 
-    private final SendReceiveSession session;
+    private final ZMQSession session;
 
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
 
@@ -69,89 +61,104 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      * @param session
      *            the session to use to send messages to the script sever
      */
-    public NicosModel(SendReceiveSession session) {
+    public NicosModel(ZMQSession session) {
         this.session = session;
-        MessageParser<ReceiveMessage> parser = new NicosMessageParser();
-        parser.addMessageConsumer(this);
-        this.session.addMessageParser(parser);
-        this.session.addPropertyChangeListener("connection", new PropertyChangeListener() {
+//        MessageParser<ReceiveMessage> parser = new NicosMessageParser();
+//        parser.addMessageConsumer(this);
+        connect();
+//        this.session.addMessageParser(parser);
+//        this.session.addPropertyChangeListener("connection", new PropertyChangeListener() {
+//
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                Boolean isConnected = (Boolean) evt.getNewValue();
+//                connectedChange(isConnected);
+//            }
+//
+//        });
+//        this.session.addPropertyChangeListener("connectionError", new PropertyChangeListener() {
+//
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                setConnectionErrorMessage((String) evt.getNewValue());
+//            }
+//
+//        });
 
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                Boolean isConnected = (Boolean) evt.getNewValue();
-                connectedChange(isConnected);
-            }
-
-        });
-        this.session.addPropertyChangeListener("connectionError", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setConnectionErrorMessage((String) evt.getNewValue());
-            }
-
-        });
-
-        setConnectionErrorMessage(this.session.getConnectionError());
-        connectedChange(this.session.isConnected());
+//        setConnectionErrorMessage(this.session.getConnectionError());
+//        connectedChange(this.session.isConnected());
     }
 
-    @Override
-    public void newMessage(ReceiveMessage nicosMessage) {
-        LOG.info("New data on ss_admin: " + nicosMessage.toString());
+//    @Override
+//    public void newMessage(ReceiveMessage nicosMessage) {
+//        LOG.info("New data on ss_admin: " + nicosMessage.toString());
+//
+//        if (nicosMessage.isReplyTo(scriptSendMessageDetails)) {
+//            if (nicosMessage.isSuccess()) {
+//                setScriptSendStatus(ScriptSendStatus.SENT);
+//                setScriptSendErrorMessage("");
+//            } else {
+//                setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
+//                setScriptSendErrorMessage(nicosMessage.getMessage());
+//            }
+//        } else if (nicosMessage.isReplyTo(loginSendMessageDetails)) {
+//            if (nicosMessage.isSuccess()) {
+//                setConnectionStatus(ConnectionStatus.CONNECTED);
+//                setConnectionErrorMessage("");
+//            } else {
+//                LOG.error("Error returned from Nicos on login: " + nicosMessage.getMessage());
+//                setConnectionStatus(ConnectionStatus.FAILED);
+//                setConnectionErrorMessage("Can not log in: " + nicosMessage.getMessage());
+//            }
+//        }
+//    }
 
-        if (nicosMessage.isReplyTo(scriptSendMessageDetails)) {
-            if (nicosMessage.isSuccess()) {
-                setScriptSendStatus(ScriptSendStatus.SENT);
-                setScriptSendErrorMessage("");
-            } else {
-                setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-                setScriptSendErrorMessage(nicosMessage.getMessage());
-            }
-        } else if (nicosMessage.isReplyTo(loginSendMessageDetails)) {
-            if (nicosMessage.isSuccess()) {
-                setConnectionStatus(ConnectionStatus.CONNECTED);
-                setConnectionErrorMessage("");
-            } else {
-                LOG.error("Error returned from Nicos on login: " + nicosMessage.getMessage());
-                setConnectionStatus(ConnectionStatus.FAILED);
-                setConnectionErrorMessage("Can not log in: " + nicosMessage.getMessage());
-            }
-        }
-    }
-
-    /**
-     * The connection status has changed. Login if connected.
-     * 
-     * @param isConnected
-     *            is the server connected
-     */
-    private void connectedChange(Boolean isConnected) {
-        // new connection so reset script send status
-        setScriptSendStatus(ScriptSendStatus.NONE);
-        setScriptSendErrorMessage("");
-
-        if (isConnected) {
-            LOG.info("Logging in to nicos");
-            setConnectionStatus(ConnectionStatus.CONNECTING);
-            setConnectionErrorMessage("");
+    private void connect() {
+        try {
             loginSendMessageDetails = sendMessageToNicos(new Login());
-            if (!loginSendMessageDetails.isSent()) {
-                LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
-                        + "\'");
-                setConnectionStatus(ConnectionStatus.FAILED);
-                setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
-            }
-        } else {
-            setConnectionStatus(ConnectionStatus.DISCONNECTED);
+        } catch (ConversionException e) {
+            setConnectionErrorMessage("Failed to parse JSON");
+        }
+        if (!loginSendMessageDetails.isSent()) {
+            LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
+                    + "\'");
+            setConnectionStatus(ConnectionStatus.FAILED);
+            setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
         }
     }
 
+//    /**
+//     * The connection status has changed. Login if connected.
+//     * 
+//     * @param isConnected
+//     *            is the server connected
+//     */
+//    private void connectedChange(Boolean isConnected) {
+//        // new connection so reset script send status
+//        setScriptSendStatus(ScriptSendStatus.NONE);
+//        setScriptSendErrorMessage("");
+//
+//        if (isConnected) {
+//            LOG.info("Logging in to nicos");
+//            setConnectionStatus(ConnectionStatus.CONNECTING);
+//            setConnectionErrorMessage("");
+//            loginSendMessageDetails = sendMessageToNicos(new Login());
+//            if (!loginSendMessageDetails.isSent()) {
+//                LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
+//                        + "\'");
+//                setConnectionStatus(ConnectionStatus.FAILED);
+//                setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
+//            }
+//        } else {
+//            setConnectionStatus(ConnectionStatus.DISCONNECTED);
+//        }
+//    }
 
-    @Override
-    public void clearMessages() {
-        // messages are not stored so there is no need to clear them.
-    }
+
+//    @Override
+//    public void clearMessages() {
+//        // messages are not stored so there is no need to clear them.
+//    }
 
 
     /**
@@ -181,6 +188,8 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
         if (!this.scriptSendMessageDetails.isSent()) {
             setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
             setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+        } else {
+            System.out.println(this.scriptSendMessageDetails.getFailureReason());
         }
     }
 
@@ -192,14 +201,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      * @return details about the sending of that message
      */
     private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
-        JsonSerialisingConverter<NicosSendMessage> serialiser =
-                new JsonSerialisingConverter<NicosSendMessage>(nicosMessage.getClass());
-        try {
-            return this.session.sendMessage(serialiser.convert(nicosMessage));
-        } catch (ConversionException e) {
-            LOG.error("Problem serialising the object before send a message to nicos.", e);
-            return SendMessageDetails.createSendFail("Can not convert message to json", "");
-        }
+        return session.sendMessage(nicosMessage);
     }
 
     /**

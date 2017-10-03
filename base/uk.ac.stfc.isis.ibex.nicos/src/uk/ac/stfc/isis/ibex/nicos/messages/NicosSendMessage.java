@@ -21,9 +21,26 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+
 /**
  * A message that can be serialised and sent to Nicos.
  */
-public interface NicosSendMessage {
-
+@SuppressWarnings("rawtypes")
+public abstract class NicosSendMessage {
+    protected String command;
+    protected List parameters;
+    
+    public ArrayList<String> getMulti() throws ConversionException {
+        JsonSerialisingConverter<List> serialiser = new JsonSerialisingConverter<>(List.class);
+        ArrayList<String> out = new ArrayList<>();
+        out.add(command);
+        out.add("");
+        out.add(serialiser.convert(parameters));
+        return out;
+    }
 }

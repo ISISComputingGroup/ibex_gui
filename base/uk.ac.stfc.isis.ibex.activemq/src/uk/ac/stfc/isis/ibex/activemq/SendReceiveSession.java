@@ -114,7 +114,7 @@ public class SendReceiveSession extends ReceiveSession {
      */
     public SendMessageDetails sendMessage(String text) {
         if (session == null) {
-            return SendMessageDetails.createSendFail("No connection to script server.", "");
+            return SendMessageDetails.createSendFail("No connection to script server.");
         }
 
         String messageId = getNextCorrelationID();
@@ -127,7 +127,7 @@ public class SendReceiveSession extends ReceiveSession {
             return SendMessageDetails.createSendSuccess(messageId);
         } catch (JMSException e) {
             LOG.warn("Failed to send message " + text);
-            return SendMessageDetails.createSendFail(e.getLocalizedMessage(), messageId);
+            return SendMessageDetails.createSendFail(e.getLocalizedMessage());
         }
     }
 

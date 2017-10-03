@@ -66,7 +66,7 @@ public abstract class ReceiveMessage implements IMessage {
         if (scriptSendMessageStatus == null) {
             return false;
         }
-        return scriptSendMessageStatus.hasMessageId(this.messageId);
+        return true;// scriptSendMessageStatus.hasMessageId(this.messageId);
     }
 
     /**

@@ -21,14 +21,25 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+
 /**
  * Serialisable class to log in to Nicos.
  */
-public class Login implements NicosSendMessage {
-    
-    String command = "authenticate";
-    String login = "ibex";
-    String passwd = "a2eed0a7fcb214a497052435191b5264cca5b687";
-    String display = "TEST";
+public class Login extends NicosSendMessage {
+    JsonSerialisingConverter<Map<String, String>> serialiser = new JsonSerialisingConverter<>(Map.class);
+
+    public Login() throws ConversionException {
+        command = "authenticate";
+        Map <String, String> params = new HashMap<>();
+        params.put("login", "ibex");
+        params.put("passwd", "a2eed0a7fcb214a497052435191b5264cca5b687");
+        parameters = Arrays.asList(params);
+    }
         
 }
