@@ -4,7 +4,7 @@
   <rules />
   <wuid>-7b81905f:141e455f16c:-7da2</wuid>
   <show_grid>true</show_grid>
-  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
   <scripts />
   <height>250</height>
   <macros>
@@ -180,7 +180,7 @@ widget.setValue(printed_text)]]></scriptText>
       <wuid>-7b81905f:141e455f16c:-7a7a</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>High limit:</text>
+      <text>High lim:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -199,7 +199,7 @@ widget.setValue(printed_text)]]></scriptText>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>61</width>
+      <width>49</width>
       <x>0</x>
       <name>HighLimitLabel</name>
       <y>6</y>
@@ -251,8 +251,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>67</width>
-      <x>66</x>
+      <width>79</width>
+      <x>54</x>
       <name>HighLimitReadback</name>
       <y>3</y>
       <foreground_color>
@@ -291,7 +291,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>61</width>
+      <width>49</width>
       <x>0</x>
       <name>PositionLabel</name>
       <y>40</y>
@@ -343,8 +343,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>67</width>
-      <x>66</x>
+      <width>79</width>
+      <x>54</x>
       <name>PositionReadback</name>
       <y>37</y>
       <foreground_color>
@@ -364,7 +364,7 @@ $(pv_value)</tooltip>
       <wuid>-7b81905f:141e455f16c:-7a38</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Low limit:</text>
+      <text>Low lim:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -383,7 +383,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>61</width>
+      <width>49</width>
       <x>0</x>
       <name>LowLimitLabel</name>
       <y>74</y>
@@ -435,8 +435,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>67</width>
-      <x>66</x>
+      <width>79</width>
+      <x>54</x>
       <name>LowLimitReadback</name>
       <y>71</y>
       <foreground_color>
@@ -986,7 +986,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):I:COMPLIANCE:SP</pv_name>
+      <pv_name>$(P)$(MM).VAL</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1136,7 +1136,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):I:COMPLIANCE:SP</pv_name>
+      <pv_name>$(P)$(MM).TWV</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1288,7 +1288,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SOURCE:MODE:SP</pv_name>
+      <pv_name>$(P)$(MM).HOMF</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1359,11 +1359,11 @@ $(pv_value)</tooltip>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
+      <push_action_index>1</push_action_index>
       <rules />
       <enabled>true</enabled>
       <wuid>-23027657:15ecdd7f624:-71e1</wuid>
-      <release_action_index>1</release_action_index>
+      <release_action_index>0</release_action_index>
       <pv_value />
       <text>&lt;</text>
       <scripts />
@@ -1413,11 +1413,11 @@ $(pv_value)</tooltip>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
+      <push_action_index>1</push_action_index>
       <rules />
       <enabled>true</enabled>
       <wuid>-23027657:15ecdd7f624:-71e0</wuid>
-      <release_action_index>1</release_action_index>
+      <release_action_index>0</release_action_index>
       <pv_value />
       <text>&gt;</text>
       <scripts />
