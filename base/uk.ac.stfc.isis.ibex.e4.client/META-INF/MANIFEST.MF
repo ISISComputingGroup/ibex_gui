@@ -12,7 +12,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-
  fc.isis.ibex.ui.banner;bundle-version=1.0.0,uk.ac.stfc.isis.ibex.ui.b
  locks;bundle-version=1.0.0,uk.ac.stfc.isis.ibex.ui.mainmenu;bundle-ve
  rsion=1.0.0,uk.ac.stfc.isis.ibex.ui.experimentdetails;bundle-version=
- 1.0.0
+ 1.0.0,uk.ac.stfc.isis.ibex.ui.ioccontrol;bundle-version=1.0.0
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: ISIS
