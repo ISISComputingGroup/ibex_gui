@@ -19,13 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -46,14 +50,17 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
  * The main view for the NICOS scripting perspective.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class NicosView extends ViewPart {
+public class NicosView {
 	
 	/**
 	 * The public ID of this class.
 	 */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.NicosView";
 
     private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
+    
+    private static final int FIXED_WIDTH = 750;
+    private static final int FIXED_HEIGHT = 225;
 	
 	private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
@@ -73,16 +80,23 @@ public class NicosView extends ViewPart {
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		Composite nicosComposite = new Composite(scrolledComposite, SWT.NONE);
+		scrolledComposite.setContent(nicosComposite);
+        scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
+		
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.marginRight = 10;
 		glParent.marginHeight = 10;
 		glParent.marginWidth = 10;
-		parent.setLayout(glParent);
+		nicosComposite.setLayout(glParent);
 
         // Connection info
-        Composite connectionGrp = new Composite(parent, SWT.NONE);
+        Composite connectionGrp = new Composite(nicosComposite, SWT.NONE);
         connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
         GridLayout connLayout = new GridLayout(2, false);
         connLayout.marginRight = 10;
@@ -102,21 +116,21 @@ public class NicosView extends ViewPart {
         bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
                 BeanProperties.value("connectionErrorMessage").observe(model));
 		
-		lblCurrentScript = new Label(parent, SWT.NONE);
+		lblCurrentScript = new Label(nicosComposite, SWT.NONE);
 		lblCurrentScript.setText("Current Script");
 		
-		Label lblOutput = new Label(parent, SWT.NONE);
+		Label lblOutput = new Label(nicosComposite, SWT.NONE);
 		lblOutput.setText("Output");
 		
-		StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
+		StyledText txtCurrentScript = new StyledText(nicosComposite, SWT.BORDER);
 		txtCurrentScript.setEditable(false);
 		txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		StyledText txtOutput = new StyledText(parent, SWT.BORDER);
+		StyledText txtOutput = new StyledText(nicosComposite, SWT.BORDER);
 		txtOutput.setEditable(false);
 		txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
+        Composite scriptSendGrp = new Composite(nicosComposite, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
         ssgLayout.marginRight = 10;
@@ -150,13 +164,5 @@ public class NicosView extends ViewPart {
 		});
 
 	}
-
-    /**
-     * 
-     */
-    @Override
-    public void setFocus() {
-        lblCurrentScript.setFocus();
-    }
 
 }

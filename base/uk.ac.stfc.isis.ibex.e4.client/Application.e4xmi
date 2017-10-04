@@ -153,6 +153,23 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="NICOS Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_32x24.png">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_41mgMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_5khbsKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_7JTBIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
+          <children xsi:type="advanced:Placeholder" xmi:id="_PVspAKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_7liRMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
+          <children xsi:type="advanced:Placeholder" xmi:id="_J_WPYKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        </children>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_83AgIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13">
+          <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosView" label="NICOS"/>
+        </children>
+      </children>
+    </children>
+  </snippets>
   <snippets xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_OcdgIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
       <children xsi:type="basic:PartSashContainer" xmi:id="_rBCaMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="30" horizontal="true">
