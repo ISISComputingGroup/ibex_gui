@@ -24,6 +24,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -39,7 +41,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
@@ -56,7 +57,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
  * Holds all UI elements of the Script Generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class View extends ViewPart {
+public class View {
     /** The ID for the View. */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
     /** The preview button. */
@@ -96,7 +97,7 @@ public class View extends ViewPart {
         builder.setRows(rows);
 	}
 
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, true));
 		
@@ -227,11 +228,6 @@ public class View extends ViewPart {
 				table.clearTable();
 			}
 		});
-	}
-	
-	@Override
-	public void setFocus() {
-		
 	}
 
 }
