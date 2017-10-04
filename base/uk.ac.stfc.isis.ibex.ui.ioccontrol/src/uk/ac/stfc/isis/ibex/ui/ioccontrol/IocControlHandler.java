@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -29,13 +28,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 
@@ -43,53 +38,39 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
  * Command to display the IOC control dialog.
  *
  */
-public class IocControlHandler implements IHandler {
+public class IocControlHandler {
 	
 	private IocControl control;
 	
+	/**
+	 * Instantiates a new IOC control handler.
+	 */
 	public IocControlHandler() {
 		control = Configurations.getInstance().iocControl();
 	}
 
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
-		
-	}
-
-	@Override
-	public void dispose() {
-		
-	}
-
 	/**
      * Display the dialog.
+     * 
+     * @param shell the shell to use to create the dialog
      */
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	@Execute
+	public void execute(Shell shell) {
 		if (control != null) {
-			IocControlDialog dialog = new IocControlDialog(shell(), control);	
+			IocControlDialog dialog = new IocControlDialog(shell, control);	
 			dialog.open();
 		}
-		
-		return null;
 	}
 	
-	private Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	}
-
-	@Override
+	/**
+	 * Checks to see if menu item should be enabled.
+	 *
+	 * @return true - menu item is always enabled
+	 */
+	@CanExecute
 	public boolean isEnabled() {
 		return true;
 	}
 
-	@Override
-	public boolean isHandled() {
-		return true;
-	}
-
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {		
-	}
 
 }
