@@ -19,11 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IPageLayout;
-import org.eclipse.wb.swt.ResourceManager;
-
-import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
+import javax.annotation.PostConstruct;
 
 /**
  * The perspective that shows the scripting window.
@@ -31,35 +27,15 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
  * Registers the perspective to be displayed in the list (see plugin.xml file
  * for this package).
  */
-public class Perspective extends BasePerspective {
+public class Perspective {
 
     /**
      * The ID of this perspective.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
 
-	@Override
-	public void createInitialLayout(IPageLayout layout) {
-		super.createInitialLayout(layout);
-		
+    @PostConstruct
+    public void createInitialLayout() {
         Consoles.getDefault().createConsole();
-	}
-	
-	@Override
-	public String id() {
-		return ID;
-	}
-
-	@Override
-	public String name() {
-        return "&Scripting";
-	}
-	
-	@Override
-	public Image image() {
-		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scripting", "icons/script_32x24.png");
-		// Icon made by Freepik http://www.flaticon.com/authors/freepik
-		// from Flaticon http://www.flaticon.com
-		// is licensed by Creative Commons BY 3.0 http://creativecommons.org/licenses/by/3.0/
-	}
+    }
 }

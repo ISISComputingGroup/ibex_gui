@@ -40,46 +40,46 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  * A factory for creating Genie Python Consoles.
  */
 public class GeniePythonConsoleFactory extends PydevConsoleFactory {
-	
+
 	private final NullProgressMonitor monitor = new NullProgressMonitor();
-	
+
     private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
-	
+
     private static final String GENIE_INITIALISATION = "# Configuring genie_python, please wait\n"
 			+ "import sys;sys.executable=''\n" 
 			+ "from genie_python.genie_startup import * \n" 
 			+ "load_script(None, globals()) \n"
 			+ "%matplotlib qt4 \n";
-	
+
 	@Override
 	public void createConsole(String additionalInitialComands) {
-		try {			
+        try {
 			setInitialInterpreterCommands();
 			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
 		} catch (Exception e) {
             LOG.error(e);
 		}
 	}
-	
+
 	private void setInitialInterpreterCommands() {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.python.pydev.debug");
 		String commands = pydevDebugPreferenceStore.getDefaultString(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS);
 		if (commands == null || commands.contains(GENIE_INITIALISATION)) {
 			return;
 		}
-		
+
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS, GENIE_INITIALISATION);
 	}
 
-	private PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
+    PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
 		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
 		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(), monitor, false);
-		
+
         PydevIProcessFactory iprocessFactory = new PydevIProcessFactory();
-        
+
 		PydevConsoleLaunchInfo launchAndProcess = 
 				iprocessFactory.createLaunch(manager, interpreterInfo, interpreterInfo.getPythonPath(), null, null);
-				
+
 		return createPydevInterpreter(launchAndProcess, null, null);
 	}
 }
