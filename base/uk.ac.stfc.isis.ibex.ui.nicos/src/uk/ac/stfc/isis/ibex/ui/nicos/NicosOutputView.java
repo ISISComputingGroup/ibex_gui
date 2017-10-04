@@ -27,57 +27,39 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
-
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 
 /**
- * The main view for the NICOS current Script view.
+ * The main view for the NICOS Script Output view.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class NicosView {
+public class NicosOutputView {
 	
 	/**
 	 * The public ID of this class.
 	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.NicosView";
-
-    private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
     
     private static final int FIXED_WIDTH = 750;
     private static final int FIXED_HEIGHT = 225;
 	
-	private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
 	
     private NicosModel model;
-    private QueueScriptViewModel queueScriptViewModel;
 
-    private Label lblCurrentScript;
 
 	/**
 	 * The default constructor for the view.
 	 */
-	public NicosView() {
+	public NicosOutputView() {
         model = Nicos.getDefault().getModel();
-        queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
-
-		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 
 	@PostConstruct
@@ -92,6 +74,7 @@ public class NicosView {
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.marginHeight = 10;
 		glParent.marginWidth = 10;
+		glParent.marginBottom = 57;
 		nicosComposite.setLayout(glParent);
 
         // Connection info
@@ -114,43 +97,11 @@ public class NicosView {
         bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
                 BeanProperties.value("connectionErrorMessage").observe(model));
 		
-				
-		StyledText txtCurrentScript = new StyledText(nicosComposite, SWT.BORDER);
-		txtCurrentScript.setEditable(false);
-		txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-				
-        Composite scriptSendGrp = new Composite(nicosComposite, SWT.NONE);
-        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
-        GridLayout ssgLayout = new GridLayout(3, false);
-        ssgLayout.marginHeight = 10;
-        ssgLayout.marginWidth = 10;
-        scriptSendGrp.setLayout(ssgLayout);
-
-        Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-		btnCreateScript.setText("Create Script");
-        btnCreateScript.setLayoutData(new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1));
 		
-        Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
-        layoutData.widthHint = 80;
-        lblQueueScriptStatus.setLayoutData(layoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
-                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
-
-
-        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
-                BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
-
-		btnCreateScript.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-                QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
-				dialog.open();
-			}
-		});
-
+		StyledText txtOutput = new StyledText(nicosComposite, SWT.BORDER);
+		txtOutput.setEditable(false);
+		txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 	}
 
 }

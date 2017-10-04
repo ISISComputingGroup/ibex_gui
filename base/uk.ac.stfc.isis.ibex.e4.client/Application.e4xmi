@@ -164,8 +164,11 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_83AgIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13">
-          <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosView" label="NICOS"/>
+        <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosView" label="Current script"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" label="Script output"/>
         </children>
       </children>
     </children>
