@@ -17,7 +17,9 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
+package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
+
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -29,19 +31,13 @@ import org.eclipse.swt.widgets.Composite;
  * Panel containing the various save/load/export buttons.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SaveLoadPanel extends Composite {
+public class SaveLoadView {
 	
-	/**
-     * The default constructor.
-     * 
-     * @param parent the parent that the EstimatePanel will be placed in
-     * @param style the style of the parent
-     */
-	public SaveLoadPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+	@PostConstruct
+	public void createPartControl(Composite parent) {
+		parent.setLayout(new GridLayout(1, false));
 		
-		Composite saveLoad = new Composite(this, SWT.NONE);
+		Composite saveLoad = new Composite(parent, SWT.NONE);
 		saveLoad.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		GridLayout glSaveLoad = new GridLayout(1, false);
 		saveLoad.setLayout(glSaveLoad);
