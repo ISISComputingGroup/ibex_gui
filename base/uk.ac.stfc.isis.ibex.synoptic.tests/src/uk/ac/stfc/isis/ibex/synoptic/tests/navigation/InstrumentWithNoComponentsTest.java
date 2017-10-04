@@ -67,7 +67,6 @@ public class InstrumentWithNoComponentsTest {
 
 		@Override
         public SynopticDescription getDescription() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 

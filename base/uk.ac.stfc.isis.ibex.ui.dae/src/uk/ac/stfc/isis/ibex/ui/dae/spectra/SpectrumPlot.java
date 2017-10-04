@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.ui.Utils;
 /**
  * A single spectrum plot UI component.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SpectrumPlot extends Canvas {
 
     /** Logger. */

@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.logplotter;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
@@ -48,8 +49,8 @@ public class LogPlotterDisplay {
 			final PVItem item = new PVItem(pvAddress, period);
 			item.useDefaultArchiveDataSources();
 			// Add item to new axes
-			item.setAxis(model.addAxis(item.getDisplayName()));
-			model.addItem(item);
+			AxisConfig axisConfig = new AxisConfig(item.getDisplayName());
+			model.addAxis(axisConfig);
 	    } catch (Exception ex) {
 	        MessageDialog.openError(editor.getSite().getShell(),
 	                Messages.Error,

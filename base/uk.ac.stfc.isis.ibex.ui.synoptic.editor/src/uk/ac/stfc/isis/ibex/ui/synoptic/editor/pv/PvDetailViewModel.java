@@ -207,7 +207,7 @@ public class PvDetailViewModel extends ModelObject {
     public void openBlockDialog() {
         BlockSelector selectPV = new BlockSelector();
         try {
-            selectPV.execute(null);
+            selectPV.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }

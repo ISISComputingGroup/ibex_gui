@@ -22,10 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.csstudio.swt.xygraph.dataprovider.IDataProvider;
-import org.csstudio.swt.xygraph.dataprovider.IDataProviderListener;
-import org.csstudio.swt.xygraph.dataprovider.ISample;
-import org.csstudio.swt.xygraph.linearscale.Range;
+import org.eclipse.nebula.visualization.xygraph.dataprovider.IDataProvider;
+import org.eclipse.nebula.visualization.xygraph.dataprovider.IDataProviderListener;
+import org.eclipse.nebula.visualization.xygraph.dataprovider.ISample;
+import org.eclipse.nebula.visualization.xygraph.linearscale.Range;
 
 /**
  * Data provider for the XYGraph that shows the beam current from TS1 and TS2.

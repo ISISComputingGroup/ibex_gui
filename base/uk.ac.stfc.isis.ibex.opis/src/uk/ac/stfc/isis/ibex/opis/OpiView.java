@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.opis;
 import java.util.LinkedHashMap;
 
 import org.apache.logging.log4j.Logger;
+import org.csstudio.opibuilder.runmode.OPIView;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
@@ -31,7 +32,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * The Class OpiView to show an OPI.
  */
-public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
+public abstract class OpiView extends OPIView {
 
     private static final Logger LOG = IsisLog.getLogger(OpiView.class);
 

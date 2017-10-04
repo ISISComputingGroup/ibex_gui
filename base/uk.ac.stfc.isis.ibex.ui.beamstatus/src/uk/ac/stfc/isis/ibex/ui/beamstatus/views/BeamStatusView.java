@@ -20,13 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import java.util.Calendar;
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
-import org.csstudio.swt.xygraph.figures.Trace;
-import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
-import org.csstudio.swt.xygraph.figures.XYGraph;
+import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.Messages;
-import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -35,24 +36,19 @@ import org.csstudio.trends.databrowser2.model.ModelListener;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
-import org.csstudio.trends.databrowser2.ui.Plot;
+import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -61,7 +57,7 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
+public class BeamStatusView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -85,7 +81,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */
-    private Plot plot;
+    private ModelBasedPlot modelPlot;
 
     /** Model of the currently active Data Browser plot or <code>null</code>. */
     private Model model;
@@ -102,9 +98,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     /** Current plot time span in milliseconds. */
     private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
-    /** Title for the plot. */
-    private static final String PLOT_TITLE = "Beam Current";
-
     /** Custom magenta colour for high-contrast plot traces. */
     private static final RGB MAGENTA = new RGB(255, 0, 170);
 
@@ -116,62 +109,50 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
 
     /** Default colour for undefined plot traces. */
     private static final RGB DEFAULT = new RGB(0, 0, 0);
+    
+    /** Shell for opening error dialogs. */
+    private Shell shell;
 
-    /** {@inheritDoc} */
-    @Override
-    protected void doCreatePartControl(final Composite parent) {
-        // Arrange disposal
-        parent.addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(DisposeEvent e) {
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam Current";
 
-                // Be ignorant of any change of the current model after
-                // this view is disposed.
-                if (model != null) {
-                    model.removeListener(BeamStatusView.this);
-                }
-            }
-        });
+    @PostConstruct 
+    public void createPartControl(final Composite parent) {
+        
+    	// Remember what shell we're using
+        shell = parent.getShell();
+        
+        // Create the view model
+        configureModel();
 
-        parent.setLayout(new GridLayout(2, false));
-        Composite graphPanel = new Composite(parent, SWT.NONE);
-        graphPanel.setLayout(new GridLayout(1, false));
-        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        createTimeRangeRadioButtons(graphPanel);
-        createBeamStatusPlot(graphPanel);
+        // Create the basic panel
+        parent.setLayout(new GridLayout(1, false));
+        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        // Add the radio buttons
+        createTimeRangeRadioButtons(parent);
+        
+        // Create the basic plot
+        createBeamStatusPlot(parent);
 
-        BeamStatusPanel statusPanel =
-                new BeamStatusPanel(parent, SWT.BORDER | SWT.V_SCROLL);
-        GridData gdStatus = new GridData(SWT.CENTER, SWT.CENTER, false, true);
-        statusPanel.setLayoutData(gdStatus);
-
-        selectPV(TS1_BEAM_CURRENT_PV);
-        selectPV(TS2_BEAM_CURRENT_PV);
-        selectPV(SYNCH_BEAM_CURRENT_PV);
-
-        if (model != null && model.getAxisCount() > 0) {
-            setAxisProperties(model.getAxis(model.getAxisCount() - 1));
-        }
+        // TODO Disabled until connection to archive engine is fixed
+        // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
+        //	addTrace(generatePVItem(pv));
+        // }
 
         // Create and start controller
         try {
-            controller = new Controller(parent.getShell(), model, plot);
+            controller = new Controller(shell, model, modelPlot);
             controller.start();
         } catch (Exception ex) {
-            MessageDialog.openError(parent.getShell(), Messages.Error,
-                    NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
     }
 
     private void createTimeRangeRadioButtons(final Composite parent) {
         Composite controlsComposite = new Composite(parent, SWT.NONE);
-
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = false;
-        layoutData.horizontalAlignment = SWT.CENTER;
-        controlsComposite.setLayoutData(layoutData);
-
+        controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
         controlsComposite.setLayout(new RowLayout());
 
         Button dailyButton = new Button(controlsComposite, SWT.RADIO);
@@ -196,29 +177,19 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     private void createBeamStatusPlot(final Composite parent) {
-        // The canvas has to be wrapped in a composite so that the canvas has
-        // (0,0) coordinate.
-        // This is a work around for the inconsistency between
-        // figure.getBounds() and gc.getclipping().
         Composite plotComposite = new Composite(parent, SWT.NONE);
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.grabExcessVerticalSpace = true;
-        layoutData.horizontalAlignment = SWT.FILL;
-        layoutData.verticalAlignment = SWT.FILL;
-        plotComposite.setLayoutData(layoutData);
-
-        plotComposite.setLayout(new FillLayout());
-
-        // Double_BUFFERED is required to force RAP to use NativeGraphicsSource.
-        // By default, it uses BufferedGraphicsSource which has problem to
-        // render it in web browser.
-        final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
-
+        plotComposite.setLayout(new GridLayout(1, false));
+        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                
         // Create plot with basic configuration
-        plot = Plot.forCanvas(canvas);
-        plot.getXYGraph().setTitle(getPlotTitle());
-        plot.setToolbarVisible(false);
+        modelPlot = new ModelBasedPlot(plotComposite);
+        RTTimePlot rtPlot = modelPlot.getPlot();
+        rtPlot.setTitle(Optional.of(PLOT_TITLE));
+        rtPlot.setEnabled(false);
+        // TODO: Doesn't seem to actually hide the toolbar. Can we do that?
+        rtPlot.showToolbar(false);
+        rtPlot.showLegend(true);
+        rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 
     /**
@@ -228,63 +199,21 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      *            The axis configuration whose properties will be updated.
      */
     private void setAxisProperties(AxisConfig axisConfig) {
-        setYAxisName(axisConfig);
-        setYAxisColor(axisConfig);
-        setYAxisRange(axisConfig);
+        axisConfig.setName(Y_AXIS_TITLE);
+        axisConfig.useAxisName(true);
+        axisConfig.setRange(CURRENT_LOWER, CURRENT_UPPER);
+        axisConfig.setAutoScale(false);
+        axisConfig.setColor(new RGB(0, 0, 0));
     }
 
-    /**
-     * Sets the title for the given axis.
-     * 
-     * @param axis
-     *            The axis configuration whose properties will be updated.
-     */
-    private void setYAxisName(AxisConfig axis) {
-        axis.setName(Y_AXIS_TITLE);
-    }
-
-    /**
-     * Sets the range for the given axis.
-     * 
-     * @param axis
-     *            The axis configuration whose properties will be updated.
-     */
-    private void setYAxisRange(AxisConfig axis) {
-        axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
-        axis.setAutoScale(false);
+    protected void configureModel() {
+    	model = new Model();
+    	model.addListener(this);
         model.setArchiveRescale(ArchiveRescale.NONE);
-    }
-
-    /**
-     * Sets the colour for the given axis.
-     * 
-     * @param axis The axis configuration whose properties will be updated.
-     */
-    private void setYAxisColor(AxisConfig axis) {
-        axis.setColor(new RGB(0, 0, 0));
-    }
-
-    @Override
-    public void setFocus() {
-            return;
-        }
-
-    @Override
-    protected void updateModel(final Model oldModel, final Model newModel) {
-        if (newModel == null) {
-            return;
-        }
-
-        model = newModel;
-        if (oldModel != newModel) {
-            if (oldModel != null) {
-                oldModel.removeListener(this);
-            }
-
-            if (newModel != null) {
-                newModel.addListener(this);
-            }
-        }
+        AxisConfig axis = new AxisConfig("Beam current");
+        setAxisProperties(axis);
+        model.addAxis(axis);
+        updateModelTimeRange();
     }
 
     /**
@@ -294,7 +223,8 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      * @param pvAddress
      *            Name of the PV to add to the plot
      */
-    private void selectPV(final String pvAddress) {
+    @SuppressWarnings("unused")
+	private PVItem generatePVItem(final String pvAddress) {
         try {
             PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
             String displayName;
@@ -318,11 +248,12 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             }
             newItem.setDisplayName(displayName);
             newItem.setColor(rgb);
-            selectPV(newItem);
+            return newItem;
         } catch (Exception ex) {
-            MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
-            }
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
+            return null;
         }
+    }
 
     /**
      * Add this PV to the model for inclusion in the plot.
@@ -330,44 +261,21 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      * @param newItem
      *            PV to add to the plot
      */
-    protected void selectPV(final PVItem newItem) {
+    protected void addTrace(final PVItem newItem) {
 
-        // No or unknown PV name?
-        if (newItem == null) {
-            return;
-            }
-
-        // Delete all existing traces
-        if (plot == null) {
+        // PV unknown or plot does not exist
+        if (newItem == null || modelPlot == null) {
             return;
         }
-
-        XYGraph xygraph = plot.getXYGraph();
-
-        Model newModel;
-        if (model == null) {
-            newModel = new Model();
-        } else {
-            newModel = model;
-        }
-        updateModel(newModel, newModel);
+        
         try {
-            newModel.addItem(newItem);
             newItem.useDefaultArchiveDataSources();
-            newModel.setTimerange(getStartSpec(), getEndSpec());
+            model.addItem(newItem);
+            model.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception ex) {
-            MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
-
-        // Create trace for waveform
-        final Trace trace = new Trace(newItem.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
-                new BeamStatusGraphDataProvider());
-        trace.setLineWidth(newItem.getLineWidth());
-        trace.setPointStyle(PointStyle.POINT);
-        trace.setPointSize(1);
-        // Add to graph
-        xygraph.addTrace(trace);
-        }
+    }
 
     private void setTimeRangeDaily() {
         currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
@@ -380,15 +288,10 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     private void updateModelTimeRange() {
-        if (model == null) {
-            System.out.println("Unable to set model time range. Model is null");
-        } else {
-            try {
-                model.setTimerange(getStartSpec(), getEndSpec());
-            } catch (Exception ex) {
-                MessageDialog.openError(getSite().getShell(), Messages.Error,
-                        NLS.bind(Messages.ErrorFmt, ex.getMessage()));
-            }
+    	try {
+            model.setTimerange(getStartSpec(), getEndSpec());
+        } catch (Exception ex) {
+            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
     }
 
@@ -399,16 +302,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
      */
     private long getTimeRangeInMilliseconds() {
         return currentPlotTimespanMilliseconds;
-    }
-
-    /**
-     * Used by the specific implementation to define the time range in
-     * milliseconds for the plot.
-     * 
-     * @return time range of the plot in milliseconds
-     */
-    private String getPlotTitle() {
-        return PLOT_TITLE;
     }
 
     /**
@@ -448,6 +341,13 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private String getEndSpec() {
         return getCalendarSpec(getTimeRangeInMilliseconds());
     }
+    
+    @PreDestroy
+    public void dispose() {
+    	if (model != null) {
+    		model.removeListener(this);
+    	}
+    }
 
     // Following methods are defined as they are mandatory to fulfil
     // ModelListener interface, but they are not used at all to update
@@ -465,23 +365,11 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     @Override
-    public void changedColors() {
-    }
-
-    @Override
-    public void changedUpdatePeriod() {
-    }
-
-    @Override
     public void changedArchiveRescale() {
     }
 
     @Override
     public void changedTimerange() {
-    }
-
-    @Override
-    public void changedAxis(AxisConfig axis) {
     }
 
     @Override
@@ -501,14 +389,40 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     }
 
     @Override
-    public void changedXYGraphConfig() {
-    }
-
-    @Override
     public void itemRefreshRequested(PVItem item) {
     }
 
-    @Override
-    public void cursorDataChanged() {
-    }
-    }
+	@Override
+	public void changeTimeAxisConfig() {
+	}
+
+	@Override
+	public void changedAxis(Optional<AxisConfig> arg0) {		
+	}
+
+	@Override
+	public void changedColorsOrFonts() {		
+	}
+
+	@Override
+	public void changedLayout() {		
+	}
+
+	@Override
+	public void changedSaveChangesBehavior(boolean arg0) {
+		
+	}
+
+	@Override
+	public void changedTiming() {
+		
+	}
+
+	@Override
+	public void changedTitle() {
+	}
+
+	@Override
+	public void selectedSamplesChanged() {	
+	}
+}

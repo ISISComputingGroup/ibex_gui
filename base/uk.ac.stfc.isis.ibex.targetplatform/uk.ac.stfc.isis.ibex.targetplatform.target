@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="162">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="228">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.python.pydev.feature.feature.group" version="4.5.1.201601132212"/>
-<repository location="https://dl.bintray.com/fabioz/pydev/4.5.1"/>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
+<repository location="http://pydev.org/updates"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.apache.lucene" version="3.5.0.v20120725-1805"/>
-<unit id="org.apache.commons.io" version="2.0.1.v201105210651"/>
-<unit id="com.google.gson" version="2.1.0.v201303041604"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.rcp.sdk.id" version="3.8.2.M20130131-0800"/>
-<repository location="http://download.eclipse.org/eclipse/updates/3.8"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="1.0.0.201605312033"/>
 <repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rcp.feature.group" version="4.5.2.v20160212-1500"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="3.2.1.201702101113"/>
-<unit id="org.csstudio.pvmanager.ca.feature.feature.group" version="3.2.2.201708071707"/>
-<unit id="org.csstudio.boy.feature.feature.group" version="3.2.1.201708032359"/>
-<unit id="org.csstudio.core.util.feature.feature.group" version="3.1.0.201708071707"/>
-<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="3.2.2.201702101113"/>
-<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.2.201708081247"/>
-<unit id="org.csstudio.pvmanager.feature.feature.group" version="3.3.0.201708071707"/>
-<unit id="org.csstudio.pvmanager.pva.feature.feature.group" version="3.3.2.201708071707"/>
-<unit id="org.csstudio.utilities.feature.feature.group" version="3.2.1.201708071707"/>
-<unit id="org.csstudio.opibuilder.feature.feature.group" version="3.2.7.201708032359"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/CSStudio_P2_3_3_10"/>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.2.v20160208-0841"/>
+<repository location="http://download.eclipse.org/releases/mars"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="com.google.guava" version="12.0.0.v201212092141"/>
+<unit id="com.google.gson" version="2.1.0.v201303041604"/>
+<unit id="javax.activation" version="1.1.0.v201211130549"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201707191514"/>
+<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201707191527"/>
+<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201707191527"/>
+<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201707191527"/>
+<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201707191514"/>
+<repository location="http://download.controlsystemstudio.org/updates/4.4"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.17.0.v20170601-1400"/>
+<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 </location>
 </locations>
 <environment>

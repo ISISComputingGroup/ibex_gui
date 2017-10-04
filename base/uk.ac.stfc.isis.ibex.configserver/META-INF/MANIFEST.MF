@@ -7,17 +7,17 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.configserver.Configurations
 Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
- org.epics.vtype;bundle-version="2.5.0",
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
- com.google.common,
  org.eclipse.jface,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.runcontrol,
  org.eclipse.core.databinding,
  uk.ac.stfc.isis.ibex.epics.switching,
- uk.ac.stfc.isis.ibex.alarm
+ uk.ac.stfc.isis.ibex.alarm,
+ org.diirt.vtype;bundle-version="3.1.5",
+ com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;

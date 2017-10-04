@@ -49,13 +49,11 @@ public class ParentComponent implements Component {
 
 	@Override
 	public ComponentType type() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Set<ComponentProperty> properties() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -70,14 +68,11 @@ public class ParentComponent implements Component {
 	}
 
 	@Override
-	public void setTarget(Target target) {
-		// TODO Auto-generated method stub
-		
+	public void setTarget(Target target) {		
 	}
 
 	@Override
 	public Component copy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
