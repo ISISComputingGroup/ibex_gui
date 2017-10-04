@@ -172,7 +172,7 @@
   </snippets>
   <snippets xsi:type="advanced:Perspective" xmi:id="_lb95kKj_EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator" label="Script Generator" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons/hammer_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_tTn84KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
-      <children xsi:type="basic:PartSashContainer" xmi:id="_u05iYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" horizontal="true">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_u05iYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_xLzvYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
           <children xsi:type="advanced:Placeholder" xmi:id="_x03TcKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
         </children>
@@ -180,19 +180,19 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_y0Zd0KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
         </children>
       </children>
-      <children xsi:type="basic:PartSashContainer" xmi:id="_virOYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_ERj4QKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" horizontal="true">
-          <children xsi:type="basic:PartStack" xmi:id="_ImbmwKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14">
-            <children xsi:type="basic:Part" xmi:id="_PFLy4KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0"/>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_virOYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ERj4QKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="30" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_ImbmwKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="40">
+            <children xsi:type="basic:Part" xmi:id="_PFLy4KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.settings" label="Settings"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_JC5gUKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15">
-            <children xsi:type="basic:Part" xmi:id="_PfmeAKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.1"/>
+          <children xsi:type="basic:PartStack" xmi:id="_JC5gUKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" containerData="30">
+            <children xsi:type="basic:Part" xmi:id="_PfmeAKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.estimatescripttime" label="Estimate Script Time"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_JQLHUKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.16">
-            <children xsi:type="basic:Part" xmi:id="_P0V-8KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.2"/>
+          <children xsi:type="basic:PartStack" xmi:id="_JQLHUKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.16" containerData="30">
+            <children xsi:type="basic:Part" xmi:id="_P0V-8KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.saveload" label="Save / Load"/>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_E5sPQKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13">
+        <children xsi:type="basic:PartStack" xmi:id="_E5sPQKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
           <children xsi:type="basic:Part" xmi:id="_R8nTAKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scriptcomposer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.View" label="Script Composer"/>
         </children>
       </children>
