@@ -23,9 +23,9 @@
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_DPuvMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Open a dialogue to create a new synoptic" mnemonics="N"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Select and edit an existing synoptic" mnemonics="E"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and delete a synoptic" mnemonics="D"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Open a dialogue to create a new synoptic" mnemonics="N" command="_dy2SQKjiEeeauN8XvomWPw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Select and edit an existing synoptic" mnemonics="E" command="_OHOt8KjiEeeauN8XvomWPw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and delete a synoptic" mnemonics="D" command="_lNuIYKjiEeeauN8XvomWPw"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Dm7HMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ioc" label="IOC" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_gCw1sGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs"/>
@@ -72,9 +72,9 @@
   <handlers xmi:id="_lxEfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponentsHandler" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_OtF9cJojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.instrument.switch" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler" command="_QRQe4JojEeeX2q28a93CXA"/>
   <handlers xmi:id="_xaoFYJxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.managermode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler" command="_5YCA0JxFEeeX2q28a93CXA"/>
-  <handlers xmi:id="_ugTuEKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.new" command="_dy2SQKjiEeeauN8XvomWPw"/>
-  <handlers xmi:id="_I6cqkKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.edit" command="_OHOt8KjiEeeauN8XvomWPw"/>
-  <handlers xmi:id="_MVo_EKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.delete" command="_lNuIYKjiEeeauN8XvomWPw"/>
+  <handlers xmi:id="_ugTuEKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynopticHandler" command="_dy2SQKjiEeeauN8XvomWPw"/>
+  <handlers xmi:id="_I6cqkKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler" command="_OHOt8KjiEeeauN8XvomWPw"/>
+  <handlers xmi:id="_MVo_EKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynopticHandler" command="_lNuIYKjiEeeauN8XvomWPw"/>
   <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
       <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="30" horizontal="true">
