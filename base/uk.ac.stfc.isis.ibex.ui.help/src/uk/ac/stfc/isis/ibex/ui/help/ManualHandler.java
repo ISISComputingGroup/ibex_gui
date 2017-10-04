@@ -25,6 +25,7 @@ import java.net.URL;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -37,6 +38,9 @@ public class ManualHandler {
 
     private static final String USER_MANUAL_ADDRESS = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Home";
 
+    /**
+     * Opens the 'User Manual' URL in help menu.
+     */
 	@Execute
 	public void execute() {
 
@@ -52,8 +56,15 @@ public class ManualHandler {
             browser.openURL(url);
         } catch (PartInitException ex) {
             ex.printStackTrace();
-        }
-      
+        }              
 	}
-
+	
+	/**
+	 * Help menu option always available (not instrument dependent).
+	 * @return True
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return true;
+	}
 }

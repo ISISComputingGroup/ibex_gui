@@ -27,13 +27,21 @@ import org.eclipse.swt.widgets.Shell;
  * The handler for opening the about dialog window via the menu.
  */
 public class AboutHandler {
-
+	
+	/**
+	 * Opens the 'About' dialog window in help menu.
+	 * @param shell The shell to open 'About' window in help menu.
+	 */
 	@Execute
 	public void execute(Shell shell) {
 		AboutDialogBox dialog = new AboutDialogBox(shell);
 		dialog.open();
 	}
 	
+	/**
+	 * Help menu option always available (not instrument dependent).
+	 * @return True
+	 */
 	@CanExecute
 	public boolean canExecute() {
 		return true;

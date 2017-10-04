@@ -4,7 +4,7 @@
 	<extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.logger.LoggerHandler"
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler"
             id="uk.ac.stfc.isis.ibex.ui.rcp.logger.logger"
             name="Console Log">
       </command>
