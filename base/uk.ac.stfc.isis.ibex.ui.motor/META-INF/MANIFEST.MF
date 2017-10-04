@@ -23,7 +23,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.core.resources,
  com.google.guava,
- javax.inject
+ javax.inject,
+ org.eclipse.e4.ui.model.workbench
 Export-Package: uk.ac.stfc.isis.ibex.ui.motor.displayoptions,
  uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .

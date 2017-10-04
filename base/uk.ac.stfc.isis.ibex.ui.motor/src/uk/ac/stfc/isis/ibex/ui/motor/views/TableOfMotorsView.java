@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.PersistState;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
@@ -38,9 +40,12 @@ public class TableOfMotorsView {
 	private static final int TABLE_MARGIN = 20;
 	
 	/** List of the tab titles as defined in plugin.xml for this class. */
-	private List<String> tabTitles = Arrays.asList("Main Motors (Controllers 1 - 8)",
+	private static final List<String> TAB_TITLES = Arrays.asList("Main Motors (Controllers 1 - 8)",
 												   "Additional Motors (Controllers 9 - 16)",
 												   "Additional Motors (Controllers 17 - 24)");
+	
+	/** The ID of the table of motors shown in this view */
+	private int motorTableID;
 
     /**
      * List the offset for the index of the first controller in the table. Used
@@ -66,9 +71,13 @@ public class TableOfMotorsView {
     private MotorsOverview motorsOverview;
 
 	/**
-	 * Empty constructor.
+	 * Constructor.
+	 * 
+	 * @param part The part of the E4 application model containing this view.
 	 */
-	public TableOfMotorsView() {
+    @Inject
+	public TableOfMotorsView(MPart part) {
+    	motorTableID = TAB_TITLES.indexOf(part.getLabel());
 	}
 	
 	@PostConstruct
@@ -149,9 +158,6 @@ public class TableOfMotorsView {
 	 */
 	@PersistState
 	protected void setMotorsTable() {
-		// This is not an ideal way of wiring up the tables to tabs, can probably be made more
-		// flexible by implementing in a similar way to the DAE view
-		int motorTableID = 0; //tabTitles.indexOf(getTitle());
 		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
 	}
 
@@ -159,7 +165,6 @@ public class TableOfMotorsView {
      * @return The controller number offset for this particular tab
      */
     protected int getTableControllerOffset() {
-        int motorTableID = 0; // tabTitles.indexOf(getTitle());
         return TAB_CONTROLLER_OFFSETS.get(motorTableID);
     }
 }
