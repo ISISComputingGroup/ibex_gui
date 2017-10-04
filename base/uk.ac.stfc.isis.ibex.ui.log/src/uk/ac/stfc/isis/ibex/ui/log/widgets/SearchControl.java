@@ -37,11 +37,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
+/**
+ * The Class Search Control to allow searching within the log.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
 	private static final LogMessageFields[] FIELDS = {
@@ -82,6 +84,12 @@ public class SearchControl extends Canvas {
 
     private ProgressBar progressBar;
 	
+	/**
+	 * Instantiates a new search control.
+	 *
+	 * @param parent the parent in which this control resides
+	 * @param searcher a model to allow searching of log messages
+	 */
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);		
 		this.parent = parent;
@@ -219,6 +227,11 @@ public class SearchControl extends Canvas {
 		
 	}
 
+	/**
+	 * Sets the searcher model.
+	 *
+	 * @param searcher the new searcher for searching the log database
+	 */
 	public void setSearcher(ISearchModel searcher) {
 		this.searcher = searcher;
 	}

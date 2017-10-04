@@ -34,19 +34,23 @@ import javax.annotation.PostConstruct;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 
+/**
+ * An IOC Log View control.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 public class LogView {
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.log.views.LogView"; //$NON-NLS-1$
 	
 	private LogViewModel viewModel;
 	private LogDisplayModel logDisplayModel;
 		
+	/**
+	 * Instantiates a new log view.
+	 */
 	public LogView() {
 		viewModel = Activator.getDefault().viewModel();
 		logDisplayModel = new LogDisplayModel(viewModel.getMessageProducer());
@@ -54,6 +58,8 @@ public class LogView {
 	
 	/**
 	 * Create contents of the view part.
+	 * 
+	 * @param parent the composite in which this control should live 
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {		
