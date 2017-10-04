@@ -170,6 +170,26 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_ya2AEKjZEee2Eer_82zHCw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors" label="Motors" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.motor/icons/gears6_32x24.png">
+    <children xsi:type="basic:PartSashContainer" xmi:id="__zMkcKjdEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Bhbn4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_MOx7YKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="32">
+          <children xsi:type="advanced:Placeholder" xmi:id="_OPLs4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="68">
+          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_8CS7IKjcEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_9ljEUKjhEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.tableofmotors" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView" label="Table of Motors 1">
+          <persistedState key="idnum" value="0"/>
+          <variables>Title</variables>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_HzglwKjlEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.tableofmotors2" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView" label="Table of Motors 2"/>
+        <children xsi:type="basic:Part" xmi:id="_IKx2QKjlEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.tableofmotors3" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView" label="Table of Motors 3"/>
+      </children>
+    </children>
+  </snippets>
   <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.current" commandName="Edit or View current configuration" description="Edit or view current configuration depending on permissions"/>
   <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration in ibex" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_McQNQHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.load" commandName="Load configuration" description="Select and load a new configuration into the instrument" category="_La_dMHtbEeeIzM7lvAxMoQ"/>

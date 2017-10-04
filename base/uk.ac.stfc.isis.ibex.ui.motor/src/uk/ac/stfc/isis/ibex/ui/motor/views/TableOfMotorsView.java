@@ -3,6 +3,9 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseAdapter;
@@ -16,7 +19,6 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 
 import com.google.common.base.Strings;
 
@@ -26,7 +28,7 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
-public class TableOfMotorsView extends ViewPart {
+public class TableOfMotorsView {
 
 	/** Pixel height of the minimalMotorView in table of motors. */
 	private static final int MOTOR_HEIGHT = 79;
@@ -69,7 +71,7 @@ public class TableOfMotorsView extends ViewPart {
 	public TableOfMotorsView() {
 	}
 	
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
         setMotorsTable();
 		
@@ -106,9 +108,9 @@ public class TableOfMotorsView extends ViewPart {
         motorsOverview.setMotors(motorsTable, getTableControllerOffset());
 	}
 
-	@Override
-	public void setFocus() {	
-	}
+//	@Override
+//	public void setFocus() {	
+//	}
 
     /**
      * Updates the current motor background palette according to the latest menu
@@ -145,10 +147,11 @@ public class TableOfMotorsView extends ViewPart {
 	/**
 	 * Sets the MotorsTable for this view, overridden for other motor tabs.
 	 */
+	@PersistState
 	protected void setMotorsTable() {
 		// This is not an ideal way of wiring up the tables to tabs, can probably be made more
 		// flexible by implementing in a similar way to the DAE view
-		int motorTableID = tabTitles.indexOf(getTitle());
+		int motorTableID = 0; //tabTitles.indexOf(getTitle());
 		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
 	}
 
@@ -156,7 +159,7 @@ public class TableOfMotorsView extends ViewPart {
      * @return The controller number offset for this particular tab
      */
     protected int getTableControllerOffset() {
-        int motorTableID = tabTitles.indexOf(getTitle());
+        int motorTableID = 0; // tabTitles.indexOf(getTitle());
         return TAB_CONTROLLER_OFFSETS.get(motorTableID);
     }
 }
