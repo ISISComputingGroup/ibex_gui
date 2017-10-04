@@ -25,6 +25,7 @@ import java.net.URL;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -32,12 +33,12 @@ import org.eclipse.ui.browser.IWebBrowser;
 /**
  * The handler for opening the user manual via the menu.
  */
-public class ManualHandler extends AbstractHandler {
+public class ManualHandler {
 
     private static final String USER_MANUAL_ADDRESS = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Home";
 
-	@Override
-	public Object execute(ExecutionEvent e) throws ExecutionException {
+	@Execute
+	public void execute() {
 
         URL url = null;
         try {
@@ -52,7 +53,7 @@ public class ManualHandler extends AbstractHandler {
         } catch (PartInitException ex) {
             ex.printStackTrace();
         }
-        return null;
+      
 	}
 
 }
