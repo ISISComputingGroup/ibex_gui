@@ -29,22 +29,25 @@
  */
 package uk.ac.stfc.isis.ibex.ui.log;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 
-public class LogView extends ViewPart {
+public class LogView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.log.views.LogView"; //$NON-NLS-1$
 	
 	private LogViewModel viewModel;
 	private LogDisplayModel logDisplayModel;
 		
 	public LogView() {
-		setPartName("LogView");
 		viewModel = Activator.getDefault().viewModel();
 		logDisplayModel = new LogDisplayModel(viewModel.getMessageProducer());
 	}
@@ -52,16 +55,20 @@ public class LogView extends ViewPart {
 	/**
 	 * Create contents of the view part.
 	 */
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {		
-		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new FillLayout(SWT.HORIZONTAL));
+		parent.setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 		
-		new LogDisplay(container, logDisplayModel);
+		
+		ScrolledComposite container = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		
+		container.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
+		container.setMinSize(700, 300);
+		container.setExpandHorizontal(true);
+		container.setExpandVertical(true);
+		
+		LogDisplay logDisplay = new LogDisplay(container, logDisplayModel);
+		container.setContent(logDisplay);
 	}
 
-	@Override
-	public void setFocus() {
-		// Set the focus
-	}
 }

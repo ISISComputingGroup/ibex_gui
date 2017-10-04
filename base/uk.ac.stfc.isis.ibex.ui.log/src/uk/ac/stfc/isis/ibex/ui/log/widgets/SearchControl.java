@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
@@ -82,18 +83,16 @@ public class SearchControl extends Canvas {
     private ProgressBar progressBar;
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
-		super(parent, SWT.NONE);
-		
+		super(parent, SWT.NONE);		
 		this.parent = parent;
 		this.searcher = searcher;
 
-        GridLayout gl = new GridLayout(2, false);
-        gl.marginWidth = 0;
+        GridLayout gl = new GridLayout(1, false);
         setLayout(gl);
 
         Group grpFilter = new Group(this, SWT.NONE);
         grpFilter.setText("Filter Options");
-        grpFilter.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         GridLayout glGrpFilter = new GridLayout(6, false);
         glGrpFilter.verticalSpacing = 0;
