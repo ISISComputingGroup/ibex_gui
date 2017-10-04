@@ -192,8 +192,8 @@
             <children xsi:type="basic:Part" xmi:id="_WaS74KjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" label="Overview"/>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_TJLwcKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" containerData="40">
-          <children xsi:type="basic:Part" xmi:id="_8NwkQKjcEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticTargetView" containerData="" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView"/>
+        <children xsi:type="basic:PartStack" xmi:id="_TJLwcKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" toBeRendered="false" containerData="40">
+          <children xsi:type="advanced:Placeholder" xmi:id="_BGCGgKj4EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView" toBeRendered="false"/>
         </children>
       </children>
     </children>
