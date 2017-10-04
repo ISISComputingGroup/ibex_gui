@@ -126,6 +126,7 @@ public class TableOfMotorsView {
      * setting.
      */
     public void updatePalette() {
+    	System.out.println("update called");
         motorsOverview.setPalette(DisplayPreferences.getMotorBackgroundPalette());
     }
 

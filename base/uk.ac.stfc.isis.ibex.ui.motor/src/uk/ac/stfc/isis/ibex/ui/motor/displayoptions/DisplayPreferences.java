@@ -30,6 +30,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public final class DisplayPreferences {
 
+	// TODO make this modelobject to propagate changes to motors overview
+	
     private static final Color NORMAL_VISION_MOVING_COLOR = SWTResourceManager.getColor(160, 250, 170);
     private static final Color NORMAL_VISION_STOPPED_COLOR = SWTResourceManager.getColor(255, 200, 200);
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
