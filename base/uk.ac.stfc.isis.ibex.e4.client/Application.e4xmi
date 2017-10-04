@@ -46,7 +46,7 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_pNvIsH3WEee2jZQhjWIQ1g" elementId="org.eclipse.ui.run" toBeRendered="false" visible="false" label="&amp;Run"/>
       <children xsi:type="menu:Menu" xmi:id="_6uLgoH3WEee2jZQhjWIQ1g" elementId="edit" toBeRendered="false" visible="false" label="Edit"/>
-      <children xsi:type="menu:Menu" xmi:id="_yk66gH3WEee2jZQhjWIQ1g" elementId="window" toBeRendered="false" visible="false" label="Window"/>
+      <children xsi:type="menu:Menu" xmi:id="_yk66gH3WEee2jZQhjWIQ1g" elementId="window" label="Window"/>
       <children xsi:type="menu:Menu" xmi:id="_0xPBEH3WEee2jZQhjWIQ1g" elementId="css" toBeRendered="false" visible="false" label="&amp;CS-Studio"/>
       <children xsi:type="menu:Menu" xmi:id="_1HMqAH3WEee2jZQhjWIQ1g" elementId="file" toBeRendered="false" visible="false" label="&amp;File"/>
       <children xsi:type="menu:MenuSeparator" xmi:id="_1qIX8H3WEee2jZQhjWIQ1g" elementId="navigate" toBeRendered="false" visible="false"/>
@@ -183,10 +183,10 @@
       <children xsi:type="basic:PartSashContainer" xmi:id="_QLdbEKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="70" horizontal="true">
         <children xsi:type="basic:PartSashContainer" xmi:id="_OWNmIKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70">
           <children xsi:type="basic:PartStack" xmi:id="_aXEI4KjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="15">
-            <children xsi:type="basic:Part" xmi:id="_M2iGoKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.navigator" label="Navigator"/>
+            <children xsi:type="basic:Part" xmi:id="_M2iGoKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigatorView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView" label="Navigator"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_auLoYKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="85">
-            <children xsi:type="basic:Part" xmi:id="_WaS74KjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.overview" label="Overview"/>
+            <children xsi:type="basic:Part" xmi:id="_WaS74KjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" label="Overview"/>
           </children>
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_TJLwcKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" visible="false" containerData="30"/>
