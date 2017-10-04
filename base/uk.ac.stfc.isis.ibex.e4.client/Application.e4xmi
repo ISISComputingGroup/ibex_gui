@@ -180,8 +180,13 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_DtVPAKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
         </children>
       </children>
-      <children xsi:type="basic:PartStack" xmi:id="_sUtoIKkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_k3_X4KkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting" containerData="70" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.Perspective" label="Scripting"/>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_krh18KkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_sUtoIKkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" visible="false" containerData="70">
+          <children xsi:type="basic:Part" xmi:id="_k3_X4KkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting" containerData="70" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.Perspective" label="Scripting"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_numlYKkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="70">
+          <children xsi:type="basic:Part" xmi:id="_zm3sgKkUEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" toBeRendered="false" visible="false" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.EmptyView"/>
+        </children>
       </children>
     </children>
   </snippets>

@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+
 /**
  * The perspective that shows the scripting window.
  * 
@@ -35,7 +37,8 @@ public class Perspective {
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
 
     @PostConstruct
-    public void createInitialLayout() {
+    public void createInitialLayout(EPartService partService) {
         Consoles.getDefault().createConsole();
+        partService.findPart("uk.ac.stfc.isis.ibex.e4.client.part.scripting").setVisible(false);
     }
 }
