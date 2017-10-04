@@ -21,38 +21,42 @@ package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 
 /**
  * A panel that allows the user to plot various spectra from the DAE.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SpectraPlotsPanel extends Composite {
+public class SpectraPlotsPanel {
 
 	private SpectrumView plot1;
 	private SpectrumView plot2;
 	private SpectrumView plot3;
 	private SpectrumView plot4;
 	private Composite plots;
+    private List<? extends UpdatableSpectrum> model;
 	
     /**
      * The constructor for the panel.
      * 
-     * @param parent
-     *            The parent composite that the panel belongs to.
-     * @param style
-     *            The SWT style flags for the panel.
      */
-	public SpectraPlotsPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+    public SpectraPlotsPanel() {
+        this.model = DaeUI.getDefault().viewModel().spectra();
+    }
+
+    @PostConstruct
+    public void createPart(Composite parent) {
+        parent.setLayout(new GridLayout(1, false));
 		
-		plots = new Composite(this, SWT.NONE);
+        plots = new Composite(parent, SWT.NONE);
 		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		plots.setLayout(new GridLayout(2, false));
 		
@@ -71,6 +75,8 @@ public class SpectraPlotsPanel extends Composite {
 		plot4 = new SpectrumView(plots, SWT.NONE);
 		plot4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		plot4.setSize(399, 258);
+
+        setModel(model);
 	}
 	
     /**

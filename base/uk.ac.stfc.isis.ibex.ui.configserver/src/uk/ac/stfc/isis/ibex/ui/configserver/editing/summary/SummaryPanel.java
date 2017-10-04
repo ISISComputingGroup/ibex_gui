@@ -28,17 +28,18 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
@@ -73,6 +74,7 @@ public class SummaryPanel extends Composite {
      */
     public SummaryPanel(Composite parent, int style, MessageDisplayer dialog) {
 		super(parent, style);
+
         messageDisplayer = dialog;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -101,7 +103,6 @@ public class SummaryPanel extends Composite {
         cmboSynoptic = new ComboViewer(cmpSummary, SWT.READ_ONLY);
 		cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cmboSynoptic.setContentProvider(new ArrayContentProvider());
-        updateSynopticList();
 		
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -145,13 +146,15 @@ public class SummaryPanel extends Composite {
                 return !(Boolean) value;
             }
         };
-		
+        
+        bindSynopticList();
+        
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
                 BeanProperties.value("isNew").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
                 BeanProperties.value("description").observe(config), descValidator, null);
-		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));
+		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));		
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
                 BeanProperties.value("isNew").observe(config), null, notConverter);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
@@ -163,17 +166,84 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("isComponent").observe(config), null, notConverter);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("isComponent").observe(config), null, notConverter);
+                
 	}
 	
-	private void updateSynopticList() {
-		Collection<SynopticInfo> available = Synoptic.getInstance().availableSynoptics();
-		String[] names = SynopticInfo.names(available).toArray(new String[0]);
-		Arrays.sort(names);
-		cmboSynoptic.setInput(names);
-        selectDefaultSynoptic();
-	}
+	/**
+	 * Bind the default synoptic list to the synoptic names from the list.
+	 * 
+	 * This means as the list is updated new values will become available to the synoptic list
+	 * This behaviour is incorrect because it also select the default synoptic for the current config. There is a
+	 * ticket to fix this #2527.
+	 */
+	private void bindSynopticList() {
+		Synoptic.getInstance().availableSynopticsInfo().addObserver(new Observer<Collection<SynopticInfo>>() {
+			
+			@Override
+			public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
+				updateSynopticNamesInComboBox(value);				
+			}
+			
+			@Override
+			public void onValue(Collection<SynopticInfo> value) {
+				updateSynopticNamesInComboBox(value);
 
-    private void selectDefaultSynoptic() {
-        cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
-    }
+			}
+
+			/**
+			 * Get the new list of synoptics and the current default and update the combo box.
+			 * 
+			 * @param value the new value of the synoptics list
+			 */
+			private void updateSynopticNamesInComboBox(Collection<SynopticInfo> value) {
+				final String[] names = SynopticInfo.names(value).toArray(new String[0]);
+				Arrays.sort(names);
+				
+				final String selected = getDefaultSelection(value);
+				
+				
+				Display.getDefault().asyncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						if (!cmboSynoptic.getControl().isDisposed()) {
+							cmboSynoptic.setInput(names);
+							if (selected != null) {
+								config.setSynoptic(selected);
+							}
+						}
+					}
+				});
+			}
+
+			/**
+			 * Based on the synoptics list get the current default.
+			 * 
+			 * @param value the synoptics list
+			 * @return the label; empty if there is no default
+			 */
+			private String getDefaultSelection(Collection<SynopticInfo> value) {
+				if (value == null) {
+					return null;
+				}
+				for (SynopticInfo info : value) {
+					if (info.isDefault()) {
+						return info.name();
+					}
+				}
+				return null;
+			}
+			
+			@Override
+			public void onError(Exception e) {
+				// keep list as is
+				
+			}
+			
+			@Override
+			public void onConnectionStatus(boolean isConnected) {
+				// keep list as is				
+			}
+		});
+	}
 }

@@ -51,7 +51,6 @@ import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 /**
  * Dialogue for saving a configuration.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
     /**

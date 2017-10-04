@@ -106,12 +106,7 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                try {
-                    new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
-                } catch (ExecutionException e) {
-                    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                            "Unable to edit block.");
-                }
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct                
             }
         };
 	}

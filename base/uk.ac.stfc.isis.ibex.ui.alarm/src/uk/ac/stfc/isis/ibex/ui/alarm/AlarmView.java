@@ -19,53 +19,60 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.csstudio.alarm.beast.ui.alarmtree.Activator;
+import org.csstudio.alarm.beast.ui.alarmtree.GUI;
+import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 
 /**
  * The Class AlarmView which is the view which contains the alarm tree.
  */
-public class AlarmView extends AlarmTreeView {
-
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
+public class AlarmView extends ViewPart {
 	
-    /**
-     * Instantiates a new alarm view.
-     */
-	public AlarmView() {
-		setPartName("TestView");
-	}
+    final public static String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 
-	@Override
-	public void setFocus() {
-        // Do nothing.
-	}
+    private AlarmClientModel model;
+    private GUI gui;
 
-    /**
-     * Creates the view.
-     * 
-     * The view comes from CSStudio, we just append our own button onto it in
-     * this method
-     * 
-     * @param parent the parent composite
-     */
     @Override
-    public void createPartControl(final Composite parent) {
-        // Create the normal view (comes from CSStudio).
-        super.createPartControl(parent);
-
-        // Get the toolbar of the CSStudio view.
-        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
-
-        // Append our new button to the toolbar.
-        toolbar.add(new Separator());
-        toolbar.add(new RefreshAction());
+    public void createPartControl(final Composite parent)
+    {
+        try {
+			model = AlarmClientModel.getInstance();
+		} catch (Exception e) {
+            Logger.getLogger(Activator.ID).log(Level.SEVERE, "Cannot load alarm model", e); //$NON-NLS-1$
+		}
+        
+        gui = new GUI(parent, model, getViewSite());
+        
+        // There's nothing on the default menu we currently want
+        gui.getTreeViewer().getTree().setMenu(null);
+        
+        // Gives choice of "Annunciator" and "Instrument". We definitely want the latter
+        model.setConfigurationName("Instrument", null);
+        
+        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
+        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
     }
 
+    @Override
+    public void setFocus()
+    {
+    	gui.setFocus();
+    }
+    
+    @Override
+    public void dispose() {
+    	super.dispose();
+    	if (model!=null)
+    	{
+    		model.release();
+    	}
+        model = null;
+    }
 }

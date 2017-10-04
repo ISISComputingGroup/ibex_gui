@@ -4,27 +4,23 @@ Bundle-Name: Configserver
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.configserver;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.model,
- uk.ac.stfc.isis.ibex.ui.blocks.presentation,
- uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
- com.google.common;bundle-version="10.0.1",
- uk.ac.stfc.isis.ibex.epics,
- uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
- org.eclipse.swt,
- uk.ac.stfc.isis.ibex.validators
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.configserver.commands,
  uk.ac.stfc.isis.ibex.ui.configserver.dialogs,
  uk.ac.stfc.isis.ibex.ui.configserver.editing,
  uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks,
  uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters
-Import-Package: org.eclipse.core.expressions,
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
- uk.ac.stfc.isis.ibex.preferences,
- uk.ac.stfc.isis.ibex.runcontrol,
+ uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.validators,
+ com.google.guava,
+ org.eclipse.e4.core.di.annotations,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.ui.di,
  uk.ac.stfc.isis.ibex.synoptic
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

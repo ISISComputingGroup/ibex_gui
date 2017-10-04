@@ -19,32 +19,32 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.Navigator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelection;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelectionViewModel;
 
-public class NavigationView extends ViewPart implements ISizeProvider {
+public class NavigationView {
 		
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
 	public static final int FIXED_HEIGHT = 62;
 	
-	public NavigationView() {
-	}
-
-	@Override
-	public void createPartControl(Composite parent) {
+	//TODO: Why couldn't we do this with postConstruct?
+	@Inject
+	public NavigationView(Composite parent) {
+		System.out.println("Loading navigation view...");
 		parent.setBackground(BACKGROUND);
 		parent.setLayout(new GridLayout(2, false));
 		
@@ -65,22 +65,5 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 		Navigator navigator = new Navigator(navigationGroup, SWT.NONE);
 		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		navigator.setBackground(BACKGROUND);
-	}
-	
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getSizeFlags(boolean width) {
-		return SWT.MIN | SWT.MAX;
-	}
-
-	@Override
-	public int computePreferredSize(boolean width, int availableParallel,
-			int availablePerpendicular, int preferredResult) {
-		return  width ? -1 : FIXED_HEIGHT;
 	}
 }

@@ -8,14 +8,14 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
- org.epics.vtype;bundle-version="2.5.0",
  com.google.gson,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
- com.google.common;bundle-version="10.0.1",
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.logger
+ uk.ac.stfc.isis.ibex.logger,
+ org.diirt.vtype;bundle-version="3.1.5",
+ com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.dae,

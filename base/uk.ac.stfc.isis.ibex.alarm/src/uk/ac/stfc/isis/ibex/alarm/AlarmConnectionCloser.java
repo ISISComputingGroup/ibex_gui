@@ -85,7 +85,10 @@ public class AlarmConnectionCloser {
             connectionField.setAccessible(true);
             connection = (Connection) connectionField.get(communicator);
 
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException
+                | LinkageError e) {
+            // TODO: Catching a LinkageError was added during E4 migration and
+            // is almost certainly not the right behaviour.
             LOG.warn("While getting reference to the connection from the communicator we had an error. ");
             LOG.catching(Level.WARN, e);
             return;

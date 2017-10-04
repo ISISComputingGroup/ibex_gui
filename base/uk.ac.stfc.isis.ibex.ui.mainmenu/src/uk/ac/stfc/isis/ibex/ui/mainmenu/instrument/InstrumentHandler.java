@@ -19,9 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -36,10 +34,10 @@ import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
  * Handles the changing of the instrument pointed.
  *
  */
-public class InstrumentHandler extends AbstractHandler {
+public class InstrumentHandler {
 
-    @Override
-    public Object execute(ExecutionEvent arg0) throws ExecutionException {
+    @Execute
+    public Object execute() {
         InstrumentInfo selected = getUserSelectedInstrument();
         if (selected == null) {
             return null;

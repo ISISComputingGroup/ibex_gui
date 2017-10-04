@@ -19,12 +19,6 @@
       </perspective>
    </extension>
    <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-      <contribution
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective">
-      </contribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="uk.ac.stfc.isis.ibex.ui.alarm.perspective">
@@ -39,12 +33,6 @@
                visible="true">
          </view>
       </perspectiveExtension>
-   </extension>
-   <extension
-         point="uk.ac.stfc.isis.ibex.instrument.info">
-      <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmsInstrumentInfoReceiver">
-      </InstrumentInfoReceiver>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">

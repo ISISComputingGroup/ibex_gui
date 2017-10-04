@@ -8,8 +8,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences,
- org.epics.vtype;bundle-version="2.6.0",
- com.google.common,
  uk.ac.stfc.isis.ibex.instrument
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

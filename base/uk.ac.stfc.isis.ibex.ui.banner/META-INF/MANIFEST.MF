@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Banner
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.banner;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: uk.ac.stfc.isis.ibex.ui.banner.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
@@ -13,11 +12,10 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument.baton;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.managermode;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.managermode;bundle-version="1.0.0",
+ org.eclipse.e4.ui.di
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.ui.banner;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
- uk.ac.stfc.isis.ibex.ui.banner.indicators,
+Export-Package: uk.ac.stfc.isis.ibex.ui.banner.indicators,
  uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
 Import-Package: com.google.common.base,
  uk.ac.stfc.isis.ibex.banner.motion,

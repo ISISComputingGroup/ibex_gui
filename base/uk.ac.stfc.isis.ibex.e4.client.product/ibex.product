@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="IBEX" uid="ibex.product" id="uk.ac.stfc.isis.ibex.e4.client.IBEX_E4" application="uk.ac.stfc.isis.ibex.e4.product.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
+      <feature id="uk.ac.stfc.isis.ibex.feature.css"/>
+   </features>
+
+
+</product>
