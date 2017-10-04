@@ -136,8 +136,13 @@
           <children xsi:type="advanced:Placeholder" xmi:id="_dX_GwKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
         </children>
       </children>
-      <children xsi:type="basic:PartStack" xmi:id="_xbobQKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_x6m2QKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.devicescreens/uk.ac.stfc.isis.ibex.ui.devicescreens.DeviceScreensView" label="Device screens"/>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_FYy20KjlEee7e6-cGDhHXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.16" containerData="70" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_xbobQKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_x6m2QKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.devicescreens/uk.ac.stfc.isis.ibex.ui.devicescreens.DeviceScreensView" label="Device screens"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_LBdIcKjlEee7e6-cGDhHXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.16" toBeRendered="false" containerData="50">
+          <children xsi:type="advanced:Placeholder" xmi:id="_zMtrcKjlEee7e6-cGDhHXA" elementId="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView" toBeRendered="false"/>
+        </children>
       </children>
     </children>
   </snippets>
