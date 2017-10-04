@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.widgets;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -49,23 +48,18 @@ public class SynopticSelection extends Composite {
 	public SynopticSelection(Composite parent, int style, final SynopticSelectionViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(3, false);
-		gridLayout.marginRight = -2;
-		gridLayout.marginLeft = 0;
-		gridLayout.marginTop = -6;
-		gridLayout.marginBottom = -6;
-
 		setLayout(gridLayout);
 		
 		GridData gdGotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdGotoLabel.verticalAlignment = SWT.CENTER;
 		
 		GridData gdSynopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gdSynopticCombo.widthHint = 120;
+		gdSynopticCombo.widthHint = 200;
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gdSynopticCombo);
 		
         refreshButton = new Button(this, SWT.NONE);
-		refreshButton.setText("Refresh Synoptic");
+		refreshButton.setText("Refresh synoptic");
 		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		refreshButton.setBackground(BACKGROUND);
 		
@@ -82,7 +76,7 @@ public class SynopticSelection extends Composite {
 	private void bind(SynopticSelectionViewModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
-        bindingContext.bindList(SWTObservables.observeItems(synopticCombo),
+        bindingContext.bindList(WidgetProperties.items().observe(synopticCombo),
                 BeanProperties.list(SynopticSelectionViewModel.SYNOPTIC_LIST).observe(model));
         bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo),
                 BeanProperties.value(SynopticSelectionViewModel.SELECTED).observe(model));
