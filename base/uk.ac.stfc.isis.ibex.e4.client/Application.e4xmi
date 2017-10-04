@@ -137,7 +137,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_xbobQKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_x6m2QKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.part.devicescreens" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.devicescreens/uk.ac.stfc.isis.ibex.ui.devicescreens.DeviceScreensView" label="Device screens"/>
+        <children xsi:type="basic:Part" xmi:id="_x6m2QKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.devicescreens/uk.ac.stfc.isis.ibex.ui.devicescreens.DeviceScreensView" label="Device screens"/>
       </children>
     </children>
   </snippets>
