@@ -27,7 +27,6 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
 public class TableOfMotorsView {
@@ -52,7 +51,7 @@ public class TableOfMotorsView {
      * to set labels down left hand side.
      */
     private static final List<Integer> TAB_CONTROLLER_OFFSETS = Arrays.asList(0, 8, 16);
-	
+    
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
 		@Override
@@ -108,7 +107,8 @@ public class TableOfMotorsView {
 		scrolledComposite.setExpandVertical(true);
 		
         motorsOverview =
-                new MotorsOverview(scrolledComposite, SWT.NONE, DisplayPreferences.getMotorBackgroundPalette());
+                new MotorsOverview(scrolledComposite, SWT.NONE);
+        
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
 		
@@ -121,18 +121,6 @@ public class TableOfMotorsView {
 		
         motorsOverview.setMotors(motorsTable, getTableControllerOffset());
 	}
-
-//	@Override
-//	public void setFocus() {	
-//	}
-
-    /**
-     * Updates the current motor background palette according to the latest menu
-     * setting.
-     */
-    public void updatePalette() {
-        motorsOverview.setPalette(DisplayPreferences.getMotorBackgroundPalette());
-    }
 
 	/**
 	 * Opens the motor OPI for a particular motor.
