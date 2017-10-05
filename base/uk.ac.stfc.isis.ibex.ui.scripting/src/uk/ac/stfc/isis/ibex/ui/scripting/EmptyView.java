@@ -24,10 +24,13 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import javax.annotation.PostConstruct;
 
 /**
- *
+ * This is an empty view to avoid errors from an "empty" placeholder.
  */
 public class EmptyView {
 
+    /**
+     * Makes an empty view.
+     */
     @PostConstruct
     public void doNothing() {
         // Do nothing.
