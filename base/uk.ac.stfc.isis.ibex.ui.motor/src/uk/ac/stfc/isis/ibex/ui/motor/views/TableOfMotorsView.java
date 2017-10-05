@@ -80,6 +80,11 @@ public class TableOfMotorsView {
     	motorTableID = TAB_TITLES.indexOf(part.getLabel());
 	}
 	
+    /**
+     * Initialises the view.
+     * 
+     * @param parent The parent composite
+     */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
         setMotorsTable();
