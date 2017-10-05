@@ -47,7 +47,7 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_pNvIsH3WEee2jZQhjWIQ1g" elementId="org.eclipse.ui.run" toBeRendered="false" visible="false" label="&amp;Run"/>
       <children xsi:type="menu:Menu" xmi:id="_6uLgoH3WEee2jZQhjWIQ1g" elementId="edit" toBeRendered="false" visible="false" label="Edit"/>
-      <children xsi:type="menu:Menu" xmi:id="_yk66gH3WEee2jZQhjWIQ1g" elementId="window" toBeRendered="false" visible="false" label="Window"/>
+      <children xsi:type="menu:Menu" xmi:id="_yk66gH3WEee2jZQhjWIQ1g" elementId="window" label="Window"/>
       <children xsi:type="menu:Menu" xmi:id="_0xPBEH3WEee2jZQhjWIQ1g" elementId="css" toBeRendered="false" visible="false" label="&amp;CS-Studio"/>
       <children xsi:type="menu:Menu" xmi:id="_1HMqAH3WEee2jZQhjWIQ1g" elementId="file" toBeRendered="false" visible="false" label="&amp;File"/>
       <children xsi:type="menu:MenuSeparator" xmi:id="_1qIX8H3WEee2jZQhjWIQ1g" elementId="navigate" toBeRendered="false" visible="false"/>
@@ -152,6 +152,26 @@
               <children xsi:type="basic:Part" xmi:id="_bVfXQJxmEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.beamlineparameters" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.experimentdetails/uk.ac.stfc.isis.ibex.ui.experimentdetails.BeamlineParametersPanel" label="Beamline Parameters"/>
             </children>
           </children>
+        </children>
+      </children>
+    </children>
+  </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="__53Z4KjtEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.scripting" label="Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scripting/icons/script_32x24.png">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_6GVfkKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_63_mAKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="__UCTgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
+          <children xsi:type="advanced:Placeholder" xmi:id="_CUS_gKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="__9sUgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
+          <children xsi:type="advanced:Placeholder" xmi:id="_DtVPAKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        </children>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_krh18KkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_sUtoIKkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" visible="false" containerData="70">
+          <children xsi:type="basic:Part" xmi:id="_k3_X4KkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting" containerData="70" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.Perspective" label="Scripting"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_numlYKkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="70">
+          <children xsi:type="basic:Part" xmi:id="_zm3sgKkUEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" toBeRendered="false" visible="false" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.EmptyView"/>
         </children>
       </children>
     </children>
