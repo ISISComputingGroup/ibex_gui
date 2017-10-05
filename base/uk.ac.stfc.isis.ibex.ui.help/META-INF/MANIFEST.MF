@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.help
+ uk.ac.stfc.isis.ibex.help,
+ org.eclipse.e4.core.di.annotations
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.help
