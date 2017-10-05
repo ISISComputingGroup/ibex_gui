@@ -38,6 +38,24 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * A factory for creating Genie Python Consoles.
+ * 
+ * This factory creates the pydev console in a new tab.
+ * 
+ * To avoid issues with "empty" part stacks, the python console is currently
+ * created as follows: - The e4 xmi defines *two* part stacks, the first of
+ * which is invisible - In the first (invisible) part stack there is a view
+ * which calls this class. - This class creates a PyDev console tab and it gets
+ * added to the second (visible) part stack - To avoid errors with the second
+ * part stack being empty, we make it contain an Empty view (which is neither
+ * visible nor rendered).
+ * 
+ * This is all very hacky.
+ * 
+ * TODO: As part of the E4 migration we should change this so that we don't need
+ * the mess of invisible parts to make the console appear in a sensible way. See
+ * if we can simply wrap the pydev console class and pass it the startup
+ * parameters we need (i.e. default commands).
+ * 
  */
 public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
