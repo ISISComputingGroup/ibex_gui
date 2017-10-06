@@ -4,7 +4,7 @@
   <rules />
   <wuid>-7b81905f:141e455f16c:-7da2</wuid>
   <show_grid>true</show_grid>
-  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts />
   <height>250</height>
   <macros>
@@ -1055,7 +1055,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
+      <width>20</width>
       <x>102</x>
       <name>TweakReverseButton</name>
       <y>34</y>
@@ -1102,7 +1102,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
+      <width>20</width>
       <x>191</x>
       <name>TweakForwardsButton</name>
       <y>34</y>
@@ -1165,8 +1165,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>56</width>
-      <x>130</x>
+      <width>64</width>
+      <x>124</x>
       <y>34</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1246,7 +1246,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
+      <width>20</width>
       <x>102</x>
       <name>HomeReverseButton</name>
       <y>60</y>
@@ -1293,8 +1293,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
-      <x>130</x>
+      <width>20</width>
+      <x>124</x>
       <name>HomeForwardsButton</name>
       <y>60</y>
       <foreground_color>
@@ -1382,7 +1382,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
+      <width>20</width>
       <x>102</x>
       <name>JogReverseButton</name>
       <y>84</y>
@@ -1436,8 +1436,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>24</width>
-      <x>130</x>
+      <width>20</width>
+      <x>124</x>
       <name>JogForwardsButton</name>
       <y>84</y>
       <foreground_color>
