@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
  * A message that can be serialised and sent to Nicos.
  */
 @SuppressWarnings("rawtypes")
-public abstract class NicosSendMessage {
+public abstract class SendMessage {
     protected String command;
     protected List parameters;
     

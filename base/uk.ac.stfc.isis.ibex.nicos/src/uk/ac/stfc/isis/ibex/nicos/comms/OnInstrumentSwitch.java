@@ -19,27 +19,35 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.nicos.messages;
+package uk.ac.stfc.isis.ibex.nicos.comms;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
- * Serialisable class to log in to Nicos.
+ * Switches the GUI to look at another instance of NICOS.
  */
-public class Login extends SendMessage {
-    JsonSerialisingConverter<Map<String, String>> serialiser = new JsonSerialisingConverter<>(Map.class);
+public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
-    public Login() throws ConversionException {
-        command = "authenticate";
-        Map <String, String> params = new HashMap<>();
-        params.put("login", "ibex");
-        params.put("passwd", "a2eed0a7fcb214a497052435191b5264cca5b687");
-        parameters = Arrays.asList(params);
+    Nicos nicos = Nicos.getDefault();
+
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        if (nicos.started()) {
+            nicos.getModel().connect(instrument);
+        }
     }
-        
+
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        if (nicos.started()) {
+            nicos.getModel().disconnect();
+        }
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+    }
+
 }

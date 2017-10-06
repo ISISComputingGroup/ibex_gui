@@ -18,17 +18,20 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
+
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 
 /**
  * Constructor for the NICOS plugin, which provides a connection between NICOS
  * and the GUI.
  */
-public class Nicos extends AbstractUIPlugin {
+public class Nicos extends Plugin {
 	
 	private static BundleContext context;
 	private static Nicos instance;
+
     private NicosModel model;
 
     /**
@@ -54,6 +57,10 @@ public class Nicos extends AbstractUIPlugin {
         }
         return model;
 	}
+
+    public boolean started() {
+        return model != null;
+    }
 	
     /**
      * @return The context for the plugin.

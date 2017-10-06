@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.nicos;
+package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,43 +27,61 @@ import java.util.List;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
+import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
- * Used to send and receive messages to ActiveMQ. The queue to send messages on
- * must be provided, a temporary receiving queue will then be created.
+ * Used to send and receive messages to NICOS via ZMQ.
  */
 
 public class ZMQSession extends ModelObject {
 
-    private final Socket socket;
+    private Socket socket;
     private final Context context;
+
+    private static final String ZMQ_PROTO = "tcp";
+    private static final String ZMQ_PORT = "1301";
 
     /**
      * The constructor for the class.
      * 
      * Creates the session and sets up the sending connection.
      * 
-     * @param mqConnection
-     *            The ActiveMQ connection to connect the session to.
-     * @param sendQueue
-     *            The name of the ActiveMQ Queue that data should be sent on.
      */
     public ZMQSession() {
         context = ZMQ.context(1);
-
-        socket = context.socket(ZMQ.REQ);
-        socket.connect("tcp://127.0.0.1:1301");
-
-        sendMultipleMessages(Arrays.asList("getbanner", "", ""));
-        System.out.println(getServerResponse().getFailureReason());
     }
 
-    private void sendMultipleMessages(List<String> messages) {
+    public SendMessageDetails connect(InstrumentInfo instrument) {
+        try {
+            socket = context.socket(ZMQ.REQ);
+            socket.setReceiveTimeOut(500);
+            socket.connect(createConnectionString(instrument));
+
+            sendMultipleMessages(Arrays.asList("getbanner", "", ""));
+            // TODO: Check that this response is what we expect
+            return getServerResponse();
+        } catch (ZMQException e) {
+            return SendMessageDetails.createSendFail(e.toString());
+        }
+    }
+
+    private String createConnectionString(InstrumentInfo instrument) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ZMQ_PROTO);
+        sb.append("://");
+        sb.append(instrument.hostName());
+        sb.append(":");
+        sb.append(ZMQ_PORT);
+        return sb.toString();
+    }
+
+    private void sendMultipleMessages(List<String> messages) throws ZMQException {
         int i;
         for (i = 0; i < messages.size() - 1; i++) {
             socket.sendMore(messages.get(i));
@@ -71,9 +89,11 @@ public class ZMQSession extends ModelObject {
         socket.send(messages.get(i));
     }
 
-    public SendMessageDetails sendMessage(NicosSendMessage message) {
+    public SendMessageDetails sendMessage(SendMessage message) {
         try {
             sendMultipleMessages(message.getMulti());
+        } catch (ZMQException e) {
+            return SendMessageDetails.createSendFail(e.toString());
         } catch (ConversionException e) {
             return SendMessageDetails.createSendFail("Failed to convert NICOS message");
         }
@@ -85,6 +105,10 @@ public class ZMQSession extends ModelObject {
         socket.recvStr(); // Do not care
         String message = socket.recvStr();
 
+        if (status == null | message == null | message == "") {
+            return SendMessageDetails.createSendFail("No data received from NICOS");
+        }
+
         if (status.equals("ok")) {
             return SendMessageDetails.createSendSuccess(message);
         } else {
@@ -92,9 +116,7 @@ public class ZMQSession extends ModelObject {
         }
     }
 
-    protected void disconnect() {
+    public void disconnect() {
         socket.close();
-        context.term();
     }
-
 }

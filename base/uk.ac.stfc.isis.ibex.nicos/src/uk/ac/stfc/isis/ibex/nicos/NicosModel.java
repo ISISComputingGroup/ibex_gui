@@ -21,11 +21,14 @@ package uk.ac.stfc.isis.ibex.nicos;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
-import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -65,7 +68,7 @@ public class NicosModel extends ModelObject {
         this.session = session;
 //        MessageParser<ReceiveMessage> parser = new NicosMessageParser();
 //        parser.addMessageConsumer(this);
-        connect();
+        connect(Instrument.getInstance().currentInstrument());
 //        this.session.addMessageParser(parser);
 //        this.session.addPropertyChangeListener("connection", new PropertyChangeListener() {
 //
@@ -113,18 +116,33 @@ public class NicosModel extends ModelObject {
 //        }
 //    }
 
-    private void connect() {
-        try {
-            loginSendMessageDetails = sendMessageToNicos(new Login());
-        } catch (ConversionException e) {
-            setConnectionErrorMessage("Failed to parse JSON");
+    private void failConnection(String message) {
+        setConnectionStatus(ConnectionStatus.FAILED);
+        setConnectionErrorMessage("Can not connect to NICOS: " + message);
+    }
+
+    public void connect(InstrumentInfo instrument) {
+        SendMessageDetails connectionDetails = session.connect(instrument);
+        if (!connectionDetails.isSent()) {
+            failConnection("Can not connect to NICOS" + connectionDetails.getFailureReason());
+        } else {
+            try {
+                loginSendMessageDetails = sendMessageToNicos(new Login());
+            } catch (ConversionException e) {
+                failConnection("Failed to parse JSON");
+            }
+            if (!loginSendMessageDetails.isSent()) {
+                failConnection("Can not send login message: " + loginSendMessageDetails.getFailureReason());
+            } else {
+                setConnectionStatus(ConnectionStatus.CONNECTED);
+            }
         }
-        if (!loginSendMessageDetails.isSent()) {
-            LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
-                    + "\'");
-            setConnectionStatus(ConnectionStatus.FAILED);
-            setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
-        }
+        
+    }
+    
+    public void disconnect() {
+        session.disconnect();
+        setConnectionStatus(ConnectionStatus.DISCONNECTED);
     }
 
 //    /**
@@ -200,7 +218,7 @@ public class NicosModel extends ModelObject {
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
+    private SendMessageDetails sendMessageToNicos(SendMessage nicosMessage) {
         return session.sendMessage(nicosMessage);
     }
 
