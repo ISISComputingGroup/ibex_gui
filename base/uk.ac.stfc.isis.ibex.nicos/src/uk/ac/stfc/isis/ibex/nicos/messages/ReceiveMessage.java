@@ -18,15 +18,12 @@
 
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
-
 /**
  * A Message that has been received from NICOS.
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public abstract class ReceiveMessage implements IMessage {
+public abstract class ReceiveMessage {
     private String messageId;
 
     private boolean success;

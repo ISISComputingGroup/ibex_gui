@@ -33,10 +33,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.stubbing.OngoingStubbing;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 public class NicosSendScriptTest {
 

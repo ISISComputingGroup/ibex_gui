@@ -28,10 +28,10 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
  * Used to send and receive messages to ActiveMQ. The queue to send messages on

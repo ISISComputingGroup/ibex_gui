@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.activemq;
+package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
  * Class to capture details about having sent a message. This is returned when a

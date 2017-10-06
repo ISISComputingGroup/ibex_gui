@@ -20,13 +20,13 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
  * The model that holds the connection to nicos.

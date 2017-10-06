@@ -23,12 +23,9 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
-import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveErrorMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveStringMessage;
@@ -36,7 +33,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveStringMessage;
 /**
  * The class parses the data coming out of ActiveMQ into a NicosMessage.
  */
-public class NicosMessageParser extends MessageParser<ReceiveMessage> {
+public class NicosMessageParser {
 
     private static final Logger LOG = IsisLog.getLogger(NicosMessageParser.class);
 
@@ -45,35 +42,32 @@ public class NicosMessageParser extends MessageParser<ReceiveMessage> {
     private static final JsonDeserialisingConverter<ReceiveLoginMessage> LOGIN_PAYLOAD_CONVERTER =
             new JsonDeserialisingConverter<>(ReceiveLoginMessage.class);
 
-    /**
-     * Convert the ActiveMQ message to a Nicos message.
-     * 
-     * @param rawMessage
-     *            The raw message from ActiveMQ.
-     * @return A dummy message.
-     */
-    @Override
-    protected ReceiveMessage parseMessage(MessageDetails rawMessage) {
-         
-
-        ReceiveMessage nicosMessage;
-        String rawMessageText = rawMessage.getText();
-        try {
-            nicosMessage = convert(rawMessageText);
-            nicosMessage.setMessageId(rawMessage.getMessageID());            
-        } catch (ConversionException e) {
-            LOG.error("Error converting message from script server. Text was '" + rawMessageText + "'", e);
-            nicosMessage = new ReceiveErrorMessage("Error converting message from the script server.",
-                    rawMessage.getMessageID(), false);
-        } catch (NullPointerException e) {
-            LOG.error("Error converting message from script server, text was null.", e);
-            nicosMessage =
-                    new ReceiveStringMessage("Blank message sent from the script server.", rawMessage.getMessageID(),
-                            false);
-        }
-        
-        return nicosMessage;
-    }
+//    /**
+//     * Convert the ActiveMQ message to a Nicos message.
+//     * 
+//     * @param rawMessage
+//     *            The raw message from ActiveMQ.
+//     * @return A dummy message.
+//     */
+//    protected ReceiveMessage parseMessage(String rawMessage) {
+//        ReceiveMessage nicosMessage;
+//        String rawMessageText = rawMessage.getText();
+//        try {
+//            nicosMessage = convert(rawMessageText);
+//            nicosMessage.setMessageId(rawMessage.getMessageID());            
+//        } catch (ConversionException e) {
+//            LOG.error("Error converting message from script server. Text was '" + rawMessageText + "'", e);
+//            nicosMessage = new ReceiveErrorMessage("Error converting message from the script server.",
+//                    rawMessage.getMessageID(), false);
+//        } catch (NullPointerException e) {
+//            LOG.error("Error converting message from script server, text was null.", e);
+//            nicosMessage =
+//                    new ReceiveStringMessage("Blank message sent from the script server.", rawMessage.getMessageID(),
+//                            false);
+//        }
+//        
+//        return nicosMessage;
+//    }
 
     /**
      * Convert a message to a received message using one of the parsers
