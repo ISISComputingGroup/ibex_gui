@@ -95,12 +95,6 @@ public class LogDisplay extends Canvas {
 	private static final String MSG_CLEAR_CONFIRM = "This will clear all recent log message history (messages "
 			+ "will still be retrievable by searching). Proceed?";
 
-	private static final LogMessageFields[] COLUMNS = {
-			LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
-			LogMessageFields.CONTENTS, LogMessageFields.EVENT_TIME,
-			LogMessageFields.CREATE_TIME, LogMessageFields.SEVERITY,
-			LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
-
     /** The data model. */
 	private LogDisplayModel model;
 
@@ -382,7 +376,7 @@ public class LogDisplay extends Canvas {
 			return;
 		}
 
-		for (final LogMessageFields field : COLUMNS) {
+		for (final LogMessageFields field : LogMessageFields.COLUMNS) {
 			final TableViewerColumn viewerColumn = new TableViewerColumn(
 					viewer, SWT.NONE);
 			final TableColumn column = viewerColumn.getColumn();

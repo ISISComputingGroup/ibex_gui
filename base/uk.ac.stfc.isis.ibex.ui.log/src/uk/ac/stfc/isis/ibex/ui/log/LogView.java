@@ -36,6 +36,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
 
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 
@@ -45,6 +46,8 @@ import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class LogView {
 	
+	// rough table padding size so second scroll bar doesn't appear when columns are not resized
+	private static final int TABLE_PADDING = 20;
 	private LogViewModel viewModel;
 	private LogDisplayModel logDisplayModel;
 		
@@ -69,7 +72,13 @@ public class LogView {
 		ScrolledComposite container = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
-		container.setMinSize(700, 300);
+		
+		int panelWidthFromColumns = 0;		
+		for (LogMessageFields column : LogMessageFields.COLUMNS) {
+			panelWidthFromColumns += column.getDefaultColumnWidth();
+		}				
+		
+		container.setMinSize(panelWidthFromColumns + TABLE_PADDING, 300);
 		container.setExpandHorizontal(true);
 		container.setExpandVertical(true);
 		
