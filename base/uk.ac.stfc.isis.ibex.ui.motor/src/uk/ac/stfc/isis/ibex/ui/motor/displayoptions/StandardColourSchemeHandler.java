@@ -19,16 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-
-import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
 
 /**
  * Sets the current motor background palette to the standard colour scheme.
@@ -39,26 +31,12 @@ public class StandardColourSchemeHandler {
      * Method to execute when command corresponding to this handler is triggered.
      * 
      * @param menuItem The menuItem triggering the command.
-     * @param shell The Shell
-     * @throws ExecutionException Thrown when execution fails
      */
     @Execute
-    public void execute(MHandledMenuItem menuItem, Shell shell) throws ExecutionException {
+    public void execute(MHandledMenuItem menuItem) {
 
     	if (menuItem.isSelected()) {
-            DisplayPreferences.setMotorBackgroundPalette(ColourOption.NORMAL_VISION);
-
-            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            IViewReference[] viewReferences = page.getViewReferences();
-
-            for (IViewReference viewReference : viewReferences) {
-                IViewPart viewPart = viewReference.getView(false);
-                if (viewPart instanceof TableOfMotorsView) {
-                    TableOfMotorsView motorsView = (TableOfMotorsView) viewPart;
-                    motorsView.updatePalette();
-                }
-            }
-
+            DisplayPreferences.getInstance().setMotorBackgroundPalette(ColourOption.NORMAL_VISION);
     	}
     }
 }
