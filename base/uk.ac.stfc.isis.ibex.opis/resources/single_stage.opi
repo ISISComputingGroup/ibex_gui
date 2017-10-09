@@ -89,7 +89,7 @@ $(pv_value)</tooltip>
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Motor/mymotor_v2.opi</opi_file>
+    <opi_file>Motor/mymotor.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
@@ -97,7 +97,7 @@ $(pv_value)</tooltip>
     <wuid>59e95f47:14ecffb7a3e:-7b34</wuid>
     <auto_size>true</auto_size>
     <scripts />
-    <height>250</height>
+    <height>266</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -117,7 +117,7 @@ $(pv_value)</tooltip>
       <color red="240" green="240" blue="240" />
     </background_color>
     <zoom_to_fit>true</zoom_to_fit>
-    <width>450</width>
+    <width>446</width>
     <x>12</x>
     <name>Linking Container</name>
     <y>84</y>
