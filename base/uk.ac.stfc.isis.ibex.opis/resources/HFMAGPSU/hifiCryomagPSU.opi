@@ -1509,15 +1509,15 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT)_01:RAMPTABLEDIRECTORY</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
           <widget_type>Button</widget_type>
           <width>110</width>
-          <x>461</x>
+          <x>474</x>
           <name>Button</name>
-          <y>273</y>
+          <y>243</y>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
@@ -1563,9 +1563,9 @@ $(pv_value)</tooltip>
           </border_color>
           <widget_type>Button</widget_type>
           <width>110</width>
-          <x>344</x>
+          <x>357</x>
           <name>Button</name>
-          <y>273</y>
+          <y>243</y>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
@@ -1610,22 +1610,22 @@ $(pv_value)</tooltip>
           <column_headers>
             <row>
               <col></col>
-              <col>140</col>
+              <col>155</col>
               <col>no</col>
             </row>
             <row>
               <col></col>
-              <col>97</col>
+              <col>115</col>
               <col>yes</col>
             </row>
             <row>
               <col></col>
-              <col>120</col>
+              <col>135</col>
               <col>no</col>
             </row>
             <row>
               <col></col>
-              <col>97</col>
+              <col>115</col>
               <col>yes</col>
             </row>
           </column_headers>
@@ -1633,10 +1633,10 @@ $(pv_value)</tooltip>
           <background_color>
             <color red="240" green="240" blue="240" />
           </background_color>
-          <width>487</width>
-          <x>84</x>
+          <width>541</width>
+          <x>43</x>
           <name>ramp_table</name>
-          <y>60</y>
+          <y>36</y>
           <foreground_color>
             <color red="192" green="192" blue="192" />
           </foreground_color>
@@ -1684,9 +1684,9 @@ $(pv_value)</tooltip>
           </border_color>
           <widget_type>Button</widget_type>
           <width>100</width>
-          <x>84</x>
+          <x>43</x>
           <name>Button</name>
-          <y>273</y>
+          <y>243</y>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
@@ -1745,9 +1745,9 @@ $(pv_value)</tooltip>
           </border_color>
           <widget_type>Button</widget_type>
           <width>100</width>
-          <x>192</x>
+          <x>151</x>
           <name>Button</name>
-          <y>273</y>
+          <y>243</y>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
@@ -1770,6 +1770,102 @@ if row > 1:
           </actions>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <precision>0</precision>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <horizontal_alignment>0</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>-69b119e8:15f0032a487:-7a3d</wuid>
+          <transparent>true</transparent>
+          <pv_value />
+          <auto_size>false</auto_size>
+          <text>######</text>
+          <rotation_angle>0.0</rotation_angle>
+          <scripts>
+            <path pathString="../Common Scripts/FormatWaveformChars.py" checkConnect="true" sfe="false" seoe="false">
+              <pv trig="true">$(PV_ROOT)_01:RAMPTABLEDIRECTORY</pv>
+            </path>
+          </scripts>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <show_units>true</show_units>
+          <height>27</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT)_01:RAMPTABLEDIRECTORY</pv_name>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <precision_from_pv>true</precision_from_pv>
+          <widget_type>Text Update</widget_type>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <wrap_words>false</wrap_words>
+          <format_type>0</format_type>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>399</width>
+          <x>190</x>
+          <name>ramp_table_directory</name>
+          <y>302</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+          <border_style>0</border_style>
+          <tooltip></tooltip>
+          <horizontal_alignment>0</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>-69b119e8:15f0032a487:-7960</wuid>
+          <transparent>false</transparent>
+          <auto_size>false</auto_size>
+          <text>Ramp table file Location:</text>
+          <scripts />
+          <height>20</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Label</widget_type>
+          <wrap_words>true</wrap_words>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>148</width>
+          <x>43</x>
+          <name>Label_3</name>
+          <y>306</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <show_scrollbar>false</show_scrollbar>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
           </font>
         </widget>
       </widget>

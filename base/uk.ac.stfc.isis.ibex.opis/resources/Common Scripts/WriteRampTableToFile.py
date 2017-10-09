@@ -1,12 +1,21 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-# Need to make this a macro
-f = open("C:\\Instrument\\Settings\\config\\common\\ramps\\cryomag_ramp_table.txt", 'w')
+directory = widget.getPV()
+
+waveform = [""]
+
+# Convert to readable string
+for c in PVUtil.getLongArray(directory):
+	if c == 0:
+		break	
+	waveform.append(chr(c))
+
+directory = "".join(waveform)
 
 rates = display.getWidget("ramp_table_rates").getPV()
-targets = display.getWidget("ramp_table_targets").getPV()
-
 rates = PVUtil.getDoubleArray(rates)
+
+targets = display.getWidget("ramp_table_targets").getPV()
 targets = PVUtil.getDoubleArray(targets)
 
 table = display.getWidget("ramp_table").getTable()
@@ -17,6 +26,7 @@ index = 0
 # Text File headers
 text = "target rate"
 
+f = open(directory, 'w')
 
 for index in range(0, rows):
 	
