@@ -52,6 +52,7 @@ public class UpdatedValue<T> extends ModelObject {
 	
 	protected synchronized void setValue(T value) {
 		isSet = true;
+        System.out.println("Print property fire from " + this.value + " to " + value);
 		firePropertyChange("value", this.value, this.value = value);
 	}
 }

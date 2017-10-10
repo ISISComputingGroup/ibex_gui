@@ -124,6 +124,17 @@ public class TimeChannelsPanel extends Composite {
                 BeanProperties.value("timeUnit").observe(viewModel));
         bindingContext.bindList(WidgetProperties.items().observe(timeChannelFileSelector),
                 BeanProperties.list("timeChannelFileList").observe(viewModel));
+
+        viewModel.addPropertyChangeListener("timeChannelFileList", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println("PVERROR bound time channel file selector" + evt);
+                System.out.println("The value is " + viewModel.getTimeChannelFileList() == null ? "null"
+                        : viewModel.getTimeChannelFileList()[0]);
+
+            }
+        });
+
         bindingContext.bindValue(WidgetProperties.text().observe(timeChannelFileRB),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
 

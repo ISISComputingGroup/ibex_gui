@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
@@ -34,6 +37,12 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	private final Observer<T> observer = new BaseObserver<T>() {
 		@Override
 		public void onValue(T value) {
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            System.out.println("In updated observable adapted the value is: " + value);
 			setValue(value);
 		}
 
@@ -59,6 +68,7 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	}
 		
 	protected void error(Exception e) {
+        Logger.getGlobal().log(Level.WARNING, e.toString());
 	};
 	
 	protected void connectionChanged(boolean isConnected) {

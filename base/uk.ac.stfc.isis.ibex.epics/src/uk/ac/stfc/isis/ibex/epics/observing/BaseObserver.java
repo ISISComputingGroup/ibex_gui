@@ -26,6 +26,8 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public abstract class BaseObserver<T> implements Observer<T> {
 
+    public boolean printme = false;
+
 	@Override
 	public void update(T value, Exception error, boolean isConnected) {		
 		onConnectionStatus(isConnected);
