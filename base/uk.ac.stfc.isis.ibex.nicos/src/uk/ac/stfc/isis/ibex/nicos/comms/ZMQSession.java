@@ -33,6 +33,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -73,10 +75,19 @@ public class ZMQSession extends ModelObject {
             socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
             socket.connect(createConnectionString(instrument));
 
-            // TODO: Check that this response is what we expect
-            return sendMessage(getBanner);
+            SendMessageDetails response = sendMessage(getBanner);
+            if (response.isSent()) {
+                ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
+                if (!banner.protocolValid()) {
+                    return SendMessageDetails.createSendFail("NICOS protocol is invalid");
+                } else if (!banner.serializerValid()) {
+                    return SendMessageDetails.createSendFail("NICOS serialiser is invalid");
+                }
+
+            }
+            return response;
         } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString(), getBanner);
+            return SendMessageDetails.createSendFail(e.toString());
         }
     }
 
@@ -109,9 +120,9 @@ public class ZMQSession extends ModelObject {
         try {
             sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString(), message);
+            return SendMessageDetails.createSendFail(e.toString());
         } catch (ConversionException e) {
-            return SendMessageDetails.createSendFail("Failed to convert NICOS message", message);
+            return SendMessageDetails.createSendFail("Failed to convert NICOS message");
         }
         return getServerResponse(message);
     }
@@ -119,16 +130,21 @@ public class ZMQSession extends ModelObject {
     private SendMessageDetails getServerResponse(NICOSMessage sentMessage) {
         String status = socket.recvStr();
         socket.recvStr(); // Do not care
-        String message = socket.recvStr();
+        String resp = socket.recvStr();
 
-        if (status == null | message == null | message == "") {
-            return SendMessageDetails.createSendFail("No data received from NICOS", sentMessage);
+        if (status == null | resp == null | resp == "") {
+            return SendMessageDetails.createSendFail("No data received from NICOS");
         }
 
         if (status.equals("ok")) {
-            return SendMessageDetails.createSendSuccess(sentMessage);
+            try {
+                ReceiveMessage received = sentMessage.parseResponse(resp);
+                return SendMessageDetails.createSendSuccess(received);
+            } catch (ConversionException e) {
+                return SendMessageDetails.createSendFail("Unexpected response from server");
+            }
         } else {
-            return SendMessageDetails.createSendFail(message, sentMessage);
+            return SendMessageDetails.createSendFail(resp);
         }
     }
 

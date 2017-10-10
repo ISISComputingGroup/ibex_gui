@@ -46,4 +46,16 @@ public abstract class NICOSMessage {
         JsonSerialisingConverter<List<Object>> serialiser = new JsonSerialisingConverter<>(List.class);
         return Arrays.asList(command, "", serialiser.convert(parameters));
     }
+
+    /**
+     * Parses the response from NICOS once this command has been sent.
+     * 
+     * @param response
+     *            The string response from NICOS.
+     * 
+     * @return The response from NICOS.
+     * @throws ConversionException
+     *             Thrown when the response from NICOS is not as expected.
+     */
+    public abstract ReceiveMessage parseResponse(String response) throws ConversionException;
 }

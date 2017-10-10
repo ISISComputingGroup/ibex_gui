@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+
 /**
  * Command that gets banner information from NICOS.
  */
@@ -31,6 +34,11 @@ public class GetBanner extends NICOSMessage {
      */
     public GetBanner() {
         this.command = "getbanner";
+    }
+
+    @Override
+    public ReceiveBannerMessage parseResponse(String response) throws ConversionException {
+        return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).convert(response);
     }
 
 }

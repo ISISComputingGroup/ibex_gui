@@ -29,33 +29,30 @@ public final class SendMessageDetails {
 
     private boolean isSent;
     private String failureReason;
-    private NICOSMessage sentMessage;
+    private ReceiveMessage response;
 
     /**
      * Creates the message details when the send fails.
      *
      * @param failureReason
      *            the failure reason
-     * @param sent
-     *            the message that was originally sent to NICOS
      * 
      * @return the failure send message details
      */
-    public static SendMessageDetails createSendFail(String failureReason, NICOSMessage sent) {
-        return new SendMessageDetails(false, failureReason, sent);
+    public static SendMessageDetails createSendFail(String failureReason) {
+        return new SendMessageDetails(false, failureReason, null);
     }
 
     /**
      * Creates the message details for a send success.
      * 
-     * @param sent
-     *            The message sent to the server, which also contains the
-     *            response.
+     * @param received
+     *            The message received from NICOS.
      *
      * @return the send message details
      */
-    public static SendMessageDetails createSendSuccess(NICOSMessage sent) {
-        return new SendMessageDetails(true, "", sent);
+    public static SendMessageDetails createSendSuccess(ReceiveMessage received) {
+        return new SendMessageDetails(true, "", received);
     }
 
     /**
@@ -65,20 +62,20 @@ public final class SendMessageDetails {
      *            true if the message has been sent; false otherwise
      * @param failureReason
      *            the reason for a failure
-     * @param sentMessage
+     * @param response
      *            the message that was originally sent to NICOS.
      */
-    private SendMessageDetails(boolean isSent, String failureReason, NICOSMessage sentMessage) {
+    private SendMessageDetails(boolean isSent, String failureReason, ReceiveMessage response) {
         this.isSent = isSent;
         this.failureReason = failureReason;
-        this.sentMessage = sentMessage;
+        this.response = response;
     }
 
     /**
      * @return the message that was sent and it's response.
      */
-    public NICOSMessage getMessage() {
-        return sentMessage;
+    public ReceiveMessage getResponse() {
+        return response;
     }
 
     /**

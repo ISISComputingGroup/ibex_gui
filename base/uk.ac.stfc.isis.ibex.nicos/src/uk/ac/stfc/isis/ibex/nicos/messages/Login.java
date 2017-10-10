@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+
 /**
  * Class to log in to Nicos.
  */
@@ -38,6 +41,11 @@ public class Login extends NICOSMessage {
         params.put("login", "ibex");
         params.put("passwd", "a2eed0a7fcb214a497052435191b5264cca5b687");
         parameters = Arrays.asList(params);
+    }
+
+    @Override
+    public ReceiveLoginMessage parseResponse(String response) throws ConversionException {
+        return new JsonDeserialisingConverter<>(ReceiveLoginMessage.class).convert(response);
     }
         
 }
