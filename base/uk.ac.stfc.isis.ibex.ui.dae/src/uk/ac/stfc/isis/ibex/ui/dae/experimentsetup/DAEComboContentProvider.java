@@ -87,14 +87,15 @@ public class DAEComboContentProvider {
         String[] tables = valueOrEmpty(list);
 
         if (list == null) {
+            // This happens if the file list PV is not available.
             tables = new String[] {"Error retrieving information from Instrument." };
         } else if (tables.length == 0) {
-            String instrument;
-            if (this.instrumentName == null) {
-                instrument = "<instrument>";
-            } else {
-                instrument = this.instrumentName;
-            }
+            // This happens if the file list PV was available but empty.
+
+            // Use a sensible default if the instrument name PV is not available
+            // yet.
+            String instrument = this.instrumentName == null ? "<instrument>" : this.instrumentName;
+
             tables = new String[] { "None found in C:\\Instrument\\Settings\\config\\" + instrument
                     + "\\configurations\\tables\\ (file name must contain \"" + pattern + "\")." };
         }
