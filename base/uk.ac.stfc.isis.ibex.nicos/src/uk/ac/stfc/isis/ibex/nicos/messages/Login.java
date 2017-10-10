@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Class to log in to Nicos.
  */
-public class Login extends SendMessage {
+public class Login extends NICOSMessage {
     /**
      * Creates the login command for NICOS.
      */

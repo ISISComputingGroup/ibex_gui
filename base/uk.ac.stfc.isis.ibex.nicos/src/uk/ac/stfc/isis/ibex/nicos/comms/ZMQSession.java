@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -67,16 +67,16 @@ public class ZMQSession extends ModelObject {
      * @return details as to the connection's success.
      */
     public SendMessageDetails connect(InstrumentInfo instrument) {
+        NICOSMessage getBanner = new GetBanner();
         try {
             socket = context.socket(ZMQ.REQ);
             socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
             socket.connect(createConnectionString(instrument));
 
-            SendMessage getBanner = new GetBanner();
             // TODO: Check that this response is what we expect
             return sendMessage(getBanner);
         } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString());
+            return SendMessageDetails.createSendFail(e.toString(), getBanner);
         }
     }
 
@@ -105,30 +105,30 @@ public class ZMQSession extends ModelObject {
      *            The message to send.
      * @return The response.
      */
-    public SendMessageDetails sendMessage(SendMessage message) {
+    public SendMessageDetails sendMessage(NICOSMessage message) {
         try {
             sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString());
+            return SendMessageDetails.createSendFail(e.toString(), message);
         } catch (ConversionException e) {
-            return SendMessageDetails.createSendFail("Failed to convert NICOS message");
+            return SendMessageDetails.createSendFail("Failed to convert NICOS message", message);
         }
-        return getServerResponse();
+        return getServerResponse(message);
     }
 
-    private SendMessageDetails getServerResponse() {
+    private SendMessageDetails getServerResponse(NICOSMessage sentMessage) {
         String status = socket.recvStr();
         socket.recvStr(); // Do not care
         String message = socket.recvStr();
 
         if (status == null | message == null | message == "") {
-            return SendMessageDetails.createSendFail("No data received from NICOS");
+            return SendMessageDetails.createSendFail("No data received from NICOS", sentMessage);
         }
 
         if (status.equals("ok")) {
-            return SendMessageDetails.createSendSuccess(message);
+            return SendMessageDetails.createSendSuccess(sentMessage);
         } else {
-            return SendMessageDetails.createSendFail(message);
+            return SendMessageDetails.createSendFail(message, sentMessage);
         }
     }
 

@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 /**
  * Command that gets banner information from NICOS.
  */
-public class GetBanner extends SendMessage {
+public class GetBanner extends NICOSMessage {
 
     /**
      * Create the get banner command.

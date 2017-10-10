@@ -26,7 +26,7 @@ import java.util.Arrays;
 /**
  * Serialisable class to queue a script in Nicos.
  */
-public class QueueScript extends SendMessage {
+public class QueueScript extends NICOSMessage {
     
     /**
      * Constructor.

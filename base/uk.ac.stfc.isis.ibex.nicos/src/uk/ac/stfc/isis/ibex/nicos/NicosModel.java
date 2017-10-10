@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -155,7 +155,7 @@ public class NicosModel extends ModelObject {
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(SendMessage nicosMessage) {
+    private SendMessageDetails sendMessageToNicos(NICOSMessage nicosMessage) {
         return session.sendMessage(nicosMessage);
     }
 

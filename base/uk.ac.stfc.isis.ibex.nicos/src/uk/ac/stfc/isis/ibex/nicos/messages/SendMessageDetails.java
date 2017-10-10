@@ -25,32 +25,37 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * Class to capture details about having sent a message. This is returned when a
  * message is sent to Nagios.
  */
-public class SendMessageDetails {
+public final class SendMessageDetails {
 
     private boolean isSent;
     private String failureReason;
+    private NICOSMessage sentMessage;
 
     /**
      * Creates the message details when the send fails.
      *
      * @param failureReason
      *            the failure reason
+     * @param sent
+     *            the message that was originally sent to NICOS
+     * 
      * @return the failure send message details
      */
-    public static SendMessageDetails createSendFail(String failureReason) {
-        return new SendMessageDetails(false, failureReason);
+    public static SendMessageDetails createSendFail(String failureReason, NICOSMessage sent) {
+        return new SendMessageDetails(false, failureReason, sent);
     }
 
     /**
      * Creates the message details for a send success.
      * 
-     * @param response
-     *            The response from the server.
+     * @param sent
+     *            The message sent to the server, which also contains the
+     *            response.
      *
      * @return the send message details
      */
-    public static SendMessageDetails createSendSuccess(String response) {
-        return new SendMessageDetails(true, response);
+    public static SendMessageDetails createSendSuccess(NICOSMessage sent) {
+        return new SendMessageDetails(true, "", sent);
     }
 
     /**
@@ -60,11 +65,20 @@ public class SendMessageDetails {
      *            true if the message has been sent; false otherwise
      * @param failureReason
      *            the reason for a failure
+     * @param sentMessage
+     *            the message that was originally sent to NICOS.
      */
-    public SendMessageDetails(boolean isSent, String failureReason) {
-        super();
+    private SendMessageDetails(boolean isSent, String failureReason, NICOSMessage sentMessage) {
         this.isSent = isSent;
         this.failureReason = failureReason;
+        this.sentMessage = sentMessage;
+    }
+
+    /**
+     * @return the message that was sent and it's response.
+     */
+    public NICOSMessage getMessage() {
+        return sentMessage;
     }
 
     /**
