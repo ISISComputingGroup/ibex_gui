@@ -34,16 +34,12 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-        if (nicos.started()) {
-            nicos.getModel().connect(instrument);
-        }
+        nicos.getModel().connect(instrument);
     }
 
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
-        if (nicos.started()) {
-            nicos.getModel().disconnect();
-        }
+        nicos.getModel().disconnect();
     }
 
     @Override

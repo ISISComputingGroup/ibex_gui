@@ -46,21 +46,15 @@ public class Nicos extends Plugin {
      */
 	public Nicos() {
         instance = this;
+        model = new NicosModel(new ZMQSession());
     }
 
     /**
      * @return The model that is connected to nicos on the instrument.
      */
     public NicosModel getModel() {
-        if (model == null) {
-            model = new NicosModel(new ZMQSession());
-        }
         return model;
 	}
-
-    public boolean started() {
-        return model != null;
-    }
 	
     /**
      * @return The context for the plugin.

@@ -47,20 +47,29 @@ public class ZMQSession extends ModelObject {
     private static final String ZMQ_PROTO = "tcp";
     private static final String ZMQ_PORT = "1301";
 
+    private static final int RECEIVE_TIMEOUT = 500;
+
     /**
      * The constructor for the class.
      * 
-     * Creates the session and sets up the sending connection.
+     * Creates the ZMQ context.
      * 
      */
     public ZMQSession() {
         context = ZMQ.context(1);
     }
 
+    /**
+     * Connect to the ZMQ session.
+     * 
+     * @param instrument
+     *            The instrument that we want to connect to.
+     * @return details as to the connection's success.
+     */
     public SendMessageDetails connect(InstrumentInfo instrument) {
         try {
             socket = context.socket(ZMQ.REQ);
-            socket.setReceiveTimeOut(500);
+            socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
             socket.connect(createConnectionString(instrument));
 
             sendMultipleMessages(Arrays.asList("getbanner", "", ""));
@@ -89,6 +98,13 @@ public class ZMQSession extends ModelObject {
         socket.send(messages.get(i));
     }
 
+    /**
+     * Send a message to the ZMQ.
+     * 
+     * @param message
+     *            The message to send.
+     * @return The response.
+     */
     public SendMessageDetails sendMessage(SendMessage message) {
         try {
             sendMultipleMessages(message.getMulti());
@@ -116,6 +132,9 @@ public class ZMQSession extends ModelObject {
         }
     }
 
+    /**
+     * Disconnect from the ZMQ socket.
+     */
     public void disconnect() {
         socket.close();
     }
