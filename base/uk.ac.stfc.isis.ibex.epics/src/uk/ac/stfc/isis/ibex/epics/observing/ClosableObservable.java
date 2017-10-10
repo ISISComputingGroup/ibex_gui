@@ -37,8 +37,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     private boolean isConnected;
     private Exception currentError;
 
-    public boolean printMe;
-
     @Override
     public Subscription addObserver(Observer<T> observer) {
         if (!observers.contains(observer)) {
@@ -74,9 +72,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      * @param value the new value
      */
     protected void setValue(T value) {
-        if (printMe) {
-            System.out.println("PVERROR Value set " + value);
-        }
         currentError = null;
         if (value == null) {
             return;

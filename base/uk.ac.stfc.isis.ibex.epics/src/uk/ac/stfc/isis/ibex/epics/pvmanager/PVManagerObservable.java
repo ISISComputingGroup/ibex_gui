@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 
-    private static final int UPDATE_FREQUENCY = 1000;
+    private static final int UPDATE_FREQUENCY = 10;
 
     private PVReader<R> pv;	
 	
@@ -48,46 +48,17 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	private final PVReaderListener<R> observingListener = new PVReaderListener<R>() {
 		@Override
 		public void pvChanged(PVReaderEvent<R> evt) {
-            boolean event_categoried = false;
 			boolean isConnected = pv.isConnected();
-            if (pv.getName().endsWith("TCBFILES")) {
-                System.out.println("PVERROR " + pv.getName());
-                System.out.println("EVENT: " + evt);
-                System.out.println("VALUE: " + pv.getValue());
-                System.out.println("CONNECTED: " + pv.isConnected());
-            }
 			if (evt.isConnectionChanged()) {
-                event_categoried = true;
                 setConnectionStatus(isConnected);
 			}
 			
 			if (evt.isExceptionChanged()) {
-                event_categoried = true;
 				setError(pv.lastException());
 			}
 			
-            if (evt.isValueChanged()) {
-                event_categoried = true;
-			    if (isConnected) {
-			        R value = pv.getValue();
-                    if (value == null) {
-                        value = pv.getValue();
-                        if (value != null) {
-                            System.out.println("PVERROR weird");
-                        }
-                    }
-                    if (pv.getName().endsWith("TCBFILES")) {
-                        printMe = true;
-                        System.out.println("Seting valur to " + value);
-                    }
-                    setValue(value);
-                
-			    } else {
-                    System.out.println("PVERROR!!!! value chang but not connected");
-    			}
-            }
-            if (!event_categoried) {
-                System.out.println("PVERROR unknown event: " + evt);
+			if (evt.isValueChanged() && isConnected) {
+				setValue(pv.getValue());
             }
 		}
     };
