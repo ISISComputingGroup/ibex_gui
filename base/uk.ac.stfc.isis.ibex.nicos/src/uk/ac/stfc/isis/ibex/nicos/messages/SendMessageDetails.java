@@ -43,6 +43,9 @@ public class SendMessageDetails {
 
     /**
      * Creates the message details for a send success.
+     * 
+     * @param response
+     *            The response from the server.
      *
      * @return the send message details
      */
@@ -57,8 +60,6 @@ public class SendMessageDetails {
      *            true if the message has been sent; false otherwise
      * @param failureReason
      *            the reason for a failure
-     * @param messageId
-     *            the message id sent to JMS to coordinate messages and replies
      */
     public SendMessageDetails(boolean isSent, String failureReason) {
         super();

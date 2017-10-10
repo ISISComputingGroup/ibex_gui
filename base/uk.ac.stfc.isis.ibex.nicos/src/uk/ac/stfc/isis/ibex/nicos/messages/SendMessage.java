@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -35,12 +36,15 @@ public abstract class SendMessage {
     protected String command = "";
     protected List parameters = new ArrayList<>();
     
-    public ArrayList<String> getMulti() throws ConversionException {
+    /**
+     * Converts the message into a list of mesages to send NICOS.
+     * 
+     * @return The list of messages to send to NICOS.
+     * @throws ConversionException
+     *             thrown when the conversion cannot take place.
+     */
+    public List<String> getMulti() throws ConversionException {
         JsonSerialisingConverter<List> serialiser = new JsonSerialisingConverter<>(List.class);
-        ArrayList<String> out = new ArrayList<>();
-        out.add(command);
-        out.add("");
-        out.add(serialiser.convert(parameters));
-        return out;
+        return Arrays.asList(command, "", serialiser.convert(parameters));
     }
 }
