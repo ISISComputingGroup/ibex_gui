@@ -21,7 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.zeromq.ZMQ;
@@ -32,6 +31,7 @@ import org.zeromq.ZMQException;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
@@ -72,9 +72,9 @@ public class ZMQSession extends ModelObject {
             socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
             socket.connect(createConnectionString(instrument));
 
-            sendMultipleMessages(Arrays.asList("getbanner", "", ""));
+            SendMessage getBanner = new GetBanner();
             // TODO: Check that this response is what we expect
-            return getServerResponse();
+            return sendMessage(getBanner);
         } catch (ZMQException e) {
             return SendMessageDetails.createSendFail(e.toString());
         }

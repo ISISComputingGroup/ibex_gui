@@ -44,8 +44,6 @@ public class SendMessageDetails {
     /**
      * Creates the message details for a send success.
      *
-     * @param messageId
-     *            the message id
      * @return the send message details
      */
     public static SendMessageDetails createSendSuccess(String response) {

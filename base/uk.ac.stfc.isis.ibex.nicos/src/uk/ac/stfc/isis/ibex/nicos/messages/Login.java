@@ -25,14 +25,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
-
 /**
  * Class to log in to Nicos.
  */
 public class Login extends SendMessage {
-    JsonSerialisingConverter<Map<String, String>> serialiser = new JsonSerialisingConverter<>(Map.class);
-
     /**
      * Creates the login command for NICOS.
      */
