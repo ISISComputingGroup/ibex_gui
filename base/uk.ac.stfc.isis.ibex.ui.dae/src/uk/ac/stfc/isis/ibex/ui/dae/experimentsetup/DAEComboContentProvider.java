@@ -115,9 +115,7 @@ public class DAEComboContentProvider {
     private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            System.out.println("PVERROR: in anonymous type value=" + value);
             setInstrumentName(value);
         }
     };
-
 }
