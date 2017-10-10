@@ -18,18 +18,13 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
-import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -39,8 +34,6 @@ public class NicosModel extends ModelObject {
 
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
     private static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
-
-    private static final int CONNECT_POLL_TIME = 10000;
 
     private final ZMQSession session;
 
@@ -55,29 +48,26 @@ public class NicosModel extends ModelObject {
     /**
      * Constructor for the model.
      * 
-     * This will initialise the connection to the appropriate ActiveMQ Queue and
-     * login to nicos.
+     * This will initialise the connection to zeroMQ and login to NICOS.
      * 
      * @param session
-     *            the session to use to send messages to the script sever
+     *            the session to use to send and receive messages to and from
+     *            the script sever
+     * @param connectionJob
+     *            the job that will periodically be run to reconnect to NICOS if
+     *            a connection has failed. (pulled out of class for testing)
+     * 
      */
-    public NicosModel(ZMQSession session) {
+    public NicosModel(ZMQSession session, RepeatingJob connectionJob) {
         this.session = session;
-        this.connectionJob = new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
-            
-            @Override
-            protected IStatus doTask(IProgressMonitor monitor) {
-                connect(Instrument.getInstance().currentInstrument());
-                return Status.OK_STATUS;
-            }
-        };
+        this.connectionJob = connectionJob;
         this.connectionJob.schedule();
     }
 
     private void failConnection(String message) {
         setConnectionStatus(ConnectionStatus.FAILED);
         setConnectionErrorMessage(message);
-        this.connectionJob.setRunning(true);
+        connectionJob.setRunning(true);
     }
 
     /**
@@ -103,7 +93,7 @@ public class NicosModel extends ModelObject {
         }
 
         setConnectionStatus(ConnectionStatus.CONNECTED);
-        this.connectionJob.setRunning(false);
+        connectionJob.setRunning(false);
     }
     
     /**
@@ -113,6 +103,7 @@ public class NicosModel extends ModelObject {
         session.disconnect();
         setConnectionStatus(ConnectionStatus.DISCONNECTED);
         setConnectionErrorMessage("");
+        connectionJob.setRunning(true);
     }
 
 

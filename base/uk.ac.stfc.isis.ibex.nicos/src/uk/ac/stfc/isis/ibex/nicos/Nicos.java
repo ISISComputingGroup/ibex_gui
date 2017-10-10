@@ -18,9 +18,14 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 
 /**
@@ -34,6 +39,8 @@ public class Nicos extends Plugin {
 
     private NicosModel model;
 
+    private static final int CONNECT_POLL_TIME = 10000;
+
     /**
      * @return The instance of this singleton.
      */
@@ -46,7 +53,15 @@ public class Nicos extends Plugin {
      */
 	public Nicos() {
         instance = this;
-        model = new NicosModel(new ZMQSession());
+        model = new NicosModel(new ZMQSession(), new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
+            
+            @Override
+            protected IStatus doTask(IProgressMonitor monitor) {
+                model.connect(Instrument.getInstance().currentInstrument());
+                return Status.OK_STATUS;
+            }
+        }
+        );
     }
 
     /**

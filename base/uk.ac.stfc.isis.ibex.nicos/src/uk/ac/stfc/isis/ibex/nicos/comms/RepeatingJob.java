@@ -77,7 +77,7 @@ public abstract class RepeatingJob extends Job {
      * @param running
      *            True to start the job running, false to stop.
      */
-    public void setRunning(boolean running) {
+    public void setRunning(Boolean running) {
         this.running = running;
         schedule(repeatDelay);
     }
