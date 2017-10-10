@@ -45,11 +45,19 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.logger.IRecentLog;
 
-public class LoggerDialog extends TitleAreaDialog {
+/**
+ * Dialog box which contains the Console log, to be accessed from the Help menu.
+ */
+public class ConsoleLogDialog extends TitleAreaDialog {
 	private Text text;
 	private IRecentLog model;
 
-	public LoggerDialog(Shell parentShell, IRecentLog model) {
+	/**
+	 * Sets dialog window and data.
+	 * @param parentShell Shell to open log dialog box
+	 * @param model Contains log data
+	 */
+	public ConsoleLogDialog(Shell parentShell, IRecentLog model) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.model = model;
