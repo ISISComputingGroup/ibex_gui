@@ -32,7 +32,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_gCw1sGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_D1o4oGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.run-control" label="Run-Control" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_hT8JsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.viewrun-controlsettings" label="View run-control settings"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_hT8JsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.viewrun-controlsettings" label="View run-control settings" command="_OEEDYKkdEeePZ9uSg3-JRA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_EEcwsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.preferences" label="Preferences" mnemonics="">
         <children xsi:type="menu:Menu" xmi:id="_jS04QGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.coloursettings" label="Colour settings">
@@ -74,6 +74,7 @@
   <handlers xmi:id="_OtF9cJojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.instrument.switch" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler" command="_QRQe4JojEeeX2q28a93CXA"/>
   <handlers xmi:id="_xaoFYJxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.managermode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler" command="_5YCA0JxFEeeX2q28a93CXA"/>
   <handlers xmi:id="_Zp_q4KkAEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.ioc.startStop" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlHandler" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>
+  <handlers xmi:id="_MEkQ0KkdEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.runcontrol" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.runcontrol/uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler" command="_OEEDYKkdEeePZ9uSg3-JRA"/>
   <handlers xmi:id="_EDXy0KkjEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.exit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler" command="_BQbKEKkjEeePZ9uSg3-JRA"/>
   <handlers xmi:id="_Q7_cIKkEEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.about" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.AboutHandler" command="_hj--kKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_v5ccsKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.usermanual" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.ManualHandler" command="_w0psQKkDEeeNUPQOsQF40g"/>
@@ -223,6 +224,7 @@
   <commands xmi:id="_QRQe4JojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchinstruments" commandName="Switch Instruments"/>
   <commands xmi:id="_5YCA0JxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.managermode" commandName="Manager mode" description="Manager mode"/>
   <commands xmi:id="_5dJv8Kj_Eeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.ioc.startStop" commandName="Start/Stop IOC" description="Bring up Start/Stop IOC dialog" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
+  <commands xmi:id="_OEEDYKkdEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.runcontrol" commandName="View Run Control" description="View the run control settings"/>
   <commands xmi:id="_BQbKEKkjEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.exit" commandName="Exit IBEX Client"/>
   <commands xmi:id="_hj--kKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="About IBEX" description="About IBEX"/>
   <commands xmi:id="_w0psQKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.usermanual" commandName="User Manual " description="User Manual"/>

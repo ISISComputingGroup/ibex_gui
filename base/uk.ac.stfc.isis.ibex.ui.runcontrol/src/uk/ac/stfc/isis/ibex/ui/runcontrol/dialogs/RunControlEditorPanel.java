@@ -21,10 +21,11 @@ package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -60,7 +61,6 @@ public class RunControlEditorPanel extends Composite {
     private final Label spacerLabel;
     private final Label spacerLabel2;
     private Group grpGlobalSettings;
-	private DisplayBlock block;
     private boolean canSend;
 
     private final RunControlViewModel viewModel;
@@ -75,7 +75,7 @@ public class RunControlEditorPanel extends Composite {
 		public void onCanWriteChanged(boolean canWrite) {
             canSend = canWrite;
             btnRestoreAll.setEnabled(canWrite);
-		};	
+		};
 	};
 
     /**
@@ -181,15 +181,14 @@ public class RunControlEditorPanel extends Composite {
 
         setModel(viewModel);
         setBlock(null);
+        
+        parent.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				saveAsSubscription.removeObserver();
+			}
+		});
 	}
-    
-    @Override
-    public void dispose() {
-        // Must dispose of the subscription otherwise can get multiple
-        // subscriptions when swapping instruments
-        saveAsSubscription.removeObserver();
-        super.dispose();
-    }
 
     private void setModel(RunControlViewModel viewModel) {
     	DataBindingContext bindingContext = new DataBindingContext();
@@ -197,9 +196,9 @@ public class RunControlEditorPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSend),
                 BeanProperties.value("sendEnabled").observe(viewModel));
     	
-        bindingContext.bindValue(SWTObservables.observeText(txtLowLimit, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtLowLimit),
                 BeanProperties.value("txtLowLimit").observe(viewModel));
-        bindingContext.bindValue(SWTObservables.observeText(txtHighLimit, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHighLimit),
                 BeanProperties.value("txtHighLimit").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
                 BeanProperties.value("rcEnabled").observe(viewModel));
@@ -220,8 +219,6 @@ public class RunControlEditorPanel extends Composite {
      *            The new block to examine.
      */
 	public void setBlock(DisplayBlock block) {
-		this.block = block;
-
         viewModel.setBlock(block);
 
 		if (block == null) {
