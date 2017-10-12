@@ -181,7 +181,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_virOYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_ERj4QKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ERj4QKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="40" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_ImbmwKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="40">
             <children xsi:type="basic:Part" xmi:id="_PFLy4KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.settings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.SettingsView" label="Settings"/>
           </children>
@@ -192,7 +192,7 @@
             <children xsi:type="basic:Part" xmi:id="_P0V-8KkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.saveload" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.SaveLoadView" label="Save / Load"/>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_E5sPQKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
+        <children xsi:type="basic:PartStack" xmi:id="_E5sPQKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="60">
           <children xsi:type="basic:Part" xmi:id="_R8nTAKkBEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scriptcomposer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.TableView" label="Script Composer"/>
         </children>
       </children>
