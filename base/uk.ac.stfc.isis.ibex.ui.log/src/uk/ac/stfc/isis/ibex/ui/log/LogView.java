@@ -29,39 +29,61 @@
  */
 package uk.ac.stfc.isis.ibex.ui.log;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.FillLayout;
 
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 
-public class LogView extends ViewPart {
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.log.views.LogView"; //$NON-NLS-1$
+/**
+ * An IOC Log View control.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
+public class LogView {
 	
+	// rough table padding size so second scroll bar doesn't appear when columns are not resized
+	private static final int TABLE_PADDING = 20;
 	private LogViewModel viewModel;
 	private LogDisplayModel logDisplayModel;
 		
+	/**
+	 * Instantiates a new log view.
+	 */
 	public LogView() {
-		setPartName("LogView");
 		viewModel = Activator.getDefault().viewModel();
 		logDisplayModel = new LogDisplayModel(viewModel.getMessageProducer());
 	}
 	
 	/**
 	 * Create contents of the view part.
+	 * 
+	 * @param parent the composite in which this control should live 
 	 */
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {		
-		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(new FillLayout(SWT.HORIZONTAL));
+		parent.setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 		
-		new LogDisplay(container, logDisplayModel);
+		
+		ScrolledComposite container = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		
+		container.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
+		
+		int panelWidthFromColumns = 0;		
+		for (LogMessageFields column : LogMessageFields.COLUMNS) {
+			panelWidthFromColumns += column.getDefaultColumnWidth();
+		}				
+		
+		container.setMinSize(panelWidthFromColumns + TABLE_PADDING, 300);
+		container.setExpandHorizontal(true);
+		container.setExpandVertical(true);
+		
+		LogDisplay logDisplay = new LogDisplay(container, logDisplayModel);
+		container.setContent(logDisplay);
 	}
 
-	@Override
-	public void setFocus() {
-		// Set the focus
-	}
 }
