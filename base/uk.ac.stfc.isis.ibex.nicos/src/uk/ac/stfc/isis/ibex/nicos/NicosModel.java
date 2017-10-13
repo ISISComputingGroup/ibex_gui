@@ -18,13 +18,17 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import org.zeromq.ZMQException;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -80,10 +84,27 @@ public class NicosModel extends ModelObject {
         setConnectionStatus(ConnectionStatus.CONNECTING);
         setConnectionErrorMessage("");
 
-        SendMessageDetails connectionDetails = session.connect(instrument);
-        if (!connectionDetails.isSent()) {
-            failConnection(connectionDetails.getFailureReason());
+        try {
+            session.connect(instrument);
+        } catch (ZMQException e) {
+            failConnection(e.getMessage());
             return;
+        }
+
+        NICOSMessage getBanner = new GetBanner();
+        SendMessageDetails response = sendMessageToNicos(getBanner);
+        if (!response.isSent()) {
+            failConnection(response.getFailureReason());
+            return;
+        } else {
+            ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
+            if (!banner.protocolValid()) {
+                failConnection("NICOS protocol is invalid");
+                return;
+            } else if (!banner.serializerValid()) {
+                failConnection("NICOS serialiser is invalid");
+                return;
+            }
         }
 
         SendMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());

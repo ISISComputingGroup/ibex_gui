@@ -23,75 +23,48 @@ package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import java.util.List;
 
-import org.zeromq.ZMQ;
-import org.zeromq.ZMQ.Context;
-import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
  * Used to send and receive messages to NICOS via ZMQ.
  */
+public class ZMQSession {
 
-public class ZMQSession extends ModelObject {
-
-    private Socket socket;
-    private final Context context;
+    private ZMQWrapper zmq;
 
     private static final String ZMQ_PROTO = "tcp";
     private static final String ZMQ_PORT = "1301";
 
-    private static final int RECEIVE_TIMEOUT = 500;
-
     /**
      * The constructor for the class.
      * 
-     * Creates the ZMQ context.
+     * @param zmq
+     *            The ZMQ connection.
      * 
      */
-    public ZMQSession() {
-        context = ZMQ.context(1);
+    public ZMQSession(ZMQWrapper zmq) {
+        this.zmq = zmq;
     }
 
     /**
-     * Connect to the ZMQ session.
+     * Connect to ZMQ on the given instrument.
      * 
      * @param instrument
-     *            The instrument that we want to connect to.
-     * @return details as to the connection's success.
+     *            The instrument to connect to.
+     * @throws ZMQException
+     *             Thrown if a connection cannot be made.
      */
-    public SendMessageDetails connect(InstrumentInfo instrument) {
-        NICOSMessage getBanner = new GetBanner();
-        try {
-            socket = context.socket(ZMQ.REQ);
-            socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
-            socket.connect(createConnectionString(instrument));
-
-            SendMessageDetails response = sendMessage(getBanner);
-            if (response.isSent()) {
-                ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
-                if (!banner.protocolValid()) {
-                    return SendMessageDetails.createSendFail("NICOS protocol is invalid");
-                } else if (!banner.serializerValid()) {
-                    return SendMessageDetails.createSendFail("NICOS serialiser is invalid");
-                }
-
-            }
-            return response;
-        } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString());
-        }
+    public void connect(InstrumentInfo instrument) throws ZMQException {
+        zmq.connect(createConnectionURI(instrument));
     }
 
-    private String createConnectionString(InstrumentInfo instrument) {
+    private String createConnectionURI(InstrumentInfo instrument) {
         StringBuilder sb = new StringBuilder();
         sb.append(ZMQ_PROTO);
         sb.append("://");
@@ -102,11 +75,13 @@ public class ZMQSession extends ModelObject {
     }
 
     private void sendMultipleMessages(List<String> messages) throws ZMQException {
-        int i;
-        for (i = 0; i < messages.size() - 1; i++) {
-            socket.sendMore(messages.get(i));
+        if (messages.size() > 0) {
+            int i;
+            for (i = 0; i < messages.size() - 1; i++) {
+                zmq.send(messages.get(i), true);
+            }
+            zmq.send(messages.get(i), false);
         }
-        socket.send(messages.get(i));
     }
 
     /**
@@ -120,19 +95,19 @@ public class ZMQSession extends ModelObject {
         try {
             sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
-            return SendMessageDetails.createSendFail(e.toString());
+            return SendMessageDetails.createSendFail(e.getMessage());
         } catch (ConversionException e) {
-            return SendMessageDetails.createSendFail("Failed to convert NICOS message");
+            return SendMessageDetails.createSendFail("Failed to convert sent NICOS message");
         }
         return getServerResponse(message);
     }
 
     private SendMessageDetails getServerResponse(NICOSMessage sentMessage) {
-        String status = socket.recvStr();
-        socket.recvStr(); // Do not care
-        String resp = socket.recvStr();
+        String status = zmq.receiveString();
+        zmq.receiveString(); // Do not care
+        String resp = zmq.receiveString();
 
-        if (status == null | resp == null | resp == "") {
+        if (status == null | resp == null | status == "") {
             return SendMessageDetails.createSendFail("No data received from NICOS");
         }
 
@@ -152,6 +127,6 @@ public class ZMQSession extends ModelObject {
      * Disconnect from the ZMQ socket.
      */
     public void disconnect() {
-        socket.close();
+        zmq.disconnect();
     }
 }

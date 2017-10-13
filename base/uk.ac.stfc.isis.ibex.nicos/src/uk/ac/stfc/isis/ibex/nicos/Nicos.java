@@ -27,6 +27,7 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 
 /**
  * Constructor for the NICOS plugin, which provides a connection between NICOS
@@ -53,15 +54,16 @@ public class Nicos extends Plugin {
      */
 	public Nicos() {
         instance = this;
-        model = new NicosModel(new ZMQSession(), new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
+        ZMQSession session = new ZMQSession(new ZMQWrapper());
+        RepeatingJob connectionJob = new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
             
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
                 model.connect(Instrument.getInstance().currentInstrument());
                 return Status.OK_STATUS;
             }
-        }
-        );
+        };
+        model = new NicosModel(session, connectionJob);
     }
 
     /**
