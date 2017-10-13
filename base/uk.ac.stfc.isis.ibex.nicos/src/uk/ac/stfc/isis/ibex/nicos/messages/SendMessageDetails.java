@@ -23,7 +23,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
  * Class to capture details about having sent a message. This is returned when a
- * message is sent to Nagios.
+ * message is sent to NICOS.
  */
 public final class SendMessageDetails {
 
