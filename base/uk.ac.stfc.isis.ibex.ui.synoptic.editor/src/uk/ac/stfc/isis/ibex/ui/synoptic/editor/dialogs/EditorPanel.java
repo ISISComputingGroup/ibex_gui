@@ -105,8 +105,7 @@ public class EditorPanel extends Composite {
         lblTargetSelectorTree.setFont(titleFont);
         lblTargetSelectorTree.setText("Target selection");
 
-        Composite targetSelectorPanel =
-                new TargetSelectorPanel(targetSelectorComposite, SWT.NONE, synopticViewModel, opis);
+        new TargetSelectorPanel(targetSelectorComposite, SWT.NONE, synopticViewModel, opis);
 
         detailBarComposite = new Composite(this, SWT.NONE);
         detailBarComposite.setLayout(detailBarLayout);
@@ -125,11 +124,7 @@ public class EditorPanel extends Composite {
         PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
         new PvDetailView(pvComposite, pvDetailViewModel);
 
-        targetDetailsComposite = new Composite(detailBarComposite, SWT.NONE);
-        targetDetailsComposite.setLayout(targetDetailsLayout);
-        targetDetailsComposite.setLayoutData(targetDetailsLayoutData);
-
-        macrosComposite = new Composite(targetDetailsComposite, SWT.BORDER);
+        macrosComposite = new Composite(detailBarComposite, SWT.BORDER);
         macrosComposite.setLayout(new GridLayout(1, false));
         macrosComposite.setLayoutData(targetGridData);
 

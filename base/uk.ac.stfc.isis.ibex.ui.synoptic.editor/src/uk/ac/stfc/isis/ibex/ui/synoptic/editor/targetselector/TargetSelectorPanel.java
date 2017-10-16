@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  *
@@ -136,6 +137,7 @@ public class TargetSelectorPanel extends Composite {
                 }
 
                 viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
+                viewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
             }
             
             @Override

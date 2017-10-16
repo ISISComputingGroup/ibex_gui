@@ -239,7 +239,7 @@ public class SynopticViewModel extends ModelObject {
                 setSelectedComponents(null);
                 refreshTreeView();
 			}
-		}
+        } 
 	}
 
     /**
