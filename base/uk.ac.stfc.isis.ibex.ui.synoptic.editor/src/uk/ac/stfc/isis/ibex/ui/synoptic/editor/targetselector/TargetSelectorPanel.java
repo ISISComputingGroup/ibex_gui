@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -46,25 +49,47 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 public class TargetSelectorPanel extends Composite {
 
     private Map<String, List<String>> availableOpis;
-    private SynopticViewModel viewModel;
+    private final SynopticViewModel viewModel;
 
     /**
      * @param parent
      *            the parent composite
      * @param style
      *            the style of this composite
+     * @param viewModel
+     *            the synoptic view model
+     * @param availableOpis
+     *            the available opi groups
      */
-    public TargetSelectorPanel(Composite parent, int style, SynopticViewModel viewModel,
+    public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel viewModel,
             Map<String, List<String>> availableOpis) {
         super(parent, style);
+
         this.availableOpis = availableOpis;
         this.viewModel = viewModel;
+
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        draw();
+
+        // Draw the components
+        drawNameBox();
+        drawTargetTree();
+
+        Utils.recursiveSetEnabled(this, false);
+
+        viewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (viewModel.getSingleSelectedComp() != null) {
+                    Utils.recursiveSetEnabled(TargetSelectorPanel.this, true);
+                } else {
+                    Utils.recursiveSetEnabled(TargetSelectorPanel.this, false);
+                }
+            }
+        });
     }
 
-    private void draw() {
+    private void drawTargetTree() {
 
         final List<String> keyset = new ArrayList<>(new TreeSet<>(availableOpis.keySet()));
         Collections.sort(keyset);
@@ -97,14 +122,17 @@ public class TargetSelectorPanel extends Composite {
             
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (tree.getSelectionCount() != 1) {
+                // Correct things aren't selected or too many things are
+                // selected.
+                if (tree.getSelectionCount() != 1 || viewModel.getSingleSelectedComp() == null) {
                     return;
                 }
 
                 TreeItem item = tree.getSelection()[0];
 
+                // Was a category not an item.
                 if (item.getData() == null) {
-                    return; // Was a category not an item.
+                    return;
                 }
 
                 viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
@@ -115,6 +143,10 @@ public class TargetSelectorPanel extends Composite {
                 widgetSelected(e);
             }
         });
+    }
+
+    private void drawNameBox() {
+
     }
 
 }
