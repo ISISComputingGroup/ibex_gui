@@ -136,6 +136,11 @@ public class OpiDescription {
         return "";
     }
 
+    /**
+     * Get a list of categories that this OPI belongs to.
+     * 
+     * @return a list of categories that this OPI belongs to
+     */
     public List<String> getCategories() {
         return categories;
     }
