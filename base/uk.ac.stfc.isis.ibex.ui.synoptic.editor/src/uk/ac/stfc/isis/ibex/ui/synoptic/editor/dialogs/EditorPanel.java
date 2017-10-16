@@ -20,7 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -54,7 +55,7 @@ public class EditorPanel extends Composite {
     private TargetSelectorPanel targetSelectorComposite;
 	
     public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel,
-            Collection<String> availableOPIs) {
+            Map<String, List<String>> opis) {
 		super(parent, style);
 
         this.synopticViewModel = synopticViewModel;
@@ -93,7 +94,7 @@ public class EditorPanel extends Composite {
         new InstrumentTreeView(treeComposite, this.synopticViewModel);
         new InstrumentTreeControls(treeComposite, this.synopticViewModel);
 
-        targetSelectorComposite = new TargetSelectorPanel(this, SWT.BORDER);
+        targetSelectorComposite = new TargetSelectorPanel(this, SWT.BORDER, opis);
         targetSelectorComposite.setLayout(new GridLayout(1, false));
         targetSelectorComposite.setLayoutData(targetSelectorGridData);
 

@@ -22,7 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
@@ -78,7 +79,7 @@ public abstract class SynopticEditorHandler extends AbstractHandler {
      *            is blank
      */
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
-        Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
+        Map<String, List<String>> opis = Opi.getDefault().descriptionsProvider().getOpiCategories();
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
         EditSynopticDialog editDialog =
                 new EditSynopticDialog(SHELL, title, isBlank, opis, viewModel);

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 public class DescriptionsProvider extends Provider {
 	
 	private static final String FILENAME = "opi_info.xml";
+    private static final String UNKNOWN_CATEGORY_NAME = "Other";
 	
 	private final Descriptions descriptions;
 	
@@ -113,12 +115,6 @@ public class DescriptionsProvider extends Provider {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
         Collections.sort(availableOPIs, String.CASE_INSENSITIVE_ORDER);
 
-        System.out.println("The list of categories are:");
-        System.out.println(descriptions.getOpis().get("Analyser").getCategories());
-
-        System.out.println("The list of macros are:");
-        System.out.println(descriptions.getOpis().get("Applied Measurements Int2-L").getMacros());
-
         return availableOPIs;
 	}
 
@@ -158,5 +154,35 @@ public class DescriptionsProvider extends Provider {
 	    // If all else fails return an empty string
 		return "";
 	}
+
+    /**
+     * @return
+     */
+    public Map<String, List<String>> getOpiCategories() {
+        Map<String, List<String>> map = new HashMap<>();
+
+        map.put(UNKNOWN_CATEGORY_NAME, new ArrayList<String>());
+
+        for (String opiName : getOpiList()) {
+            OpiDescription desc = getDescription(opiName);
+
+            if (desc.getCategories() == null || desc.getCategories().isEmpty()) {
+                map.get(UNKNOWN_CATEGORY_NAME).add(opiName);
+                continue;
+            }
+
+            for (String category : desc.getCategories()) {
+                if (map.get(category) == null) {
+                    ArrayList<String> list = new ArrayList<>();
+                    list.add(opiName);
+                    map.put(category, list);
+                } else {
+                    map.get(category).add(opiName);
+                }
+            }
+        }
+
+        return map;
+    }
 	
 }

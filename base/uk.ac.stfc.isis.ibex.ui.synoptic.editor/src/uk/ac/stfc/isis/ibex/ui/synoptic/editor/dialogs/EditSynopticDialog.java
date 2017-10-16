@@ -21,7 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -60,7 +61,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private Button saveBtn;
 	
     private SynopticViewModel synopticViewModel;
-    private Collection<String> availableOPIs;
+    private Map<String, List<String>> availableOPIs;
 
     private SynopticValidator synopticValidator;
 
@@ -79,7 +80,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
      *            The view model describing the logic of the synoptic editor
      */
     public EditSynopticDialog(Shell parentShell, String title, boolean isBlank,
-            Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
+            Map<String, List<String>> availableOPIs, SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;

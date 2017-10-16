@@ -22,9 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -41,14 +39,7 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public class TargetSelectorPanel extends Composite {
 
-    public Map<String, List<String>> map = new HashMap<>();
-
-    {
-        map.put("Temperature", Arrays.asList("Eurotherm", "Keithley"));
-        map.put("Motion control", Arrays.asList("Galil", "McLennan", "ABC motor"));
-        map.put("Empty category", Collections.EMPTY_LIST);
-        map.put("Null category", null);
-    }
+    private Map<String, List<String>> availableOpis;
 
     /**
      * @param parent
@@ -56,31 +47,33 @@ public class TargetSelectorPanel extends Composite {
      * @param style
      *            the style of this composite
      */
-    public TargetSelectorPanel(Composite parent, int style) {
+    public TargetSelectorPanel(Composite parent, int style, Map<String, List<String>> availableOpis) {
         super(parent, style);
+        this.availableOpis = availableOpis;
         setLayout(new GridLayout(1, false));
         draw();
     }
 
     private void draw() {
 
-        final List<String> keyset = new ArrayList<>(new TreeSet<>(map.keySet()));
+        final List<String> keyset = new ArrayList<>(new TreeSet<>(availableOpis.keySet()));
         Collections.sort(keyset);
 
-        final Tree tree = new Tree(this, SWT.VIRTUAL | SWT.BORDER);
+        final Tree tree = new Tree(this, SWT.BORDER);
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         for (String key : keyset) {
 
-            if (map.get(key) == null || map.get(key).isEmpty()) {
+            if (availableOpis.get(key) == null || availableOpis.get(key).isEmpty()) {
                 continue;
             }
 
-            List<String> targets = new ArrayList<>(map.get(key));
+            List<String> targets = new ArrayList<>(availableOpis.get(key));
             Collections.sort(targets);
 
             TreeItem category = new TreeItem(tree, 0);
             category.setText(key);
+            category.setExpanded(false);
 
             for (String target : targets) {
                 TreeItem targetTreeItem = new TreeItem(category, 0);
