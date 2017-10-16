@@ -51,6 +51,7 @@ public class TargetSelectorPanel extends Composite {
         super(parent, style);
         this.availableOpis = availableOpis;
         setLayout(new GridLayout(1, false));
+        setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         draw();
     }
 
