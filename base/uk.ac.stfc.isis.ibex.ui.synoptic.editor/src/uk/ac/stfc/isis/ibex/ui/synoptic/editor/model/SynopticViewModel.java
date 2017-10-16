@@ -31,7 +31,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -52,8 +51,6 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
  * Provides the model for the editing view of the synoptic. This is an
@@ -240,36 +237,6 @@ public class SynopticViewModel extends ModelObject {
                 refreshTreeView();
 			}
         } 
-	}
-
-    /**
-     * Add a target (e.g. an OPI) to the component.
-     * 
-     * @param isFinalEdit has focus moved onto something else (e.g another
-     *            component)
-     */
-    public void addTargetToSelectedComponent() {
-        ComponentDescription component = getSingleSelectedComp();
-        ComponentType compType = component.type();
-
-        Collection<TargetDescription> potentialTargets = DefaultTargetForComponent.defaultTarget(compType);
-        TargetDescription target = new TargetDescription("NONE", TargetType.OPI);
-
-        if (potentialTargets.size() == 1) {
-            target = potentialTargets.iterator().next();
-        } else if (potentialTargets.size() > 1) {
-            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-            SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(shell, potentialTargets);
-            dialog.open();
-            target = dialog.selectedTarget();
-        }
-		
-        if (component != null && (component.target().name() == "NONE")) {
-            component.setTarget(target);
-            target.addProperties(getPropertyKeys(target.name()));
-			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
-		}
-
 	}
 
     /**
