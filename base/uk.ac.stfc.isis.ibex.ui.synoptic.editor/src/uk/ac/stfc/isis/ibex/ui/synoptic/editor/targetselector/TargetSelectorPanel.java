@@ -21,16 +21,34 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 /**
  *
  */
 public class TargetSelectorPanel extends Composite {
+
+    public Map<String, List<String>> map = new HashMap<>();
+
+    {
+        map.put("Temperature", Arrays.asList("Eurotherm", "Keithley"));
+        map.put("Motion control", Arrays.asList("Galil", "McLennan", "ABC motor"));
+        map.put("Empty category", Collections.EMPTY_LIST);
+        map.put("Null category", null);
+    }
 
     /**
      * @param parent
@@ -45,9 +63,30 @@ public class TargetSelectorPanel extends Composite {
     }
 
     private void draw() {
+
+        final List<String> keyset = new ArrayList<>(new TreeSet<>(map.keySet()));
+        Collections.sort(keyset);
+
         final Tree tree = new Tree(this, SWT.VIRTUAL | SWT.BORDER);
-        tree.setItemCount(10);
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        for (String key : keyset) {
+
+            if (map.get(key) == null || map.get(key).isEmpty()) {
+                continue;
+            }
+
+            List<String> targets = new ArrayList<>(map.get(key));
+            Collections.sort(targets);
+
+            TreeItem category = new TreeItem(tree, 0);
+            category.setText(key);
+
+            for (String target : targets) {
+                TreeItem targetTreeItem = new TreeItem(category, 0);
+                targetTreeItem.setText(target);
+            }
+        }
     }
 
 }
