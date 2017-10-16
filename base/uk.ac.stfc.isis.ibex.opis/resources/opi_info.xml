@@ -491,7 +491,6 @@
 			<key>Sample stage</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Sample stacks and goniometers</category>
 				</categories>
 				<type>SAMPLESTACK</type>
@@ -519,7 +518,7 @@
 			<key>Single Stage</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Sample stacks and goniometers</category>
 				</categories>
 				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
@@ -804,7 +803,6 @@
 			<key>Zoom sample stack</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Sample stacks and goniometers</category>
 				</categories>
 				<type>ZOOM_SAMPLE_STACK</type>
@@ -836,7 +834,6 @@
 			<key>Goniometer</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Sample stacks and goniometers</category>
 				</categories>
 				<type>GONIOMETER</type>
@@ -997,7 +994,6 @@
 			<value>
 				<categories>
 					<category>Sample stacks and goniometers</category>
-					<category>Motion control</category>
 				</categories>
 				<type>SAMPLESTACK</type>
 				<path>enginx_sample_position_system.opi</path>
