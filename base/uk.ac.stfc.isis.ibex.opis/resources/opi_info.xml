@@ -188,7 +188,6 @@
 			<value>
 				<categories>
 					<category>Jaws and slits</category>
-					<category>Motion control</category>
 				</categories>
 				<type>UNCONFIRMED</type>
 				<path>jaws/Jaws.opi</path>
@@ -558,7 +557,6 @@
 			<key>Slit 1</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
@@ -592,7 +590,6 @@
 			<key>Coupled Slit</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
@@ -618,7 +615,6 @@
 			<key>Slit motors</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>UNCONFIRMED</type>
@@ -764,7 +760,6 @@
 			<key>Slits (single motor)</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
@@ -893,7 +888,6 @@
 			<key>Polaris jaw set</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
@@ -1033,7 +1027,6 @@
 			<key>EnginX 3rd Jaw</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
@@ -1066,7 +1059,6 @@
 			<value>
 				<categories>
 					<category>Motion control</category>
-					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
 				<path>enginx_collimators/enginx_collimators.opi</path>
