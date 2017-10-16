@@ -53,7 +53,7 @@ public class ComponentLabelProvider implements ILabelProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof ComponentDescription) {
-			return ((ComponentDescription) element).name();
+			return ((ComponentDescription) element).getName();
 		} else {
 			return null;
 		}

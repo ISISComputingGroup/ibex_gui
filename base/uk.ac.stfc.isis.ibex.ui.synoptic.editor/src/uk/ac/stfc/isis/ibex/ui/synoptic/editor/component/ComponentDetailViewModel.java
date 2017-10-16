@@ -82,7 +82,7 @@ public class ComponentDetailViewModel extends ModelObject {
         if (component != null) {
             setSelectionVisible(true);
 
-            updateComponentName(component.name());
+            updateComponentName(component.getName());
 
             setCompType(component.type().name());
 

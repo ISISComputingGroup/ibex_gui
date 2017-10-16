@@ -30,14 +30,19 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.Utils;
@@ -51,6 +56,7 @@ public class TargetSelectorPanel extends Composite {
 
     private Map<String, List<String>> availableOpis;
     private final SynopticViewModel viewModel;
+    private Text txtName;
 
     /**
      * @param parent
@@ -73,7 +79,7 @@ public class TargetSelectorPanel extends Composite {
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Draw the components
-        drawNameBox();
+        drawNameSelector();
         drawTargetTree();
 
         Utils.recursiveSetEnabled(this, false);
@@ -83,8 +89,35 @@ public class TargetSelectorPanel extends Composite {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (viewModel.getSingleSelectedComp() != null) {
                     Utils.recursiveSetEnabled(TargetSelectorPanel.this, true);
+                    txtName.setText(viewModel.getSingleSelectedComp().getName());
                 } else {
                     Utils.recursiveSetEnabled(TargetSelectorPanel.this, false);
+                    txtName.setText("");
+                }
+            }
+        });
+    }
+
+    private void drawNameSelector() {
+
+        Composite nameContainer = new Composite(this, SWT.NONE);
+        nameContainer.setLayout(new GridLayout(2, false));
+        nameContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+        Label lblName = new Label(nameContainer, SWT.NONE);
+        lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+        lblName.setText("Name: ");
+
+        txtName = new Text(nameContainer, SWT.BORDER);
+        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        txtName.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                ComponentDescription comp = viewModel.getSingleSelectedComp();
+                if (comp != null) {
+                    comp.setName(txtName.getText());
+                    viewModel.refreshTreeView();
                 }
             }
         });

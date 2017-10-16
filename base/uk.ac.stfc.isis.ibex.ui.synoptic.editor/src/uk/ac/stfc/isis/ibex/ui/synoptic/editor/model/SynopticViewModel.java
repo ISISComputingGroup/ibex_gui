@@ -158,7 +158,7 @@ public class SynopticViewModel extends ModelObject {
         for (ComponentDescription selectedComponent : selectedComponents) {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
 
-            String uniqueName = getUniqueName(selectedComponent.name(), allComponentNames);
+            String uniqueName = getUniqueName(selectedComponent.getName(), allComponentNames);
             allComponentNames.add(uniqueName);
 
             componentCopy.setName(uniqueName);
@@ -181,7 +181,7 @@ public class SynopticViewModel extends ModelObject {
 
     private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
         for (ComponentDescription cd : component.components()) {
-            String uniqueName = getUniqueName(cd.name(), allComponentNames);
+            String uniqueName = getUniqueName(cd.getName(), allComponentNames);
             allComponentNames.add(uniqueName);
             
             cd.setName(uniqueName);
@@ -207,12 +207,12 @@ public class SynopticViewModel extends ModelObject {
     private String constructDeleteMessage() {
 		String message = "Are you sure you want to delete the component";
 		if (selectedComponents.size() == 1) {
-            message += " " + getSingleSelectedComp().name() + "?";
+            message += " " + getSingleSelectedComp().getName() + "?";
 		} else {
 			int idx = 0;
             message += "s ";
 			for (ComponentDescription selected : selectedComponents) {
-				message += selected.name();
+				message += selected.getName();
 				if (idx == selectedComponents.size() - 2) {
 					message += " and ";
 				} else if (idx != selectedComponents.size() - 1) {

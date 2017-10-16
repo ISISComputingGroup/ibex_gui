@@ -71,7 +71,7 @@ public class ObservableSynopticTest {
 		
 		ComponentDescription mockCompDesc = mock(ComponentDescription.class);
 		when(mockCompDesc.type()).thenReturn(compType);
-		when(mockCompDesc.name()).thenReturn(compDescName);
+		when(mockCompDesc.getName()).thenReturn(compDescName);
 		
 		List<ComponentDescription> mockCompDescs = new ArrayList<>();
 		mockCompDescs.add(mockCompDesc);

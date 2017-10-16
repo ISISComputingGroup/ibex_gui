@@ -91,7 +91,7 @@ public class ObservableComponentTest {
 		ComponentDescription mockComp = mock(ComponentDescription.class);
 		when(mockComp.target()).thenReturn(mockTargetDesc);
 		when(mockComp.type()).thenReturn(compType);
-		when(mockComp.name()).thenReturn(compName);
+		when(mockComp.getName()).thenReturn(compName);
 		
 		List<ComponentDescription> mockComps = new ArrayList<>();
 		mockComps.add(mockComp);
@@ -100,7 +100,7 @@ public class ObservableComponentTest {
 		when(mockCompDesc.pvs()).thenReturn(mockPVs);
 		when(mockCompDesc.target()).thenReturn(mockTargetDesc);
 		when(mockCompDesc.components()).thenReturn(mockComps);
-		when(mockCompDesc.name()).thenReturn(compDesc);
+		when(mockCompDesc.getName()).thenReturn(compDesc);
 		when(mockCompDesc.type()).thenReturn(compType);
 		
 		Subscription mockSub = mock(Subscription.class);
