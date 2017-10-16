@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * A class for holding the OPI description.
  *
  */
-@XmlRootElement(name = "opi")
+@XmlRootElement(name = "entry")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OpiDescription {
     private String type;
@@ -43,6 +43,10 @@ public class OpiDescription {
 	@XmlElement(name = "macro", type = MacroInfo.class)
 	private List<MacroInfo> macros = new ArrayList<>();
 	
+    @XmlElementWrapper(name = "categories")
+    @XmlElement(name = "category", type = Category.class)
+    private List<Category> categories = new ArrayList<>();
+
     /**
      * Gets the component type.
      *
@@ -130,6 +134,10 @@ public class OpiDescription {
         }
 
         return "";
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 
 }

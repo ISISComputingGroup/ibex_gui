@@ -112,6 +112,13 @@ public class DescriptionsProvider extends Provider {
 	public Collection<String> getOpiList() {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
         Collections.sort(availableOPIs, String.CASE_INSENSITIVE_ORDER);
+
+        System.out.println("The list of categories are:");
+        System.out.println(descriptions.getOpis().get("Analyser").getCategories());
+
+        System.out.println("The list of macros are:");
+        System.out.println(descriptions.getOpis().get("Applied Measurements Int2-L").getMacros());
+
         return availableOPIs;
 	}
 

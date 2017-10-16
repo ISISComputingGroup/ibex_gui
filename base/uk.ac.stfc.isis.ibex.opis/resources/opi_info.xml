@@ -4,6 +4,14 @@
 		<entry>
 			<key>Analyser</key>
 			<value>
+				<categories>
+					<category>
+						<name>Monitors</name>
+					</category>
+					<category>
+						<name>Motion control</name>
+					</category>
+				</categories>
 				<type>ANALYSER</type>
 				<path>analyser.opi</path>
 				<description>The OPI for the analyser. No properties required.</description>
