@@ -127,7 +127,7 @@ public class ComponentDetailView extends Composite {
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
                 if (!selectionCausedByMouseClick) {
                     StructuredSelection selection = (StructuredSelection) cmboType.getSelection();
-                    compDetailsViewModel.updateModelType((String) selection.getFirstElement(), true);
+                    compDetailsViewModel.updateModelType((String) selection.getFirstElement());
                 }
             }
         });
@@ -142,10 +142,9 @@ public class ComponentDetailView extends Composite {
         cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
-                boolean isFinalUpdate = selectionCausedByMouseClick;
                 StructuredSelection selection = (StructuredSelection) cmboType.getSelection();
 
-                compDetailsViewModel.updateModelType((String) selection.getFirstElement(), isFinalUpdate);
+                compDetailsViewModel.updateModelType((String) selection.getFirstElement());
                 selectionCausedByMouseClick = false;
             }
         });

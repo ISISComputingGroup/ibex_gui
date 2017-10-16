@@ -248,7 +248,7 @@ public class SynopticViewModel extends ModelObject {
      * @param isFinalEdit has focus moved onto something else (e.g another
      *            component)
      */
-    public void addTargetToSelectedComponent(boolean isFinalEdit) {
+    public void addTargetToSelectedComponent() {
         ComponentDescription component = getSingleSelectedComp();
         ComponentType compType = component.type();
 
@@ -257,15 +257,14 @@ public class SynopticViewModel extends ModelObject {
 
         if (potentialTargets.size() == 1) {
             target = potentialTargets.iterator().next();
-        } else if (potentialTargets.size() > 1 && isFinalEdit && !component.target().getUserSelected()) {
+        } else if (potentialTargets.size() > 1) {
             Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
             SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(shell, potentialTargets);
             dialog.open();
             target = dialog.selectedTarget();
         }
 		
-        if (component != null && (component.target().name() == "NONE" || !component.target().getUserSelected())) {
-            target.setUserSelected(isFinalEdit);
+        if (component != null && (component.target().name() == "NONE")) {
             component.setTarget(target);
             target.addProperties(getPropertyKeys(target.name()));
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);

@@ -130,7 +130,6 @@ public class TargetNameWidget extends Composite {
             if (target != null) {
                 target.setName(targetName);
                 target.setType(type);
-                target.setUserSelected(true);
                 target.clearProperties();
                 
                 List<String> keys = synopticViewModel.getPropertyKeys(target.name());

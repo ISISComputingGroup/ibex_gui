@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -42,10 +44,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -57,6 +61,7 @@ public class TargetSelectorPanel extends Composite {
     private Map<String, List<String>> availableOpis;
     private final SynopticViewModel viewModel;
     private Text txtName;
+    private final ComponentDetailViewModel compDetailsViewModel;
 
     /**
      * @param parent
@@ -74,12 +79,14 @@ public class TargetSelectorPanel extends Composite {
 
         this.availableOpis = availableOpis;
         this.viewModel = viewModel;
+        this.compDetailsViewModel = new ComponentDetailViewModel(viewModel);
 
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Draw the components
         drawNameSelector();
+        drawIconSelector();
         drawTargetTree();
 
         Utils.recursiveSetEnabled(this, false);
@@ -119,6 +126,39 @@ public class TargetSelectorPanel extends Composite {
                     comp.setName(txtName.getText());
                     viewModel.refreshTreeView();
                 }
+            }
+        });
+    }
+
+    private void drawIconSelector() {
+        Composite iconContainer = new Composite(this, SWT.NONE);
+        iconContainer.setLayout(new GridLayout(2, false));
+        iconContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+        Label lblIcon = new Label(iconContainer, SWT.NONE);
+        lblIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+        lblIcon.setText("Icon: ");
+
+        final ComboViewer cmboType = new ComboViewer(iconContainer, SWT.READ_ONLY);
+        final String[] items = ComponentType.componentTypeAlphaList().toArray(new String[0]);
+
+        cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        cmboType.setContentProvider(ArrayContentProvider.getInstance());
+        cmboType.getCombo().setItems(items);
+
+        cmboType.getCombo().addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                int selection = cmboType.getCombo().getSelectionIndex();
+                compDetailsViewModel.updateModelType(items[selection]);
+
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
             }
         });
     }
@@ -178,10 +218,6 @@ public class TargetSelectorPanel extends Composite {
                 widgetSelected(e);
             }
         });
-    }
-
-    private void drawNameBox() {
-
     }
 
 }

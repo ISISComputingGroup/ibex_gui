@@ -100,18 +100,10 @@ public class ComponentDetailViewModel extends ModelObject {
      * @param isFinalUpdate
      *            Whether this is the final update for the user
      */
-    public void updateModelType(String modelType, boolean isFinalUpdate) {
+    public void updateModelType(String modelType) {
         if (component != null) {
             setCompType(modelType);
-            ComponentType type = ComponentType.valueOf(compType);
-            component.setType(type);
-
-            if (isFinalUpdate) {
-                model.addTargetToSelectedComponent(true);
-            } else {
-                model.addTargetToSelectedComponent(false);
-            }
-
+            component.setType(ComponentType.valueOf(compType));
             updateTypeIcon();
         }
     }
