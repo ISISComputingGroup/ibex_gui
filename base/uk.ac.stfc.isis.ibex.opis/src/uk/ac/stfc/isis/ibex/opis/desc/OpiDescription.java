@@ -44,8 +44,8 @@ public class OpiDescription {
 	private List<MacroInfo> macros = new ArrayList<>();
 	
     @XmlElementWrapper(name = "categories")
-    @XmlElement(name = "category", type = Category.class)
-    private List<Category> categories = new ArrayList<>();
+    @XmlElement(name = "category")
+    private List<String> categories = new ArrayList<>();
 
     /**
      * Gets the component type.
@@ -136,7 +136,7 @@ public class OpiDescription {
         return "";
     }
 
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 

@@ -5,12 +5,8 @@
 			<key>Analyser</key>
 			<value>
 				<categories>
-					<category>
-						<name>Monitors</name>
-					</category>
-					<category>
-						<name>Motion control</name>
-					</category>
+					<category>Monitors</category>
+					<category>Motion control</category>
 				</categories>
 				<type>ANALYSER</type>
 				<path>analyser.opi</path>
