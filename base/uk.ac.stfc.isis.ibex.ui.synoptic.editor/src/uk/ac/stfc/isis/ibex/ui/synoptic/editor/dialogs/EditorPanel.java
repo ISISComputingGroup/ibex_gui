@@ -34,6 +34,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties.TargetPropertiesView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector.TargetSelectorPanel;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -47,10 +51,10 @@ public class EditorPanel extends Composite {
 
 	private Composite treeComposite;
 	private Composite detailBarComposite;
-	private Composite targetBarComposite;
+	private Composite targetDetailsComposite;
 	private Composite componentComposite;
 	private Composite pvComposite;	
-	private Composite targetComposite;
+	private Composite macrosComposite;
     private Composite targetSelectorComposite;
 	
     public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel,
@@ -63,23 +67,23 @@ public class EditorPanel extends Composite {
 		
 		GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData detailBarData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		GridData targetBarData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		GridData targetDetailsLayoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData componentGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData targetGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData pvGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         GridData targetSelectorGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		treeGridData.widthHint = 300;
 		detailBarData.widthHint = 300;
-		targetBarData.widthHint = 300;
+		targetDetailsLayoutData.widthHint = 300;
         targetSelectorGridData.widthHint = 300;
 		
 		GridLayout detailBarLayout = new GridLayout(1, false);
 		detailBarLayout.marginHeight = 0;
 		detailBarLayout.marginWidth = 0;
 		
-		GridLayout targetBarLayout = new GridLayout(1, false);
-		targetBarLayout.marginHeight = 0;
-		targetBarLayout.marginWidth = 0;
+		GridLayout targetDetailsLayout = new GridLayout(1, false);
+		targetDetailsLayout.marginHeight = 0;
+		targetDetailsLayout.marginWidth = 0;
 		
 
 		treeComposite = new Composite(this, SWT.BORDER);
@@ -101,50 +105,38 @@ public class EditorPanel extends Composite {
         lblTargetSelectorTree.setFont(titleFont);
         lblTargetSelectorTree.setText("Target selection");
 
-        new TargetSelectorPanel(targetSelectorComposite, SWT.NONE, opis);
+        Composite targetSelectorPanel =
+                new TargetSelectorPanel(targetSelectorComposite, SWT.NONE, synopticViewModel, opis);
 
-		
-//		detailBarComposite = new Composite(this, SWT.NONE);
-//		detailBarComposite.setLayout(detailBarLayout);
-//		detailBarComposite.setLayoutData(detailBarData);
-//			
-//        componentComposite = new Composite(detailBarComposite, SWT.BORDER);
-//        componentComposite.setLayout(new GridLayout(1, false));
-//        componentComposite.setLayoutData(componentGridData);
-//
-//        Label lblComponentTitle = new Label(componentComposite, SWT.NONE);
-//        lblComponentTitle.setFont(titleFont);
-//        lblComponentTitle.setText("Component Details");
-//
-//        PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
-//
-//        ComponentDetailViewModel compDetailViewModel = new ComponentDetailViewModel(synopticViewModel);
-//        new ComponentDetailView(componentComposite, compDetailViewModel, pvListViewModel);
-//
-//        pvComposite = new Composite(detailBarComposite, SWT.BORDER);
-//        pvComposite.setLayout(new GridLayout(1, false));
-//        pvComposite.setLayoutData(pvGridData);
-//
-//        Label lblPvTitle = new Label(pvComposite, SWT.NONE);
-//        lblPvTitle.setFont(titleFont);
-//        lblPvTitle.setText("PV Details");
-//
-//        PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
-//        new PvDetailView(pvComposite, pvDetailViewModel);
-//		
-        targetBarComposite = new Composite(this, SWT.NONE);
-        targetBarComposite.setLayout(targetBarLayout);
-        targetBarComposite.setLayoutData(targetBarData);
+        detailBarComposite = new Composite(this, SWT.NONE);
+        detailBarComposite.setLayout(detailBarLayout);
+        detailBarComposite.setLayoutData(detailBarData);
 
-        targetComposite = new Composite(targetBarComposite, SWT.BORDER);
-        targetComposite.setLayout(new GridLayout(1, false));
-        targetComposite.setLayoutData(targetGridData);
+        PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
 
-        Label lblTargetTitle = new Label(targetComposite, SWT.NONE);
+        pvComposite = new Composite(detailBarComposite, SWT.BORDER);
+        pvComposite.setLayout(new GridLayout(1, false));
+        pvComposite.setLayoutData(pvGridData);
+
+        Label lblPvTitle = new Label(pvComposite, SWT.NONE);
+        lblPvTitle.setFont(titleFont);
+        lblPvTitle.setText("PV Details");
+
+        PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
+        new PvDetailView(pvComposite, pvDetailViewModel);
+
+        targetDetailsComposite = new Composite(detailBarComposite, SWT.NONE);
+        targetDetailsComposite.setLayout(targetDetailsLayout);
+        targetDetailsComposite.setLayoutData(targetDetailsLayoutData);
+
+        macrosComposite = new Composite(targetDetailsComposite, SWT.BORDER);
+        macrosComposite.setLayout(new GridLayout(1, false));
+        macrosComposite.setLayoutData(targetGridData);
+
+        Label lblTargetTitle = new Label(macrosComposite, SWT.NONE);
         lblTargetTitle.setFont(titleFont);
-        lblTargetTitle.setText("Component Target Details");
+        lblTargetTitle.setText("Component macros");
 
-        // new TargetDetailView(targetComposite, this.synopticViewModel,
-        // availableOPIs);
+        new TargetPropertiesView(macrosComposite, this.synopticViewModel);
     }
 }

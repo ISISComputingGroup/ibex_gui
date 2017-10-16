@@ -28,11 +28,17 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
  *
@@ -40,6 +46,7 @@ import org.eclipse.swt.widgets.TreeItem;
 public class TargetSelectorPanel extends Composite {
 
     private Map<String, List<String>> availableOpis;
+    private SynopticViewModel viewModel;
 
     /**
      * @param parent
@@ -47,9 +54,11 @@ public class TargetSelectorPanel extends Composite {
      * @param style
      *            the style of this composite
      */
-    public TargetSelectorPanel(Composite parent, int style, Map<String, List<String>> availableOpis) {
+    public TargetSelectorPanel(Composite parent, int style, SynopticViewModel viewModel,
+            Map<String, List<String>> availableOpis) {
         super(parent, style);
         this.availableOpis = availableOpis;
+        this.viewModel = viewModel;
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         draw();
@@ -75,12 +84,37 @@ public class TargetSelectorPanel extends Composite {
             TreeItem category = new TreeItem(tree, 0);
             category.setText(key);
             category.setExpanded(false);
+            category.setData(null);
 
             for (String target : targets) {
                 TreeItem targetTreeItem = new TreeItem(category, 0);
                 targetTreeItem.setText(target);
+                targetTreeItem.setData(viewModel.getOpi(target));
             }
         }
+        
+        tree.addSelectionListener(new SelectionListener() {
+            
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (tree.getSelectionCount() != 1) {
+                    return;
+                }
+
+                TreeItem item = tree.getSelection()[0];
+
+                if (item.getData() == null) {
+                    return; // Was a category not an item.
+                }
+
+                viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
+            }
+            
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
     }
 
 }
