@@ -51,8 +51,6 @@ public class EditorPanel extends Composite {
 
 	private Composite treeComposite;
 	private Composite detailBarComposite;
-	private Composite targetDetailsComposite;
-	private Composite componentComposite;
 	private Composite pvComposite;	
 	private Composite macrosComposite;
     private Composite targetSelectorComposite;
@@ -68,7 +66,6 @@ public class EditorPanel extends Composite {
 		GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData detailBarData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData targetDetailsLayoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		GridData componentGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData targetGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData pvGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         GridData targetSelectorGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -85,7 +82,6 @@ public class EditorPanel extends Composite {
 		targetDetailsLayout.marginHeight = 0;
 		targetDetailsLayout.marginWidth = 0;
 		
-
 		treeComposite = new Composite(this, SWT.BORDER);
 		treeComposite.setLayout(new GridLayout(1, false));
         treeComposite.setLayoutData(treeGridData);
@@ -111,6 +107,16 @@ public class EditorPanel extends Composite {
         detailBarComposite.setLayout(detailBarLayout);
         detailBarComposite.setLayoutData(detailBarData);
 
+        macrosComposite = new Composite(detailBarComposite, SWT.BORDER);
+        macrosComposite.setLayout(new GridLayout(1, false));
+        macrosComposite.setLayoutData(targetGridData);
+
+        Label lblTargetTitle = new Label(macrosComposite, SWT.NONE);
+        lblTargetTitle.setFont(titleFont);
+        lblTargetTitle.setText("Component macros");
+
+        new TargetPropertiesView(macrosComposite, this.synopticViewModel);
+
         PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
 
         pvComposite = new Composite(detailBarComposite, SWT.BORDER);
@@ -124,14 +130,5 @@ public class EditorPanel extends Composite {
         PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
         new PvDetailView(pvComposite, pvDetailViewModel);
 
-        macrosComposite = new Composite(detailBarComposite, SWT.BORDER);
-        macrosComposite.setLayout(new GridLayout(1, false));
-        macrosComposite.setLayoutData(targetGridData);
-
-        Label lblTargetTitle = new Label(macrosComposite, SWT.NONE);
-        lblTargetTitle.setFont(titleFont);
-        lblTargetTitle.setText("Component macros");
-
-        new TargetPropertiesView(macrosComposite, this.synopticViewModel);
     }
 }

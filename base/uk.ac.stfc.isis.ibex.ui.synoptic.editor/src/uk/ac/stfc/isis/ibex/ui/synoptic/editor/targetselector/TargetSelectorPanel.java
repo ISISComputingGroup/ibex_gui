@@ -174,13 +174,13 @@ public class TargetSelectorPanel extends Composite {
             List<String> targets = new ArrayList<>(availableOpis.get(key));
             Collections.sort(targets);
 
-            TreeItem category = new TreeItem(tree, 0);
+            TreeItem category = new TreeItem(tree, SWT.NONE);
             category.setText(key);
             category.setExpanded(false);
             category.setData(null);
 
             for (String target : targets) {
-                TreeItem targetTreeItem = new TreeItem(category, 0);
+                TreeItem targetTreeItem = new TreeItem(category, SWT.NONE);
                 targetTreeItem.setText(target);
                 targetTreeItem.setData(viewModel.getOpi(target));
             }
