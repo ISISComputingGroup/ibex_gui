@@ -25,19 +25,17 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 
 /**
- * Only allows text input if the new text is a combination of alphanumerics,
- * spaces and underscores.
+ * Only allows text input if the new text is a valid component name.
  */
 public class ComponentNameVerifier implements VerifyListener {
     /**
      * A regex matching any combination of alphanumerics, spaces and
      * underscores.
      */
-    private static final String ALPHANUMERIC_SPACES_AND_UNDERSCORES_REGEX = "[a-zA-Z0-9_ ]*";
+    private static final String ALPHANUMERIC_SPACES_AND_UNDERSCORES_REGEX = "[a-zA-Z0-9_\\- ()]*";
 
     /**
-     * Only allows text input if the new text is a combination of alphanumerics,
-     * spaces and underscores.
+     * Only allows text input if the new text matches the regex above.
      * 
      * @see {org.eclipse.swt.events.VerifyText}
      * 
