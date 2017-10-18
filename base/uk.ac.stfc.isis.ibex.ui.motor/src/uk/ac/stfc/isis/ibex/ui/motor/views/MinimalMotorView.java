@@ -144,6 +144,9 @@ public class MinimalMotorView extends Composite {
         bindingContext.bindValue(WidgetProperties.background().observe(motorComposite),
                 BeanProperties.value("color").observe(minimalMotorViewModel));
 
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(motorComposite),
+                BeanProperties.value("tooltip").observe(minimalMotorViewModel));
+
 	}
 	
 	private void setMouseListeners() {

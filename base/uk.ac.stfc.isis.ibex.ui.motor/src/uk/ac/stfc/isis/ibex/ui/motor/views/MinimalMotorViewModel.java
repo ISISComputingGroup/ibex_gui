@@ -38,6 +38,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
@@ -47,14 +49,16 @@ import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
  * The view model for an individual motor.
  */
 public class MinimalMotorViewModel extends ModelObject {
-
+    private static final Integer MAX_NAME_LENGTH = 12;
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
     private Motor motor;
+
     private String value;
     private String setpoint;
     private String motorName;
+    private String tooltip;
     private Boolean enabled;
     private Boolean moving;
     private MotorBackgroundPalette palette;
@@ -106,13 +110,27 @@ public class MinimalMotorViewModel extends ModelObject {
     }
 
     /**
-     * Sets the name of the motor in the display.
+     * Sets the name of the motor in the display based on a motor object.
      *
-     * @param newName
-     *            the new name of the motor
+     * @param motor
+     *            the new motor
      */
-    public void setMotorName(String newName) {
-        firePropertyChange("motorName", this.motorName, this.motorName = newName);
+    public void setMotorName(Motor motor) {
+        String name = Strings.isNullOrEmpty(motor.getDescription()) ? motor.name() : motor.getDescription();
+        if (name != null && name.length() > MAX_NAME_LENGTH) {
+            name = name.substring(0, MAX_NAME_LENGTH);
+        }
+        firePropertyChange("motorName", this.motorName, this.motorName = name);
+    }
+
+    /**
+     * Sets the tooltip of the motor view.
+     *
+     * @param tooltip
+     *            the new tooltip for the view.
+     */
+    public void setTooltip(String tooltip) {
+        firePropertyChange("tooltip", this.tooltip, this.tooltip = tooltip);
     }
 
     /**
@@ -183,6 +201,15 @@ public class MinimalMotorViewModel extends ModelObject {
     }
 
     /**
+     * Gets the tooltip for the view.
+     *
+     * @return the tooltip for the view.
+     */
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    /**
      * Gets the setpoint of the motor.
      *
      * @return the setpoint of the motor
@@ -223,7 +250,8 @@ public class MinimalMotorViewModel extends ModelObject {
     public void setMotor(final Motor motor) {
 
         this.motor = motor;
-        setMotorName(motor.name());
+        setMotorName(motor);
+        setTooltip(motor.getDescription());
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("Val", motor.getSetpoint().getValue());
         this.moving = motor.getMoving();
