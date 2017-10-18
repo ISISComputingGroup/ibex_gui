@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
@@ -62,6 +63,7 @@ public class TargetSelectorPanel extends Composite {
     private final SynopticViewModel viewModel;
     private Text txtName;
     private final ComponentDetailViewModel compDetailsViewModel;
+    private Text description;
 
     /**
      * @param parent
@@ -200,11 +202,14 @@ public class TargetSelectorPanel extends Composite {
 
                 // Was a category not an item.
                 if (item.getData() == null) {
+                    description.setText("");
                     return;
                 }
 
                 viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
                 viewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
+                
+                description.setText(((OpiDescription) item.getData()).getDescription());
             }
             
             @Override
@@ -212,6 +217,12 @@ public class TargetSelectorPanel extends Composite {
                 widgetSelected(e);
             }
         });
+        
+        description = new Text(this, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        GridData descriptionLayoutData = new GridData(SWT.FILL, SWT.BOTTOM, true, false);
+        descriptionLayoutData.heightHint = 60;
+        description.setLayoutData(descriptionLayoutData);
+        
     }
 
 }

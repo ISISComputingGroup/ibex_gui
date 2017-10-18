@@ -124,7 +124,7 @@ public class PvListViewModel extends ModelObject {
             // refreshed
             firePropertyChange("pvListChanged", 0, pvList = selectedComp.pvs());
         } else {
-            firePropertyChange("pvListChanged", 0, pvList = Collections.<PV> emptyList());
+            firePropertyChange("pvListChanged", 0, pvList = Collections.<PV>emptyList());
         }
     }
 
@@ -171,7 +171,9 @@ public class PvListViewModel extends ModelObject {
     }
 
     /**
+     * Enables or disables all the buttons.
      * 
+     * @param enabled true to enable all buttons, false to disable all buttons
      */
     private void setAllButtonsEnabled(boolean enabled) {
         setAddEnabled(enabled);

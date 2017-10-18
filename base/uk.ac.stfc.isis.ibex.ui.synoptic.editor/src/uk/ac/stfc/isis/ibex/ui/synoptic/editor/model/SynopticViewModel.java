@@ -41,6 +41,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -57,7 +58,11 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
  * observable model, which various other classes subscribe to.
  */
 public class SynopticViewModel extends ModelObject {
-	private SynopticModel editing = Synoptic.getInstance().edit();
+	/**
+     * 
+     */
+    private static final DescriptionsProvider OPI_DESCRIPTIONS_PROVIDER = Opi.getDefault().descriptionsProvider();
+    private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
 	private Property selectedProperty;
@@ -304,6 +309,7 @@ public class SynopticViewModel extends ModelObject {
      * @param newProperty the new property
      */
 	public void updateOrAddSelectedProperty(Property newProperty) {
+	    
 		if (newProperty == null) {
 			return;
 		}
@@ -383,8 +389,8 @@ public class SynopticViewModel extends ModelObject {
      * @return the OPI description
      */
     public OpiDescription getOpi(String targetName) {
-        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
-        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        String name = OPI_DESCRIPTIONS_PROVIDER.guessOpiName(targetName);
+        OpiDescription opi = OPI_DESCRIPTIONS_PROVIDER.getDescription(name);
         return opi;
 	}
     
@@ -412,5 +418,17 @@ public class SynopticViewModel extends ModelObject {
      */
     public void refreshTreeView() {
         firePropertyChange("refreshTree", 0, 1);
+    }
+    
+    /**
+     * Gets the description of the currently selected component.
+     */
+    public String getSingleSelectedComponentDescription() {
+        try {
+            return OPI_DESCRIPTIONS_PROVIDER.getDescriptions().getOpis().get(getSingleSelectedComp().target().name()).getDescription();
+        } catch (NullPointerException e) {
+            // Caught if there are multiple components selected, no components selected, selected opi is not in list, opi doesn't have a description.
+            return "";
+        }
     }
 }
