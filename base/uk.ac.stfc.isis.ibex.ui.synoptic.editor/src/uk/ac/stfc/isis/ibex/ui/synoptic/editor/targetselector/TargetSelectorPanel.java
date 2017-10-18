@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,8 @@ public class TargetSelectorPanel extends Composite {
     private Text txtName;
     private final ComponentDetailViewModel compDetailsViewModel;
     private Text description;
+    private ComboViewer comboType;
+    private static final String[] COMPONENT_TYPES = ComponentType.componentTypeAlphaList().toArray(new String[0]);
 
     /**
      * @param parent
@@ -98,9 +101,12 @@ public class TargetSelectorPanel extends Composite {
                 if (viewModel.getSingleSelectedComp() != null) {
                     Utils.recursiveSetEnabled(TargetSelectorPanel.this, true);
                     txtName.setText(viewModel.getSingleSelectedComp().getName());
+                    comboType.getCombo().select(Arrays.asList(COMPONENT_TYPES)
+                            .indexOf(viewModel.getSingleSelectedComp().type().name()));
                 } else {
                     Utils.recursiveSetEnabled(TargetSelectorPanel.this, false);
                     txtName.setText("");
+                    comboType.getCombo().select(0);
                 }
             }
         });
@@ -136,20 +142,19 @@ public class TargetSelectorPanel extends Composite {
         lblIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         lblIcon.setText("Icon: ");
 
-        final ComboViewer cmboType = new ComboViewer(container, SWT.READ_ONLY);
-        final String[] items = ComponentType.componentTypeAlphaList().toArray(new String[0]);
+        comboType = new ComboViewer(container, SWT.READ_ONLY);
 
-        cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-        cmboType.setContentProvider(ArrayContentProvider.getInstance());
-        cmboType.getCombo().setItems(items);
+        comboType.setContentProvider(ArrayContentProvider.getInstance());
+        comboType.getCombo().setItems(COMPONENT_TYPES);
 
-        cmboType.getCombo().addSelectionListener(new SelectionListener() {
+        comboType.getCombo().addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                int selection = cmboType.getCombo().getSelectionIndex();
-                compDetailsViewModel.updateModelType(items[selection]);
+                int selection = comboType.getCombo().getSelectionIndex();
+                compDetailsViewModel.updateModelType(COMPONENT_TYPES[selection]);
             }
 
             @Override
