@@ -32,7 +32,6 @@ import java.util.TreeSet;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -95,6 +94,9 @@ public class TargetSelectorPanel extends Composite {
             }
         });
         
+        // Have to do this here otherwise the binding overrides the default value in the model.
+        Utils.recursiveSetEnabled(TargetSelectorPanel.this, viewModel.isEnabled());
+        
         bind();
     }
 
@@ -110,22 +112,16 @@ public class TargetSelectorPanel extends Composite {
 
         txtName = new Text(container, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-
         txtName.addVerifyListener(new ComponentNameVerifier());
 
         Label lblIcon = new Label(container, SWT.NONE);
         lblIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         lblIcon.setText("Icon: ");
 
-        comboType = new ComboViewer(container, SWT.READ_ONLY);
-
+        comboType = new ComboViewer(container);
         comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-
-        comboType.setContentProvider(ArrayContentProvider.getInstance());
         comboType.getCombo().setItems(viewModel.component_types_array);
-
         comboType.getCombo().addSelectionListener(new SelectionListener() {
-
             @Override
             public void widgetSelected(SelectionEvent e) {
                 compDetailsViewModel.updateModelType(viewModel.component_types_array[comboType.getCombo().getSelectionIndex()]);
@@ -169,7 +165,6 @@ public class TargetSelectorPanel extends Composite {
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         for (String key : keyset) {
-
             if (availableOpis.get(key) == null || availableOpis.get(key).isEmpty()) {
                 continue;
             }
@@ -180,26 +175,27 @@ public class TargetSelectorPanel extends Composite {
             TreeItem category = new TreeItem(tree, SWT.NONE);
             category.setText(key);
             category.setExpanded(false);
-            category.setData(null);
+            // Use this to tell whether something is a category or an item.
+            category.setData(false); 
 
             for (String target : targets) {
                 TreeItem targetTreeItem = new TreeItem(category, SWT.NONE);
                 targetTreeItem.setText(target);
+                // Use this to tell whether something is a category or an item.
+                targetTreeItem.setData(true);
             }
         }
         
-        tree.addSelectionListener(new SelectionListener() {
-            
+        tree.addSelectionListener(new SelectionListener() {         
             @Override
             public void widgetSelected(SelectionEvent e) {
-
                 TreeItem item = tree.getSelection()[0];
 
                 // Was a category not an item.
-                if (item.getText() == null) {
-                    viewModel.setOpi("");
-                } else {            
+                if ((boolean) item.getData()) {
                     viewModel.setOpi(item.getText(0));
+                } else {            
+                    viewModel.clearTarget();
                 }
             }
             
