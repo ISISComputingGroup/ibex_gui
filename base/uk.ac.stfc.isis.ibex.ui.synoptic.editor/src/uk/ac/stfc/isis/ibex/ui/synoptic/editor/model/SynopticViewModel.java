@@ -59,10 +59,8 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
  * observable model, which various other classes subscribe to.
  */
 public class SynopticViewModel extends ModelObject {
-	/**
-     * 
-     */
-    private static final DescriptionsProvider OPI_DESCRIPTIONS_PROVIDER = Opi.getDefault().descriptionsProvider();
+
+    private final DescriptionsProvider opiDescriptionsProvider;
     private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
@@ -76,10 +74,11 @@ public class SynopticViewModel extends ModelObject {
      *            The underlying xml description of the synoptic to edit.
      */
     public SynopticViewModel(SynopticDescription description) {
+        this.opiDescriptionsProvider = Opi.getDefault().descriptionsProvider();
         synoptic = description;
         synoptic.processChildComponents();
-		editing.setSynopticFromDescription(description);
-		
+        editing.setSynopticFromDescription(description);
+        
         setSelectedComponents(null);
 	}
 
@@ -390,8 +389,8 @@ public class SynopticViewModel extends ModelObject {
      * @return the OPI description
      */
     public OpiDescription getOpi(String targetName) {
-        String name = OPI_DESCRIPTIONS_PROVIDER.guessOpiName(targetName);
-        OpiDescription opi = OPI_DESCRIPTIONS_PROVIDER.getDescription(name);
+        String name = opiDescriptionsProvider.guessOpiName(targetName);
+        OpiDescription opi = opiDescriptionsProvider.getDescription(name);
         return opi;
 	}
     
@@ -428,7 +427,7 @@ public class SynopticViewModel extends ModelObject {
      */
     public String getSingleSelectedComponentDescription() {
         try {
-            return OPI_DESCRIPTIONS_PROVIDER.getDescriptions().getOpis().get(getSingleSelectedComp().target().name()).getDescription();
+            return opiDescriptionsProvider.getDescriptions().getOpis().get(getSingleSelectedComp().target().name()).getDescription();
         } catch (NullPointerException e) {
             // Caught if there are multiple components selected, no components selected, selected opi is not in list, opi doesn't have a description.
             return "";
@@ -440,6 +439,6 @@ public class SynopticViewModel extends ModelObject {
      * @return a map of lists where each index in the map is a category, and the list is the OPIs within that category
      */
     public Map<String, List<String>> getAvailableOpis() {
-        return OPI_DESCRIPTIONS_PROVIDER.getOpiCategories();
+        return opiDescriptionsProvider.getOpiCategories();
     }
 }
