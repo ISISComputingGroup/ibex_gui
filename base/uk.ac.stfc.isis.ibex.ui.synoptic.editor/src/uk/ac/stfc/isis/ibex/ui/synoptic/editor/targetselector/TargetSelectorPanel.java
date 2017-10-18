@@ -55,7 +55,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
- *
+ * The target selector panel.
  */
 public class TargetSelectorPanel extends Composite {
 
@@ -159,6 +159,7 @@ public class TargetSelectorPanel extends Composite {
         });
     }
 
+    @SuppressWarnings("checkstyle:magicnumber") // Gui method
     private void drawTargetTree() {
 
         final List<String> keyset = new ArrayList<>(new TreeSet<>(availableOpis.keySet()));
