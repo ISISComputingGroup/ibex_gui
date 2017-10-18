@@ -95,7 +95,7 @@ public class TargetSelectorPanel extends Composite {
         });
         
         // Have to do this here otherwise the binding overrides the default value in the model.
-        Utils.recursiveSetEnabled(TargetSelectorPanel.this, viewModel.isEnabled());
+        Utils.recursiveSetEnabled(this, viewModel.isEnabled());
         
         bind();
     }
@@ -120,11 +120,11 @@ public class TargetSelectorPanel extends Composite {
 
         comboType = new ComboViewer(container);
         comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        comboType.getCombo().setItems(viewModel.component_types_array);
+        comboType.getCombo().setItems(viewModel.componentTypesArray);
         comboType.getCombo().addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                compDetailsViewModel.updateModelType(viewModel.component_types_array[comboType.getCombo().getSelectionIndex()]);
+                compDetailsViewModel.updateModelType(viewModel.componentTypesArray[comboType.getCombo().getSelectionIndex()]);
             }
 
             @Override

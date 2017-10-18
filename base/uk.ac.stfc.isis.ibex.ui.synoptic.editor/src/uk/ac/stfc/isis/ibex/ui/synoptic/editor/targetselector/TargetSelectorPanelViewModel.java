@@ -45,11 +45,17 @@ public class TargetSelectorPanelViewModel extends ModelObject {
     private String description = "";
     
     private static final String NONE_OPI = "NONE";
-    private final List<String> component_types_list = ComponentType.componentTypeAlphaList();
+    private final List<String> componentTypesList = ComponentType.componentTypeAlphaList();
     
-    public final String[] component_types_array = component_types_list.toArray(new String[0]);
+    /**
+     * An array of component types for populating the drop down icon selector in the synoptic editor.
+     */
+    public final String[] componentTypesArray = componentTypesList.toArray(new String[0]);
     
-     
+    /**
+     * View model for the target selector panel.
+     * @param synopticViewModel the main synoptic view model
+     */
     public TargetSelectorPanelViewModel(final SynopticViewModel synopticViewModel){
         this.synopticViewModel = synopticViewModel;
         
@@ -59,7 +65,7 @@ public class TargetSelectorPanelViewModel extends ModelObject {
                 if (synopticViewModel.getSingleSelectedComp() != null) {
                     setEnabled(true);
                     setName(synopticViewModel.getSingleSelectedComp().getName());
-                    setIcon(component_types_list.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
+                    setIcon(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
                     setOpi(synopticViewModel.getSingleSelectedComp().target().name());
                     
                 } else {
@@ -72,20 +78,36 @@ public class TargetSelectorPanelViewModel extends ModelObject {
         });
     }
     
-    public boolean isEnabled(){
+    /**
+     * Whether the panel is enabled.
+     * @return true if enabled, false otherwise
+     */
+    public boolean isEnabled() {
         return enabled;
     }
     
-    public void setEnabled(boolean enabled){
+    /**
+     * Sets whether the panel should be enabled.
+     * @param enabled true to enable, false to disable
+     */
+    public void setEnabled(boolean enabled) {
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);
     }
     
-    public String getName(){
+    /**
+     * Gets the name of this component.
+     * @return the name of this component
+     */
+    public String getName() {
         return name;
     }
     
-    public void setName(String name){
-        if(synopticViewModel.getSingleSelectedComp() == null) {
+    /**
+     * Set the name of this component.
+     * @param name the new name
+     */
+    public void setName(String name) {
+        if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
         firePropertyChange("name", this.name, this.name = name);
@@ -93,25 +115,41 @@ public class TargetSelectorPanelViewModel extends ModelObject {
         synopticViewModel.refreshTreeView();
     }
     
-    public int getIcon(){
+    /**
+     * Gets the index of the icon within the TargetSelectorPanelViewModel.componentTypesList.
+     * @return the selection index
+     */
+    public int getIcon() {
         return icon;
     }
     
-    public void setIcon(int icon){       
+    /**
+     * Sets the index of the icon within the TargetSelectorPanelViewModel.componentTypesList.
+     * @param icon the selection index.
+     */
+    public void setIcon(int icon) { 
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
         
-        synopticViewModel.getSingleSelectedComp().setType(ComponentType.valueOf(component_types_list.get(icon)));
+        synopticViewModel.getSingleSelectedComp().setType(ComponentType.valueOf(componentTypesList.get(icon)));
         
         firePropertyChange("icon", this.icon, this.icon = icon);
         synopticViewModel.refreshTreeView();
     }
     
+    /**
+     * The selected OPI name.
+     * @return the opi name
+     */
     public String getOpi() {
         return opi;
     }
     
+    /**
+     * Sets the selected OPI by name.
+     * @param opi the selected OPI name
+     */
     public void setOpi(String opi) {
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
@@ -124,15 +162,26 @@ public class TargetSelectorPanelViewModel extends ModelObject {
         firePropertyChange("opi", this.opi, this.opi = opi);
     }
     
+    /**
+     * Gets the description of the currently selected OPI.
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
     
+    /**
+     * Sets the description of the currently selected OPI.
+     * @param description the new description
+     */
     public void setDescription(String description) {
         firePropertyChange("description", this.description, this.description = description);
     }
     
-    public void clearTarget(){
+    /**
+     * Clears the target OPI.
+     */
+    public void clearTarget() {
         setOpi(NONE_OPI);
     }
 }
