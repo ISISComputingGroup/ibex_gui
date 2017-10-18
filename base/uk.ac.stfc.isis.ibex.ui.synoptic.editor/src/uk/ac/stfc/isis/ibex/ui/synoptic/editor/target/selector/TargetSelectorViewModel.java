@@ -28,7 +28,6 @@ import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -191,6 +190,6 @@ public class TargetSelectorViewModel extends ModelObject {
      * @return a map of lists where each index in the map is a category, and the list is the OPIs within that category
      */
     public Map<String, List<String>> getAvailableOpis() {
-        return Opi.getDefault().descriptionsProvider().getOpiCategories();
+        return synopticViewModel.getAvailableOpis();
     }
 }

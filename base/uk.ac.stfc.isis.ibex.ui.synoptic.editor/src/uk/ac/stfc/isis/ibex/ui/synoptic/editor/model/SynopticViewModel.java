@@ -32,6 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -432,5 +433,13 @@ public class SynopticViewModel extends ModelObject {
             // Caught if there are multiple components selected, no components selected, selected opi is not in list, opi doesn't have a description.
             return "";
         }
+    }
+    
+    /**
+     * Gets the list of OPI names in categories.
+     * @return a map of lists where each index in the map is a category, and the list is the OPIs within that category
+     */
+    public Map<String, List<String>> getAvailableOpis() {
+        return OPI_DESCRIPTIONS_PROVIDER.getOpiCategories();
     }
 }
