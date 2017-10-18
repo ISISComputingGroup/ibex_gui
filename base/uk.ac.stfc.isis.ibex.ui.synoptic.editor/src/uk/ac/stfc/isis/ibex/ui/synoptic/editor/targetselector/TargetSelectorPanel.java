@@ -66,6 +66,7 @@ public class TargetSelectorPanel extends Composite {
     private final ComponentDetailViewModel compDetailsViewModel;
     private Text description;
     private ComboViewer comboType;
+    private Text txtSelectedTarget;
     private static final String[] COMPONENT_TYPES = ComponentType.componentTypeAlphaList().toArray(new String[0]);
 
     /**
@@ -103,10 +104,13 @@ public class TargetSelectorPanel extends Composite {
                     txtName.setText(viewModel.getSingleSelectedComp().getName());
                     comboType.getCombo().select(Arrays.asList(COMPONENT_TYPES)
                             .indexOf(viewModel.getSingleSelectedComp().type().name()));
+                    txtSelectedTarget.setText(viewModel.getSingleSelectedComp().target().name());
+                    
                 } else {
                     Utils.recursiveSetEnabled(TargetSelectorPanel.this, false);
                     txtName.setText("");
                     comboType.getCombo().select(0);
+                    txtSelectedTarget.setText("");
                 }
             }
         });
@@ -162,6 +166,13 @@ public class TargetSelectorPanel extends Composite {
                 widgetSelected(e);
             }
         });
+        
+        Label lblSelectedTarget = new Label(container, SWT.NONE);
+        lblSelectedTarget.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+        lblSelectedTarget.setText("Target OPI: ");
+
+        txtSelectedTarget = new Text(container, SWT.BORDER | SWT.READ_ONLY);
+        txtSelectedTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     }
 
     @SuppressWarnings("checkstyle:magicnumber") // Gui method
@@ -216,6 +227,7 @@ public class TargetSelectorPanel extends Composite {
                 viewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
                 
                 description.setText(((OpiDescription) item.getData()).getDescription());
+                txtSelectedTarget.setText(viewModel.getSingleSelectedComp().target().name());
             }
             
             @Override
