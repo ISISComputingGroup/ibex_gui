@@ -64,7 +64,7 @@ public class TargetSelectorPanel extends Composite {
     private final SynopticViewModel viewModel;
     private Text txtName;
     private final ComponentDetailViewModel compDetailsViewModel;
-    private Text description;
+    private Text txtDescription;
     private ComboViewer comboType;
     private Text txtSelectedTarget;
     private static final String[] COMPONENT_TYPES = ComponentType.componentTypeAlphaList().toArray(new String[0]);
@@ -219,14 +219,14 @@ public class TargetSelectorPanel extends Composite {
 
                 // Was a category not an item.
                 if (item.getData() == null) {
-                    description.setText("");
+                    txtDescription.setText("");
                     return;
                 }
 
                 viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
                 viewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
                 
-                description.setText(((OpiDescription) item.getData()).getDescription());
+                txtDescription.setText(((OpiDescription) item.getData()).getDescription());
                 txtSelectedTarget.setText(viewModel.getSingleSelectedComp().target().name());
             }
             
@@ -236,10 +236,10 @@ public class TargetSelectorPanel extends Composite {
             }
         });
         
-        description = new Text(this, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+        txtDescription = new Text(this, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData descriptionLayoutData = new GridData(SWT.FILL, SWT.BOTTOM, true, false);
         descriptionLayoutData.heightHint = 60;
-        description.setLayoutData(descriptionLayoutData);
+        txtDescription.setLayoutData(descriptionLayoutData);
         
     }
 
