@@ -34,7 +34,7 @@ public abstract class Motor extends ModelObject {
 	public abstract String name();
 	
     /**
-     * Gets the motor address
+     * Gets the motor address.
      * 
      * @return the address
      */
