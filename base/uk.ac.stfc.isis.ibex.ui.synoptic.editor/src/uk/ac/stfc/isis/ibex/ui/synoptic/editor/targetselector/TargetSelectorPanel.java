@@ -85,8 +85,7 @@ public class TargetSelectorPanel extends Composite {
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Draw the components
-        drawNameSelector();
-        drawIconSelector();
+        drawNameAndIconSelector();
         drawTargetTree();
 
         Utils.recursiveSetEnabled(this, false);
@@ -105,17 +104,17 @@ public class TargetSelectorPanel extends Composite {
         });
     }
 
-    private void drawNameSelector() {
+    private void drawNameAndIconSelector() {
 
-        Composite nameContainer = new Composite(this, SWT.NONE);
-        nameContainer.setLayout(new GridLayout(2, false));
-        nameContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        Composite container = new Composite(this, SWT.NONE);
+        container.setLayout(new GridLayout(2, false));
+        container.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-        Label lblName = new Label(nameContainer, SWT.NONE);
+        Label lblName = new Label(container, SWT.NONE);
         lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         lblName.setText("Name: ");
 
-        txtName = new Text(nameContainer, SWT.BORDER);
+        txtName = new Text(container, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         txtName.addModifyListener(new ModifyListener() {
@@ -128,18 +127,14 @@ public class TargetSelectorPanel extends Composite {
                 }
             }
         });
-    }
 
-    private void drawIconSelector() {
-        Composite iconContainer = new Composite(this, SWT.NONE);
-        iconContainer.setLayout(new GridLayout(2, false));
-        iconContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        txtName.addVerifyListener(new ComponentNameVerifier());
 
-        Label lblIcon = new Label(iconContainer, SWT.NONE);
+        Label lblIcon = new Label(container, SWT.NONE);
         lblIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         lblIcon.setText("Icon: ");
 
-        final ComboViewer cmboType = new ComboViewer(iconContainer, SWT.READ_ONLY);
+        final ComboViewer cmboType = new ComboViewer(container, SWT.READ_ONLY);
         final String[] items = ComponentType.componentTypeAlphaList().toArray(new String[0]);
 
         cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -153,7 +148,6 @@ public class TargetSelectorPanel extends Composite {
             public void widgetSelected(SelectionEvent e) {
                 int selection = cmboType.getCombo().getSelectionIndex();
                 compDetailsViewModel.updateModelType(items[selection]);
-
             }
 
             @Override

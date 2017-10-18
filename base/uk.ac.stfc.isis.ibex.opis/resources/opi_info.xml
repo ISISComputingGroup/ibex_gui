@@ -6,7 +6,6 @@
 			<value>
 				<categories>
 					<category>Monitors</category>
-					<category>Motion control</category>
 				</categories>
 				<type>ANALYSER</type>
 				<path>analyser.opi</path>
@@ -82,7 +81,6 @@
             <value>	
 				<categories>
 					<category>Monitors</category>
-					<category>Motion control</category>
 				</categories>
                 <type>MONITOR</type>
                 <path>double_monitor.opi</path>		
