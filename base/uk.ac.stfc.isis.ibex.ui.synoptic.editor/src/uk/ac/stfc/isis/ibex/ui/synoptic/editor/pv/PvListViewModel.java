@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
@@ -45,6 +46,7 @@ public class PvListViewModel extends ModelObject {
     private boolean deleteEnabled;
     private boolean upEnabled;
     private boolean downEnabled;
+    private boolean addEnabled;
 
     /**
      * The constructor for the view model of the pv list view.
@@ -70,9 +72,16 @@ public class PvListViewModel extends ModelObject {
      *            The component to change to.
      */
     public void changeComponent(ComponentDescription newComp) {
-        selectedComp = newComp;
+        firePropertyChange("selectedComponent", selectedComp, selectedComp = newComp);
         updatePvList();
         setSelectedPV(null);
+
+        if (newComp == null) {
+            setAllButtonsEnabled(false);
+        } else {
+            setAddEnabled(true);
+            setSelectedPV(null);
+        }
     }
 
     /**
@@ -114,6 +123,8 @@ public class PvListViewModel extends ModelObject {
             // We don't need to send the list as the ListViewer just needs to be
             // refreshed
             firePropertyChange("pvListChanged", 0, pvList = selectedComp.pvs());
+        } else {
+            firePropertyChange("pvListChanged", 0, pvList = Collections.<PV> emptyList());
         }
     }
 
@@ -157,6 +168,16 @@ public class PvListViewModel extends ModelObject {
         }
 
         firePropertyChange("pvSelection", selectedPV, selectedPV = selected);
+    }
+
+    /**
+     * 
+     */
+    private void setAllButtonsEnabled(boolean enabled) {
+        setAddEnabled(enabled);
+        setDeleteEnabled(enabled);
+        setUpEnabled(enabled);
+        setDeleteEnabled(enabled);
     }
 
     /**
@@ -229,6 +250,21 @@ public class PvListViewModel extends ModelObject {
      */
     public void setDownEnabled(boolean enabled) {
         firePropertyChange("downEnabled", downEnabled, downEnabled = enabled);
+    }
+
+    /**
+     * @return true if the down PV button is enabled.
+     */
+    public boolean getAddEnabled() {
+        return addEnabled;
+    }
+
+    /**
+     * @param enabled
+     *            true to enable the down PV button
+     */
+    public void setAddEnabled(boolean enabled) {
+        firePropertyChange("addEnabled", addEnabled, addEnabled = enabled);
     }
 
     /**

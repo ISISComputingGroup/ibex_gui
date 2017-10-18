@@ -34,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
@@ -117,8 +118,6 @@ public class EditorPanel extends Composite {
 
         new TargetPropertiesView(macrosComposite, this.synopticViewModel);
 
-        PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
-
         pvComposite = new Composite(detailBarComposite, SWT.BORDER);
         pvComposite.setLayout(new GridLayout(1, false));
         pvComposite.setLayoutData(pvGridData);
@@ -127,8 +126,9 @@ public class EditorPanel extends Composite {
         lblPvTitle.setFont(titleFont);
         lblPvTitle.setText("PV Details");
 
-        PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
-        new PvDetailView(pvComposite, pvDetailViewModel);
+        PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
+        new PVList(pvComposite, pvListViewModel);
+        new PvDetailView(pvComposite, new PvDetailViewModel(pvListViewModel));
 
     }
 }
