@@ -72,12 +72,11 @@ public class TargetSelectorPanel extends Composite {
      * @param availableOpis
      *            the available opi groups
      */
-    public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel synopticViewModel,
-            Map<String, List<String>> availableOpis) {
+    public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel synopticViewModel) {
         super(parent, style);
 
-        this.availableOpis = availableOpis;
         this.viewModel = new TargetSelectorViewModel(synopticViewModel);
+        this.availableOpis = viewModel.getAvailableOpis();
         this.compDetailsViewModel = new ComponentDetailViewModel(synopticViewModel);
 
         setLayout(new GridLayout(1, false));

@@ -24,9 +24,11 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -182,5 +184,13 @@ public class TargetSelectorViewModel extends ModelObject {
      */
     public void clearTarget() {
         setOpi(NONE_OPI);
+    }
+
+    /**
+     * Gets the list of OPI names in categories.
+     * @return a map of lists where each index in the map is a category, and the list is the OPIs within that category
+     */
+    public Map<String, List<String>> getAvailableOpis() {
+        return Opi.getDefault().descriptionsProvider().getOpiCategories();
     }
 }
