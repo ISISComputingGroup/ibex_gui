@@ -100,6 +100,7 @@ public class TargetSelectorPanel extends Composite {
         bind();
     }
 
+    @SuppressWarnings("checkstyle:magicnumber") // Gui method   
     private void drawNameAndIconSelector() {
 
         Composite container = new Composite(this, SWT.NONE);

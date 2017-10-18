@@ -100,7 +100,7 @@ public class EditorPanel extends Composite {
 
         Label lblTargetSelectorTree = new Label(targetSelectorComposite, SWT.NONE);
         lblTargetSelectorTree.setFont(titleFont);
-        lblTargetSelectorTree.setText("Target selection");
+        lblTargetSelectorTree.setText("Target Selection");
 
         new TargetSelectorPanel(targetSelectorComposite, SWT.NONE, synopticViewModel, opis);
 
@@ -114,7 +114,7 @@ public class EditorPanel extends Composite {
 
         Label lblTargetTitle = new Label(macrosComposite, SWT.NONE);
         lblTargetTitle.setFont(titleFont);
-        lblTargetTitle.setText("Component macros");
+        lblTargetTitle.setText("Component Macros");
 
         new TargetPropertiesView(macrosComposite, this.synopticViewModel);
 
