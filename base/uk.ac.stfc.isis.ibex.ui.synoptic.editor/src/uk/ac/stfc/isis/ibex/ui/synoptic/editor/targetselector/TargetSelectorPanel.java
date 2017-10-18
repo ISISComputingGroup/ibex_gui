@@ -24,36 +24,31 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
-import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * The target selector panel.
@@ -61,31 +56,30 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 public class TargetSelectorPanel extends Composite {
 
     private Map<String, List<String>> availableOpis;
-    private final SynopticViewModel viewModel;
+    private final TargetSelectorPanelViewModel viewModel;
     private Text txtName;
     private final ComponentDetailViewModel compDetailsViewModel;
     private Text txtDescription;
     private ComboViewer comboType;
     private Text txtSelectedTarget;
-    private static final String[] COMPONENT_TYPES = ComponentType.componentTypeAlphaList().toArray(new String[0]);
 
     /**
      * @param parent
      *            the parent composite
      * @param style
      *            the style of this composite
-     * @param viewModel
+     * @param synopticViewModel
      *            the synoptic view model
      * @param availableOpis
      *            the available opi groups
      */
-    public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel viewModel,
+    public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel synopticViewModel,
             Map<String, List<String>> availableOpis) {
         super(parent, style);
 
         this.availableOpis = availableOpis;
-        this.viewModel = viewModel;
-        this.compDetailsViewModel = new ComponentDetailViewModel(viewModel);
+        this.viewModel = new TargetSelectorPanelViewModel(synopticViewModel);
+        this.compDetailsViewModel = new ComponentDetailViewModel(synopticViewModel);
 
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -94,32 +88,20 @@ public class TargetSelectorPanel extends Composite {
         drawNameAndIconSelector();
         drawTargetTree();
 
-        Utils.recursiveSetEnabled(this, false);
-
-        viewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (viewModel.getSingleSelectedComp() != null) {
-                    Utils.recursiveSetEnabled(TargetSelectorPanel.this, true);
-                    txtName.setText(viewModel.getSingleSelectedComp().getName());
-                    comboType.getCombo().select(Arrays.asList(COMPONENT_TYPES)
-                            .indexOf(viewModel.getSingleSelectedComp().type().name()));
-                    txtSelectedTarget.setText(viewModel.getSingleSelectedComp().target().name());
-                    
-                } else {
-                    Utils.recursiveSetEnabled(TargetSelectorPanel.this, false);
-                    txtName.setText("");
-                    comboType.getCombo().select(0);
-                    txtSelectedTarget.setText("");
-                }
+                Utils.recursiveSetEnabled(TargetSelectorPanel.this, viewModel.isEnabled()); 
             }
         });
+        
+        bind();
     }
 
     private void drawNameAndIconSelector() {
 
         Composite container = new Composite(this, SWT.NONE);
-        container.setLayout(new GridLayout(2, false));
+        container.setLayout(new GridLayout(3, false));
         container.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
         Label lblName = new Label(container, SWT.NONE);
@@ -127,18 +109,7 @@ public class TargetSelectorPanel extends Composite {
         lblName.setText("Name: ");
 
         txtName = new Text(container, SWT.BORDER);
-        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-        txtName.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent e) {
-                ComponentDescription comp = viewModel.getSingleSelectedComp();
-                if (comp != null) {
-                    comp.setName(txtName.getText());
-                    viewModel.refreshTreeView();
-                }
-            }
-        });
+        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         txtName.addVerifyListener(new ComponentNameVerifier());
 
@@ -148,17 +119,16 @@ public class TargetSelectorPanel extends Composite {
 
         comboType = new ComboViewer(container, SWT.READ_ONLY);
 
-        comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         comboType.setContentProvider(ArrayContentProvider.getInstance());
-        comboType.getCombo().setItems(COMPONENT_TYPES);
+        comboType.getCombo().setItems(viewModel.component_types_array);
 
         comboType.getCombo().addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                int selection = comboType.getCombo().getSelectionIndex();
-                compDetailsViewModel.updateModelType(COMPONENT_TYPES[selection]);
+                compDetailsViewModel.updateModelType(viewModel.component_types_array[comboType.getCombo().getSelectionIndex()]);
             }
 
             @Override
@@ -173,6 +143,20 @@ public class TargetSelectorPanel extends Composite {
 
         txtSelectedTarget = new Text(container, SWT.BORDER | SWT.READ_ONLY);
         txtSelectedTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Button buttonClearTarget = new Button(container, SWT.NONE);
+        buttonClearTarget.setText("Clear");
+        buttonClearTarget.addSelectionListener(new SelectionListener() {         
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.clearTarget();
+            }
+            
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
     }
 
     @SuppressWarnings("checkstyle:magicnumber") // Gui method
@@ -201,7 +185,6 @@ public class TargetSelectorPanel extends Composite {
             for (String target : targets) {
                 TreeItem targetTreeItem = new TreeItem(category, SWT.NONE);
                 targetTreeItem.setText(target);
-                targetTreeItem.setData(viewModel.getOpi(target));
             }
         }
         
@@ -209,25 +192,15 @@ public class TargetSelectorPanel extends Composite {
             
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // Correct things aren't selected or too many things are
-                // selected.
-                if (tree.getSelectionCount() != 1 || viewModel.getSingleSelectedComp() == null) {
-                    return;
-                }
 
                 TreeItem item = tree.getSelection()[0];
 
                 // Was a category not an item.
-                if (item.getData() == null) {
-                    txtDescription.setText("");
-                    return;
+                if (item.getText() == null) {
+                    viewModel.setOpi("");
+                } else {            
+                    viewModel.setOpi(item.getText(0));
                 }
-
-                viewModel.getSingleSelectedComp().setTarget(new TargetDescription(item.getText(0), TargetType.OPI));
-                viewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
-                
-                txtDescription.setText(((OpiDescription) item.getData()).getDescription());
-                txtSelectedTarget.setText(viewModel.getSingleSelectedComp().target().name());
             }
             
             @Override
@@ -241,6 +214,18 @@ public class TargetSelectorPanel extends Composite {
         descriptionLayoutData.heightHint = 60;
         txtDescription.setLayoutData(descriptionLayoutData);
         
+    }
+    
+    private void bind() {
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
+                BeanProperties.value("name").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text().observe(txtSelectedTarget),
+                BeanProperties.value("opi").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text().observe(txtDescription),
+                BeanProperties.value("description").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboType.getCombo()),
+                BeanProperties.value("icon").observe(viewModel));
     }
 
 }
