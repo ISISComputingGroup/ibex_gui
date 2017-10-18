@@ -38,9 +38,15 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties.TargetPropertiesView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.TargetSelectorPanel;
 
+/**
+ * Main panel for the synoptic editor.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditorPanel extends Composite {
 
+    /**
+     * The ID of this class.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.EditorView";
 	
 	private static Font titleFont = SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD);
@@ -53,6 +59,12 @@ public class EditorPanel extends Composite {
 	private Composite macrosComposite;
     private Composite targetSelectorComposite;
 	
+    /**
+     * The synoptic editor panel.
+     * @param parent the parent
+     * @param style the style
+     * @param synopticViewModel the synoptic view model
+     */
     public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel) {
 		super(parent, style);
 
