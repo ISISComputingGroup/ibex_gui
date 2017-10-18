@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 /**
  *
  */
-public class TargetSelectorPanelViewModel extends ModelObject {
+public class TargetSelectorViewModel extends ModelObject {
     
     private final SynopticViewModel synopticViewModel;
     private boolean enabled = false;
@@ -56,7 +56,7 @@ public class TargetSelectorPanelViewModel extends ModelObject {
      * View model for the target selector panel.
      * @param synopticViewModel the main synoptic view model
      */
-    public TargetSelectorPanelViewModel(final SynopticViewModel synopticViewModel) {
+    public TargetSelectorViewModel(final SynopticViewModel synopticViewModel) {
         this.synopticViewModel = synopticViewModel;
         
         synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
@@ -67,12 +67,11 @@ public class TargetSelectorPanelViewModel extends ModelObject {
                     setName(synopticViewModel.getSingleSelectedComp().getName());
                     setIcon(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
                     setOpi(synopticViewModel.getSingleSelectedComp().target().name());
-                    
                 } else {
-                    setEnabled(false);
                     setName("");
                     setIcon(0);
                     setOpi(NONE_OPI);
+                    setEnabled(false);
                 }
             }
         });

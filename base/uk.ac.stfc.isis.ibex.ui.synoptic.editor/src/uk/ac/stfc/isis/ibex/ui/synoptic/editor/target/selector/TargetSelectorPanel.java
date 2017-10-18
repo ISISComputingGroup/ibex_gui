@@ -55,7 +55,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 public class TargetSelectorPanel extends Composite {
 
     private Map<String, List<String>> availableOpis;
-    private final TargetSelectorPanelViewModel viewModel;
+    private final TargetSelectorViewModel viewModel;
     private Text txtName;
     private final ComponentDetailViewModel compDetailsViewModel;
     private Text txtDescription;
@@ -77,7 +77,7 @@ public class TargetSelectorPanel extends Composite {
         super(parent, style);
 
         this.availableOpis = availableOpis;
-        this.viewModel = new TargetSelectorPanelViewModel(synopticViewModel);
+        this.viewModel = new TargetSelectorViewModel(synopticViewModel);
         this.compDetailsViewModel = new ComponentDetailViewModel(synopticViewModel);
 
         setLayout(new GridLayout(1, false));
