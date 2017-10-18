@@ -69,8 +69,6 @@ public class TargetSelectorPanel extends Composite {
      *            the style of this composite
      * @param synopticViewModel
      *            the synoptic view model
-     * @param availableOpis
-     *            the available opi groups
      */
     public TargetSelectorPanel(Composite parent, int style, final SynopticViewModel synopticViewModel) {
         super(parent, style);
