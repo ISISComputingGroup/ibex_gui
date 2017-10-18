@@ -19,4 +19,4 @@
 /**
  * Provides the target selector for the synoptic editing dialog.
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -56,7 +56,7 @@ public class TargetSelectorPanelViewModel extends ModelObject {
      * View model for the target selector panel.
      * @param synopticViewModel the main synoptic view model
      */
-    public TargetSelectorPanelViewModel(final SynopticViewModel synopticViewModel){
+    public TargetSelectorPanelViewModel(final SynopticViewModel synopticViewModel) {
         this.synopticViewModel = synopticViewModel;
         
         synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {

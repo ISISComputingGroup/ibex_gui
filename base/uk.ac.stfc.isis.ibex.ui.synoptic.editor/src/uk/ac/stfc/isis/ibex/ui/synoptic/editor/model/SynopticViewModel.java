@@ -422,6 +422,8 @@ public class SynopticViewModel extends ModelObject {
     
     /**
      * Gets the description of the currently selected component.
+     * 
+     * @return the description, or an empty string if not available
      */
     public String getSingleSelectedComponentDescription() {
         try {

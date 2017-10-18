@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.targetselector;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
