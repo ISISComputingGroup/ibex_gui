@@ -36,11 +36,11 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 public class TargetSelectorViewModel extends ModelObject {
     
     private final SynopticViewModel synopticViewModel;
-    private boolean enabled = false;
-    private String name = "";
-    private String opi = "";
-    private int icon = 0;
-    private String description = "";
+    private boolean enabled;
+    private String name;
+    private String opi;
+    private int icon;
+    private String description;
     
     private static final String NONE_OPI = "NONE";
     private final List<String> componentTypesList = ComponentType.componentTypeAlphaList();
