@@ -46,7 +46,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import uk.ac.stfc.isis.ibex.ui.Utils;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -57,7 +56,6 @@ public class TargetSelectorPanel extends Composite {
     private Map<String, List<String>> availableOpis;
     private final TargetSelectorViewModel viewModel;
     private Text txtName;
-    private final ComponentDetailViewModel compDetailsViewModel;
     private Text txtDescription;
     private ComboViewer comboType;
     private Text txtSelectedTarget;
@@ -75,7 +73,6 @@ public class TargetSelectorPanel extends Composite {
 
         this.viewModel = new TargetSelectorViewModel(synopticViewModel);
         this.availableOpis = viewModel.getAvailableOpis();
-        this.compDetailsViewModel = new ComponentDetailViewModel(synopticViewModel);
 
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -119,17 +116,6 @@ public class TargetSelectorPanel extends Composite {
         comboType = new ComboViewer(container);
         comboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         comboType.getCombo().setItems(viewModel.componentTypesArray);
-        comboType.getCombo().addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                compDetailsViewModel.updateModelType(viewModel.componentTypesArray[comboType.getCombo().getSelectionIndex()]);
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-        });
         
         Label lblSelectedTarget = new Label(container, SWT.NONE);
         lblSelectedTarget.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
