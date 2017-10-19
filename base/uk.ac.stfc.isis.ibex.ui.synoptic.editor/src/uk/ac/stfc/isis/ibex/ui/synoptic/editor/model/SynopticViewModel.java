@@ -427,7 +427,10 @@ public class SynopticViewModel extends ModelObject {
      */
     public String getSingleSelectedComponentDescription() {
         try {
-            return opiDescriptionsProvider.getDescriptions().getOpis().get(getSingleSelectedComp().target().name()).getDescription();
+            Map<String, OpiDescription> opis = opiDescriptionsProvider.getDescriptions().getOpis();
+            String targetName = getSingleSelectedComp().target().name();
+            OpiDescription target = opis.get(targetName);
+            return target.getDescription();
         } catch (NullPointerException e) {
             // Caught if there are multiple components selected, no components selected, selected opi is not in list, opi doesn't have a description.
             return "";
