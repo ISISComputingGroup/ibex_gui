@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.engineer.EngineerView"
+            id="uk.ac.stfc.isis.ibex.ui.engineer.engineerview"
+            name="Engineering View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.engineer.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.engineer.perspective"
+            name="Engineering View">
+      </perspective>
+   </extension>
+      <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.engineer.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.engineer.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.engineer.engineerview"
+               minimized="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="uk.ac.stfc.isis.ibex.ui.engineer.EngineerUI">
+      </startup>
+   </extension>
+</plugin>

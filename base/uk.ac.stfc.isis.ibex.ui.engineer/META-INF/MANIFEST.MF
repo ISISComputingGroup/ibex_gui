@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Engineer
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.engineer;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.engineer.EngineerUI
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.perspectives,
+ org.eclipse.swt
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: uk.ac.stfc.isis.ibex.ui.engineer
