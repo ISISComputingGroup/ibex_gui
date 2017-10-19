@@ -75,13 +75,14 @@ public class EditorPanel extends Composite {
 		GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData detailBarData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData targetDetailsLayoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		GridData targetGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData macrosGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData pvGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         GridData targetSelectorGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		treeGridData.widthHint = 300;
 		detailBarData.widthHint = 300;
 		targetDetailsLayoutData.widthHint = 300;
         targetSelectorGridData.widthHint = 300;
+        macrosGridData.heightHint = 320;
 		
 		GridLayout detailBarLayout = new GridLayout(1, false);
 		detailBarLayout.marginHeight = 0;
@@ -118,7 +119,7 @@ public class EditorPanel extends Composite {
 
         macrosComposite = new Composite(detailBarComposite, SWT.BORDER);
         macrosComposite.setLayout(new GridLayout(1, false));
-        macrosComposite.setLayoutData(targetGridData);
+        macrosComposite.setLayoutData(macrosGridData);
 
         Label lblTargetTitle = new Label(macrosComposite, SWT.NONE);
         lblTargetTitle.setFont(titleFont);
