@@ -19,10 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
@@ -50,6 +48,12 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     
     private final List<String> facilityPvList;
 
+    /**
+     * Constructor.
+     * 
+     * @param editingBlock the block to edit
+     * @param config the configuration the block belongs to
+     */
     public BlockDetailsViewModel(final EditableBlock editingBlock, EditableConfiguration config) {
     	this.editingBlock = editingBlock;
     	this.config = config;
@@ -65,49 +69,92 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
 
 	}
 
+    /**
+     * Enable or disable the block.
+     * 
+     * @param enabled true for enabled
+     */
 	public void setEnabled(boolean enabled) {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 	}
 	
+    /**
+     * @return true if the block is enabled
+     */
 	public boolean getEnabled() {
 		return enabled;
 	}
 	
+    /**
+     * @return the block's name
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * Set the block's name.
+     * 
+     * @param name the new name
+     */
 	public void setName(String name) {
 		validate(name, pvAddress);
 		firePropertyChange("name", this.name, this.name = name);
 	}
 
+    /**
+     * @return the PV address
+     */
 	public String getPvAddress() {
 		return pvAddress;
 	}
 
+    /**
+     * Set the block's PV address.
+     * 
+     * @param pvAddress the new address
+     */
 	public void setPvAddress(String pvAddress) {
 		validate(name, pvAddress);
         checkFacilityPv(pvAddress);
 		firePropertyChange("pvAddress", this.pvAddress, this.pvAddress = pvAddress);
 	}
 
+    /**
+     * @return true if the block is visible
+     */
 	public boolean isVisible() {
 		return visible;
 	}
 
+    /**
+     * Set whether the block is visible.
+     * 
+     * @param visible true for visible
+     */
 	public void setVisible(boolean visible) {
 		firePropertyChange("visible", this.visible, this.visible = visible);
 	}
 
+    /**
+     * @return true if the block is local
+     */
 	public boolean isLocal() {
 		return local;
 	}
 
+    /**
+     * Set whether the block is local or not.
+     * 
+     * @param local true for local
+     */
 	public void setLocal(boolean local) {
 		firePropertyChange("local", this.local, this.local = local);
 	}
     
+    /**
+     * Open the PV dialog window.
+     */
     public void openPvDialog() {
 		PvSelectorDialog pvDialog = new PvSelectorDialog(null, config, pvAddress);	
 		if (pvDialog.open() == Window.OK) {
@@ -115,6 +162,9 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
 		}
     }
 	
+    /**
+     * Update the underlying block with the new values. *
+     */
     public void updateBlock() {
     	editingBlock.setName(name);
     	editingBlock.setPV(pvAddress);
