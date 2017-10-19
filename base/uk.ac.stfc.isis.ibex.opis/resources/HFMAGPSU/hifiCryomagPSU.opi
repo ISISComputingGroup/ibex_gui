@@ -24,7 +24,7 @@
   </background_color>
   <width>800</width>
   <x>-1</x>
-  <name>$(PV_NAME)_01:LIMIT:SP</name>
+  <name>$(PV_NAME)_01:LOGMESSAGE</name>
   <grid_space>6</grid_space>
   <show_ruler>false</show_ruler>
   <y>-1</y>
@@ -753,7 +753,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:PAUSE:SP</pv_name>
+          <pv_name>$(PV_ROOT)_01:SYSTEMSTABLE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1327,57 +1327,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-58edc187:15ee714b666:-5e67</wuid>
-          <pv_value />
-          <text>Save Table to File</text>
-          <scripts />
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <height>40</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <image></image>
-          <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:RAMPTABLEDIRECTORY</pv_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Button</widget_type>
-          <width>110</width>
-          <x>474</x>
-          <name>Button</name>
-          <y>216</y>
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <actions hook="false" hook_all="true">
-            <action type="EXECUTE_PYTHONSCRIPT">
-              <path>../Common Scripts/WriteRampTableToFile.py</path>
-              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-]]></scriptText>
-              <embedded>false</embedded>
-              <description></description>
-            </action>
-          </actions>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-          </font>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-          <toggle_button>false</toggle_button>
-          <border_style>0</border_style>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <push_action_index>0</push_action_index>
-          <rules />
-          <enabled>true</enabled>
           <wuid>6b1c2648:15ef0c4a7c1:-680b</wuid>
           <pv_value />
-          <text>Reset Table Values</text>
+          <text>Reload Table File</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>40</height>
@@ -1389,7 +1341,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT)_01:WRITEFILE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1405,7 +1357,12 @@ $(pv_value)</tooltip>
             <action type="EXECUTE_PYTHONSCRIPT">
               <path>../Common Scripts/WriteRampTableValues.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-]]></scriptText>
+
+from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV()
+
+pv.setValue(1)]]></scriptText>
               <embedded>false</embedded>
               <description></description>
             </action>
@@ -1598,6 +1555,98 @@ if row > 1:
 ]]></scriptText>
               <embedded>true</embedded>
               <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules>
+            <rule name="Enabled if system is paused" prop_id="enabled" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>true</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)_01:WRITEFILE</pv>
+              <pv trig="false"></pv>
+            </rule>
+          </rules>
+          <enabled>true</enabled>
+          <wuid>-69b119e8:15f0032a487:-673c</wuid>
+          <pv_value />
+          <text>Save Table to File</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>40</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT)_01:WRITEFILE</pv_name>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>110</width>
+          <x>474</x>
+          <name>Button_1</name>
+          <y>216</y>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="true">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path></path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+rates = display.getWidget("ramp_table_rates").getPV()
+rates_values = PVUtil.getDoubleArray(rates)
+
+targets = display.getWidget("ramp_table_targets").getPV()
+targets_values = PVUtil.getDoubleArray(targets)
+
+table = display.getWidget("ramp_table").getTable()
+rows = table.getRowCount()
+
+for index in range(0, rows):
+	
+	# If table rows contain values that aren't zero
+	if (float(table.getCellText(index,1)) > 0) and (float(table.getCellText(index,3)) > 0):
+		# Set new array values
+		targets_values[index] = float(table.getCellText(index, 1))
+		rates_values[index] = float(table.getCellText(index, 3))		
+
+# Set new Values to PV
+targets.setValue(targets_values)
+rates.setValue(rates_values)]]></scriptText>
+              <embedded>true</embedded>
+              <description>Update rate/target PVs with new table values</description>
+            </action>
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path></path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV()
+
+pv.setValue(1)]]></scriptText>
+              <embedded>true</embedded>
+              <description>Trigger file write PV (ramp_table_write_trigger)</description>
             </action>
           </actions>
           <font>
@@ -2887,7 +2936,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <pv_value />
         <auto_size>false</auto_size>
-        <text>######</text>
+        <text>d</text>
         <rotation_angle>0.0</rotation_angle>
         <scripts>
           <path pathString="../Common Scripts/FormatWaveformChars.py" checkConnect="true" sfe="false" seoe="false">
@@ -2984,6 +3033,70 @@ $(pv_value)</tooltip>
           <fontdata fontName="Consolas" height="10" style="0" />
         </font>
       </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0 == 0">
+            <value>true</value>
+          </exp>
+          <exp bool_exp="pv0 == 1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-69b119e8:15f0032a487:-5eb8</wuid>
+      <pv_value />
+      <text>WRITE LOG</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>37</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)_01:LOGMESSAGE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>133</width>
+      <x>180</x>
+      <name>pause_ramp</name>
+      <y>546</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV()
+
+pv.setValue("new log message!")
+
+
+]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolButton" version="1.0">
@@ -3289,7 +3402,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>false</visible>
-    <pv_name>$(PV_ROOT)_01:RAMPTABLERATES.VAL</pv_name>
+    <pv_name>$(PV_ROOT)_01:RAMPTABLERATES</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
