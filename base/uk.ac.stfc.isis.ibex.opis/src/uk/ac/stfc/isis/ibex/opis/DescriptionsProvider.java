@@ -45,10 +45,11 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 public class DescriptionsProvider extends Provider {
 	
 	private static final String FILENAME = "opi_info.xml";
-    private static final String UNKNOWN_CATEGORY_NAME = "Other";
+    private static final String CATEGORY_UNKNOWN = "Uncategorised devices";
+    private static final String CATEGORY_ALL = "All devices";
 	
 	private final Descriptions descriptions;
-	
+    	
 	/**
 	 * Provides information from opi_info.xml.
 	 */
@@ -165,33 +166,44 @@ public class DescriptionsProvider extends Provider {
     public Map<String, List<String>> getOpiCategories() {
         Map<String, List<String>> map = new HashMap<>();
 
-        // Initialize the "unknown" category
-        map.put(UNKNOWN_CATEGORY_NAME, new ArrayList<String>());
-
         for (String opiName : getOpiList()) {
+            
+            addOpiToMap(map, CATEGORY_ALL, opiName);
+            
             OpiDescription desc = getDescription(opiName);
 
             if (desc.getCategories() == null || desc.getCategories().isEmpty()) {
                 // If it has no category then put it in the unknown category
-                map.get(UNKNOWN_CATEGORY_NAME).add(opiName);
+                addOpiToMap(map, CATEGORY_UNKNOWN, opiName);
                 continue;
             }
 
             for (String category : desc.getCategories()) {
-                // Iterate over all categories that this OPI belongs to
-                if (map.get(category) == null) {
-                    // If the category doesn't exist yet create it
-                    ArrayList<String> list = new ArrayList<>();
-                    list.add(opiName);
-                    map.put(category, list);
-                } else {
-                    // The category already exists, add this opi to it.
-                    map.get(category).add(opiName);
-                }
+                addOpiToMap(map, category, opiName);
             }
         }
 
         return map;
+    }
+    
+    /**
+     * Adds an OPI name-category pair to a map. If the category doesn't yet exist it is created, 
+     * if the category does exist then the opi is appended to that category.
+     * 
+     * @param map the map to add to
+     * @param category the category of this opi
+     * @param name the name of this opi
+     */
+    private void addOpiToMap(Map<String, List<String>> map, String category, String name) {
+        if (map.get(category) == null) {
+            // If the category doesn't exist yet create it
+            ArrayList<String> list = new ArrayList<>();
+            list.add(name);
+            map.put(category, list);
+        } else {
+            // The category already exists, add this opi to it.
+            map.get(category).add(name);
+        }
     }
 	
 }
