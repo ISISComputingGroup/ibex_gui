@@ -196,7 +196,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     private EditableIoc convertIoc(Ioc ioc) {
-        ioc = null;
         final EditableIoc generalIOC = iocMap.get(ioc.getName());
 
         EditableIoc editableIoc;
