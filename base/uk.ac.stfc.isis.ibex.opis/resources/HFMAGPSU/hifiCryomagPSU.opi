@@ -1341,7 +1341,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:WRITEFILE</pv_name>
+          <pv_name>$(PV_ROOT)_01:READFILE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -1353,9 +1353,9 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
-          <actions hook="false" hook_all="false">
+          <actions hook="false" hook_all="true">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path>../Common Scripts/WriteRampTableValues.py</path>
+              <path></path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 from org.csstudio.opibuilder.scriptUtil import PVUtil
@@ -1363,6 +1363,13 @@ from org.csstudio.opibuilder.scriptUtil import PVUtil
 pv = widget.getPV()
 
 pv.setValue(1)]]></scriptText>
+              <embedded>true</embedded>
+              <description>Trigger read_file PV</description>
+            </action>
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>../Common Scripts/WriteRampTableValues.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
               <embedded>false</embedded>
               <description></description>
             </action>
@@ -1568,20 +1575,9 @@ if row > 1:
           <tooltip>$(pv_name)
 $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
-          <rules>
-            <rule name="Enabled if system is paused" prop_id="enabled" out_exp="false">
-              <exp bool_exp="pv0 == 0">
-                <value>true</value>
-              </exp>
-              <exp bool_exp="pv0 == 1">
-                <value>true</value>
-              </exp>
-              <pv trig="true">$(PV_ROOT)_01:WRITEFILE</pv>
-              <pv trig="false"></pv>
-            </rule>
-          </rules>
+          <rules />
           <enabled>true</enabled>
-          <wuid>-69b119e8:15f0032a487:-673c</wuid>
+          <wuid>2ca4d508:15f2f393986:-65e5</wuid>
           <pv_value />
           <text>Save Table to File</text>
           <scripts />
@@ -1602,22 +1598,22 @@ $(pv_value)</tooltip>
           <widget_type>Button</widget_type>
           <width>110</width>
           <x>474</x>
-          <name>Button_1</name>
+          <name>Button</name>
           <y>216</y>
           <foreground_color>
             <color red="0" green="0" blue="0" />
           </foreground_color>
           <actions hook="false" hook_all="true">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>ReadTableValuesToPV.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 rates = display.getWidget("ramp_table_rates").getPV()
-rates_values = PVUtil.getDoubleArray(rates)
-
 targets = display.getWidget("ramp_table_targets").getPV()
-targets_values = PVUtil.getDoubleArray(targets)
+
+rates_values = [0,0,0,0,0,0,0,0,0,0]
+targets_values = [0,0,0,0,0,0,0,0,0,0]
 
 table = display.getWidget("ramp_table").getTable()
 rows = table.getRowCount()
@@ -1627,14 +1623,16 @@ for index in range(0, rows):
 	# If table rows contain values that aren't zero
 	if (float(table.getCellText(index,1)) > 0) and (float(table.getCellText(index,3)) > 0):
 		# Set new array values
-		targets_values[index] = float(table.getCellText(index, 1))
-		rates_values[index] = float(table.getCellText(index, 3))		
+		targets_values[index] = (float(table.getCellText(index, 1))
+		rates_values[index] = (float(table.getCellText(index, 3))	
+
 
 # Set new Values to PV
 targets.setValue(targets_values)
-rates.setValue(rates_values)]]></scriptText>
-              <embedded>true</embedded>
-              <description>Update rate/target PVs with new table values</description>
+rates.setValue(rates_values)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
             </action>
             <action type="EXECUTE_PYTHONSCRIPT">
               <path></path>
@@ -1646,7 +1644,7 @@ pv = widget.getPV()
 
 pv.setValue(1)]]></scriptText>
               <embedded>true</embedded>
-              <description>Trigger file write PV (ramp_table_write_trigger)</description>
+              <description></description>
             </action>
           </actions>
           <font>
@@ -3402,7 +3400,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>false</visible>
-    <pv_name>$(PV_ROOT)_01:RAMPTABLERATES</pv_name>
+    <pv_name>$(PV_ROOT)_01:RAMPTABLERATES.VAL</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -3426,6 +3424,98 @@ $(pv_value)</tooltip>
       <color red="0" green="0" blue="0" />
     </foreground_color>
     <minimum>-1.7976931348623157E308</minimum>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules>
+      <rule name="Enabled if system is paused" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="pv0 == 1">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)_01:WRITEFILE</pv>
+        <pv trig="false"></pv>
+      </rule>
+    </rules>
+    <enabled>true</enabled>
+    <wuid>-69b119e8:15f0032a487:-673c</wuid>
+    <pv_value />
+    <text>Save Table to File</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>40</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT)_01:WRITEFILE</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>110</width>
+    <x>864</x>
+    <name>Button_1</name>
+    <y>228</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path></path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+rates = display.getWidget("ramp_table_rates").getPV()
+rates_values = []
+
+targets = display.getWidget("ramp_table_targets").getPV()
+targets_values = []
+
+table = display.getWidget("ramp_table").getTable()
+rows = table.getRowCount()
+
+for index in range(0, rows):
+	
+	# If table rows contain values that aren't zero
+	if (float(table.getCellText(index,1)) > 0) and (float(table.getCellText(index,3)) > 0):
+		# Set new array values
+		targets_values.append(float(table.getCellText(index, 1)))
+		rates_values.append(float(table.getCellText(index, 3)))		
+
+# Set new Values to PV
+targets.setValue(targets_values)
+rates.setValue(rates_values)]]></scriptText>
+        <embedded>true</embedded>
+        <description>Update rate/target PVs with new table values</description>
+      </action>
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path></path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV()
+
+pv.setValue(1)]]></scriptText>
+        <embedded>true</embedded>
+        <description>Trigger file write PV (ramp_table_write_trigger)</description>
+      </action>
+    </actions>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
