@@ -64,7 +64,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * The description text for an ioc if the description cannot be retrieved
      * from the server.
      */
-    private static final String UNKNOWN_IOC_TEXT = "Unknown";
+    private static final String UNKNOWN_IOC_TEXT = "";
 
     /** The default group name text to apply to new groups. */
     private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
@@ -196,6 +196,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     private EditableIoc convertIoc(Ioc ioc) {
+        ioc = null;
         final EditableIoc generalIOC = iocMap.get(ioc.getName());
 
         EditableIoc editableIoc;

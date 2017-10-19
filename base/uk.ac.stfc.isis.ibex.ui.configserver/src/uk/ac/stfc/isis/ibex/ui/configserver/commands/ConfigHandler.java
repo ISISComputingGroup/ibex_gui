@@ -139,8 +139,8 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 
         MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
                 "Error",
-                "An error occured while performing that action. Error was:\n" + ex.toString()
-                        + "\nPlease see the error log for more details.");
+                "An error occured in the IBEX user interface while performing that action.\n\n"
+                 + "Please report the problem to the computing group with a description of what you were trying to do.");
     }
 	
 }
