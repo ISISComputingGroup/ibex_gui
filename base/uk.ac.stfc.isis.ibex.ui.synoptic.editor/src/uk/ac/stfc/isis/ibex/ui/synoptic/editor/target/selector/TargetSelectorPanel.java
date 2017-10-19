@@ -30,6 +30,9 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -143,7 +146,8 @@ public class TargetSelectorPanel extends Composite {
         final List<String> keyset = new ArrayList<>(new TreeSet<>(availableOpis.keySet()));
         Collections.sort(keyset);
 
-        final Tree tree = new Tree(this, SWT.BORDER);
+        final TreeViewer treeViewer = new TreeViewer(this);
+        final Tree tree = treeViewer.getTree();
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         for (String key : keyset) {
@@ -154,11 +158,11 @@ public class TargetSelectorPanel extends Composite {
             List<String> targets = new ArrayList<>(availableOpis.get(key));
             Collections.sort(targets);
 
-            TreeItem category = new TreeItem(tree, SWT.NONE);
+            final TreeItem category = new TreeItem(tree, SWT.NONE);
             category.setText(key);
             category.setExpanded(false);
             // Use this to tell whether something is a category or an item.
-            category.setData(false); 
+            category.setData(false);
 
             for (String target : targets) {
                 TreeItem targetTreeItem = new TreeItem(category, SWT.NONE);
@@ -168,22 +172,34 @@ public class TargetSelectorPanel extends Composite {
             }
         }
         
+        // Behaviour when an item in the tree is selected.
         tree.addSelectionListener(new SelectionListener() {         
             @Override
             public void widgetSelected(SelectionEvent e) {
                 TreeItem item = tree.getSelection()[0];
 
-                // Was a category not an item.
+                // Check if it was an item rather than a category.
                 if ((boolean) item.getData()) {
                     viewModel.setOpi(item.getText(0));
-                } else {            
-                    viewModel.clearTarget();
                 }
             }
             
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
+            }
+        });
+        
+        // Behaviour when an item in the tree is double clicked.
+        treeViewer.addDoubleClickListener(new IDoubleClickListener() {           
+            @Override
+            public void doubleClick(DoubleClickEvent event) {
+                try {
+                    TreeItem item = tree.getSelection()[0];
+                    item.setExpanded(!item.getExpanded());
+                } catch (NullPointerException e) {
+                    // Caught if nothing selected. Do nothing.
+                }
             }
         });
          
