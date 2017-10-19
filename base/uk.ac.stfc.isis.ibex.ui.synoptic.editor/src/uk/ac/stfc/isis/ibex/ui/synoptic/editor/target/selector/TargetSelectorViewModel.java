@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 
 import java.beans.PropertyChangeEvent;
@@ -34,7 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
- *
+ * The view model for the target selector.
  */
 public class TargetSelectorViewModel extends ModelObject {
     
@@ -59,18 +56,21 @@ public class TargetSelectorViewModel extends ModelObject {
      */
     public TargetSelectorViewModel(final SynopticViewModel synopticViewModel) {
         this.synopticViewModel = synopticViewModel;
-        
+        addEnablementListener();
+    }
+    
+    private void addEnablementListener() {
         synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (synopticViewModel.getSingleSelectedComp() != null) {
                     setEnabled(true);
                     setName(synopticViewModel.getSingleSelectedComp().getName());
-                    setIcon(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
+                    setIconSelectionIndex(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
                     setOpi(synopticViewModel.getSingleSelectedComp().target().name());
                 } else {
                     setName("");
-                    setIcon(0);
+                    setIconSelectionIndex(0);
                     setOpi(NONE_OPI);
                     setEnabled(false);
                 }
@@ -119,7 +119,7 @@ public class TargetSelectorViewModel extends ModelObject {
      * Gets the index of the icon within the TargetSelectorPanelViewModel.componentTypesList.
      * @return the selection index
      */
-    public int getIcon() {
+    public int getIconSelectionIndex() {
         return icon;
     }
     
@@ -127,14 +127,14 @@ public class TargetSelectorViewModel extends ModelObject {
      * Sets the index of the icon within the TargetSelectorPanelViewModel.componentTypesList.
      * @param icon the selection index.
      */
-    public void setIcon(int icon) { 
+    public void setIconSelectionIndex(int icon) { 
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
         
         synopticViewModel.getSingleSelectedComp().setType(ComponentType.valueOf(componentTypesList.get(icon)));
         
-        firePropertyChange("icon", this.icon, this.icon = icon);
+        firePropertyChange("iconSelectionIndex", this.icon, this.icon = icon);
         synopticViewModel.refreshTreeView();
     }
     

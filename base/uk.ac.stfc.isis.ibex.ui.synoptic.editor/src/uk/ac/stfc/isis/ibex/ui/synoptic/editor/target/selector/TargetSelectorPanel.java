@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 
 import java.beans.PropertyChangeEvent;
@@ -78,8 +75,9 @@ public class TargetSelectorPanel extends Composite {
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Draw the components
-        drawNameAndIconSelector();
+        drawControls();
         drawTargetTree();
+        drawDescriptionBox();
 
         viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
@@ -95,7 +93,7 @@ public class TargetSelectorPanel extends Composite {
     }
 
     @SuppressWarnings("checkstyle:magicnumber") // Gui method   
-    private void drawNameAndIconSelector() {
+    private void drawControls() {
 
         Composite container = new Composite(this, SWT.NONE);
         container.setLayout(new GridLayout(3, false));
@@ -188,12 +186,15 @@ public class TargetSelectorPanel extends Composite {
                 widgetSelected(e);
             }
         });
-        
+         
+    }
+    
+    @SuppressWarnings("checkstyle:magicnumber") // Gui method 
+    private void drawDescriptionBox() {
         txtDescription = new Text(this, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         GridData descriptionLayoutData = new GridData(SWT.FILL, SWT.BOTTOM, true, false);
         descriptionLayoutData.heightHint = 60;
-        txtDescription.setLayoutData(descriptionLayoutData);
-        
+        txtDescription.setLayoutData(descriptionLayoutData); 
     }
     
     private void bind() {
@@ -205,7 +206,7 @@ public class TargetSelectorPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text().observe(txtDescription),
                 BeanProperties.value("description").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboType.getCombo()),
-                BeanProperties.value("icon").observe(viewModel));
+                BeanProperties.value("iconSelectionIndex").observe(viewModel));
     }
 
 }

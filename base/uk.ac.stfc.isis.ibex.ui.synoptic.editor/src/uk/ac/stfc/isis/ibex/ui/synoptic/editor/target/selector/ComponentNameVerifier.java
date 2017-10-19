@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector;
 
 import org.eclipse.swt.events.VerifyEvent;
@@ -29,8 +26,7 @@ import org.eclipse.swt.events.VerifyListener;
  */
 public class ComponentNameVerifier implements VerifyListener {
     /**
-     * A regex matching any combination of alphanumerics, spaces and
-     * underscores.
+     * A regex matching a valid component name.
      */
     private static final String ALPHANUMERIC_SPACES_AND_UNDERSCORES_REGEX = "[a-zA-Z0-9_\\- ()]*";
 
