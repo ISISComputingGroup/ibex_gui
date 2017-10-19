@@ -432,7 +432,8 @@ public class SynopticViewModel extends ModelObject {
             OpiDescription target = opis.get(targetName);
             return target.getDescription();
         } catch (NullPointerException e) {
-            // Caught if there are multiple components selected, no components selected, selected opi is not in list, opi doesn't have a description.
+            // Caught if there are multiple components selected, no components selected, 
+            // selected opi is not in map, opi doesn't have a description.
             return "";
         }
     }
