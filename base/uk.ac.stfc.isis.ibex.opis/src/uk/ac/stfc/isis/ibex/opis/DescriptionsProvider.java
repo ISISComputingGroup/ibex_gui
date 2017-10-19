@@ -49,6 +49,9 @@ public class DescriptionsProvider extends Provider {
 	
 	private final Descriptions descriptions;
 	
+	/**
+	 * Provides information from opi_info.xml.
+	 */
 	public DescriptionsProvider() {
 		descriptions = importDescriptions();
 	}
@@ -156,27 +159,33 @@ public class DescriptionsProvider extends Provider {
 	}
 
     /**
-     * @return
+     * Get a Map of lists, where each key in the map is a category and each value is a list of items in that category.
+     * @return the map
      */
     public Map<String, List<String>> getOpiCategories() {
         Map<String, List<String>> map = new HashMap<>();
 
+        // Initialize the "unknown" category
         map.put(UNKNOWN_CATEGORY_NAME, new ArrayList<String>());
 
         for (String opiName : getOpiList()) {
             OpiDescription desc = getDescription(opiName);
 
             if (desc.getCategories() == null || desc.getCategories().isEmpty()) {
+                // If it has no category then put it in the unknown category
                 map.get(UNKNOWN_CATEGORY_NAME).add(opiName);
                 continue;
             }
 
             for (String category : desc.getCategories()) {
+                // Iterate over all categories that this OPI belongs to
                 if (map.get(category) == null) {
+                    // If the category doesn't exist yet create it
                     ArrayList<String> list = new ArrayList<>();
                     list.add(opiName);
                     map.put(category, list);
                 } else {
+                    // The category already exists, add this opi to it.
                     map.get(category).add(opiName);
                 }
             }
