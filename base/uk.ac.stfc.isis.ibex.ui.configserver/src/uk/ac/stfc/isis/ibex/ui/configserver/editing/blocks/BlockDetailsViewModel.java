@@ -20,7 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.List;
+import java.util.Arrays;
+import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
