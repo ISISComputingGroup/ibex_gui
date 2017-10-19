@@ -160,8 +160,11 @@ public class TargetSelectorViewModel extends ModelObject {
         setDescription(synopticViewModel.getOpi(opi).getDescription());
         
         firePropertyChange("opi", this.opi, this.opi = opi);
+        
+        int index = componentTypesList.indexOf(synopticViewModel.getOpi(opi).getType());
+        setIconSelectionIndex(index < 0 ? 0 : index);
     }
-    
+
     /**
      * Gets the description of the currently selected OPI.
      * @return the description
