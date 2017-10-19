@@ -259,6 +259,15 @@ public class MinimalMotorViewModel extends ModelObject {
         setColor(chooseColor());
         this.font = chooseFont();
 
+        motor.addPropertyChangeListener("description", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setMotorName(motor);
+                setTooltip(motor.getDescription());
+            }
+        });
+        
         motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
 
             @Override
@@ -272,22 +281,14 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                try {
-                    setSetpoint(formatForMotorDisplay("SP", (Double) evt.getNewValue()));
-                } catch (java.lang.ClassCastException e) {
-                    throw e;
-                }
+                setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint()));
             }
         });
 
         motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                try {
-                    setValue(formatForMotorDisplay("Val", (Double) evt.getNewValue()));
-                } catch (java.lang.ClassCastException e) {
-                    throw e;
-                }
+                setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue()));
             }
         });
 
