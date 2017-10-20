@@ -67,8 +67,6 @@ public class PvDetailView extends Composite {
 	private Composite buttonsComposite;
 	private Button btnSelectBlock;
 
-    private Label lblError;
-
     /**
      * The constructor for the panel used to edit PV details.
      * 
@@ -136,9 +134,6 @@ public class PvDetailView extends Composite {
         cmboMode.setInput(modeList);
         cmboMode.getCombo().select(0);
 
-        lblError = new Label(fieldsComposite, SWT.NONE);
-        lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-
         buttonsComposite = new Composite(selectionComposite, SWT.NONE);
         GridData gdComposite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
         gdComposite.widthHint = 210;
@@ -186,9 +181,5 @@ public class PvDetailView extends Composite {
                 BeanProperties.value("pvAddress").observe(model));
         bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboMode),
                 BeanProperties.value("pvMode").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
-                BeanProperties.value("errorText").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("errorColor").observe(model));
     }
 }

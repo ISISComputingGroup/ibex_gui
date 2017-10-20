@@ -23,13 +23,17 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 
 import org.epics.util.array.IteratorByte;
+import org.epics.util.array.IteratorDouble;
 import org.epics.util.array.IteratorFloat;
+import org.epics.util.array.IteratorInt;
 import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
+import org.epics.vtype.VDoubleArray;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
 import org.epics.vtype.VInt;
+import org.epics.vtype.VIntArray;
 import org.epics.vtype.VLong;
 import org.epics.vtype.VNumber;
 import org.epics.vtype.VShort;
@@ -128,6 +132,22 @@ public final class VTypeFormat {
 				.apply(extractFloats());
 	}
 	
+	/**
+     * @return Converter from a VDoubleArray to a double array
+     */
+    public static Converter<VType, double[]> fromVDoubleArray() {
+        return toVDoubleArray()
+                .apply(extractDoubles());
+    }
+    
+    /**
+     * @return Converter from a VIntArray to an int array
+     */
+    public static Converter<VType, int[]> fromVIntegerArray() {
+        return toVIntegerArray()
+                .apply(extractIntegers());
+    }
+	
     /**
      * @return Converter from a VByteArray of zipped, hexed values to a String
      */
@@ -150,6 +170,38 @@ public final class VTypeFormat {
 			}
 		};
 	}
+	
+	/**
+     * @return Converter from a VType to a VDoubleArray
+     */
+    public static Converter<VType, VDoubleArray> toVDoubleArray() {
+        return new Converter<VType, VDoubleArray>() {
+            @Override
+            public VDoubleArray convert(VType value) throws ConversionException {
+                try {
+                    return (VDoubleArray) value;
+                } catch (ClassCastException e) {
+                    throw new ConversionException(e.getMessage());
+                }
+            }
+        };
+    }
+    
+    /**
+     * @return Converter from a VType to a VIntegerArray
+     */
+    public static Converter<VType, VIntArray> toVIntegerArray() {
+        return new Converter<VType, VIntArray>() {
+            @Override
+            public VIntArray convert(VType value) throws ConversionException {
+                try {
+                    return (VIntArray) value;
+                } catch (ClassCastException e) {
+                    throw new ConversionException(e.getMessage());
+                }
+            }
+        };
+    }
 	
     /**
      * @return Converter from a VType to a VByteArray
@@ -205,6 +257,11 @@ public final class VTypeFormat {
 			@Override
 			public E convert(VEnum value) throws ConversionException {
 				String text = value.getValue();
+				
+				// Replace characters which can't be used in java enums with underscores.
+				text = text.replace(" ", "_");
+				text = text.replace("-", "_");
+				
 				for (Enum<E> item : enumType.getEnumConstants()) {
 					if (text.equalsIgnoreCase(item.name())) {
 						return Enum.valueOf(enumType, item.name());
@@ -360,4 +417,54 @@ public final class VTypeFormat {
 			}
 		};
 	}
+	
+	/**
+     * @return A converter from a VDouble array to an array of doubles
+     */
+    public static Converter<VDoubleArray, double[]> extractDoubles() {
+        return new Converter<VDoubleArray, double[]>() {
+            @Override
+            public double[] convert(VDoubleArray value) throws ConversionException {
+                if (value == null) {
+                    throw new ConversionException("value to format was null");
+                }
+                
+                int length = value.getSizes().iterator().nextInt();
+                double[] doubles = new double[length];
+                int count = 0;
+                IteratorDouble doubleIterator = value.getData().iterator();
+                for (int i = 0; i < length; i++) {
+                    doubles[i] = doubleIterator.nextDouble();
+                    count++;
+                }
+                
+                return Arrays.copyOf(doubles, count);
+            }
+        };
+    }
+    
+    /**
+     * @return A converter from a VInteger array to an array of ints
+     */
+    public static Converter<VIntArray, int[]> extractIntegers() {
+        return new Converter<VIntArray, int[]>() {
+            @Override
+            public int[] convert(VIntArray value) throws ConversionException {
+                if (value == null) {
+                    throw new ConversionException("value to format was null");
+                }
+                
+                int length = value.getSizes().iterator().nextInt();
+                int[] ints = new int[length];
+                int count = 0;
+                IteratorInt intIterator = value.getData().iterator();
+                for (int i = 0; i < length; i++) {
+                    ints[i] = intIterator.nextInt();
+                    count++;
+                }
+                
+                return Arrays.copyOf(ints, count);
+            }
+        };
+    }
 }

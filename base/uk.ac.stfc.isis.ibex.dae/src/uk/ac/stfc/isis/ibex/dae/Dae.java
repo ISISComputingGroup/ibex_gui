@@ -22,9 +22,10 @@ package uk.ac.stfc.isis.ibex.dae;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 
 /**
+ * The DAE plugin.
  * Provides and sets information about the Data Acquisition Electronics.
  */
 public class Dae extends Plugin {
@@ -37,14 +38,14 @@ public class Dae extends Plugin {
     private static Dae instance;
 	private static BundleContext context;
 
-    /**
-     * @return The DAE singleton.
-     */
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return the singleton instance of this class
+	 */
     public static Dae getInstance() { 
     	return instance; 
     }
-
-    private static final Instrument INSTRUMENT = Instrument.getInstance();
 
     private final DaeModel model;
 	private final DaeWritables writables;
@@ -54,7 +55,6 @@ public class Dae extends Plugin {
      * Default constructor.
      */
     public Dae() {
-		super();
 		instance = this;
         writables = new DaeWritables();
         observables = new DaeObservables();
@@ -62,22 +62,28 @@ public class Dae extends Plugin {
 	}
     
     /**
-     * @return The DAE model
+     * Gets the model used by the DAE.
+     * 
+     * @return the model
      */
 	public IDae model() {
 		return model;
 	}
 	
-    /**
-     * @return The observables to DAE information.
-     */
+	/**
+	 * Gets the observables used by the DAE.
+	 * 
+	 * @return the observables
+	 */
 	public DaeObservables observables() {
 		return observables;
 	}
 	
-    /**
-     * @return The current context.
-     */
+	/**
+	 * Gets the bundle context associated with this plugin.
+	 * 
+	 * @return the bundle context
+	 */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -99,5 +105,6 @@ public class Dae extends Plugin {
     public void stop(BundleContext bundleContext) throws Exception {
 		Dae.context = null;
 		model.close();
+		DetectorDiagnosticsViewModel.getInstance().stopObserving();
 	}
 }

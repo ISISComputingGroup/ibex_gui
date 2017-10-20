@@ -40,6 +40,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
@@ -62,7 +63,6 @@ public class DaeView extends ViewPart {
 	private VetosPanel vetosPanel;
 	private RunInformationPanel runInformation;
 	private SpectraPlotsPanel spectraPanel;
-
 	private DaeViewModel model;
 
 	
@@ -73,6 +73,7 @@ public class DaeView extends ViewPart {
 
     /** Listener for changes in experimental change. **/
     private PropertyChangeListener experimentalChangeListener;
+    
 	
     /**
      * Sets the model for the DAE view.
@@ -95,6 +96,7 @@ public class DaeView extends ViewPart {
 		vetosPanel.setModel(viewModel);
 		runInformation.setModel(viewModel);
 		spectraPanel.setModel(viewModel.spectra());
+
 	}
 	
 	@Override
@@ -131,7 +133,7 @@ public class DaeView extends ViewPart {
 		
 		GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		container.setLayoutData(gdContainer);
-		GridLayout glContainer = new GridLayout(2, false);
+		GridLayout glContainer = new GridLayout(1, false);
 		glContainer.horizontalSpacing = 0;
 		glContainer.verticalSpacing = 0;
 		glContainer.marginWidth = 0;
@@ -189,11 +191,16 @@ public class DaeView extends ViewPart {
 		spectraComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		spectraPanel = new SpectraPlotsPanel(spectraComposite, SWT.NONE);
-		//spectraPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDiagnostics.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/monitor.png"));
-		tbtmDiagnostics.setText("Diagnostics");
+		tbtmDiagnostics.setText("Detector Diagnostics");
+		
+		Composite diagnosticsComposite = new Composite(tabFolder, SWT.NONE);
+        tbtmDiagnostics.setControl(diagnosticsComposite);
+        diagnosticsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+        
+		new DetectorDiagnosticsPanel(diagnosticsComposite, SWT.NONE);
 		
 		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
 		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));

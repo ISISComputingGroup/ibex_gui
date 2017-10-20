@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.log;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.epics,
- uk.ac.stfc.isis.ibex.activemq
+ uk.ac.stfc.isis.ibex.activemq,
+ org.eclipse.swt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae

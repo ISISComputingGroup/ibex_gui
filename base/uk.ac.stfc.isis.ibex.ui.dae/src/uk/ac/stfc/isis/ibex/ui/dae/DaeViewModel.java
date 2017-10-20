@@ -46,7 +46,7 @@ public class DaeViewModel extends Closer {
 	
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
-	
+
     /**
      * Binds a model to this view model.
      * 
@@ -119,4 +119,5 @@ public class DaeViewModel extends Closer {
 	public RunInformationViewModel runInformation() {
 		return runInformation;
 	}
+
 }

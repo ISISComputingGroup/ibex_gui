@@ -29,9 +29,9 @@ if "%EXIT%" == "YES" exit
 
 REM Copy zip to installs area
 REM Delete older versions?
-REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server
+REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d
-net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
+net use p: \\isis\inst$ /user:isis\IBEXbuilder %BUILDERPW%
 
 python.exe purge_archive_client.py
 

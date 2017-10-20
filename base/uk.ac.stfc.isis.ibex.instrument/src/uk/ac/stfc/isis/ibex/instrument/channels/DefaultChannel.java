@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A default channel type which reads a string.
+ */
 public class DefaultChannel implements ChannelType<String> {
 
 	@Override

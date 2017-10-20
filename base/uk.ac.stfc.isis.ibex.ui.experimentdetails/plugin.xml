@@ -39,7 +39,7 @@
 	         allowMultiple="false"
 	         class="uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsView"
 	         id="uk.ac.stfc.isis.ibex.ui.experimentdetails.experimentdetailsview"
-	         name="My View"
+	         name="Experiment Details"
 	         restorable="true">
 	   </view>
 	</extension>
