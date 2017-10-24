@@ -27,7 +27,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -44,7 +43,6 @@ public class MinimalMotorView extends Composite {
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 
-	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
 		
 	private Label motorName;
@@ -63,19 +61,17 @@ public class MinimalMotorView extends Composite {
      *            the view model to be used by this view.
      */
     public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
-		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-        this.minimalMotorViewModel = minimalMotorViewModel;
+        super(parent, SWT.BORDER);
 
-		motorComposite = new Composite(this, SWT.BORDER);
-		GridLayout glMotorComposite = new GridLayout(1, false);
+        GridLayout glMotorComposite = new GridLayout(1, false);
 		glMotorComposite.verticalSpacing = 2;
 		glMotorComposite.marginWidth = 2;
 		glMotorComposite.marginHeight = 1;
-		motorComposite.setLayout(glMotorComposite);
+        setLayout(glMotorComposite);
+
+        this.minimalMotorViewModel = minimalMotorViewModel;
 		
-		motorName = new Label(motorComposite, SWT.NONE);
+        motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
 		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
 		gdMotorName.minimumWidth = 80;
@@ -83,17 +79,17 @@ public class MinimalMotorView extends Composite {
 		motorName.setLayoutData(gdMotorName);
 		motorName.setText("Motor name");
 				
-		value = new Label(motorComposite, SWT.NONE);
+        value = new Label(this, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         value.setText("");
 		
-		setpoint = new Label(motorComposite, SWT.NONE);
+        setpoint = new Label(this, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
 		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         setpoint.setText("");
 		
-		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
+        indicator = new MinimalMotionIndicator(this, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         indicator.setMotor(this.minimalMotorViewModel.getMotor());
 		
@@ -141,8 +137,11 @@ public class MinimalMotorView extends Composite {
         bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
                 BeanProperties.value("color").observe(minimalMotorViewModel));
 
-        bindingContext.bindValue(WidgetProperties.background().observe(motorComposite),
+        bindingContext.bindValue(WidgetProperties.background().observe(this),
                 BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(this),
+                BeanProperties.value("tooltip").observe(minimalMotorViewModel));
 
 	}
 	
@@ -158,7 +157,6 @@ public class MinimalMotorView extends Composite {
 			}
 		};
 		
-		motorComposite.addMouseListener(forwardDoubleClick);
 		motorName.addMouseListener(forwardDoubleClick);
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
