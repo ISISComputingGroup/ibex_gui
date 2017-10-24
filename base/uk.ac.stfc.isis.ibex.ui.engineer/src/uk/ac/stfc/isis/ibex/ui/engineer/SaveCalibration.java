@@ -25,15 +25,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * Main Engineering panel.
+ * Panel that allows users to save calibration parameters for all axes.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EngineerView extends ViewPart {
-
-    /**
-     * The view ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.engineer.engineerview"; //$NON-NLS-1$
+public class SaveCalibration extends ViewPart {
 	
 	/**
 	 * Create contents of the view part.

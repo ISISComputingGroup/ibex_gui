@@ -4,9 +4,9 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="uk.ac.stfc.isis.ibex.ui.engineer.EngineerView"
+            class="uk.ac.stfc.isis.ibex.ui.engineer.SaveCalibration"
             id="uk.ac.stfc.isis.ibex.ui.engineer.engineerview"
-            name="Engineering View">
+            name="Save Calibration Information">
       </view>
    </extension>
    <extension
@@ -35,6 +35,7 @@
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
                showTitle="false"
+               standalone="true"
                visible="true">
          </view>
       </perspectiveExtension>

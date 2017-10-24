@@ -477,16 +477,16 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+         
    <plugin
-         id="uk.ac.stfc.isis.ibex.managermode"
+         id="uk.ac.stfc.isis.ibex.ui.engineer"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+         
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.engineer"
+         id="uk.ac.stfc.isis.ibex.managermode"
          download-size="0"
          install-size="0"
          version="0.0.0"

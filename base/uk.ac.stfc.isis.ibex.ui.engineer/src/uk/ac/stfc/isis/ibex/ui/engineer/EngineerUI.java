@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.engineer;
 
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -27,7 +26,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class EngineerUI extends AbstractUIPlugin implements IStartup {
+public class EngineerUI extends AbstractUIPlugin {
 
     /**
      * The plug-in ID.
@@ -71,13 +70,5 @@ public class EngineerUI extends AbstractUIPlugin implements IStartup {
 	public static EngineerUI getDefault() {
 		return plugin;
 	}
-
-    /**
-     * 
-     */
-    @Override
-    public void earlyStartup() {
-        //
-    }
 
 }
