@@ -17,7 +17,9 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
+package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
+
+import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -43,23 +45,16 @@ import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
  * The estimated script time composite.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EstimatePanel extends Composite {
+public class EstimatorView {
 	private Text txtCountRate;
 	private Text txtTimeBetween;
 	private Label lblTimeValue;
 	
-	/**
-     * The default constructor.
-     * 
-     * @param parent the parent that the EstimatePanel will be placed in
-     * @param style the style of the parent
-     * @param estimate the estimate data
-     */
-	public EstimatePanel(Composite parent, int style, final EstimateSettingsModel estimate) {
-		super(parent, style);
-		setLayout(new GridLayout(1, true));
+	@PostConstruct
+	public void createPartControl(Composite parent) {
+		parent.setLayout(new GridLayout(1, true));
 		
-		Group grpEstimate = new Group(this, SWT.NULL);
+		Group grpEstimate = new Group(parent, SWT.NULL);
 		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		GridLayout glGrpEstimate = new GridLayout(3, false);
 		grpEstimate.setLayout(glGrpEstimate);
@@ -112,7 +107,7 @@ public class EstimatePanel extends Composite {
 		gdButtonCalculate.minimumWidth = 80;
 		btnCalculate.setText("Calculate");
 		
-		bind(estimate);
+		bind(new EstimateSettingsModel(40, 120));
 	}
 	
 	/**

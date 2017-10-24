@@ -17,10 +17,12 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
+package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -54,11 +56,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
- * Panel that contains all of the global settings for the experiment(s).
+ * Provides settings to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SettingsPanel extends Composite {
-	private ComboViewer comboOrder;
+public class SettingsView {
+    private ComboViewer comboOrder;
 	private ComboViewer comboSampleGeometry;
 	private Text txtDoSans;
 	private Text txtSampleHeight;
@@ -68,19 +70,22 @@ public class SettingsPanel extends Composite {
 	private ComboViewer comboCollectionMode;
 	private ComboViewer comboApertureSans;
 	private ComboViewer comboApertureTrans;
-
+	
 	/**
-     * The default constructor.
-     * 
-     * @param parent the parent that the EstimatePanel will be placed in
-     * @param style the style of the parent
-     * @param settings the settings
-     */
-	public SettingsPanel(Composite parent, int style, final SansSettings settings) {
-		super(parent, style);
-		setLayout(new GridLayout(2, false));
+	 * The default constructor.
+	 */
+	public SettingsView() {
+	}
+
+	@PostConstruct
+	public void createPartControl(Composite parent) {
 		
-		Group grpSettings = new Group(this, SWT.NULL);
+		SansSettings settings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM, ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
+		
+		parent.setLayout(new GridLayout(2, true));
+		parent.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 2));
+		
+		Group grpSettings = new Group(parent, SWT.NULL);
 		grpSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		GridLayout glGrpSettings = new GridLayout(7, false);
 		grpSettings.setLayout(glGrpSettings);
@@ -246,6 +251,7 @@ public class SettingsPanel extends Composite {
 		bind(settings);
 	}
 	
+
 	/**
      * The databinding of all settings between SettingsPanel and Settings.
      * 
@@ -321,4 +327,5 @@ public class SettingsPanel extends Composite {
             }
         });
 	}
+
 }
