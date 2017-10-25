@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
@@ -45,8 +44,11 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 		super(SERVER.deleteComponents());
 	}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());
         MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell(), 
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet());
@@ -59,10 +61,9 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 configService.uncheckedWrite(toDelete);
             } else {
                 displayWarning(selectedDependencies);
-                execute(event); // Re-open selection dialog.
+                safeExecute(event); // Re-open selection dialog.
             }
         }
-        return null;
     }
     
     private void displayWarning(Map<String, Collection<String>> selectedDependencies) {

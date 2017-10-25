@@ -61,6 +61,7 @@ public class MinimalMotorViewModelTest {
     public void GIVEN_motor_name_is_empty_THEN_motor_colour_is_unnamed_colour() {
         // Arrange
         testMotor.name = "";
+        testMotor.description = "";
         testMotor.enabled = MotorEnable.ENABLE;
         testMotor.moving = false;
 
@@ -77,6 +78,7 @@ public class MinimalMotorViewModelTest {
     public void GIVEN_motor_name_is_null_THEN_motor_colour_is_unnamed_colour() {
         // Arrange
         testMotor.name = null;
+        testMotor.description = null;
         testMotor.enabled = MotorEnable.ENABLE;
 
         viewModel.setMotor(testMotor);

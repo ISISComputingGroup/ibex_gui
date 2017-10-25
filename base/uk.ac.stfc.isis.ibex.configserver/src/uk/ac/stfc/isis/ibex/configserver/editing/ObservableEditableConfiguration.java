@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -53,11 +55,17 @@ public class ObservableEditableConfiguration
 	
 	@Override
 	protected EditableConfiguration transform(Configuration value) {
-		return new EditableConfiguration(
-				value, 
-                valueOrEmptyCollection(configServer.iocs()),
-                valueOrEmptyCollection(configServer.componentDetails()), 
-                valueOrEmptyCollection(configServer.pvs()));
+	    try {
+    		return new EditableConfiguration(
+    				value, 
+                    valueOrEmptyCollection(configServer.iocs()),
+                    valueOrEmptyCollection(configServer.componentDetails()), 
+                    valueOrEmptyCollection(configServer.pvs()));
+	    } catch (RuntimeException e) {
+	        // Log here because the exception will be lost in the observer/observables.
+	        Logger.getGlobal().log(Level.SEVERE, "Error while creating configuration", e);
+            throw e;
+        }
 	}	
 
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {

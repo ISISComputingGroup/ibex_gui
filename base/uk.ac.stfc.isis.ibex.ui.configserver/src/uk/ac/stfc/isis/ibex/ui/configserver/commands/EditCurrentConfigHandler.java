@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -82,12 +81,13 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
 
-	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());
         helper.createDialogCurrent();
-		return null;
 	}
 
 
