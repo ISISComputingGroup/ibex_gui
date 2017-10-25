@@ -39,28 +39,28 @@ final class LogMessageFieldTags {
  * The enum for the log message fields.
  */
 public enum LogMessageFields {
-    /** The contents field. **/
+    /** The contents field. */
     CONTENTS("Content", LogMessageFieldTags.TAG_CONTENTS, 500),
 
-    /** The severity field. **/
+    /** The severity field. */
     SEVERITY("Severity", LogMessageFieldTags.TAG_SEVERITY, 100),
 
-    /** The event time field. **/
+    /** The event time field. */
     EVENT_TIME("Event Time", LogMessageFieldTags.TAG_EVENTTIME, 200),
 
-    /** The create time field. **/
+    /** The create time field. */
     CREATE_TIME("Create Time", LogMessageFieldTags.TAG_CREATETIME, 0),
 
-    /** The client name field. **/
+    /** The client name field. */
     CLIENT_NAME("Sender", LogMessageFieldTags.TAG_CLIENTNAME, 150),
 
-    /** The client host field. **/
+    /** The client host field. */
     CLIENT_HOST("Sender Host", LogMessageFieldTags.TAG_CLIENTHOST, 0),
 
-    /** The type field. **/
+    /** The type field. */
     TYPE("Type", LogMessageFieldTags.TAG_TYPE, 100),
 
-    /** The application id field. **/
+    /** The application id field. */
     APPLICATION_ID("Application ID", LogMessageFieldTags.TAG_APPID, 0);
 
     private String displayName;
