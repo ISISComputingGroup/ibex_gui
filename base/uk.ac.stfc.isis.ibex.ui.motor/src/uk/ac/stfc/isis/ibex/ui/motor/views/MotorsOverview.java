@@ -33,8 +33,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.motor.Controller;
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.motor.MotorsTable;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
@@ -92,13 +93,15 @@ public class MotorsOverview extends Composite {
 		resetViews();
 		
 		int i = 0;
-		for (Motor motor : motorsTable.motors()) {
-			if (i % motorsTable.getNumMotors() == 0) {
-                addControllerNumberLabel(i, motorsTable, controllerIndexOffset);
-			}
-			i++;
-			
-            addMinimalView(motor);
+        for (Controller controller : motorsTable.controllers()) {
+            for (Motor motor : controller.motors()) {
+                if (i % motorsTable.getNumMotors() == 0) {
+                    addControllerNumberLabel(i, motorsTable, controllerIndexOffset);
+                }
+                i++;
+
+                addMinimalView(motor);
+            }
 		}
 	}
 

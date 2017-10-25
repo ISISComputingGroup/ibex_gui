@@ -17,46 +17,29 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.motor.internal;
+package uk.ac.stfc.isis.ibex.motor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.observable.MotorVariables;
-import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
-
-public class MotorsTable extends Closer {
-	
-	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
+public class MotorsTable {
 	private int numberMotors;
 	private int numberCrates;
 	
-	private List<Motor> motors = new ArrayList<>();
+    private List<Controller> controllers = new ArrayList<>();
 	
     public MotorsTable(int numberCrates, int numberMotors, int startCrate) {
 		this.numberMotors = numberMotors;
 		this.numberCrates = numberCrates;
 		
 		for (int crate = startCrate; crate < startCrate + numberCrates; crate++) {
-			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
-				String name = motorName(crate, motorNumber);
-                MotorVariables variables = registerForClose(new MotorVariables(name));
-				Motor motor = new ObservableMotor(variables);
-
-				motors.add(motor);
-			}
+            controllers.add(new Controller(crate, numberMotors));
 		}
 	}
 	
-	public Collection<Motor> motors() {
-		return new ArrayList<>(motors);
-	}
-	
-	private String motorName(int row, int column) {
-		return String.format(MOTOR_NAME_FORMAT, row, column);
+    public Collection<Controller> controllers() {
+        return new ArrayList<>(controllers);
 	}
 	
 	public int getNumMotors() {

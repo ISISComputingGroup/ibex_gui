@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -39,7 +38,7 @@ import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 /**
  * Contains the variables for a motor.
  */
-public class MotorVariables extends Closer {
+public class MotorVariables {
 
 	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
 		@Override

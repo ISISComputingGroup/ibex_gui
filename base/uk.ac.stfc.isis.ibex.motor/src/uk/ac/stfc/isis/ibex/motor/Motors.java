@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
-
-import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -70,17 +67,6 @@ public class Motors extends Plugin {
 	 */
 	public List<MotorsTable> getMotorsTablesList() {
 		return motorsTableList;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	@Override
-    public void stop(BundleContext bundleContext) throws Exception {
-		for (MotorsTable motorsTable : motorsTableList) {
-			motorsTable.close();
-		}
 	}
 
 }
