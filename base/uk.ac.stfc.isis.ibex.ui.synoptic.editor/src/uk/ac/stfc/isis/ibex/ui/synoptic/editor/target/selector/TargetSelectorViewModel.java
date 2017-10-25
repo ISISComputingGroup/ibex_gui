@@ -167,8 +167,18 @@ public class TargetSelectorViewModel extends ModelObject {
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
+        TargetDescription currentTarget = synopticViewModel.getSingleSelectedComp().target();
+        TargetDescription newTarget;
+        if (currentTarget == null) {
+            newTarget = new TargetDescription(opi, TargetType.OPI);
+        } else {
+            newTarget = new TargetDescription(currentTarget);
+            newTarget.setType(TargetType.OPI);
+            newTarget.setName(opi);
+        }
         
-        synopticViewModel.getSingleSelectedComp().setTarget(new TargetDescription(opi, TargetType.OPI));
+        synopticViewModel.getSingleSelectedComp().setTarget(newTarget);
+        
         synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
         
         setDescription(synopticViewModel.getOpi(opi).getDescription());
