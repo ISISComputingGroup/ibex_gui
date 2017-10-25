@@ -116,12 +116,11 @@ public class MotorVariables extends Closer {
      * Constructor.
      * 
      * @param motorName the name of the motor
-     * @param instrument the instrument
      */
-	public MotorVariables(String motorName, Instrument instrument) {
+    public MotorVariables(String motorName) {
 		this.motorName = motorName;
         this.motorAddress = PVAddress.startWith("MOT").append(motorName);
-        PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
+        PVAddress fullAddress = PVAddress.startWith(Instrument.getInstance().getPvPrefix() + motorAddress);
 
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
         WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);

@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
@@ -37,14 +36,14 @@ public class MotorsTable extends Closer {
 	
 	private List<Motor> motors = new ArrayList<>();
 	
-	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors, int startCrate) {
+    public MotorsTable(int numberCrates, int numberMotors, int startCrate) {
 		this.numberMotors = numberMotors;
 		this.numberCrates = numberCrates;
 		
 		for (int crate = startCrate; crate < startCrate + numberCrates; crate++) {
 			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
 				String name = motorName(crate, motorNumber);
-				MotorVariables variables = registerForClose(new MotorVariables(name, instrument));
+                MotorVariables variables = registerForClose(new MotorVariables(name));
 				Motor motor = new ObservableMotor(variables);
 
 				motors.add(motor);

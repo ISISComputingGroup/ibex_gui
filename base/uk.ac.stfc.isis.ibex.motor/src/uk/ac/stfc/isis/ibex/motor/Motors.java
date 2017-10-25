@@ -25,7 +25,6 @@ import java.util.List;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 /**
@@ -33,7 +32,6 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
  */
 public class Motors extends Plugin {
 	private static Motors instance;
-	private static BundleContext context;
 	
 	/** The number of motor tables to show. */
 	private static final int NUMBER_MOTOR_TABLES = 3;
@@ -42,19 +40,27 @@ public class Motors extends Plugin {
 	/** The number of motors for each controller. */
 	private static final int NUMBER_MOTORS = 8;
 
-    public static Motors getInstance() { 
+    /**
+     * Get the instance of this singleton.
+     * 
+     * @return The instance of this singleton.
+     */
+    public static Motors getInstance() {
     	return instance; 
     }
 	
     private List<MotorsTable> motorsTableList = new ArrayList<MotorsTable>();
     
+    /**
+     * The constructor that creates the motor tables.
+     */
 	public Motors() {
-		super();
+        super();
 		instance = this;
 		
 		for (int i = 0; i < NUMBER_MOTOR_TABLES; i++) {
 			int controllerStart = i * NUMBER_MOTORS + 1;
-			motorsTableList.add(new MotorsTable(Instrument.getInstance(), NUMBER_CONTROLLERS, NUMBER_MOTORS, controllerStart));
+            motorsTableList.add(new MotorsTable(NUMBER_CONTROLLERS, NUMBER_MOTORS, controllerStart));
 		}
 	}
     
@@ -65,25 +71,13 @@ public class Motors extends Plugin {
 	public List<MotorsTable> getMotorsTablesList() {
 		return motorsTableList;
 	}
-			
-	static BundleContext getContext() {
-		return context;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		Motors.context = bundleContext;
-	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		Motors.context = null;
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		for (MotorsTable motorsTable : motorsTableList) {
 			motorsTable.close();
 		}
