@@ -42,9 +42,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.wb.swt.ResourceManager;
 
+/**
+ * The double list editor control.
+ */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class DoubleListEditor extends Composite {
-	
 	private final Button select;
 	private final Button unselect;
 	private final Button btnUp;
@@ -62,6 +64,14 @@ public class DoubleListEditor extends Composite {
 	private Label lblAvailable;
 	private Label lblSelected;
 	
+    /**
+     * Constructor.
+     * 
+     * @param parent the containing composite
+     * @param style the SWT style
+     * @param observedProperty the property to observe
+     * @param orderable is it orderable
+     */
 	public DoubleListEditor(Composite parent, int style, String observedProperty, boolean orderable) {
 		super(parent, style);
 		setLayout(new GridLayout(4, false));		
@@ -203,35 +213,70 @@ public class DoubleListEditor extends Composite {
 		});
 	}
 	 
+    /**
+     * Binds data to the list-viewers.
+     * 
+     * @param unselected the contents of the unselected list-viewer
+     * @param selected the contents of the unselected list-viewer
+     */
 	public void bind(IObservableList unselected, IObservableList selected) {		
 		selectedViewer.setInput(selected);
 		unselectedViewer.setInput(unselected);
 	}
 	
+    /**
+     * @return the selected items
+     */
 	public IObservableList selectedItems() {
 		return selectedItems;
 	}
 	
+    /**
+     * @return the unselected items
+     */
 	public IObservableList unselectedItems() {
 		return unselectedItems;
 	}
 	
+    /**
+     * @return the currently selected item
+     */
 	public String selectedItem() {
 		return selectedList.getItem(selectedList.getSelectionIndex());
 	}
 	
+    /**
+     * Add a listener for items being selected.
+     * 
+     * @param listener the listener
+     */
 	public void addSelectionListenerForSelecting(SelectionListener listener) {
 		select.addSelectionListener(listener);
 	}
 	
+    /**
+     * Add a listener for items being deselected.
+     * 
+     * @param listener the listener
+     */
 	public void addSelectionListenerForUnselecting(SelectionListener listener) {
 		unselect.addSelectionListener(listener);
 	}
 	
+    /**
+     * Add a listener for items moved up in the list-viewer.
+     * 
+     * @param listener the listener
+     */
 	public void addSelectionListenerForMovingUp(SelectionListener listener) {
 		btnUp.addSelectionListener(listener);
 	}
 	
+    /**
+     * Add a listener for items moved down in the list-viewer.
+     * 
+     * @param listener the listener
+     */
 	public void addSelectionListenerForMovingDown(SelectionListener listener) {
 		btnDown.addSelectionListener(listener);
 	}
@@ -250,6 +295,9 @@ public class DoubleListEditor extends Composite {
 				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] {observedProperty})));
 	}
 	
+    /**
+     * Refresh the selected list-viewer.
+     */
 	public void refreshViewer() {
 		int selectIndex = selectedList.getSelectionIndex();
 		String selected = selectedList.getItem(selectIndex);
