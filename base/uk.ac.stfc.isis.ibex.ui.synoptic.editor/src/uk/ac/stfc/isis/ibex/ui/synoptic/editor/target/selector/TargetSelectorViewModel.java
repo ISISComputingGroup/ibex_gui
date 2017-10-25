@@ -66,12 +66,12 @@ public class TargetSelectorViewModel extends ModelObject {
                 if (synopticViewModel.getSingleSelectedComp() != null) {
                     setEnabled(true);
                     setName(synopticViewModel.getSingleSelectedComp().getName());
+                    setOpi(synopticViewModel.getSingleSelectedComp().target().name(), false);
                     setIconSelectionIndex(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
-                    setOpi(synopticViewModel.getSingleSelectedComp().target().name());
                 } else {
                     setName("");
                     setIconSelectionIndex(0);
-                    setOpi(NONE_OPI);
+                    setOpi(NONE_OPI, false);
                     setEnabled(false);
                 }
             }
@@ -147,13 +147,27 @@ public class TargetSelectorViewModel extends ModelObject {
     }
     
     /**
-     * Sets the selected OPI by name.
+     * Sets the selected OPI by name. Decides whether to set the icon based on whether the current OPI has a default icon.
      * @param opi the selected OPI name
      */
-    public void setOpi(String opi) {
+    public void setOpi(String opi) {        
+        String currentlySelectedOpiType = synopticViewModel.getOpi(this.opi).getType();
+        int iconSelectionIndexForCurrentlySelectedOpi = componentTypesList.indexOf(currentlySelectedOpiType);        
+        boolean isIconDefault = getIconSelectionIndex() == 0 || iconSelectionIndexForCurrentlySelectedOpi == getIconSelectionIndex();
+        
+        setOpi(opi, isIconDefault);
+    }
+    
+    /**
+     * Sets the selected OPI.
+     * @param opi the selected OPI name
+     * @param changeIcon whether to change the component icon to the default for the new OPI.
+     */
+    public void setOpi(String opi, boolean changeIcon) {
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
+        
         synopticViewModel.getSingleSelectedComp().setTarget(new TargetDescription(opi, TargetType.OPI));
         synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
         
@@ -161,8 +175,10 @@ public class TargetSelectorViewModel extends ModelObject {
         
         firePropertyChange("opi", this.opi, this.opi = opi);
         
-        int index = componentTypesList.indexOf(synopticViewModel.getOpi(opi).getType());
-        setIconSelectionIndex(index < 0 ? 0 : index);
+        if (changeIcon) {
+            int index = componentTypesList.indexOf(synopticViewModel.getOpi(opi).getType());
+            setIconSelectionIndex(index < 0 ? 0 : index);
+        }
     }
 
     /**
@@ -186,6 +202,7 @@ public class TargetSelectorViewModel extends ModelObject {
      */
     public void clearTarget() {
         setOpi(NONE_OPI);
+        setIconSelectionIndex(0);
     }
 
     /**
