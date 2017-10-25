@@ -38,7 +38,7 @@ public class TargetSelectorViewModel extends ModelObject {
     private final SynopticViewModel synopticViewModel;
     private boolean enabled;
     private String name;
-    private String opi;
+    private String opi = NONE_OPI;
     private int icon;
     private String description;
     
@@ -167,8 +167,10 @@ public class TargetSelectorViewModel extends ModelObject {
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
+        
         TargetDescription currentTarget = synopticViewModel.getSingleSelectedComp().target();
         TargetDescription newTarget;
+        
         if (currentTarget == null) {
             newTarget = new TargetDescription(opi, TargetType.OPI);
         } else {

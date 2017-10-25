@@ -69,7 +69,7 @@ public class TargetDescription {
     public TargetDescription(TargetDescription other) {
         this.name = other.name;
         this.type = other.type;
-        this.properties = new ArrayList<>(other.properties);
+        this.properties = new ArrayList<>(other.getProperties());
     }
 
     /**
