@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.motor.Controller;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
@@ -48,10 +49,14 @@ public class ObservableMotor extends Motor {
     /**
      * Creates a motor that is pointing to a backend device.
      * 
+     * @param controller
+     *            The controller that this motor belongs to.
+     * 
      * @param variables
      *            The PVs for the motor.
      */
-	public ObservableMotor(MotorVariables variables) {
+    public ObservableMotor(Controller controller, MotorVariables variables) {
+        super(controller);
 		this.variables = variables;
 		description = textAdapt(variables.description, "description");
 		setpoint = new ObservableMotorSetpoint(variables.motorName, variables.setpoint);

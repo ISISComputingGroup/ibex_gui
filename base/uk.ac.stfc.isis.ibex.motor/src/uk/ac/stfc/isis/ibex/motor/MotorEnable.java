@@ -19,8 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.motor;
 
+/**
+ * Enum giving the possible enabled states of a motor.
+ */
 public enum MotorEnable {
+    /**
+     * The enable PV is unknown.
+     */
 	UNKNOWN,
+    /**
+     * The motor is enabled.
+     */
 	ENABLE,
+    /**
+     * The motor is disabled.
+     */
 	DISABLE
 }

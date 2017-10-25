@@ -42,6 +42,10 @@ public class TestMotor extends Motor {
     public boolean atUpperLimit = false;
     public String status = "Motor status";
 
+    public TestMotor() {
+        super(null);
+    }
+
     @Override
     public String name() {
         return name;

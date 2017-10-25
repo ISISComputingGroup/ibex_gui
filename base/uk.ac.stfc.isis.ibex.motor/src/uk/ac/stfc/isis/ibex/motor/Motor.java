@@ -25,6 +25,20 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * The abstract motor class.
  */
 public abstract class Motor extends ModelObject {
+    Controller controller;
+
+    public Motor(Controller control) {
+        this.controller = control;
+    }
+
+    /**
+     * Gets the controller that controls this motor.
+     * 
+     * @return the controller
+     */
+    public Controller getController() {
+        return controller;
+    }
 
     /**
      * Gets the motor name.

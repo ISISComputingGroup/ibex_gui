@@ -51,7 +51,7 @@ public class Controller extends ModelObject {
         for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
             String name = motorName(motorNumber);
             MotorVariables variables = new MotorVariables(name);
-            Motor motor = new ObservableMotor(variables);
+            Motor motor = new ObservableMotor(this, variables);
 
             motors.add(motor);
         }
