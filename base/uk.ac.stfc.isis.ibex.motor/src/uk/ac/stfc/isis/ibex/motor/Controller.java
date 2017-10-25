@@ -57,6 +57,15 @@ public class Controller extends ModelObject {
         }
     }
 
+    /**
+     * Get which controller this is.
+     * 
+     * @return The number that this contoller corresponds to.
+     */
+    public int getControllerNumber() {
+        return controllerNum;
+    }
+
     private String motorName(int motorNum) {
         return String.format(MOTOR_NAME_FORMAT, controllerNum, motorNum);
     }

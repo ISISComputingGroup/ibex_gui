@@ -71,7 +71,7 @@ public class SaveCalibration extends ViewPart {
         checkboxTreeViewer.setContentProvider(provider);
         checkboxTreeViewer.setLabelProvider(provider);
 
-        checkboxTreeViewer.setInput(Motors.getInstance().getMotorsTablesList().get(0));
+        checkboxTreeViewer.setInput(Motors.getInstance());
 	}
 
 	@Override

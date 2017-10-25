@@ -35,7 +35,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Controller;
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.MotorsTable;
+import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
@@ -77,29 +77,24 @@ public class MotorsOverview extends Composite {
 	}
 	
     /**
+     * Sets the motors that this overview displays.
      * 
-     * @param motorsTable - The table of motors to be displayed in the view
-     * @param controllerIndexOffset - The offset from 1 of the controller
-     *            numbers (e.g. tab starting at controller 9 has offset of 8).
+     * @param controllers
+     *            - The controllers to be displayed in the view
      */
-    public void setMotors(MotorsTable motorsTable, int controllerIndexOffset) {
-		motorComposite.setLayout(new GridLayout(motorsTable.getNumMotors() + 1, false));
+    public void setMotors(List<Controller> controllers) {
+        motorComposite.setLayout(new GridLayout(Motors.NUMBER_MOTORS + 1, false));
 		
 		addSpacerLabel();		
-		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
+        for (int i = 1; i <= Motors.NUMBER_MOTORS; i++) {
             addMotorNumberLabel(i);
 		}		
 		
 		resetViews();
 		
-		int i = 0;
-        for (Controller controller : motorsTable.controllers()) {
+        for (Controller controller : controllers) {
+            addControllerNumberLabel(controller);
             for (Motor motor : controller.motors()) {
-                if (i % motorsTable.getNumMotors() == 0) {
-                    addControllerNumberLabel(i, motorsTable, controllerIndexOffset);
-                }
-                i++;
-
                 addMinimalView(motor);
             }
 		}
@@ -183,7 +178,7 @@ public class MotorsOverview extends Composite {
         addNumberLabel(i);
 	}
 
-    private void addControllerNumberLabel(int i, MotorsTable motorsTable, int controllerIndexOffset) {
-        addNumberLabel(1 + i / motorsTable.getNumMotors() + controllerIndexOffset);
+    private void addControllerNumberLabel(Controller control) {
+        addNumberLabel(1 + control.getControllerNumber());
     }
 }

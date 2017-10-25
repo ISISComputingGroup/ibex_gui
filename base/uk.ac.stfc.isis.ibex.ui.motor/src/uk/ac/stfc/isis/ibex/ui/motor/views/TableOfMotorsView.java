@@ -20,9 +20,9 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.motor.Controller;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
-import uk.ac.stfc.isis.ibex.motor.MotorsTable;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
@@ -34,17 +34,13 @@ public class TableOfMotorsView extends ViewPart {
 	private static final int MOTOR_WIDTH = 90;
 	/** Pixel margin to add on the right and bottom of the table. */
 	private static final int TABLE_MARGIN = 20;
-	
+    /** Number of controllers to display */
+    private static final int NUM_CONTROLLERS = 8;
+
 	/** List of the tab titles as defined in plugin.xml for this class. */
 	private List<String> tabTitles = Arrays.asList("Main Motors (Controllers 1 - 8)",
 												   "Additional Motors (Controllers 9 - 16)",
 												   "Additional Motors (Controllers 17 - 24)");
-
-    /**
-     * List the offset for the index of the first controller in the table. Used
-     * to set labels down left hand side.
-     */
-    private static final List<Integer> TAB_CONTROLLER_OFFSETS = Arrays.asList(0, 8, 16);
 	
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
@@ -56,9 +52,6 @@ public class TableOfMotorsView extends ViewPart {
 			}
 		}
 	};
-	
-    /** The MotorsTable used for this particular table of motors view. */
-    protected MotorsTable motorsTable;
 
     /** The MotorsOverview used by this view. **/
     private MotorsOverview motorsOverview;
@@ -71,7 +64,7 @@ public class TableOfMotorsView extends ViewPart {
 	
 	@Override
 	public void createPartControl(Composite parent) {
-        setMotorsTable();
+        int tabNumber = getTabNumber();
 		
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.verticalSpacing = 0;
@@ -83,11 +76,11 @@ public class TableOfMotorsView extends ViewPart {
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
 		
-		int numCrates = motorsTable.getNumCrates();
+        int numCrates = NUM_CONTROLLERS;
 		scrolledComposite.setMinHeight(numCrates * MOTOR_HEIGHT + TABLE_MARGIN);
 		scrolledComposite.setExpandHorizontal(true);
 		
-		int numMotors = motorsTable.getNumMotors();
+        int numMotors = Motors.NUMBER_MOTORS;
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
@@ -103,7 +96,9 @@ public class TableOfMotorsView extends ViewPart {
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-        motorsOverview.setMotors(motorsTable, getTableControllerOffset());
+        List<Controller> controllers = Motors.getInstance().getControllers();
+
+        motorsOverview.setMotors(controllers.subList(tabNumber * NUM_CONTROLLERS, (tabNumber + 1) * NUM_CONTROLLERS));
 	}
 
 	@Override
@@ -143,20 +138,11 @@ public class TableOfMotorsView extends ViewPart {
 	}
 	
 	/**
-	 * Sets the MotorsTable for this view, overridden for other motor tabs.
-	 */
-	protected void setMotorsTable() {
+     * Gets which tab this view is on, overridden for other motor tabs.
+     */
+    private int getTabNumber() {
 		// This is not an ideal way of wiring up the tables to tabs, can probably be made more
 		// flexible by implementing in a similar way to the DAE view
-		int motorTableID = tabTitles.indexOf(getTitle());
-		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
+        return tabTitles.indexOf(getTitle());
 	}
-
-    /**
-     * @return The controller number offset for this particular tab
-     */
-    protected int getTableControllerOffset() {
-        int motorTableID = tabTitles.indexOf(getTitle());
-        return TAB_CONTROLLER_OFFSETS.get(motorTableID);
-    }
 }

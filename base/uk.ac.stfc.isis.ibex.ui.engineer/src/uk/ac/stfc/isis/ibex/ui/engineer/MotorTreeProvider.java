@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.motor.Controller;
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.MotorsTable;
+import uk.ac.stfc.isis.ibex.motor.Motors;
 
 /**
  * Provides the content for the motor tree viewer.
@@ -48,8 +48,8 @@ class MotorTreeProvider implements ITreeContentProvider, ILabelProvider {
     public Object[] getChildren(Object parent) {
         if (parent instanceof Controller) {
             return ((Controller) parent).motors().toArray();
-        } else if (parent instanceof MotorsTable) {
-            return ((MotorsTable) parent).controllers().toArray();
+        } else if (parent instanceof Motors) {
+            return ((Motors) parent).getControllers().toArray();
         }
         return null;
     }
@@ -80,8 +80,8 @@ class MotorTreeProvider implements ITreeContentProvider, ILabelProvider {
             }
         };
 
-        if (newInput instanceof MotorsTable) {
-            Collection<Controller> controllers = ((MotorsTable) newInput).controllers();
+        if (newInput instanceof Motors) {
+            Collection<Controller> controllers = ((Motors) newInput).getControllers();
             for (Controller control : controllers) {
                 for (Motor mtr : control.motors()) {
                     mtr.addPropertyChangeListener("description", refreshViewer);
@@ -97,7 +97,7 @@ class MotorTreeProvider implements ITreeContentProvider, ILabelProvider {
      */
     @Override
     public Object[] getElements(Object inputElement) {
-        return ((MotorsTable) inputElement).controllers().toArray();
+        return ((Motors) inputElement).getControllers().toArray();
     }
 
     @Override

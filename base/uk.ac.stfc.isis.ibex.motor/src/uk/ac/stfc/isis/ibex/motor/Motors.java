@@ -30,12 +30,10 @@ import org.eclipse.core.runtime.Plugin;
 public class Motors extends Plugin {
 	private static Motors instance;
 	
-	/** The number of motor tables to show. */
-	private static final int NUMBER_MOTOR_TABLES = 3;
-	/** The number of controllers (crates) in each table. */
-	private static final int NUMBER_CONTROLLERS = 8;
+    /** The number of controllers to gather data for. */
+    private static final int NUMBER_CONTROLLERS = 24;
 	/** The number of motors for each controller. */
-	private static final int NUMBER_MOTORS = 8;
+    public static final int NUMBER_MOTORS = 8;
 
     /**
      * Get the instance of this singleton.
@@ -46,7 +44,7 @@ public class Motors extends Plugin {
     	return instance; 
     }
 	
-    private List<MotorsTable> motorsTableList = new ArrayList<MotorsTable>();
+    private List<Controller> controllers = new ArrayList<Controller>();
     
     /**
      * The constructor that creates the motor tables.
@@ -55,18 +53,18 @@ public class Motors extends Plugin {
         super();
 		instance = this;
 		
-		for (int i = 0; i < NUMBER_MOTOR_TABLES; i++) {
-			int controllerStart = i * NUMBER_MOTORS + 1;
-            motorsTableList.add(new MotorsTable(NUMBER_CONTROLLERS, NUMBER_MOTORS, controllerStart));
+        for (int i = 1; i < NUMBER_CONTROLLERS + 1; i++) {
+            controllers.add(new Controller(i, NUMBER_MOTORS));
 		}
 	}
     
 	/**
-	 * Getter for list of all the motor tables.
-	 * @return List of motor tables
-	 */
-	public List<MotorsTable> getMotorsTablesList() {
-		return motorsTableList;
+     * Getter for all the controllers.
+     * 
+     * @return List of controllers
+     */
+    public List<Controller> getControllers() {
+        return controllers;
 	}
 
 }
