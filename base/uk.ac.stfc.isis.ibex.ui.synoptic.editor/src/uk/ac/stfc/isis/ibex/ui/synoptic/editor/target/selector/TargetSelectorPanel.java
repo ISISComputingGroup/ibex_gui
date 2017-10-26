@@ -78,8 +78,9 @@ public class TargetSelectorPanel extends Composite {
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // Draw the components
-        drawControls();
+        drawNameControl();
         drawTargetTree();
+        drawControls();
         drawDescriptionBox();
 
         viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
@@ -94,12 +95,10 @@ public class TargetSelectorPanel extends Composite {
         
         bind();
     }
-
-    @SuppressWarnings("checkstyle:magicnumber") // Gui method   
-    private void drawControls() {
-
+    
+    private void drawNameControl() {
         Composite container = new Composite(this, SWT.NONE);
-        container.setLayout(new GridLayout(3, false));
+        container.setLayout(new GridLayout(2, false));
         container.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
         Label lblName = new Label(container, SWT.NONE);
@@ -107,9 +106,16 @@ public class TargetSelectorPanel extends Composite {
         lblName.setText("Name: ");
 
         txtName = new Text(container, SWT.BORDER);
-        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         txtName.addVerifyListener(new ComponentNameVerifier());
+    }
 
+    @SuppressWarnings("checkstyle:magicnumber") // Gui method   
+    private void drawControls() {
+        Composite container = new Composite(this, SWT.NONE);
+        container.setLayout(new GridLayout(3, false));
+        container.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+        
         Label lblIcon = new Label(container, SWT.NONE);
         lblIcon.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         lblIcon.setText("Icon: ");

@@ -100,8 +100,8 @@ public class EditorPanel extends Composite {
         lblInstrumentTree.setFont(titleFont);
         lblInstrumentTree.setText("Instrument Tree");
 
-        new InstrumentTreeView(treeComposite, this.synopticViewModel);
         new InstrumentTreeControls(treeComposite, this.synopticViewModel);
+        new InstrumentTreeView(treeComposite, this.synopticViewModel); 
 
         targetSelectorComposite = new Composite(this, SWT.BORDER);
         targetSelectorComposite.setLayout(new GridLayout(1, false));
