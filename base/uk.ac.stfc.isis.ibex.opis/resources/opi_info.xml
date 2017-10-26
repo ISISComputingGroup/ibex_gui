@@ -131,6 +131,7 @@
 			<value>
 				<categories>
 					<category>Temperature controllers</category>
+					<category>Cryogenics</category>
 				</categories>
 				<type>MERCURY</type>
 				<path>mercuryiTC.opi</path>
@@ -202,7 +203,7 @@
 			<key>Julabo FL300</key>
 			<value>
 				<categories>
-					<category>Temperature controllers</category>
+					<category>Water baths</category>
 				</categories>
 				<type>JULABO</type>
 				<path>JulaboFL300.opi</path>
@@ -215,7 +216,7 @@
 			<key>Julabo FP50</key>
 			<value>
 				<categories>
-					<category>Temperature controllers</category>
+					<category>Water baths</category>
 				</categories>
 				<type>JULABO</type>
 				<path>JulaboFP50.opi</path>
