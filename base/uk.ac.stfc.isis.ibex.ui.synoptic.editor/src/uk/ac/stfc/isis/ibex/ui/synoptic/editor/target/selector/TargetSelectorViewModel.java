@@ -107,6 +107,7 @@ public class TargetSelectorViewModel extends ModelObject {
      * @param name the new name
      */
     public void setName(String name) {
+        name = name == null ? null : name.trim();
         if (synopticViewModel.getSingleSelectedComp() == null) {
             return;
         }
