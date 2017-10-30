@@ -28,7 +28,7 @@
 			<key>XY Beam-stop</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
@@ -165,7 +165,7 @@
 			<value>
 				<categories>
 					<category>Monitors</category>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>MOVINGMONITOR</type>
 				<path>inout_monitor.opi</path>
@@ -367,7 +367,7 @@
 			<key>Pinhole Selector</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>PINHOLESELECTOR</type>
 				<path>pinhole_selector\pinhole_selector.opi</path>
@@ -388,7 +388,7 @@
 			<key>PGC</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>PGC</type>
 				<path>pgc\pgc.opi</path>
@@ -436,7 +436,7 @@
 			<key>Rotating Bench</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>ROTATINGBENCH</type>
 				<path>rotating_bench.opi</path>
@@ -977,7 +977,7 @@
 			<key>XY Shutter Arm Beam-stop</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>BEAMSTOP</type>
 				<path>xyShutterArmBeamstop.opi</path>
@@ -1055,7 +1055,7 @@
         	<key>Engin-X collimators</key>
 			<value>
 				<categories>
-					<category>Motion control</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>JAWS</type>
 				<path>enginx_collimators/enginx_collimators.opi</path>
