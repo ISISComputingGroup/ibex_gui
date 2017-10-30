@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-	<extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler"
-            id="uk.ac.stfc.isis.ibex.ui.rcp.logger.logger"
-            name="Console Log">
-      </command>
-   	</extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=preferencesMenu">
-         <menu
-               id="helpMenu"
-               label="Help"
-               mnemonic="H">
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.rcp.logger.logger"
-                  id="uk.ac.stfc.isis.ibex.ui.rcp.logger"
-                  label="Console Log"
-                  mnemonic="C"
-                  style="push"
-                  tooltip="Display the console showing internal log messages from this program.">
-            </command>
-         </menu>
-      </menuContribution>
-   </extension>
 </plugin>
