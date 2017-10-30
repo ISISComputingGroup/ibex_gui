@@ -17,35 +17,26 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
-package uk.ac.stfc.isis.ibex.ui.devicescreens;
+package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
 
-import javax.annotation.PostConstruct;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * A view for the current available device screens.
+ * Sets the current motor background palette to the standard colour scheme.
  */
-public class DeviceScreensView {
-
+public class StandardColourSchemeHandler {
+	
     /**
-     * Class ID.
+     * Method to execute when command corresponding to this handler is triggered.
+     * 
+     * @param menuItem The menuItem triggering the command.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
+    @Execute
+    public void execute(MHandledMenuItem menuItem) {
 
-    @PostConstruct
-    public void createPartControl(Composite parent) {
-        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new DeviceScreenListPanel(parent, SWT.NONE,
-                new ViewDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel()));
+    	if (menuItem.isSelected()) {
+            DisplayPreferences.getInstance().setMotorBackgroundPalette(ColourOption.NORMAL_VISION);
+    	}
     }
-
 }

@@ -29,60 +29,41 @@
  */
 package uk.ac.stfc.isis.ibex.ui.logger;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-
 import uk.ac.stfc.isis.ibex.logger.IRecentLog;
 
 /**
- * Command to display the IOC control dialog.
+ * Command to display the Console Log Handler.
  */
-public class LoggerHandler implements IHandler {
+public class ConsoleLogHandler {
 	private static IRecentLog model;
 
+	/**
+	 * Sets the model log data.
+	 * @param loggerModel Model that contains log data
+	 */
 	public static void setModel(IRecentLog loggerModel) {
 		model = loggerModel;
 	}
 
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
-
-	}
-
-	@Override
-	public void dispose() {
-	}
-
 	/**
-     * Display the dialog.
-     */
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		LoggerDialog dialog = new LoggerDialog(shell(), model);
+	 * Opens the Console Log in help menu.
+	 * @param shell The shell to open Console Log window in help menu.
+	 */
+	@Execute
+	public void execute(Shell shell)  {
+		ConsoleLogDialog dialog = new ConsoleLogDialog(shell, model);
 		dialog.open();
-		return null;
 	}
-
-	private Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	}
-
-	@Override
-	public boolean isEnabled() {
+	
+	/**
+	 * Help menu option always available (not instrument dependent).
+	 * @return True
+	 */
+	@CanExecute
+	public boolean canExecute() {
 		return true;
 	}
-
-	@Override
-	public boolean isHandled() {
-		return true;
-	}
-
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {
-	}
-
 }

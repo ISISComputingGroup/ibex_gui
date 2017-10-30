@@ -2,33 +2,4 @@
 <?eclipse version="3.4"?>
 <plugin>
    
-<extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.runcontrol.commands.EditRunControlHandler"
-            id="uk.ac.stfc.isis.ibex.ui.runcontrol.commands.EditRunControl"
-            name="View Run-Control">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-        allPopups="false"
-        locationURI="menu:org.eclipse.ui.main.menu?after=iocMenu">
-         <menu
-               id="runcontrolMenu"
-               label="Run-Control"
-               mnemonic="R">
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.runcontrol.commands.EditRunControl"
-                  id="uk.ac.stfc.isis.ibex.ui.runcontrol"
-                  label="View Run-Control Settings"
-                  mnemonic="V"
-                  style="push"
-                  tooltip="View Run-Control Settings">
-            </command>
-            
-         </menu>
-     </menuContribution>
-   </extension>
 </plugin>

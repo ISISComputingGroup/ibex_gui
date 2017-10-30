@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -20,32 +19,21 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.devicescreens;
+package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import javax.annotation.PostConstruct;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
-
 /**
- * A view for the current available device screens.
+ * This is an empty view to avoid errors from an "empty" placeholder.
  */
-public class DeviceScreensView {
+public class EmptyView {
 
     /**
-     * Class ID.
+     * Makes an empty view.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
-
     @PostConstruct
-    public void createPartControl(Composite parent) {
-        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new DeviceScreenListPanel(parent, SWT.NONE,
-                new ViewDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel()));
+    public void doNothing() {
+        // Do nothing.
     }
 
 }

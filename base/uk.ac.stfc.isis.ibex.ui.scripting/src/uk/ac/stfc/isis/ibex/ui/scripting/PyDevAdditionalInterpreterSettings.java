@@ -108,6 +108,8 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	private List<String> epicsEnvironment() {
 		List<String> epicsEnv = new ArrayList<String>();
 
+        // TODO: This appears to be getting null out of the preference store, so
+        // genie_python can't currently access PVs
         final String addList = prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
         epicsEnv.add("EPICS_CA_ADDR_LIST=" + addList);
         
