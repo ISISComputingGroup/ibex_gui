@@ -25,17 +25,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.Navigator;
 
-public class NavigationView {
+import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelection;
+import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelectionViewModel;
+
+public class SelectorView {
 		
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SelectorView"; //$NON-NLS-1$
 	
 	//TODO: Why couldn't we do this with postConstruct?
 	@Inject
-	public NavigationView(Composite parent) {
+	public SelectorView(Composite parent) {
 		parent.setLayout(new GridLayout(2, false));
-		Navigator navigator = new Navigator(parent, SWT.NONE);
-		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.NONE, new SynopticSelectionViewModel());
+		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 	}
 }
