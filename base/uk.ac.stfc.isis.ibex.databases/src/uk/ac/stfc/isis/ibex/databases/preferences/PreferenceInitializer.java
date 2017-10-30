@@ -26,6 +26,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.databases.Databases;
 
+/**
+ * Class used to initialise default preference values.
+ */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
 	@Override

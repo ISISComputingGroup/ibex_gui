@@ -34,119 +34,168 @@ import uk.ac.stfc.isis.ibex.ui.dae.run.InstrumentState;
 public class RunInformationViewModel extends Closer {
 	
     /**
-     * An updating string with the name of the instrument.
+     * The name of the instrument.
      */
 	public UpdatedValue<String> instrument;
 
     /**
-     * An updating string with the status of the run.
+     * The status of the run.
      */
 	public UpdatedValue<String> runStatus;
 
     /**
-     * An updating string with the run number.
+     * The run number.
      */
 	public UpdatedValue<String> runNumber;
 
     /**
-     * An updating string with the cycle number.
+     * The cycle number.
      */
 	public UpdatedValue<String> isisCycle;
 
     /**
-     * An updating number giving the current beam current.
+     * The current beam current.
      */
 	public UpdatedObservableAdapter<Number> beamCurrent;
 
     /**
-     * An updating integer giving the number of good frames for this run.
+     * The number of good frames for this run.
      */
 	public UpdatedObservableAdapter<Integer> goodFrames;
 
     /**
-     * An updating double giving the number of counts for this run.
+     * The number of counts for this run.
      */
 	public UpdatedObservableAdapter<Double> totalCounts;
 
     /**
-     * An updating integer giving the memory used on the DAE.
+     * The memory used on the DAE.
      */
 	public UpdatedObservableAdapter<Integer> memoryUsed;
 
     /**
-     * An updating string giving the timing source being used by the DAE.
+     * The timing source being used by the DAE.
      */
 	public UpdatedObservableAdapter<String> timingSource;
 	
     /**
-     * An updating string with the current RB number.
+     * The current RB number.
      */
 	public UpdatedObservableAdapter<String> rbNumber;
 
     /**
-     * An updating integer giving the number of raw frames for this run.
+     * The number of raw frames for this run.
      */
 	public UpdatedObservableAdapter<Integer> rawFrames;
 
     /**
-     * An updating number giving the total current for this run.
+     * The total current for this run.
      */
 	public UpdatedObservableAdapter<Number> totalCurrent;
 
     /**
-     * An updating double giving the count rate of the DAE.
+     * The count rate of the DAE.
      */
 	public UpdatedObservableAdapter<Double> countRate;
 
+    /**
+     * The event mode value.
+     */
 	public UpdatedObservableAdapter<Double> eventMode;
 	
     /**
-     * An updating string with the start time of the current run.
+     * The start time of the current run.
      */
 	public UpdatedObservableAdapter<String> startTime;
 
     /**
-     * An updating integer giving the duration of the current run in seconds.
+     * The duration of the current run in seconds.
      */
 	public UpdatedObservableAdapter<Integer> runDuration;
 
+    /**
+     * The number of time channels.
+     */
 	public UpdatedObservableAdapter<Integer> timeChannels;
+
+    /**
+     * The number of spectra.
+     */
 	public UpdatedObservableAdapter<Integer> spectra;
 
     /**
-     * An updating string giving the title for the current run.
+     * The title for the current run.
      */
 	public UpdatedObservableAdapter<String> title;
 
     /**
-     * An updating boolean giving whether or not to display the title on the
-     * webpage.
+     * Whether or not to display the title on the webpage.
      */
     public UpdatedObservableAdapter<Boolean> displayTitle;
 
     /**
-     * An updating string giving the users of the instrument for the current
-     * run.
+     * The users of the instrument for the current run.
      */
 	public UpdatedObservableAdapter<String> users;
 	
-
+    /**
+     * The current period.
+     */
 	public UpdatedObservableAdapter<Integer> period;
+
+    /**
+     * The number of good frames for the current period.
+     */
 	public UpdatedObservableAdapter<Integer> periodGoodFrames;
 
     /**
-     * An updating integer giving the duration of the current period in seconds.
+     * The number of raw frames for the current period.
+     */
+    public UpdatedObservableAdapter<Integer> periodRawFrames;
+
+    /**
+     * The duration of the current period in seconds.
      */
 	public UpdatedObservableAdapter<Integer> periodDuration;
+
+    /**
+     * The total number of periods.
+     */
 	public UpdatedObservableAdapter<Integer> totalPeriods;
-	public UpdatedObservableAdapter<Integer> periodRawFrames;
+
+    /**
+     * The period type.
+     */
 	public UpdatedObservableAdapter<String> periodType;
+
+    /**
+     * The period sequence.
+     */
 	public UpdatedObservableAdapter<Integer> periodSequence;
 	
+    /**
+     * The detector number for the monitor spectrum.
+     */
 	public UpdatedObservableAdapter<Integer> monitorSpectrum;
+
+    /**
+     * The lower time limit for the monitor.
+     */
 	public UpdatedObservableAdapter<Double> monitorFrom;
+
+    /**
+     * The upper time limit for the monitor.
+     */
+    public UpdatedObservableAdapter<Double> monitorTo;
+
+    /**
+     * The number of monitor counts.
+     */
 	public UpdatedObservableAdapter<Integer> monitorCounts;
-	public UpdatedObservableAdapter<Double> monitorTo;
+
+    /**
+     * The neutron/proton ratio.
+     */
 	public UpdatedObservableAdapter<Double> npRatio;
 
     /**

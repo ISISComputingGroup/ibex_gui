@@ -1,18 +1,18 @@
 /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -33,8 +33,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     private static final String MAJOR = "MAJOR";
     private static final String MINOR = "MINOR";
 
-    private static IPreferenceStore preferenceStore = Log.getDefault()
-	    .getPreferenceStore();
+    private static IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
 
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
@@ -43,14 +42,14 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
      * Starts the counter running.
      */
     public void start() {
-	running = true;
+        running = true;
     }
 
     /**
      * Stops the counter.
      */
     public void stop() {
-	running = false;
+        running = false;
     }
 
     /**
@@ -59,16 +58,16 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
      * @return The number of counted messsages.
      */
     public long getCount() {
-	return counter.countsForSeverity(MAJOR) + optionalMinorCount();
+        return counter.countsForSeverity(MAJOR) + optionalMinorCount();
     }
 
     /**
      * Resets the counter to zero.
      */
     public void resetCount() {
-	long grandTotal = counter.totalCount();
-	counter = new MessageCounter();
-	fireCountChanged(grandTotal);
+        long grandTotal = counter.totalCount();
+        counter = new MessageCounter();
+        fireCountChanged(grandTotal);
     }
 
     /**
@@ -76,30 +75,29 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
      */
     @Override
     public void newMessage(LogMessage logMessage) {
-	if (!running) {
-	    return;
-	}
+        if (!running) {
+            return;
+        }
 
-	long totalToDate = counter.totalCount();
-	counter.countMessage(logMessage);
-	fireCountChanged(totalToDate);
+        long totalToDate = counter.totalCount();
+        counter.countMessage(logMessage);
+        fireCountChanged(totalToDate);
     }
 
     private void fireCountChanged(long previousTotal) {
-	firePropertyChange("count", previousTotal, counter.totalCount());
+        firePropertyChange("count", previousTotal, counter.totalCount());
     }
 
     private long optionalMinorCount() {
-	return includeMinorSeverityCount() ? counter.countsForSeverity(MINOR)
-		: 0;
+        return includeMinorSeverityCount() ? counter.countsForSeverity(MINOR) : 0;
     }
 
     private boolean includeMinorSeverityCount() {
-	return preferenceStore.getBoolean(PreferenceConstants.P_MINOR_MESSAGE);
+        return preferenceStore.getBoolean(PreferenceConstants.P_MINOR_MESSAGE);
     }
 
     @Override
     public void clearMessages() {
-	this.resetCount();
+        this.resetCount();
     }
 }

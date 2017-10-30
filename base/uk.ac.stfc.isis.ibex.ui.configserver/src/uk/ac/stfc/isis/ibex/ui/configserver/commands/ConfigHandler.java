@@ -19,7 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
@@ -88,5 +96,50 @@ public abstract class ConfigHandler<T> {
      * @param canWrite whether can write or not
      */
 	public abstract void canWriteChanged(boolean canWrite);
+	
+    /**
+     * Execute the handler and catch any errors to display to the user.
+     * 
+     * Declared as final here, implement executeAndCatchErrors instead so that
+     * we can "hook into" any errors that occur in any of these dialogs and do
+     * something sensible with them.
+     * 
+     * @param shell
+     *            the shell to use for the dialogue
+     */
+    @Execute
+    public final void execute(Shell shell) {
+        try {
+            safeExecute(shell);
+        } catch (RuntimeException e) {
+            onError(e);
+        }
+    }
+
+    /**
+     * Executes an eclipse event. Any runtime errors thrown by this method will
+     * be caught by the execute() method and cause the onError() handler to be
+     * called.
+     * 
+     * @param event
+     *            the eclipse event
+     */
+    public abstract void safeExecute(Shell event);
+
+    /**
+     * Error handler. Override this to provide specific error handling
+     * behaviour.
+     * 
+     * @param ex
+     *            the exception that was thrown from the handler
+     */
+    public void onError(Exception ex) {
+        Logger.getGlobal().log(Level.SEVERE, "Exception while executing configserver command", ex);
+
+        MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                "Error",
+                "An error occured in the IBEX user interface while performing that action.\n\n"
+                 + "Please report the problem to the computing group with a description of what you were trying to do.");
+    }
 	
 }

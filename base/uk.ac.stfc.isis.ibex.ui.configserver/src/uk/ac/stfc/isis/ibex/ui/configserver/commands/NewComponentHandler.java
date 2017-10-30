@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -51,8 +50,8 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
 	 * 
 	 * @param shell shell to use
 	 */
-	@Execute
-    public void execute(Shell shell) {
+	@Override
+	public void safeExecute(Shell shell) {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsBlankConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();

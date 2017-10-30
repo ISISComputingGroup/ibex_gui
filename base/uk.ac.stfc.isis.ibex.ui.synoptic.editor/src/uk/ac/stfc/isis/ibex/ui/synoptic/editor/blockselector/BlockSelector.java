@@ -20,8 +20,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
 
 import java.util.Collection;
 
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -49,8 +49,8 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 	/**
 	 * Open block selector dialogue.
 	 */
-	@Execute
-	public void execute() {		
+	@Override
+    public void safeExecute(Shell shell) {
         Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAvailableBlocks();
 		
         BlockSelectorDialog dialog = new BlockSelectorDialog(null, availableBlocks);

@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -52,16 +51,21 @@ public class PvSelector extends DisablingConfigHandler<Configuration> {
 	 * 
 	 * @param shell the shell
 	 */
-	@Execute
-    public void execute(Shell shell) {		
+	@Override
+    public void safeExecute(Shell shell) {
 		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.currentConfig());
 		
 		if (Awaited.returnedValue(config, 1)) {
 			openDialog(config.getValue());
 		}
-				
 	}
 	
+    /**
+     * Opens the dialog.
+     * 
+     * @param config
+     *            the configuration
+     */
 	private void openDialog(EditableConfiguration config) {
 		PvSelectorDialog dialog = new PvSelectorDialog(null, config, "");	
 		if (dialog.open() == Window.OK) {

@@ -71,11 +71,16 @@ public class ExperimentSetup {
         viewModel = DaeUI.getDefault().viewModel();
     }
 
+    /**
+     * Creates the controls for the experimental setup part.
+     *
+     * @param parent the parent
+     */
     @PostConstruct
+    @SuppressWarnings("checkstyle:magicnumber")
     public void createPart(Composite parent) {
 
         sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
-
 		GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginHeight = 0;
         gridLayout.verticalSpacing = 5;
