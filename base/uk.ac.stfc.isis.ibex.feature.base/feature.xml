@@ -799,4 +799,18 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="uk.ac.stfc.isis.ibex.nicos"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.nicos"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
