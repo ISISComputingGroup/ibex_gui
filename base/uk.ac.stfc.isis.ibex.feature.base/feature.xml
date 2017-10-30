@@ -742,7 +742,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.ioccontrol"
          download-size="0"
@@ -756,24 +756,28 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.help"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.logger"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.runcontrol"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.motor"
          download-size="0"
@@ -787,4 +791,12 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.synoptic.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

@@ -15,7 +15,7 @@
           <children xsi:type="menu:HandledMenuItem" xmi:id="_YFonEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Open a dialogue to create a new configuration" mnemonics="N" command="_dBXa0HtXEeeIzM7lvAxMoQ"/>
           <children xsi:type="menu:HandledMenuItem" xmi:id="_ZvsVIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.load" label="Load" tooltip="Select and load a new configuration into the instrument" mnemonics="L" command="_McQNQHtYEeeIzM7lvAxMoQ"/>
           <children xsi:type="menu:HandledMenuItem" xmi:id="_aVTjoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Select and edit an existing configuration" mnemonics="E" command="_FgXuUHtaEeeIzM7lvAxMoQ"/>
-          <children xsi:type="menu:HandledMenuItem" xmi:id="_a6AMIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and deleted a configuration" mnemonics="D" command="_kcuRwHtaEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_a6AMIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and delete a configuration" mnemonics="D" command="_kcuRwHtaEeeIzM7lvAxMoQ"/>
         </children>
         <children xsi:type="menu:Menu" xmi:id="_W44gEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components" mnemonics="p">
           <children xsi:type="menu:HandledMenuItem" xmi:id="_bjqNIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new.0" label="New" tooltip="Create a new component" mnemonics="N" command="_jpCRYHtiEeeIzM7lvAxMoQ"/>
@@ -24,9 +24,9 @@
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_DPuvMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new.1" label="New"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit.1" label="Edit"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete.1" label="Delete"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.new" label="New" tooltip="Open a dialogue to create a new synoptic" mnemonics="N" command="_dy2SQKjiEeeauN8XvomWPw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.edit" label="Edit" tooltip="Select and edit an existing synoptic" mnemonics="E" command="_OHOt8KjiEeeauN8XvomWPw"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.delete" label="Delete" tooltip="Select and delete a synoptic" mnemonics="D" command="_lNuIYKjiEeeauN8XvomWPw"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Dm7HMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ioc" label="IOC" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_gCw1sGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>
@@ -73,6 +73,9 @@
   <handlers xmi:id="_lxEfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponentsHandler" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_OtF9cJojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.instrument.switch" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler" command="_QRQe4JojEeeX2q28a93CXA"/>
   <handlers xmi:id="_xaoFYJxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.managermode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler" command="_5YCA0JxFEeeX2q28a93CXA"/>
+  <handlers xmi:id="_ugTuEKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynopticHandler" command="_dy2SQKjiEeeauN8XvomWPw"/>
+  <handlers xmi:id="_I6cqkKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler" command="_OHOt8KjiEeeauN8XvomWPw"/>
+  <handlers xmi:id="_MVo_EKjjEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.synoptic.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynopticHandler" command="_lNuIYKjiEeeauN8XvomWPw"/>
   <handlers xmi:id="_lVRM8KkFEeeR15ll_ruI0A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.colours.alternative" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.displayoptions.AlternativeColourSchemeHandler" command="_aKnSYKkFEeeR15ll_ruI0A"/>
   <handlers xmi:id="_A4TZQKkIEeeR15ll_ruI0A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.colours.standard" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.displayoptions.StandardColourSchemeHandler" command="_J1L8EKkFEeeR15ll_ruI0A"/>
   <handlers xmi:id="_Zp_q4KkAEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.ioc.startStop" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlHandler" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>
@@ -183,26 +186,27 @@
     </children>
   </snippets>
   <snippets xsi:type="advanced:Perspective" xmi:id="_jl-k8KjWEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic" label="Synoptic" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.synoptic/icons/earth16_32x24.png">
-    <children xsi:type="basic:PartSashContainer" xmi:id="_MvPBQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.17">
-      <children xsi:type="basic:PartSashContainer" xmi:id="_Nt8sQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_SvbCEKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.21" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_ToafkKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+    <children xsi:type="basic:PartSashContainer" xmi:id="_MvPBQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Nt8sQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_SvbCEKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
+          <children xsi:type="advanced:Placeholder" xmi:id="_ToafkKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_TGYJgKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_UJhBgKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.18" containerData="68">
+          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_QLdbEKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="70" horizontal="true">
         <children xsi:type="basic:PartSashContainer" xmi:id="_OWNmIKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="60">
-          <children xsi:type="basic:PartStack" xmi:id="_aXEI4KjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.17" containerData="15">
-            <children xsi:type="basic:Part" xmi:id="_M2iGoKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigatorView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView" label="Navigator"/>
+          <children xsi:type="basic:PartStack" xmi:id="_NpApcKj5EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.17" containerData="10" selectedElement="_RFWNcKj5EeeauN8XvomWPw">
+            <children xsi:type="basic:Part" xmi:id="_RFWNcKj5EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SelectorView" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SelectorView" label="Select synoptic"/>
+            <children xsi:type="basic:Part" xmi:id="_M2iGoKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigatorView" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView" label="Navigate synoptic"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_auLoYKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="85">
+          <children xsi:type="basic:PartStack" xmi:id="_auLoYKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="90">
             <children xsi:type="basic:Part" xmi:id="_WaS74KjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView" label="Overview"/>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_TJLwcKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" containerData="40">
-          <children xsi:type="basic:Part" xmi:id="_8NwkQKjcEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticTargetView" containerData="" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView"/>
+        <children xsi:type="basic:PartStack" xmi:id="_TJLwcKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.15" toBeRendered="false" containerData="40">
+          <children xsi:type="advanced:Placeholder" xmi:id="_BGCGgKj4EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView" toBeRendered="false"/>
         </children>
       </children>
     </children>
@@ -317,16 +321,19 @@
     </children>
   </snippets>
   <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.current" commandName="Edit or View current configuration" description="Edit or view current configuration depending on permissions"/>
-  <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration in ibex" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_McQNQHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.load" commandName="Load configuration" description="Select and load a new configuration into the instrument" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_FgXuUHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.edit" commandName="Edit configuration" description="Select and edit an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kcuRwHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.delete" commandName="Delete configuration" description="Delete an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
-  <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component in ibex" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kNSN8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit component" description="Select and edit an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_bjIjUHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.waitfor" commandName="Wait for Instrument" description="Command indicating that the client is waiting for the instrument"/>
   <commands xmi:id="_QRQe4JojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchinstruments" commandName="Switch Instruments"/>
   <commands xmi:id="_5YCA0JxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.managermode" commandName="Manager mode" description="Manager mode"/>
+  <commands xmi:id="_OHOt8KjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.edit" commandName="Edit a synoptic" description="Select and edit an existing synoptic" category="_Vi3ZEKjiEeeauN8XvomWPw"/>
+  <commands xmi:id="_dy2SQKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.new" commandName="New synoptic" description="Create a new synoptic" category="_Vi3ZEKjiEeeauN8XvomWPw"/>
+  <commands xmi:id="_lNuIYKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.delete" commandName="Delete synoptic" description="Delete an existing synoptic" category="_Vi3ZEKjiEeeauN8XvomWPw"/>
   <commands xmi:id="_J1L8EKkFEeeR15ll_ruI0A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.colours.standard" commandName="Standard Colour Scheme" description="Switch to Standard Colour Scheme"/>
   <commands xmi:id="_aKnSYKkFEeeR15ll_ruI0A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.colours.alternative" commandName="Alternative Colour Scheme" description="Switch to Alternative Colour Scheme"/>
   <commands xmi:id="_5dJv8Kj_Eeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.ioc.startStop" commandName="Start/Stop IOC" description="Bring up Start/Stop IOC dialog" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
@@ -344,5 +351,6 @@
   <addons xmi:id="_2jV5N2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <categories xmi:id="_La_dMHtbEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.category.configuration" name="Configuration CRUD" description="Configuration creation, read, update, deletion"/>
   <categories xmi:id="_DlkfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.category.component" name="Component CRUD" description="Component creation, read, update, deletion"/>
+  <categories xmi:id="_Vi3ZEKjiEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.category.synoptic" name="Synoptic CRUD" description="Synoptic creation, read, update, deletion"/>
   <categories xmi:id="_MKzh4KkAEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.category.ioc" name="IOC" description="IOC related commands"/>
 </application:Application>
