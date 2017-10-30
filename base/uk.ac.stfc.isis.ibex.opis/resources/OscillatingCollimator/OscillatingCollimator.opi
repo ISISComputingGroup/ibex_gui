@@ -319,7 +319,7 @@ pv.setValue(1)
       <wuid>-23027657:15ecdd7f624:-7bf4</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Current postition:</text>
+      <text>Current angle:</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
