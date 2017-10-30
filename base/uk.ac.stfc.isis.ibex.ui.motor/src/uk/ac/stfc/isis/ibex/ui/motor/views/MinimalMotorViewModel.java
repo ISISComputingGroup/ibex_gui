@@ -41,13 +41,14 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
  * The view model for an individual motor.
  */
 public class MinimalMotorViewModel extends ModelObject {
-
+	
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
@@ -61,6 +62,17 @@ public class MinimalMotorViewModel extends ModelObject {
     private Font font;
     private Color color;
 	
+    public MinimalMotorViewModel() {
+    	DisplayPreferences displayPrefsModel = DisplayPreferences.getInstance();
+    	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				setPalette((MotorBackgroundPalette)evt.getNewValue());
+			}
+		});
+        setPalette(displayPrefsModel.getMotorBackgroundPalette());
+    }
+    
     private Font chooseFont() {
         if (enabled == null) {
             return DISABLEDFONT;
