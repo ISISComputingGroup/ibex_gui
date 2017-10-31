@@ -48,12 +48,15 @@ public class DescriptionsProvider extends Provider {
     private static final String CATEGORY_ALL = "All devices";
 	
 	private final Descriptions descriptions;
+	
+	private final Map<String, List<String>> opiCategories;
     	
 	/**
 	 * Provides information from opi_info.xml.
 	 */
 	public DescriptionsProvider() {
 		descriptions = importDescriptions();
+		opiCategories = constructOpiCategories();
 	}
 	
 	/**
@@ -63,6 +66,7 @@ public class DescriptionsProvider extends Provider {
 	 */
 	public DescriptionsProvider(Descriptions descriptions) {
 		this.descriptions = descriptions;
+		opiCategories = constructOpiCategories();
 	}
 	
     /**
@@ -143,12 +147,24 @@ public class DescriptionsProvider extends Provider {
 	    // If all else fails return an empty string
 		return "";
 	}
-
+	
     /**
      * Get a Map of lists, where each key in the map is a category and each value is a list of items in that category.
      * @return the map
      */
-    public Map<String, List<String>> getOpiCategories() {
+	public Map<String, List<String>> getOpiCategories() {
+	    return opiCategories;
+	}
+
+	/**
+     * Constructs a Map of lists, where each key in the map is a category and each value is a list of items in that category.
+     * 
+     * Makes both the map and the lists unmodifiable to prevent accidentally changing it since an instance of this class might
+     * be shared among multiple other classes.
+     * 
+     * @return the map
+     */
+    private Map<String, List<String>> constructOpiCategories() {
         Map<String, List<String>> map = new HashMap<>();
 
         for (String opiName : getOpiList()) {
@@ -167,8 +183,13 @@ public class DescriptionsProvider extends Provider {
                 addOpiToMap(map, category, opiName);
             }
         }
-
-        return map;
+        
+        // Make map and lists unmodifiable to prevent accidentally changing since they are shared.
+        Map<String, List<String>> returnedMap = new HashMap<>();
+        for (String key : map.keySet()) {
+            returnedMap.put(key, Collections.unmodifiableList(map.get(key)));
+        }    
+        return Collections.unmodifiableMap(returnedMap);
     }
     
     /**

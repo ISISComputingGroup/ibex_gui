@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -149,7 +148,8 @@ public class TargetSelectorPanel extends Composite {
     @SuppressWarnings("checkstyle:magicnumber") // Gui method
     private void drawTargetTree() {
 
-        final List<String> keyset = new ArrayList<>(new TreeSet<>(availableOpis.keySet()));
+        final List<String> keyset = new ArrayList<>(availableOpis.keySet());
+        
         Collections.sort(keyset);
 
         final TreeViewer treeViewer = new TreeViewer(this);
