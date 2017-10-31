@@ -182,11 +182,15 @@ public class TargetSelectorPanel extends Composite {
         tree.addSelectionListener(new SelectionListener() {         
             @Override
             public void widgetSelected(SelectionEvent e) {
-                TreeItem item = tree.getSelection()[0];
-
-                // Check if it was an item rather than a category.
-                if ((boolean) item.getData()) {
-                    viewModel.setOpi(item.getText(0));
+                try {
+                    TreeItem item = tree.getSelection()[0];
+    
+                    // Check if it was an item rather than a category.
+                    if ((boolean) item.getData()) {
+                        viewModel.setOpi(item.getText(0));
+                    }
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    // Caught if nothing selected. Do nothing.
                 }
             }
             
