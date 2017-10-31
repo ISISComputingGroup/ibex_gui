@@ -22,85 +22,67 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 
+/**
+ * A bar of icons that give information about an axis at a glance.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotionIndicator extends Composite {
 
 	private final Display display = Display.getDefault();
 
-	private Label lowerDirectionLimit;
-	private Label leftDirection;
-	private Label home;
-	private Label rightDirection;
-	private Label upperDirectionLimit;
-	
-	private EnableableImage lowerLimit;
-	private EnableableImage leftArrow;
-	private EnableableImage homeImage;
-	private EnableableImage rightArrow;
-	private EnableableImage upperLimit;
-	
-	private Composite composite;
-	
+    private EnableableImageLabel lowerDirectionLimit;
+    private EnableableImageLabel leftDirection;
+    private EnableableImageLabel home;
+    private EnableableImageLabel rightDirection;
+    private EnableableImageLabel upperDirectionLimit;
+
+    /**
+     * Creates an indicator bar that gives information about an axis at a
+     * glance.
+     * 
+     * @param parent
+     *            The composite that this indicator is held in.
+     * @param style
+     *            The style of the indicator.
+     */
 	public MinimalMotionIndicator(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gridLayout1 = new GridLayout(1, false);
+        GridLayout gridLayout1 = new GridLayout(5, false);
 		gridLayout1.verticalSpacing = 0;
 		gridLayout1.marginWidth = 0;
 		gridLayout1.marginHeight = 0;
 		gridLayout1.horizontalSpacing = 0;
 		setLayout(gridLayout1);
 		
-		composite = new Composite(this, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, true, 1, 1));
+        lowerDirectionLimit = new EnableableImageLabel(this, getImage("lower_limit_minimal.png"));
+
+        leftDirection = new EnableableImageLabel(this, getImage("arrow_left_minimal.png"));
 		
-		GridLayout gridLayout = new GridLayout(5, false);
-		gridLayout.horizontalSpacing = 0;
-		gridLayout.marginHeight = 0;
-		gridLayout.marginWidth = 0;
-		gridLayout.verticalSpacing = 0;
-		composite.setLayout(gridLayout);
+        home = new EnableableImageLabel(this, getImage("home_minimal.png"));
 		
-		lowerDirectionLimit = new Label(composite, SWT.NONE);
-		lowerDirectionLimit.setAlignment(SWT.CENTER);
-		lowerDirectionLimit.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/lower_limit_minimal.png"));
+        rightDirection = new EnableableImageLabel(this, getImage("arrow_right_minimal.png"));
 		
-		leftDirection = new Label(composite, SWT.NONE);
-		leftDirection.setAlignment(SWT.CENTER);
-		leftDirection.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/arrow_left_minimal.png"));
+        upperDirectionLimit = new EnableableImageLabel(this, getImage("upper_limit_minimal.png"));
 		
-		home = new Label(composite, SWT.NONE);
-		home.setAlignment(SWT.CENTER);
-		home.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/home_minimal.png"));
-		
-		rightDirection = new Label(composite, SWT.NONE);
-		rightDirection.setAlignment(SWT.CENTER);
-		rightDirection.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/arrow_right_minimal.png"));
-		
-		upperDirectionLimit = new Label(composite, SWT.NONE);
-		upperDirectionLimit.setAlignment(SWT.CENTER);
-		upperDirectionLimit.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/upper_limit_minimal.png"));
-		
-		setImages(parent);
 		setInitialState();
-		setMouseListeners();
 	}
 
+    /**
+     * Set the motor that the indicator is pointing to.
+     * 
+     * @param motor
+     *            The motor that the indicator is displaying information about.
+     */
 	public void setMotor(final Motor motor) {
 	
 		setArrows(motor);
@@ -149,26 +131,6 @@ public class MinimalMotionIndicator extends Composite {
 		rightDirection.setBackground(color);
 		upperDirectionLimit.setBackground(color);
 	}
-
-	private void setMouseListeners() {
-		final Composite self = this;
-		final MouseAdapter forwardDoubleClick = new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				Event event = new Event();
-				event.widget = self;
-		
-				self.notifyListeners(SWT.MouseDoubleClick, event);
-			}
-		};
-		
-		composite.addMouseListener(forwardDoubleClick);
-		lowerDirectionLimit.addMouseListener(forwardDoubleClick);
-		leftDirection.addMouseListener(forwardDoubleClick);
-		home.addMouseListener(forwardDoubleClick);
-		rightDirection.addMouseListener(forwardDoubleClick);
-		upperDirectionLimit.addMouseListener(forwardDoubleClick);
-	}
 	
 	private void setInitialState() {
 		setLowerLimit(false);
@@ -178,19 +140,19 @@ public class MinimalMotionIndicator extends Composite {
 	}
 	
 	private void setUpperLimit(final Boolean enable) {
-		setLimit(upperDirectionLimit, upperLimit, enable);
+        setLimit(upperDirectionLimit, enable);
 
 	}
 	
 	private void setLowerLimit(final Boolean enable) {
-		setLimit(lowerDirectionLimit, lowerLimit, enable);
+        setLimit(lowerDirectionLimit, enable);
 	}
 
-	private void setLimit(final Label limit, final EnableableImage image, final Boolean enable) {
+    private void setLimit(final EnableableImageLabel limit, final Boolean enable) {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				limit.setImage(image.isEnabled(disableIfNull(enable)));
+                limit.enable(disableIfNull(enable));
 			}
 		});
 	}
@@ -207,25 +169,25 @@ public class MinimalMotionIndicator extends Composite {
 	private void setArrows(MotorDirection motorDirection, Boolean moving) {
 		
 		if (moving == null || !moving) {
-			leftDirection.setImage(leftArrow.disabled());
-			rightDirection.setImage(rightArrow.disabled());
+            leftDirection.disable();
+            rightDirection.disable();
 			
 			return;
 		}
 		
 		switch (motorDirection) {
 			case POSITIVE:
-				leftDirection.setImage(leftArrow.disabled());
-				rightDirection.setImage(rightArrow.enabled());
+                leftDirection.disable();
+                rightDirection.enable();
 				return;
 			case NEGATIVE:
-				leftDirection.setImage(leftArrow.enabled());
-				rightDirection.setImage(rightArrow.disabled());
+                leftDirection.enable();
+                rightDirection.disable();
 				return;
             default:
 			case UNKNOWN:
-				leftDirection.setImage(leftArrow.disabled());
-				rightDirection.setImage(rightArrow.disabled());
+                leftDirection.disable();
+                rightDirection.disable();
 				return;
 		}
 	}
@@ -234,28 +196,9 @@ public class MinimalMotionIndicator extends Composite {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				home.setImage(homeImage.isEnabled(disableIfNull(enable)));				
+				home.enable(disableIfNull(enable));				
 			}
 		});
-	}
-	
-	private void setImages(Composite parent) {
-		Display display = parent.getDisplay();
-		lowerLimit = new EnableableImage(display, getImage("lower_limit_minimal.png"));
-		leftArrow = new EnableableImage(display, getImage("arrow_left_minimal.png"));
-		homeImage = new EnableableImage(display, getImage("home_minimal.png"));
-		rightArrow = new EnableableImage(display, getImage("arrow_right_minimal.png"));
-		upperLimit = new EnableableImage(display, getImage("upper_limit_minimal.png"));
-	}
-	
-	@Override
-	public void dispose() {
-		super.dispose();
-		lowerLimit.dispose();
-		leftArrow.dispose();
-		homeImage.dispose();
-		rightArrow.dispose();
-		upperLimit.dispose();
 	}
 	
 	private Image getImage(String image) {

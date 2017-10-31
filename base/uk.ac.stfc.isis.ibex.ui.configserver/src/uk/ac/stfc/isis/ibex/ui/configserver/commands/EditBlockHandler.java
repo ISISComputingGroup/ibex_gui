@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
 
@@ -43,9 +42,12 @@ public final class EditBlockHandler extends EditConfigHandler {
         this.blockName = blockName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         new EditBlockHelper(shell(), SERVER).createDialog(blockName);
-        return null;
     }
+
 }

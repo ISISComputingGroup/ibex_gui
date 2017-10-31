@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -44,13 +43,15 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
 		super(SERVER.saveAsComponent());
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public void safeExecute(ExecutionEvent event) {
         ConfigSelectionDialog selectionDialog =
                 new ConfigSelectionDialog(shell(), TITLE, SERVER.componentsInfo().getValue(), true, true);
         if (selectionDialog.open() == Window.OK) {
             (new EditComponentHelper(shell(), SERVER)).createDialog(selectionDialog.selectedConfig(), false);
         }
-        return null;
     }
 }
