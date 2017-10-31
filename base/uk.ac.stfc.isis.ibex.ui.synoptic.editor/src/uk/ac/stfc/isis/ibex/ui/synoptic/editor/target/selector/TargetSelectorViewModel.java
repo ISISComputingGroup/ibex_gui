@@ -74,6 +74,9 @@ public class TargetSelectorViewModel extends ModelObject {
                     setOpi(NONE_OPI, false);
                     setEnabled(false);
                 }
+                
+                // Re-fire the event so that it can be listened to in the view
+                firePropertyChange("selectedComponents", evt.getOldValue(), evt.getNewValue());
             }
         });
     }

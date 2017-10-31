@@ -212,6 +212,15 @@ public class TargetSelectorPanel extends Composite {
                 }
             }
         });
+        
+        viewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                for (TreeItem category : tree.getItems()) {
+                    category.setExpanded(false);
+                }
+            }
+        });
          
     }
     
