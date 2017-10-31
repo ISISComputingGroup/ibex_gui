@@ -44,8 +44,15 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 public class DescriptionsProvider extends Provider {
 	
 	private static final String FILENAME = "opi_info.xml";
-    private static final String CATEGORY_UNKNOWN = "Uncategorised devices";
-    private static final String CATEGORY_ALL = "All devices";
+	/**
+	 * Name of the category containing uncategorised devices.
+	 */
+    public static final String CATEGORY_UNKNOWN = "Uncategorised devices";
+    
+    /**
+     * Name of the category containing all devices.
+     */
+    public static final String CATEGORY_ALL = "All devices";
 	
 	private final Descriptions descriptions;
 	
@@ -87,7 +94,7 @@ public class DescriptionsProvider extends Provider {
      */
 	public OpiDescription getDescription(String name) {
 		if (!descriptions.getOpis().containsKey(name)) {
-            return new OpiDescription("", "", "", new ArrayList<MacroInfo>());
+            return new OpiDescription("", "", "", new ArrayList<MacroInfo>(), Collections.<String>emptyList());
 		}
 		
 		return descriptions.getOpis().get(name);

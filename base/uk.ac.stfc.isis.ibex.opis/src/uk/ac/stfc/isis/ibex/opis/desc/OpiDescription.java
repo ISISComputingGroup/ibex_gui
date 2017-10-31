@@ -111,11 +111,12 @@ public class OpiDescription {
      * @param description the description of the OPI
      * @param macros the macros for the OPI
      */
-    public OpiDescription(String type, String path, String description, List<MacroInfo> macros) {
+    public OpiDescription(String type, String path, String description, List<MacroInfo> macros, List<String> categories) {
         this.type = type;
 		this.path = path;
 		this.description = description;
 		this.macros = macros;
+		this.categories = categories;
 	}
 
     /**
