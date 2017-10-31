@@ -189,7 +189,7 @@ public class TargetSelectorPanel extends Composite {
                     if ((boolean) item.getData()) {
                         viewModel.setOpi(item.getText(0));
                     }
-                } catch (ArrayIndexOutOfBoundsException ex) {
+                } catch (ArrayIndexOutOfBoundsException | NullPointerException ex) {
                     // Caught if nothing selected. Do nothing.
                 }
             }
@@ -207,7 +207,7 @@ public class TargetSelectorPanel extends Composite {
                 try {
                     TreeItem item = tree.getSelection()[0];
                     item.setExpanded(!item.getExpanded());
-                } catch (NullPointerException e) {
+                } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
                     // Caught if nothing selected. Do nothing.
                 }
             }
@@ -219,6 +219,7 @@ public class TargetSelectorPanel extends Composite {
                 for (TreeItem category : tree.getItems()) {
                     category.setExpanded(false);
                 }
+                tree.setSelection(new TreeItem[0]); // Deselect all.
             }
         });
          
