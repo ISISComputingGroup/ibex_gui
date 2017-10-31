@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Serialisable class to queue a script in Nicos.
  */
-public class QueueScript extends NICOSMessage {
+public class QueueScript extends NICOSMessage<String> {
     
     /**
      * Constructor.

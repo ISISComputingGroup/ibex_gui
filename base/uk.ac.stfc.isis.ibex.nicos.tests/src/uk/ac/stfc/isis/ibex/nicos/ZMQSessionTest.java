@@ -81,35 +81,35 @@ public class ZMQSessionTest {
     public void GIVEN_NICOS_message_with_three_parts_WHEN_message_sent_THEN_three_parts_sent() {
         sendBlankMessage(3);
 
-        verify(zmq, times(3)).send(any(), any());
+        verify(zmq, times(3)).send(anyString(), anyBoolean());
     }
 
     @Test
     public void GIVEN_NICOS_message_with_five_parts_WHEN_message_sent_THEN_five_parts_sent() {
         sendBlankMessage(5);
 
-        verify(zmq, times(5)).send(any(), any());
+        verify(zmq, times(5)).send(anyString(), anyBoolean());
     }
 
     @Test
     public void GIVEN_NICOS_message_with_zero_parts_WHEN_message_sent_THEN_nothing_sent() {
         sendBlankMessage(0);
 
-        verify(zmq, never()).send(any(), any());
+        verify(zmq, never()).send(anyString(), anyBoolean());
     }
 
     @Test
     public void GIVEN_NICOS_message_with_one_part_WHEN_message_sent_THEN_one_part_sent() {
         sendBlankMessage(1);
 
-        verify(zmq, times(1)).send(any(), any());
+        verify(zmq, times(1)).send(anyString(), anyBoolean());
     }
 
     @Test
     public void GIVEN_NICOS_message_with_one_part_WHEN_message_sent_THEN_more_flag_is_false() {
         sendBlankMessage(1);
 
-        verify(zmq, times(1)).send(any(), eq(false));
+        verify(zmq, times(1)).send(anyString(), eq(false));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class ZMQSessionTest {
         sendBlankMessage(2);
 
         ArgumentCaptor<Boolean> more = ArgumentCaptor.forClass(Boolean.class);
-        verify(zmq, times(2)).send(any(), more.capture());
+        verify(zmq, times(2)).send(anyString(), more.capture());
 
         assertEquals(true, more.getAllValues().get(0));
         assertEquals(false, more.getAllValues().get(1));
@@ -126,7 +126,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_message_failing_to_send_WHEN_message_sent_THEN_fail_message_returned() {
         String failedMessage = "FAIL";
-        doThrow(new ZMQException(failedMessage, 0)).when(zmq).send(any(), any());
+        doThrow(new ZMQException(failedMessage, 0)).when(zmq).send(anyString(), anyBoolean());
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
@@ -174,7 +174,7 @@ public class ZMQSessionTest {
         when(zmq.receiveString()).thenReturn("");
         sendBlankMessage(2);
 
-        verify(mockMessage, never()).parseResponse(any());
+        verify(mockMessage, never()).parseResponse(anyString());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class ZMQSessionTest {
         when(zmq.receiveString()).thenReturn("ok");
         sendBlankMessage(2);
 
-        verify(mockMessage).parseResponse(any());
+        verify(mockMessage).parseResponse(anyString());
     }
 
     @Test
@@ -201,7 +201,7 @@ public class ZMQSessionTest {
             throws ConversionException {
         ReceiveMessage recieved = mock(ReceiveMessage.class);
         when(zmq.receiveString()).thenReturn("ok");
-        when(mockMessage.parseResponse(any())).thenReturn(recieved);
+        when(mockMessage.parseResponse(anyString())).thenReturn(recieved);
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(true, resp.isSent());
@@ -212,7 +212,7 @@ public class ZMQSessionTest {
     public void GIVEN_unparsable_message_from_server_WHEN_message_sent_THEN_unexpected_response_message_returned()
             throws ConversionException {
         when(zmq.receiveString()).thenReturn("ok");
-        doThrow(new ConversionException("")).when(mockMessage).parseResponse(any());
+        doThrow(new ConversionException("")).when(mockMessage).parseResponse(anyString());
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());

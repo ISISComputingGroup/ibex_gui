@@ -115,7 +115,7 @@ public class NicosModelTest {
 
     @Test
     public void GIVEN_failing_session_connection_WHEN_connect_first_called_THEN_first_status_is_connecting() {
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any());
+        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
@@ -126,7 +126,7 @@ public class NicosModelTest {
 
     @Test
     public void GIVEN_failing_session_connection_WHEN_connect_called_THEN_final_status_is_failed() {
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any());
+        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
@@ -138,7 +138,7 @@ public class NicosModelTest {
     @Test
     public void GIVEN_failing_session_connection_WHEN_connect_called_THEN_final_error_message_is_failure_message() {
         String failureMessage = "FAILED";
-        doThrow(new ZMQException(failureMessage, 1)).when(zmqSession).connect(any());
+        doThrow(new ZMQException(failureMessage, 1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -247,7 +247,7 @@ public class NicosModelTest {
     @Test
     public void WHEN_connect_called_THEN_session_connect_called() {
         connectSuccessfully();
-        verify(zmqSession, times(1)).connect(any());
+        verify(zmqSession, times(1)).connect(any(InstrumentInfo.class));
     }
 
     @Test
@@ -270,7 +270,7 @@ public class NicosModelTest {
 
     @Test
     public void GIVEN_connection_failed_WHEN_connect_called_THEN_banner_message_not_called() {
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any());
+        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(zmqSession, never()).sendMessage(sendMessage);
@@ -304,7 +304,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_failed_connection_THEN_connection_job_resumed() {
         connectSuccessfully();
 
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any());
+        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
         model.connect(new InstrumentInfo("", "", "TEST"));
 
         ArgumentCaptor<Boolean> running = ArgumentCaptor.forClass(Boolean.class);

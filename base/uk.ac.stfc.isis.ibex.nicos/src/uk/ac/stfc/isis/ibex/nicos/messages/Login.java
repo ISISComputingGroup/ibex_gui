@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Class to log in to Nicos.
  */
-public class Login extends NICOSMessage {
+public class Login extends NICOSMessage<Map<String, String>> {
     /**
      * Creates the login command for NICOS.
      */

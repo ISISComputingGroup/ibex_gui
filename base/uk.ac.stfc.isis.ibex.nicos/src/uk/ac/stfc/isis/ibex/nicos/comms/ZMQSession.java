@@ -91,7 +91,7 @@ public class ZMQSession {
      *            The message to send.
      * @return The response.
      */
-    public SendMessageDetails sendMessage(NICOSMessage message) {
+    public SendMessageDetails sendMessage(NICOSMessage<?> message) {
         try {
             sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
@@ -102,7 +102,7 @@ public class ZMQSession {
         return getServerResponse(message);
     }
 
-    private SendMessageDetails getServerResponse(NICOSMessage sentMessage) {
+    private SendMessageDetails getServerResponse(NICOSMessage<?> sentMessage) {
         String status = zmq.receiveString();
         zmq.receiveString(); // Do not care
         String resp = zmq.receiveString();

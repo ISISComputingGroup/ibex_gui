@@ -91,7 +91,7 @@ public class NicosModel extends ModelObject {
             return;
         }
 
-        NICOSMessage getBanner = new GetBanner();
+        GetBanner getBanner = new GetBanner();
         SendMessageDetails response = sendMessageToNicos(getBanner);
         if (!response.isSent()) {
             failConnection(response.getFailureReason());
@@ -167,7 +167,7 @@ public class NicosModel extends ModelObject {
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(NICOSMessage nicosMessage) {
+    private SendMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
         return session.sendMessage(nicosMessage);
     }
 
