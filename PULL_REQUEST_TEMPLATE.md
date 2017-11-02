@@ -8,22 +8,18 @@
 
 ### Acceptance criteria
 
-*List the acceptance criteria for the PR*
-*The aim is provide information to help the reviewer*
+*List the acceptance criteria for the PR. The aim is provide information to help the reviewer*
 
 ### Unit tests
 
-*Give an overview of unit tests you have added or modified, if applicable*
-*The aim is provide information to help the reviewer*
+*Give an overview of unit tests you have added or modified, if applicable. The aim is provide information to help the reviewer*
 
 ### System tests
 
-*Mention any automated tests or manual tests that you have added or modified, if applicable*
-*The aim is provide information to help the reviewer*
+*Mention any automated tests or manual tests that you have added or modified, if applicable. The aim is provide information to help the reviewer*
 
 ### Documentation
-*Highlight and provide a link to any additions or changes to the documentation, if applicable*
-*The aim is provide information to help the reviewer*
+*Highlight and provide a link to any additions or changes to the documentation, if applicable. The aim is provide information to help the reviewer*
 
 ---
 
