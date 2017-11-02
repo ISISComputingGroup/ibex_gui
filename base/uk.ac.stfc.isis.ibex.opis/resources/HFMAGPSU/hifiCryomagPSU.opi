@@ -372,7 +372,8 @@ $(pv_value)</tooltip>
           <transparent>true</transparent>
           <pv_value />
           <auto_size>false</auto_size>
-          <text>######</text>
+          <text>GAUSS&#xD;
+</text>
           <rotation_angle>0.0</rotation_angle>
           <scripts />
           <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -385,7 +386,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:OUTPUTMODE</pv_name>
+          <pv_name></pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -401,7 +402,7 @@ $(pv_value)</tooltip>
           <width>85</width>
           <x>227</x>
           <name>Text Update</name>
-          <y>30</y>
+          <y>34</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -968,7 +969,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:OUTPUT</pv_name>
+          <pv_name>$(PV_ROOT)_01:GAUSS</pv_name>
           <border_color>
             <color red="0" green="0" blue="0" />
           </border_color>
@@ -3449,6 +3450,8 @@ $(pv_value)</tooltip>
 
 pv = widget.getPV()
 
+val = pvUtil.getInt(pv)
+
 if val == "AMPS":
 	pv.setValue("TESLA")
 else:
@@ -3519,7 +3522,16 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <text>######</text>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts>
+      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+widget.setText("hey!")
+]]></scriptText>
+        <pv trig="true"></pv>
+      </path>
+    </scripts>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <show_units>true</show_units>
     <height>27</height>
@@ -3530,7 +3542,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(PV_ROOT)_01:OUTPUTMODE</pv_name>
+    <pv_name></pv_name>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3547,6 +3559,57 @@ $(pv_value)</tooltip>
     <x>576</x>
     <name>Text Update</name>
     <y>366</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>2ca4d508:15f2f393986:-1e4e</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>27</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT)_01:OUTPUT</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>85</width>
+    <x>576</x>
+    <name>output</name>
+    <y>202</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
