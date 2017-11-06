@@ -940,29 +940,15 @@
 			</value>
 		</entry>
 		<entry>
-			<key>HLG</key>
+			<key>SKF MB350 Chopper</key>
 			<value>
-				<type>HE_LEVEL_GAUGE</type>
-				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<type>CHOPPER</type>
+				<path>skf_mb350.opi</path>
+				<description>The OPI for the SKF MB350 Chopper.</description>
 				<macros>
 					<macro>
-						<name>HLG</name>
-						<description>The HLG PV prefix (e.g. HLG_01).</description>
-					</macro>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>OscillatingCollimator</key>
-			<value>
-				<type>OSCILLATING_COLLIMATOR</type>
-				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
-				<description>The OPI for the LET oscillating collimator.</description>
-				<macros>
-					<macro>
-						<name>MOT</name>
-						<description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
+						<name>SKFMB350</name>
+						<description>The chopper PV prefix (e.g. SKFMB350_01).</description>
 					</macro>
 				</macros>
 			</value>
