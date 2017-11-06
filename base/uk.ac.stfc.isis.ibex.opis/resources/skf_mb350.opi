@@ -9,6 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)$(SKFMB350)</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -711,7 +712,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>319</height>
+    <height>283</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -862,7 +863,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>85</width>
+      <width>133</width>
       <x>132</x>
       <name>Text Update</name>
       <y>6</y>
@@ -913,7 +914,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>85</width>
+      <width>133</width>
       <x>132</x>
       <name>Text Update</name>
       <y>30</y>
@@ -1050,7 +1051,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>114</y>
+      <y>108</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1102,7 +1103,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>111</y>
+      <y>105</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1144,7 +1145,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>144</y>
+      <y>132</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1196,7 +1197,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>141</y>
+      <y>129</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1238,7 +1239,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>174</y>
+      <y>156</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1290,7 +1291,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>171</y>
+      <y>153</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1332,7 +1333,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>204</y>
+      <y>180</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1384,7 +1385,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>201</y>
+      <y>177</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1426,7 +1427,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>234</y>
+      <y>204</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1478,7 +1479,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>231</y>
+      <y>201</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1520,7 +1521,7 @@ $(pv_value)</tooltip>
       <width>121</width>
       <x>0</x>
       <name>Label_15</name>
-      <y>264</y>
+      <y>228</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1572,7 +1573,7 @@ $(pv_value)</tooltip>
       <x>132</x>
       <name>chopper_on_rbv</name>
       <data_type>0</data_type>
-      <y>261</y>
+      <y>225</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1663,7 +1664,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>85</width>
+      <width>133</width>
       <x>132</x>
       <name>Text Update</name>
       <y>54</y>
@@ -1685,7 +1686,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>517</height>
+    <height>427</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1851,7 +1852,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_9</name>
       <data_type>0</data_type>
-      <y>33</y>
+      <y>27</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1904,7 +1905,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_10</name>
       <data_type>0</data_type>
-      <y>63</y>
+      <y>51</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1957,7 +1958,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_11</name>
       <data_type>0</data_type>
-      <y>93</y>
+      <y>75</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2010,7 +2011,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_12</name>
       <data_type>0</data_type>
-      <y>123</y>
+      <y>99</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2063,7 +2064,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_13</name>
       <data_type>0</data_type>
-      <y>153</y>
+      <y>123</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2116,7 +2117,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_14</name>
       <data_type>0</data_type>
-      <y>183</y>
+      <y>147</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2169,7 +2170,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_15</name>
       <data_type>0</data_type>
-      <y>213</y>
+      <y>171</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2222,7 +2223,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_8</name>
       <data_type>0</data_type>
-      <y>246</y>
+      <y>195</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2275,7 +2276,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_9</name>
       <data_type>0</data_type>
-      <y>276</y>
+      <y>219</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2328,7 +2329,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_10</name>
       <data_type>0</data_type>
-      <y>306</y>
+      <y>243</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2381,7 +2382,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_11</name>
       <data_type>0</data_type>
-      <y>336</y>
+      <y>267</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2434,7 +2435,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_12</name>
       <data_type>0</data_type>
-      <y>366</y>
+      <y>291</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2487,7 +2488,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_13</name>
       <data_type>0</data_type>
-      <y>396</y>
+      <y>315</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2540,7 +2541,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_14</name>
       <data_type>0</data_type>
-      <y>426</y>
+      <y>339</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2593,7 +2594,7 @@ $(pv_value)</tooltip>
       <x>234</x>
       <name>LED_15</name>
       <data_type>0</data_type>
-      <y>456</y>
+      <y>361</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -2635,7 +2636,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>36</y>
+      <y>30</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2676,7 +2677,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>66</y>
+      <y>54</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2717,7 +2718,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>96</y>
+      <y>78</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2758,7 +2759,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>126</y>
+      <y>102</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2799,7 +2800,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>156</y>
+      <y>126</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2840,7 +2841,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>186</y>
+      <y>150</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2881,7 +2882,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>216</y>
+      <y>174</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2922,7 +2923,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>249</y>
+      <y>198</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2963,7 +2964,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>279</y>
+      <y>222</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3004,7 +3005,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>309</y>
+      <y>246</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3045,7 +3046,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>339</y>
+      <y>270</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3086,7 +3087,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>369</y>
+      <y>294</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3127,7 +3128,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>399</y>
+      <y>318</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3168,7 +3169,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>429</y>
+      <y>342</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3209,7 +3210,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>459</y>
+      <y>364</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
