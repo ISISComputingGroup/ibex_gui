@@ -1060,10 +1060,12 @@ $(pv_value)</tooltip>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pause = PVUtil.getString(pvs[1])
-widget.setPropertyValue("text", pause)
 
-output = display.getWidget("output").getPV()
-output = PVUtil.getDouble(output)
+constant = PVUtil.getDouble(pvs[2])
+
+output = PVUtil.getDouble(pvs[0])
+mode = PVUtil.getString(pvs[3])
+final_target = PVUtil.getDouble(pvs[4])
 
 rate = display.getWidget("ramp_rate").getPV()
 rate = PVUtil.getDouble(rate)
@@ -1071,8 +1073,13 @@ rate = PVUtil.getDouble(rate)
 target = display.getWidget("final_target").getPV()
 target = PVUtil.getDouble(target)
 
+distance = abs(output-final_target)
+
+if mode == "TESLA":
+	rate *= constant
+
 if rate != 0:
-	time = (abs(target - output)) / rate
+	time = distance/rate
 	time = round(time, 1)
 else:
 	time = 0
@@ -1080,10 +1087,17 @@ else:
 if pause == 'OFF':
 	widget.setPropertyValue("text", time)
 else:
-	widget.setPropertyValue("text", 0)
+	widget.setPropertyValue("text", "-")
+
+
+
+
 ]]></scriptText>
               <pv trig="true">$(PV_ROOT)_01:OUTPUT</pv>
               <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
+              <pv trig="false">$(PV_ROOT)_01:CONSTANT</pv>
+              <pv trig="false">$(PV_ROOT)_01:OUTPUTMODE</pv>
+              <pv trig="false">$(PV_ROOT)_01:MIDFINALTARGET</pv>
             </path>
           </scripts>
           <show_units>false</show_units>
