@@ -22,13 +22,23 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
+/**
+ * The view model for the log settings for a block.
+ */
 public class BlockLogSettingsViewModel extends ErrorMessageProvider {
+    /** The value for the periodic string. */
     public static final String PERIODIC_STRING = "Periodic Scan for Change";
+
+    /** The value for the monitor string. */
     public static final String MONITOR_STRING = "Monitor With Deadband";
 
+    /** The value for the dead-band label. */
     public static final String DEADBAND_LABEL = "Deadband:";
+
+    /** The value for the scan label. */
     public static final String SCAN_LABEL = "Rate/seconds:";
 
+    /** The message for the combo-box tool tip. */
     public static final String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
@@ -82,6 +92,11 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     private int rate;
     private float deadband;
 
+    /**
+     * Constructor.
+     * 
+     * @param editingBlock the block being edited
+     */
     public BlockLogSettingsViewModel(final Block editingBlock) {
     	this.editingBlock = editingBlock;
     	
@@ -155,14 +170,27 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         return enabled;
     }
 
+    /**
+     * Set the label text.
+     * 
+     * @param text the new text
+     */
     public void setLabelText(String text) {
         firePropertyChange("labelText", this.labelText, this.labelText = text);
     }
 
+    /**
+     * @return the label text
+     */
     public String getLabelText() {
         return labelText;
     }
 
+    /**
+     * Set the combo-box text.
+     * 
+     * @param selection the new text
+     */
     public void setComboText(String selection) {
         if (selection.equals(PERIODIC_STRING)) {
         	updatePeriodic(true, false);
@@ -172,6 +200,9 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         firePropertyChange("comboText", this.comboText, this.comboText = selection);
     }
     
+    /**
+     * @return the combo-box text
+     */
     public String getComboText() {
     	return comboText;
     }
@@ -218,10 +249,16 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         firePropertyChange("textBoxText", this.textBoxText, this.textBoxText = text);
     }
 
+    /**
+     * @return the text-box text
+     */
     public String getTextBoxText() {
         return textBoxText;
     }
     
+    /**
+     * Update the settings on the block.
+     */
     public void updateBlock() {
     	editingBlock.setLogPeriodic(periodic);
     	if (periodic) {
