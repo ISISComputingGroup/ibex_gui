@@ -959,5 +959,27 @@
 				</macros>
 			</value>
 		</entry>
+		</entry>
+			<key>Sample stack</key>
+			<value>
+				<type>SAMPLESTACK</type>
+				<path>sample_stack\sample_stack.opi</path>
+				<description>Generic sample stack OPI supporting up to 8 motors.</description>
+				<macros>
+					<macro>
+						<name>LABEL_1</name>
+						<description>The label applied to motor 1.</description>
+					</macro>
+					<macro>
+						<name>NAME_1</name>
+						<description>The alias name of motor 1 (see axes.cmd).</description>
+					</macro>
+					<macro>
+						<name>MOTOR_1</name>
+						<description>The motor PV prefix for the named motor (e.g. MTR0101).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
