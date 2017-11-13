@@ -118,8 +118,6 @@ public class PVList extends Composite {
                 BeanProperties.value("upEnabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDown),
                 BeanProperties.value("downEnabled").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(btnAdd),
-                BeanProperties.value("addEnabled").observe(viewModel));
     }
 
     /**

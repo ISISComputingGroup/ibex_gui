@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Describes the target for navigation around the synoptic.
@@ -38,6 +39,9 @@ public class TargetDescription {
 
     private String name;
     private TargetType type;
+
+    @XmlTransient
+    private boolean userSelected = true;
 	
 	@XmlElementWrapper(name = "properties")
 	@XmlElement(name = "property", type = Property.class)
@@ -58,6 +62,7 @@ public class TargetDescription {
     public TargetDescription(String name, TargetType type) {
         this.name = name;
         this.type = type;
+        this.userSelected = false;
     }
 
     /**
@@ -69,7 +74,8 @@ public class TargetDescription {
     public TargetDescription(TargetDescription other) {
         this.name = other.name;
         this.type = other.type;
-        this.properties = new ArrayList<>(other.getProperties());
+        this.userSelected = other.userSelected;
+        this.properties = new ArrayList<>(other.properties);
     }
 
     /**
@@ -107,6 +113,25 @@ public class TargetDescription {
 	public void setType(TargetType type) {
 		this.type = type;
 	}
+	
+    /**
+     * Has the User selected the target type (as opposed to the default type
+     * selected by the GUI, I think).
+     *
+     * @return True if user selected; false otherwise
+     */
+    public boolean getUserSelected() {
+        return this.userSelected;
+    }
+
+    /**
+     * Sets whether the user has selected the target type.
+     *
+     * @param userSelected the new user selected
+     */
+    public void setUserSelected(boolean userSelected) {
+        this.userSelected = userSelected;
+    }
 
     /**
      * Adds possibly the property names; default blank properties are added.
