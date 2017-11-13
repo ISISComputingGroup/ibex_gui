@@ -207,7 +207,7 @@ public class TargetSelectorViewModelTests {
     }
     
     @Test
-    public void GIVEN_an_opi_is_set_WHEN_getting_desctiption_THEN_description_is_correct() {
+    public void GIVEN_an_opi_is_set_WHEN_getting_desctiption_THEN_description_is_the_description_of_the_opi_that_was_just_set() {
         // Arrange
         Mockito.when(synopticModel.getSingleSelectedComp()).thenReturn(chopperComponentDesc);
         TargetSelectorViewModel model = new TargetSelectorViewModel(synopticModel);
