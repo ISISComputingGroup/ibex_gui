@@ -137,6 +137,8 @@ public final class ComponentIcons {
                 return "gas_exchange";
             case HE_LEVEL_GAUGE:
                 return "he_level_gauge";
+            case OSCILLATING_COLLIMATOR:
+                return "oscillating_collimator";
             default:
                 return "cog";
         }

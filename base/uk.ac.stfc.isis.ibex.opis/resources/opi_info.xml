@@ -1078,14 +1078,6 @@
 						<name>IEG</name>
 						<description>The gas exchange system PV prefix (e.g. IEG_01).</description>
 					</macro>
-					<macro>
-						<name>TPG26X</name>
-						<description>The TPG (bin presure reading) PV prefix (e.g. TPG26X_01).</description>
-					</macro>
-					<macro>
-						<name>TPGGAUGE</name>
-						<description>The TPG pressure gauge being used for bin pressure (e.g. 1).</description>
-					</macro>
 				</macros>
 			</value>
 		</entry>
@@ -1119,6 +1111,20 @@
 					<macro>
 						<name>HLG</name>
 						<description>The HLG PV prefix (e.g. HLG_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>OscillatingCollimator</key>
+			<value>
+				<type>OSCILLATING_COLLIMATOR</type>
+				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
+				<description>The OPI for the LET oscillating collimator.</description>
+				<macros>
+					<macro>
+						<name>MOT</name>
+						<description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
 					</macro>
 				</macros>
 			</value>
