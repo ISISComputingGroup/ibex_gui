@@ -119,7 +119,9 @@ public enum ComponentType {
     /** Sample changer for HRPD/POLARIS/GEM. */
     ROT_SAMPLE_CHANGER,
     /** Helium Level Gauge.*/
-    HE_LEVEL_GAUGE;
+    HE_LEVEL_GAUGE,
+    /** LET oscillating collimator. */
+    OSCILLATING_COLLIMATOR;
 
 	
 	private Target target;

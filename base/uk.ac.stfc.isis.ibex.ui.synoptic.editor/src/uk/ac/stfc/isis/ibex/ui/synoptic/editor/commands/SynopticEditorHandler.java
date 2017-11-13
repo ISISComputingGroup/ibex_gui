@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.jface.window.Window;
@@ -29,8 +28,11 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXParseException;
 
+<<<<<<< HEAD
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.opis.Opi;
+=======
+>>>>>>> master
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -94,6 +96,8 @@ public abstract class SynopticEditorHandler {
      * Handle the sequence of opening a synoptic editor dialog and the
      * subsequent cancel/save.
      * 
+     * @param shell
+     * 			  The shell that contains the synoptic editor
      * @param synoptic
      *            The synoptic to edit
      * @param title
@@ -103,10 +107,9 @@ public abstract class SynopticEditorHandler {
      *            is blank
      */
 	protected void openDialog(Shell shell, SynopticDescription synoptic, String title, boolean isBlank) {
-        Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
         EditSynopticDialog editDialog =
-                new EditSynopticDialog(shell, title, isBlank, opis, viewModel);
+                new EditSynopticDialog(shell, title, isBlank, viewModel);
 		if (editDialog.open() == Window.OK) {
 		    try {
 		        writer.write(viewModel.getSynoptic());

@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
-=======
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
->>>>>>> master
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -21,6 +17,6 @@
  */
 
 /**
- * Provides the block selector for the synoptic dialog.
+ * Provides commands used by the synoptic dialog.
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
