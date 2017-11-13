@@ -114,7 +114,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
      * 
      * @return the name
      */
-    public String getName() {
+    public String name() {
 		return name;
 	}
 	

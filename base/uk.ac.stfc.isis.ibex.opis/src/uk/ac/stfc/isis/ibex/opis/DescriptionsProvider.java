@@ -183,11 +183,10 @@ public class DescriptionsProvider extends Provider {
             if (desc.getCategories() == null || desc.getCategories().isEmpty()) {
                 // If it has no category then put it in the unknown category
                 addOpiToMap(map, CATEGORY_UNKNOWN, opiName);
-                continue;
-            }
-
-            for (String category : desc.getCategories()) {
-                addOpiToMap(map, category, opiName);
+            } else {
+                for (String category : desc.getCategories()) {
+                    addOpiToMap(map, category, opiName);
+                }
             }
         }
         

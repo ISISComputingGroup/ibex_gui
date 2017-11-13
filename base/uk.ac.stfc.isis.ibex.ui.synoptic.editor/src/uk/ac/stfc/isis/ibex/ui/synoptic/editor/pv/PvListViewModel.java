@@ -273,6 +273,6 @@ public class PvListViewModel extends ModelObject {
      * @return the name of the component
      */
     public String getComponentName() {
-        return selectedComp.getName();
+        return selectedComp.name();
     }
 }

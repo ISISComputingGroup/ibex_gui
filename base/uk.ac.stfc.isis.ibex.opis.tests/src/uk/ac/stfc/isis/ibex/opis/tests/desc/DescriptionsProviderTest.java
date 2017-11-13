@@ -100,18 +100,18 @@ public class DescriptionsProviderTest {
 	}
 	
 	@Test
-	public void WHEN_get_opi_categories_THEN_categories_appear_as_a_key_in_the_map() {
+	public void GIVEN_opi_is_in_multiple_categories_WHEN_get_categories_THEN_the_opi_is_in_all_of_its_categories_and_not_in_the_unknown_category() {
 	    Map<String, List<String>> map = descProvider.getOpiCategories();
 	    
 	    for (String key : opiCategories2) {
 	        assertTrue(map.containsKey(key));
 	        assertTrue(map.get(key).contains(opiName2));
-	        assertFalse(map.get(DescriptionsProvider.CATEGORY_UNKNOWN).contains(opiName2));
 	    }
+	    assertFalse(map.get(DescriptionsProvider.CATEGORY_UNKNOWN).contains(opiName2));
 	}
 	
    @Test
-   public void WHEN_get_opi_categories_THEN_opis_that_are_uncategorised_appear_as_uncategorised_in_the_map() {
+   public void GIVEN_two_uncategorised_opis_WHEN_get_categories_THEN_both_opis_are_in_the_unknown_category() {
         Map<String, List<String>> map = descProvider.getOpiCategories();
         
         assertTrue(map.containsKey(DescriptionsProvider.CATEGORY_UNKNOWN));

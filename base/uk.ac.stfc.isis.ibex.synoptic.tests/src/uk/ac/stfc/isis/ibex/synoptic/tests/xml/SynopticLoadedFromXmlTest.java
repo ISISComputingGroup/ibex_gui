@@ -64,7 +64,7 @@ public class SynopticLoadedFromXmlTest extends FileReadingTest {
 
 	@Test
 	public void component_name_is_updated() {
-		assertThat(firstComponent().getName(), is("Slit 1"));
+		assertThat(firstComponent().name(), is("Slit 1"));
 	}
 
 	@Test

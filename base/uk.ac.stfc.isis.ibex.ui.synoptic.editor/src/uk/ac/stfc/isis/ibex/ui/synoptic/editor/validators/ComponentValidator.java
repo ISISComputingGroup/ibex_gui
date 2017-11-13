@@ -93,7 +93,7 @@ public class ComponentValidator extends ErrorAggregator {
     public String constructMessage() {
         StringBuilder sb = new StringBuilder();
         for (String c : getErrorMessages()) {
-            sb.append("In " + component.getName());
+            sb.append("In " + component.name());
             sb.append(", " + c);
             sb.append("; ");
         }

@@ -64,15 +64,15 @@ public class TargetSelectorViewModel extends ModelObject {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (synopticViewModel.getSingleSelectedComp() != null) {
-                    setEnabled(true);
-                    setName(synopticViewModel.getSingleSelectedComp().getName());
+                    setEnabled(true); // order is important - must set enabled to true before setting properties.
+                    setName(synopticViewModel.getSingleSelectedComp().name());
                     setOpi(synopticViewModel.getSingleSelectedComp().target().name(), false);
                     setIconSelectionIndex(componentTypesList.indexOf(synopticViewModel.getSingleSelectedComp().type().name()));
                 } else {
                     setName("");
                     setIconSelectionIndex(0);
                     setOpi(NONE_OPI, false);
-                    setEnabled(false);
+                    setEnabled(false); // order is important - must set enabled to false after setting properties.
                 }
                 
                 // Re-fire the event so that it can be listened to in the view

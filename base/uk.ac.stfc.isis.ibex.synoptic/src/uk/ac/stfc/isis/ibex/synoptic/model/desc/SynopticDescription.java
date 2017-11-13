@@ -154,7 +154,7 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
         ArrayList<String> nameList = new ArrayList<>();
 
         for (ComponentDescription cd : components) {
-            nameList.add(cd.getName());
+            nameList.add(cd.name());
         }
 
         return nameList;
@@ -169,7 +169,7 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
         ArrayList<String> nameList = new ArrayList<>();
 
         for (ComponentDescription cd : components) {
-            nameList.add(cd.getName().trim());
+            nameList.add(cd.name().trim());
             getChildNames(cd, nameList);
         }
 
@@ -179,7 +179,7 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
     private List<String> getChildNames(ComponentDescription component, List<String> nameList) {
 
         for (ComponentDescription cd : component.components()) {
-            nameList.add(cd.getName());
+            nameList.add(cd.name());
             getChildNames(cd, nameList);
         }
 

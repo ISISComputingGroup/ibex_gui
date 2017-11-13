@@ -165,7 +165,7 @@ public class TargetSelectorViewModelTests {
     }
     
     @Test
-    public void GIVEN_a_component_icon_is_set_WHEN_retrieving_the_icon_THEN_it_is_set_correctly() {
+    public void GIVEN_a_component_icon_is_set_WHEN_retrieving_the_icon_THEN_it_is_set_to_the_icon_that_was_just_passed_in() {
         // Arrange
         Mockito.when(synopticModel.getSingleSelectedComp()).thenReturn(chopperComponentDesc);
         TargetSelectorViewModel model = new TargetSelectorViewModel(synopticModel);
@@ -179,7 +179,7 @@ public class TargetSelectorViewModelTests {
     }
     
     @Test
-    public void GIVEN_an_opi_is_set_WHEN_retrieving_opi_THEN_opi_is_set_correctly() {
+    public void GIVEN_an_opi_is_set_WHEN_retrieving_opi_THEN_opi_is_set_to_the_opi_that_was_just_passed_in() {
         // Arrange
         Mockito.when(synopticModel.getSingleSelectedComp()).thenReturn(noneComponentDesc);
         TargetSelectorViewModel model = new TargetSelectorViewModel(synopticModel);

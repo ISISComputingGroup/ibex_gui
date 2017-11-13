@@ -92,7 +92,7 @@ public class ComponentDescriptionTest {
         ComponentDescription copied = new ComponentDescription(source);
 
         // Assert
-        assertTrue((source.getName() + COPIED_NAME_SUFFIX).equals(copied.getName()));
+        assertTrue((source.name() + COPIED_NAME_SUFFIX).equals(copied.name()));
     }
 
     @Test
@@ -102,8 +102,8 @@ public class ComponentDescriptionTest {
         copied.setName(NEW_NAME);
 
         // Assert
-        assertTrue(source.getName().equals(COMPONENT_NAME));
-        assertTrue(copied.getName().equals(NEW_NAME));
+        assertTrue(source.name().equals(COMPONENT_NAME));
+        assertTrue(copied.name().equals(NEW_NAME));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class ComponentDescriptionTest {
 
         // Assert
         for (int i = 1; i < source.components().size(); i++) {
-            assertEquals(source.components().get(i).getName(), copied.components().get(i).getName());
+            assertEquals(source.components().get(i).name(), copied.components().get(i).name());
         }
     }
 
@@ -191,8 +191,8 @@ public class ComponentDescriptionTest {
         // Assert
         for (int i = 1; i < source.pvs().size(); i++) {
             copied.components().get(i).setName(NEW_NAME);
-            assertFalse(source.components().get(i).getName().equals(NEW_NAME));
-            assertTrue(copied.components().get(i).getName().equals(NEW_NAME));
+            assertFalse(source.components().get(i).name().equals(NEW_NAME));
+            assertTrue(copied.components().get(i).name().equals(NEW_NAME));
         }
     }
 }

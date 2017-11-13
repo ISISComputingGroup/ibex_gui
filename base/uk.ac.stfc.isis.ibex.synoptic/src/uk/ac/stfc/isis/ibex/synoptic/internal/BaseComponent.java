@@ -47,7 +47,7 @@ public abstract class BaseComponent implements Component {
 	
 	@Override
 	public String name() {
-		return description.getName();
+		return description.name();
 	}
 
 	@Override
