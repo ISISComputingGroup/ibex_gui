@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -43,8 +44,8 @@ public final class XMLUtil {
     private XMLUtil() {
     }
 
-	/**
-     * Converts an input XML into the given type.
+    /**
+     * Converts an input XML reader into the given type.
      * 
      * @param <T>
      *            the type to parse the XML into
@@ -57,11 +58,28 @@ public final class XMLUtil {
      *             XML Exception thrown if the conversion failed
      */
     @SuppressWarnings("unchecked")
-    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
+    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(clazz);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
-        return (T) unmarshaller.unmarshal(new StringReader(xml));
+        return (T) unmarshaller.unmarshal(xml);
+    }
+
+    /**
+     * Converts an input XML string into the given type.
+     * 
+     * @param <T>
+     *            the type to parse the XML into
+     * @param xml
+     *            the XML to convert
+     * @param clazz
+     *            the type to parse the XML into
+     * @return the xml data converted into the specified type
+     * @throws JAXBException
+     *             XML Exception thrown if the conversion failed
+     */
+    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
+        return fromXml(new StringReader(xml), clazz);
 	}
 
     /**
