@@ -94,7 +94,6 @@ public class PvDetailView extends Composite {
      */
 	public void createControls(Composite parent) {	
 		setLayout(new GridLayout(1, false));
-
 		noSelectionComposite = new Composite(parent, SWT.NONE);
 		noSelectionComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		noSelectionComposite.setLayout(new FillLayout());

@@ -38,7 +38,6 @@ public class ComponentListValidator extends ErrorMessageProvider {
     private SynopticDescription synoptic;
 
     private static final String UNIQUE_COMPONENT_NAME = "Component names (%s) must be unique";
-    private static final String EMPTY_COMPONENT_NAME = "Component names must not be empty";
 
     private PropertyChangeListener componentNameListener = new PropertyChangeListener() {
         @Override
@@ -53,8 +52,6 @@ public class ComponentListValidator extends ErrorMessageProvider {
         String duplicate = getDuplicateComponentName();
         if (!duplicate.isEmpty()) {
             setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
-        } else if (synoptic.getComponentNameListWithChildren().contains("")) {
-            setError(true, EMPTY_COMPONENT_NAME);   
         } else {
             setError(false, null);
         }

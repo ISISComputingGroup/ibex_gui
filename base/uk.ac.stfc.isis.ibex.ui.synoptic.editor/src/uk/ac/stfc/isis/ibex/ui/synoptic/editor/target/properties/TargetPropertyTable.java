@@ -99,7 +99,6 @@ public class TargetPropertyTable extends Composite {
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		createControls(this);
-        table.setEnabled(false);
 	}
 	
     /**
@@ -155,8 +154,6 @@ public class TargetPropertyTable extends Composite {
             }
 
             table.setEnabled(opiPropertyKeys.size() > 0);
-        } else {
-            table.setEnabled(false);
         }
 
         table.getColumn(0).pack();
