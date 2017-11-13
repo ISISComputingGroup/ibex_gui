@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.jface.window.Window;
@@ -28,11 +29,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXParseException;
 
-<<<<<<< HEAD
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.opis.Opi;
-=======
->>>>>>> master
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
