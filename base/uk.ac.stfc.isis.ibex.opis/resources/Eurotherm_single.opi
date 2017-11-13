@@ -1684,7 +1684,30 @@ $(pv_value)</tooltip>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <rules />
+      <rules>
+        <rule name="Off_Colour" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv>
+        </rule>
+        <rule name="On_Colour" prop_id="on_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv>
+        </rule>
+        <rule name="Target_PV" prop_id="pv_name" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>$(PV_ROOT_EURO):RAMPON:CACHE</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv>
+        </rule>
+      </rules>
       <effect_3d>true</effect_3d>
       <bit>-1</bit>
       <enabled>true</enabled>
