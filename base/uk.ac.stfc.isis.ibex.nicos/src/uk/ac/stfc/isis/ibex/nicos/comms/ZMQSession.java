@@ -41,6 +41,10 @@ public class ZMQSession {
     private static final String ZMQ_PROTO = "tcp";
     private static final String ZMQ_PORT = "1301";
 
+    private static final String FAILED_TO_CONVERT = "Failed to convert sent NICOS message";
+    private static final String NO_DATA_RECEIVED = "No data received from NICOS";
+    private static final String UNEXPECTED_RESPONSE = "Unexpected response from server";
+
     /**
      * The constructor for the class.
      * 
@@ -97,7 +101,7 @@ public class ZMQSession {
         } catch (ZMQException e) {
             return SendMessageDetails.createSendFail(e.getMessage());
         } catch (ConversionException e) {
-            return SendMessageDetails.createSendFail("Failed to convert sent NICOS message");
+            return SendMessageDetails.createSendFail(FAILED_TO_CONVERT);
         }
         return getServerResponse(message);
     }
@@ -112,7 +116,7 @@ public class ZMQSession {
         String resp = zmq.receiveString();
 
         if (status == null | resp == null | status == "") {
-            return SendMessageDetails.createSendFail("No data received from NICOS");
+            return SendMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
 
         if (status.equals("ok")) {
@@ -120,7 +124,7 @@ public class ZMQSession {
                 ReceiveMessage received = sentMessage.parseResponse(resp);
                 return SendMessageDetails.createSendSuccess(received);
             } catch (ConversionException e) {
-                return SendMessageDetails.createSendFail("Unexpected response from server");
+                return SendMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
             }
         } else {
             return SendMessageDetails.createSendFail(resp);

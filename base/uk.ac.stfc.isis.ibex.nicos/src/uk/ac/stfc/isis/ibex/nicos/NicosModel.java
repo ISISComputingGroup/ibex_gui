@@ -39,6 +39,9 @@ public class NicosModel extends ModelObject {
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
     private static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
 
+    private static final String INVALID_PROTOCOL = "NICOS protocol is invalid";
+    private static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
+
     private final ZMQSession session;
 
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
@@ -99,10 +102,10 @@ public class NicosModel extends ModelObject {
         } else {
             ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
             if (!banner.protocolValid()) {
-                failConnection("NICOS protocol is invalid");
+                failConnection(INVALID_PROTOCOL);
                 return;
             } else if (!banner.serializerValid()) {
-                failConnection("NICOS serialiser is invalid");
+                failConnection(INVALID_SERIALISER);
                 return;
             }
         }

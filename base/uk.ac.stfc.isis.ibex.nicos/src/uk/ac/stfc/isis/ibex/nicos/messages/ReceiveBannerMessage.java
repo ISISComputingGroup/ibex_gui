@@ -19,9 +19,9 @@
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
- * A Login Message that has been received from NICOS. There are two associated
- * with the login command, the first is the initial connection and details nicos
- * the second is the user connection.
+ * A Banner Message that has been received from NICOS. This message should be
+ * the first sent and details various things about the instance of NICOS that we
+ * are trying to connect to.
  * 
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
