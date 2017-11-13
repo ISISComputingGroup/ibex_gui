@@ -301,7 +301,17 @@ public class NicosModelTest {
     }
 
     @Test
-    public void GIVEN_successful_connection_WHEN_failed_connection_THEN_connection_job_resumed() {
+    public void GIVEN_successful_connection_WHEN_connect_created_THEN_first_status_is_connecting() {
+        connectSuccessfully();
+
+        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
+
+        Object connectionStatus = propertyChangeArgument.getAllValues().get(0).getNewValue();
+        assertEquals("Connection status", ConnectionStatus.CONNECTING, connectionStatus);
+    }
+
+    @Test
+    public void GIVEN_successful_connection_WHEN_subsequent_failed_connection_THEN_connection_job_resumed() {
         connectSuccessfully();
 
         doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));

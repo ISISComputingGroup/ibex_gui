@@ -104,7 +104,11 @@ public class ZMQSession {
 
     private SendMessageDetails getServerResponse(NICOSMessage<?> sentMessage) {
         String status = zmq.receiveString();
-        zmq.receiveString(); // Do not care
+
+        // NICOS protocol leaves the second package empty for future expansion
+        // so read and throw away.
+        zmq.receiveString();
+
         String resp = zmq.receiveString();
 
         if (status == null | resp == null | status == "") {

@@ -79,16 +79,10 @@ public class ZMQSessionTest {
 
     @Test
     public void GIVEN_NICOS_message_with_three_parts_WHEN_message_sent_THEN_three_parts_sent() {
+        // Note: most messages NICOS expects will be 3 parts
         sendBlankMessage(3);
 
         verify(zmq, times(3)).send(anyString(), anyBoolean());
-    }
-
-    @Test
-    public void GIVEN_NICOS_message_with_five_parts_WHEN_message_sent_THEN_five_parts_sent() {
-        sendBlankMessage(5);
-
-        verify(zmq, times(5)).send(anyString(), anyBoolean());
     }
 
     @Test
