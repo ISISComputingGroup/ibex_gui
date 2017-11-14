@@ -38,6 +38,12 @@ import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotionIndicator extends Composite {
 
+    private static final String LOW_LIMIT_TOOLTIP = "Low (reverse) limit";
+    private static final String LOW_MOVE_TOOLTIP = "Low (reverse) movement";
+    private static final String HIGH_LIMIT_TOOLTIP = "High (forward) limit";
+    private static final String HIGH_MOVE_TOOLTIP = "High (forward) movement";
+    private static final String HOME_TOOLTIP = "Axis homed";
+
 	private final Display display = Display.getDefault();
 
     private EnableableImageLabel lowerDirectionLimit;
@@ -64,15 +70,15 @@ public class MinimalMotionIndicator extends Composite {
 		gridLayout1.horizontalSpacing = 0;
 		setLayout(gridLayout1);
 		
-        lowerDirectionLimit = new EnableableImageLabel(this, getImage("lower_limit_minimal.png"));
+        lowerDirectionLimit = new EnableableImageLabel(this, getImage("lower_limit_minimal.png"), LOW_LIMIT_TOOLTIP);
 
-        leftDirection = new EnableableImageLabel(this, getImage("arrow_left_minimal.png"));
+        leftDirection = new EnableableImageLabel(this, getImage("arrow_left_minimal.png"), LOW_MOVE_TOOLTIP);
 		
-        home = new EnableableImageLabel(this, getImage("home_minimal.png"));
+        home = new EnableableImageLabel(this, getImage("home_minimal.png"), HOME_TOOLTIP);
 		
-        rightDirection = new EnableableImageLabel(this, getImage("arrow_right_minimal.png"));
+        rightDirection = new EnableableImageLabel(this, getImage("arrow_right_minimal.png"), HIGH_MOVE_TOOLTIP);
 		
-        upperDirectionLimit = new EnableableImageLabel(this, getImage("upper_limit_minimal.png"));
+        upperDirectionLimit = new EnableableImageLabel(this, getImage("upper_limit_minimal.png"), HIGH_LIMIT_TOOLTIP);
 		
 		setInitialState();
 	}
