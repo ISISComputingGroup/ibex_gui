@@ -130,14 +130,16 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts>
-      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-        <scriptName>Set number of axes</scriptName>
-        <scriptText><![CDATA[try:
-    pvs[0].setValue(int(display.getWidget("NAXES").getValue()))
-except:
-    pass]]></scriptText>
+      <path pathString="setMotorMacros.py" checkConnect="true" sfe="false" seoe="false">
         <pv trig="false">loc://sample_stack:naxes</pv>
-        <pv trig="true">$(P)CS:VERSION:SVN:REV</pv>
+        <pv trig="true">loc://$(DID):motor1($(NAME1))</pv>
+        <pv trig="false">loc://$(DID):motor2($(NAME2))</pv>
+        <pv trig="false">loc://$(DID):motor3($(NAME3))</pv>
+        <pv trig="false">loc://$(DID):motor4($(NAME4))</pv>
+        <pv trig="false">loc://$(DID):motor5($(NAME5))</pv>
+        <pv trig="false">loc://$(DID):motor6($(NAME6))</pv>
+        <pv trig="false">loc://$(DID):motor7($(NAME7))</pv>
+        <pv trig="false">loc://$(DID):motor8($(NAME8))</pv>
       </path>
     </scripts>
     <height>350</height>
@@ -674,68 +676,5 @@ except:
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
     </widget>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <show_native_border>false</show_native_border>
-    <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>-1fce3382:15fb9cec36d:-7e6f</wuid>
-    <next_focus>0</next_focus>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <read_only>true</read_only>
-    <text>$(NAXES)</text>
-    <scripts />
-    <show_units>true</show_units>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>10</height>
-    <multiline_input>false</multiline_input>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>false</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <precision_from_pv>true</precision_from_pv>
-    <widget_type>Text</widget_type>
-    <confirm_message></confirm_message>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <format_type>0</format_type>
-    <limits_from_pv>false</limits_from_pv>
-    <background_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </background_color>
-    <password_input>false</password_input>
-    <name>NAXES</name>
-    <width>10</width>
-    <x>438</x>
-    <y>78</y>
-    <maximum>1.7976931348623157E308</maximum>
-    <actions hook="false" hook_all="false">
-      <action type="WRITE_PV">
-        <pv_name>loc://sample_stack:naxes</pv_name>
-        <value>$(NAXES)</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <foreground_color>
-      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-    </foreground_color>
-    <minimum>-1.7976931348623157E308</minimum>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
   </widget>
 </display>
