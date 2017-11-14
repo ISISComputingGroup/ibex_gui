@@ -1099,14 +1099,14 @@
 			</value>
 		</entry>
 		<entry>
-			<key>EMMA Fermi Chopper Lifter</key>
+			<key>Fermi chopper lifter</key>
 			<value>
 				<categories>
 					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>CHOPPER</type>
-				<path>emma_chopper_lift.opi</path>
-				<description>The OPI for the EMMA fermi chopper lifter.</description>
+				<path>fermi_chopper_lift.opi</path>
+				<description>The OPI for the fermi chopper lifter.</description>
 				<macros>
 				</macros>
 			</value>
