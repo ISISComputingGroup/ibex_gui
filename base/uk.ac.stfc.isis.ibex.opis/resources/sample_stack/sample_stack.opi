@@ -5,7 +5,19 @@
   <wuid>4e5b1dc5:159f9d09037:-7eaa</wuid>
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
-  <scripts />
+  <scripts>
+    <path pathString="setMotorMacros.py" checkConnect="true" sfe="false" seoe="false">
+      <pv trig="false">loc://sample_stack:naxes</pv>
+      <pv trig="true">loc://$(DID):motor1($(NAME1))</pv>
+      <pv trig="false">loc://$(DID):motor2($(NAME2))</pv>
+      <pv trig="false">loc://$(DID):motor3($(NAME3))</pv>
+      <pv trig="false">loc://$(DID):motor4($(NAME4))</pv>
+      <pv trig="false">loc://$(DID):motor5($(NAME5))</pv>
+      <pv trig="false">loc://$(DID):motor6($(NAME6))</pv>
+      <pv trig="false">loc://$(DID):motor7($(NAME7))</pv>
+      <pv trig="false">loc://$(DID):motor8($(NAME8))</pv>
+    </path>
+  </scripts>
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
@@ -129,20 +141,8 @@
     <wuid>4e5b1dc5:159f9d09037:-7c3c</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
-    <scripts>
-      <path pathString="setMotorMacros.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="false">loc://sample_stack:naxes</pv>
-        <pv trig="true">loc://$(DID):motor1($(NAME1))</pv>
-        <pv trig="false">loc://$(DID):motor2($(NAME2))</pv>
-        <pv trig="false">loc://$(DID):motor3($(NAME3))</pv>
-        <pv trig="false">loc://$(DID):motor4($(NAME4))</pv>
-        <pv trig="false">loc://$(DID):motor5($(NAME5))</pv>
-        <pv trig="false">loc://$(DID):motor6($(NAME6))</pv>
-        <pv trig="false">loc://$(DID):motor7($(NAME7))</pv>
-        <pv trig="false">loc://$(DID):motor8($(NAME8))</pv>
-      </path>
-    </scripts>
-    <height>350</height>
+    <scripts />
+    <height>517</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -211,7 +211,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME2)</LABEL>
         <NAME>$(NAME2)</NAME>
-        <MOTOR>$(MOTOR2)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -274,7 +273,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME1)</LABEL>
         <NAME>$(NAME1)</NAME>
-        <MOTOR>$(MOTOR1)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -337,7 +335,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME3)</LABEL>
         <NAME>$(NAME3)</NAME>
-        <MOTOR>$(MOTOR3)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -400,7 +397,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME4)</LABEL>
         <NAME>$(NAME4)</NAME>
-        <MOTOR>$(MOTOR4)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -463,7 +459,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME5)</LABEL>
         <NAME>$(NAME5)</NAME>
-        <MOTOR>$(MOTOR5)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -526,7 +521,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME6)</LABEL>
         <NAME>$(NAME6)</NAME>
-        <MOTOR>$(MOTOR6)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -589,7 +583,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME7)</LABEL>
         <NAME>$(NAME7)</NAME>
-        <MOTOR>$(MOTOR7)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -652,7 +645,6 @@
         <include_parent_macros>true</include_parent_macros>
         <LABEL>$(NAME8)</LABEL>
         <NAME>$(NAME8)</NAME>
-        <MOTOR>$(MOTOR8)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
