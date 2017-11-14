@@ -41,7 +41,7 @@
     <wuid>-6bf25c5f:15fb6315fcb:-7ecb</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>$(LABEL="Not in use:"):</text>
+    <text>$(LABEL):</text>
     <scripts />
     <height>25</height>
     <border_width>1</border_width>

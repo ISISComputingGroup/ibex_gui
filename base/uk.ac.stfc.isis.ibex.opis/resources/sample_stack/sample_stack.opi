@@ -171,9 +171,9 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>LABEL_1</LABEL>
-        <NAME>NAME_1</NAME>
-        <MOTOR>MOTOR_1</MOTOR>
+        <LABEL>$(LABEL1)</LABEL>
+        <NAME>$(NAME1)</NAME>
+        <MOTOR>$(MOTOR1)</MOTOR>
       </macros>
       <visible>true</visible>
       <group_name></group_name>

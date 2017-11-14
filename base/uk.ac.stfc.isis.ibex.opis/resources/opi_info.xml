@@ -959,7 +959,7 @@
 				</macros>
 			</value>
 		</entry>
-		</entry>
+		<entry>
 			<key>Sample stack</key>
 			<value>
 				<type>SAMPLESTACK</type>
@@ -967,15 +967,19 @@
 				<description>Generic sample stack OPI supporting up to 8 motors.</description>
 				<macros>
 					<macro>
-						<name>LABEL_1</name>
+						<name>NAXES</name>
+						<description>The number of axes to display on the stack.</description>
+					</macro>
+					<macro>
+						<name>LABEL1</name>
 						<description>The label applied to motor 1.</description>
 					</macro>
 					<macro>
-						<name>NAME_1</name>
+						<name>NAME1</name>
 						<description>The alias name of motor 1 (see axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>MOTOR_1</name>
+						<name>MOTOR1</name>
 						<description>The motor PV prefix for the named motor (e.g. MTR0101).</description>
 					</macro>
 				</macros>
