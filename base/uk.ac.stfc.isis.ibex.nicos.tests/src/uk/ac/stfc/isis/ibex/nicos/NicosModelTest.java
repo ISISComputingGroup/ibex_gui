@@ -184,7 +184,7 @@ public class NicosModelTest {
 
         String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
 
-        assertTrue(connectionError.equals("NICOS protocol is invalid"));
+        assertTrue(connectionError.equals(NicosModel.INVALID_PROTOCOL));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class NicosModelTest {
 
         String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
 
-        assertTrue(connectionError.equals("NICOS serialiser is invalid"));
+        assertTrue(connectionError.equals(NicosModel.INVALID_SERIALISER));
     }
 
     @Test
@@ -225,7 +225,7 @@ public class NicosModelTest {
 
         String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
 
-        assertTrue(connectionError.startsWith("Failed to login: "));
+        assertTrue(connectionError.startsWith(NicosModel.FAILED_LOGIN_MESSAGE));
         assertTrue(connectionError.contains(failureMessage));
     }
     
@@ -405,7 +405,7 @@ public class NicosModelTest {
         verify(scriptErrorListener).propertyChange(propertyChangeArgument.capture());
 
         Object scriptError = propertyChangeArgument.getValue().getNewValue();
-        assertEquals("Failed to send script", scriptError);
+        assertEquals(NicosModel.SCRIPT_SEND_FAIL_MESSAGE, scriptError);
     }
 
     @Test

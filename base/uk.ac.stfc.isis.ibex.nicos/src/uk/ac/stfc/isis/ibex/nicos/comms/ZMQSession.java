@@ -45,9 +45,20 @@ public class ZMQSession {
     private static final String ZMQ_PROTO = "tcp";
     private static final String ZMQ_PORT = "1301";
 
-    private static final String FAILED_TO_CONVERT = "Failed to convert sent NICOS message";
-    private static final String NO_DATA_RECEIVED = "No data received from NICOS";
-    private static final String UNEXPECTED_RESPONSE = "Unexpected response from server";
+    /**
+     * Error for when a message could not be converted into the NICOS protocol.
+     */
+    public static final String FAILED_TO_CONVERT = "Failed to convert sent NICOS message";
+
+    /**
+     * Error for when no response has been returned from NICOS.
+     */
+    public static final String NO_DATA_RECEIVED = "No data received from NICOS";
+
+    /**
+     * Error for when an unexpected response has been sent from NICOS.
+     */
+    public static final String UNEXPECTED_RESPONSE = "Unexpected response from server";
 
     /**
      * The constructor for the class.
@@ -105,8 +116,10 @@ public class ZMQSession {
         try {
             sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
+            LOG.warn("Failed to send message " + message.toString());
             return SendMessageDetails.createSendFail(e.getMessage());
         } catch (ConversionException e) {
+            LOG.warn("Failed to convert message " + message.toString());
             return SendMessageDetails.createSendFail(FAILED_TO_CONVERT);
         }
         return getServerResponse(message);

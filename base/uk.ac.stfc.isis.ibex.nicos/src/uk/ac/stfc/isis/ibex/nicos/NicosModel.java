@@ -18,9 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
@@ -36,11 +38,27 @@ import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
  */
 public class NicosModel extends ModelObject {
 
-    private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
-    private static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
+    private static final Logger LOG = IsisLog.getLogger(NicosModel.class);
 
-    private static final String INVALID_PROTOCOL = "NICOS protocol is invalid";
-    private static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
+    /**
+     * Error for when a script fails to send.
+     */
+    public static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
+
+    /**
+     * Error for when a login fails.
+     */
+    public static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
+
+    /**
+     * Error for when the protocol received from the server is unrecognised.
+     */
+    public static final String INVALID_PROTOCOL = "NICOS protocol is invalid";
+
+    /**
+     * Error for when the serialiser received from the server is unrecognised.
+     */
+    public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
 
     private final ZMQSession session;
 
@@ -73,6 +91,7 @@ public class NicosModel extends ModelObject {
 
     private void failConnection(String message) {
         setConnectionStatus(ConnectionStatus.FAILED);
+        LOG.error(message);
         setConnectionErrorMessage(message);
         connectionJob.setRunning(true);
     }

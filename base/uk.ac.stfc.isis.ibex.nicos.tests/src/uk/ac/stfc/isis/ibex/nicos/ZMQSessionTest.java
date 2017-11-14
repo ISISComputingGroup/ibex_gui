@@ -134,7 +134,7 @@ public class ZMQSessionTest {
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
-        assertEquals("Failed to convert sent NICOS message", resp.getFailureReason());
+        assertEquals(ZMQSession.FAILED_TO_CONVERT, resp.getFailureReason());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class ZMQSessionTest {
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
-        assertEquals("No data received from NICOS", resp.getFailureReason());
+        assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
     }
 
     @Test
@@ -159,7 +159,7 @@ public class ZMQSessionTest {
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
-        assertEquals("No data received from NICOS", resp.getFailureReason());
+        assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
     }
 
     @Test
@@ -210,7 +210,7 @@ public class ZMQSessionTest {
         SendMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
-        assertEquals("Unexpected response from server", resp.getFailureReason());
+        assertEquals(ZMQSession.UNEXPECTED_RESPONSE, resp.getFailureReason());
     }
 
     @Test
