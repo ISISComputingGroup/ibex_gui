@@ -967,72 +967,36 @@
 				<description>Generic sample stack OPI supporting up to 8 motors.</description>
 				<macros>
 					<macro>
-						<name>NAXES</name>
-						<description>The number of axes to display on the stack.</description>
-					</macro>
-					<macro>
 						<name>NAME1</name>
 						<description>The alias name of motor 1 (see axes.cmd).</description>
-					</macro>
-					<macro>
-						<name>MOTOR1</name>
-						<description>The motor PV prefix for motor 1 (e.g. MTR0101).</description>
 					</macro>
 					<macro>
 						<name>NAME2</name>
 						<description>The alias name of motor 2 (see axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>MOTOR2</name>
-						<description>The motor PV prefix for motor 2 (e.g. MTR0102).</description>
-					</macro>
-					<macro>
 						<name>NAME3</name>
 						<description>The alias name of motor 3 (see axes.cmd).</description>
-					</macro>
-					<macro>
-						<name>MOTOR3</name>
-						<description>The motor PV prefix for motor 3 (e.g. MTR0103).</description>
 					</macro>
 					<macro>
 						<name>NAME4</name>
 						<description>The alias name of motor 4 (see axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>MOTOR4</name>
-						<description>The motor PV prefix for motor 4 (e.g. MTR0104).</description>
-					</macro>
-					<macro>
 						<name>NAME5</name>
 						<description>The alias name of motor 5 (see axes.cmd).</description>
-					</macro>
-					<macro>
-						<name>MOTOR5</name>
-						<description>The motor PV prefix for motor 5 (e.g. MTR0105).</description>
 					</macro>
 					<macro>
 						<name>NAME6</name>
 						<description>The alias name of motor 6 (see axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>MOTOR6</name>
-						<description>The motor PV prefix for motor 6 (e.g. MTR0106).</description>
-					</macro>
-					<macro>
 						<name>NAME7</name>
 						<description>The alias name of motor 7 (see axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>MOTOR7</name>
-						<description>The motor PV prefix for motor 7 (e.g. MTR0107).</description>
-					</macro>
-					<macro>
 						<name>NAME8</name>
 						<description>The alias name of motor 8 (see axes.cmd).</description>
-					</macro>
-					<macro>
-						<name>MOTOR8</name>
-						<description>The motor PV prefix for motor 8 (e.g. MTR0108).</description>
 					</macro>
 				</macros>
 			</value>
