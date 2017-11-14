@@ -8,14 +8,14 @@
   <scripts>
     <path pathString="setMotorMacros.py" checkConnect="true" sfe="false" seoe="false">
       <pv trig="false">loc://sample_stack:naxes</pv>
-      <pv trig="true">loc://$(DID):motor1($(NAME1))</pv>
+      <pv trig="false">loc://$(DID):motor1($(NAME1))</pv>
       <pv trig="false">loc://$(DID):motor2($(NAME2))</pv>
       <pv trig="false">loc://$(DID):motor3($(NAME3))</pv>
       <pv trig="false">loc://$(DID):motor4($(NAME4))</pv>
       <pv trig="false">loc://$(DID):motor5($(NAME5))</pv>
       <pv trig="false">loc://$(DID):motor6($(NAME6))</pv>
       <pv trig="false">loc://$(DID):motor7($(NAME7))</pv>
-      <pv trig="false">loc://$(DID):motor8($(NAME8))</pv>
+      <pv trig="true">loc://$(DID):motor8($(NAME8))</pv>
     </path>
   </scripts>
   <height>600</height>
@@ -31,7 +31,7 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <width>800</width>
   <x>-1</x>
@@ -41,7 +41,7 @@
   <y>-1</y>
   <snap_to_geometry>true</snap_to_geometry>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
