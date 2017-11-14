@@ -220,7 +220,7 @@ $(pv_value)</tooltip>
         <path>../Motor/mymotor.opi</path>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <MM>MOT:$(MOTOR)</MM>
+          <MM>$(MOTOR)</MM>
         </macros>
         <replace>1</replace>
         <description></description>
