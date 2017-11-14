@@ -23,10 +23,12 @@ package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
@@ -35,6 +37,8 @@ import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
  * Used to send and receive messages to NICOS via ZMQ.
  */
 public class ZMQSession {
+
+    private static final Logger LOG = IsisLog.getLogger(ZMQSession.class);
 
     private ZMQWrapper zmq;
 
@@ -65,7 +69,9 @@ public class ZMQSession {
      *             Thrown if a connection cannot be made.
      */
     public void connect(InstrumentInfo instrument) throws ZMQException {
-        zmq.connect(createConnectionURI(instrument));
+        String connectionString = createConnectionURI(instrument);
+        zmq.connect(connectionString);
+        LOG.info("Connected to NICOS at " + connectionString);
     }
 
     private String createConnectionURI(InstrumentInfo instrument) {
@@ -116,6 +122,7 @@ public class ZMQSession {
         String resp = zmq.receiveString();
 
         if (status == null | resp == null | status == "") {
+            LOG.warn("No response from server after sending " + sentMessage.toString());
             return SendMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
 
@@ -124,9 +131,11 @@ public class ZMQSession {
                 ReceiveMessage received = sentMessage.parseResponse(resp);
                 return SendMessageDetails.createSendSuccess(received);
             } catch (ConversionException e) {
+                LOG.warn("Unexpected response from server: " + resp);
                 return SendMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
             }
         } else {
+            LOG.warn("Error received from server " + resp);
             return SendMessageDetails.createSendFail(resp);
         }
     }
