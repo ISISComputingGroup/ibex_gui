@@ -188,7 +188,7 @@
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" name="ISIS_OPI_Background" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>298</width>
       <x>1</x>
@@ -379,7 +379,7 @@
         </border_color>
         <widget_type>Linking Container</widget_type>
         <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
         <width>482</width>
@@ -502,7 +502,7 @@
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" name="ISIS_OPI_Background" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>497</width>
       <x>1</x>
@@ -584,7 +584,7 @@
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" name="ISIS_OPI_Background" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>497</width>
       <x>1</x>
@@ -666,7 +666,7 @@
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" name="ISIS_OPI_Background" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>497</width>
       <x>1</x>
@@ -748,7 +748,7 @@
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" name="ISIS_OPI_Background" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>497</width>
       <x>1</x>
