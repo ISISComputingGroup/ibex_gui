@@ -98,20 +98,21 @@ public class SpectrumPlot extends Canvas {
         traceDataProvider.setConcatenate_data(false);
         traceDataProvider.setUpdateMode(UpdateMode.X_OR_Y);
 
-		trace = new Trace("Spectrum", plot.primaryXAxis, plot.primaryYAxis, traceDataProvider);
+		trace = new Trace("Spectrum", plot.getPrimaryXAxis(), plot.getPrimaryYAxis(), traceDataProvider);
 		trace.setAntiAliasing(true);
 		
-        plot.primaryXAxis.setTitle("Time-of-flight (" + Utils.MU + "s)");
-		plot.primaryXAxis.setDashGridLine(true);
-		plot.primaryXAxis.setAutoScale(true);
-        plot.primaryXAxis.setAutoScaleThreshold(0);
-        plot.primaryXAxis.setFormatPattern("0");
-				
-        plot.primaryYAxis.setTitle("Count (/" + Utils.MU + "s)");
-		plot.primaryYAxis.setDashGridLine(true);
-		plot.primaryYAxis.setAutoScale(true);
-        plot.primaryYAxis.setAutoScaleThreshold(0);
-        plot.primaryYAxis.setFormatPattern("0");
+        plot.getPrimaryXAxis().setTitle("Time-of-flight (" + Utils.MU + "s)");
+		plot.getPrimaryXAxis().setDashGridLine(true);
+		plot.getPrimaryXAxis().setAutoScale(true);
+        plot.getPrimaryXAxis().setAutoScaleThreshold(0);
+        plot.getPrimaryXAxis().setFormatPattern("0");
+
+        plot.getPrimaryYAxis().setTitle("Count (/" + Utils.MU + "s)");
+		plot.getPrimaryYAxis().setDashGridLine(true);
+		plot.getPrimaryYAxis().setAutoScale(true);
+        plot.getPrimaryYAxis().setAutoScaleThreshold(0);
+        plot.getPrimaryYAxis().setFormatPattern("0");
+        
 		plot.addTrace(trace);
 	}
 
@@ -142,7 +143,7 @@ public class SpectrumPlot extends Canvas {
     /**
      * Update both the x and y data.
      */
-    public void updateData() {
+    private void updateData() {
         setXData();
 		setYData();
     }

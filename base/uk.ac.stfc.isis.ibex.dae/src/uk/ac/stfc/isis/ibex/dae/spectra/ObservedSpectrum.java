@@ -57,7 +57,21 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	private final DataObserver yDataObserver = new DataObserver() {
 		@Override
         public void onValue(Pair<Integer, float[]> value) {
-            setYData(toDoubleArray(value.second, value.first));
+			double[] data = toDoubleArray(value.second, value.first);
+			
+			if (true) {
+				for (int i = 0; i<value.first; i++) {
+					try {
+						data[i] *= Math.abs(xData.getValue().second[i+1] - xData.getValue().second[i]);
+					} catch (ArrayIndexOutOfBoundsException e){
+						System.out.println("AIOOB");
+						data[i] = 0;
+					}
+				}
+			}
+			
+			
+            setYData(data);
         }
 	};
 
@@ -72,16 +86,6 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
     public ObservedSpectrum(DaeObservables observables) {
 		this.observables = observables;
-	}
-	
-	@Override
-	public void setNumber(int value) {
-		super.setNumber(value);
-	}
-
-	@Override
-	public void setPeriod(int value) {
-		super.setPeriod(value);
 	}
 	
 	@Override
