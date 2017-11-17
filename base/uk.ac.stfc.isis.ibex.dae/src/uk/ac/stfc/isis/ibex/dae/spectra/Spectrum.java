@@ -27,6 +27,7 @@ public class Spectrum extends ModelObject {
 	private int period;
 	private double[] xData = new double[2];
 	private double[] yData = new double[2];
+	private int spectrumYAxisTypeSelectionIndex = 0;
 	
 	public int getNumber() {
 		return number;
@@ -52,11 +53,31 @@ public class Spectrum extends ModelObject {
 		return yData;
 	}
 	
+	public void setTypeSelectionIndex(int type) {
+		System.out.println("Set the thing to " + type);
+		firePropertyChange("typeSelectionIndex", spectrumYAxisTypeSelectionIndex, spectrumYAxisTypeSelectionIndex = type);
+	}
+	
+	public int getTypeSelectionIndex() {
+		return spectrumYAxisTypeSelectionIndex;
+	}
+
+	
 	protected void setXData(double[] value) {
 		firePropertyChange("xData", xData, xData = value);
 	}
 	
 	protected void setYData(double[] value) {
+		System.out.println("Setting data, " + spectrumYAxisTypeSelectionIndex);
+		if (spectrumYAxisTypeSelectionIndex == 0) {
+			for (int i = 0; i<value.length; i++) {
+				try {
+					value[i] *= Math.abs(xData[i+1] - xData[i]);
+				} catch (ArrayIndexOutOfBoundsException e){
+					value[i] = 0;
+				}
+			}
+		}
 		firePropertyChange("yData", yData, yData = value);
 	}
 }
