@@ -92,6 +92,7 @@ public class TargetPropertyValue extends Composite {
                 }
             }
         });
+        valueText.setEnabled(false);
     }
 
     private void setProperty(Property newProperty) {

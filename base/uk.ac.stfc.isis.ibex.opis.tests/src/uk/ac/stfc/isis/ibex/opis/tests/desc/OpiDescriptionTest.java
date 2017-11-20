@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.opis.tests.desc;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class OpiDescriptionTest {
 	@Test
     public void GIVEN_no_macros_WHEN_get_description_by_key_THEN_default_answer_returned() {
         // Arrange
-        OpiDescription opiDescription = new OpiDescription("", "", "", new ArrayList<MacroInfo>());
+        OpiDescription opiDescription = new OpiDescription("", "", "", new ArrayList<MacroInfo>(), Collections.<String>emptyList());
 
         // Act
         String result = opiDescription.getMacroDescription("name");
@@ -55,7 +56,7 @@ public class OpiDescriptionTest {
         String expectedDescription = "desc";
         String expectedName = "name";
         macros.add(new MacroInfo(expectedName, expectedDescription));
-        OpiDescription opiDescription = new OpiDescription("", "", "", macros);
+        OpiDescription opiDescription = new OpiDescription("", "", "", macros, Collections.<String>emptyList());
 
         // Act
         String result = opiDescription.getMacroDescription(expectedName);
