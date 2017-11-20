@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
+import uk.ac.stfc.isis.ibex.dae.spectra.SpectrumYAxisTypes;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 
@@ -73,6 +74,13 @@ public class SpectrumPlot extends Canvas {
 			setYData();
 		}
 	};
+
+	private final PropertyChangeListener typeSelectionIndexListener =  new PropertyChangeListener() {	
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			updateYAxisTitle();
+		}
+	};
 	
     /**
      * Instantiates a new spectrum plot.
@@ -107,7 +115,7 @@ public class SpectrumPlot extends Canvas {
         plot.getPrimaryXAxis().setAutoScaleThreshold(0);
         plot.getPrimaryXAxis().setFormatPattern("0");
 
-        plot.getPrimaryYAxis().setTitle("Count (/" + Utils.MU + "s)");
+        plot.getPrimaryYAxis().setTitle("");
 		plot.getPrimaryYAxis().setDashGridLine(true);
 		plot.getPrimaryYAxis().setAutoScale(true);
         plot.getPrimaryYAxis().setAutoScaleThreshold(0);
@@ -125,19 +133,28 @@ public class SpectrumPlot extends Canvas {
 		if (spectrum != null) {
 			spectrum.removePropertyChangeListener(xDataListener);
 			spectrum.removePropertyChangeListener(yDataListener);
+			spectrum.removePropertyChangeListener(typeSelectionIndexListener);
 		}
 		
 		spectrum = newSpectrum;
 		spectrum.addPropertyChangeListener("xData", xDataListener);
 		spectrum.addPropertyChangeListener("yData", yDataListener);
+		spectrum.addPropertyChangeListener("typeSelectionIndex", typeSelectionIndexListener);
 
 		if (spectrum.xData().length > DAE_SPECTRUM_BUFFER_SIZE || spectrum.yData().length > DAE_SPECTRUM_BUFFER_SIZE) {
             LOG.warn("DAE graph is clipped because DAE_SPECTRUM_BUFFER_SIZE is not large enough.");
 		}
 		
 		traceDataProvider.clearTrace();
+		
+		updateYAxisTitle();
         
 		updateData();
+	}
+	
+	private void updateYAxisTitle() {
+		plot.getPrimaryYAxis().setTitle(
+				SpectrumYAxisTypes.values()[spectrum.getTypeSelectionIndex()].toString());
 	}
 
     /**

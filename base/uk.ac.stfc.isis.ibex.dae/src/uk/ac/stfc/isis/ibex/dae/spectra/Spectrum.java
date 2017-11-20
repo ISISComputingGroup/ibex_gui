@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The view model for a single spectrum plot.
+ */
 public class Spectrum extends ModelObject {
 
 	private int number;
@@ -30,44 +33,88 @@ public class Spectrum extends ModelObject {
 	
 	private int spectrumYAxisTypeSelectionIndex = 0;
 	
+	/**
+	 * Gets the spectrum number.
+	 * @return the spectrum number
+	 */
 	public int getNumber() {
 		return number;
 	}
 	
+	/**
+	 * Sets the spectrum number.
+	 * @param value the new spectrum number
+	 */
 	public void setNumber(int value) {
 		firePropertyChange("number", number, number = value);
 	}
 	
+	/**
+	 * Gets the period of this spectrum.
+	 * @return the period
+	 */
 	public int getPeriod() {
 		return period;
 	}
 	
+	/**
+	 * The period of this spectrum.
+	 * @param value the new period
+	 */
 	public void setPeriod(int value) {
 		firePropertyChange("period", period, period = value);
 	}
 	
+	/**
+	 * The X data of this spectrum.
+	 * @return the X data.
+	 */
 	public double[] xData() {
 		return xData;
 	}
 		
+	/**
+	 * The Y data of this spectrum.
+	 * @return the Y data.
+	 */
 	public double[] yData() {
 		return yData;
 	}
 	
+	/**
+	 * Sets the selection index of the Y axis type.
+	 * 
+	 * This is an index into the {@link SpectrumYAxisTypes} enum.
+	 */
 	public void setTypeSelectionIndex(int type) {
 		firePropertyChange("typeSelectionIndex", spectrumYAxisTypeSelectionIndex, spectrumYAxisTypeSelectionIndex = type);
 	}
 	
+	/**
+	 * Gets the selection index of the Y axis type.
+	 * 
+	 * This is an index into the {@link SpectrumYAxisTypes} enum.
+	 * 
+	 * @return the type selection index
+	 */
 	public int getTypeSelectionIndex() {
 		return spectrumYAxisTypeSelectionIndex;
 	}
 
-	
-	protected void setXData(double[] value) {
+
+	/**
+	 * Sets the X data array for this spectrum.
+	 * @param value the data to set.
+	 */
+	public void setXData(double[] value) {
 		firePropertyChange("xData", xData, xData = value);
 	}
 	
-	protected void setYData(double[] value) {
+	/**
+	 * Sets the Y data array for this spectrum.
+	 * @param value the data to set.
+	 */
+	public void setYData(double[] value) {
 		if (SpectrumYAxisTypes.values()[spectrumYAxisTypeSelectionIndex] == SpectrumYAxisTypes.ABSOLUTE_COUNTS) {
 			for (int i = 0; i<value.length; i++) {
 				try {
