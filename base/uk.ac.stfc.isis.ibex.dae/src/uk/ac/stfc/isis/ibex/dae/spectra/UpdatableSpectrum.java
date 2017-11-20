@@ -21,28 +21,48 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 
 import org.osgi.service.prefs.Preferences;
 
+/**
+ * An updatable spectrum.
+ */
 public class UpdatableSpectrum extends Spectrum {
 
 	private boolean requiresUpdate;
 	
+	/**
+	 * Constructor.
+	 * @param preferenceStore the preference store to use.
+	 */
 	public UpdatableSpectrum(Preferences preferenceStore){
 		super(preferenceStore);
 	}
 
+	/**
+	 * Whether the spectrum requires an update.
+	 * @return true if it requires an update, false otherwise
+	 */
 	public boolean getRequiresUpdate() {
 		return requiresUpdate;
 	}
 	
+	/**
+	 * Trigger an update of the spectrum.
+	 */
 	public void update() {
 		firePropertyChange("requiresUpdate", requiresUpdate, requiresUpdate = false);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setNumber(int value) {
 		super.setNumber(value);
 		firePropertyChange("requiresUpdate", requiresUpdate, requiresUpdate = true);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setPeriod(int value) {
 		super.setPeriod(value);

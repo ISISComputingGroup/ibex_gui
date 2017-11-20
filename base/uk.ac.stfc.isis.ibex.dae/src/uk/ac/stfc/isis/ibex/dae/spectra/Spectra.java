@@ -49,7 +49,7 @@ public class Spectra extends Closer {
 	private void addSpectrum(int spectrum, int period) {
 		
 		Preferences preferenceStore = ConfigurationScope.INSTANCE
-				.getNode("uk.ac.stfc.isis.ibex.instrument").node("spectrapreferences" + spectrum);
+				.getNode("uk.ac.stfc.isis.ibex.dae.spectra").node("preferences" + spectrum);
 		
 		UpdatableSpectrum spec = registerForClose(new ObservedSpectrum(preferenceStore, observables));
 		

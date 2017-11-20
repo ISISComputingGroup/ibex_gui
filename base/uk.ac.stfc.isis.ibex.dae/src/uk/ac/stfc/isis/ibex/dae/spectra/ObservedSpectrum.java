@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import org.osgi.service.prefs.Preferences;
 
+/**
+ * An observed spectrum.
+ */
 public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		
 	private final DaeObservables observables;
@@ -71,11 +74,19 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
     private ForwardingObservable<float[]> xValObservable;
     private ForwardingObservable<float[]> yValObservable;
 
+    /**
+     * Constructor.
+     * @param preferenceStore the preference store to use
+     * @param observables the dae observables to use
+     */
     public ObservedSpectrum(Preferences preferenceStore, DaeObservables observables) {
     	super(preferenceStore);
 		this.observables = observables;
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void update() {
 		updateSubscriptions();
@@ -99,6 +110,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
         ySubscription = yData.addObserver(yDataObserver);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         closeObservables();
