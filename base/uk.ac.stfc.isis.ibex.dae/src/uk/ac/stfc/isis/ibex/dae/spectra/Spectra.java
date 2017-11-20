@@ -22,6 +22,9 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.osgi.service.prefs.Preferences;
+
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
@@ -43,10 +46,13 @@ public class Spectra extends Closer {
 		return spectra;
 	}
 
-	private void addSpectrum(int spectrum, int period) {	
-		UpdatableSpectrum spec = registerForClose(new ObservedSpectrum(observables));
-		spec.setNumber(spectrum);
-		spec.setPeriod(period);
+	private void addSpectrum(int spectrum, int period) {
+		
+		Preferences preferenceStore = ConfigurationScope.INSTANCE
+				.getNode("uk.ac.stfc.isis.ibex.instrument").node("spectrapreferences" + spectrum);
+		
+		UpdatableSpectrum spec = registerForClose(new ObservedSpectrum(preferenceStore, observables));
+		
 		spec.update();
 		
 		spectra.add(spec);

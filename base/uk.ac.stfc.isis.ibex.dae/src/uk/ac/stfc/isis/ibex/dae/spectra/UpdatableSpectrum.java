@@ -19,9 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.dae.spectra;
 
+import org.osgi.service.prefs.Preferences;
+
 public class UpdatableSpectrum extends Spectrum {
 
 	private boolean requiresUpdate;
+	
+	public UpdatableSpectrum(Preferences preferenceStore){
+		super(preferenceStore);
+	}
 
 	public boolean getRequiresUpdate() {
 		return requiresUpdate;

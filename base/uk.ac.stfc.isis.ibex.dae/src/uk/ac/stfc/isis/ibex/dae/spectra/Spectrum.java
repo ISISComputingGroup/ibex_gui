@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.spectra;
 
+import org.osgi.service.prefs.Preferences;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -32,6 +34,18 @@ public class Spectrum extends ModelObject {
 	private double[] yData = new double[2];
 	
 	private int spectrumYAxisTypeSelectionIndex = 0;
+	private Preferences preferences;
+	
+	/**
+	 * Constructor.
+	 * @param preferenceStore the preference store to use.
+	 */
+	public Spectrum(Preferences preferenceStore) {
+		this.preferences = preferenceStore;
+		setNumber(preferences.getInt("spectrumNumber", 1));
+		setPeriod(preferences.getInt("period", 1));
+		setTypeSelectionIndex(preferences.getInt("typeSelectionIndex", 0));
+	}
 	
 	/**
 	 * Gets the spectrum number.
@@ -47,6 +61,7 @@ public class Spectrum extends ModelObject {
 	 */
 	public void setNumber(int value) {
 		firePropertyChange("number", number, number = value);
+		preferences.putInt("spectrumNumber", number);
 	}
 	
 	/**
@@ -63,6 +78,7 @@ public class Spectrum extends ModelObject {
 	 */
 	public void setPeriod(int value) {
 		firePropertyChange("period", period, period = value);
+		preferences.putInt("period", period);
 	}
 	
 	/**
@@ -88,8 +104,9 @@ public class Spectrum extends ModelObject {
 	 */
 	public void setTypeSelectionIndex(int type) {
 		firePropertyChange("typeSelectionIndex", spectrumYAxisTypeSelectionIndex, spectrumYAxisTypeSelectionIndex = type);
+		preferences.putInt("typeSelectionIndex", spectrumYAxisTypeSelectionIndex);
 	}
-	
+
 	/**
 	 * Gets the selection index of the Y axis type.
 	 * 

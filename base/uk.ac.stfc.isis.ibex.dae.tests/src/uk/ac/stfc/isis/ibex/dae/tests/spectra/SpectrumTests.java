@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
 import uk.ac.stfc.isis.ibex.dae.spectra.SpectrumYAxisTypes;
@@ -22,11 +24,16 @@ public class SpectrumTests {
 	@Before
 	public void setUp() {
 		
-		if (CONSTANT_BIN_WIDTH_X_DATA.length != VARIABLE_BIN_WIDTH_X_DATA.length || VARIABLE_BIN_WIDTH_X_DATA.length != Y_DATA.length) {
+		if (CONSTANT_BIN_WIDTH_X_DATA.length != VARIABLE_BIN_WIDTH_X_DATA.length 
+				|| VARIABLE_BIN_WIDTH_X_DATA.length != Y_DATA.length) {
 			fail("All test data should have the same length.");
 		}
 		
-		spectrum = new Spectrum();
+		Preferences preferenceMock = Mockito.mock(Preferences.class);
+		Mockito.doNothing().when(preferenceMock).putInt(Mockito.anyString(), Mockito.anyInt());
+		Mockito.when(preferenceMock.getInt(Mockito.anyString(), Mockito.anyInt())).thenReturn(0);
+		
+		spectrum = new Spectrum(preferenceMock);
 	}
 
 	@Test
