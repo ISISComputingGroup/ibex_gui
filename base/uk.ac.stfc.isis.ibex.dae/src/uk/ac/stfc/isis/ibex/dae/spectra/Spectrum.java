@@ -27,6 +27,7 @@ public class Spectrum extends ModelObject {
 	private int period;
 	private double[] xData = new double[2];
 	private double[] yData = new double[2];
+	
 	private int spectrumYAxisTypeSelectionIndex = 0;
 	
 	public int getNumber() {
@@ -54,7 +55,6 @@ public class Spectrum extends ModelObject {
 	}
 	
 	public void setTypeSelectionIndex(int type) {
-		System.out.println("Set the thing to " + type);
 		firePropertyChange("typeSelectionIndex", spectrumYAxisTypeSelectionIndex, spectrumYAxisTypeSelectionIndex = type);
 	}
 	
@@ -68,8 +68,7 @@ public class Spectrum extends ModelObject {
 	}
 	
 	protected void setYData(double[] value) {
-		System.out.println("Setting data, " + spectrumYAxisTypeSelectionIndex);
-		if (spectrumYAxisTypeSelectionIndex == 0) {
+		if (SpectrumYAxisTypes.values()[spectrumYAxisTypeSelectionIndex] == SpectrumYAxisTypes.ABSOLUTE_COUNTS) {
 			for (int i = 0; i<value.length; i++) {
 				try {
 					value[i] *= Math.abs(xData[i+1] - xData[i]);

@@ -90,15 +90,12 @@ public class SpectrumView extends Composite {
         period.setMinimum(0);
         period.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
         
-        spectrumType = new Combo(this, SWT.BORDER);
+        spectrumType = new Combo(this, SWT.BORDER | SWT.DROP_DOWN | SWT.READ_ONLY);
         String[] s = new String[SpectrumYAxisTypes.values().length];
         for (int i = 0; i<SpectrumYAxisTypes.values().length; i++) {
         	s[i] = SpectrumYAxisTypes.values()[i].toString();
         }
         spectrumType.setItems(s);
-
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
 
 		spectrumFigure = new SpectrumPlot(this, SWT.NONE);
         spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
@@ -115,9 +112,8 @@ public class SpectrumView extends Composite {
 		bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.selection().observe(number), BeanProperties.value("number").observe(updatableSpectrum));
 		bindingContext.bindValue(WidgetProperties.selection().observe(period), BeanProperties.value("period").observe(updatableSpectrum));		
-		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectrumType), BeanProperties.value("typeSelectionIndex").observe(updatableSpectrum));
-
-		System.out.println("Bound the thing.");
+		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectrumType), 
+				BeanProperties.value("typeSelectionIndex").observe(updatableSpectrum));
 
         spectrum.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
