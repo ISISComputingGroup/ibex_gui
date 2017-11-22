@@ -63,6 +63,8 @@ public class SynopticPresenter extends ModelObject {
 	private List<Component> components = new ArrayList<>();
 	private List<String> trail;
 
+    private SynopticOpiTargetView targetView = new SynopticOpiTargetView();
+
     private final PropertyChangeListener navigationListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -177,7 +179,7 @@ public class SynopticPresenter extends ModelObject {
         if (target instanceof OpiTarget) {
             // Opi targets don't update the navigator.
             try {
-                SynopticOpiTargetView.displayOpi((OpiTarget) target);
+                targetView.displayOpi((OpiTarget) target);
             } catch (OPIViewCreationException e) {
                 LOG.catching(e);
             }
@@ -230,7 +232,7 @@ public class SynopticPresenter extends ModelObject {
 
 		if (currentTarget instanceof OpiTarget) {
             try {
-                SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
+                targetView.displayOpi((OpiTarget) currentTarget);
             } catch (OPIViewCreationException e) {
                 LOG.catching(e);
             }
@@ -292,6 +294,6 @@ public class SynopticPresenter extends ModelObject {
      * Closes any OPIs that have been opened on the synoptic.
      */
     public void closeAllOPIs() {
-        SynopticOpiTargetView.closeAllOPIs();
+        targetView.closeAllOPIs();
     }
 }

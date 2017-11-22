@@ -72,7 +72,8 @@ public class DeviceScreenListPanel extends Composite {
      * @param viewModel
      *            the view model to be used by this view
      */
-    public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
+    public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel,
+            final DevicesOpiTargetView targetView) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -109,7 +110,7 @@ public class DeviceScreenListPanel extends Composite {
                 for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
                     LOG.info("Open opi target " + deviceScreeen.getName());
                     try {
-                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+                        targetView.displayOpi(deviceScreeen.getOPITarget());
                     } catch (OPIViewCreationException e) {
                         LOG.catching(e);
                         MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());

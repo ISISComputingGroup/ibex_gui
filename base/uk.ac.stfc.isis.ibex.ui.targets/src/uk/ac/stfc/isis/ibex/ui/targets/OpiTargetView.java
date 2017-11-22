@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.targets;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -39,6 +38,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.opis.OpiViewLocator;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
@@ -113,29 +113,36 @@ public abstract class OpiTargetView extends OpiView {
 		}
 	}
 
-    private static List<IViewPart> openOPIs = new ArrayList<>();;
-    private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
+    private List<OpiViewLocator> openOPIs = new ArrayList<>();
 
     /**
      * Closes any OPIs that have been opened.
      */
-    public static void closeAllOPIs() {
-        ListIterator<IPerspectiveDescriptor> wbiter = openOPIsWorkbenchPage.listIterator();
-        for (ListIterator<IViewPart> iter = openOPIs.listIterator(); iter.hasNext();) {
-            final IViewPart vp = iter.next();
-            final IPerspectiveDescriptor descriptor = wbiter.next();
-            // Must run on the GUI thread
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);
+    public void closeAllOPIs() {
+        // Must run on the GUI thread
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                // Get the current perspective
+                final IPerspectiveDescriptor originalPerspective =
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
+
+                // Go through the OPI perspectives and close the OPI views
+                for (OpiViewLocator opiLocator : openOPIs) {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                            .setPerspective(opiLocator.perspective());
                     IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    wp.hideView(vp);
+                    wp.hideView(opiLocator.viewPart());
                 }
-            });
-        }
-        openOPIs.clear();
-        openOPIsWorkbenchPage.clear();
+
+                // Switch back to the original perspective
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                        .setPerspective(originalPerspective);
+
+                // Once we've finished closing the OPIs, forget about them.
+                openOPIs.clear();
+            }
+        });
     }
 
     /**
@@ -148,7 +155,7 @@ public abstract class OpiTargetView extends OpiView {
      * @throws OPIViewCreationException
      *             when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
+    public void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
         IWorkbenchPage workbenchPage = null;
         IViewPart view = null;
         try {
@@ -156,8 +163,7 @@ public abstract class OpiTargetView extends OpiView {
             view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
             OpiTargetView viewAsOPITarget = (OpiTargetView) view;
             viewAsOPITarget.setOpi(opiTarget);
-            openOPIs.add(view);
-            openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
+            openOPIs.add(new OpiViewLocator(view, workbenchPage.getPerspective()));
         } catch (PartInitException e) {
             LOG.catching(e);
         } catch (OPIViewCreationException e) {

@@ -17,15 +17,15 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.synoptic;
+package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
 /**
- * The activator class controls the plug-in life cycle.
+ * Performs actions of the device screens when the instrument is changed.
  */
-public class SynopticSettings implements InstrumentInfoReceiver {
+public class DeviceScreensInstrumentInfoReceiver implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
@@ -41,7 +41,7 @@ public class SynopticSettings implements InstrumentInfoReceiver {
     public void preSetInstrument(InstrumentInfo instrument) {
         final Activator activator = Activator.getDefault();
         if (activator != null) {
-            activator.presenter().closeAllOPIs();
+            activator.targetView().closeAllOPIs();
         }
     }
 

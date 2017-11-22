@@ -4,35 +4,19 @@ Bundle-Name: Devicescreens
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.devicescreens;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.devicescreens.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.preferences,
- uk.ac.stfc.isis.ibex.ui.perspectives,
+Require-Bundle: uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.widgets,
  uk.ac.stfc.isis.ibex.model,
  org.eclipse.swt,
  org.eclipse.ui.ide,
  uk.ac.stfc.isis.ibex.ui.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
- org.eclipse.ui.workbench,
- org.eclipse.jface,
- uk.ac.stfc.isis.ibex.opis,
- uk.ac.stfc.isis.ibex.devicescreens
+ uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.validators,
+ uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.ui.targets
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: org.apache.logging.log4j,
- org.csstudio.opibuilder.runmode,
- org.csstudio.opibuilder.util,
- uk.ac.stfc.isis.ibex.devicescreens,
- uk.ac.stfc.isis.ibex.devicescreens.desc,
- uk.ac.stfc.isis.ibex.epics.switching,
- uk.ac.stfc.isis.ibex.epics.writing,
- uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.opis,
- uk.ac.stfc.isis.ibex.synoptic.model.desc,
- uk.ac.stfc.isis.ibex.targets,
- uk.ac.stfc.isis.ibex.ui.targets,
- uk.ac.stfc.isis.ibex.validators
 Export-Package: uk.ac.stfc.isis.ibex.ui.devicescreens
