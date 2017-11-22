@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="CheckOpiFormat-20171122132340" tests="7" time="0.000">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_THEN_it_ends_in_a_colon" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000"/>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

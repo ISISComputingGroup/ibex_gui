@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<testsuite errors="2" failures="0" name="CheckOpiFormat-20171122142845" tests="9" time="0.001">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_THEN_it_ends_in_a_colon" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case" time="0.001">
+		<error message="Label on line 1702 with text 'First word is not capitalised' is not title case.
+Label on line 1743 with text 'First word is not capitalised' is not title case.
+Label on line 1784 with text 'First word is not capitalised' is not title case.
+Label on line 1826 with text 'First word is not capitalised' is not title case.
+Label on line 1867 with text 'First word is not capitalised' is not title case.
+Label on line 1908 with text 'First word is not capitalised' is not title case.
+Label on line 1949 with text 'First word is not capitalised' is not title case.
+Label on line 1990 with text 'First word is not capitalised' is not title case.
+Label on line 2031 with text 'First word is not capitalised' is not title case." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 270, in test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case
+    self.fail(message)
+AssertionError: Label on line 1702 with text 'First word is not capitalised' is not title case.
+Label on line 1743 with text 'First word is not capitalised' is not title case.
+Label on line 1784 with text 'First word is not capitalised' is not title case.
+Label on line 1826 with text 'First word is not capitalised' is not title case.
+Label on line 1867 with text 'First word is not capitalised' is not title case.
+Label on line 1908 with text 'First word is not capitalised' is not title case.
+Label on line 1949 with text 'First word is not capitalised' is not title case.
+Label on line 1990 with text 'First word is not capitalised' is not title case.
+Label on line 2031 with text 'First word is not capitalised' is not title case.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case" time="0.000">
+		<error message="Label on line 485 with text 'Word 'Position:' is not in sentence case' is not sentence case.
+Label on line 635 with text 'Word 'Position' is not in sentence case' is not sentence case.
+Label on line 1702 with text 'First word is not capitalised' is not sentence case.
+Label on line 1743 with text 'First word is not capitalised' is not sentence case.
+Label on line 1784 with text 'First word is not capitalised' is not sentence case.
+Label on line 1826 with text 'First word is not capitalised' is not sentence case.
+Label on line 1867 with text 'First word is not capitalised' is not sentence case.
+Label on line 1908 with text 'First word is not capitalised' is not sentence case.
+Label on line 1949 with text 'First word is not capitalised' is not sentence case.
+Label on line 1990 with text 'First word is not capitalised' is not sentence case.
+Label on line 2031 with text 'First word is not capitalised' is not sentence case." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 263, in test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case
+    self.fail(message)
+AssertionError: Label on line 485 with text 'Word 'Position:' is not in sentence case' is not sentence case.
+Label on line 635 with text 'Word 'Position' is not in sentence case' is not sentence case.
+Label on line 1702 with text 'First word is not capitalised' is not sentence case.
+Label on line 1743 with text 'First word is not capitalised' is not sentence case.
+Label on line 1784 with text 'First word is not capitalised' is not sentence case.
+Label on line 1826 with text 'First word is not capitalised' is not sentence case.
+Label on line 1867 with text 'First word is not capitalised' is not sentence case.
+Label on line 1908 with text 'First word is not capitalised' is not sentence case.
+Label on line 1949 with text 'First word is not capitalised' is not sentence case.
+Label on line 1990 with text 'First word is not capitalised' is not sentence case.
+Label on line 2031 with text 'First word is not capitalised' is not sentence case.
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

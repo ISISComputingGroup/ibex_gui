@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<testsuite errors="1" failures="0" name="CheckOpiFormat-20171122104038" tests="4" time="0.000">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000">
+		<error message="global name 'check_foreground_colour' is not defined" type="NameError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 351, in test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground
+    self._assert_foreground_colour_correct("TextInput", ["ISIS_Standard_Text"])
+  File "check_opi_format.py", line 327, in _assert_foreground_colour_correct
+    errors = check_foreground_colour(self.xml_root, widget, colours)
+NameError: global name 'check_foreground_colour' is not defined
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

@@ -9,6 +9,7 @@ from time import gmtime, strftime
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour
+from check_OPI_format_utils.text import check_label_punctuation, check_sentence_case, check_title_case
 
 # Directory to iterate through
 from xmlrunner import XMLTestRunner
@@ -83,51 +84,6 @@ class CheckOpiFormatOld(object):
                 + "\n... " + error_message
             self.errors.append(err)
 
-    def check_case(self, root, xpath, error_message, title_case):
-        for name in root.xpath(xpath):
-            try:
-                if name.text is None:
-                    raise CapitalisationError("No text identified")
-
-                words = name.text.split()
-                if len(words)==0:
-                    raise CapitalisationError("Text is empty")
-
-                # Special case for the manager mode indicator
-                if title_case and "manager mode" in name.text.lower():
-                    continue
-
-                # Handle special case of first word (which should be capitalised regardless of length)
-                word = words[0]
-                if not word.title() == word and not any(s in word for s in self.ignore):
-                    raise CapitalisationError("First word is not capitalised")
-
-            # Ignore words less than 4 characters as these are probably prepositions
-            # Also don't check first word as that is a special case handled above
-                for i, word in enumerate(words):
-                    is_long_word = len(word) > self.ignore_short_words_limit
-                    is_first_word = i==0
-                    is_ignored = any(s in word for s in self.ignore)
-                    if is_long_word and not is_first_word and not is_ignored:
-                        if title_case and word.title() != word:
-                            raise CapitalisationError("Word '{}' is not in title case".format(word))
-                        elif not title_case and word.lower() != word:
-                            raise CapitalisationError("Word '{}' is not in sentence case".format(word))
-
-            except CapitalisationError as caps_err:
-                err = "Error on line {source}, {name}: {broad_message}\n    {fine_message}".format(
-                    source=name.sourceline,
-                    name=etree.tostring(name),
-                    broad_message=error_message,
-                    fine_message=caps_err)
-                self.errors.append(err)
-
-    def check_title_case(self, root, xpath, error_message):
-        self.check_case(root, xpath, error_message, True)
-
-    def check_sentence_case(self, root, xpath, error_message):
-        self.check_case(root, xpath, error_message, False)
-
     def check_plot_area_background(self, root):
 
         # Select a plot area
@@ -146,27 +102,6 @@ class CheckOpiFormatOld(object):
         condition = "/font/opifont.name[not(starts-with(., 'ISIS_')) and not(starts-with(@fontName, 'ISIS_'))]"
         error_message = "The font must be an ISIS_* font"
         self.check_condition(root, xpath + condition, error_message)
-
-    # def check_led_colours(self, root):
-    #
-    #     # Select LEDs
-    #     xpath = "//" + self.widget_xpath + "LED']"
-    #
-    #     condition = "/on_color/color[not(@name)]"
-    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
-    #     self.check_condition(root, xpath + condition, error_message)
-    #
-    #     condition = "/on_color/color[@name!='ISIS_Green_LED_On' and @name!='ISIS_Red_LED_On']"
-    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
-    #     self.check_condition(root, xpath + condition, error_message)
-    #
-    #     condition = "/off_color/color[not(@name)]"
-    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
-    #     self.check_condition(root, xpath + condition, error_message)
-    #
-    #     condition = "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"
-    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
-    #     self.check_condition(root, xpath + condition, error_message)
 
     def check_text_input_colors(self, root):
 
@@ -226,25 +161,6 @@ class CheckOpiFormatOld(object):
 
         error_message = "Labels should be in 'sentence case'"
         self.check_sentence_case(root, xpath, error_message)
-
-    def check_colon_at_the_end_of_labels(self, root):
-        container_name_xpath = "//" + self.widget_xpath + "groupingContainer']" \
-                             "/" + self.widget_xpath + "Label']/text"
-
-        for name in root.xpath(container_name_xpath):
-            text = name.text
-            if text is None or len(text)==0:
-                continue
-
-            # Check last character in the string is a colon
-            last_character_is_colon = text[-1:] != ":"
-            ends_in_ellipsis = len(text)>= 3 and text[-3:]=="..."
-            text_is_numeric = text.isdigit()
-            is_ignored = any(s==text for s in self.ignore)
-            if  not last_character_is_colon and not ends_in_ellipsis and not text_is_numeric and not is_ignored:
-                    err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                        + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
-                    self.errors.append(err)
 
     def run(self, file, directory, logs_directory, file_extension):
 
@@ -309,11 +225,10 @@ class CheckOpiFormat(unittest.TestCase):
         self.xml_root = xml_root
 
     def _assert_colour_correct(self, location, widget, colours):
-        errors = check_colour(location, self.xml_root, widget, colours)
+        errors = check_colour(self.xml_root, widget, location, colours)
 
         if len(errors):
-            self.fail("\n".join(
-                ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+            self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
 
     def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
         self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
@@ -332,6 +247,27 @@ class CheckOpiFormat(unittest.TestCase):
 
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
+    def test_GIVEN_a_label_THEN_it_ends_in_a_colon(self):
+        errors = check_label_punctuation(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Label on line {} with text '{}' did not end in a colon."
+                                .format(*error) for error in errors])
+            self.fail(message)
+
+    def test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case(self):
+        errors = check_sentence_case(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Label on line {}: {}"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
+    def test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case(self):
+        errors = check_title_case(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Label on line {}: {}"
+                                .format(*error) for error in errors])
+            self.fail(message)
 
 
 if __name__ == "__main__":

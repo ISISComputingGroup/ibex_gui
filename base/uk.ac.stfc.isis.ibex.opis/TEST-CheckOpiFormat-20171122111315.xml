@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<testsuite errors="5" failures="0" name="CheckOpiFormat-20171122111315" tests="6" time="0.020">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.010"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000">
+		<error message="On line 2468, text 'Grouping Container_2', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 319, in test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background
+    self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
+  File "check_opi_format.py", line 316, in _assert_colour_correct
+    ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 2468, text 'Grouping Container_2', colour was not correct.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour" time="0.000">
+		<error message="On line 2513, text 'LED', colour was not correct.
+On line 2701, text 'LED_1', colour was not correct.
+On line 2795, text 'LED_2', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 334, in test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour
+    self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+  File "check_opi_format.py", line 316, in _assert_colour_correct
+    ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 2513, text 'LED', colour was not correct.
+On line 2701, text 'LED_1', colour was not correct.
+On line 2795, text 'LED_2', colour was not correct.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour" time="0.000">
+		<error message="On line 2493, text 'LED', colour was not correct.
+On line 2681, text 'LED_1', colour was not correct.
+On line 2775, text 'LED_2', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 331, in test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour
+    self._assert_colour_correct("on_color", "LED", ["ISIS_Green_LED_On", "ISIS_Red_LED_On"])
+  File "check_opi_format.py", line 316, in _assert_colour_correct
+    ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 2493, text 'LED', colour was not correct.
+On line 2681, text 'LED_1', colour was not correct.
+On line 2775, text 'LED_2', colour was not correct.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.010">
+		<error message="On line 944, text 'None', colour was not correct.
+On line 1368, text 'None', colour was not correct.
+On line 1424, text 'None', colour was not correct.
+On line 1480, text 'None', colour was not correct.
+On line 1679, text 'None', colour was not correct.
+On line 1837, text 'None', colour was not correct.
+On line 3261, text 'None', colour was not correct.
+On line 3941, text 'None', colour was not correct.
+On line 4426, text 'None', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 325, in test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background
+    self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
+  File "check_opi_format.py", line 316, in _assert_colour_correct
+    ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 944, text 'None', colour was not correct.
+On line 1368, text 'None', colour was not correct.
+On line 1424, text 'None', colour was not correct.
+On line 1480, text 'None', colour was not correct.
+On line 1679, text 'None', colour was not correct.
+On line 1837, text 'None', colour was not correct.
+On line 3261, text 'None', colour was not correct.
+On line 3941, text 'None', colour was not correct.
+On line 4426, text 'None', colour was not correct.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000">
+		<error message="On line 951, text 'None', colour was not correct.
+On line 1375, text 'None', colour was not correct.
+On line 1431, text 'None', colour was not correct.
+On line 1487, text 'None', colour was not correct.
+On line 1686, text 'None', colour was not correct.
+On line 1844, text 'None', colour was not correct.
+On line 3268, text 'None', colour was not correct.
+On line 3948, text 'None', colour was not correct.
+On line 4433, text 'None', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 328, in test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground
+    self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
+  File "check_opi_format.py", line 316, in _assert_colour_correct
+    ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 951, text 'None', colour was not correct.
+On line 1375, text 'None', colour was not correct.
+On line 1431, text 'None', colour was not correct.
+On line 1487, text 'None', colour was not correct.
+On line 1686, text 'None', colour was not correct.
+On line 1844, text 'None', colour was not correct.
+On line 3268, text 'None', colour was not correct.
+On line 3948, text 'None', colour was not correct.
+On line 4433, text 'None', colour was not correct.
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/background_color/color[not(@name) or (@name!='ISIS_OPI_Background')]
+//widget[@typeId='org.csstudio.opibuilder.widgets.Label']/background_color/color[not(@name) or (@name!='ISIS_Label_Background' and @name!='ISIS_Title_Background_NEW')]
+//widget[@typeId='org.csstudio.opibuilder.widgets.LED']/off_color/color[not(@name) or (@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off')]
+//widget[@typeId='org.csstudio.opibuilder.widgets.LED']/on_color/color[not(@name) or (@name!='ISIS_Green_LED_On' and @name!='ISIS_Red_LED_On')]
+//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']/background_color/color[not(@name) or (@name!='ISIS_Textbox_Background')]
+//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']/foreground_color/color[not(@name) or (@name!='ISIS_Standard_Text')]
+]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
