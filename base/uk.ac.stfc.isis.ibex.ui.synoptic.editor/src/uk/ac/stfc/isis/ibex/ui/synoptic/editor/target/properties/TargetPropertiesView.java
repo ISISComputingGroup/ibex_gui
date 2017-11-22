@@ -48,6 +48,7 @@ public class TargetPropertiesView extends Composite {
         super(parent, SWT.FILL);
 		
         setLayout(new GridLayout(2, false));
+        setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		this.synopticViewModel = synopticViewModel;
 		

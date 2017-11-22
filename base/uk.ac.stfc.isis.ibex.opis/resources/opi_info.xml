@@ -4,6 +4,9 @@
 		<entry>
 			<key>Analyser</key>
 			<value>
+				<categories>
+					<category>Monitors</category>
+				</categories>
 				<type>ANALYSER</type>
 				<path>analyser.opi</path>
 				<description>The OPI for the analyser. No properties required.</description>
@@ -24,6 +27,9 @@
 		<entry>
 			<key>XY Beam-stop</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
 				<description>The OPI for the XY beam-stop. No properties required.</description>
@@ -34,6 +40,9 @@
 		<entry>
 			<key>Caen HV</key>
 			<value>
+				<categories>
+					<category>Power supplies</category>
+				</categories>
 				<type>CAEN</type>
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
 				<description>Summary display for Caens (maintenance of list via the button on this OPI). No properties required.</description>
@@ -70,6 +79,9 @@
         <entry>
             <key>Double Monitor</key>		
             <value>	
+				<categories>
+					<category>Monitors</category>
+				</categories>
                 <type>MONITOR</type>
                 <path>double_monitor.opi</path>		
                 <description>The OPI for a double fixed monitor.</description>		
@@ -100,6 +112,9 @@
  		<entry>
 			<key>Eurotherm</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
 				<description>The OPI for the Eurotherm crate connected to multiple Eurotherm temperature controllers.</description>
@@ -114,6 +129,10 @@
 		<entry>
 			<key>Mercury iTC</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+					<category>Cryogenics</category>
+				</categories>
 				<type>MERCURY</type>
 				<path>mercuryiTC.opi</path>
 				<description>The OPI for the Mercury temperature controller.</description>
@@ -144,6 +163,10 @@
 		<entry>
 			<key>In Out Monitor</key>
 			<value>
+				<categories>
+					<category>Monitors</category>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>MOVINGMONITOR</type>
 				<path>inout_monitor.opi</path>
 				<description>The OPI for a moving monitor.</description>
@@ -162,6 +185,9 @@
 		<entry>
 			<key>Jaws</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>UNCONFIRMED</type>
 				<path>jaws/Jaws.opi</path>
 				<description>The OPI for a Jaw set.</description>
@@ -176,6 +202,10 @@
 		<entry>
 			<key>Julabo FL300</key>
 			<value>
+				<categories>
+					<category>Water baths</category>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>JULABO</type>
 				<path>JulaboFL300.opi</path>
 				<description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
@@ -186,6 +216,10 @@
 		<entry>
 			<key>Julabo FP50</key>
 			<value>
+				<categories>
+					<category>Water baths</category>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>JULABO</type>
 				<path>JulaboFP50.opi</path>
 				<description>The OPI for the Julabo FP50 temperature controller..</description>
@@ -200,6 +234,9 @@
 		<entry>
 			<key>Linkam 95</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>LINKAM95</type>
 				<path>linkam95.opi</path>
 				<description>The OPI for the Linkam 95 temperature controller.</description>
@@ -214,6 +251,9 @@
 		<entry>
 			<key>Keithley 2400</key>
 			<value>
+				<categories>
+					<category>Multimeters</category>
+				</categories>
 				<type>KHLY2400</type>
 				<path>Keithley2400/Keithley2400.opi</path>
 				<description>The OPI for the Keithley 2400 Source Meter.</description>
@@ -228,6 +268,9 @@
 		<entry>
 			<key>Kepco</key>
 			<value>
+				<categories>
+					<category>Power supplies</category>
+				</categories>
 				<type>KEPCO</type>
 				<path>kepco.opi</path>
 				<description>The OPI for the Kepco power supply.</description>
@@ -242,6 +285,9 @@
 		<entry>
 			<key>Lakeshore 218</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>LAKESHORE</type>
 				<path>Lakeshore218.opi</path>
 				<description>The OPI for the Lakeshore 218 temperature controller.</description>
@@ -256,6 +302,9 @@
 		<entry>
 			<key>Lakeshore 336</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+				</categories>
 				<type>LAKESHORE</type>
 				<path>Lakeshore336/Lakeshore336.opi</path>
 				<description>The OPI for the Lakeshore 336 temperature controller.</description>
@@ -270,6 +319,9 @@
 		<entry>
 			<key>Mk3 Chopper</key>
 			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>Mk3Chopper/multiple_choppers.opi</path>
 				<description>The OPI for the Mk3 chopper. No properties required.</description>
@@ -280,6 +332,9 @@
 		<entry>
 			<key>Mk2 Chopper</key>
 			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>Mk2Chopper.opi</path>
 				<description>The OPI for the Mk2 chopper.</description>
@@ -294,6 +349,9 @@
 		<entry>
 			<key>Monitor</key>
 			<value>
+				<categories>
+					<category>Monitors</category>
+				</categories>
 				<type>MONITOR</type>
 				<path>monitor.opi</path>
 				<description>The OPI for a fixed monitor.</description>
@@ -308,6 +366,9 @@
 		<entry>
 			<key>Pinhole Selector</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>PINHOLESELECTOR</type>
 				<path>pinhole_selector\pinhole_selector.opi</path>
 				<description>The OPI for the pinhole selector.</description>
@@ -326,6 +387,9 @@
 		<entry>
 			<key>PGC</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>PGC</type>
 				<path>pgc\pgc.opi</path>
 				<description>The OPI for the Polariser , Guide and Collimation ticket.</description>
@@ -344,6 +408,9 @@
 		<entry>
 			<key>Pixelman</key>
 			<value>
+				<categories>
+					<category>Imaging cameras</category>
+				</categories>
 				<type>UNCONFIRMED</type>
 				<path>pixelman.opi</path>
 				<description>Description required.</description>
@@ -368,6 +435,9 @@
 		<entry>
 			<key>Rotating Bench</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>ROTATINGBENCH</type>
 				<path>rotating_bench.opi</path>
 				<description>The OPI for the LARMOR rotating bench.</description>
@@ -382,6 +452,9 @@
 		<entry>
 			<key>Sample changer</key>
 			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
 				<type>SAMPLECHANGER</type>
 				<path>stage/sample_changer.opi</path>
 				<description>The OPI for the sample changer. No properties required.</description>
@@ -392,6 +465,9 @@
 		<entry>
 			<key>Linear sample changer</key>
 			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
 				<type>LINEARSAMPLECHANGER</type>
 				<path>stage/linear_sample_changer.opi</path>
 				<description>The OPI for the linear sample changer. No properties required.</description>
@@ -402,6 +478,9 @@
 		<entry>
 			<key>Pixelman</key>
 			<value>
+				<categories>
+					<category>Imaging cameras</category>
+				</categories>
 				<type>PIXELMAN</type>
 				<path>pixelman.opi</path>
 				<description>Pixelman camera.</description>
@@ -412,6 +491,9 @@
 		<entry>
 			<key>Sample stage</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>SAMPLESTACK</type>
 				<path>stage/sample.opi</path>
 				<description>The OPI for the sample stage. No properties required.</description>
@@ -436,6 +518,9 @@
 		<entry>
 			<key>Single Stage</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
 				<description>The OPI displaying a single Motor along with a designated ID.</description>
@@ -454,6 +539,9 @@
         <entry>
 			<key>SKF G5 Chopper</key>
 			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>SKFChopper.opi</path>
 				<description>The OPI for the SKF G5 chopper controllers.</description>
@@ -468,6 +556,9 @@
 		<entry>
 			<key>Slit 1</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>JAWS</type>
 				<path>jaws/slit1.opi</path>
 				<description>The OPI for a 2D set of rectangular jaws controlled by 4 motors.</description>
@@ -498,6 +589,9 @@
 		<entry>
 			<key>Coupled Slit</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>JAWS</type>
 				<path>jaws/coupled_slit.opi</path>
 				<description>The OPI for a 2D set of rectangular jaws controlled by 2 motors.</description>
@@ -520,6 +614,9 @@
 		<entry>
 			<key>Slit motors</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>UNCONFIRMED</type>
 				<path>slit_motors.opi</path>
 				<description>The OPI displaying the motors of a slit.</description>
@@ -546,6 +643,9 @@
 		<entry>
 			<key>TPG300</key>
 			<value>
+				<categories>
+					<category>Pressure sensors</category>
+				</categories>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG300.opi</path>
 				<description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
@@ -560,6 +660,9 @@
 		<entry>
 			<key>TPG26x</key>
 			<value>
+				<categories>
+					<category>Pressure sensors</category>
+				</categories>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG26x.opi</path>
 				<description>The OPI for the PFEIFFER 26x Vacuum Gauge.</description>
@@ -584,6 +687,9 @@
 		<entry>
 			<key>TDK Lambda Genesys</key>
 			<value>
+				<categories>
+					<category>Power supplies</category>
+				</categories>
 				<type>TDK_LAMBDA_GENESYS</type>
 				<path>genesys.opi</path>
 				<description>The OPI for the TDK Lambda Genesys PSU.</description>
@@ -602,6 +708,9 @@
 		<entry>
 			<key>Danfysik</key>
 			<value>
+				<categories>
+					<category>Power supplies</category>
+				</categories>
 				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
 				<description>The OPI for the Danfysik power supply for magnets.</description>
@@ -616,6 +725,9 @@
 		<entry>
 			<key>PDR2000</key>
 			<value>
+				<categories>
+					<category>Pressure sensors</category>
+				</categories>
 				<type>PDR2000</type>
 				<path>pdr2000.opi</path>
 				<description>The OPI for the MKS PDR 2000 pressure transducer</description>
@@ -630,6 +742,9 @@
 		<entry>
 			<key>Cryo valve</key>
 			<value>
+				<categories>
+					<category>Cryogenics</category>
+				</categories>
 				<type>CRYVALVE</type>
 				<path>cryValve.opi</path>
 				<description>The OPI for the Iris cryo valve.</description>
@@ -644,6 +759,9 @@
 		<entry>
 			<key>Slits (single motor)</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>JAWS</type>
 				<path>slits_single_motor.opi</path>
 				<description>The OPI for a slit set with one degree of  freedom.</description>
@@ -658,6 +776,9 @@
 		<entry>
 			<key>SCIMAG3D</key>
 			<value>
+				<categories>
+					<category>Magnets</category>
+				</categories>
 				<type>SCIMAG3D</type>
 				<path>scimag3D.opi</path>
 				<description>The OPI for the Scientific Magnetics 3D Magnet.</description>
@@ -682,6 +803,9 @@
 		<entry>
 			<key>Zoom sample stack</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>ZOOM_SAMPLE_STACK</type>
 				<path>zoom_sample_stack/zoom_sample_stack.opi</path>
 				<description>The OPI for the ZOOM sample stack. No properties required.</description>
@@ -692,6 +816,10 @@
 		<entry>
 			<key>Neocera LTC21</key>
 			<value>
+				<categories>
+					<category>Temperature controllers</category>
+					<category>Cryogenics</category>
+				</categories>
 				<type>NEOCERA</type>
 				<path>neocera_ltc21.opi</path>
 				<description>The OPI for the Neocera LTC21.</description>
@@ -706,6 +834,9 @@
 		<entry>
 			<key>Goniometer</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>GONIOMETER</type>
 				<path>goniometer/goniometer.opi</path>
 				<description>The OPI for a goniometer. No properties required.</description>
@@ -716,6 +847,9 @@
 		<entry>
 			<key>Rotating Sample Changer</key>
 			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
 				<type>ROT_SAMPLE_CHANGER</type>
 				<path>rot_sample_changer.opi</path>
 				<description>The OPI for the rotating sample changer on HRPD/GEM/POLARIS. No properties required.</description>
@@ -734,6 +868,9 @@
 		<entry>
 			<key>Mk3 Chopper (single)</key>
 			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>Mk3Chopper/single_chopper.opi</path>
 				<description>The OPI for a single Mk3 Chopper.</description>
@@ -748,6 +885,9 @@
 		<entry>
 			<key>Polaris jaw set</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>JAWS</type>
 				<path>jaws/polaris_jaws/Jaws_polaris.opi</path>
 				<description>The OPI for the Polaris jaw set. No properties required.</description>
@@ -758,6 +898,9 @@
 		<entry>
 			<key>Instron stress rig</key>
 			<value>
+				<categories>
+					<category>Loading rigs</category>
+				</categories>
 				<type>STRESS_RIG</type>
 				<path>stress_rig/stress_rig.opi</path>
 				<description>The OPI for the Instron stress rig. No properties required.</description>
@@ -768,6 +911,9 @@
 		<entry>
 			<key>Applied Measurements Int2-L</key>
 			<value>
+				<categories>
+					<category>Pressure sensors</category>
+				</categories>
 				<type>PRESSURE_GAUGE</type>
 				<path>amint2l/amint2l.opi</path>
 				<description>The OPI for the Applied Measurements Int2-L pressure measurement system.</description>
@@ -830,6 +976,9 @@
 		<entry>
 			<key>XY Shutter Arm Beam-stop</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>BEAMSTOP</type>
 				<path>xyShutterArmBeamstop.opi</path>
 				<description>The OPI for the XY Arm Beam-stop with a shutter.</description>
@@ -844,6 +993,9 @@
 		<entry>
 			<key>Engin-X sample postioning system</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>SAMPLESTACK</type>
 				<path>enginx_sample_position_system.opi</path>
 				<description>The OPI for the Engin-X sample positioning system.</description>
@@ -854,6 +1006,9 @@
 		<entry>
 			<key>Fermi chopper</key>
 			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>fermi_chopper.opi</path>
 				<description>The OPI for the fermi chopper.</description>
@@ -868,6 +1023,9 @@
 		<entry>
 			<key>EnginX 3rd Jaw</key>
 			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
 				<type>JAWS</type>
 				<path>jaws/enginx_jaws/jaw_overview.opi</path>
 				<description>The OPI for the 3rd Enginx Jawset.</description>
@@ -896,6 +1054,9 @@
 		<entry>
         	<key>Engin-X collimators</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>JAWS</type>
 				<path>enginx_collimators/enginx_collimators.opi</path>
 				<description>The OPI for the Engin-X collimators.</description>
@@ -906,6 +1067,9 @@
 		<entry>
 			<key>IEG system</key>
 			<value>
+				<categories>
+					<category>Gas handling systems</category>
+				</categories>
 				<type>GAS_EXCHANGE</type>
 				<path>ieg_system.opi</path>
 				<description>The OPI for the gas exchange system.</description>
@@ -920,6 +1084,9 @@
 		<entry>
 			<key>Cybaman</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>GONIOMETER</type>
 				<path>cybaman.opi</path>
 				<description>The OPI for the cybaman.</description>
@@ -934,6 +1101,9 @@
 		<entry>
 			<key>HLG</key>
 			<value>
+				<categories>
+					<category>Cryogenics</category>
+				</categories>
 				<type>HE_LEVEL_GAUGE</type>
 				<path>hlg.opi</path>
 				<description>The OPI for the helium level guage.</description>
