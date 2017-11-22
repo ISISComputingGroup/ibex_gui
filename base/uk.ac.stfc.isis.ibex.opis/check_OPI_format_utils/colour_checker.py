@@ -43,5 +43,9 @@ def check_specific_isis_colours(root, widget, colour_type, colours):
     Returns:
         list: A list of tuples containing the line number and text of the widgets that do not conform to conditions
     """
-    return check_colour(root, widget,colour_type, ["@name!='{}'".format(colour) for colour in colours])
+    return check_colour(root, widget, colour_type, ["@name!='{}'".format(colour) for colour in colours])
 
+
+def check_plot_area_backgrounds(root):
+    return [(node.sourceline, get_text_of_widget(node.getparent()))
+            for node in root.xpath("//plot_area_background_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]")]

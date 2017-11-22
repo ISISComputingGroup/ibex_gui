@@ -1,7 +1,8 @@
 import unittest
 from lxml import etree
 
-from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour
+from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour, \
+    check_plot_area_backgrounds
 from check_OPI_format_utils.text import check_label_punctuation, check_container_names,\
     check_label_case_inside_containers, check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
@@ -146,35 +147,35 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(errors), 1)
-    #
-    # def test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<plot_area_background_color>' \
-    #           '<color name="ISIS_Something_valid" red="255" green="255" blue="255" />' \
-    #           '</plot_area_background_color>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_plot_area_background(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_plot_area_with_an_invalid_background_colour_is_parsed_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<plot_area_background_color>' \
-    #           '<color name="not_anything_valid" red="255" green="255" blue="255" />' \
-    #           '</plot_area_background_color>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_plot_area_background(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
+
+    def test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors(self):
+        # Arrange
+
+        xml = '<plot_area_background_color>' \
+              '<color name="ISIS_Something_valid" red="255" green="255" blue="255" />' \
+              '</plot_area_background_color>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = check_plot_area_backgrounds(root)
+
+        # Assert
+        self.assertEqual(len(errors), 0)
+
+    def test_that_if_a_plot_area_with_an_invalid_background_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+
+        xml = '<plot_area_background_color>' \
+              '<color name="not_anything_valid" red="255" green="255" blue="255" />' \
+              '</plot_area_background_color>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = check_plot_area_backgrounds(root)
+
+        # Assert
+        self.assertEqual(len(errors), 1)
+
     def test_that_if_a_textbox_with_a_valid_background_colour_is_parsed_it_causes_no_errors(self):
         # Arrange
         widget, colour_type, colour = "TextInput", "background_color", "ISIS_Textbox_Background"
@@ -433,102 +434,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(errors), 1)
-
-    # def test_that_if_a_label_uses_the_correct_background_colour_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color name="ISIS_Label_Background" red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_labels(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_label_uses_an_incorrect_background_colour_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color name="Incorrect" red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_labels(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_a_label_uses_no_named_background_colour_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_labels(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_a_grouping_container_uses_the_correct_background_colour_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color name="ISIS_OPI_Background" red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_grouping_container_uses_an_incorrect_background_colour_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color name="Incorrect" red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_a_grouping_container_uses_no_named_background_colour_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<background_color>' \
-    #           '<color red="240" green="240" blue="240" />' \
-    #           '</background_color>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_background_colour_for_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
 
 if __name__ == '__main__':
     unittest.main()
