@@ -147,39 +147,31 @@ class CheckOpiFormatOld(object):
         error_message = "The font must be an ISIS_* font"
         self.check_condition(root, xpath + condition, error_message)
 
-    def check_led_colours(self, root):
-
-        # Select LEDs
-        xpath = "//" + self.widget_xpath + "LED']"
-
-        condition = "/on_color/color[not(@name)]"
-        error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
-        self.check_condition(root, xpath + condition, error_message)
-
-        condition = "/on_color/color[@name!='ISIS_Green_LED_On' and @name!='ISIS_Red_LED_On']"
-        error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
-        self.check_condition(root, xpath + condition, error_message)
-
-        condition = "/off_color/color[not(@name)]"
-        error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
-        self.check_condition(root, xpath + condition, error_message)
-
-        condition = "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"
-        error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
-        self.check_condition(root, xpath + condition, error_message)
+    # def check_led_colours(self, root):
+    #
+    #     # Select LEDs
+    #     xpath = "//" + self.widget_xpath + "LED']"
+    #
+    #     condition = "/on_color/color[not(@name)]"
+    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
+    #     self.check_condition(root, xpath + condition, error_message)
+    #
+    #     condition = "/on_color/color[@name!='ISIS_Green_LED_On' and @name!='ISIS_Red_LED_On']"
+    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
+    #     self.check_condition(root, xpath + condition, error_message)
+    #
+    #     condition = "/off_color/color[not(@name)]"
+    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
+    #     self.check_condition(root, xpath + condition, error_message)
+    #
+    #     condition = "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"
+    #     error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
+    #     self.check_condition(root, xpath + condition, error_message)
 
     def check_text_input_colors(self, root):
 
         # Select text input fields
         xpath = "//" + self.widget_xpath + "TextInput']"
-
-        condition = "/background_color/color[not(@name) or @name!='ISIS_Textbox_Background']"
-        error_message = "A text input field didn't use ISIS_Textbox_Background as it's background color."
-        self.check_condition(root, xpath + condition, error_message)
-
-        condition = "/foreground_color/color[not(@name) or @name!='ISIS_Standard_Text']"
-        error_message = "A text input field didn't use ISIS_Standard_Text as it's foreground color."
-        self.check_condition(root, xpath + condition, error_message)
 
         condition = "/border_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]"
         error_message = "A text input field didn't use ISIS_* color as it's border color."
@@ -316,24 +308,31 @@ class CheckOpiFormat(unittest.TestCase):
         super(CheckOpiFormat, self).__init__(methodName=methodName)
         self.xml_root = xml_root
 
-    #def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
-        # xpath = "//" + self.widget_xpath + "groupingContainer']"
-        #
-        # condition = "/background_color/color[not(@name) or " \
-        #             "(@name!='ISIS_Label_Background' and @name!='ISIS_OPI_Background')]"
-        #
-        # for _ in self.xml_root.xpath(xpath + condition):
-        #     self.fail("A grouping container didn't use ISIS_OPI_Background as it's background color.")
-
-    def test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
-        errors = check_colour(self.xml_root, "Label", ["ISIS_Label_Background", "ISIS_Title_Background_NEW"])
+    def _assert_colour_correct(self, location, widget, colours):
+        errors = check_colour(location, self.xml_root, widget, colours)
 
         if len(errors):
-            message = ""
-            for error in errors:
-                message += "On line {}, text '{}', colour failed\n".format(*error)
+            self.fail("\n".join(
+                ["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
 
-            self.fail(message)
+    def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
+
+    def test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "Label", ["ISIS_Label_Background", "ISIS_Title_Background_NEW"])
+
+    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
+        self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
+
+    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground(self):
+        self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
+
+    def test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour(self):
+        self._assert_colour_correct("on_color", "LED", ["ISIS_Green_LED_On", "ISIS_Red_LED_On"])
+
+    def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
+        self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
 
 if __name__ == "__main__":
 

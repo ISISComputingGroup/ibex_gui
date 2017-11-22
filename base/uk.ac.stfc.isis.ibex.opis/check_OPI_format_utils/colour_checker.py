@@ -2,7 +2,7 @@
 WIDGET_XPATH = "widget[@typeId='org.csstudio.opibuilder.widgets.{}']"
 
 
-def check_colour(root, widget, colours):
+def check_colour(colour_type, root, widget, colours):
     """
     Checks that the colour of the supplied widget type matches those in the supplied list of colours.
     Args:
@@ -15,7 +15,18 @@ def check_colour(root, widget, colours):
     """
     xpath = WIDGET_XPATH.format(widget)
 
-    condition = "/background_color/color[not(@name) or " \
-                "(@name!='ISIS_Label_Background' and @name!='ISIS_Title_Background_NEW')]"
+    subconditions = ["@name!='{}'".format(colour) for colour in colours]
 
-    return [(error.sourceline, error.getparent().xpath("text")) for error in root.xpath(xpath + condition)]
+    condition = "//{}/{}/color[not(@name) or ({})]".format(xpath, colour_type, " and ".join(subconditions))
+
+    errors = []
+    for error in root.xpath(condition):
+        parent = error.getparent().getparent()
+        try:
+            text = parent.xpath("text")[0].text
+        except IndexError:
+            text = parent.xpath("name")[0].text
+
+        errors.append((error.sourceline, text))
+
+    return errors
