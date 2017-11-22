@@ -2,7 +2,8 @@ import unittest
 from lxml import etree
 
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour
-from check_OPI_format_utils.text import check_label_punctuation, check_sentence_case, check_title_case
+from check_OPI_format_utils.text import check_label_punctuation, check_container_names,\
+    check_label_case_inside_containers, check_label_case_outside_containers
 
 
 def make_widget_with_colour(widget, colour_type, colour_name=None):
@@ -32,6 +33,13 @@ def make_label_outside_grouping_container(text):
           '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
           '<text>{}</text>' \
           '</widget>' \
+          '</widget>'.format(text)
+    return etree.fromstring(xml)
+
+
+def make_grouping_container(text):
+    xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+          '<name>{}</name>' \
           '</widget>'.format(text)
     return etree.fromstring(xml)
 
@@ -380,40 +388,32 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     #     # Assert
     #     self.assertEqual(len(self.checker.errors), 1)
     #
-    # def test_that_a_grouping_container_with_a_properly_capitalised_name_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<name>This is a Group Box</name>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_capitals_for_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_a_grouping_container_with_a_badly_capitalised_name_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<name>this is not capitalised properly</name>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_capitals_for_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
+    def test_that_a_grouping_container_with_a_title_case_name_causes_no_errors(self):
+        # Arrange
+        root = make_grouping_container("This is a Group Box")
+
+        # Act
+        errors = check_container_names(root)
+
+        # Assert
+        self.assertEqual(len(errors), 0)
+
+    def test_that_a_grouping_container_with_a_no_capitalisation_causes_one_error(self):
+        # Arrange
+        root = make_grouping_container("this is not capitalised properly")
+
+        # Act
+        errors = check_container_names(root)
+
+        # Assert
+        self.assertEqual(len(errors), 1)
 
     def test_that_a_label_with_a_properly_capitalised_name_causes_no_errors(self):
         # Arrange
         root = make_label_in_grouping_container("Some text goes here")
 
         # Act
-        errors = check_sentence_case(root)
+        errors = check_label_case_inside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 0)
@@ -423,7 +423,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = make_label_in_grouping_container("This is an OPI")
 
         # Act
-        errors = check_sentence_case(root)
+        errors = check_label_case_inside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 0)
@@ -433,7 +433,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = make_label_in_grouping_container("a label this is")
 
         # Act
-        errors = check_sentence_case(root)
+        errors = check_label_case_inside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 1)
@@ -444,7 +444,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = make_label_in_grouping_container("VOLTAGE should not have been in block capitals")
 
         # Act
-        errors = check_sentence_case(root)
+        errors = check_label_case_inside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 1)
@@ -505,7 +505,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = make_label_outside_grouping_container("This Is In Proper Case And Should Not Throw An Error")
 
         # Act
-        errors = check_title_case(root)
+        errors = check_label_case_outside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 0)
@@ -515,7 +515,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = make_label_outside_grouping_container("This is not in title case and should cause an error")
 
         # Act
-        errors = check_title_case(root)
+        errors = check_label_case_outside_containers(root)
 
         # Assert
         self.assertEqual(len(errors), 1)

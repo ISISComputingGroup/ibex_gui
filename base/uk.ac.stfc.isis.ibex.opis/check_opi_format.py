@@ -9,7 +9,7 @@ from time import gmtime, strftime
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour
-from check_OPI_format_utils.text import check_label_punctuation, check_sentence_case, check_title_case
+from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, check_label_case_outside_containers
 
 # Directory to iterate through
 from xmlrunner import XMLTestRunner
@@ -103,15 +103,6 @@ class CheckOpiFormatOld(object):
         error_message = "The font must be an ISIS_* font"
         self.check_condition(root, xpath + condition, error_message)
 
-    def check_text_input_colors(self, root):
-
-        # Select text input fields
-        xpath = "//" + self.widget_xpath + "TextInput']"
-
-        condition = "/border_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]"
-        error_message = "A text input field didn't use ISIS_* color as it's border color."
-        self.check_condition(root, xpath + condition, error_message)
-
     def check_items_are_in_grouping_containers(self, root):
 
         element_xpath = "//" + self.widget_xpath
@@ -136,31 +127,6 @@ class CheckOpiFormatOld(object):
         xpath = element_xpath + "TextInput" + ancestor_xpath
         error_message = "A text input field was not within a grouping container."
         self.check_condition(root, xpath, error_message)
-
-    def check_capitals_for_grouping_containers(self, root):
-        xpath = "//" + self.widget_xpath + "groupingContainer']/name"
-        error_message = "Grouping container titles should be in 'Title Case'."
-
-        self.check_title_case(root, xpath, error_message)
-
-    def check_capitals_for_labels_outside_grouping_containers(self, root):
-
-        # Select a Label outside a grouping container
-        xpath = \
-            "//" + self.widget_xpath + "Label' " \
-            "and not(ancestor::" + self.widget_xpath + "groupingContainer'])]/text"
-
-        error_message = "Labels outside grouping containers are titles, and therefore should be 'Title Case'."
-        self.check_title_case(root, xpath, error_message)
-
-    def check_capitals_for_labels(self, root):
-
-        # Select a Label within a grouping container
-        xpath = "//" + self.widget_xpath + "groupingContainer']" \
-                "/" + self.widget_xpath + "Label']/text"
-
-        error_message = "Labels should be in 'sentence case'"
-        self.check_sentence_case(root, xpath, error_message)
 
     def run(self, file, directory, logs_directory, file_extension):
 
@@ -256,18 +222,20 @@ class CheckOpiFormat(unittest.TestCase):
             self.fail(message)
 
     def test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case(self):
-        errors = check_sentence_case(self.xml_root)
+        errors = check_label_case_inside_containers(self.xml_root)
         if len(errors):
             message = "\n".join(["Label on line {}: {}"
                                 .format(*error) for error in errors])
             self.fail(message)
 
     def test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case(self):
-        errors = check_title_case(self.xml_root)
+        errors = check_label_case_outside_containers(self.xml_root)
         if len(errors):
             message = "\n".join(["Label on line {}: {}"
                                 .format(*error) for error in errors])
             self.fail(message)
+
+    # def test_GIVEN_a_push_button_THEN_it_is_within_a_grouping_container
 
 
 if __name__ == "__main__":
