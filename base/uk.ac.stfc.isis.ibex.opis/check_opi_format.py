@@ -12,6 +12,7 @@ from check_OPI_format_utils.colour_checker import check_colour
 from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, \
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
+from check_OPI_format_utils.font import get_incorrect_fonts
 
 # Directory to iterate through
 from xmlrunner import XMLTestRunner
@@ -201,14 +202,14 @@ class CheckOpiFormat(unittest.TestCase):
     def test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case(self):
         errors = check_label_case_inside_containers(self.xml_root)
         if len(errors):
-            message = "\n".join(["Label on line {}: {}"
+            message = "\n".join(["Label on line {} with text '{}' is not sentence case"
                                 .format(*error) for error in errors])
             self.fail(message)
 
     def test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case(self):
         errors = check_label_case_outside_containers(self.xml_root)
         if len(errors):
-            message = "\n".join(["Label on line {}: {}"
+            message = "\n".join(["Label on line {} with text '{}' is not title case"
                                 .format(*error) for error in errors])
             self.fail(message)
 
@@ -230,6 +231,13 @@ class CheckOpiFormat(unittest.TestCase):
 
     def test_GIVEN_a_TextInput_THEN_it_is_within_a_grouping_container(self):
         self._assert_widget_not_outside_container("TextInput")
+
+    def test_GIVEN_a_label_THEN_it_has_correct_font(self):
+        errors = get_incorrect_fonts(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Label on line {} with text '{}' has incorrect font"
+                                .format(*error) for error in errors])
+            self.fail(message)
 
 if __name__ == "__main__":
 

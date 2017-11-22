@@ -5,6 +5,7 @@ from check_OPI_format_utils.colour_checker import check_specific_isis_colours, c
 from check_OPI_format_utils.text import check_label_punctuation, check_container_names,\
     check_label_case_inside_containers, check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
+from check_OPI_format_utils.font import get_incorrect_fonts
 
 def make_widget_with_colour(widget, colour_type, colour_name=None):
     colour_str = '<color {} red="0" green="255" blue="0" />'
@@ -101,53 +102,50 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(errors), 1)
 
-    # def test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-    #           '<font>' \
-    #           '<opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>' \
-    #           '</font>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_opi_label_fonts(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_label_tag_with_a_valid_font_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-    #           '<font>' \
-    #           '<opifont.name fontName="ISIS_VALID_FONT" height="18" style="1">MADE UP FONT</opifont.name>' \
-    #           '</font>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_opi_label_fonts(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-    #           '<font>' \
-    #           '<opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name>' \
-    #           '</font>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_opi_label_fonts(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
+    def test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>' \
+              '</font>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_incorrect_fonts(root)
+
+        # Assert
+        self.assertEqual(len(errors), 0)
+
+    def test_that_if_a_label_tag_with_a_valid_font_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="ISIS_VALID_FONT" height="18" style="1">MADE UP FONT</opifont.name>' \
+              '</font>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_incorrect_fonts(root)
+
+        # Assert
+        self.assertEqual(len(errors), 0)
+
+    def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_error(self):
+        # Arrange
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name>' \
+              '</font>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_incorrect_fonts(root)
+
+        # Assert
+        self.assertEqual(len(errors), 1)
     #
     # def test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors(self):
     #     # Arrange
