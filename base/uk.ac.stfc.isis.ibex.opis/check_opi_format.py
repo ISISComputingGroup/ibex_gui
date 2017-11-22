@@ -1,12 +1,18 @@
 import os
 import sys
 import argparse
+import unittest
+
 from lxml import etree
 from time import gmtime, strftime
 
 from lxml.etree import LxmlError
 
+from check_OPI_format_utils.colour_checker import check_colour
+
 # Directory to iterate through
+from xmlrunner import XMLTestRunner
+
 root_directory = r"./resources/"
 
 # Files ending with .opi are parsed:
@@ -19,10 +25,12 @@ logs_directory = r"./check_OPI_format_logs/"
 # Single file
 single_file = ""
 
+
 class CapitalisationError(Exception):
     pass
 
-class CheckOpiFormat:
+
+class CheckOpiFormatOld(object):
 
     # If a word contains any of the following, the whole word will be ignored
     ignore = \
@@ -35,12 +43,13 @@ class CheckOpiFormat:
     # Start of the XPATH for a widget
     widget_xpath = "widget[@typeId='org.csstudio.opibuilder.widgets."
 
-    def __init__(self):
+    def __init__(self, single_file="", root_directory="", logs_directory="", file_extension=""):
         self.errors = []
-        self.single_file = ""
-        self.root_directory = ""
-        self.logs_directory = ""
-        self.file_extension = ""
+
+        self.single_file = single_file
+        self.root_directory = root_directory
+        self.logs_directory = logs_directory
+        self.file_extension = file_extension
 
     @staticmethod
     def get_tree(filepath):
@@ -49,10 +58,10 @@ class CheckOpiFormat:
                 parser = etree.XMLParser(remove_blank_text=True)
                 return etree.parse(opi_file, parser)
         except IOError:
-            print "Fatal: Could not open file " + filepath
+            print("Fatal: Could not open file {}".format(filepath))
             sys.exit(1)
         except LxmlError:
-            print "Fatal: Could not parse file " + filepath + " as XML."
+            print("Fatal: Could not parse file {} as XML.".format(filepath))
             sys.exit(1)
 
     def file_iterator(self):
@@ -86,7 +95,7 @@ class CheckOpiFormat:
 
                 # Special case for the manager mode indicator
                 if title_case and "manager mode" in name.text.lower():
-                    continue;
+                    continue
 
                 # Handle special case of first word (which should be capitalised regardless of length)
                 word = words[0]
@@ -245,23 +254,6 @@ class CheckOpiFormat:
                         + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                     self.errors.append(err)
 
-    def check_background_colour_for_labels(self, root):
-        # Select labels
-        xpath = "//" + self.widget_xpath + "Label']"
-
-        condition = "/background_color/color[not(@name) or " \
-                    "(@name!='ISIS_Label_Background' and @name!='ISIS_Title_Background_NEW')]"
-        error_message = "A label didn't use ISIS_Label_Background as it's background color."
-        self.check_condition(root, xpath + condition, error_message)
-
-    def check_background_colour_for_grouping_containers(self, root):
-        # Select grouping containers
-        xpath = "//" + self.widget_xpath + "groupingContainer']"
-
-        condition = "/background_color/color[not(@name) or @name!='ISIS_OPI_Background']"
-        error_message = "A grouping container didn't use ISIS_OPI_Background as it's background color."
-        self.check_condition(root, xpath + condition, error_message)
-
     def run(self, file, directory, logs_directory, file_extension):
 
         self.single_file = file
@@ -294,11 +286,11 @@ class CheckOpiFormat:
                 build_contains_errors = True
 
                 # Write to console
-                print "\n --------------"
-                print str(len(self.errors)) + " errors found in file " + filepath
-                print " --------------\n"
+                print("\n --------------")
+                print("{} errors found in file {}".format(len(self.errors), filepath))
+                print(" --------------\n")
                 for error in self.errors:
-                    print error
+                    print(error)
 
                 # Write to file
                 f = open(self.logs_directory + "/" + time + '.txt', 'a')
@@ -315,24 +307,75 @@ class CheckOpiFormat:
         else:
             sys.exit(0)
 
+
+class CheckOpiFormat(unittest.TestCase):
+    # Need the 'None' default because unittest's test loader uses a
+    # no-argument constructor when getting the test names.
+    def __init__(self, methodName, xml_root=None):
+        # Boilerplate so that unittest knows how to run these tests.
+        super(CheckOpiFormat, self).__init__(methodName=methodName)
+        self.xml_root = xml_root
+
+    #def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        # xpath = "//" + self.widget_xpath + "groupingContainer']"
+        #
+        # condition = "/background_color/color[not(@name) or " \
+        #             "(@name!='ISIS_Label_Background' and @name!='ISIS_OPI_Background')]"
+        #
+        # for _ in self.xml_root.xpath(xpath + condition):
+        #     self.fail("A grouping container didn't use ISIS_OPI_Background as it's background color.")
+
+    def test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        errors = check_colour(self.xml_root, "Label", ["ISIS_Label_Background", "ISIS_Title_Background_NEW"])
+
+        if len(errors):
+            message = ""
+            for error in errors:
+                message += "On line {}, text '{}', colour failed\n".format(*error)
+
+            self.fail(message)
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog='check_opi_format')
 
-    parser.add_argument('-file', nargs=1, type=str, default=[single_file],
+    parser.add_argument('-file', type=str, default=single_file,
                         help='A single file to check')
-    parser.add_argument('-directory', nargs=1, type=str, default=[root_directory],
+    parser.add_argument('-directory', type=str, default=root_directory,
                         help='A directory to check files in')
-    parser.add_argument('-logs_directory', nargs=1, type=str, default=[logs_directory],
+    parser.add_argument('-logs_directory', type=str, default=logs_directory,
                         help='A directory to save the logs into')
-    parser.add_argument('-extension', nargs=1, type=str, default=[file_extension],
+    parser.add_argument('-extension', type=str, default=file_extension,
                         help='The filename extension for OPIs')
 
     args = parser.parse_args()
 
-    single_file = args.file[0]
-    root_directory = args.directory[0]
-    logs_directory = args.logs_directory[0]
-    file_extension = args.extension[0]
+    single_file = args.file
+    root_directory = args.directory
+    logs_directory = args.logs_directory
+    file_extension = args.extension
 
-    CheckOpiFormat().run(single_file, root_directory, logs_directory, file_extension)
+    # CheckOpiFormat().run(single_file, root_directory, logs_directory, file_extension)
+
+    ret_vals = []
+
+    loader = unittest.TestLoader()
+    xml_parser = etree.XMLParser(remove_blank_text=True)
+
+    # Add test suite a dynamic number of times with an argument.
+    # unittest's test loader is unable to take arguments to test classes by default so have
+    # to use the getTestCaseNames() syntax and explicitly add the argument ourselves.
+    for filename in CheckOpiFormatOld(file_extension=file_extension, single_file=single_file, logs_directory=logs_directory, root_directory=root_directory).file_iterator():
+
+        print("Testing '{}'".format(filename))
+
+        suite = unittest.TestSuite()
+
+        root = etree.parse(filename, xml_parser)
+
+        suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
+
+        runner = XMLTestRunner(output=str(os.curdir), stream=sys.stdout)
+        ret_vals.append(runner.run(suite).wasSuccessful())
+
+    sys.exit(False in ret_vals)
