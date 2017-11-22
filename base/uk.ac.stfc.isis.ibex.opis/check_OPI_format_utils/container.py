@@ -1,4 +1,4 @@
-from common import WIDGET_XPATH, TYPE_ID, get_text_of_widget
+from check_OPI_format_utils.common import WIDGET_XPATH, TYPE_ID, get_text_of_widget
 
 
 WIDGET_OUTSIDE_CONTAINER_XPATH = "//widget[{{widget}} and not(ancestor::{groupingContainer})]" \

@@ -1,4 +1,4 @@
-from common import WIDGET_XPATH
+from check_OPI_format_utils.common import WIDGET_XPATH
 
 # If a word contains any of the following, the whole word will be ignored
 IGNORED_WORDS = ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:", "CCD100",
@@ -87,4 +87,3 @@ def is_case_correct(title_case, words):
             elif not title_case and word.lower() != word:
                 return False
     return True
-
