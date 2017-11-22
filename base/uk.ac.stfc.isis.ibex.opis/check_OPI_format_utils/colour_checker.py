@@ -47,5 +47,12 @@ def check_specific_isis_colours(root, widget, colour_type, colours):
 
 
 def check_plot_area_backgrounds(root):
+    """
+    Checks that all plot backgrounds are correct colour.
+    Args:
+        root (etree): The root of the xml to search.
+    Returns:
+        list: A list of tuples containing the line number and text of the widgets that are the incorrect colour
+    """
     return [(node.sourceline, get_text_of_widget(node.getparent()))
             for node in root.xpath("//plot_area_background_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]")]

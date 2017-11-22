@@ -4,7 +4,6 @@ import argparse
 import unittest
 
 from lxml import etree
-
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour, check_plot_area_backgrounds
@@ -12,18 +11,24 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
-
-# Directory to iterate through
 from xmlrunner import XMLTestRunner
 
+# Directory to iterate through
 DEFAULT_ROOT_DIR = r"./resources/"
 
 # Specify a logs directory
-# Remember to update .gitignore so that logs don't get pushed to git.
 DEFAULT_LOGS_DIR = r"./check_OPI_format_logs/"
 
 
-def file_iterator(single_file, root_dir):
+def file_iterator(root_dir, single_file=None):
+    """
+    Generator that returns the opi files that should be checked.
+    Args:
+        root_dir (str): The root directory to check for OPIs
+        single_dir (str): The name of the single file to check, every OPI in root_dir is checked if this is None
+    Yields:
+        str: Path to the OPI that must be checked
+    """
     if single_file is None:
         # No single file was defined - iterate through all files
         for filename in os.listdir(root_dir):
@@ -120,8 +125,8 @@ class CheckOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='check_opi_format')
 
     parser.add_argument('-file', type=str, default=None,
@@ -145,7 +150,7 @@ if __name__ == "__main__":
     # Add test suite a dynamic number of times with an argument.
     # unittest's test loader is unable to take arguments to test classes by default so have
     # to use the getTestCaseNames() syntax and explicitly add the argument ourselves.
-    for filename in file_iterator(single_file, root_dir):
+    for filename in file_iterator(root_dir, single_file):
 
         print("Testing '{}'".format(filename))
 

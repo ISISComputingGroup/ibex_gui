@@ -5,6 +5,14 @@ WIDGET_OUTSIDE_CONTAINER_XPATH = "//widget[{{widget}} and not(ancestor::{groupin
     .format(groupingContainer=WIDGET_XPATH.format("groupingContainer"))
 
 
-def get_items_not_in_grouping_container(root, item):
-    xpath = WIDGET_OUTSIDE_CONTAINER_XPATH.format(widget=TYPE_ID.format(item))
+def get_items_not_in_grouping_container(root, widget_type):
+    """
+    Gets any widgets that are not in a grouping container.
+    Args:
+        root (etree): The root of the xml to search.
+        widget_type (str): The type of widget to search for.
+    Returns:
+        list: A list of tuples containing the line number and text of the widgets that are not within groups
+    """
+    xpath = WIDGET_OUTSIDE_CONTAINER_XPATH.format(widget=TYPE_ID.format(widget_type))
     return [(node.sourceline, get_text_of_widget(node)) for node in root.xpath(xpath)]
