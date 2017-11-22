@@ -1,6 +1,6 @@
 @echo off
 
-call python .\check_build.py ..\base\
+call c:\Python27\python.exe .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify
