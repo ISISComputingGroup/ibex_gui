@@ -31,8 +31,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -42,6 +42,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -52,15 +53,15 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
  * Provides the model for the editing view of the synoptic. This is an
  * observable model, which various other classes subscribe to.
  */
 public class SynopticViewModel extends ModelObject {
-	private SynopticModel editing = Synoptic.getInstance().edit();
+
+    private final DescriptionsProvider opiDescriptionsProvider;
+    private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
 	private Property selectedProperty;
@@ -73,10 +74,11 @@ public class SynopticViewModel extends ModelObject {
      *            The underlying xml description of the synoptic to edit.
      */
     public SynopticViewModel(SynopticDescription description) {
+        this.opiDescriptionsProvider = Opi.getDefault().descriptionsProvider();
         synoptic = description;
         synoptic.processChildComponents();
-		editing.setSynopticFromDescription(description);
-		
+        editing.setSynopticFromDescription(description);
+        
         setSelectedComponents(null);
 	}
 
@@ -239,38 +241,7 @@ public class SynopticViewModel extends ModelObject {
                 setSelectedComponents(null);
                 refreshTreeView();
 			}
-		}
-	}
-
-    /**
-     * Add a target (e.g. an OPI) to the component.
-     * 
-     * @param isFinalEdit has focus moved onto something else (e.g another
-     *            component)
-     */
-    public void addTargetToSelectedComponent(boolean isFinalEdit) {
-        ComponentDescription component = getSingleSelectedComp();
-        ComponentType compType = component.type();
-
-        Collection<TargetDescription> potentialTargets = DefaultTargetForComponent.defaultTarget(compType);
-        TargetDescription target = new TargetDescription("NONE", TargetType.OPI);
-
-        if (potentialTargets.size() == 1) {
-            target = potentialTargets.iterator().next();
-        } else if (potentialTargets.size() > 1 && isFinalEdit && !component.target().getUserSelected()) {
-            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-            SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(shell, potentialTargets);
-            dialog.open();
-            target = dialog.selectedTarget();
-        }
-		
-        if (component != null && (component.target().name() == "NONE" || !component.target().getUserSelected())) {
-            target.setUserSelected(isFinalEdit);
-            component.setTarget(target);
-            target.addProperties(getPropertyKeys(target.name()));
-			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
-		}
-
+        } 
 	}
 
     /**
@@ -338,6 +309,7 @@ public class SynopticViewModel extends ModelObject {
      * @param newProperty the new property
      */
 	public void updateOrAddSelectedProperty(Property newProperty) {
+	    
 		if (newProperty == null) {
 			return;
 		}
@@ -417,8 +389,8 @@ public class SynopticViewModel extends ModelObject {
      * @return the OPI description
      */
     public OpiDescription getOpi(String targetName) {
-        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
-        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        String name = opiDescriptionsProvider.guessOpiName(targetName);
+        OpiDescription opi = opiDescriptionsProvider.getDescription(name);
         return opi;
 	}
     
@@ -446,5 +418,31 @@ public class SynopticViewModel extends ModelObject {
      */
     public void refreshTreeView() {
         firePropertyChange("refreshTree", 0, 1);
+    }
+    
+    /**
+     * Gets the description of the currently selected component.
+     * 
+     * @return the description, or an empty string if not available
+     */
+    public String getSingleSelectedComponentDescription() {
+        try {
+            Map<String, OpiDescription> opis = opiDescriptionsProvider.getDescriptions().getOpis();
+            String targetName = getSingleSelectedComp().target().name();
+            OpiDescription target = opis.get(targetName);
+            return target.getDescription();
+        } catch (NullPointerException e) {
+            // Caught if there are multiple components selected, no components selected, 
+            // selected opi is not in map, opi doesn't have a description.
+            return "";
+        }
+    }
+    
+    /**
+     * Gets the list of OPI names in categories.
+     * @return a map of lists where each index in the map is a category, and the list is the OPIs within that category
+     */
+    public Map<String, List<String>> getAvailableOpis() {
+        return opiDescriptionsProvider.getOpiCategories();
     }
 }

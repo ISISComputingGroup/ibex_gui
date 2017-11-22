@@ -59,6 +59,7 @@ public class ExperimentSetup extends Composite {
      * @param style
      *            The SWT style flags for this panel.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
 	public ExperimentSetup(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);

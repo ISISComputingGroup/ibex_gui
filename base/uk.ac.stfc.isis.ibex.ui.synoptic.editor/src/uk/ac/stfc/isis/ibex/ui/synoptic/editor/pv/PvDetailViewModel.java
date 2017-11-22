@@ -24,6 +24,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.commands.ExecutionEvent;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
@@ -190,11 +192,7 @@ public class PvDetailViewModel extends ModelObject {
      */
     public void openPvDialog() {
         PvSelector selectPV = new PvSelector();
-        try {
-            selectPV.execute(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        selectPV.execute(new ExecutionEvent());
 
         if (selectPV.isConfirmed()) {
             setPvAddress(selectPV.getPvAddress());
@@ -206,11 +204,7 @@ public class PvDetailViewModel extends ModelObject {
      */
     public void openBlockDialog() {
         BlockSelector selectPV = new BlockSelector();
-        try {
-            selectPV.execute(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        selectPV.execute(new ExecutionEvent());
 
         if (selectPV.isConfirmed()) {
             setPvName(selectPV.getBlockName());

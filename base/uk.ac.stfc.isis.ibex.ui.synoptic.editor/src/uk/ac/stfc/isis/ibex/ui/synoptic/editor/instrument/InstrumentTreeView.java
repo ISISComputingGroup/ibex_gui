@@ -31,18 +31,16 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -68,7 +66,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  */
 public class InstrumentTreeView extends Composite {
 	private SynopticViewModel synopticViewModel;
-	private Collection<ComponentDescription> currentDragSource;
 
 	private TreeViewer treeViewer;
 	private MenuItem mnuDeleteSelected;
@@ -125,27 +122,11 @@ public class InstrumentTreeView extends Composite {
 
 		// support drag and drop
 		int operations = DND.DROP_MOVE;
-		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance()};
-		treeViewer.addDragSupport(operations, transferTypes,
-                new DragSourceAdapter() {
-                    @Override
-        		    public void dragStart(DragSourceEvent event) {
-                        currentDragSource = synopticViewModel.getSelectedComponents();
-        		    }
-                    
-                    @Override
-                    public void dragSetData(DragSourceEvent event) {
-                    	event.data = "Data";
-                    }
-
-        		    @Override
-        		    public void dragFinished(DragSourceEvent event) {
-                        currentDragSource = null;
-        		    }
-                });
-
+		Transfer[] transferTypes = new Transfer[] {LocalSelectionTransfer.getTransfer()};
+		treeViewer.addDragSupport(operations, transferTypes, new DragSourceAdapter());
+                
 		treeViewer.addDropSupport(operations, transferTypes,
-                new ComponentDropListener(treeViewer, this, synopticViewModel));
+                new ComponentDropListener(treeViewer, synopticViewModel));
 
 		treeViewer.setContentProvider(new ComponentContentProvider());
 		treeViewer.setLabelProvider(new ComponentLabelProvider());
@@ -209,10 +190,9 @@ public class InstrumentTreeView extends Composite {
         });
     }
 
-	public Collection<ComponentDescription> getCurrentDragSource() {
-		return currentDragSource;
-	}
-
+	/**
+	 * Refresh the view.
+	 */
 	public void refresh() {
 		treeViewer.refresh();
 	}

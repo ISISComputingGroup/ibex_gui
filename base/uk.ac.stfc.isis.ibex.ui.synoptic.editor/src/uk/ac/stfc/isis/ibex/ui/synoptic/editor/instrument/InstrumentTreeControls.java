@@ -61,7 +61,7 @@ public class InstrumentTreeControls extends Composite {
             }
 		});
 
-        setLayout(new GridLayout(2, true));
+        setLayout(new GridLayout(4, false));
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		this.setLayoutData(gridData);
 
@@ -71,7 +71,7 @@ public class InstrumentTreeControls extends Composite {
 	public void createControls() {
 		btnAdd = new Button(this, SWT.NONE);
 		btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		btnAdd.setText("Add Component");
+		btnAdd.setText("Add");
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -81,7 +81,7 @@ public class InstrumentTreeControls extends Composite {
 		
 		btnCopyComponent = new Button(this, SWT.NONE);
 		btnCopyComponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnCopyComponent.setText("Copy Component");
+		btnCopyComponent.setText("Copy");
         btnCopyComponent.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -91,7 +91,7 @@ public class InstrumentTreeControls extends Composite {
         
         btnDelete = new Button(this, SWT.NONE);
         btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnDelete.setText("Delete Component");
+        btnDelete.setText("Delete");
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
