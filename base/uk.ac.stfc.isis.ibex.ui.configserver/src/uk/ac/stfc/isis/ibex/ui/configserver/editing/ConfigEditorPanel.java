@@ -39,18 +39,12 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * The panel that contains all the information for editing a configuration.
  */
 public class ConfigEditorPanel extends Composite {
-    
-    /**
-     * The name of the blocks tab. Needs to be public so it can be switched to
-     * from elsewhere.
-     */
-    public static final String BLOCK_TAB_NAME = "Blocks";
-
 	private final IocOverviewPanel iocs;
 	private final BlocksEditorPanel blocks;
 	private final GroupsEditorPanel groups;
 	private final ComponentEditorPanel components;
 	private final SummaryPanel summary;
+    private TabItem blocksTab;
 	
     private TabFolder editorTabs;
 
@@ -103,8 +97,8 @@ public class ConfigEditorPanel extends Composite {
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
 		
-		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
-        blocksTab.setText(BLOCK_TAB_NAME);
+        blocksTab = new TabItem(editorTabs, SWT.NONE);
+        blocksTab.setText("Blocks");
 		
 		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE);
 		blocksTab.setControl(blocks);
@@ -150,5 +144,12 @@ public class ConfigEditorPanel extends Composite {
      */
     public void openEditBlockDialog(String blockName) {
         blocks.openEditBlockDialog(blockName);
+    }
+
+    /**
+     * Selects the block tab within the configuration editor panel.
+     */
+    public void selectBlocksTab() {
+        editorTabs.setSelection(blocksTab);
     }
 }

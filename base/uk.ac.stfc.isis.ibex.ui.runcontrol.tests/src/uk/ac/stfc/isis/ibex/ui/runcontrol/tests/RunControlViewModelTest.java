@@ -28,10 +28,7 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
@@ -40,58 +37,128 @@ public class RunControlViewModelTest {
 
     private RunControlViewModel runControlViewModel;
     private RunControlServer runControlServer;
-    private ConfigServer configServer;
-    private Configuration config;
-    private ForwardingObservable<Configuration> configObservable;
 
-    private Collection<Block> blocks;
+    private Collection<DisplayBlock> blocks;
+
+    private DisplayBlock mockBlock;
 
     @Before
     public void setUp() {
         // Arrange
         runControlServer = mock(RunControlServer.class);
 
+        mockBlock = mock(DisplayBlock.class);
+        when(mockBlock.getHighLimit()).thenReturn("0");
+        when(mockBlock.getLowLimit()).thenReturn("0");
+        when(mockBlock.getEnabled()).thenReturn(false);
+
+
         blocks = new ArrayList<>();
-        addBlocks(blocks, 5);
+        runControlViewModel = new RunControlViewModel(blocks, runControlServer);
 
-        config = mock(Configuration.class);
-        when(config.getBlocks()).thenReturn(blocks);
-
-        configObservable = mock(ForwardingObservable.class);
-        when(configObservable.getValue()).thenReturn(config);
-        
-        configServer = mock(ConfigServer.class);
-        when(configServer.currentConfig()).thenReturn(configObservable);
-
-        runControlViewModel = new RunControlViewModel(configServer, runControlServer);
-    }
-
-    public void addBlocks(Collection<Block> blocks, int numberOfBlocks) {
-        for (int i = 1; i <= numberOfBlocks; i++) {
-            Block block = new Block("block" + Integer.toString(i), null, false, false);
-            block.setRCLowLimit(i);
-            block.setRCHighLimit(i + numberOfBlocks);
-            block.setRCEnabled(true);
-            blocks.add(block);
-        }
+        runControlViewModel.setTxtHighLimit("0");
+        runControlViewModel.setTxtLowLimit("0");
     }
 
     @Test
-    public void get_current_config_block_returns_block_with_matching_name() {
+    public void WHEN_valid_limits_set_THEN_send_enabled() {
         // Act
-        Block returnedBlock = runControlViewModel.getCurrentConfigBlock("block1");
-        
+        runControlViewModel.setTxtLowLimit("0");
+        runControlViewModel.setTxtHighLimit("1");
+
         // Assert
-        assertEquals("block1", returnedBlock.getName());
+        assertEquals(runControlViewModel.getSendEnabled(), true);
     }
 
     @Test
-    public void get_current_config_block_that_does_not_exist_returns_null() {
+    public void WHEN_invalid_low_limit_set_THEN_send_disabled() {
         // Act
-        Block returnedBlock = runControlViewModel.getCurrentConfigBlock("block0");
-
+        runControlViewModel.setTxtLowLimit("1");
+        
         // Assert
-        assertNull(returnedBlock);
+        assertFalse(runControlViewModel.getSendEnabled());
     }
 
+    @Test
+    public void WHEN_invalid_high_limit_set_THEN_send_disabled() {
+        // Act
+        runControlViewModel.setTxtHighLimit("-1");
+
+        // Assert
+        assertFalse(runControlViewModel.getSendEnabled());
+    }
+
+    @Test
+    public void WHEN_null_block_is_set_THEN_low_limit_emptied() {
+        // Act
+        runControlViewModel.setBlock(null);
+
+        // Assert
+        assertEquals(runControlViewModel.getTxtLowLimit(), "");
+    }
+
+    @Test
+    public void WHEN_null_block_is_set_THEN_high_limit_emptied() {
+        // Act
+        runControlViewModel.setBlock(null);
+
+        // Assert
+        assertEquals(runControlViewModel.getTxtHighLimit(), "");
+    }
+
+    @Test
+    public void WHEN_null_block_is_set_THEN_rc_disabled() {
+        // Act
+        runControlViewModel.setBlock(null);
+
+        // Assert
+        assertEquals(runControlViewModel.getRcEnabled(), false);
+    }
+
+    @Test
+    public void WHEN_null_block_is_set_THEN_view_model_is_not_in_error() {
+        // Act
+        runControlViewModel.setBlock(null);
+
+        // Assert
+        assertEquals(runControlViewModel.getError().isError(), false);
+    }
+
+    @Test
+    public void WHEN_new_block_is_set_THEN_high_limit_is_set_to_blocks() {
+        // Arrange
+        String newHigh = "1.0";
+        when(mockBlock.getHighLimit()).thenReturn(newHigh);
+
+        // Act
+        runControlViewModel.setBlock(mockBlock);
+
+        // Assert
+        assertEquals(runControlViewModel.getTxtHighLimit(), newHigh);
+    }
+
+    @Test
+    public void WHEN_new_block_is_set_THEN_low_limit_is_set_to_blocks() {
+        // Arrange
+        String newLow = "-1.0";
+        when(mockBlock.getHighLimit()).thenReturn(newLow);
+
+        // Act
+        runControlViewModel.setBlock(mockBlock);
+
+        // Assert
+        assertEquals(runControlViewModel.getTxtHighLimit(), newLow);
+    }
+
+    @Test
+    public void WHEN_new_block_is_set_THEN_rc_enabled_is_set_to_blocks() {
+        // Arrange
+        when(mockBlock.getEnabled()).thenReturn(true);
+
+        // Act
+        runControlViewModel.setBlock(mockBlock);
+
+        // Assert
+        assertEquals(runControlViewModel.getRcEnabled(), true);
+    }
 }

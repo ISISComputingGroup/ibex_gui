@@ -40,6 +40,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.TabIsShownAction;
+import uk.ac.stfc.isis.ibex.ui.TabIsShownListener;
+import uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
@@ -50,8 +53,8 @@ import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
  * Main DAE panel.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class DaeView extends ViewPart {
-	
+public class DaeView extends ViewPart implements TabIsShownAction {
+
     /**
      * The view ID.
      */
@@ -62,7 +65,6 @@ public class DaeView extends ViewPart {
 	private VetosPanel vetosPanel;
 	private RunInformationPanel runInformation;
 	private SpectraPlotsPanel spectraPanel;
-
 	private DaeViewModel model;
 
 	
@@ -73,6 +75,10 @@ public class DaeView extends ViewPart {
 
     /** Listener for changes in experimental change. **/
     private PropertyChangeListener experimentalChangeListener;
+
+    private CTabItem tbtmDiagnostics;
+
+    private DetectorDiagnosticsPanel detectorDiagnosticsPanel;
 	
     /**
      * Sets the model for the DAE view.
@@ -95,11 +101,15 @@ public class DaeView extends ViewPart {
 		vetosPanel.setModel(viewModel);
 		runInformation.setModel(viewModel);
 		spectraPanel.setModel(viewModel.spectra());
+        detectorDiagnosticsPanel.setModel(viewModel.detectorDiagnostics());
+
 	}
 	
 	@Override
 	public void dispose() {
-        modelIsRunningProperty.removePropertyChangeListener(experimentalChangeListener);
+        if (modelIsRunningProperty != null) {
+            modelIsRunningProperty.removePropertyChangeListener(experimentalChangeListener);
+        }
 		super.dispose();
 		model.close();
 	}
@@ -129,9 +139,9 @@ public class DaeView extends ViewPart {
 		Composite container = new Composite(scrolledComposite, SWT.NONE);
 		scrolledComposite.setContent(container);
 		
-		GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		container.setLayoutData(gdContainer);
-		GridLayout glContainer = new GridLayout(2, false);
+		GridLayout glContainer = new GridLayout(1, false);
 		glContainer.horizontalSpacing = 0;
 		glContainer.verticalSpacing = 0;
 		glContainer.marginWidth = 0;
@@ -149,8 +159,8 @@ public class DaeView extends ViewPart {
 		lblTitle.setText("DAE Control Program");
 		
 		CTabFolder tabFolder = new CTabFolder(container, SWT.BORDER);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+        TabIsShownListener.createAndRegister(this, tabFolder, this);
 
 		CTabItem tbtmRunSummary = new CTabItem(tabFolder, SWT.NONE);
 		tbtmRunSummary.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
@@ -168,8 +178,9 @@ public class DaeView extends ViewPart {
 		
 		Composite experimentalSetupComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmExperimentSetup.setControl(experimentalSetupComposite);
-		experimentalSetupComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+        experimentalSetupComposite.setLayout(new GridLayout(1, false));
 		experimentSetup = new ExperimentSetup(experimentalSetupComposite, SWT.NONE);
+        experimentSetup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		CTabItem tbtmRunInformation = new CTabItem(tabFolder, SWT.NONE);
 		tbtmRunInformation.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/info.png"));
@@ -189,12 +200,17 @@ public class DaeView extends ViewPart {
 		spectraComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		spectraPanel = new SpectraPlotsPanel(spectraComposite, SWT.NONE);
-		//spectraPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
+        tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDiagnostics.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/monitor.png"));
-		tbtmDiagnostics.setText("Diagnostics");
+		tbtmDiagnostics.setText("Detector Diagnostics");
 		
+		Composite diagnosticsComposite = new Composite(tabFolder, SWT.NONE);
+        tbtmDiagnostics.setControl(diagnosticsComposite);
+        diagnosticsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+        detectorDiagnosticsPanel = new DetectorDiagnosticsPanel(diagnosticsComposite, SWT.NONE);
+
 		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
 		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));
 		tbtmVetos.setText("Vetos");
@@ -205,26 +221,19 @@ public class DaeView extends ViewPart {
 		
 		vetosPanel = new VetosPanel(vetosComposite, SWT.NONE);
 		vetosPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		
+
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
-		scrolledComposite.setMinSize(new Point(600, 500));
-		
-		Composite composite = new Composite(container, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
-		GridData gdComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gdComposite.widthHint = 600;
-		composite.setLayoutData(gdComposite);
-		
-		Label label = new Label(composite, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+        tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        Point tabSize = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        Point titleSize = titleComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        Point compositeSize = new Point(tabSize.x + titleSize.x, tabSize.y + titleSize.y);
+        scrolledComposite.setMinSize(compositeSize);
 	}
 
 	/**
@@ -255,4 +264,18 @@ public class DaeView extends ViewPart {
 	@Override
 	public void setFocus() {		
 	}
+
+    /**
+     * What to do when a tab changes.
+     * 
+     * @param visibleTab tab that is now visible
+     */
+    @Override
+    public void visibleTabChanged(CTabItem visibleTab) {
+        if (visibleTab == tbtmDiagnostics) {
+            model.setActiveTab(DaeViewModel.ActiveTab.DETECTOR_DIAGNOSTICS);
+        } else {
+            model.setActiveTab(DaeViewModel.ActiveTab.OTHER);
+        }
+    }
 }

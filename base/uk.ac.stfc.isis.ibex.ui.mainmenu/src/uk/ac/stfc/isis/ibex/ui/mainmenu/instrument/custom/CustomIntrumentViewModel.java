@@ -45,6 +45,7 @@ public class CustomIntrumentViewModel extends ErrorMessageProvider {
     }
 
     public void setPvPrefix(String pvPrefix) {
+    	pvPrefix = addColon(pvPrefix);
         validate(pvPrefix);
         firePropertyChange("pvPrefix", this.pvPrefix, this.pvPrefix = pvPrefix);
     }
@@ -64,5 +65,12 @@ public class CustomIntrumentViewModel extends ErrorMessageProvider {
         } else {
             setError(false, null);
         }
+    }
+    
+    private String addColon(String pvPrefix) {
+    	if (!pvPrefix.endsWith(":")) {
+    		pvPrefix += ":";
+    	}
+    	return pvPrefix;
     }
 }

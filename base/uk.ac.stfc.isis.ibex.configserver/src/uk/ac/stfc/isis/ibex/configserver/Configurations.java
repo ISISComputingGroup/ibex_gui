@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
  * This is the singleton that should be used to access configuration information from across the GUI.
  */
 public class Configurations extends Closer implements BundleActivator {
-
+    /** The associated logger. */
 	public static final Logger LOG = IsisLog.getLogger(Configurations.class);
 
 	private static Configurations instance;
@@ -78,38 +78,67 @@ public class Configurations extends Closer implements BundleActivator {
 		addLogging();
 	}
 	
+    /**
+     * @return this instance of the class
+     */
 	public static Configurations getInstance() {
 		return instance;
 	}
 	
+    /**
+     * @return the context
+     */
 	public static BundleContext getContext() {
 		return context;
 	}
 
+    /**
+     * @return the variables for the configuration server instance
+     */
 	public ConfigServerVariables variables() {
 		return variables;
 	}
 	
+    /**
+     * @return the configuration server instance
+     */
 	public ConfigServer server() {
 		return server;
 	}
 	
+    /**
+     * @return the configuration information for displaying
+     */
 	public Displaying display() {
 		return displaying;
 	}
 
+    /**
+     * @return the configuration information for editing
+     */
 	public Editing edit() {
 		return editing;
 	}
 	
+    /**
+     * @return IOC information
+     */
 	public IocControl iocControl() {
 		return iocControl;
 	}
 	
+    /**
+     * @return the recently used configurations
+     */
 	public List<String> recent() {
 		return recent.get();
 	}
 
+    /**
+     * Add a configuration to the "recently used" list.
+     * 
+     * @param configName the name to add
+     */
 	public void addRecent(String configName) {
 		recent.add(configName);
 	}

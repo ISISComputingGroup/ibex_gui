@@ -67,8 +67,6 @@ public class PvDetailView extends Composite {
 	private Composite buttonsComposite;
 	private Button btnSelectBlock;
 
-    private Label lblError;
-
     /**
      * The constructor for the panel used to edit PV details.
      * 
@@ -96,6 +94,7 @@ public class PvDetailView extends Composite {
      */
 	public void createControls(Composite parent) {	
 		setLayout(new GridLayout(1, false));
+
 		noSelectionComposite = new Composite(parent, SWT.NONE);
 		noSelectionComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		noSelectionComposite.setLayout(new FillLayout());
@@ -135,9 +134,6 @@ public class PvDetailView extends Composite {
         cmboMode.setContentProvider(ArrayContentProvider.getInstance());
         cmboMode.setInput(modeList);
         cmboMode.getCombo().select(0);
-
-        lblError = new Label(fieldsComposite, SWT.NONE);
-        lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 
         buttonsComposite = new Composite(selectionComposite, SWT.NONE);
         GridData gdComposite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
@@ -186,9 +182,5 @@ public class PvDetailView extends Composite {
                 BeanProperties.value("pvAddress").observe(model));
         bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboMode),
                 BeanProperties.value("pvMode").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
-                BeanProperties.value("errorText").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("errorColor").observe(model));
     }
 }

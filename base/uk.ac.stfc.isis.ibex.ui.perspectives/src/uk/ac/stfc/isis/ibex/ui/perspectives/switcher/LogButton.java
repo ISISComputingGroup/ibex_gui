@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -58,8 +58,13 @@ public class LogButton extends PerspectiveButton {
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
-				updateFlashing();
-			}
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateFlashing();
+                    }
+                });
+            }
 		});
 	}
 	

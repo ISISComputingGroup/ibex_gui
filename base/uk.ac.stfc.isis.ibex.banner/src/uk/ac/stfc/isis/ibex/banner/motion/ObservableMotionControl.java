@@ -23,17 +23,29 @@ import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * An observable used to control the motors.
+ */
 public class ObservableMotionControl extends ModelAdapter {
 
 	private static final Long STOP_VALUE = 1L;
 	
 	private final SameTypeWriter<Long> stop = new SameTypeWriter<>();
 	
+    /**
+     * Constructor for the observable.
+     * 
+     * @param stop
+     *            The writable to write to so as to stop all motion.
+     */
 	public ObservableMotionControl(Writable<Long> stop) {
 		this.stop.writeTo(stop);
 	}
 
+    /**
+     * Sends a value to the PV to stop all motors.
+     */
 	public void stop() {
-		stop.write(STOP_VALUE);
+	    stop.uncheckedWrite(STOP_VALUE);
 	}
 }

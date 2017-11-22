@@ -200,7 +200,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
-		<module>../uk.ac.stfc.isis.ibex.users</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.epics</module>
 		<module>../uk.ac.stfc.isis.ibex.epics.switching</module>
@@ -255,6 +255,9 @@
 		<module>../uk.ac.stfc.isis.ibex.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
+		
+		
+		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 	</modules>
 </project>
 

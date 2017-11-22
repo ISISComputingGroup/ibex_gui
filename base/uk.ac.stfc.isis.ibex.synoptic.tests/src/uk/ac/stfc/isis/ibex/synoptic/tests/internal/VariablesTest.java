@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -120,7 +121,7 @@ public class VariablesTest {
 
     @Test
     public void
-            WHEN_variables_is_initialised_THEN_synopticsDeleter_is_a_writable_converting_string_collection_to_json_string_on_correct_pv() {
+            WHEN_variables_is_initialised_THEN_synopticsDeleter_is_a_writable_converting_string_collection_to_json_string_on_correct_pv() throws IOException {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
@@ -227,7 +228,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Act
-        ForwardingObservable result = variables.defaultReaderRemote(address);
+        ForwardingObservable<String> result = variables.defaultReaderRemote(address);
         
         // Assert
         assertSame(mockSwitchableObservable, result);
@@ -244,7 +245,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Act
-        ForwardingObservable result = variables.defaultReaderRemoteWithoutUnits(address);
+        ForwardingObservable<String> result = variables.defaultReaderRemoteWithoutUnits(address);
 
         // Assert
         assertSame(mockSwitchableObservable, result);

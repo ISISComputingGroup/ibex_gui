@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 /**
  * An interface for classes that will be writing, eventually, to a PV.
  *
@@ -26,7 +28,9 @@ package uk.ac.stfc.isis.ibex.epics.writing;
  */
 public interface Writer<T> {
 
-	void write(T value);
+	void write(T value) throws IOException;
+	
+	void uncheckedWrite(T value);
 	
 	void onError(Exception e);
 	

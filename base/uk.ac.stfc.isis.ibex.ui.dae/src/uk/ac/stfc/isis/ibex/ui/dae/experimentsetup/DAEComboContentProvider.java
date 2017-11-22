@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class DAEComboContentProvider {
     
     String instrumentName;
-    boolean error;
 
     /**
      * Constructor. Binds the name of the current instrument to display in
@@ -87,10 +86,17 @@ public class DAEComboContentProvider {
     public String[] getContent(UpdatedValue<Collection<String>> list, String pattern) {
         String[] tables = valueOrEmpty(list);
 
-        if (error) {
+        if (list == null) {
+            // This happens if the file list PV is not available.
             tables = new String[] {"Error retrieving information from Instrument." };
         } else if (tables.length == 0) {
-            tables = new String[] {"None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
+            // This happens if the file list PV was available but empty.
+
+            // Use a sensible default if the instrument name PV is not available
+            // yet.
+            String instrument = this.instrumentName == null ? "<instrument>" : this.instrumentName;
+
+            tables = new String[] { "None found in C:\\Instrument\\Settings\\config\\" + instrument
                     + "\\configurations\\tables\\ (file name must contain \"" + pattern + "\")." };
         }
 
@@ -110,22 +116,7 @@ public class DAEComboContentProvider {
     private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            setError(false);
             setInstrumentName(value);
         }
-
-        @Override
-        public void onError(Exception e) {
-            setError(true);
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            setError(!isConnected);
-        }
     };
-    
-    private void setError(boolean error) {
-        this.error = error;
-    }
 }

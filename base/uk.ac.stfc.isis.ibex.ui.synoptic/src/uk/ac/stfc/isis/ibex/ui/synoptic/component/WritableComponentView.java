@@ -151,7 +151,7 @@ public class WritableComponentView extends Composite {
 	}
 	
 	private void sendValue() {
-		property.writer().write(text.getText());
+	    property.writer().uncheckedWrite(text.getText());
 		parent.setFocus();
 		setButton.setEnabled(false);
 	}

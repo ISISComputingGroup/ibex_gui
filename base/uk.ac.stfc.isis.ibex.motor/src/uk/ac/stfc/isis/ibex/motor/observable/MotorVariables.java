@@ -36,6 +36,9 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 
+/**
+ * Contains the variables for a motor.
+ */
 public class MotorVariables extends Closer {
 
 	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
@@ -73,22 +76,48 @@ public class MotorVariables extends Closer {
 	
 	private final PVAddress motorAddress;
 
+    /** The name of the motor. */
 	public final String motorName;
+
+    /** The setpoint. */
 	public final MotorSetPointVariables setpoint; 
+
+    /** The description observable. */
 	public final ForwardingObservable<String> description;
+
+    /** The enable observable. */
 	public final ForwardingObservable<MotorEnable> enable;
 	
+    /** The lower limit observable. */
 	public final ForwardingObservable<Double> lowerLimit;
+
+    /** The upper limit observable. */
 	public final ForwardingObservable<Double> upperLimit;
 	
+    /** The direction observable. */
 	public final ForwardingObservable<MotorDirection> direction;
+
+    /** The moving observable. */
 	public final ForwardingObservable<Boolean> moving;
+
+    /** The "at home" observable. */
 	public final ForwardingObservable<Boolean> atHome;
+
+    /** The "at upper limit" observable. */
 	public final ForwardingObservable<Boolean> atUpperLimitSwitch;
+
+    /** The "at lower limit" observable. */
 	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
 	
+    /** The status observable. */
 	public final ForwardingObservable<String> status;
 
+    /**
+     * Constructor.
+     * 
+     * @param motorName the name of the motor
+     * @param instrument the instrument
+     */
 	public MotorVariables(String motorName, Instrument instrument) {
 		this.motorName = motorName;
         this.motorAddress = PVAddress.startWith("MOT").append(motorName);
@@ -125,6 +154,11 @@ public class MotorVariables extends Closer {
                 CAPITALISE_FIRST_LETTER_ONLY);
 	}
 	
+    /**
+     * Get the motor address.
+     * 
+     * @return the address
+     */
 	public String motorAddress() {
 		return motorAddress.toString();
 	}

@@ -62,6 +62,9 @@ public class SqlStatement {
     /**
      * Set the (ordered) list of fields that will be retrieved by the select
      * statement.
+     * 
+     * @param selectFields
+     *            the fields to select
      */
     public void setSelectFields(LogMessageFieldsSql[] selectFields) {
 	this.selectFields = new ArrayList<LogMessageFieldsSql>(
@@ -69,8 +72,11 @@ public class SqlStatement {
     }
 
     /**
-     * Set the ordered list of fields that will be featured in
-     * "WHERE field LIKE ?" clauses.
+     * Set the ordered list of fields that will be featured in "WHERE field LIKE
+     * ?" clauses.
+     * 
+     * @param whereLikeFields
+     *            the where like fields to select
      */
     public void setWhereLikeClause(LogMessageFieldsWhereSql[] whereLikeFields) {
 	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>(
@@ -80,16 +86,23 @@ public class SqlStatement {
     /**
      * Set the limits in which to search in terms of event time. Null values
      * ignored.
+     * 
+     * @param startTime
+     *            The earliest time to include in the search
+     * @param endTime
+     *            The latest time to include in the search
      */
     public void setTimeRange(Calendar startTime, Calendar endTime) {
-	this.startTime = startTime;
-	this.endTime = endTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     /**
      * Return a string representation of the SQL select statement with SELECT
      * fields, WHERE clauses and time restrictions as appropriate. The values of
      * the parameters to be filled in are given standard placeholders (?).
+     * 
+     * @return A SQL statement
      */
     public String getSelectStatement() {
 	return "SELECT " + selectList() + " FROM " + selectTableList()

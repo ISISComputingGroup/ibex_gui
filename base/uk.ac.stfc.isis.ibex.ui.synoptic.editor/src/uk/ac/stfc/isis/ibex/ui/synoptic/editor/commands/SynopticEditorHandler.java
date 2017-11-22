@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
+import java.io.IOException;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.xml.sax.SAXParseException;
 
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -77,26 +76,34 @@ public abstract class SynopticEditorHandler extends AbstractHandler {
      *            is blank
      */
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
-        Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
         EditSynopticDialog editDialog =
-                new EditSynopticDialog(SHELL, title, isBlank, opis, viewModel);
+                new EditSynopticDialog(SHELL, title, isBlank, viewModel);
 		if (editDialog.open() == Window.OK) {
-            writer.write(viewModel.getSynoptic());
+		    try {
+		        writer.write(viewModel.getSynoptic());
+		    } catch (IOException e) {
+		        handleError(e);
+		    }
+		    
             Exception error = writer.lastError();
             if (error != null) {
-                MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
-                dialog.setText("Error saving synoptic");
-                if (error.getCause().getClass() == SAXParseException.class) {
-                    dialog.setMessage(
-                            "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
-                } else {
-                    dialog.setMessage("Error in saving synoptic, please contact support team");
-                }
-                Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
-                dialog.open();
+                handleError(error);
             }
 		}
+	}
+	
+	private void handleError(Exception error) {
+        MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
+        dialog.setText("Error saving synoptic");
+        if (error.getCause().getClass() == SAXParseException.class) {
+            dialog.setMessage(
+                    "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
+        } else {
+            dialog.setMessage("Error in saving synoptic, please contact support team");
+        }
+        Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
+        dialog.open();
 	}
 	
 }

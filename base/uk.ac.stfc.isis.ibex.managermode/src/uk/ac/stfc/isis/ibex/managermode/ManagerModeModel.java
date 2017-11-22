@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.managermode;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -115,7 +116,11 @@ public final class ManagerModeModel extends ModelObject {
     public void login(String password) throws FailedLoginException {
         this.password = password;
         validate();
-        updatePV();
+        try {
+            updatePV();
+        } catch (IOException e) {
+            throw new FailedLoginException(e.getMessage());
+        }
     }
 
     /**
@@ -124,7 +129,11 @@ public final class ManagerModeModel extends ModelObject {
     public void logout() {
         this.password = "";
         this.passwordValid = false;
-        updatePV();
+        try {
+            updatePV();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to update PV (caused by: " + e.getMessage() + ")", e);
+        }
     }
 
     /**
@@ -180,7 +189,7 @@ public final class ManagerModeModel extends ModelObject {
         };
     }
 
-    private void updatePV() {
+    private void updatePV() throws IOException {
         if (passwordValid) {
             managerPvWritable.write("1");
         } else {

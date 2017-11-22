@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
@@ -42,7 +43,7 @@ public enum ComponentType {
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE")),
+    DAE(new PerspectiveTarget("DAE", Dae.ID)),
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
@@ -99,6 +100,8 @@ public enum ComponentType {
     SCIMAG3D,
     /** Stress rig component type. */
     STRESS_RIG,
+    /** Gas exchange system. */
+    GAS_EXCHANGE,
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */
@@ -114,7 +117,12 @@ public enum ComponentType {
     /** Zoom sample stack. */
     ZOOM_SAMPLE_STACK,
     /** Sample changer for HRPD/POLARIS/GEM. */
-    ROT_SAMPLE_CHANGER;
+    ROT_SAMPLE_CHANGER,
+    /** Helium Level Gauge.*/
+    HE_LEVEL_GAUGE,
+    /** LET oscillating collimator. */
+    OSCILLATING_COLLIMATOR;
+
 	
 	private Target target;
 

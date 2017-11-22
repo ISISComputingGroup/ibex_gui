@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import com.google.common.collect.Iterables;
 
@@ -166,4 +167,24 @@ public class EditableConfigurationTest {
 	protected static <T> void assertNotEmpty(Collection<T> items) {
 		assertFalse(items.isEmpty());
 	}
+
+    @Test
+    public void GIVEN_editable_configuration_has_block_WHEN_block_requested_by_name_THEN_block_returned_has_name() {
+        // Arrange
+        populateConfig();
+        EditableConfiguration config = edit(config());
+
+        // Assert
+        assertEquals(config.getBlockByName(GAPX.getName()).getName(), GAPX.getName());
+    }
+
+    @Test
+    public void
+            GIVEN_editable_configuration_does_not_have_block_WHEN_block_requested_by_name_THEN_block_returned_is_null() {
+        // Arrange
+        EditableConfiguration config = edit(config());
+
+        // Assert
+        assertNull(config.getBlockByName(GAPX.getName()));
+    }
 }

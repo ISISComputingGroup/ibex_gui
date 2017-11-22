@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
@@ -134,7 +135,7 @@ public class DeviceScreenVariablesTest {
     }
 
     @Test
-    public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() {
+    public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() throws IOException {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),

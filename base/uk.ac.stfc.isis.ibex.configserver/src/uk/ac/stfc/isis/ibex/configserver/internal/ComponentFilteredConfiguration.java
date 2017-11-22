@@ -19,8 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -82,19 +85,22 @@ public class ComponentFilteredConfiguration extends Configuration {
 	}
 
     /**
-     * Takes a collection of groups and filters out the ones that are part of a
-     * component.
+     * Takes a collection of groups and returns a filtered list. Configuration
+     * groups are unaltered. Component groups are cleared of blocks and labelled
+     * as component groups. This assumes groups cannot be jointly members of
+     * configurations and components.
      * 
      * @param groups
      *            The groups
      * @return The filtered collection of groups
      */
-    public static Collection<Group> filterGroups(Collection<Group> groups) {
-        return Lists.newArrayList(Iterables.filter(groups, new Predicate<Group>() {
-			@Override
-			public boolean apply(Group group) {
-				return !group.hasComponent();
-			}
-		}));
+    public static List<Group> filterGroups(Collection<Group> groups) {
+        return Lists.newArrayList(Iterables.transform(groups, new Function<Group, Group>() {
+            @Override
+            public Group apply(Group group) {
+                return group.getComponent() == null ? group
+                        : new Group(group.getName(), new ArrayList<String>(), group.getComponent());
+            }
+        }));
 	}
 }

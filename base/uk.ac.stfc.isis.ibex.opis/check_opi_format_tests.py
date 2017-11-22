@@ -545,7 +545,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(self.checker.errors), 1)
 
-    def test_that_if_a_label_outside_a_grouping_container_is_capitalised_in_title_case_is_causes_no_errors(self):
+    def test_that_if_a_label_outside_a_grouping_container_is_capitalised_in_title_case_it_causes_no_errors(self):
         # Arrange
         
         xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
@@ -559,11 +559,25 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(self.checker.errors), 0)
 
-    def test_that_if_a_label_outside_a_grouping_container_is_not_capitalised_in_title_case_is_causes_one_error(self):
+    def test_that_if_a_label_outside_a_grouping_container_is_not_capitalised_in_title_case_it_causes_one_error(self):
         # Arrange
         
         xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
               '<text>This is not in title case and should cause an error</text>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        self.checker.check_capitals_for_labels_outside_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(self.checker.errors), 1)
+
+    def test_that_if_a_label_outside_a_grouping_container_is_empty_it_causes_one_error(self):
+        # Arrange
+
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text></text>' \
               '</widget>'
         root = etree.fromstring(xml)
 

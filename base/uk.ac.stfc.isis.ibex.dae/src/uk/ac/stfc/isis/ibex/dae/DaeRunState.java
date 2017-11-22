@@ -19,20 +19,70 @@
 
 package uk.ac.stfc.isis.ibex.dae;
 
+/**
+ * Enum of the states that the DAE could be in.
+ */
 public enum DaeRunState {
+    /**
+     * The DAE is starting up.
+     */
 	PROCESSING,
+    /**
+     * The DAE is ready to start a run.
+     */
 	SETUP,
+    /**
+     * The DAE is running and taking data.
+     */
 	RUNNING,
+    /**
+     * The run has been paused, data is no longer being taken.
+     */
 	PAUSED,
+    /**
+     * The DAE is waiting for a block that is in run control.
+     */
 	WAITING,
+    /**
+     * The DAE is vetoing data due to a hardware signal.
+     */
 	VETOING,
+    /**
+     * The DAE is in the process of ending a run. (It may take some time to pull
+     * data out of the DAE and save it)
+     */
 	ENDING,
+    /**
+     * The DAE is in the process of saving the run data to file.
+     */
 	SAVING,
+    /**
+     * The DAE is resuming a run after being paused.
+     */
 	RESUMING,
+    /**
+     * The DAE is in the process of pausing a run.
+     */
 	PAUSING,
+    /**
+     * The DAE is in the process of beginning a run.
+     */
 	BEGINNING,
+    /**
+     * The DAE is in the process of aborting a run.
+     */
 	ABORTING,
+    /**
+     * The DAE is creating a snapshot of data in memory. (like an end but
+     * doesn't increase the run number)
+     */
 	UPDATING,
+    /**
+     * The DAE is storing the snapshot to disk.
+     */
 	STORING,
+    /**
+     * The state of the DAE is unknown.
+     */
 	UNKNOWN,
 }

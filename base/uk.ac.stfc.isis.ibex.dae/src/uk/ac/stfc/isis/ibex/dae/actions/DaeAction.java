@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.actions;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -27,15 +29,19 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Action;
 
+/**
+ * An abstract class for sending actions to the DAE to move between states.
+ */
 public abstract class DaeAction extends Action implements Closable {
 		
 	private final BaseWriter<String, String> actionWriter = new BaseWriter<String, String>() {
 
 		@Override
-		public void write(String value) {
-			writeToWritables(value);
+		public void write(String value) throws IOException {
+            writeToWritables(value);
 		}
 		
 		@Override
@@ -60,6 +66,7 @@ public abstract class DaeAction extends Action implements Closable {
 
 		@Override
 		public void onError(Exception e) {
+            IsisLog.getLogger(this.getClass()).warn("Exception occured in transition observer.", e);
 			setInTransition(true);
 		}
 	};
@@ -73,12 +80,15 @@ public abstract class DaeAction extends Action implements Closable {
 
 		@Override
 		public void onError(Exception e) {
+            IsisLog.getLogger(this.getClass()).warn("Exception occured in run state observer.", e);
 			setRunState(DaeRunState.UNKNOWN);
 		}
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			setRunState(DaeRunState.UNKNOWN);
+            if (!isConnected) {
+                setRunState(DaeRunState.UNKNOWN);
+            }
 		}
 	};
 
@@ -91,6 +101,16 @@ public abstract class DaeAction extends Action implements Closable {
 	private boolean canWrite;
 	private DaeRunState runState = DaeRunState.UNKNOWN;
 	
+    /**
+     * Constructor for the class. Will add observers to the provided PVs.
+     * 
+     * @param target
+     *            The PV to write to to change the state.
+     * @param inStateTransition
+     *            An observable to check the DAE is not transitioning.
+     * @param runState
+     *            An observable on the current state of the PV.
+     */
 	public DaeAction(
 			Writable<String> target, 
 			ForwardingObservable<Boolean> inStateTransition,
@@ -104,7 +124,7 @@ public abstract class DaeAction extends Action implements Closable {
 
 	@Override
 	public void execute() {
-		actionWriter.write("1");
+	    actionWriter.uncheckedWrite("1");
 	}
 
 	@Override
@@ -115,6 +135,14 @@ public abstract class DaeAction extends Action implements Closable {
 		writerSubscription.removeObserver();
 	}
 	
+    /**
+     * A method to check that the transition is allowed from the specified
+     * state.
+     * 
+     * @param runState
+     *            The state we are transitioning from.
+     * @return True if the transition is allowed using this action.
+     */
 	protected abstract boolean allowed(DaeRunState runState);
 	
 	private void setCanWrite(boolean canWrite) {

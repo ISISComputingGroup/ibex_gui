@@ -154,65 +154,66 @@ public class SynopticPresenter extends ModelObject {
 	}
 
     /**
-     * Navigates to a target.
+     * Navigates to a target based on a name.
      * 
      * @param targetName
      *            the target to navigate to
      */
 	public void navigateTo(final String targetName) {
-		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
-			Target target = targets.get(targetName).item();
-			
-            LOG.info(target.name());
-
-			if (target instanceof OpiTarget) {
-				// Opi targets don't update the navigator.
-                try {
-                    targetView.displayOpi((OpiTarget) target);
-                } catch (OPIViewCreationException e) {
-                    LOG.catching(e);
-                }
-                return;
-			}
-
-			if (target instanceof PerspectiveTarget) {
-				// Perspective targets don't update the navigator.
-				switchPerspective(target);
-				return;
-			}
-
-			navigator.setCurrentTarget(targets.get(targetName));
+            navigateTo(targets.get(targetName).item());
 		}
 	}
 
     /**
-     * Whether this has target.
+     * Navigates to a target.
      * 
-     * @param targetName
-     *            the target name
-     * @return true if this has the target
+     * @param target
+     *            the target to navigate to.
      */
-    public boolean hasTarget(String targetName) {
-        boolean hasTarget = false;
+    public void navigateTo(final Target target) {
+        if (target instanceof GroupedComponentTarget) {
+            displayGroupTarget((GroupedComponentTarget) target);
+        }
 
-        if (targets.containsKey(targetName)) {
-            Target target = targets.get(targetName).item();
+        if (target instanceof OpiTarget) {
+            // Opi targets don't update the navigator.
+            try {
+                targetView.displayOpi((OpiTarget) target);
+            } catch (OPIViewCreationException e) {
+                LOG.catching(e);
+            }
+            return;
+        }
 
-            if (target instanceof OpiTarget) {
-                // Empty targets are saved as "NONE" with an OpiTarget type.
-                // This is to keep track of if a target has been previously set,
-                // for the default selection.
-                String opiName = ((OpiTarget) target).opiName();
-                if (!opiName.equals("NONE")) {
-                    hasTarget = true;
-                }
-            } else if (target instanceof Target) {
-                hasTarget = true;
+        if (target instanceof PerspectiveTarget) {
+            // Perspective targets don't update the navigator.
+            switchPerspective((PerspectiveTarget) target);
+            return;
+        }
+
+        navigator.setCurrentTarget(targets.get(target.name()));
+    }
+
+    /**
+     * Whether this target is valid.
+     * 
+     * @param target
+     *            the target to check
+     * @return true if this target is valid.
+     */
+    public boolean isValidTarget(Target target) {
+        if (target instanceof OpiTarget) {
+            // Empty targets are saved as "NONE" with an OpiTarget type.
+            // This is to keep track of if a target has been previously set,
+            // for the default selection.
+            String opiName = ((OpiTarget) target).opiName();
+            if (opiName.equals("NONE")) {
+                return false;
             }
         }
 
-        return hasTarget;
+        return true;
     }
 
 	/**
@@ -225,10 +226,8 @@ public class SynopticPresenter extends ModelObject {
 	}
 
 	private void displayTarget(Target currentTarget) {
-        LOG.info("Displaying target: " + currentTarget);
-
 		if (currentTarget instanceof GroupedComponentTarget) {
-			displayGroupTarget(currentTarget);
+            displayGroupTarget((GroupedComponentTarget) currentTarget);
 		}
 
 		if (currentTarget instanceof OpiTarget) {
@@ -240,14 +239,13 @@ public class SynopticPresenter extends ModelObject {
 		}
 	}
 
-	private void displayGroupTarget(Target currentTarget) {
-		GroupedComponentTarget target = (GroupedComponentTarget) currentTarget;
+    private void displayGroupTarget(GroupedComponentTarget currentTarget) {
+		GroupedComponentTarget target = currentTarget;
 		setComponents(target.components());
 	}
 
-	private void switchPerspective(Target target) {
-		String id = uk.ac.stfc.isis.ibex.ui.perspectives.Activator.getDefault().perspectives().getID(target.name());
-		UI.getDefault().switchPerspective(id);
+    private void switchPerspective(PerspectiveTarget target) {
+        UI.getDefault().switchPerspective(target.getId());
 	}
 
 	/**

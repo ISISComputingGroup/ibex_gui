@@ -56,13 +56,13 @@ public class DisplayBlock extends ModelObject {
      * The current low limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String lowlimit;
+    private String lowlimit = "";
 
     /**
      * The current high limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String highlimit;
+    private String highlimit = "";
 
     /**
      * Specifies whether the block is currently under run-control. This can be
@@ -84,7 +84,7 @@ public class DisplayBlock extends ModelObject {
     /**
      * Saves the last alarm state (to restore after disconnect).
      */
-    private BlockState lastAlarmState = BlockState.DEFAULT;
+    private BlockState lastBlockState = BlockState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -104,7 +104,7 @@ public class DisplayBlock extends ModelObject {
                 setValue("disconnected");
                 setBlockState(BlockState.DISCONNECTED);
             } else {
-                setBlockState(lastAlarmState);
+                setBlockState(lastBlockState);
             }
             setRuncontrolState(checkRuncontrolState());
         }
@@ -134,21 +134,24 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onValue(AlarmState value) {
-            BlockState alarm = BlockState.DEFAULT;
+            BlockState state = BlockState.DEFAULT;
             if (value.name().equals("MINOR")) {
-                alarm = BlockState.MINOR_ALARM;
+                state = BlockState.MINOR_ALARM;
             } else if (value.name().equals("MAJOR")) {
-                alarm = BlockState.MAJOR_ALARM;
+                state = BlockState.MAJOR_ALARM;
+            } else if (value.name().equals("INVALID")) {
+                state = BlockState.DISCONNECTED;
             }
-            lastAlarmState = alarm;
-            setBlockState(alarm);
+
+            lastBlockState = state;
+            setBlockState(state);
         }
 
         @Override
         public void onError(Exception e) {
-            BlockState alarm = BlockState.MINOR_ALARM;
-            lastAlarmState = alarm;
-            setBlockState(alarm);
+            BlockState state = BlockState.MINOR_ALARM;
+            lastBlockState = state;
+            setBlockState(state);
         }
 
         @Override
@@ -257,6 +260,13 @@ public class DisplayBlock extends ModelObject {
      */
     public String getName() {
         return block.getName();
+    }
+
+    /**
+     * @return does the block belong to a component
+     */
+    public boolean hasComponent() {
+        return block.hasComponent();
     }
 
     /**

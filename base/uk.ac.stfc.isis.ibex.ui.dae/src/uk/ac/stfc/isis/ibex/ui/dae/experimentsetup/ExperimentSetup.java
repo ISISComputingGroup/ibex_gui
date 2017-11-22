@@ -49,7 +49,6 @@ public class ExperimentSetup extends Composite {
 	private PeriodsPanel periods;
 	
 	private final int timeToDisplayDialog = 2;
-	
 	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
 	
     /**
@@ -60,17 +59,17 @@ public class ExperimentSetup extends Composite {
      * @param style
      *            The SWT style flags for this panel.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
 	public ExperimentSetup(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
-		gridLayout.marginHeight = 0;
-		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
+        gridLayout.marginHeight = 0;
+        gridLayout.verticalSpacing = 5;
+        gridLayout.marginWidth = 0;
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
 		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
@@ -98,23 +97,24 @@ public class ExperimentSetup extends Composite {
 		periods = new PeriodsPanel(periodsComposite, SWT.NONE);
 		
 		tabFolder.setSelection(0);
-		
-		Composite sendChangesComposite = new Composite(this, SWT.NONE);
-		sendChangesComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		sendChangesComposite.setLayout(new GridLayout(1, false));
-		
-		RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
-		SendChangesButton btnSendChanges = new SendChangesButton(sendChangesComposite, SWT.NONE, rsvm.actions().begin);
-		btnSendChanges.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (viewModel != null) {
-					viewModel.updateDae();
-				}
-				sendingChanges.open();
-			}
-		});
-		btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        // Don't let the tab folder shrink vertically or controls can start
+        // disappearing
+        tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+        tabFolder.setLayoutData(tabFolderGridData);
+
+        RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
+        SendChangesButton btnSendChanges = new SendChangesButton(this, SWT.NONE, rsvm.actions().begin);
+        btnSendChanges.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (viewModel != null) {
+                    viewModel.updateDae();
+                }
+                sendingChanges.open();
+            }
+        });
+        btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
 	}
 	

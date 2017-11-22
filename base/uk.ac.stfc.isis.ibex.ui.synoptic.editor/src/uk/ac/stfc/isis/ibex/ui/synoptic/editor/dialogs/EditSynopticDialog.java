@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -40,7 +39,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.ComponentListValidator;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -60,9 +59,8 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private Button saveBtn;
 	
     private SynopticViewModel synopticViewModel;
-    private Collection<String> availableOPIs;
 
-    private ComponentListValidator synopticValidator;
+    private SynopticValidator synopticValidator;
 
     /**
      * The constructor for the overall Synoptic editor dialog.
@@ -73,25 +71,22 @@ public class EditSynopticDialog extends TitleAreaDialog {
      *            The title of the dialog.
      * @param isBlank
      *            Whether the synoptic is blank or not, i.e. a new synoptic.
-     * @param availableOPIs
-     *            The OPIs that are available to put into the synoptic
      * @param synopticViewModel
      *            The view model describing the logic of the synoptic editor
      */
     public EditSynopticDialog(Shell parentShell, String title, boolean isBlank,
-            Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
+            SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
 		this.isBlank = isBlank;
-        this.availableOPIs = availableOPIs;
         this.synopticViewModel = synopticViewModel;
-        this.synopticValidator = new ComponentListValidator(synopticViewModel.getSynoptic());
+        this.synopticValidator = new SynopticValidator(synopticViewModel.getSynoptic());
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel, availableOPIs);
+        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		return editor;
 	}

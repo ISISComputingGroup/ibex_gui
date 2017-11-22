@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.TargetPropertiesViewModel;
 
 /**
  * The main panel for the configure device screens dialog.
@@ -74,9 +75,6 @@ public class ConfigureDeviceScreensTargetPanel extends Composite {
         grpDetails.setText("Target");
         grpDetails.setLayout(new GridLayout(1, false));
 
-        bindingContext.bindValue(WidgetProperties.enabled().observe(grpDetails),
-                BeanProperties.value("enabled").observe(viewModel));
-
         Composite detailsComposite = new Composite(grpDetails, SWT.NONE);
         detailsComposite.setLayout(new GridLayout(2, false));
         detailsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -87,12 +85,6 @@ public class ConfigureDeviceScreensTargetPanel extends Composite {
 
         Text txtName = new Text(detailsComposite, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-        
-        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
-                BeanProperties.value("enabled").observe(viewModel));
-
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
-                BeanProperties.value("name").observe(viewModel));
 
         // Target of IOC
         Label lblTarget = new Label(detailsComposite, SWT.NONE);
@@ -118,7 +110,8 @@ public class ConfigureDeviceScreensTargetPanel extends Composite {
         Composite propertiesComposite = new Composite(detailsComposite, SWT.NONE);
         propertiesComposite.setLayout(new GridLayout(2, false));
         propertiesComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-        TargetPropertiesWidget propertiesView = new TargetPropertiesWidget(propertiesComposite, viewModel);
+        TargetPropertiesViewModel propsViewModel = new TargetPropertiesViewModel(viewModel);
+        TargetPropertiesWidget propertiesView = new TargetPropertiesWidget(propertiesComposite, propsViewModel);
 
         YesNoRadioButtons yesNoRadioButtons = new YesNoRadioButtons(detailsComposite, "Save this device screen",
                 "Remove this device screen when IBEX is closed");
@@ -128,6 +121,15 @@ public class ConfigureDeviceScreensTargetPanel extends Composite {
         
         bindingContext.bindValue(BeanProperties.value("enabled").observe(yesNoRadioButtons),
                 BeanProperties.value("persistenceEnabled").observe(viewModel));
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
+                BeanProperties.value("enabled").observe(viewModel));
+
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
+                BeanProperties.value("name").observe(viewModel));
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(grpDetails),
+                BeanProperties.value("enabled").observe(viewModel));
 
     }
 

@@ -80,7 +80,7 @@ public class WritableObservingTextBox extends Composite {
 	        @Override
 	        public void handleEvent(Event event) {
 	            if (event.detail == SWT.TRAVERSE_RETURN) {
-					setText(adapter);
+	                uncheckedSetText(adapter);
 	            }
 	        }
 	    });
@@ -89,12 +89,12 @@ public class WritableObservingTextBox extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				setText(adapter);
+                uncheckedSetText(adapter);
 			}
 		});
 	}
 	
-	private void setText(StringWritableObservableAdapter adapter) {
-		adapter.setText(textbox.getText());
+	private void uncheckedSetText(StringWritableObservableAdapter adapter) {
+		adapter.uncheckedSetText(textbox.getText());
 	}
 }

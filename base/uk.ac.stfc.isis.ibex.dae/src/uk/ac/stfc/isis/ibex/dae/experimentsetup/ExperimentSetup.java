@@ -37,6 +37,10 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Class that acts as a model for all the information associated with an
+ * experiment.
+ */
 public class ExperimentSetup extends Closer  {
 	
 	private final ObservingDaeSettings daeSettings;

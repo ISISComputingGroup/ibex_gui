@@ -19,6 +19,9 @@ logs_directory = r"./check_OPI_format_logs/"
 # Single file
 single_file = ""
 
+class CapitalisationError(Exception):
+    pass
+
 class CheckOpiFormat:
 
     # If a word contains any of the following, the whole word will be ignored
@@ -71,54 +74,50 @@ class CheckOpiFormat:
                 + "\n... " + error_message
             self.errors.append(err)
 
-    def check_title_case(self, root, xpath, error_message):
+    def check_case(self, root, xpath, error_message, title_case):
         for name in root.xpath(xpath):
-            capitalisation_error = False
-            words = name.text.split()
+            try:
+                if name.text is None:
+                    raise CapitalisationError("No text identified")
 
-            # Handle special case of first word (which should be capitalised regardless of length)
-            word = words[0]
-            if not word.title() == word and not any(s in word for s in self.ignore):
-                capitalisation_error = True
+                words = name.text.split()
+                if len(words)==0:
+                    raise CapitalisationError("Text is empty")
+
+                # Special case for the manager mode indicator
+                if title_case and "manager mode" in name.text.lower():
+                    continue;
+
+                # Handle special case of first word (which should be capitalised regardless of length)
+                word = words[0]
+                if not word.title() == word and not any(s in word for s in self.ignore):
+                    raise CapitalisationError("First word is not capitalised")
 
             # Ignore words less than 4 characters as these are probably prepositions
             # Also don't check first word as that is a special case handled above
-            for word in words:
-                if len(word) > self.ignore_short_words_limit \
-                        and not word == words[0] \
-                        and word.title() != word \
-                        and not any(s in word for s in self.ignore):
-                    capitalisation_error = True
+                for i, word in enumerate(words):
+                    is_long_word = len(word) > self.ignore_short_words_limit
+                    is_first_word = i==0
+                    is_ignored = any(s in word for s in self.ignore)
+                    if is_long_word and not is_first_word and not is_ignored:
+                        if title_case and word.title() != word:
+                            raise CapitalisationError("Word '{}' is not in title case".format(word))
+                        elif not title_case and word.lower() != word:
+                            raise CapitalisationError("Word '{}' is not in sentence case".format(word))
 
-            if capitalisation_error:
-                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... " + error_message
+            except CapitalisationError as caps_err:
+                err = "Error on line {source}, {name}: {broad_message}\n    {fine_message}".format(
+                    source=name.sourceline,
+                    name=etree.tostring(name),
+                    broad_message=error_message,
+                    fine_message=caps_err)
                 self.errors.append(err)
+
+    def check_title_case(self, root, xpath, error_message):
+        self.check_case(root, xpath, error_message, True)
 
     def check_sentence_case(self, root, xpath, error_message):
-
-        for name in root.xpath(xpath):
-            capitalisation_error = False
-            words = name.text.split()
-
-            # Handle special case of first word (which should be capitalised regardless of length)
-            word = words[0]
-            if not word.title() == word and not any(s in word for s in self.ignore):
-                capitalisation_error = True
-
-            # Ignore words less than 4 characters as these are probably prepositions
-            # Also don't check first word as that is a special case handled above
-            for word in words:
-                if len(word) > self.ignore_short_words_limit \
-                        and not word == words[0] \
-                        and not word.lower() == word \
-                        and not any(s in word for s in self.ignore):
-                    capitalisation_error = True
-
-            if capitalisation_error:
-                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... " + error_message
-                self.errors.append(err)
+        self.check_case(root, xpath, error_message, False)
 
     def check_plot_area_background(self, root):
 
@@ -232,11 +231,16 @@ class CheckOpiFormat:
                              "/" + self.widget_xpath + "Label']/text"
 
         for name in root.xpath(container_name_xpath):
-            words = name.text
+            text = name.text
+            if text is None or len(text)==0:
+                continue
 
             # Check last character in the string is a colon
-            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-                and not any(s in words for s in self.ignore):
+            last_character_is_colon = text[-1:] != ":"
+            ends_in_ellipsis = len(text)>= 3 and text[-3:]=="..."
+            text_is_numeric = text.isdigit()
+            is_ignored = any(s==text for s in self.ignore)
+            if  not last_character_is_colon and not ends_in_ellipsis and not text_is_numeric and not is_ignored:
                     err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                         + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                     self.errors.append(err)

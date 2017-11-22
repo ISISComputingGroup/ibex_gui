@@ -22,39 +22,67 @@ package uk.ac.stfc.isis.ibex.dae;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 
+/**
+ * Provides and sets information about the Data Acquisition Electronics.
+ */
 public class Dae extends Plugin {
+
+    /**
+     * The perspective ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.perspective"; //$NON-NLS-1$
 
     private static Dae instance;
 	private static BundleContext context;
 
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return the singleton instance of this class
+	 */
     public static Dae getInstance() { 
     	return instance; 
     }
-
-    private static final Instrument INSTRUMENT = Instrument.getInstance();
 
     private final DaeModel model;
 	private final DaeWritables writables;
 	private final DaeObservables observables;
 
+    /**
+     * Default constructor.
+     */
     public Dae() {
-		super();
 		instance = this;
         writables = new DaeWritables();
         observables = new DaeObservables();
 		model = new DaeModel(writables, observables);
 	}
     
+    /**
+     * Gets the model used by the DAE.
+     * 
+     * @return the model
+     */
 	public IDae model() {
 		return model;
 	}
 	
+	/**
+	 * Gets the observables used by the DAE.
+	 * 
+	 * @return the observables
+	 */
 	public DaeObservables observables() {
 		return observables;
 	}
 	
+	/**
+	 * Gets the bundle context associated with this plugin.
+	 * 
+	 * @return the bundle context
+	 */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -76,5 +104,6 @@ public class Dae extends Plugin {
     public void stop(BundleContext bundleContext) throws Exception {
 		Dae.context = null;
 		model.close();
+        DetectorDiagnosticsModel.closeInstance();
 	}
 }

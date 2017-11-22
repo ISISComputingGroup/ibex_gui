@@ -50,7 +50,6 @@ public class RunControlSettingsPanel extends Composite {
 	private RunControlSettingsTable table;
 	private RunControlEditorPanel editor;
 	private final ConfigServer configServer;
-	private final RunControlServer runControlServer;
     private UpdatedValue<Configuration> config;
 
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
@@ -82,7 +81,6 @@ public class RunControlSettingsPanel extends Composite {
         config = new UpdatedObservableAdapter<Configuration>(this.configServer.currentConfig());
         config.addPropertyChangeListener(updateTable, true);
 		
-		this.runControlServer = runControlServer;
         setLayout(new GridLayout(2, false));
 
         table = new RunControlSettingsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
@@ -97,7 +95,7 @@ public class RunControlSettingsPanel extends Composite {
         });
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer, viewModel);
+        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, viewModel);
 	}
 
 	private void setBlocks() {

@@ -71,6 +71,6 @@ public class ObservableParameter extends Parameter {
 	
 	@Override
 	public void setValue(String value) {
-		valueSetter.write(value);
+	    valueSetter.uncheckedWrite(value);
 	}
 }

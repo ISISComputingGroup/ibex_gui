@@ -64,50 +64,51 @@ public class LogMessageQuery {
      * @param to
      *            Consider only messages that occurred before this time (null =
      *            no limit).
+     * @return A list of log messages
+     * @throws SQLException
+     *             indicates a problem with the database connection
      */
     public List<LogMessage> getMessages(LogMessageFieldsWhereSql searchField,
-	    String searchValue, Calendar from, Calendar to) throws Exception {
-	LogMessageFieldsWhereSql[] whereLikeClauses = {searchField};
+            String searchValue, Calendar from, Calendar to) throws SQLException {
+        LogMessageFieldsWhereSql[] whereLikeClauses = { searchField };
 
-	sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
-	sqlStatement.setWhereLikeClause(whereLikeClauses);
-	sqlStatement.setTimeRange(from, to);
+        sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
+        sqlStatement.setWhereLikeClause(whereLikeClauses);
+        sqlStatement.setTimeRange(from, to);
 
-	String selectStatement = sqlStatement.getSelectStatement();
+        String selectStatement = sqlStatement.getSelectStatement();
 
-	final PreparedStatement statement = rdb.getConnection()
-		.prepareStatement(selectStatement);
+        final PreparedStatement statement = rdb.getConnection().prepareStatement(selectStatement);
 
-	ArrayList<LogMessage> messages = new ArrayList<LogMessage>();
+        ArrayList<LogMessage> messages = new ArrayList<LogMessage>();
 
-	String messageSearch = "%" + searchValue + "%";
+        String messageSearch = "%" + searchValue + "%";
 
-	try {
-	    int index = 0;
-	    statement.setString(++index, messageSearch);
+        try {
+            int index = 0;
+            statement.setString(++index, messageSearch);
 
-	    if (from != null) {
-		Timestamp start = new Timestamp(from.getTimeInMillis());
-		statement.setTimestamp(++index, start);
-	    }
+            if (from != null) {
+                Timestamp start = new Timestamp(from.getTimeInMillis());
+                statement.setTimestamp(++index, start);
+            }
 
-	    if (to != null) {
-		Timestamp end = new Timestamp(to.getTimeInMillis());
-		statement.setTimestamp(++index, end);
-	    }
+            if (to != null) {
+                Timestamp end = new Timestamp(to.getTimeInMillis());
+                statement.setTimestamp(++index, end);
+            }
 
-	    ResultSet result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
 
-	    while (result.next()) {
-		LogMessage message = getMessageFromQueryResult(result,
-			SQL_SELECT_FIELDS);
-		messages.add(message);
-	    }
-	} finally {
-	    statement.close();
-	}
+            while (result.next()) {
+                LogMessage message = getMessageFromQueryResult(result, SQL_SELECT_FIELDS);
+                messages.add(message);
+            }
+        } finally {
+            statement.close();
+        }
 
-	return messages;
+        return messages;
     }
 
     /**
@@ -143,9 +144,12 @@ public class LogMessageQuery {
      * @param to
      *            Consider only messages that occurred before this time (null =
      *            no limit).
+     * @return A list of log messages
+     * @throws SQLException
+     *             indicates a problem with the database connection
      */
     public List<LogMessage> getMessages(LogMessageFields searchField,
-	    String searchValue, Calendar from, Calendar to) throws Exception {
+            String searchValue, Calendar from, Calendar to) throws SQLException {
 	LogMessageFieldsWhereSql field = new LogMessageSql()
 		.getWhereSqlTag(searchField);
 	return getMessages(field, searchValue, from, to);

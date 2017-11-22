@@ -20,6 +20,9 @@
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.swt.widgets.Composite;
 
 
 /**
@@ -27,8 +30,10 @@ import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
  */
 public class AlarmView extends AlarmTreeView {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.test.views.TestView"; //$NON-NLS-1$
-
+    /**
+     * Class ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 	
     /**
      * Instantiates a new alarm view.
@@ -39,6 +44,28 @@ public class AlarmView extends AlarmTreeView {
 
 	@Override
 	public void setFocus() {
-		// Set the focus
+        // Do nothing.
 	}
+
+    /**
+     * Creates the view.
+     * 
+     * The view comes from CSStudio, we just append our own button onto it in
+     * this method
+     * 
+     * @param parent the parent composite
+     */
+    @Override
+    public void createPartControl(final Composite parent) {
+        // Create the normal view (comes from CSStudio).
+        super.createPartControl(parent);
+
+        // Get the toolbar of the CSStudio view.
+        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+
+        // Append our new button to the toolbar.
+        toolbar.add(new Separator());
+        toolbar.add(new RefreshAction());
+    }
+
 }

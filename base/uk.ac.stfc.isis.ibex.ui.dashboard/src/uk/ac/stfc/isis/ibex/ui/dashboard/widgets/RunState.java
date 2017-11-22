@@ -22,48 +22,90 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+/**
+ * An enum for describing the colour associated with each run state.
+ */
 public enum RunState {
-
+    /** Processing. **/
     PROCESSING(RunStateColour.YELLOW),
+    /** Running. **/
     RUNNING(RunStateColour.LIGHT_GREEN),
+    /** Setup. **/
     SETUP(RunStateColour.LIGHT_BLUE),
+    /** Paused. **/
     PAUSED(RunStateColour.RED),
+    /** Waiting. **/
     WAITING(RunStateColour.GOLDEN_ROD),
+    /** Vetoing. **/
     VETOING(RunStateColour.GOLDEN_ROD),
+    /** Ending. **/
     ENDING(RunStateColour.BLUE),
-	
+    /** Pausing. **/
     PAUSING(RunStateColour.DARK_RED),
+    /** Beginning. **/
     BEGINNING(RunStateColour.GREEN),
+    /** Aborting. **/
     ABORTING(RunStateColour.BLUE),
+    /** Resuming. **/
     RESUMING(RunStateColour.GREEN),
-	
+    /** Updating. **/
     UPDATING(RunStateColour.YELLOW),
+    /** Storing. **/
     STORING(RunStateColour.YELLOW),
+    /** Saving. **/
     SAVING(RunStateColour.YELLOW),
-	
+    /** Unknown. **/
     UNKNOWN(RunStateColour.YELLOW);
 	
 	private final String name;
 	private final Color color;
 
+    /**
+     * Constructor.
+     * 
+     * @param name the name for the colour
+     * @param color the colour
+     */
 	RunState(String name, Color color) {
 		this.name = name;
 		this.color = color;
 	}
 	
+    /**
+     * Constructor.
+     * 
+     * @param color the colour
+     */
 	RunState(Color color) {
 		this.name = this.toString();
 		this.color = color;
 	}
 	
+    /**
+     * Constructor that uses RGB values to define the colour.
+     * 
+     * @param r red component
+     * @param g green component
+     * @param b blue component
+     */
 	RunState(int r, int g, int b) {
 		this(SWTResourceManager.getColor(r, g, b));
 	}
 	
+    /**
+     * Get the name.
+     * 
+     * @return the name
+     */
 	public String getName() {
 		return name;
 	}
 	
+    /**
+     * Get the colour.
+     * 
+     * @return the colour
+     */
 	public Color color() {
 		return color;
 	}

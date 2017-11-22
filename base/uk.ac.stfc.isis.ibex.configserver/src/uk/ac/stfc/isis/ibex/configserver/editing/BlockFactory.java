@@ -60,7 +60,7 @@ public class BlockFactory {
 
     private Collection<String> blockNames() {
         List<String> names = new ArrayList<>();
-        for (Block block : config.getBlocks()) {
+        for (Block block : config.transformBlocks()) {
             names.add(block.getName());
         }
 

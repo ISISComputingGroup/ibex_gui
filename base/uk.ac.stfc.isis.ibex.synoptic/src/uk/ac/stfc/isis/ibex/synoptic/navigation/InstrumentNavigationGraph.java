@@ -79,16 +79,7 @@ public class InstrumentNavigationGraph {
 		
 		if (target != null) {
 			targets.put(target.name(), node);
-		}
-		
-		if (target instanceof GroupedComponentTarget) {
-			GroupedComponentTarget group = (GroupedComponentTarget) target;
-			if (!group.components().isEmpty()) {
-				Target extraTarget = group.components().get(0).target();
-				TargetNode extraNode = addTargetNode(extraTarget);
-				extraNode.setUp(node);
-			}
-		}
+        }
 		
 		return node;		
 	}

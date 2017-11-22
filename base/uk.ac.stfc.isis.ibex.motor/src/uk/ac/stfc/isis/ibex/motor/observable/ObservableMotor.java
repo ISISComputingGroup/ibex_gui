@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 
+/**
+ * A motor that is pointing to an actual device.
+ */
 public class ObservableMotor extends Motor {
 
 	private final MotorVariables variables;
@@ -42,6 +45,12 @@ public class ObservableMotor extends Motor {
 	private final UpdatedObservableAdapter<Boolean> atUpperLimitSwitch;
 	private final TextUpdatedObservableAdapter status;
 	
+    /**
+     * Creates a motor that is pointing to a backend device.
+     * 
+     * @param variables
+     *            The PVs for the motor.
+     */
 	public ObservableMotor(MotorVariables variables) {
 		this.variables = variables;
 		description = textAdapt(variables.description, "description");

@@ -48,6 +48,16 @@ public class RunSummary extends Composite {
 	
 	private DaeActionButtonPanel daeButtonPanel;
 	
+    /**
+     * Creates a view that shows a summary of the current run.
+     * 
+     * @param parent
+     *            The parent composite for this view.
+     * @param style
+     *            The SWT style for this view.
+     * @param model
+     *            The view model that holds the run summary information.
+     */
     public RunSummary(Composite parent, int style, final RunSummaryViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
@@ -126,8 +136,8 @@ public class RunSummary extends Composite {
 		gdTitle.widthHint = 180;
 		title.setLayoutData(gdTitle);
 
-        Label spacer3 = new Label(infoComposite, SWT.NONE);
-        Label spacer4 = new Label(infoComposite, SWT.NONE);
+        new Label(infoComposite, SWT.NONE);
+        new Label(infoComposite, SWT.NONE);
 
         btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
         btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
@@ -136,7 +146,7 @@ public class RunSummary extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 super.widgetSelected(e);
-                model.displayTitle().setValue(btnDisplayTitle.getSelection());
+                model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
             }
         });
 

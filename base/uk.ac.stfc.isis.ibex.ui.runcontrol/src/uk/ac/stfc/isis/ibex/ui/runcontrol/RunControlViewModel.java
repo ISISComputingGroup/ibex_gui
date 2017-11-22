@@ -20,116 +20,195 @@
 package uk.ac.stfc.isis.ibex.ui.runcontrol;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
 /**
  * ViewModel for the run-control, allowing blocks to be obtained from the
- * configuration and run control server to be reset to configuraiton values.
+ * configuration and run control server to be reset to configuration values.
  */
 public class RunControlViewModel extends ErrorMessageProvider {
 
-    private ForwardingObservable<Configuration> currentConfigObserver;
-    private RunControlServer runControlServer;
+    private Map<DisplayBlock, RunControlSetter> setters = new HashMap<>();
 
     private RunControlValidator runControlValidator = new RunControlValidator();
     
     private String txtHighLimit = "";
     private String txtLowLimit = "";
+    private boolean rcEnabled;
+
     private boolean sendEnabled;
     
-    public RunControlViewModel(final ConfigServer configServer, final RunControlServer runControlServer) {
-        this.currentConfigObserver = configServer.currentConfig();
-        this.runControlServer = runControlServer;
+    private DisplayBlock currentBlock;
+
+    /**
+     * Creates the view model for changing the run control settings outside of a
+     * configuration.
+     * 
+     * The setters are created here so as the PVs have some time to connect
+     * before writing to them.
+     * 
+     * @param blocks
+     *            The blocks to set run control on.
+     * @param runControlServer
+     *            The object for creating the PV names for run control.
+     */
+    public RunControlViewModel(Collection<DisplayBlock> blocks, final RunControlServer runControlServer) {
+        for (DisplayBlock block : blocks) {
+            setters.put(block, new RunControlSetter(block.getName(), runControlServer));
+        }
     }
 
     /**
-     * Return a named block from the current configuration.
-     * 
-     * @param blockName
-     *            The name of the block
-     * @return The block from the configuration, or null if block name does not
-     *         exist
+     * Resets the current values to those of the current block's configuration.
      */
-    public Block getCurrentConfigBlock(String blockName) {
-        Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
+    public void resetCurrentBlock() {
+        setTxtHighLimit(currentBlock.getConfigurationHighLimit());
+        setTxtLowLimit(currentBlock.getConfigurationLowLimit());
+        setRcEnabled(currentBlock.getConfigurationEnabled());
 
-        for (Block block : blocks) {
-            if (block.getName().equals(blockName)) {
-                return block;
-            }
-        }
-        return null;
+        setSendEnabled(true);
     }
 
     /**
      * Resets the run control server settings to the configuration block run
      * control settings.
      */
-    public void resetRunControlSettings() {
-        Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
-        
-        for (Block block : blocks) {
-            resetLowLimit(block);
-            resetHighLimit(block);
-            resetEnabled(block);
+    public void resetAllRunControlSettings() {
+        for (Map.Entry<DisplayBlock, RunControlSetter> e : setters.entrySet()) {
+            e.getValue().setLowLimit(e.getKey().getConfigurationLowLimit());
+            e.getValue().setHighLimit(e.getKey().getConfigurationHighLimit());
+            e.getValue().setEnabled(e.getKey().getConfigurationEnabled());
         }
     }
-
-    private void resetLowLimit(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlLowLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCLowLimit()));
-    }
-
-    private void resetHighLimit(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlHighLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCHighLimit()));
-    }
-
-    private void resetEnabled(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlEnabledSetter(configBlock.getName());
-        writer.write(configBlock.getRCEnabled() ? "YES" : "NO");
-    }
     
-    public String getTxtLowLimit() {
-		return txtLowLimit;
-	}
-    
-	public void setTxtLowLimit(String txtLowLimit) {
-		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
+    private void checkIsValid(String lowLimit, String highLimit) {
+        boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
 		setSendEnabled(isValid);
 		setError(!(isValid), runControlValidator.getErrorMessage());
-		
-		firePropertyChange("txtLowLimit", this.txtLowLimit, this.txtLowLimit = txtLowLimit);
+    }
+
+    /**
+     * Set the block that the view model is looking at.
+     * 
+     * @param block
+     *            The block to get/set rc values on.
+     */
+    public void setBlock(DisplayBlock block) {
+        this.currentBlock = block;
+
+        if (currentBlock == null) {
+            setSendEnabled(false);
+            setTxtLowLimit("");
+            setTxtHighLimit("");
+            setRcEnabled(false);
+
+            // This isn't actually an error
+            setError(false, null);
+            return;
+        }
+
+        setTxtLowLimit(block.getLowLimit().trim());
+        setTxtHighLimit(block.getHighLimit().trim());
+        setRcEnabled(block.getEnabled());
+    }
+
+    /**
+     * Send the currently inputed values to the server.
+     */
+    public void sendChanges() {
+        if (currentBlock != null) {
+            RunControlSetter setter = setters.get(currentBlock);
+            setter.setLowLimit(txtLowLimit);
+            setter.setHighLimit(txtHighLimit);
+            setter.setEnabled(rcEnabled);
+        }
+
+        setSendEnabled(false);
+    }
+
+    /**
+     * Get the low limit for the block. Required for databinding.
+     * 
+     * @return The low limit for the block.
+     */
+    public String getTxtLowLimit() {
+        return txtLowLimit;
+    }
+
+    /**
+     * Set the low limit for the block.
+     * 
+     * @param txtLowLimit
+     *            The new low limit for the block.
+     */
+    public void setTxtLowLimit(String txtLowLimit) {
+        checkIsValid(txtLowLimit, txtHighLimit);
+        firePropertyChange("txtLowLimit", this.txtLowLimit, this.txtLowLimit = txtLowLimit);
 	}
 	
+    /**
+     * Get the high limit for the block. Required for databinding.
+     * 
+     * @return The high limit for the block.
+     */
 	public String getTxtHighLimit() {
 		return txtHighLimit;
 	}
 
-	public void setTxtHighLimit(String txtHighLimit) {
-		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
-		setSendEnabled(isValid);
-		setError(!(isValid), runControlValidator.getErrorMessage());
-		
-		firePropertyChange("txtHighLimit", this.txtHighLimit, this.txtHighLimit = txtHighLimit);
+    /**
+     * Set the high limit for the block.
+     * 
+     * @param txtHighLimit
+     *            The new high limit for the block.
+     */
+    public void setTxtHighLimit(String txtHighLimit) {
+        checkIsValid(txtLowLimit, txtHighLimit);
+        firePropertyChange("txtHighLimit", this.txtHighLimit, this.txtHighLimit = txtHighLimit);
 	}
 
-	public boolean isValid() {
-		return runControlValidator.isValid(txtLowLimit, txtHighLimit);
-	}
+    /**
+     * Set whether run control is enabled for the block.
+     * 
+     * @param enabled
+     *            True to enable run control
+     */
+    public void setRcEnabled(boolean enabled) {
+        checkIsValid(txtLowLimit, txtHighLimit);
+        firePropertyChange("rcEnabled", this.rcEnabled, this.rcEnabled = enabled);
+    }
+
+    /**
+     * Get whether run control is enabled on the block. Required for
+     * databinding.
+     * 
+     * @return True is run control is enabled.
+     */
+    public boolean getRcEnabled() {
+        return rcEnabled;
+    }
 	
+    /**
+     * Gets whether the send changes button is enabled or not.
+     * 
+     * @return True if the send button is enabled.
+     */
 	public boolean getSendEnabled() {
 		return sendEnabled;
 	}
 
+    /**
+     * Set whether the send changes button is enabled or not.
+     * 
+     * @param sendEnabled
+     *            True to enable the button.
+     */
 	public void setSendEnabled(boolean sendEnabled) {
 		firePropertyChange("sendEnabled", this.sendEnabled, this.sendEnabled = sendEnabled);
 	}	

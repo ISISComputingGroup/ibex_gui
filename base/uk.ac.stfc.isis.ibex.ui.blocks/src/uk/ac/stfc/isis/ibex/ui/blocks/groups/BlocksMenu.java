@@ -20,14 +20,11 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -46,7 +43,9 @@ public class BlocksMenu extends MenuManager {
 	
     private static final String BLOCK_MENU_GROUP = "Block";
 
-    private static final String EDIT_BLOCK = "Edit block";
+    private static final String EDIT_BLOCK_PREFIX = "Edit host ";
+    private static final String COMPONENT_SUFFIX = "component";
+    private static final String CONFIGURATION_SUFFIX = "configuration";
 	
 	private final IAction editBlockAction;
 	
@@ -95,15 +94,16 @@ public class BlocksMenu extends MenuManager {
 		
         appendToGroup(BLOCK_MENU_GROUP, displayHistory);
 
-        editBlockAction = new Action(EDIT_BLOCK) {
+        String editBlockLabel = EDIT_BLOCK_PREFIX;
+        if (this.block.hasComponent()) {
+            editBlockLabel += COMPONENT_SUFFIX;
+        } else {
+            editBlockLabel += CONFIGURATION_SUFFIX;
+        }
+        editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                try {
-                    new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
-                } catch (ExecutionException e) {
-                    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                            "Unable to edit block.");
-                }
+                new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
             }
         };
 	}

@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -43,8 +45,23 @@ public interface Writable<T> extends Closable {
      * 
      * @param value
      *            the value to write
+     * @throws IOException
+     *              if the write failed
      */
-	void write(T value);
+	void write(T value) throws IOException;
+	
+	/**
+	 * Write the value to destination.
+	 * 
+	 * Does not throw an exception on failed write. 
+	 * 
+	 * This method should not be used unless you are 
+	 * certain that the write cannot possibly fail.
+	 * 
+	 * @param value
+	 *             the value to write
+	 */
+	void uncheckedWrite(T value);
 	
 	/**
      * Allows the writer to receive updates from the writable.

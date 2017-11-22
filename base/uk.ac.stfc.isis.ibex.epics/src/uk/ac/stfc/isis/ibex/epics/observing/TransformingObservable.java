@@ -62,7 +62,9 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	@Override
 	public void close() {
 		cancelSubscription();
-        source.close();
+        if (source != null) {
+            source.close();
+        }
         super.close();
 	}
 	

@@ -26,10 +26,10 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -61,11 +61,7 @@ public class BlocksEditorPanel extends Composite {
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_table.heightHint = 90;
 		table.setLayoutData(gd_table);
-        table.addKeyListener(new KeyListener() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
+        table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
@@ -94,7 +90,7 @@ public class BlocksEditorPanel extends Composite {
                 BlockFactory blockFactory = new BlockFactory(config);
                 EditableBlock added = blockFactory.createNewBlock();
                 EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
-				dialog.open();
+                dialog.open();
 				setBlocks(config);
 				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
 				table.setSelected(added);
@@ -135,19 +131,14 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 
-        table.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseUp(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    openEditBlockDialog(table.firstSelectedRow());
+                    EditableBlock block = table.firstSelectedRow();
+                    if (!block.hasComponent()) {
+                        openEditBlockDialog(block);
+                    }
                 }
             }
         });
