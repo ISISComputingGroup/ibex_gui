@@ -33,7 +33,7 @@ REM the password for isis\IBEXbuilder is contained in the BUILDERPW system envir
 net use p: /d
 net use p: \\isis\inst$ /user:isis\IBEXbuilder %BUILDERPW%
 
-python.exe purge_archive_client.py
+c:\Python27\python.exe purge_archive_client.py
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
