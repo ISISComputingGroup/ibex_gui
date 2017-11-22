@@ -1,4 +1,4 @@
-from check_OPI_format_utils.common import WIDGET_XPATH
+from check_OPI_format_utils.common import WIDGET_XPATH, get_text_of_widget
 
 
 def check_colour(root, widget, colour_type, conditions):
@@ -16,20 +16,7 @@ def check_colour(root, widget, colour_type, conditions):
 
     xpath = "//{}/{}/color[not(@name) or ({})]".format(xpath, colour_type, " and ".join(conditions))
 
-    errors = []
-    for error in root.xpath(xpath):
-        parent = error.getparent().getparent()
-
-        if len(parent.xpath("text")):
-            text = parent.xpath("text")[0].text
-        elif len(parent.xpath("name")):
-            text = parent.xpath("name")[0].text
-        else:
-            text = ""
-
-        errors.append((error.sourceline, text))
-
-    return errors
+    return [(error.sourceline, get_text_of_widget(error.getparent().getparent())) for error in root.xpath(xpath)]
 
 
 def check_any_isis_colour(root, widget, colour_type):

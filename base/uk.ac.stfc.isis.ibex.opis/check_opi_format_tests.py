@@ -4,7 +4,7 @@ from lxml import etree
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour
 from check_OPI_format_utils.text import check_label_punctuation, check_container_names,\
     check_label_case_inside_containers, check_label_case_outside_containers
-
+from check_OPI_format_utils.container import get_items_not_in_grouping_container
 
 def make_widget_with_colour(widget, colour_type, colour_name=None):
     colour_str = '<color {} red="0" green="255" blue="0" />'
@@ -276,118 +276,34 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(errors), 1)
 
-    # def test_that_if_a_push_button_is_defined_within_a_grouping_container_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
-    #           '</widget>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_push_button_is_defined_outside_a_grouping_container_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_an_led_is_defined_within_a_grouping_container_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">' \
-    #           '</widget>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_an_led_is_defined_outside_a_grouping_container_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_a_dropdown_menu_is_defined_within_a_grouping_container_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">' \
-    #           '</widget>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_dropdown_menu_is_defined_outside_a_grouping_container_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
-    # def test_that_if_a_textinput_is_defined_within_a_grouping_container_it_causes_no_errors(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-    #           '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
-    #           '</widget>' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 0)
-    #
-    # def test_that_if_a_textinput_is_defined_outside_a_grouping_container_it_causes_one_error(self):
-    #     # Arrange
-    #
-    #     xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
-    #           '</widget>'
-    #     root = etree.fromstring(xml)
-    #
-    #     # Act
-    #     self.checker.check_items_are_in_grouping_containers(root)
-    #
-    #     # Assert
-    #     self.assertEqual(len(self.checker.errors), 1)
-    #
+    def test_that_if_a_push_button_is_defined_within_a_grouping_container_it_causes_no_errors(self):
+        # Arrange
+
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_items_not_in_grouping_container(root, "NativeButton")
+
+        # Assert
+        self.assertEqual(len(errors), 0)
+
+    def test_that_if_a_push_button_is_defined_outside_a_grouping_container_it_causes_one_error(self):
+        # Arrange
+
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_items_not_in_grouping_container(root, "NativeButton")
+
+        # Assert
+        self.assertEqual(len(errors), 1)
+
     def test_that_a_grouping_container_with_a_title_case_name_causes_no_errors(self):
         # Arrange
         root = make_grouping_container("This is a Group Box")

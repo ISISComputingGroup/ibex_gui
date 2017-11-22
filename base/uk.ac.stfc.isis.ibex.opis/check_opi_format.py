@@ -9,7 +9,9 @@ from time import gmtime, strftime
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour
-from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, check_label_case_outside_containers
+from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, \
+    check_label_case_outside_containers
+from check_OPI_format_utils.container import get_items_not_in_grouping_container
 
 # Directory to iterate through
 from xmlrunner import XMLTestRunner
@@ -102,31 +104,6 @@ class CheckOpiFormatOld(object):
         condition = "/font/opifont.name[not(starts-with(., 'ISIS_')) and not(starts-with(@fontName, 'ISIS_'))]"
         error_message = "The font must be an ISIS_* font"
         self.check_condition(root, xpath + condition, error_message)
-
-    def check_items_are_in_grouping_containers(self, root):
-
-        element_xpath = "//" + self.widget_xpath
-        ancestor_xpath = "' and not(ancestor::" + self.widget_xpath + "groupingContainer'])]"
-
-        # Select a push button outside a grouping container
-        xpath = element_xpath + "NativeButton" + ancestor_xpath
-        error_message = "A button was not within a grouping container."
-        self.check_condition(root, xpath, error_message)
-
-        # Select an LED outside a grouping container
-        xpath = element_xpath + "LED" + ancestor_xpath
-        error_message = "An LED indicator was not within a grouping container."
-        self.check_condition(root, xpath, error_message)
-
-        # Select a drop down menu outside a grouping container
-        xpath = element_xpath + "combo" + ancestor_xpath
-        error_message = "A drop down menu was not within a grouping container."
-        self.check_condition(root, xpath, error_message)
-
-        # Select a text input field outside a grouping container
-        xpath = element_xpath + "TextInput" + ancestor_xpath
-        error_message = "A text input field was not within a grouping container."
-        self.check_condition(root, xpath, error_message)
 
     def run(self, file, directory, logs_directory, file_extension):
 
@@ -235,8 +212,24 @@ class CheckOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
-    # def test_GIVEN_a_push_button_THEN_it_is_within_a_grouping_container
+    def _assert_widget_not_outside_container(self, widget):
+        errors = get_items_not_in_grouping_container(self.xml_root, widget)
+        if len(errors):
+            message = "\n".join(["{} on line {} ({}) was not in a grouping container"
+                                .format(widget, *error) for error in errors])
+            self.fail(message)
 
+    def test_GIVEN_a_push_button_THEN_it_is_within_a_grouping_container(self):
+        self._assert_widget_not_outside_container("NativeButton")
+
+    def test_GIVEN_a_LED_THEN_it_is_within_a_grouping_container(self):
+        self._assert_widget_not_outside_container("LED")
+
+    def test_GIVEN_a_combo_THEN_it_is_within_a_grouping_container(self):
+        self._assert_widget_not_outside_container("combo")
+
+    def test_GIVEN_a_TextInput_THEN_it_is_within_a_grouping_container(self):
+        self._assert_widget_not_outside_container("TextInput")
 
 if __name__ == "__main__":
 

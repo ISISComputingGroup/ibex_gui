@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<testsuite errors="2" failures="0" name="CheckOpiFormat-20171122171639" tests="13" time="0.010">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_LED_THEN_it_is_within_a_grouping_container" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_TextInput_THEN_it_is_within_a_grouping_container" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_combo_THEN_it_is_within_a_grouping_container" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_push_button_THEN_it_is_within_a_grouping_container" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.010"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_THEN_it_ends_in_a_colon" time="0.000">
+		<error message="Label on line 84 with text 'Running' did not end in a colon.
+Label on line 125 with text 'Overload Tripped' did not end in a colon.
+Label on line 272 with text 'Emergency Stop' did not end in a colon.
+Label on line 366 with text 'SP Guard - Warning' did not end in a colon.
+Label on line 460 with text 'SP Guard - Fault' did not end in a colon.
+Label on line 594 with text 'Running' did not end in a colon.
+Label on line 635 with text 'Overload Tripped' did not end in a colon.
+Label on line 782 with text 'Emergency Stop' did not end in a colon.
+Label on line 876 with text 'SP Guard - Warning' did not end in a colon.
+Label on line 970 with text 'SP Guard - Fault' did not end in a colon.
+Label on line 1104 with text 'Running' did not end in a colon.
+Label on line 1145 with text 'Overload Tripped' did not end in a colon.
+Label on line 1292 with text 'Emergency Stop' did not end in a colon.
+Label on line 1426 with text 'Gauge 1' did not end in a colon.
+Label on line 1518 with text 'Gauge 2' did not end in a colon.
+Label on line 1610 with text 'Gauge 3' did not end in a colon.
+Label on line 1753 with text 'Gauge 4' did not end in a colon.
+Label on line 1794 with text 'Gauge 5' did not end in a colon.
+Label on line 1886 with text 'Gauge 6' did not end in a colon.
+Label on line 1978 with text 'Gauge 7' did not end in a colon.
+Label on line 2121 with text 'Gauge 8' did not end in a colon.
+Label on line 2202 with text 'Open' did not end in a colon.
+Label on line 2243 with text 'Error' did not end in a colon.
+Label on line 2430 with text 'Open' did not end in a colon.
+Label on line 2471 with text 'Error' did not end in a colon.
+Label on line 2759 with text 'In' did not end in a colon.
+Label on line 2800 with text 'Out' did not end in a colon.
+Label on line 2947 with text 'Error' did not end in a colon.
+Label on line 3183 with text 'In' did not end in a colon.
+Label on line 3224 with text 'Out' did not end in a colon.
+Label on line 3371 with text 'Error' did not end in a colon.
+Label on line 3607 with text 'General Alarm' did not end in a colon.
+Label on line 3648 with text 'Detector Overcount' did not end in a colon." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 224, in test_GIVEN_a_label_THEN_it_ends_in_a_colon
+    self.fail(message)
+AssertionError: Label on line 84 with text 'Running' did not end in a colon.
+Label on line 125 with text 'Overload Tripped' did not end in a colon.
+Label on line 272 with text 'Emergency Stop' did not end in a colon.
+Label on line 366 with text 'SP Guard - Warning' did not end in a colon.
+Label on line 460 with text 'SP Guard - Fault' did not end in a colon.
+Label on line 594 with text 'Running' did not end in a colon.
+Label on line 635 with text 'Overload Tripped' did not end in a colon.
+Label on line 782 with text 'Emergency Stop' did not end in a colon.
+Label on line 876 with text 'SP Guard - Warning' did not end in a colon.
+Label on line 970 with text 'SP Guard - Fault' did not end in a colon.
+Label on line 1104 with text 'Running' did not end in a colon.
+Label on line 1145 with text 'Overload Tripped' did not end in a colon.
+Label on line 1292 with text 'Emergency Stop' did not end in a colon.
+Label on line 1426 with text 'Gauge 1' did not end in a colon.
+Label on line 1518 with text 'Gauge 2' did not end in a colon.
+Label on line 1610 with text 'Gauge 3' did not end in a colon.
+Label on line 1753 with text 'Gauge 4' did not end in a colon.
+Label on line 1794 with text 'Gauge 5' did not end in a colon.
+Label on line 1886 with text 'Gauge 6' did not end in a colon.
+Label on line 1978 with text 'Gauge 7' did not end in a colon.
+Label on line 2121 with text 'Gauge 8' did not end in a colon.
+Label on line 2202 with text 'Open' did not end in a colon.
+Label on line 2243 with text 'Error' did not end in a colon.
+Label on line 2430 with text 'Open' did not end in a colon.
+Label on line 2471 with text 'Error' did not end in a colon.
+Label on line 2759 with text 'In' did not end in a colon.
+Label on line 2800 with text 'Out' did not end in a colon.
+Label on line 2947 with text 'Error' did not end in a colon.
+Label on line 3183 with text 'In' did not end in a colon.
+Label on line 3224 with text 'Out' did not end in a colon.
+Label on line 3371 with text 'Error' did not end in a colon.
+Label on line 3607 with text 'General Alarm' did not end in a colon.
+Label on line 3648 with text 'Detector Overcount' did not end in a colon.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case" time="0.000">
+		<error message="Label on line 125: Overload Tripped
+Label on line 272: Emergency Stop
+Label on line 366: SP Guard - Warning
+Label on line 460: SP Guard - Fault
+Label on line 635: Overload Tripped
+Label on line 782: Emergency Stop
+Label on line 876: SP Guard - Warning
+Label on line 970: SP Guard - Fault
+Label on line 1145: Overload Tripped
+Label on line 1292: Emergency Stop
+Label on line 3607: General Alarm
+Label on line 3648: Detector Overcount" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 231, in test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case
+    self.fail(message)
+AssertionError: Label on line 125: Overload Tripped
+Label on line 272: Emergency Stop
+Label on line 366: SP Guard - Warning
+Label on line 460: SP Guard - Fault
+Label on line 635: Overload Tripped
+Label on line 782: Emergency Stop
+Label on line 876: SP Guard - Warning
+Label on line 970: SP Guard - Fault
+Label on line 1145: Overload Tripped
+Label on line 1292: Emergency Stop
+Label on line 3607: General Alarm
+Label on line 3648: Detector Overcount
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>

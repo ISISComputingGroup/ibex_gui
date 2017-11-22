@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<testsuite errors="3" failures="0" name="CheckOpiFormat-20171122164754" tests="10" time="0.000">
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_THEN_it_ends_in_a_colon" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_within_a_grouping_container_THEN_it_is_sentence_case" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_push_button_THEN_it_is_within_a_grouping_container" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour" time="0.000"/>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case" time="0.000">
+		<error message="check_label_case_outside_containers() takes exactly 1 argument (2 given)" type="TypeError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 234, in test_GIVEN_a_label_outside_a_grouping_container_THEN_it_is_title_case
+    errors = check_label_case_outside_containers(self.xml_root, "Label")
+TypeError: check_label_case_outside_containers() takes exactly 1 argument (2 given)
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background" time="0.000">
+		<error message="On line 1537, text 'None', colour was not correct.
+On line 1644, text 'None', colour was not correct.
+On line 1751, text 'None', colour was not correct.
+On line 1858, text 'None', colour was not correct.
+On line 1965, text 'None', colour was not correct.
+On line 2072, text 'None', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 208, in test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background
+    self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
+  File "check_opi_format.py", line 199, in _assert_colour_correct
+    self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 1537, text 'None', colour was not correct.
+On line 1644, text 'None', colour was not correct.
+On line 1751, text 'None', colour was not correct.
+On line 1858, text 'None', colour was not correct.
+On line 1965, text 'None', colour was not correct.
+On line 2072, text 'None', colour was not correct.
+]]>		</error>
+	</testcase>
+	<testcase classname="CheckOpiFormat" name="test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground" time="0.000">
+		<error message="On line 1565, text 'None', colour was not correct.
+On line 1672, text 'None', colour was not correct.
+On line 1779, text 'None', colour was not correct.
+On line 1886, text 'None', colour was not correct.
+On line 1993, text 'None', colour was not correct.
+On line 2100, text 'None', colour was not correct." type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "check_opi_format.py", line 211, in test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground
+    self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
+  File "check_opi_format.py", line 199, in _assert_colour_correct
+    self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+AssertionError: On line 1565, text 'None', colour was not correct.
+On line 1672, text 'None', colour was not correct.
+On line 1779, text 'None', colour was not correct.
+On line 1886, text 'None', colour was not correct.
+On line 1993, text 'None', colour was not correct.
+On line 2100, text 'None', colour was not correct.
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
