@@ -19,42 +19,26 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import org.apache.logging.log4j.Logger;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import uk.ac.stfc.isis.ibex.dae.xml.DoubleNode;
+import uk.ac.stfc.isis.ibex.dae.xml.EnumNode;
+import uk.ac.stfc.isis.ibex.dae.xml.IntegerNode;
+import uk.ac.stfc.isis.ibex.dae.xml.StringNode;
+import uk.ac.stfc.isis.ibex.dae.xml.XmlFile;
+import uk.ac.stfc.isis.ibex.dae.xml.XmlNode;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Gets the DAE settings from XML.
+ */
 public class XmlBackedDaeSettings extends DaeSettings {
+    private static final Logger LOG = IsisLog.getLogger(XmlBackedDaeSettings.class);
 
-    private final XPath xpath = XPathFactory.newInstance().newXPath();
-	private Document doc;
-
-	private static final String XPATH_TO_MONITORSPECTRUM_VALUE = "/Cluster/I32[Name='Monitor Spectrum']/Val";
-	private static final String XPATH_TO_FROM_VALUE = "/Cluster/DBL[Name='from']/Val";
-	private static final String XPATH_TO_TO_VALUE = "/Cluster/DBL[Name='to']/Val";
-	private static final String XPATH_TO_WIRINGTABLE_VALUE = "/Cluster/String[Name='Wiring Table']/Val";
-	private static final String XPATH_TO_DETECTORTABLE_VALUE = "/Cluster/String[Name='Detector Table']/Val";
-	private static final String XPATH_TO_SPECTRATABLE_VALUE = "/Cluster/String[Name='Spectra Table']/Val";
-	private static final String XPATH_TO_DAETIMINGSOURCE_VALUE = "/Cluster/EW[Name='DAETimingSource']/Val";
+    private static final String XPATH_TO_DAETIMINGSOURCE = "/Cluster/EW[Name='DAETimingSource']/Val";
 	private static final String XPATH_TO_SMPVETO = "/Cluster/EW[Name='SMP (Chopper) Veto']/Val";
 	private static final String XPATH_TO_VETO0 = "/Cluster/EW[Name='Veto 0']/Val";
 	private static final String XPATH_TO_VETO1 = "/Cluster/EW[Name='Veto 1']/Val";
@@ -63,316 +47,228 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	private static final String XPATH_TO_TS2PULSEVETO = "/Cluster/EW[Name=' TS2 Pulse Veto']/Val";
 	private static final String XPATH_TO_ISIS50HZVETO = "/Cluster/EW[Name=' ISIS 50Hz Veto']/Val";	
 	private static final String XPATH_TO_FERMICHOPPERVETO = "/Cluster/EW[Name=' Fermi Chopper Veto']/Val";
-	private static final String XPATH_TO_FCDELAY = "/Cluster/DBL[Name='FC Delay']/Val";
-	private static final String XPATH_TO_FCWIDTH = "/Cluster/DBL[Name='FC Width']/Val";
 	private static final String XPATH_TO_MUONCERENKOVPULSE = "/Cluster/EW[Name='Muon Cerenkov Pulse']/Val";
 	private static final String XPATH_TO_MUONMSMODE = "/Cluster/EW[Name='Muon MS Mode']/Val";	
 	
-	private Node monitorSpectrum;
-	private Node from;
-	private Node to;
-	private Node wiringTable;
-	private Node detectorTable;
-	private Node spectraTable;
-	private Node daeTimingSource;
-	private Node smpVeto;
-	private Node veto0;
-	private Node veto1;
-	private Node veto2;
-	private Node veto3;
-	private Node ts2PulseVeto;
-	private Node isis50HzVeto;
-	private Node fermiChopperVeto;
-	private Node fcDelay;
-	private Node fcWidth;
-	private Node muonCerenkovPulse;
-	private Node muonMsMode;
+    private IntegerNode monitorSpectrum = new IntegerNode("/Cluster/I32[Name='Monitor Spectrum']/Val");
+    private DoubleNode from = new DoubleNode("/Cluster/DBL[Name='from']/Val");
+    private DoubleNode to = new DoubleNode("/Cluster/DBL[Name='to']/Val");
+    private StringNode wiringTable = new StringNode("/Cluster/String[Name='Wiring Table']/Val");
+    private StringNode detectorTable = new StringNode("/Cluster/String[Name='Detector Table']/Val");
+    private StringNode spectraTable = new StringNode("/Cluster/String[Name='Spectra Table']/Val");
+    private EnumNode<DaeTimingSource> daeTimingSource = new EnumNode<>(XPATH_TO_DAETIMINGSOURCE, DaeTimingSource.class);
+
+    private EnumNode<BinaryChoice> smpVeto = new EnumNode<>(XPATH_TO_SMPVETO, BinaryChoice.class);
+    private EnumNode<BinaryChoice> veto0 = new EnumNode<>(XPATH_TO_VETO0, BinaryChoice.class);
+    private EnumNode<BinaryChoice> veto1 = new EnumNode<>(XPATH_TO_VETO1, BinaryChoice.class);
+    private EnumNode<BinaryChoice> veto2 = new EnumNode<>(XPATH_TO_VETO2, BinaryChoice.class);
+    private EnumNode<BinaryChoice> veto3 = new EnumNode<>(XPATH_TO_VETO3, BinaryChoice.class);
+    private EnumNode<BinaryChoice> ts2PulseVeto = new EnumNode<>(XPATH_TO_TS2PULSEVETO, BinaryChoice.class);
+    private EnumNode<BinaryChoice> isis50HzVeto = new EnumNode<>(XPATH_TO_ISIS50HZVETO, BinaryChoice.class);
+    private EnumNode<BinaryChoice> fermiChopperVeto = new EnumNode<>(XPATH_TO_FERMICHOPPERVETO, BinaryChoice.class);
+
+    private DoubleNode fcDelay = new DoubleNode("/Cluster/DBL[Name='FC Delay']/Val");
+    private DoubleNode fcWidth = new DoubleNode("/Cluster/DBL[Name='FC Width']/Val");
+
+    private EnumNode<MuonCerenkovPulse> muonCerenkovPulse =
+            new EnumNode<>(XPATH_TO_MUONCERENKOVPULSE, MuonCerenkovPulse.class);
+    private EnumNode<BinaryState> muonMsMode = new EnumNode<>(XPATH_TO_MUONMSMODE, BinaryState.class);
 	
+    private final XmlFile xmlFile;
+    private final List<XmlNode<?>> nodes = new ArrayList<>();
+
+    /**
+     * Constructor. Creates the xml structure that backs the DaeSettings.
+     */
+    public XmlBackedDaeSettings() {
+        nodes.add(monitorSpectrum);
+        nodes.add(from);
+        nodes.add(to);
+        nodes.add(wiringTable);
+        nodes.add(detectorTable);
+        nodes.add(spectraTable);
+        nodes.add(daeTimingSource);
+        nodes.add(smpVeto);
+        nodes.add(veto0);
+        nodes.add(veto1);
+        nodes.add(veto2);
+        nodes.add(veto3);
+        nodes.add(ts2PulseVeto);
+        nodes.add(isis50HzVeto);
+        nodes.add(fermiChopperVeto);
+        nodes.add(fcDelay);
+        nodes.add(fcWidth);
+        nodes.add(muonCerenkovPulse);
+        nodes.add(muonMsMode);
+
+        xmlFile = new XmlFile(nodes);
+    }
+
+    /**
+     * Updates the setting based on some xml.
+     * 
+     * @param xml
+     *            the xml to update the settings with
+     */
 	public void setXml(String xml) {
-		try {
-			buildDocument(xml);
-			updateNodes();
-			initialiseFromXml();
-		} catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
-			e.printStackTrace();
-		}
+        xmlFile.setXml(xml);
+        initialiseFromXml();
 	}
 	
+    /**
+     * Gets the xml from file.
+     * 
+     * @return the xml
+     */
 	public String xml() {
-		if (doc == null) {
-			return "";
-		}
-		
-		TransformerFactory tf = TransformerFactory.newInstance();
-		Transformer transformer;
-		try {
-			transformer = tf.newTransformer();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			StringWriter writer = new StringWriter();
-			transformer.transform(new DOMSource(doc), new StreamResult(writer));
-			String output = writer.getBuffer().toString();
-			
-			return output;
-		} catch (TransformerException e) {
-			return "";
-		}
+        return xmlFile.toString();
 	} 
 	
 	@Override
 	public void setMonitorSpectrum(int value) {
 		super.setMonitorSpectrum(value);
-		setInt(monitorSpectrum, value);
+        monitorSpectrum.setValue(value);
 	}
 	
 	@Override
 	public void setFrom(double value) {
 		super.setFrom(value);
-		setDouble(from, value);
+        from.setValue(value);
 	}
 
 	@Override
 	public void setTo(double value) {
 		super.setTo(value);
-		setDouble(to, value);
+        to.setValue(value);
 	}
 
 	@Override
 	public void setNewWiringTable(String value) {
 		super.setNewWiringTable(value);
-		
-		if (doc == null) {
-			return;
-		}
-		wiringTable.setTextContent(value);
+        wiringTable.setValue(value);
 	}
 		
 	@Override
 	public void setNewDetectorTable(String value) {
 		super.setNewDetectorTable(value);
-
-		if (doc == null) {
-			return;
-		}
-		detectorTable.setTextContent(value);
+        detectorTable.setValue(value);
 	}
 	
 	@Override
 	public void setNewSpectraTable(String value) {
 		super.setNewSpectraTable(value);
-		
-		if (doc == null) {
-			return;
-		}
-		spectraTable.setTextContent(value);
+        spectraTable.setValue(value);
 	}
 	
 	@Override
 	public void setTimingSource(DaeTimingSource value) {
 		super.setTimingSource(value);
-
-		if (doc == null) {
-			return;
-		}
-		setInt(daeTimingSource, value.ordinal());
+        daeTimingSource.setValue(value);
 	}
 	
 	@Override
 	public void setSmpVeto(BinaryChoice value) {
 		super.setSmpVeto(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(smpVeto, value.ordinal());
+        smpVeto.setValue(value);
 	}
 
 	@Override
 	public void setVeto0(BinaryChoice value) {
 		super.setVeto0(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(veto0, value.ordinal());
+        veto0.setValue(value);
 	}
 
 	@Override
 	public void setVeto1(BinaryChoice value) {
 		super.setVeto1(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(veto1, value.ordinal());
+        veto1.setValue(value);
 	}
 	
 	@Override
 	public void setVeto2(BinaryChoice value) {
 		super.setVeto2(value);
-
-		if (doc == null) {
-			return;
-		}
-		setInt(veto2, value.ordinal());
+        veto2.setValue(value);
 	}
 	
 	@Override
 	public void setVeto3(BinaryChoice value) {
 		super.setVeto3(value);
-
-		if (doc == null) {
-			return;
-		}
-		setInt(veto3, value.ordinal());
+        veto3.setValue(value);
 	}
 	
 	@Override
 	public void setTs2PulseVeto(BinaryChoice value) {
 		super.setTs2PulseVeto(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(ts2PulseVeto, value.ordinal());
+        ts2PulseVeto.setValue(value);
 	}
 	
 	@Override
 	public void setIsis50HzVeto(BinaryChoice value) {
 		super.setIsis50HzVeto(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(isis50HzVeto, value.ordinal());
+        isis50HzVeto.setValue(value);
 	}
 	
 	@Override
 	public void setFermiChopperVeto(BinaryChoice value) {
 		super.setFermiChopperVeto(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(fermiChopperVeto, value.ordinal());
+        fermiChopperVeto.setValue(value);
 	}
 	
 	@Override
 	public void setFcDelay(double value) {
 		super.setFcDelay(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setDouble(fcDelay, value);
+        fcDelay.setValue(value);
 	}
 	
 	@Override
 	public void setFcWidth(double value) {
 		super.setFcWidth(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setDouble(fcWidth, value);
+        fcWidth.setValue(value);
 	}
 	
 	@Override
 	public void setMuonCerenkovPulse(MuonCerenkovPulse value) {
 		super.setMuonCerenkovPulse(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(muonCerenkovPulse, value.ordinal());
+        muonCerenkovPulse.setValue(value);
 	}
 	
 	@Override
 	public void setMuonMsMode(BinaryState value) {
 		super.setMuonMsMode(value);
-		
-		if (doc == null) {
-			return;
-		}
-		setInt(muonMsMode, value.ordinal());
-	}
-	
-	private static BinaryChoice parseBinaryChoice(String value) {
-		int index = Integer.parseInt(value);
-		return BinaryChoice.values()[index];
-	}
-	
-	private static void setDouble(Node node, double value) {
-		node.setTextContent(String.format("%f", value));
-	}
-
-	private static void setInt(Node node, int value) {
-		node.setTextContent(String.format("%d", value));
-	}
-	
-	private void updateNodes() throws XPathExpressionException {
-		monitorSpectrum = getNode(XPATH_TO_MONITORSPECTRUM_VALUE);
-		from = getNode(XPATH_TO_FROM_VALUE);
-		to = getNode(XPATH_TO_TO_VALUE);
-		wiringTable = getNode(XPATH_TO_WIRINGTABLE_VALUE);
-		detectorTable = getNode(XPATH_TO_DETECTORTABLE_VALUE);
-		spectraTable = getNode(XPATH_TO_SPECTRATABLE_VALUE);
-		daeTimingSource = getNode(XPATH_TO_DAETIMINGSOURCE_VALUE);
-		smpVeto = getNode(XPATH_TO_SMPVETO);
-		veto0 = getNode(XPATH_TO_VETO0);
-		veto1 = getNode(XPATH_TO_VETO1);
-		veto2 = getNode(XPATH_TO_VETO2);
-		veto3 = getNode(XPATH_TO_VETO3);
-		ts2PulseVeto = getNode(XPATH_TO_TS2PULSEVETO);
-		isis50HzVeto = getNode(XPATH_TO_ISIS50HZVETO);
-		fermiChopperVeto = getNode(XPATH_TO_FERMICHOPPERVETO);
-		fcDelay = getNode(XPATH_TO_FCDELAY);
-		fcWidth = getNode(XPATH_TO_FCWIDTH);
-		muonCerenkovPulse = getNode(XPATH_TO_MUONCERENKOVPULSE);
-		muonMsMode = getNode(XPATH_TO_MUONMSMODE);
-	}
-	
-	
-	private void buildDocument(String xml) throws ParserConfigurationException, SAXException, IOException {
-	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder builder = factory.newDocumentBuilder();    
-	    InputSource source = new InputSource(new StringReader(xml));
-	    
-	    doc = builder.parse(source);
+        muonMsMode.setValue(value);
 	}
 	
 	private void initialiseFromXml() {
-		super.setMonitorSpectrum(Integer.parseInt(monitorSpectrum.getTextContent()));
-		super.setFrom(Double.parseDouble(from.getTextContent()));
-		super.setTo(Double.parseDouble(to.getTextContent()));
-		
-        super.setWiringTable(wiringTable.getTextContent());
-        super.setDetectorTable(detectorTable.getTextContent());
-        super.setSpectraTable(spectraTable.getTextContent());
-		
-		int index = Integer.parseInt(daeTimingSource.getTextContent());
-		super.setTimingSource(DaeTimingSource.values()[index]);
+        for (XmlNode<?> node : nodes) {
+            if (node == null || node.value() == null) {
+                LOG.info("Error, Dae Settings were not initialised correctly from the XML.");
+                return;
+            }
+        }
 
-		super.setSmpVeto(parseBinaryChoice(smpVeto.getTextContent()));
-		super.setVeto0(parseBinaryChoice(veto0.getTextContent()));
-		super.setVeto1(parseBinaryChoice(veto1.getTextContent()));
-		super.setVeto2(parseBinaryChoice(veto2.getTextContent()));
-		super.setVeto3(parseBinaryChoice(veto3.getTextContent()));
-		super.setTs2PulseVeto(parseBinaryChoice(ts2PulseVeto.getTextContent()));
-		super.setIsis50HzVeto(parseBinaryChoice(isis50HzVeto.getTextContent()));
-		super.setFermiChopperVeto(parseBinaryChoice(fermiChopperVeto.getTextContent()));
+        super.setMonitorSpectrum(monitorSpectrum.value());
+        super.setFrom(from.value());
+        super.setTo(to.value());
 		
-		super.setFcDelay(Double.parseDouble(fcDelay.getTextContent()));
-		super.setFcWidth(Double.parseDouble(fcWidth.getTextContent()));
+        super.setWiringTable(wiringTable.value());
+        super.setDetectorTable(detectorTable.value());
+        super.setSpectraTable(spectraTable.value());
 		
-		index = Integer.parseInt(muonCerenkovPulse.getTextContent());
-		super.setMuonCerenkovPulse(MuonCerenkovPulse.values()[index]);
+        super.setTimingSource(daeTimingSource.value());
+
+        super.setSmpVeto(smpVeto.value());
+        super.setVeto0(veto0.value());
+        super.setVeto1(veto1.value());
+        super.setVeto2(veto2.value());
+        super.setVeto3(veto3.value());
+        super.setTs2PulseVeto(ts2PulseVeto.value());
+        super.setIsis50HzVeto(isis50HzVeto.value());
+        super.setFermiChopperVeto(fermiChopperVeto.value());
 		
-		index = Integer.parseInt(muonMsMode.getTextContent());
-		super.setMuonMsMode(BinaryState.values()[index]);
-	}	
-	
-	private Node getNode(String expression) throws XPathExpressionException {
-		NodeList nodes = (NodeList) xpath.compile(expression).evaluate(doc, XPathConstants.NODESET);	
-		return nodes.item(0);
+        super.setFcDelay(fcDelay.value());
+        super.setFcWidth(fcWidth.value());
+		
+        super.setMuonCerenkovPulse(muonCerenkovPulse.value());
+        super.setMuonMsMode(muonMsMode.value());
 	}
 }

@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
+/**
+ * The view model for the run-control settings for a block.
+ */
 public class BlockRunControlViewModel extends ErrorMessageProvider {    
 	private String lowLimitText = "";
 	private String highLimitText = "";    
@@ -34,6 +37,11 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
     private final Block editingBlock;
     private final RunControlValidator runControlValidator = new RunControlValidator();
     
+    /**
+     * Constructor.
+     * 
+     * @param editingBlock the block being edited
+     */
     public BlockRunControlViewModel(final Block editingBlock) {
     	this.editingBlock = editingBlock;
     	
@@ -42,10 +50,18 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
     	enabled = editingBlock.getRCEnabled();
 	}
     
+    /**
+     * @return the low limit
+     */
     public String getLowLimitText() {
 		return lowLimitText;
 	}
     
+    /**
+     * Set the low limit.
+     * 
+     * @param lowLimitText the new value
+     */
 	public void setLowLimitText(String lowLimitText) {
 		boolean isValid = runControlValidator.isValid(lowLimitText, highLimitText);
 		if (isValid) {
@@ -56,10 +72,18 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
 		firePropertyChange("lowLimitText", this.lowLimitText, this.lowLimitText = lowLimitText);
 	}
 	
+    /**
+     * @return the high limit
+     */
 	public String getHighLimitText() {
 		return highLimitText;
 	}
 
+    /**
+     * Set the high limit.
+     * 
+     * @param highLimitText the new value
+     */
 	public void setHighLimitText(String highLimitText) {
 		boolean isValid = runControlValidator.isValid(lowLimitText, highLimitText);
 		if (isValid) {
@@ -70,22 +94,39 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
 		firePropertyChange("highLimitText", this.highLimitText, this.highLimitText = highLimitText);
 	}
 	
+    /**
+     * @return the low limit
+     */
 	public float getLowLimit() {
 		return lowLimit;
 	}
 	
+    /**
+     * @return the high limit
+     */
 	public float getHighLimit() {
 		return highLimit;
 	}
 	
+    /**
+     * Set whether run-control is enabled.
+     * 
+     * @param enabled enable or not
+     */
 	public void setEnabled(boolean enabled) {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 	}
 	
+    /**
+     * @return whether run-control is enabled
+     */
 	public boolean getEnabled() {
 		return enabled;
 	}
     
+    /**
+     * Update the stored settings.
+     */
     public void updateBlock() {
     	editingBlock.setRCHighLimit(highLimit);
     	editingBlock.setRCLowLimit(lowLimit);

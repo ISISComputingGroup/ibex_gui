@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
 /**
- * The Class SQLSettings which will change the SQL DB address on the change of
+ * The SQLSettings which will change the SQL DB address on the change of
  * instrument.
  */
 public class SQLSettings implements InstrumentInfoReceiver {

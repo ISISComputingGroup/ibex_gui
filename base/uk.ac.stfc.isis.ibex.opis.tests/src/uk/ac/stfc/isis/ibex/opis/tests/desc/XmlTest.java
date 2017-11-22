@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.opis.tests.desc;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,8 @@ public class XmlTest {
 		macros.add(new MacroInfo(macroName1, macroDescription1));
 		macros.add(new MacroInfo(macroName2, macroDescription2));
 		
-        OpiDescription opi1 = new OpiDescription(opiType1, opiPath1, opiDescription1, macros);
-        OpiDescription opi2 = new OpiDescription(opiType2, opiPath2, opiDescription2, macros);
+        OpiDescription opi1 = new OpiDescription(opiType1, opiPath1, opiDescription1, macros, Collections.<String>emptyList());
+        OpiDescription opi2 = new OpiDescription(opiType2, opiPath2, opiDescription2, macros, Collections.<String>emptyList());
 
 		Map<String, OpiDescription> opis = new HashMap<String, OpiDescription>();
 		opis.put(opi1.getPath(), opi1);

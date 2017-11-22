@@ -13,7 +13,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
  */
 public abstract class ConfigHelper {
     protected String title;
-    protected String currentSubTitle;
 	
     protected ConfigurationViewModels configurationViewModels;
     protected Shell shell;
@@ -27,13 +26,11 @@ public abstract class ConfigHelper {
      *            Whether to present the blocks tab first
      */
     public void createDialog(String configName, boolean editBlockFirst) {
-        String subTitle = "Viewing configuration " + configName;
-
         configurationViewModels.setModelAsConfig(configName);
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), false, editBlockFirst);
+            openDialog(config.getValue(), false, editBlockFirst);
         }
     }
     
@@ -48,7 +45,7 @@ public abstract class ConfigHelper {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(currentSubTitle, config.getValue(), true, editBlockFirst);
+            openDialog(config.getValue(), true, editBlockFirst);
         } else {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
@@ -64,8 +61,6 @@ public abstract class ConfigHelper {
     /**
      * Opens a view/edit configuration dialog for the specified configuration.
      * 
-     * @param subTitle
-     *            The subtitle to add to the dialog
      * @param config
      *            The configuration to open
      * @param isCurrent
@@ -73,6 +68,20 @@ public abstract class ConfigHelper {
      * @param editBlockFirst
      *            Should the dialog open the blocks tab first
      */
-    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+    protected abstract void openDialog(EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst);
+    
+    /**
+     * Get the display name for this configuration
+     * 
+     * This will return the configuration name or current if it is the current configuration. 
+     * @param config
+     * 			The configuration to get the name from
+     * @param isCurrent
+     * 			Is this the current configuration
+     * @return the display name for this configuration
+     */
+    public String getConfigDisplayName(EditableConfiguration config, boolean isCurrent) {
+    	return (isCurrent) ? "current" : config.getName();
+    }
 }

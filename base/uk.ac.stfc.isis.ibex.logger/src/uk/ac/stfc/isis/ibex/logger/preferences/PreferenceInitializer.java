@@ -35,7 +35,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * Class used to initialize default preference values.
+ * Class used to initialise default preference values.
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
@@ -44,7 +44,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 * 
 	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
-	public void initializeDefaultPreferences() {
+	@Override
+    public void initializeDefaultPreferences() {
 		IPreferenceStore store = IsisLog.getDefault().getPreferenceStore();
 		
 		store.setDefault(PreferenceConstants.P_LOG_DIR, PreferenceConstants.DEFAULT_LOG_DIR);
