@@ -364,7 +364,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(errors), 1)
 
-
     def test_that_a_label_with_a_colon_at_the_end_causes_no_errors(self):
         # Arrange
         root = make_label_in_grouping_container("Voltage:")
@@ -434,6 +433,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(errors), 1)
+
 
 if __name__ == '__main__':
     unittest.main()
