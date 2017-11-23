@@ -43,7 +43,13 @@ def add_motor_macro(motor_index, pv):
     motor_widget = display.getWidget("Motor_" + str(motor_index))    
     
     motor_macros = motor_widget.getPropertyValue("macros")
-    motor_macros.put("MOTOR", get_pv_value(pv))
+    
+    # Prepend "MOT" if it's not already in the address
+    motor_address = get_pv_value(pv)
+    if not motor_address.startswith("MOT:"):
+        motor_address = "MOT:" + motor_address
+        
+    motor_macros.put("MOTOR", motor_address)
     motor_widget.setPropertyValue("macros", motor_macros)
     
 def add_label_macro(motor_index):
