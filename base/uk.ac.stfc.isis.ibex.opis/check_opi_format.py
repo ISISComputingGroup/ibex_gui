@@ -145,6 +145,7 @@ if __name__ == "__main__":
     logs_dir = args.logs_directory
 
     loader = unittest.TestLoader()
+    
     def self_valid():
         self_test_suite = unittest.TestSuite()
         self_test_suite.addTests(loader.loadTestsFromTestCase(TestCheckOpiFormatMethods))
