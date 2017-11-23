@@ -68,13 +68,14 @@ public class EditComponentHelper extends ConfigHelper {
     }
 
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration component, boolean isCurrent,
+    protected void openDialog(EditableConfiguration component, boolean isCurrent,
             boolean editBlockFirst) {
-        openDialog(subTitle, component, editBlockFirst);
+        openDialogComponent(component, editBlockFirst);
     }
 
-    private void openDialog(String subTitle, EditableConfiguration component, boolean editBlockFirst) {
+    private void openDialogComponent(EditableConfiguration component, boolean editBlockFirst) {
         component.setIsComponent(true);
+        final String subTitle = "Editing the " + getConfigDisplayName(component, false) + " component";
         EditConfigDialog editDialog =
                 new EditConfigDialog(shell, TITLE, subTitle, component, false,
                         configurationViewModels, editBlockFirst);
@@ -88,7 +89,7 @@ public class EditComponentHelper extends ConfigHelper {
                 }
             } else {
                 openConflictsDialog(buildWarning(conflicts));
-                openDialog(subTitle, component, false, editBlockFirst);
+                openDialog(component, false, editBlockFirst);
             }
         }
     }
@@ -107,13 +108,11 @@ public class EditComponentHelper extends ConfigHelper {
 
     @Override
     public void createDialog(String componentName, boolean editBlockFirst) {
-        String subTitle = "Editing component " + componentName;
-
         configurationViewModels.setModelAsComponent(componentName);
         UpdatedValue<EditableConfiguration> component = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(component, 1)) {
-            openDialog(subTitle, component.getValue(), false, editBlockFirst);
+            openDialog(component.getValue(), false, editBlockFirst);
         }
     }
 

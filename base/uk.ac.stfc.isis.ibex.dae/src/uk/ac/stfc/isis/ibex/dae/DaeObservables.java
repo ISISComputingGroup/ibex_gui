@@ -44,44 +44,42 @@ public class DaeObservables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
     /**
-     * An observable on a string with the name of the instrument.
+     * An observable on the name of the instrument.
      */
     public final ForwardingObservable<String> instrumentName;
 
     /**
-     * An observable on a string with the status of the run.
+     * An observable on the status of the run.
      */
     public final ForwardingObservable<DaeRunState> runState;
 
     /**
-     * An observable on a string with the run number.
+     * An observable on the run number.
      */
     public final ForwardingObservable<String> runNumber;
 
     /**
-     * An observable on a string giving the title for the current run.
+     * An observable on the title for the current run.
      */
     public final ForwardingObservable<String> title;
 
     /**
-     * An observable on a boolean giving whether or not to display the title on
-     * the webpage.
+     * An observable giving whether or not to display the title on the webpage.
      */
     public final ForwardingObservable<Boolean> displayTitle;
 
     /**
-     * An observable on a string giving the users of the instrument for the
-     * current run.
+     * An observable on the users of the instrument for the current run.
      */
     public final ForwardingObservable<String> users;
 
     /**
-     * An observable on a integer giving the number of good frames for this run.
+     * An observable on the number of good frames for this run.
      */
     public final ForwardingObservable<Integer> goodFrames;
 
     /**
-     * An observable on a integer giving the number of raw frames for this run.
+     * An observable on the number of raw frames for this run.
      */
     public final ForwardingObservable<Integer> rawFrames;
 
@@ -115,15 +113,55 @@ public class DaeObservables {
      * states.
      */
     public final ForwardingObservable<Boolean> inStateTransition;
+
+    /**
+     * An observable for the DAE settings data.
+     */
     public final ForwardingObservable<String> daeSettings;
+
+    /**
+     * An observable for the hardware period settings data.
+     */
     public final ForwardingObservable<String> hardwarePeriods;
+
+    /**
+     * An observable for the PV for updating setting on the DAE.
+     */
     public final ForwardingObservable<String> updateSettings;
+
+    /**
+     * An observable for the time channel settings data.
+     */
     public final ForwardingObservable<String> timeChannelSettings;
+
+    /**
+     * An observable for the detector table data.
+     */
     public final ForwardingObservable<String> detectorTables;
+
+    /**
+     * An observable for the spectra tables data.
+     */
     public final ForwardingObservable<String> spectraTables;
+
+    /**
+     * An observable for the wiring tables data.
+     */
     public final ForwardingObservable<String> wiringTables;
+
+    /**
+     * An observable for the list of period files available.
+     */
     public final ForwardingObservable<String> periodFiles;
+
+    /**
+     * An observable for the list of time channel files available.
+     */
     public final ForwardingObservable<String> timeChannelFiles;
+
+    /**
+     * An observable for the veto information.
+     */
     public final ForwardingObservable<String> vetos;
 
     /**
@@ -132,62 +170,103 @@ public class DaeObservables {
     public final ForwardingObservable<Number> beamCurrent;
 
     /**
-     * An observable on a double giving the number of counts for this run.
+     * An observable on the number of counts for this run.
      */
     public final ForwardingObservable<Double> totalDaeCounts;
 
     /**
-     * An observable on a integer giving the memory used on the DAE.
+     * An observable on the memory used on the DAE.
      */
     public final ForwardingObservable<Integer> daeMemoryUsed;
 
     /**
-     * An observable on a string giving the timing source being used by the DAE.
+     * An observable on the timing source being used by the DAE.
      */
     public final ForwardingObservable<String> timingSource;
 
     /**
-     * An observable on a string with the current RB number.
+     * An observable on the current RB number.
      */
     public final ForwardingObservable<String> rbNumber;
 
     /**
-     * An observable on a double giving the count rate of the DAE.
+     * An observable giving the count rate of the DAE.
      */
     public final ForwardingObservable<Double> countRate;
 
+    /**
+     * An observable giving the event mode of the DAE.
+     */
     public final ForwardingObservable<Double> eventMode;
 
     /**
-     * An observable on a string with the start time of the current run.
+     * An observable on the start time of the current run.
      */
     public final ForwardingObservable<String> startTime;
 
     /**
-     * An observable on a integer giving the duration of the current run in
-     * seconds.
+     * An observable giving the duration of the current run in seconds.
      */
     public final ForwardingObservable<Integer> runDuration;
+
+    /**
+     * An observable giving the number of time channels.
+     */
     public final ForwardingObservable<Integer> timeChannels;
+
+    /**
+     * An observable giving the number of spectra.
+     */
     public final ForwardingObservable<Integer> spectra;
 
     /**
-     * An observable on a string with the cycle number.
+     * An observable on the cycle number.
      */
     public final ForwardingObservable<String> isisCycle;
+
+    /**
+     * An observable giving the number of good frames in the current period.
+     */
     public final ForwardingObservable<Integer> periodGoodFrames;
+
+    /**
+     * An observable giving the number of raw frames in the current period.
+     */
     public final ForwardingObservable<Integer> periodRawFrames;
 
     /**
-     * An observable on a integer giving the duration of the current period in
-     * seconds.
+     * An observable on the duration of the current period in seconds.
      */
     public final ForwardingObservable<Integer> periodDuration;
+
+    /**
+     * An observable on the period type (e.g. soft periods).
+     */
     public final ForwardingObservable<String> periodType;
+
+    /**
+     * An observable on the period sequence.
+     */
     public final ForwardingObservable<Integer> periodSequence;
+
+    /**
+     * An observable on the selected monitor spectrum.
+     */
     public final ForwardingObservable<Integer> monitorSpectrum;
+
+    /**
+     * An observable on the lower time limit on the monitor.
+     */
     public final ForwardingObservable<Double> monitorFrom;
+
+    /**
+     * An observable on the upper time limit on the monitor.
+     */
     public final ForwardingObservable<Double> monitorTo;
+
+    /**
+     * An observable on the neutron proton ratio.
+     */
     public final ForwardingObservable<Double> npRatio;
 
     /**
@@ -197,7 +276,7 @@ public class DaeObservables {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("INSTNAME")));
         runState = obsFactory.getSwitchableObservable(new EnumChannel<>(DaeRunState.class),
-                InstrumentUtils.addPrefix(DAE.endWith("RUNSTATE_STR")));
+                InstrumentUtils.addPrefix(DAE.endWith("RUNSTATE")));
         runNumber = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("RUNNUMBER")));
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(),

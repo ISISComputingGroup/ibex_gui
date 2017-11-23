@@ -1,18 +1,18 @@
 /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -38,101 +38,125 @@ public class LogMessage implements IMessage {
     private String createTime = "";
     private String applicationId = "";
 
+    /**
+     * Set a property's value.
+     * 
+     * @param property the property
+     * @param value the value
+     */
     public void setProperty(LogMessageFields property, String value) {
-	switch (property) {
-	case CONTENTS:
-	    contents = value;
-	    break;
-	case SEVERITY:
-	    severity = value;
-	    break;
-	case EVENT_TIME:
-	    eventTime = value;
-	    break;
-	case CREATE_TIME:
-	    createTime = value;
-	    break;
-	case CLIENT_NAME:
-	    clientName = value;
-	    break;
-	case CLIENT_HOST:
-	    clientHost = value;
-	    break;
-	case TYPE:
-	    type = value;
-	    break;
-	case APPLICATION_ID:
-	    applicationId = value;
-	    break;
-	default:
-	    new Throwable().getStackTrace();
-	}
+        switch (property) {
+            case CONTENTS:
+                contents = value;
+                break;
+            case SEVERITY:
+                severity = value;
+                break;
+            case EVENT_TIME:
+                eventTime = value;
+                break;
+            case CREATE_TIME:
+                createTime = value;
+                break;
+            case CLIENT_NAME:
+                clientName = value;
+                break;
+            case CLIENT_HOST:
+                clientHost = value;
+                break;
+            case TYPE:
+                type = value;
+                break;
+            case APPLICATION_ID:
+                applicationId = value;
+                break;
+            default:
+                new Throwable().getStackTrace();
+        }
     }
 
+    /**
+     * Get the current value for a property.
+     * 
+     * @param property the requested property
+     * @return the current value
+     */
     public String getProperty(LogMessageFields property) {
-	switch (property) {
-	case CONTENTS:
-	    return contents;
-	case SEVERITY:
-	    return severity;
-	case EVENT_TIME:
-	    return eventTime;
-	case CREATE_TIME:
-	    return createTime;
-	case CLIENT_NAME:
-	    return clientName;
-	case CLIENT_HOST:
-	    return clientHost;
-	case TYPE:
-	    return type;
-	case APPLICATION_ID:
-	    return applicationId;
-	default:
-	    new Throwable().getStackTrace();
-	    return null;
-	}
+        switch (property) {
+            case CONTENTS:
+                return contents;
+            case SEVERITY:
+                return severity;
+            case EVENT_TIME:
+                return eventTime;
+            case CREATE_TIME:
+                return createTime;
+            case CLIENT_NAME:
+                return clientName;
+            case CLIENT_HOST:
+                return clientHost;
+            case TYPE:
+                return type;
+            case APPLICATION_ID:
+                return applicationId;
+            default:
+                new Throwable().getStackTrace();
+                return null;
+        }
     }
 
+    /**
+     * Get the values for multiple properties.
+     * 
+     * @param properties the properties to look up
+     * @return the collection of values
+     */
     public Object[] getProperties(LogMessageFields[] properties) {
-	int length = properties.length;
+        int length = properties.length;
 
-	String[] values = new String[length];
+        String[] values = new String[length];
 
-	for (int p = 0; p < length; ++p) {
-	    values[p] = getProperty(properties[p]);
-	}
+        for (int p = 0; p < length; ++p) {
+            values[p] = getProperty(properties[p]);
+        }
 
-	return values;
+        return values;
     }
 
+    /**
+     * Set a property's value.
+     * 
+     * @param property the property to set
+     * @param value the new value
+     */
     public void setProperty(LogMessageFieldsSql property, String value) {
-	switch (property) {
-	case CONTENTS:
-	    contents = value;
-	    break;
-	case SEVERITY:
-	    severity = value;
-	    break;
-	case EVENT_TIME:
-	    eventTime = value;
-	    break;
-	case CREATE_TIME:
-	    createTime = value;
-	    break;
-	case CLIENT_NAME:
-	    clientName = value;
-	    break;
-	case CLIENT_HOST:
-	    clientHost = value;
-	    break;
-	case TYPE:
-	    type = value;
-	    break;
-	case APPLICATION_ID:
-	    applicationId = value;
-	    break;
-	default:
-	    new Throwable().getStackTrace();
-	}
+        switch (property) {
+            case CONTENTS:
+                contents = value;
+                break;
+            case SEVERITY:
+                severity = value;
+                break;
+            case EVENT_TIME:
+                eventTime = value;
+                break;
+            case CREATE_TIME:
+                createTime = value;
+                break;
+            case CLIENT_NAME:
+                clientName = value;
+                break;
+            case CLIENT_HOST:
+                clientHost = value;
+                break;
+            case TYPE:
+                type = value;
+                break;
+            case APPLICATION_ID:
+                applicationId = value;
+                break;
+            default:
+                new Throwable().getStackTrace();
+        }
     }
 }

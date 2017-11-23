@@ -26,20 +26,38 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.databases.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Represents the RDB connection.
+ */
 public class Rdb {
     private static final Logger LOG = IsisLog.getLogger(Rdb.class);
-
-    private final String schema; 
-    
+    private final String schema;
     private static final String PROTOCOL = "jdbc:mysql:";
 
     /** RDB connection */
     private final Connection connection;
 
+    /**
+     * Factory method for creating a RDB connection.
+     * 
+     * @param schema the schema to use
+     * @param user the user
+     * @param password the password
+     * @return the connection
+     * @throws Exception occurs if the connection cannot be established
+     */
     public static Rdb connectToDatabase(String schema, String user, String password) throws Exception {
 		return new Rdb(schema, user, password);
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param schema the schema to use
+     * @param user the user
+     * @param password the password
+     * @throws Exception occurs if the connection cannot be established
+     */
     public Rdb(String schema, String user, String password) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 	
@@ -57,7 +75,9 @@ public class Rdb {
 		connection = DriverManager.getConnection(url, user, password);
     }
 
-    /** @return JDBC connection */
+    /**
+     * @return JDBC connection
+     */
     public Connection getConnection() {
 		return connection;
     }

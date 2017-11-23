@@ -102,6 +102,8 @@ public enum ComponentType {
     SCIMAG3D,
     /** Stress rig component type. */
     STRESS_RIG,
+    /** Gas exchange system. */
+    GAS_EXCHANGE,
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */
@@ -117,7 +119,12 @@ public enum ComponentType {
     /** Zoom sample stack. */
     ZOOM_SAMPLE_STACK,
     /** Sample changer for HRPD/POLARIS/GEM. */
-    ROT_SAMPLE_CHANGER;
+    ROT_SAMPLE_CHANGER,
+    /** Helium Level Gauge.*/
+    HE_LEVEL_GAUGE,
+    /** LET oscillating collimator. */
+    OSCILLATING_COLLIMATOR;
+
 	
 	private Target target;
 

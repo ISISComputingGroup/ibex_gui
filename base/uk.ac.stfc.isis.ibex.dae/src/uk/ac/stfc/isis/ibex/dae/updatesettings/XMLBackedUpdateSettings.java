@@ -38,8 +38,8 @@ public class XMLBackedUpdateSettings extends UpdateSettings {
     private static final Logger LOG = IsisLog.getLogger(XMLBackedPeriodSettings.class);
 
     private EnumNode<AutosaveUnit> autosaveUnits =
-            new EnumNode<>("/Cluster/U32[Name=' Frequency']/Val", AutosaveUnit.class);
-    private IntegerNode autosaveFrequency = new IntegerNode("/Cluster/EW[Name='Units']/Val");
+            new EnumNode<>("/Cluster/EW[Name='Units']/Val", AutosaveUnit.class);
+    private IntegerNode autosaveFrequency = new IntegerNode("/Cluster/U32[Name=' Frequency']/Val");
 
     private final XmlFile xmlFile;
     private final List<XmlNode<?>> nodes = new ArrayList<>();

@@ -21,50 +21,92 @@ package uk.ac.stfc.isis.ibex.dae.experimentsetup.periods;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Represents a period.
+ */
 public class Period extends ModelObject {
-
 	private int number;
 	private PeriodType type = PeriodType.UNUSED;
 	private int frames;
 	private int binaryOutput;
 	private String label = "";
 	
+    /**
+     * Constructor.
+     * 
+     * @param number the period number
+     */
 	public Period(int number) {
 		this.number = number;
 	}
 	
+    /**
+     * @return the period number
+     */
 	public int getNumber() {
 		return number;
 	}
 	
+    /**
+     * @return the period type
+     */
 	public PeriodType getType() {
 		return type;
 	}
 	
+    /**
+     * Set the period type.
+     * 
+     * @param value the period type
+     */
 	public void setType(PeriodType value) {
 		firePropertyChange("type", type, type = value);
 	}
 
+    /**
+     * @return the number of frames in the period
+     */
 	public int getFrames() {
 		return frames;
 	}
 
+    /**
+     * Set the number of frames in the period.
+     * 
+     * @param value the number of frames
+     */
 	public void setFrames(int value) {
 		firePropertyChange("frames", frames, frames = value);
 	}
 
+    /**
+     * @return the binary output
+     */
 	public int getBinaryOutput() {
 		return binaryOutput;
 	}
 
+    /**
+     * Set the binary output.
+     * 
+     * @param value the binary output
+     */
 	public void setBinaryOutput(int value) {
 		firePropertyChange("binaryOutput", binaryOutput, binaryOutput = value);
 	}
 
+    /**
+     * @return the period's label
+     */
 	public String getLabel() {
 		return label;
 	}
 
+    /**
+     * Set the period's label.
+     * 
+     * @param value the new label
+     */
 	public void setLabel(String value) {
 		firePropertyChange("label", label, label = value);
 	}

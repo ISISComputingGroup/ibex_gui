@@ -4,7 +4,7 @@ pipeline {
 
   // agent defines where the pipeline will run.
   agent {  
-    label "ndhspare53"
+    label "ndw1757"
   }
   
   triggers {
@@ -22,16 +22,25 @@ pipeline {
     stage("Build") {
       steps {
         script {
+            // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
+            if (env.BRANCH_NAME == null) {
+                env.BRANCH_NAME = ""
+			}
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
+            env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.BRANCH_NAME}"
-            if (env.BRANCH_NAME != null && env.BRANCH_NAME.startsWith("Release")) {
+            echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
+            if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
             }
-            else {
+            else if (env.GIT_BRANCH == "origin/master") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
+            }
+            else {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "NO"
             }
         }
         
@@ -41,7 +50,7 @@ pipeline {
             set GIT_BRANCH=${env.BRANCH_NAME}
             set RELEASE=${env.IS_RELEASE}
             set DEPLOY=${env.IS_DEPLOY}
-            jenkins_build.bat"
+            jenkins_build.bat
             """
       }
     }

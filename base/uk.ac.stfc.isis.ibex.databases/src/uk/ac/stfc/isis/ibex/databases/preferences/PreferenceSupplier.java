@@ -30,25 +30,47 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.databases.Databases;
 
+/**
+ * Supplies the details for the IBEX database preference page.
+ */
 public class PreferenceSupplier extends AbstractPreferenceInitializer {
-    
+    /** The preference setting for the SQL address. */
     public static final String SQL_ADDRESS = "sqlAddress";
+    
+    /** The default setting for the SQL address. */
     public static final String DEFAULT_SQL_ADDRESS = "localhost";
     
+    /** The preference setting for the SQL port. */
     public static final String SQL_PORT = "sqlPort";
+
+    /** The default setting for the SQL port. */
     public static final String DEFAULT_SQL_PORT = "3306";
     
+    /** The scope for the preference settings. */
 	public static final IScopeContext SCOPE_CONTEXT = InstanceScope.INSTANCE;
+
+    /**
+     * The overall preferences name.
+     */
     public static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.databases";
 	
+    /**
+     * @return the database preferences.
+     */
 	public static IEclipsePreferences getPreferences() {
         return SCOPE_CONTEXT.getNode(PREFERENCE_NODE);
     }
 	
+    /**
+     * @return the preference setting for the SQL address.
+     */
 	public static String sqlAddress() {
 		return getPreferences().get(SQL_ADDRESS, DEFAULT_SQL_ADDRESS);
 	}
 	
+    /**
+     * @return the preference setting for the SQL port.
+     */
 	public static String sqlPort() {
 		return getPreferences().get(SQL_PORT, DEFAULT_SQL_PORT);
 	}
@@ -62,6 +84,11 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
         }
     }
 
+    /**
+     * Gets the initial settings for the preferences.
+     * 
+     * @return the initial settings
+     */
 	public static Map<String, String> getInitializationEntries() {
         Map<String, String> entries = new HashMap<String, String>();
         entries.put(SQL_ADDRESS, DEFAULT_SQL_ADDRESS);
