@@ -25,7 +25,7 @@ def file_iterator(root_dir, single_file=None):
     Generator that returns the opi files that should be checked.
     Args:
         root_dir (str): The root directory to check for OPIs
-        single_dir (str): The name of the single file to check, every OPI in root_dir is checked if this is None
+        single_file (str): The name of the single file to check, every OPI in root_dir is checked if this is None
     Yields:
         str: Path to the OPI that must be checked
     """
