@@ -66,10 +66,10 @@ def get_motor_pvs():
 
 def main():
     naxes = 0
-    for i, pv in enumerate(get_motor_pvs()):
+    for i, pv in enumerate(get_motor_pvs(), 1):
         if pv is not None:
-            add_motor_macro(i+1, pv)
-            naxes = i+1
+            add_motor_macro(i, pv)
+            naxes = i
     pvs[0].setValue(naxes)
             
 main()
