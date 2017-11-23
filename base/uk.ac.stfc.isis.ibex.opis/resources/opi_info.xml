@@ -1140,36 +1140,36 @@
 				<description>Generic sample stack OPI supporting up to 8 motors.</description>
 				<macros>
 					<macro>
-						<name>NAME1</name>
-						<description>The alias name of motor 1 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX1</name>
+						<description>The PV prefix for motor 1 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME2</name>
-						<description>The alias name of motor 2 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX2</name>
+						<description>The PV prefix for motor 2 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME3</name>
-						<description>The alias name of motor 3 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX3</name>
+						<description>The PV prefix for motor 3 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME4</name>
-						<description>The alias name of motor 4 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX4</name>
+						<description>The PV prefix for motor 4 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME5</name>
-						<description>The alias name of motor 5 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX5</name>
+						<description>The PV prefix for motor 5 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME6</name>
-						<description>The alias name of motor 6 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX6</name>
+						<description>The PV prefix for motor 6 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME7</name>
-						<description>The alias name of motor 7 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX7</name>
+						<description>The PV prefix for motor 7 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
-						<name>NAME8</name>
-						<description>The alias name of motor 8 (value of AXIS in axes.cmd).</description>
+						<name>PREFIX8</name>
+						<description>The PV prefix for motor 8 (value of AXIS in axes.cmd).</description>
 					</macro>
 				</macros>
 			</value>
