@@ -47,7 +47,7 @@ def get_motor_pvs():
     """
     motor_pvs = []
     
-    for name in [PVUtil.getString(pv) for pv in pvs[1:]]:
+    for name in [PVUtil.getString(pv) for pv in pvs[1:]]:  # pvs[0] is for the number of motors
     
         if is_unexpanded_macro(name):
             motor_pvs.append(None)
