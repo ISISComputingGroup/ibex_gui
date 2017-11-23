@@ -12,6 +12,7 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
 from xmlrunner import XMLTestRunner
+from check_opi_format_tests import TestCheckOpiFormatMethods
 
 # Directory to iterate through
 DEFAULT_ROOT_DIR = r"./resources/"
@@ -143,9 +144,18 @@ if __name__ == "__main__":
     root_dir = args.directory
     logs_dir = args.logs_directory
 
-    ret_vals = []
-
     loader = unittest.TestLoader()
+    def self_valid():
+        self_test_suite = unittest.TestSuite()
+        self_test_suite.addTests(loader.loadTestsFromTestCase(TestCheckOpiFormatMethods))
+        runner = XMLTestRunner(output=os.path.join(logs_dir, "check_opi_format"), stream=sys.stdout)
+        return runner.run(self_test_suite).wasSuccessful()
+
+    if not self_valid():
+        print("Check OPI format test script failed own tests. Aborting")
+        sys.exit(1)
+
+    return_values = []
     xml_parser = etree.XMLParser(remove_blank_text=True)
 
     # Add test suite a dynamic number of times with an argument.
@@ -161,12 +171,11 @@ if __name__ == "__main__":
             root = etree.parse(filename, xml_parser)
         except LxmlError as e:
             print("XML failed to parse {}".format(e))
-            ret_vals.append(False)
+            return_values.append(False)
             continue
 
         suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
-
         runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
-        ret_vals.append(runner.run(suite).wasSuccessful())
+        return_values.append(runner.run(suite).wasSuccessful())
 
-    sys.exit(False in ret_vals)
+    sys.exit(False in return_values)
