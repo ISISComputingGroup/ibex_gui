@@ -31,9 +31,10 @@ def file_iterator(root_dir, single_file=None):
     """
     if single_file is None:
         # No single file was defined - iterate through all files
-        for filename in os.listdir(root_dir):
-            if filename.endswith(".opi"):
-                yield os.path.join(root_dir, filename)
+        for path, _, files in os.walk(root_dir):
+            for filename in files:
+                if filename.endswith(".opi"):
+                    yield os.path.join(path, filename)
     else:
         # Only check one file
         yield os.path.join(root_dir, single_file)
@@ -165,7 +166,7 @@ if __name__ == "__main__":
 
         suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
 
-        runner = XMLTestRunner(output=logs_dir, stream=sys.stdout)
+        runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
         ret_vals.append(runner.run(suite).wasSuccessful())
 
     sys.exit(False in ret_vals)
