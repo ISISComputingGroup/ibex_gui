@@ -1132,6 +1132,9 @@
 		<entry>
 			<key>Sample stack</key>
 			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
 				<type>SAMPLESTACK</type>
 				<path>sample_stack\sample_stack.opi</path>
 				<description>Generic sample stack OPI supporting up to 8 motors.</description>
