@@ -1141,35 +1141,35 @@
 				<macros>
 					<macro>
 						<name>NAME1</name>
-						<description>The alias name of motor 1 (see axes.cmd).</description>
+						<description>The alias name of motor 1 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME2</name>
-						<description>The alias name of motor 2 (see axes.cmd).</description>
+						<description>The alias name of motor 2 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME3</name>
-						<description>The alias name of motor 3 (see axes.cmd).</description>
+						<description>The alias name of motor 3 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME4</name>
-						<description>The alias name of motor 4 (see axes.cmd).</description>
+						<description>The alias name of motor 4 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME5</name>
-						<description>The alias name of motor 5 (see axes.cmd).</description>
+						<description>The alias name of motor 5 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME6</name>
-						<description>The alias name of motor 6 (see axes.cmd).</description>
+						<description>The alias name of motor 6 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME7</name>
-						<description>The alias name of motor 7 (see axes.cmd).</description>
+						<description>The alias name of motor 7 (value of AXIS in axes.cmd).</description>
 					</macro>
 					<macro>
 						<name>NAME8</name>
-						<description>The alias name of motor 8 (see axes.cmd).</description>
+						<description>The alias name of motor 8 (value of AXIS in axes.cmd).</description>
 					</macro>
 				</macros>
 			</value>
