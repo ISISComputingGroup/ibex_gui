@@ -54,7 +54,8 @@ def add_label_macro(motor_index):
     motor_widget = display.getWidget("Motor_" + str(motor_index))    
    
     motor_macros = motor_widget.getPropertyValue("macros")
-    motor_macros.put("LABEL", display.getMacroValue("NAME" + str(motor_index)))
+    name = display.getMacroValue("NAME" + str(motor_index))
+    motor_macros.put("LABEL", name.split(":")[-1])
     motor_widget.setPropertyValue("macros", motor_macros)
     
 def get_motor_pvs():
