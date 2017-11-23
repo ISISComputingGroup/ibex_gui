@@ -20,6 +20,13 @@ def get_pv_value(pv, max_wait=1.0):
             sleep(max_wait/steps)
     return None
     
+def reload_widgets(count):
+    """
+    Reload all the motor widgets. We have 'count' of them
+    """
+    for motor_index in range(1, count+1):
+        reload_widget(display.getWidget("Motor_" + str(motor_index)) )
+    
 def reload_widget(widget):
     """
     We have to reload the widget to update the macros. Done by unsetting and resetting the
@@ -39,7 +46,16 @@ def add_motor_macro(motor_index, pv):
     motor_macros.put("MOTOR", get_pv_value(pv))
     motor_widget.setPropertyValue("macros", motor_macros)
     
-    reload_widget(motor_widget)
+def add_label_macro(motor_index):
+    """
+    Add the $(LABEL) macro to a motor widget. Widgets are identified as "Motor_n"
+    for n in [1,8] in the parent OPI
+    """
+    motor_widget = display.getWidget("Motor_" + str(motor_index))    
+   
+    motor_macros = motor_widget.getPropertyValue("macros")
+    motor_macros.put("LABEL", display.getMacroValue("NAME" + str(motor_index)))
+    motor_widget.setPropertyValue("macros", motor_macros)
     
 def get_motor_pvs():
     """
@@ -66,10 +82,13 @@ def get_motor_pvs():
 
 def main():
     naxes = 0
-    for i, pv in enumerate(get_motor_pvs()):  # enumerate( , 1) not supported in CSS Python
+    # enumerate( , 1) not supported in CSS Python
+    for i, pv in enumerate(get_motor_pvs()): 
         if pv is not None:
-            add_motor_macro(i + 1, pv)
-            naxes = i + 1
+            add_motor_macro(i+1, pv)
+            add_label_macro(i+1)
+            naxes = i+1
     pvs[0].setValue(naxes)
+    reload_widgets(naxes)
             
 main()

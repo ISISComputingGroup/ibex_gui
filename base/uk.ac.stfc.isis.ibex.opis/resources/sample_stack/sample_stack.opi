@@ -209,7 +209,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME2)</LABEL>
         <NAME>$(NAME2)</NAME>
       </macros>
       <visible>true</visible>
@@ -271,7 +270,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME1)</LABEL>
         <NAME>$(NAME1)</NAME>
       </macros>
       <visible>true</visible>
@@ -333,7 +331,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME3)</LABEL>
         <NAME>$(NAME3)</NAME>
       </macros>
       <visible>true</visible>
@@ -395,7 +392,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME4)</LABEL>
         <NAME>$(NAME4)</NAME>
       </macros>
       <visible>true</visible>
@@ -457,7 +453,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME5)</LABEL>
         <NAME>$(NAME5)</NAME>
       </macros>
       <visible>true</visible>
@@ -519,7 +514,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME6)</LABEL>
         <NAME>$(NAME6)</NAME>
       </macros>
       <visible>true</visible>
@@ -581,7 +575,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME7)</LABEL>
         <NAME>$(NAME7)</NAME>
       </macros>
       <visible>true</visible>
@@ -643,7 +636,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>$(NAME8)</LABEL>
         <NAME>$(NAME8)</NAME>
       </macros>
       <visible>true</visible>
