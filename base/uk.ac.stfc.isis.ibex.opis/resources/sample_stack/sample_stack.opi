@@ -5,7 +5,19 @@
   <wuid>4e5b1dc5:159f9d09037:-7eaa</wuid>
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
-  <scripts />
+  <scripts>
+    <path pathString="setMotorMacros.py" checkConnect="true" sfe="false" seoe="false">
+      <pv trig="false">loc://sample_stack:naxes</pv>
+      <pv trig="false">loc://$(DID):motor1($(NAME1))</pv>
+      <pv trig="false">loc://$(DID):motor2($(NAME2))</pv>
+      <pv trig="false">loc://$(DID):motor3($(NAME3))</pv>
+      <pv trig="false">loc://$(DID):motor4($(NAME4))</pv>
+      <pv trig="false">loc://$(DID):motor5($(NAME5))</pv>
+      <pv trig="false">loc://$(DID):motor6($(NAME6))</pv>
+      <pv trig="false">loc://$(DID):motor7($(NAME7))</pv>
+      <pv trig="true">loc://$(DID):motor8($(NAME8))</pv>
+    </path>
+  </scripts>
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
@@ -19,7 +31,7 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <width>800</width>
   <x>-1</x>
@@ -29,7 +41,7 @@
   <y>-1</y>
   <snap_to_geometry>true</snap_to_geometry>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -117,13 +129,20 @@
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
     <tooltip></tooltip>
-    <rules />
+    <rules>
+      <rule name="Height" prop_id="height" out_exp="true">
+        <exp bool_exp="true">
+          <value>40*pv0+30</value>
+        </exp>
+        <pv trig="true">loc://sample_stack:naxes</pv>
+      </rule>
+    </rules>
     <enabled>true</enabled>
     <wuid>4e5b1dc5:159f9d09037:-7c3c</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>343</height>
+    <height>517</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -157,9 +176,28 @@
       <opi_file>motor_control.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules />
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;2">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;2">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;2">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
       <enabled>true</enabled>
-      <wuid>-6bf25c5f:15fb6315fcb:-7e83</wuid>
+      <wuid>-1fce3382:15fb9cec36d:-7ca3</wuid>
       <auto_size>false</auto_size>
       <scripts />
       <height>40</height>
@@ -171,9 +209,8 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <LABEL>LABEL_1</LABEL>
-        <NAME>NAME_1</NAME>
-        <MOTOR>MOTOR_1</MOTOR>
+        <LABEL>$(NAME2)</LABEL>
+        <NAME>$(NAME2)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -187,8 +224,442 @@
       <zoom_to_fit>true</zoom_to_fit>
       <width>400</width>
       <x>0</x>
-      <name>Linking Container</name>
+      <name>Motor_2</name>
+      <y>39</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;1">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7c3b</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME1)</LABEL>
+        <NAME>$(NAME1)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_1</name>
       <y>0</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;3">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;3">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;3">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7c1a</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME3)</LABEL>
+        <NAME>$(NAME3)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_3</name>
+      <y>78</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;4">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;4">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;4">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7c0e</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME4)</LABEL>
+        <NAME>$(NAME4)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_4</name>
+      <y>117</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;5">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;5">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;5">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7bfd</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME5)</LABEL>
+        <NAME>$(NAME5)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_5</name>
+      <y>156</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;6">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;6">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;6">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7bec</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME6)</LABEL>
+        <NAME>$(NAME6)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_6</name>
+      <y>195</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;7">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;7">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Y" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;7">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7bdb</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME7)</LABEL>
+        <NAME>$(NAME7)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_7</name>
+      <y>234</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>motor_control.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0&lt;8">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="X" prop_id="x" out_exp="false">
+          <exp bool_exp="pv0&lt;8">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+        <rule name="Rule" prop_id="y" out_exp="false">
+          <exp bool_exp="pv0&lt;8">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://sample_stack:naxes</pv>
+        </rule>
+      </rules>
+      <enabled>true</enabled>
+      <wuid>-1fce3382:15fb9cec36d:-7bca</wuid>
+      <auto_size>false</auto_size>
+      <scripts />
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <LABEL>$(NAME8)</LABEL>
+        <NAME>$(NAME8)</NAME>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>true</zoom_to_fit>
+      <width>400</width>
+      <x>0</x>
+      <name>Motor_8</name>
+      <y>273</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>

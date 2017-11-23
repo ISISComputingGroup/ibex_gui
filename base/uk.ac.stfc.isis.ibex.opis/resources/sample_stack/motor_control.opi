@@ -19,7 +19,7 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <width>400</width>
   <x>-1</x>
@@ -29,7 +29,7 @@
   <y>-1</y>
   <snap_to_geometry>true</snap_to_geometry>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -41,7 +41,7 @@
     <wuid>-6bf25c5f:15fb6315fcb:-7ecb</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>$(LABEL="Not in use:"):</text>
+    <text>$(LABEL):</text>
     <scripts />
     <height>25</height>
     <border_width>1</border_width>
@@ -220,7 +220,7 @@ $(pv_value)</tooltip>
         <path>../Motor/mymotor.opi</path>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <MM>MOT:$(MOTOR)</MM>
+          <MM>$(MOTOR)</MM>
         </macros>
         <replace>1</replace>
         <description></description>
