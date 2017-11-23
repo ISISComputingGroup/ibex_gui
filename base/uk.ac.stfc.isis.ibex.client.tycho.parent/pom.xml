@@ -162,8 +162,11 @@
 
 	<modules>
 		<module>../uk.ac.stfc.isis.ibex.e4.client.product</module>
+		<module>../uk.ac.stfc.isis.ibex.e4.client</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.base</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.css</module>
+		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
+		<module>../uk.ac.stfc.isis.ibex.feature.spies</module>
 		<module>../uk.ac.stfc.isis.ibex.opi.feature.core</module>
 		<module>../uk.ac.stfc.isis.ibex.opi.feature.eclipse</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.product</module>
@@ -182,6 +185,7 @@
 		<module>../uk.ac.stfc.isis.ibex.opis</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui</module>
+		<module>../uk.ac.stfc.isis.ibex.e4.ui.handlers</module>
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
@@ -192,6 +196,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.perspectives</module>
+		<module>../uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.dae</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>
@@ -203,6 +208,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.beamstatus</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
 		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.epics</module>
@@ -230,7 +236,6 @@
 		<!--<module>../uk.ac.stfc.isis.ibex.epics.switching.tests</module>-->
 		<module>../uk.ac.stfc.isis.ibex.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.baton</module>
-		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.validators.tests</module>
