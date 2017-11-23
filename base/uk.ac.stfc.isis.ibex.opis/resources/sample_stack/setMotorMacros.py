@@ -66,10 +66,10 @@ def get_motor_pvs():
 
 def main():
     naxes = 0
-    for i, pv in enumerate(get_motor_pvs(), 1):
+    for i, pv in enumerate(get_motor_pvs()):  # enumerate( , 1) not supported in CSS Python
         if pv is not None:
-            add_motor_macro(i, pv)
-            naxes = i
+            add_motor_macro(i + 1, pv)
+            naxes = i + 1
     pvs[0].setValue(naxes)
             
 main()
