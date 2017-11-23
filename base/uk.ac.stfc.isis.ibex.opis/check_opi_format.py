@@ -20,24 +20,24 @@ DEFAULT_ROOT_DIR = r"./resources/"
 DEFAULT_LOGS_DIR = r"./check_OPI_format_logs/"
 
 
-def file_iterator(root_dir, single_file=None):
+def file_iterator(directory, file_name=None):
     """
     Generator that returns the opi files that should be checked.
     Args:
-        root_dir (str): The root directory to check for OPIs
-        single_file (str): The name of the single file to check, every OPI in root_dir is checked if this is None
+        directory (str): The root directory to check for OPIs
+        file_name (str): The name of the single file to check, every OPI in root_dir is checked if this is None
     Yields:
         str: Path to the OPI that must be checked
     """
-    if single_file is None:
+    if file_name is None:
         # No single file was defined - iterate through all files
-        for path, _, files in os.walk(root_dir):
-            for filename in files:
-                if filename.endswith(".opi"):
-                    yield os.path.join(path, filename)
+        for path, _, files in os.walk(directory):
+            for file_name in files:
+                if file_name.endswith(".opi"):
+                    yield os.path.join(path, file_name)
     else:
         # Only check one file
-        yield os.path.join(root_dir, single_file)
+        yield os.path.join(directory, file_name)
 
 
 class CheckOpiFormat(unittest.TestCase):
