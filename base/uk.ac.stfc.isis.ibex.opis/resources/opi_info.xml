@@ -59,19 +59,19 @@
 				<macros>
 					<macro>		
                         <name>CCD_1</name>		
-                        <description>The PV prefix for the first CCD100 (e.g CCD100_01).</description>		
+                        <description>The axis PV for the first CCD100 (e.g CCD100_01).</description>		
                     </macro>						
                     <macro>		
                         <name>CCD_2</name>		
-                        <description>The PV prefix for the second CCD100 (e.g CCD100_01).</description>		
+                        <description>The axis PV for the second CCD100 (e.g CCD100_01).</description>		
                     </macro>		
                     <macro>		
                         <name>CCD_3</name>		
-                        <description>The PV prefix for the third CCD100 (e.g CCD100_01).</description>		
+                        <description>The axis PV for the third CCD100 (e.g CCD100_01).</description>		
                     </macro>		
                     <macro>		
                         <name>CCD_4</name>		
-                        <description>The PV prefix for the fourth CCD100 (e.g CCD100_01).</description>		
+                        <description>The axis PV for the fourth CCD100 (e.g CCD100_01).</description>		
                     </macro>				
 				</macros>
 			</value>
@@ -121,7 +121,7 @@
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+						<description>The Eurotherm axis PV (e.g. EUROTHRM_01).</description>
 					</macro>
                 </macros>
 			</value>
@@ -139,7 +139,7 @@
 				<macros>
 					<macro>
 						<name>MERCURY</name>
-						<description>The Mercury PV prefix (e.g. MERCURY_01).</description>
+						<description>The Mercury axis PV (e.g. MERCURY_01).</description>
 					</macro>
                     <macro>
 						<name>TEMP_NUM1</name>
@@ -226,7 +226,7 @@
 				<macros>
                     <macro>
 						<name>JULABO</name>
-						<description>The Julabo PV prefix (e.g. JULABO_01).</description>
+						<description>The Julabo axis PV (e.g. JULABO_01).</description>
 					</macro>                     
 				</macros>
 			</value>
@@ -243,7 +243,7 @@
 				<macros>    
                     <macro>
 						<name>LINKAM95</name>
-						<description>The Linkam 95 PV prefix (e.g. LINKAM95_01).</description>
+						<description>The Linkam 95 axis PV (e.g. LINKAM95_01).</description>
 					</macro>              
 				</macros>
 			</value>
@@ -294,7 +294,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>  
+ 						<description>The Lakeshore 218 axis PV (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -311,7 +311,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE336</name>
- 						<description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>  
+ 						<description>The Lakeshore 336 axis PV (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -341,7 +341,7 @@
 				<macros>
                     <macro>
 						<name>MK2CHOPR</name>
- 						<description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>  
+ 						<description>The Mk2 Chopper axis PV (e.g. MK2CHOPR_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -510,7 +510,7 @@
 				<macros>
 					<macro>
 						<name>DEV</name>
-						<description>The SDTest PV prefix (e.g. SDTEST_01)</description>
+						<description>The SDTest axis PV (e.g. SDTEST_01)</description>
 					</macro>
 				</macros>
 			</value>
@@ -652,7 +652,7 @@
 				<macros>
                     <macro>
 						<name>TPG300</name>
-						<description>The TPG300 PV prefix (e.g. TPG300_01).</description>
+						<description>The TPG300 axis PV (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -669,7 +669,7 @@
 				<macros>
                     <macro>
 						<name>TPG</name>
-						<description>The TPG26x PV prefix (e.g. TPG26X_01).</description>
+						<description>The TPG26x axis PV (e.g. TPG26X_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -717,7 +717,7 @@
 				<macros>
 					<macro>
 						<name>DFKPS</name>
-						<description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
+						<description>The Danfysik axis PV (e.g. DFKPS_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -734,7 +734,7 @@
 				<macros>    
                     <macro>
 						<name>PDR2000</name>
-						<description>The MKS PDR 2000 PV prefix (e.g. PDR2000_01).</description>
+						<description>The MKS PDR 2000 axis PV (e.g. PDR2000_01).</description>
 					</macro>               
 				</macros>
 			</value>
@@ -751,7 +751,7 @@
 				<macros>    
                     <macro>
 						<name>CRYVALVE</name>
-						<description>The cryo valve PV prefix (e.g. CRYVALVE_01).</description>
+						<description>The cryo valve axis PV (e.g. CRYVALVE_01).</description>
 					</macro>  
 				</macros>
 			</value>
@@ -785,7 +785,7 @@
 				<macros>
 					<macro>
 						<name>SCIMAG3D</name>
-						<description>The magnet PV prefix (e.g. SCIMAG3D_01).</description>
+						<description>The magnet axis PV (e.g. SCIMAG3D_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -826,7 +826,7 @@
 				<macros>
 					<macro>
 						<name>NEOCERA</name>
-						<description>The neocera PV prefix (e.g. NEOCERA_01).</description>
+						<description>The neocera axis PV (e.g. NEOCERA_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -920,7 +920,7 @@
 				<macros>
 					<macro>
 						<name>AMINT2L</name>
-						<description>The AM Int2-L PV prefix (e.g. AMINT2L_01).</description>
+						<description>The AM Int2-L axis PV (e.g. AMINT2L_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -968,7 +968,7 @@
 				<macros>
 					<macro>
 						<name>SPRLG</name>
-						<description>The Superlogics PV prefix (e.g. SPRLG_01).</description>
+						<description>The Superlogics axis PV (e.g. SPRLG_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -985,7 +985,7 @@
 				<macros>
 					<macro>
 						<name>XYSHUTTERARMBEAMSTOP</name>
-						<description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
+						<description>The XY Arm Shutter Beamstop axis PV (e.g. MOT).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1015,7 +1015,7 @@
 				<macros>
 					<macro>
 						<name>FERMCHOP</name>
-						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+						<description>The fermi chopper axis PV (e.g. FERMCHOP_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1046,7 +1046,7 @@
 				<macros>
 					<macro>
 						<name>Q</name>
-						<description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
+						<description>The Omron FINS PLC Zoom vacuum axis PV (e.g. VACUUM).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1076,7 +1076,7 @@
 				<macros>
 					<macro>
 						<name>IEG</name>
-						<description>The gas exchange system PV prefix (e.g. IEG_01).</description>
+						<description>The gas exchange system axis PV (e.g. IEG_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1093,7 +1093,7 @@
 				<macros>
 					<macro>
 						<name>CYBAMAN</name>
-						<description>The cybaman PV prefix (e.g. CYBAMAN_01).</description>
+						<description>The cybaman axis PV (e.g. CYBAMAN_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1110,7 +1110,7 @@
 				<macros>
 					<macro>
 						<name>HLG</name>
-						<description>The HLG PV prefix (e.g. HLG_01).</description>
+						<description>The HLG axis PV (e.g. HLG_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1137,39 +1137,39 @@
 				</categories>
 				<type>SAMPLESTACK</type>
 				<path>sample_stack\sample_stack.opi</path>
-				<description>Generic sample stack OPI supporting up to 8 motors.</description>
+				<description>Generic sample stack OPI supporting up to 8 motors. Axis PVs are typically of the form MOT:STACK:Z </description>
 				<macros>
 					<macro>
-						<name>PREFIX1</name>
-						<description>The PV prefix for motor 1 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_1</name>
+						<description>The axis PV for motor 1</description>
 					</macro>
 					<macro>
-						<name>PREFIX2</name>
-						<description>The PV prefix for motor 2 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_2</name>
+						<description>The axis PV for motor 2</description>
 					</macro>
 					<macro>
-						<name>PREFIX3</name>
-						<description>The PV prefix for motor 3 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_3</name>
+						<description>The axis PV for motor 3</description>
 					</macro>
 					<macro>
-						<name>PREFIX4</name>
-						<description>The PV prefix for motor 4 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_4</name>
+						<description>The axis PV for motor 4</description>
 					</macro>
 					<macro>
-						<name>PREFIX5</name>
-						<description>The PV prefix for motor 5 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_5</name>
+						<description>The axis PV for motor 5</description>
 					</macro>
 					<macro>
-						<name>PREFIX6</name>
-						<description>The PV prefix for motor 6 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_6</name>
+						<description>The axis PV for motor 6</description>
 					</macro>
 					<macro>
-						<name>PREFIX7</name>
-						<description>The PV prefix for motor 7 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_7</name>
+						<description>The axis PV for motor 7</description>
 					</macro>
 					<macro>
-						<name>PREFIX8</name>
-						<description>The PV prefix for motor 8 (value of AXIS in axes.cmd).</description>
+						<name>AXIS_PV_8</name>
+						<description>The axis PV for motor 8</description>
 					</macro>
 				</macros>
 			</value>

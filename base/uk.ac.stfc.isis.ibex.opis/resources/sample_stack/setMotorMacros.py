@@ -2,6 +2,8 @@ from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 from time import sleep
 
+MACRO_ROOT = "AXIS_PV_"
+
 def is_unexpanded_macro(value):
     """
     Is the value of the form "$(...)"?
@@ -35,34 +37,44 @@ def reload_widget(widget):
     widget.setPropertyValue("opi_file","null.opi");
     widget.setPropertyValue("opi_file","motor_control.opi");
     
+def _add_macro(motor_index, name, value):
+    """
+    Add the macro with name to a motor widget with value. 
+    Widgets are identified as "Motor_n" for n in [1,8] in the parent OPI
+    """
+    motor_widget = display.getWidget("Motor_" + str(motor_index))    
+    motor_macros = motor_widget.getPropertyValue("macros")
+    motor_macros.put(name, value)
+    motor_widget.setPropertyValue("macros", motor_macros)
+    
+def _get_axis_pv(index):
+	return display.getMacroValue(MACRO_ROOT + str(index))
+    
 def add_motor_macro(motor_index, pv):
     """
     Add the $(MOTOR) macro to a motor widget. Widgets are identified as "Motor_n"
     for n in [1,8] in the parent OPI
     """
-    motor_widget = display.getWidget("Motor_" + str(motor_index))    
-    
-    motor_macros = motor_widget.getPropertyValue("macros")
-    
     # Prepend "MOT" if it's not already in the address
     motor_address = get_pv_value(pv)
     if not motor_address.startswith("MOT:"):
         motor_address = "MOT:" + motor_address
         
-    motor_macros.put("MOTOR", motor_address)
-    motor_widget.setPropertyValue("macros", motor_macros)
+    _add_motor_macro(motor_index, "MOTOR", motor_address)
     
 def add_label_macro(motor_index):
     """
     Add the $(LABEL) macro to a motor widget. Widgets are identified as "Motor_n"
     for n in [1,8] in the parent OPI
     """
-    motor_widget = display.getWidget("Motor_" + str(motor_index))    
-   
-    motor_macros = motor_widget.getPropertyValue("macros")
-    name = display.getMacroValue("NAME" + str(motor_index))
-    motor_macros.put("LABEL", name.split(":")[-1])
-    motor_widget.setPropertyValue("macros", motor_macros)
+    _add_macro(motor_index, "LABEL", _get_axis_pv(motor_index).split(":")[-1])
+
+def add_name_macro(motor_index):
+    """
+    Add the $(NAME) macro to a motor widget. Widgets are identified as "Motor_n"
+    for n in [1,8] in the parent OPI
+    """
+    _add_macro(motor_index, "NAME", _get_axis_pv(motor_index)
     
 def get_motor_pvs():
     """
@@ -94,6 +106,7 @@ def main():
         if pv is not None:
             add_motor_macro(i+1, pv)
             add_label_macro(i+1)
+            add_name_macro(i+1)
             naxes = i+1
     pvs[0].setValue(naxes)
     reload_widgets(naxes)

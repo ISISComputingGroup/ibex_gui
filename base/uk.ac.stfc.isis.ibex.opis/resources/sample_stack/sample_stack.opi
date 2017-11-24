@@ -209,7 +209,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME2)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -270,7 +269,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME1)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -331,7 +329,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME3)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -392,7 +389,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME4)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -453,7 +449,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME5)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -514,7 +509,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME6)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -575,7 +569,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME7)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -636,7 +629,6 @@
       </scale_options>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>$(NAME8)</NAME>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
