@@ -41,12 +41,14 @@ public class EnableableImageLabel {
      * Creates a label that holds an image that can be greyed out.
      * 
      * @param parent
-     *            The parent composite fo the label.
+     *            The parent composite for the label.
      * @param enabled
      *            The image to show when enabled (the disabled image will be
      *            constructed from this)
+     * @param tooltip
+     *            The tooltip that will show when hovering over this image
      */
-    public EnableableImageLabel(final Composite parent, Image enabled) {
+    public EnableableImageLabel(final Composite parent, Image enabled, String tooltip) {
         label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
         label.setImage(enabled);
@@ -64,6 +66,8 @@ public class EnableableImageLabel {
                 parent.notifyListeners(SWT.MouseDoubleClick, event);
             }
         });
+
+        label.setToolTipText(tooltip);
 	}
 	
     /**
