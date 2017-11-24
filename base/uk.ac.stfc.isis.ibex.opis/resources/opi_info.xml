@@ -1129,5 +1129,50 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Sample stack</key>
+			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
+				<type>SAMPLESTACK</type>
+				<path>sample_stack\sample_stack.opi</path>
+				<description>Generic sample stack OPI supporting up to 8 motors. PV prefixs are typically of the form MOT:STACK:Z </description>
+				<macros>
+					<macro>
+						<name>AXIS_PV_1</name>
+						<description>The axis PV for motor 1</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_2</name>
+						<description>The axis PV for motor 2</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_3</name>
+						<description>The axis PV for motor 3</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_4</name>
+						<description>The axis PV for motor 4</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_5</name>
+						<description>The axis PV for motor 5</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_6</name>
+						<description>The axis PV for motor 6</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_7</name>
+						<description>The axis PV for motor 7</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_8</name>
+						<description>The axis PV for motor 8</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
