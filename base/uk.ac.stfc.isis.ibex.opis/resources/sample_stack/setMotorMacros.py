@@ -57,10 +57,11 @@ def add_motor_macro(motor_index, pv):
     """
     # Prepend "MOT" if it's not already in the address
     motor_address = get_pv_value(pv)
-    if not motor_address.startswith("MOT:"):
-        motor_address = "MOT:" + motor_address
-        
-    _add_motor_macro(motor_index, "MOTOR", motor_address)
+    
+    if motor_address is not None:
+    	if not motor_address.startswith("MOT:"):
+        	motor_address = "MOT:" + motor_address
+        _add_macro(motor_index, "MOTOR", motor_address)
     
 def add_label_macro(motor_index):
     """
@@ -74,7 +75,7 @@ def add_name_macro(motor_index):
     Add the $(NAME) macro to a motor widget. Widgets are identified as "Motor_n"
     for n in [1,8] in the parent OPI
     """
-    _add_macro(motor_index, "NAME", _get_axis_pv(motor_index)
+    _add_macro(motor_index, "NAME", _get_axis_pv(motor_index))
     
 def get_motor_pvs():
     """
