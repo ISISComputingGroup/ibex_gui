@@ -86,17 +86,10 @@ def get_motor_pvs():
     for name in [PVUtil.getString(pv) for pv in pvs[1:]]:  # pvs[0] is for the number of motors
     
         if is_unexpanded_macro(name):
-            motor_pvs.append(None)
-            
-        else:
-            def get_motor_target():
-                """
-                e.g. "TE:NDW1836:THETA:MOTOR"
-                """
-                return display.getMacroValue("P") + name + ":MOTOR"
-                
+            motor_pvs.append(None)            
+        else:                
             # Associate all PVs with the top-level display for ease. Shouldn't be any conflict
-            motor_pvs.append(PVUtil.createPV(get_motor_target(), display))
+            motor_pvs.append(PVUtil.createPV(display.getMacroValue("P") + name + ":MOTOR", display))
             
     return motor_pvs
 
