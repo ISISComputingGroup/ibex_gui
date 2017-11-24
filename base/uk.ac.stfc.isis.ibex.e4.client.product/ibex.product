@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="IBEX" uid="ibex.product" id="uk.ac.stfc.isis.ibex.e4.product.ibex" application="uk.ac.stfc.isis.ibex.e4.product.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="IBEX" uid="ibex.product" id="uk.ac.stfc.isis.ibex.e4.client.IBEX_E4" application="uk.ac.stfc.isis.ibex.e4.product.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
@@ -54,8 +54,80 @@
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.beamstatus" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.configserver" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.dae" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.dashboard" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.databases" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.devicescreens" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.client" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.product" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.beamstatus" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.blocks" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.dae" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.handlers" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.epics" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.epics.switching" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.experimentdetails" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.help" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.instrument" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.instrument.baton" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.log" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.logger" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.managermode" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.model" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.motor" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.nicos" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.opis" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.preferences" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.runcontrol" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.scriptgenerator" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.synoptic" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.targets" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.banner" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.beamstatus" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.blocks" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.blocks.presentation" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.configserver" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.dae" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.dashboard" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.devicescreens" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.experimentdetails" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.help" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.ioccontrol" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.log" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.logger" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.mainmenu" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.motor" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.nicos" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.perspectives" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.runcontrol" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.scriptgenerator" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.scripting" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.statusbar" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.synoptic" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.synoptic.editor" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.targets" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.weblinks" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.widgets" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.validators" autoStart="false" startLevel="0" />
+      <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.e4.product" />
    </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
