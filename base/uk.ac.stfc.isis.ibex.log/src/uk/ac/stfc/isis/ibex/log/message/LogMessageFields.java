@@ -35,65 +35,118 @@ final class LogMessageFieldTags {
     }
 }
 
+/**
+ * The Enum for all the field in the log message tables.
+ */
 public enum LogMessageFields {
-    CONTENTS("Content", LogMessageFieldTags.TAG_CONTENTS, 500), SEVERITY(
-	    "Severity", LogMessageFieldTags.TAG_SEVERITY, 100), EVENT_TIME(
-	    "Event Time", LogMessageFieldTags.TAG_EVENTTIME, 200), CREATE_TIME(
-	    "Create Time", LogMessageFieldTags.TAG_CREATETIME, 0), CLIENT_NAME(
-	    "Sender", LogMessageFieldTags.TAG_CLIENTNAME, 150), CLIENT_HOST(
-	    "Sender Host", LogMessageFieldTags.TAG_CLIENTHOST, 0), TYPE("Type",
-	    LogMessageFieldTags.TAG_TYPE, 100), APPLICATION_ID(
-	    "Application ID", LogMessageFieldTags.TAG_APPID, 0);
+    
+    /** The contents column. */
+    CONTENTS("Content", LogMessageFieldTags.TAG_CONTENTS, 500), 
+    
+    /** The severity column. */
+    SEVERITY("Severity", LogMessageFieldTags.TAG_SEVERITY, 100), 
+    
+    /** The event time column. */
+    EVENT_TIME("Event Time", LogMessageFieldTags.TAG_EVENTTIME, 200), 
+    
+    /** The create time column. */
+    CREATE_TIME("Create Time", LogMessageFieldTags.TAG_CREATETIME, 0), 
+    
+    /** The client name column. */
+    CLIENT_NAME("Sender", LogMessageFieldTags.TAG_CLIENTNAME, 150), 
+    
+    /** The client host column. */
+    CLIENT_HOST("Sender Host", LogMessageFieldTags.TAG_CLIENTHOST, 0), 
+    
+    /** The type column. */
+    TYPE("Type", LogMessageFieldTags.TAG_TYPE, 100), 
+    
+    /** The application id column. */
+    APPLICATION_ID("Application ID", LogMessageFieldTags.TAG_APPID, 0);
 
+	/** List fo all the columns. */
+	public static final LogMessageFields[] COLUMNS = {
+			LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
+			LogMessageFields.CONTENTS, LogMessageFields.EVENT_TIME,
+			LogMessageFields.CREATE_TIME, LogMessageFields.SEVERITY,
+			LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
+	
     private String displayName;
     private String tagName;
     private int defaultColumnWidth;
 
-    LogMessageFields(String displayName, String tagName,
-	    int defaultColumnWidth) {
-	this.displayName = displayName;
-	this.tagName = tagName;
-	this.defaultColumnWidth = defaultColumnWidth;
+    /**
+     * Constructor.
+     * 
+     * @param displayName the display name
+     * @param tagName the tag name
+     * @param defaultColumnWidth the default column width
+     */
+    LogMessageFields(String displayName, String tagName, int defaultColumnWidth) {
+        this.displayName = displayName;
+        this.tagName = tagName;
+        this.defaultColumnWidth = defaultColumnWidth;
     }
 
+    /**
+     * Gets the display name.
+     *
+     * @return the display name
+     */
     public String getDisplayName() {
-	return displayName;
+        return displayName;
     }
 
+    /**
+     * Gets the tag name.
+     *
+     * @return the tag name
+     */
     public String getTagName() {
-	return tagName;
+        return tagName;
     }
 
+    /**
+     * Gets the default column width.
+     * 
+     * @return the width
+     */
     public int getDefaultColumnWidth() {
-	return defaultColumnWidth;
+        return defaultColumnWidth;
     }
 
     @Override
     public String toString() {
-	return displayName;
+        return displayName;
     }
 
-    public static LogMessageFields getFieldByTagName(String tagName)
-	    throws Exception {
-	switch (tagName) {
-	case LogMessageFieldTags.TAG_CONTENTS:
-	    return CONTENTS;
-	case LogMessageFieldTags.TAG_SEVERITY:
-	    return SEVERITY;
-	case LogMessageFieldTags.TAG_EVENTTIME:
-	    return EVENT_TIME;
-	case LogMessageFieldTags.TAG_CREATETIME:
-	    return CREATE_TIME;
-	case LogMessageFieldTags.TAG_CLIENTNAME:
-	    return CLIENT_NAME;
-	case LogMessageFieldTags.TAG_CLIENTHOST:
-	    return CLIENT_HOST;
-	case LogMessageFieldTags.TAG_TYPE:
-	    return TYPE;
-	case LogMessageFieldTags.TAG_APPID:
-	    return APPLICATION_ID;
-	default:
-	    throw new Exception("Unknown log message field tag: " + tagName);
-	}
+    /**
+     * Gets the field by tag name.
+     *
+     * @param tagName the tag name to find
+     * @return the field by tag name
+     * @throws Exception throws if the tag name is invalid
+     */
+    public static LogMessageFields getFieldByTagName(String tagName) throws Exception {
+        switch (tagName) {
+            case LogMessageFieldTags.TAG_CONTENTS:
+                return CONTENTS;
+            case LogMessageFieldTags.TAG_SEVERITY:
+                return SEVERITY;
+            case LogMessageFieldTags.TAG_EVENTTIME:
+                return EVENT_TIME;
+            case LogMessageFieldTags.TAG_CREATETIME:
+                return CREATE_TIME;
+            case LogMessageFieldTags.TAG_CLIENTNAME:
+                return CLIENT_NAME;
+            case LogMessageFieldTags.TAG_CLIENTHOST:
+                return CLIENT_HOST;
+            case LogMessageFieldTags.TAG_TYPE:
+                return TYPE;
+            case LogMessageFieldTags.TAG_APPID:
+                return APPLICATION_ID;
+            default:
+                throw new Exception("Unknown log message field tag: " + tagName);
+        }
     }
 }

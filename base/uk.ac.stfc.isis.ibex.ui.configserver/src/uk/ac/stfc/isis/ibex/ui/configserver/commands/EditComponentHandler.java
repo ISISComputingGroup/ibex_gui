@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -49,8 +48,8 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
 	 * 
 	 * @param shell the shell
 	 */
-	@Execute
-    public void execute(Shell shell) {
+	@Override
+	public void safeExecute(Shell shell) {
         ConfigSelectionDialog selectionDialog =
                 new ConfigSelectionDialog(shell, TITLE, SERVER.componentsInfo().getValue(), true, true);
         if (selectionDialog.open() == Window.OK) {

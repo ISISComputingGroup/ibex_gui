@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Action;
 
 /**
@@ -65,6 +66,7 @@ public abstract class DaeAction extends Action implements Closable {
 
 		@Override
 		public void onError(Exception e) {
+            IsisLog.getLogger(this.getClass()).warn("Exception occured in transition observer.", e);
 			setInTransition(true);
 		}
 	};
@@ -78,12 +80,15 @@ public abstract class DaeAction extends Action implements Closable {
 
 		@Override
 		public void onError(Exception e) {
+            IsisLog.getLogger(this.getClass()).warn("Exception occured in run state observer.", e);
 			setRunState(DaeRunState.UNKNOWN);
 		}
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			setRunState(DaeRunState.UNKNOWN);
+            if (!isConnected) {
+                setRunState(DaeRunState.UNKNOWN);
+            }
 		}
 	};
 

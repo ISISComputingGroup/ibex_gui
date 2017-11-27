@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -50,8 +49,8 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
      *
      * @param shell the shell
      */
-    @Execute
-    public void execute(Shell shell) {
+	@Override
+	public void safeExecute(Shell shell) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());
         MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell, 
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet());
@@ -64,7 +63,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 configService.uncheckedWrite(toDelete);
             } else {
                 displayWarning(selectedDependencies, shell);
-                execute(shell); // Re-open selection dialog.
+                safeExecute(shell); // Re-open selection dialog.
             }
         }
     }

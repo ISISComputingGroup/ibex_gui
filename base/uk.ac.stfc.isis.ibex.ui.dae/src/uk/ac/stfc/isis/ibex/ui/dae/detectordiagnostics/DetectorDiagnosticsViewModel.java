@@ -90,7 +90,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * @param spectrumNumbersList
+     * Update the spectrum numbers used.
+     * 
+     * @param spectrumNumbersList the new values
      */
     @Override
     public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
@@ -107,11 +109,12 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
 
     /**
-     * @param countRatesList
+     * Update the count rates for the spectra.
+     * 
+     * @param countRatesList the new values
      */
     @Override
     public synchronized void updateCountRates(final List<Double> countRatesList) {
-        
         this.countRatesList = countRatesList;
         
         try {    
@@ -124,7 +127,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * @param maxSpecBinCount
+     * Update the maximum bin count for the spectra.
+     * 
+     * @param maxSpecBinCount the new values
      */
     @Override
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
@@ -141,7 +146,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * @param integralsList
+     * Update the integrals for the spectra.
+     * 
+     * @param integralsList the new values
      */
     @Override
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
@@ -319,7 +326,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * @param value
+     * Set the integral time range lower limit.
+     * 
+     * @param value new value
      */
     @Override
     public void setIntegralTimeRangeFrom(String value) {
@@ -332,16 +341,16 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * Gets the integral time range to.
-     *
-     * @return the integral time range to
+     * @return the integral time range upper limit
      */
     public String getIntegralTimeRangeTo() {
         return integralTimeRangeTo != null ? integralTimeRangeTo.toString() : "";
     }
     
     /**
-     * @param value
+     * Set the integral time range upper limit.
+     * 
+     * @param value the new value
      */
     @Override
     public void setIntegralTimeRangeTo(String value) {
@@ -363,7 +372,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * @param value
+     * Set the maximum frames.
+     * 
+     * @param value the new value
      */
     @Override
     public void setMaxFrames(Integer value) {
@@ -378,8 +389,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
      * Sets the diagnostics enabled. (This is the readback to set use the
      * enabledDiagnostics property)
      *
-     * @param isEnabled
-     *            the new diagnostics enabled
+     * @param isEnabled the new diagnostics enabled
      */
     @Override
     public void setDiagnosticsEnabled(boolean isEnabled) {
@@ -438,8 +448,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
 
     /**
-     * @param isShown
-     *            true if the detector diagnostics is shown; false otherwise
+     * Set whether to show the detector diagnostics.
+     * 
+     * @param isShown true to show; false otherwise
      */
     public void setVisible(boolean isShown) {
         detectorDiagnosticsModel.setDetectorDiagnosticsEnabled(isShown);

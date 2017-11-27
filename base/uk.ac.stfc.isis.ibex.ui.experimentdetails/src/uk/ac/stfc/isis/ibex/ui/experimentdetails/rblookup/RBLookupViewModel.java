@@ -87,7 +87,7 @@ public class RBLookupViewModel extends ModelObject {
 	}
 	
     /**
-     * Get the date parameter set for the search
+     * Get the date parameter set for the search.
      * 
      * @return the date
      */

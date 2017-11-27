@@ -20,12 +20,13 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.List;
-import org.eclipse.e4.core.di.annotations.Execute;
+
 import org.eclipse.e4.ui.di.AboutToShow;
 import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuFactory;
-import org.eclipse.jface.window.IShellProvider;
+import org.eclipse.swt.widgets.Shell;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
@@ -81,19 +82,18 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
 
-	
 	/**
 	 * Execute the handler to open the edit/view config dialogue.
 	 *
-	 * @param shellprovider the shellprovider
+	 * @param shell the shell to user
 	 */
-	@Execute
-    public void execute(IShellProvider shellprovider) {
+	@Override
+    public void safeExecute(Shell shell) {
         ConfigHelper helper;
         if (canWrite)  {
-        	helper = new EditConfigHelper(shellprovider.getShell(), SERVER);
+        	helper = new EditConfigHelper(shell, SERVER);
         } else {
-        	helper = new ViewConfigHelper(shellprovider.getShell());
+        	helper = new ViewConfigHelper(shell);
         }
         helper.createDialogCurrent();
 	}

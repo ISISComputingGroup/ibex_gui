@@ -121,7 +121,9 @@ public class GroupsPanel extends Composite {
 	 * @param groups The new set of groups.
 	 */
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
-		this.displayGroups = groups;
+	    
+		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups, showHiddenBlocks);
+		
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -159,7 +161,7 @@ public class GroupsPanel extends Composite {
 	
 	private void addGroups() {
 		for (DisplayGroup group : displayGroups) {
-			groups.add(groupWidget(group));
+		    groups.add(groupWidget(group));
 		}
 	}
 	
@@ -193,5 +195,6 @@ public class GroupsPanel extends Composite {
 		configureMenu();
 		
 		groups.clear();
-	}
+	} 
+	
 }

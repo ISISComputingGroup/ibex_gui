@@ -1,18 +1,18 @@
 /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -37,13 +37,14 @@ import uk.ac.stfc.isis.ibex.log.Log;
  * preference store that belongs to the main plug-in class. That way,
  * preferences can be accessed directly via the preference store.
  */
-
-public class PreferencePage extends FieldEditorPreferencePage implements
-	IWorkbenchPreferencePage {
+public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+    /**
+     * Constructor.
+     */
     public PreferencePage() {
-	super(GRID);
-	setPreferenceStore(Log.getDefault().getPreferenceStore());
-	setDescription("Settings for connection to JMS server and SQL Database.");
+        super(GRID);
+        setPreferenceStore(Log.getDefault().getPreferenceStore());
+        setDescription("Settings for connection to JMS server and SQL Database.");
     }
 
     /**
@@ -53,31 +54,28 @@ public class PreferencePage extends FieldEditorPreferencePage implements
      */
     @Override
     public void createFieldEditors() {
-	addField(new StringFieldEditor(PreferenceConstants.P_JMS_TOPIC,
-		"JMS Message Topic:", getFieldEditorParent()));
+        addField(new StringFieldEditor(PreferenceConstants.P_JMS_TOPIC, "JMS Message Topic:", getFieldEditorParent()));
 
-	addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_SCHEMA,
-		"SQL Server Schema:", getFieldEditorParent()));
-	addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_USERNAME,
-		"SQL Server Username:", getFieldEditorParent()));
+        addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_SCHEMA, "SQL Server Schema:",
+                getFieldEditorParent()));
+        addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_USERNAME, "SQL Server Username:",
+                getFieldEditorParent()));
 
-	// Star out password field
-	StringFieldEditor password = new StringFieldEditor(
-		PreferenceConstants.P_MESSAGE_SQL_PASSWORD, "SQL Server Password:",
-		getFieldEditorParent()) {
-	    @Override
-	    protected void doFillIntoGrid(Composite parent, int numColumns) {
-		super.doFillIntoGrid(parent, numColumns);
+        // Star out password field
+        StringFieldEditor password = new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_PASSWORD,
+                "SQL Server Password:", getFieldEditorParent()) {
+            @Override
+            protected void doFillIntoGrid(Composite parent, int numColumns) {
+                super.doFillIntoGrid(parent, numColumns);
 
-		getTextControl().setEchoChar('*');
-	    }
-	};
+                getTextControl().setEchoChar('*');
+            }
+        };
 
-	addField(password);
+        addField(password);
 
-	addField(new BooleanFieldEditor(PreferenceConstants.P_MINOR_MESSAGE,
-		"Display minor errors on IOC Log button",
-		getFieldEditorParent()));
+        addField(new BooleanFieldEditor(PreferenceConstants.P_MINOR_MESSAGE, "Display minor errors on IOC Log button",
+                getFieldEditorParent()));
 
     }
 
