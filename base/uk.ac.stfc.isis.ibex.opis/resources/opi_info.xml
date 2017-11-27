@@ -1118,6 +1118,9 @@
 		<entry>
 			<key>OscillatingCollimator</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>OSCILLATING_COLLIMATOR</type>
 				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
 				<description>The OPI for the LET oscillating collimator.</description>
@@ -1132,6 +1135,9 @@
 		<entry>
 			<key>SKF MB350 Chopper</key>
 			<value>
+			<categories>
+					<category>Choppers</category>
+				</categories>
 				<type>CHOPPER</type>
 				<path>skf_mb350.opi</path>
 				<description>The OPI for the SKF MB350 Chopper.</description>
