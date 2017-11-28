@@ -7,4 +7,7 @@ base/workspace/.metadata/.log
 base/uk.ac.stfc.isis.ibex.opis/check_OPI_format_logs
 *.prefs
 .metadata/
-.recommenders/
+.recommenders/*.pyc
+*.iml
+.idea/*
+
