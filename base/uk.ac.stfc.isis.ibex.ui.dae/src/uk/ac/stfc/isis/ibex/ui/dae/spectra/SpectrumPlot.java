@@ -79,6 +79,7 @@ public class SpectrumPlot extends Canvas {
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			updateYAxisTitle();
+			setYData();
 		}
 	};
 	

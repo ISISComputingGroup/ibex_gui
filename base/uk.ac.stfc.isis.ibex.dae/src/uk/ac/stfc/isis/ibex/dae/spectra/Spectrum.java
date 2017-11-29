@@ -94,7 +94,22 @@ public class Spectrum extends ModelObject {
 	 * @return the Y data.
 	 */
 	public double[] yData() {
-		return yData;
+		double[] value = yData.clone();
+		if (SpectrumYAxisTypes.values()[spectrumYAxisTypeSelectionIndex] == SpectrumYAxisTypes.ABSOLUTE_COUNTS) {
+			if (value.length != xData.length) {
+				for (int i=0; i<value.length; i++) {
+					// Can't calculate widths if the lengths aren't the same.
+					// Just set everything to zero
+					value[i] = 0;
+				}
+			} else {
+				for (int i=0; i<value.length - 1; i++) {
+					value[i] *= Math.abs(xData[i+1] - xData[i]);
+				}
+				value[value.length - 1] = 0;
+			}
+		}
+		return value;
 	}
 	
 	/**
@@ -132,21 +147,6 @@ public class Spectrum extends ModelObject {
 	 * @param value the data to set.
 	 */
 	public void setYData(double[] value) {
-		if (SpectrumYAxisTypes.values()[spectrumYAxisTypeSelectionIndex] == SpectrumYAxisTypes.ABSOLUTE_COUNTS) {
-			
-			if (value.length != xData.length) {
-				for (int i=0; i<value.length; i++) {
-					// Can't calculate widths if the lengths aren't the same.
-					// Just set everything to zero
-					value[i] = 0;
-				}
-			} else {
-				for (int i=0; i<value.length - 1; i++) {
-					value[i] *= Math.abs(xData[i+1] - xData[i]);
-				}
-				value[value.length - 1] = 0;
-			}
-		}
 		firePropertyChange("yData", yData, yData = value);
 	}
 }
