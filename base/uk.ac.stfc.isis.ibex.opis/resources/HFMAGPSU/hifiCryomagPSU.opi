@@ -42,7 +42,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>595</height>
+    <height>547</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -111,9 +111,9 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>133</width>
-      <x>282</x>
+      <x>280</x>
       <name>ramp_to_zero</name>
-      <y>546</y>
+      <y>494</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -183,7 +183,7 @@ $(pv_value)</tooltip>
       <width>133</width>
       <x>420</x>
       <name>pause_ramp</name>
-      <y>546</y>
+      <y>494</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1054,52 +1054,7 @@ $(pv_value)</tooltip>
           <auto_size>false</auto_size>
           <read_only>true</read_only>
           <text></text>
-          <scripts>
-            <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-              <scriptName>EmbeddedScript</scriptName>
-              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-pause = PVUtil.getString(pvs[1])
-
-constant = PVUtil.getDouble(pvs[2])
-
-output = PVUtil.getDouble(pvs[0])
-mode = PVUtil.getString(pvs[3])
-final_target = PVUtil.getDouble(pvs[4])
-
-rate = display.getWidget("ramp_rate").getPV()
-rate = PVUtil.getDouble(rate)
-
-target = display.getWidget("final_target").getPV()
-target = PVUtil.getDouble(target)
-
-distance = abs(output-final_target)
-
-if mode == "TESLA":
-	rate *= constant
-
-if rate != 0:
-	time = distance/rate
-	time = round(time, 1)
-else:
-	time = 0
-
-if pause == 'OFF':
-	widget.setPropertyValue("text", time)
-else:
-	widget.setPropertyValue("text", "-")
-
-
-
-
-]]></scriptText>
-              <pv trig="true">$(PV_ROOT)_01:OUTPUT</pv>
-              <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
-              <pv trig="false">$(PV_ROOT)_01:CONSTANT</pv>
-              <pv trig="false">$(PV_ROOT)_01:OUTPUTMODE</pv>
-              <pv trig="false">$(PV_ROOT)_01:MIDFINALTARGET</pv>
-            </path>
-          </scripts>
+          <scripts />
           <show_units>false</show_units>
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>25</height>
@@ -1111,7 +1066,7 @@ else:
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT)_01:RAMPTIME</pv_name>
           <border_color>
             <color red="0" green="0" blue="0" />
           </border_color>
@@ -2899,7 +2854,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>145</height>
+      <height>91</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2976,61 +2931,6 @@ $(pv_value)</tooltip>
         <x>6</x>
         <name>log_message</name>
         <y>12</y>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <font>
-          <fontdata fontName="Consolas" height="10" style="0" />
-        </font>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-        <border_style>3</border_style>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <precision>0</precision>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <horizontal_alignment>0</horizontal_alignment>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>-6fe0425c:15e9aa8bacc:-2bd4</wuid>
-        <transparent>false</transparent>
-        <pv_value />
-        <auto_size>false</auto_size>
-        <text>######</text>
-        <rotation_angle>0.0</rotation_angle>
-        <scripts>
-          <path pathString="../Common Scripts/FormatWaveformChars.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(PV_ROOT)_01:ERRORMESSAGE</pv>
-          </path>
-        </scripts>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <show_units>true</show_units>
-        <height>43</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <visible>true</visible>
-        <pv_name>$(PV_ROOT)_01:ERRORMESSAGE</pv_name>
-        <vertical_alignment>1</vertical_alignment>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <precision_from_pv>false</precision_from_pv>
-        <widget_type>Text Update</widget_type>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <wrap_words>false</wrap_words>
-        <format_type>0</format_type>
-        <background_color>
-          <color red="255" green="255" blue="255" />
-        </background_color>
-        <width>511</width>
-        <x>6</x>
-        <name>log_message</name>
-        <y>66</y>
         <foreground_color>
           <color red="0" green="0" blue="0" />
         </foreground_color>
