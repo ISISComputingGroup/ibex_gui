@@ -1099,33 +1099,15 @@
 			</value>
 		</entry>
 		<entry>
-			<key>HLG</key>
+			<key>Fermi chopper lifter</key>
 			<value>
 				<categories>
-					<category>Cryogenics</category>
+					<category>Miscellaneous motion control</category>
 				</categories>
-				<type>HE_LEVEL_GAUGE</type>
-				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<type>CHOPPER</type>
+				<path>fermi_chopper_lift.opi</path>
+				<description>The OPI for the fermi chopper lifter.</description>
 				<macros>
-					<macro>
-						<name>HLG</name>
-						<description>The HLG PV prefix (e.g. HLG_01).</description>
-					</macro>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>OscillatingCollimator</key>
-			<value>
-				<type>OSCILLATING_COLLIMATOR</type>
-				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
-				<description>The OPI for the LET oscillating collimator.</description>
-				<macros>
-					<macro>
-						<name>MOT</name>
-						<description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
-					</macro>
 				</macros>
 			</value>
 		</entry>
