@@ -47,7 +47,8 @@ public class LogPlotterDisplay {
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IViewPart view = page.showView(LogPlotterView.ID, null, IWorkbenchPage.VIEW_ACTIVATE);
 
-//			LogPlotterView logplotterView = (LogPlotterView) view;
+			LogPlotterView logplotterView = (LogPlotterView) view;
+			logplotterView.setPv(pvAddress);
 
 		} catch (PartInitException e) {
 			e.printStackTrace();
