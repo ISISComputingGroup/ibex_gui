@@ -10,6 +10,14 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="ibex"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="uk.ac.stfc.isis.ibex.e4.product.application"
+            name="IBEX">
+      </product>
+   </extension>
 </plugin>
 
 

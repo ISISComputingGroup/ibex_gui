@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.epics.switching,
- uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  org.diirt.vtype;bundle-version="3.1.5",
  com.google.guava

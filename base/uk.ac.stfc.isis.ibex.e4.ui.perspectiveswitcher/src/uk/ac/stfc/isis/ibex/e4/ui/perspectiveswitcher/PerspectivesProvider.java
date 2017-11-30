@@ -2,8 +2,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.NoSuchElementException;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -31,11 +30,14 @@ public class PerspectivesProvider {
 		this.partService = partService;
 		this.app = app;
 		this.modelService = modelService;
-		this.perspectives =  modelService
-				.findElements(app, null, MPerspective.class, null)
-				.stream()
-				.filter(p -> p.isVisible())
-				.collect(Collectors.toList());
+		
+		perspectives = new ArrayList<>();
+		for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)){
+			if (perspective.isVisible()) {
+				perspectives.add(perspective);
+			}
+		}
+		
 		this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
 		instance = this;
 	}
@@ -62,7 +64,13 @@ public class PerspectivesProvider {
 	}
 	
 	public MPerspective getPerspective(String elementId) {
-		return perspectives.stream().filter(p -> matchPerspectivesById(p, elementId)).findAny().get();
+		
+		for (MPerspective perspective : perspectives) {
+			if (matchPerspectivesById(perspective, elementId)) {
+				return perspective;
+			}
+		}
+		throw new NoSuchElementException();
 	}
 	
 	public boolean isSelected(MPerspective perspective) {

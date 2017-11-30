@@ -4,7 +4,7 @@ Bundle-Name: Preferences
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.preferences;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.preferences.Preferences
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.preferences
 Require-Bundle: org.eclipse.ui,

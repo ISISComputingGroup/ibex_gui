@@ -19,20 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import org.csstudio.trends.databrowser2.Messages;
-import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
-import org.csstudio.trends.databrowser2.model.AxisConfig;
-import org.csstudio.trends.databrowser2.model.Model;
-import org.csstudio.trends.databrowser2.model.PVItem;
-import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.quickaccess.PerspectiveProvider;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.ui.UI;
