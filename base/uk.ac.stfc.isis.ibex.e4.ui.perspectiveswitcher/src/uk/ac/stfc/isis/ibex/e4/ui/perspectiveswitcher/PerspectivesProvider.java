@@ -13,6 +13,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 public class PerspectivesProvider {
 	
+	private static PerspectivesProvider instance;
+	
 	private final EPartService partService;
 	private List<MPerspective> perspectives = new ArrayList<MPerspective>();
 	private MPerspectiveStack perspectivesStack;
@@ -21,6 +23,10 @@ public class PerspectivesProvider {
 	
     private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 	
+    public static PerspectivesProvider getInstance(){
+    	return instance;
+    }
+    
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
 		this.partService = partService;
 		this.app = app;
@@ -31,6 +37,7 @@ public class PerspectivesProvider {
 				.filter(p -> p.isVisible())
 				.collect(Collectors.toList());
 		this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+		instance = this;
 	}
 	
 	public EPartService getPartService() {
@@ -55,7 +62,7 @@ public class PerspectivesProvider {
 	}
 	
 	public MPerspective getPerspective(String elementId) {
-		return perspectives.stream().filter(p-> matchPerspectivesById(p, elementId)).findAny().get();
+		return perspectives.stream().filter(p -> matchPerspectivesById(p, elementId)).findAny().get();
 	}
 	
 	public boolean isSelected(MPerspective perspective) {

@@ -279,8 +279,9 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_qNDzkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.9" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_sUqZQKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13">
-          <children xsi:type="basic:Part" xmi:id="_wzMaEKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterHistoryPresenter" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
+        <children xsi:type="basic:PartStack" xmi:id="_sUqZQKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="">
+          <children xsi:type="basic:Part" xmi:id="_wzMaEKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
+          <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterView" toBeRendered="false"/>
         </children>
       </children>
     </children>
