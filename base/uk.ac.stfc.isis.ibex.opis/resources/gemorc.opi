@@ -1352,7 +1352,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>373</width>
     <x>408</x>
-    <name>Current state</name>
+    <name>Current State</name>
     <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
