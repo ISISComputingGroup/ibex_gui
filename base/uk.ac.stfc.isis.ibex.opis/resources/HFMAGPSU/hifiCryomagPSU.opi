@@ -124,10 +124,8 @@ $(pv_value)</tooltip>
 
 # set mid target to zero value
 
-mid_widget = display.getWidget("hidden_mid").getPV()
-zero = display.getWidget("zero_value").getPV()
-zero_val = PVUtil.getDouble(zero)
-mid_widget.setValue(zero_val)
+target = display.getWidget("hidden_ramp_target").getPV()
+target.setValue(0)
 
 pv = widget.getPV()
 pv.setValue("OFF")
@@ -163,7 +161,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-4555ced6:15e60c584da:-7bbc</wuid>
       <pv_value />
-      <text>Pause Ramp</text>
+      <text>ABORT RAMP</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>37</height>
@@ -196,8 +194,15 @@ pv = widget.getPV()
 
 pv.setValue("ON")
 
+output = display.getWidget("hidden_output").getPV()
+output = PVUtil.getDouble(output)
 
-]]></scriptText>
+set_mid = display.getWidget("set_mid")
+set_mid.setValue(output*10000)
+
+# Set MID value to output to stop ramping to crazy value
+hidden_mid = display.getWidget("hidden_mid").getPV()
+hidden_mid.setValue(output)]]></scriptText>
           <embedded>true</embedded>
           <description></description>
         </action>
@@ -607,7 +612,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>97</width>
-          <x>336</x>
+          <x>311</x>
           <name>Label_10</name>
           <y>165</y>
           <foreground_color>
@@ -627,7 +632,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules>
-            <rule name="Enabled When Not Ramping" prop_id="enabled" out_exp="false">
+            <rule name="Visible When Not Ramping" prop_id="visible" out_exp="false">
               <exp bool_exp="pv0 == 0">
                 <value>false</value>
               </exp>
@@ -671,7 +676,16 @@ $(pv_value)</tooltip>
 
 mid_val = display.getWidget("set_mid").getValue()
 mid_set = display.getWidget("hidden_mid").getPV()
-mid_set.setValue(float(mid_val))
+mode = display.getWidget("hidden_output_mode").getPV()
+mode = PVUtil.getString(mode)
+
+constant = display.getWidget("constant").getPV()
+constant = PVUtil.getDouble(constant)
+
+if mode == "TESLA":
+	mid_set.setValue(float(mid_val/10000))
+else:
+	mid_set.setValue(float(mid_val/10000/constant))
 
 target = display.getWidget("hidden_ramp_target").getPV()
 target.setValue("MID")
@@ -811,7 +825,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>81</width>
-          <x>336</x>
+          <x>311</x>
           <name>Label_14</name>
           <y>213</y>
           <foreground_color>
@@ -928,8 +942,8 @@ $(pv_value)</tooltip>
           </background_color>
           <password_input>false</password_input>
           <name>Text</name>
-          <width>73</width>
-          <x>424</x>
+          <width>90</width>
+          <x>407</x>
           <y>210</y>
           <maximum>1.7976931348623157E308</maximum>
           <actions hook="false" hook_all="false" />
@@ -984,106 +998,9 @@ $(pv_value)</tooltip>
           </background_color>
           <password_input>false</password_input>
           <name>output</name>
-          <width>73</width>
-          <x>424</x>
+          <width>90</width>
+          <x>407</x>
           <y>162</y>
-          <maximum>1.7976931348623157E308</maximum>
-          <actions hook="false" hook_all="false" />
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <minimum>-1.7976931348623157E308</minimum>
-          <font>
-            <fontdata fontName="Segoe UI" height="11" style="0" />
-          </font>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-          <border_style>0</border_style>
-          <tooltip></tooltip>
-          <horizontal_alignment>0</horizontal_alignment>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>-6fe0425c:15e9aa8bacc:-7195</wuid>
-          <transparent>false</transparent>
-          <auto_size>false</auto_size>
-          <text>Time to Ramp Completion (S):</text>
-          <scripts />
-          <height>20</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <visible>true</visible>
-          <vertical_alignment>1</vertical_alignment>
-          <border_color>
-            <color name="ISIS_Border" red="0" green="0" blue="0" />
-          </border_color>
-          <widget_type>Label</widget_type>
-          <wrap_words>true</wrap_words>
-          <background_color>
-            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-          </background_color>
-          <width>187</width>
-          <x>57</x>
-          <name>Label_10</name>
-          <y>213</y>
-          <foreground_color>
-            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <show_scrollbar>false</show_scrollbar>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
-          </font>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-          <border_style>3</border_style>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <show_native_border>false</show_native_border>
-          <precision>1</precision>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <horizontal_alignment>2</horizontal_alignment>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>-6fe0425c:15e9aa8bacc:-7167</wuid>
-          <next_focus>0</next_focus>
-          <pv_value />
-          <auto_size>false</auto_size>
-          <read_only>true</read_only>
-          <text></text>
-          <scripts />
-          <show_units>false</show_units>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <height>25</height>
-          <multiline_input>false</multiline_input>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:RAMPTIME</pv_name>
-          <border_color>
-            <color red="0" green="0" blue="0" />
-          </border_color>
-          <precision_from_pv>false</precision_from_pv>
-          <widget_type>Text</widget_type>
-          <confirm_message></confirm_message>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <format_type>1</format_type>
-          <limits_from_pv>false</limits_from_pv>
-          <background_color>
-            <color red="255" green="255" blue="255" />
-          </background_color>
-          <password_input>false</password_input>
-          <name>ramp_time</name>
-          <width>73</width>
-          <x>239</x>
-          <y>210</y>
           <maximum>1.7976931348623157E308</maximum>
           <actions hook="false" hook_all="false" />
           <foreground_color>
@@ -1200,6 +1117,70 @@ else:
             <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
           </font>
           <off_label>OFF</off_label>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules>
+            <rule name="Visible when ramping" prop_id="visible" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>true</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
+            </rule>
+          </rules>
+          <enabled>true</enabled>
+          <wuid>-f23565e:1600305cac5:-73e5</wuid>
+          <pv_value />
+          <text>Pause Ramp</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>34</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT)_01:PAUSE:SP</pv_name>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>214</width>
+          <x>300</x>
+          <name>pause_ramp</name>
+          <y>27</y>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path></path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV()
+
+pv.setValue("ON")
+
+
+]]></scriptText>
+              <embedded>true</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+          </font>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
@@ -2523,7 +2504,7 @@ $(pv_value)</tooltip>
             <color red="255" green="255" blue="255" />
           </background_color>
           <password_input>false</password_input>
-          <name>Text_1</name>
+          <name>constant</name>
           <width>88</width>
           <x>225</x>
           <y>57</y>
@@ -2968,7 +2949,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>false</visible>
-      <pv_name>$(PV_ROOT)_01:MIDFINALTARGET</pv_name>
+      <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -3210,6 +3191,118 @@ $(pv_value)</tooltip>
       <width>43</width>
       <x>492</x>
       <y>72</y>
+      <maximum>1.7976931348623157E308</maximum>
+      <actions hook="false" hook_all="false" />
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <minimum>-1.7976931348623157E308</minimum>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <show_native_border>false</show_native_border>
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-f23565e:1600305cac5:-76db</wuid>
+      <next_focus>0</next_focus>
+      <pv_value />
+      <auto_size>false</auto_size>
+      <read_only>true</read_only>
+      <text></text>
+      <scripts />
+      <show_units>false</show_units>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>25</height>
+      <multiline_input>false</multiline_input>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>false</visible>
+      <pv_name>$(PV_ROOT)_01:OUTPUTMODE</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text</widget_type>
+      <confirm_message></confirm_message>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <format_type>0</format_type>
+      <limits_from_pv>false</limits_from_pv>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <password_input>false</password_input>
+      <name>hidden_output_mode</name>
+      <width>109</width>
+      <x>480</x>
+      <y>36</y>
+      <maximum>1.7976931348623157E308</maximum>
+      <actions hook="false" hook_all="false" />
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <minimum>-1.7976931348623157E308</minimum>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <show_native_border>false</show_native_border>
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-f23565e:1600305cac5:-7276</wuid>
+      <next_focus>0</next_focus>
+      <pv_value />
+      <auto_size>false</auto_size>
+      <read_only>true</read_only>
+      <text></text>
+      <scripts />
+      <show_units>false</show_units>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>25</height>
+      <multiline_input>false</multiline_input>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>false</visible>
+      <pv_name>$(PV_ROOT)_01:OUTPUT</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text</widget_type>
+      <confirm_message></confirm_message>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <format_type>0</format_type>
+      <limits_from_pv>false</limits_from_pv>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <password_input>false</password_input>
+      <name>hidden_output</name>
+      <width>43</width>
+      <x>412</x>
+      <y>36</y>
       <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
