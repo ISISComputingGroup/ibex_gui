@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>TE:NDW1801:HFMAGPSU</PV_ROOT>
+    <PV_ROOT>TE:NDLT658:HFMAGPSU</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -42,7 +42,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>547</height>
+    <height>565</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -85,7 +85,7 @@ $(pv_value)</tooltip>
             <value>true</value>
           </exp>
           <exp bool_exp="pv0 == 0">
-            <value>false</value>
+            <value>true</value>
           </exp>
           <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
         </rule>
@@ -110,10 +110,10 @@ $(pv_value)</tooltip>
         <color red="0" green="128" blue="255" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>133</width>
-      <x>280</x>
+      <width>155</width>
+      <x>258</x>
       <name>ramp_to_zero</name>
-      <y>494</y>
+      <y>516</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -181,7 +181,7 @@ $(pv_value)</tooltip>
       <width>133</width>
       <x>420</x>
       <name>pause_ramp</name>
-      <y>494</y>
+      <y>516</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -293,7 +293,7 @@ hidden_mid.setValue(output)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1192,7 +1192,7 @@ pv.setValue("ON")
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1605,7 +1605,7 @@ pv.setValue(1)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2088,8 +2088,8 @@ spinner_constant.setValue(constant_val)
             <color red="0" green="128" blue="255" />
           </border_color>
           <widget_type>Button</widget_type>
-          <width>133</width>
-          <x>144</x>
+          <width>169</width>
+          <x>108</x>
           <name>Button</name>
           <y>216</y>
           <foreground_color>
@@ -2169,7 +2169,7 @@ pvs[0].setValue(constant_val)]]></scriptText>
             <color red="0" green="128" blue="255" />
           </border_color>
           <widget_type>Button</widget_type>
-          <width>133</width>
+          <width>169</width>
           <x>288</x>
           <name>Button_1</name>
           <y>216</y>
@@ -2835,7 +2835,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>91</height>
+      <height>121</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2887,7 +2887,7 @@ $(pv_value)</tooltip>
         </scripts>
         <border_alarm_sensitive>true</border_alarm_sensitive>
         <show_units>true</show_units>
-        <height>43</height>
+        <height>55</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2908,7 +2908,7 @@ $(pv_value)</tooltip>
         <background_color>
           <color red="255" green="255" blue="255" />
         </background_color>
-        <width>511</width>
+        <width>499</width>
         <x>6</x>
         <name>log_message</name>
         <y>12</y>
