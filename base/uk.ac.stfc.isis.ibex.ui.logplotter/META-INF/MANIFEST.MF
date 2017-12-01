@@ -6,11 +6,11 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotter
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.csstudio.trends.databrowser2;bundle-version="3.2.17",
  uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.ui.blocks.presentation;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ org.csstudio.trends.databrowser2;bundle-version="4.2.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.logplotter

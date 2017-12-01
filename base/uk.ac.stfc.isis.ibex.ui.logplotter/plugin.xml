@@ -59,12 +59,6 @@
             id="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView"
             name="Log Plotter">
       </view>
-      <view
-            class="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterView"
-            id="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterView"
-            name="Log Plotter Data"
-            restorable="true">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">

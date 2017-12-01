@@ -55,6 +55,15 @@
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status" closeable="true"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks" closeable="true"/>
+    <sharedElements xsi:type="advanced:Area" xmi:id="_yi1esNadEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.area.0" selectedElement="_ZX9AENacEeekLPLQ_9IvJQ" label="Log Plotter Area">
+      <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
+        <tags>newtablook</tags>
+        <tags>org.eclipse.e4.primaryDataStack</tags>
+        <tags>EditorStack</tags>
+        <tags>NoAutoCollapse</tags>
+        <children xsi:type="basic:Part" xmi:id="_KUbkENZ8EeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
+      </children>
+    </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
@@ -279,10 +288,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_qNDzkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.9" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_sUqZQKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="">
-          <children xsi:type="basic:Part" xmi:id="_wzMaEKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
-          <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterView" toBeRendered="false"/>
-        </children>
+        <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="org.eclipse.ui.editorss" ref="_yi1esNadEeekLPLQ_9IvJQ"/>
       </children>
     </children>
   </snippets>
