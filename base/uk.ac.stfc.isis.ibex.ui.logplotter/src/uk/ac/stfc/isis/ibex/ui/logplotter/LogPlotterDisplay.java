@@ -54,8 +54,6 @@ public class LogPlotterDisplay {
 		// Create new editor
 		DataBrowserEditor editor = DataBrowserEditor.createInstance();
 
-		System.out.println("setting pv");
-//		super.setPartName(getBlockName(pvAddress));
 		final Model model = editor.getModel();
 		final double period = Preferences.getScanPeriod();
 		try {
@@ -64,6 +62,7 @@ public class LogPlotterDisplay {
 			// Add item to new axes
 			AxisConfig axisConfig = new AxisConfig(item.getDisplayName());
 			model.addAxis(axisConfig);
+			model.addItem(item);
 			
 		} catch (Exception ex) {
 			MessageDialog.openError(editor.getSite().getShell(), Messages.Error,
