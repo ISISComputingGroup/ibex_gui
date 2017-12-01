@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>TE:NDLT658:HFMAGPSU</PV_ROOT>
+    <PV_ROOT>TE:NDW1801:HFMAGPSU</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -293,7 +293,7 @@ hidden_mid.setValue(output)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>267</height>
+        <height>272</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -332,7 +332,7 @@ hidden_mid.setValue(output)]]></scriptText>
           <wuid>-4555ced6:15e60c584da:-19a3</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>MID target:</text>
+          <text>MID target (G):</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -362,58 +362,6 @@ hidden_mid.setValue(output)]]></scriptText>
           <show_scrollbar>false</show_scrollbar>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
-          </font>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-          <border_style>0</border_style>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <precision>0</precision>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <horizontal_alignment>0</horizontal_alignment>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>-4555ced6:15e60c584da:-19a2</wuid>
-          <transparent>true</transparent>
-          <pv_value />
-          <auto_size>false</auto_size>
-          <text>GAUSS&#xD;
-</text>
-          <rotation_angle>0.0</rotation_angle>
-          <scripts />
-          <border_alarm_sensitive>true</border_alarm_sensitive>
-          <show_units>true</show_units>
-          <height>27</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <visible>true</visible>
-          <pv_name></pv_name>
-          <vertical_alignment>1</vertical_alignment>
-          <border_color>
-            <color name="ISIS_Border" red="0" green="0" blue="0" />
-          </border_color>
-          <precision_from_pv>true</precision_from_pv>
-          <widget_type>Text Update</widget_type>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <wrap_words>false</wrap_words>
-          <format_type>0</format_type>
-          <background_color>
-            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-          </background_color>
-          <width>85</width>
-          <x>227</x>
-          <name>Text Update</name>
-          <y>34</y>
-          <foreground_color>
-            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
           </font>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -676,6 +624,7 @@ $(pv_value)</tooltip>
 
 mid_val = display.getWidget("set_mid").getValue()
 mid_set = display.getWidget("hidden_mid").getPV()
+
 mode = display.getWidget("hidden_output_mode").getPV()
 mode = PVUtil.getString(mode)
 
@@ -1192,7 +1141,7 @@ pv.setValue("ON")
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>267</height>
+        <height>272</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1605,7 +1554,7 @@ pv.setValue(1)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>267</height>
+        <height>272</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2949,7 +2898,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>false</visible>
-      <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
+      <pv_name>$(PV_ROOT)_01:MIDFINALTARGET</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
