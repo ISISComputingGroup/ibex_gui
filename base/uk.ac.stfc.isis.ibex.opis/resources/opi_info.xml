@@ -1098,6 +1098,43 @@
         </macros>
       </value>
     </entry>
+	<entry>
+		<key>HLG</key>
+        <categories>
+          <category>Gas handling systems</category>
+		</categories>
+		<value>
+			<categories>
+				<category>Cryogenics</category>
+			</categories>
+			<type>HE_LEVEL_GAUGE</type>
+			<path>hlg.opi</path>
+			<description>The OPI for the helium level guage.</description>
+			<macros>
+				<macro>
+					<name>HLG</name>
+					<description>The HLG PV prefix (e.g. HLG_01).</description>
+				</macro>
+			</macros>
+		</value>
+	</entry>
+	<entry>
+		<key>OscillatingCollimator</key>
+        <categories>
+          <category>Miscellaneous motion control</category>
+		</categories>
+		<value>
+			<type>OSCILLATING_COLLIMATOR</type>
+			<path>OscillatingCollimator/OscillatingCollimator.opi</path>
+			<description>The OPI for the LET oscillating collimator.</description>
+			<macros>
+				<macro>
+					<name>MOT</name>
+					<description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
+				</macro>
+			</macros>
+		</value>
+	</entry>
     <entry>
       <key>Fermi chopper lifter</key>
       <value>
@@ -1108,7 +1145,7 @@
         <path>fermi_chopper_lift.opi</path>
         <description>The OPI for the fermi chopper lifter.</description>
         <macros>
-				</macros>
+		</macros>
       </value>
     </entry>
     <entry>
@@ -1157,12 +1194,14 @@
       </value>
     </entry>
     <entry>
-      <key>GEMORC</key>
+      <key>GEMOscillatingRadialCollimator</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+          <category>Miscellaneous motion control</category>
+		</categories>
+        <type>OSCILLATING_COLLIMATOR</type>
         <path>gemorc.opi</path>
-        <description>The OPI for the GEMORC</description>
+        <description>The OPI for the GEM Oscillating Radial Collimator</description>
         <macros/>
       </value>
     </entry>
