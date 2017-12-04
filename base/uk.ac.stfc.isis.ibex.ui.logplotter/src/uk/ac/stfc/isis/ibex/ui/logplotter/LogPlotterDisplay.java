@@ -46,8 +46,7 @@ public class LogPlotterDisplay {
 		MPerspective element = provider.getPerspective(targetElementId);
 	    if (element != null) {
 	      	provider.getPartService().switchPerspective(element);
-	    }
-		else {
+	    } else {
 			System.out.println("Unable to find perspective part with ID: " + targetElementId);
 		}
 
@@ -61,6 +60,7 @@ public class LogPlotterDisplay {
 			item.useDefaultArchiveDataSources();
 			// Add item to new axes
 			AxisConfig axisConfig = new AxisConfig(item.getDisplayName());
+			axisConfig.setAutoScale(true);
 			model.addAxis(axisConfig);
 			model.addItem(item);
 			
