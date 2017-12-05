@@ -29,8 +29,16 @@ import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 
+/**
+ * Helper class for plotting the log of a specified block.
+ */
 public class LogPlotterDisplay {
 	
+	/**
+	 * Opens a CSS databrowser showing the log plot of the block specified.
+	 * 
+	 * @param pvAddress The block's PV address
+	 */
 	public void displayPVHistory(String pvAddress) {	
 
 		// Create new editor

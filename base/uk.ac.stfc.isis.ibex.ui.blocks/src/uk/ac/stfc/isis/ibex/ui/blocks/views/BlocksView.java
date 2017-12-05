@@ -101,7 +101,11 @@ public class BlocksView {
 
 	/**
 	 * Create the controls within the blocks view.
+	 * 
 	 * @param parent parent of the blocks view
+	 * @param app The E4 application model
+	 * @param partService The E4 service responsible for showing/hiding parts
+	 * @param modelService The E4 service responsible for handling model elements
 	 */
     @PostConstruct
 	public void createPartControl(final Composite parent, MApplication app, EPartService partService, EModelService modelService) {
