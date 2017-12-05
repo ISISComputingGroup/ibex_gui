@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -32,6 +31,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
+import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
@@ -49,6 +49,7 @@ public class BlocksMenu extends MenuManager {
 	
 	private final IAction editBlockAction;
 	
+	private final BlockLogPerspectiveSwitcher switcher = BlocksView.switcher;
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
@@ -88,6 +89,7 @@ public class BlocksMenu extends MenuManager {
         IAction displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
+				switcher.switchPerspective();
 				pvHistoryPresenter.displayHistory(block.blockServerAlias());
 			}
 		};

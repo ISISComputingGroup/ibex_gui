@@ -25,6 +25,9 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -36,6 +39,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlockLogPerspectiveSwitcher;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
 /**
@@ -55,6 +59,11 @@ public class BlocksView {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
 
+	/**
+	 * Helper for switching to the logplotter perspective.
+	 */
+	public static BlockLogPerspectiveSwitcher switcher;
+	
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 
@@ -95,7 +104,8 @@ public class BlocksView {
 	 * @param parent parent of the blocks view
 	 */
     @PostConstruct
-	public void createPartControl(final Composite parent) {
+	public void createPartControl(final Composite parent, MApplication app, EPartService partService, EModelService modelService) {
+		switcher = new BlockLogPerspectiveSwitcher(app, partService, modelService);
 		
 		GridLayout glParent = new GridLayout(1, false);
 		glParent.verticalSpacing = 2;
