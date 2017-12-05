@@ -261,7 +261,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -343,7 +343,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -425,7 +425,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -507,7 +507,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -589,7 +589,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -650,7 +650,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -671,7 +671,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -732,7 +732,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -753,7 +753,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -835,7 +835,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis_params.opi</opi_file>
+        <opi_file>single_axis.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -1278,7 +1278,7 @@ $(pv_value)</tooltip>
       <wuid>4fdc1aa2:158de06471b:-77b0</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>IP Address:</text>
+      <text>IP address:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1421,7 +1421,7 @@ $(pv_value)</tooltip>
       <wuid>7c053f9e:15f9bef5288:-5b16</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Home Type:</text>
+      <text>Home type:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1462,7 +1462,7 @@ $(pv_value)</tooltip>
       <wuid>7c053f9e:15f9bef5288:-5afc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Limit Type:</text>
+      <text>Limit type:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
