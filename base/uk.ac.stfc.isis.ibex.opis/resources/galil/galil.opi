@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <M>01</M>
+    <M>02</M>
     <P>TE:NDLT702:</P>
     <PV_ROOT>$(P)MOT:</PV_ROOT>
   </macros>
@@ -240,7 +240,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -261,7 +261,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -269,7 +269,7 @@
         <wuid>6892be24:156313795e2:-7d1e</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>409</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -290,7 +290,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>775</width>
+        <width>769</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -343,7 +343,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -351,7 +351,7 @@
         <wuid>-40c4852:15fa6b58686:-7e35</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>409</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -425,7 +425,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -433,7 +433,7 @@
         <wuid>-40c4852:15fa6b58686:-7e04</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>415</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -507,7 +507,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -515,7 +515,7 @@
         <wuid>-40c4852:15fa6b58686:-7dbf</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>403</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -589,7 +589,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -597,7 +597,7 @@
         <wuid>-40c4852:15fa6b58686:-7d84</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>409</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -671,7 +671,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -679,7 +679,7 @@
         <wuid>-40c4852:15fa6b58686:-7d45</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>403</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -732,7 +732,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -753,7 +753,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -761,7 +761,7 @@
         <wuid>-40c4852:15fa6b58686:-7d0a</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>403</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -835,7 +835,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -843,7 +843,7 @@
         <wuid>-40c4852:15fa6b58686:-7ccf</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>385</height>
+        <height>409</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -864,7 +864,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>775</width>
+        <width>751</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
