@@ -10,7 +10,6 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <M>02</M>
-    <P>TE:NDLT702:</P>
     <PV_ROOT>$(P)MOT:</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
@@ -240,7 +239,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -261,7 +260,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -343,7 +342,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -425,7 +424,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -507,7 +506,7 @@
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -589,7 +588,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -650,7 +649,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -671,7 +670,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -753,7 +752,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
@@ -835,7 +834,7 @@
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-        <opi_file>single_axis.opi</opi_file>
+        <opi_file>single_axis_params.opi</opi_file>
         <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />

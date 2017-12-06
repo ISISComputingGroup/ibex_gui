@@ -1159,6 +1159,9 @@
 		<entry>
 			<key>Galil Engineering View</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>GALIL_ENGINEERING</type>
 				<path>galil/galil.opi</path>
 				<description>The OPI giving a detailed engineering view of a galil.</description>
