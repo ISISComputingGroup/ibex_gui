@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
+import uk.ac.stfc.isis.ibex.dae.spectra.SpectrumYAxisTypes;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 
@@ -73,6 +74,13 @@ public class SpectrumPlot extends Canvas {
 			setYData();
 		}
 	};
+
+	private final PropertyChangeListener typeSelectionIndexListener =  new PropertyChangeListener() {	
+		@Override
+		public void propertyChange(PropertyChangeEvent e) {
+			updateYAxisTitle();
+		}
+	};
 	
     /**
      * Instantiates a new spectrum plot.
@@ -98,20 +106,21 @@ public class SpectrumPlot extends Canvas {
         traceDataProvider.setConcatenate_data(false);
         traceDataProvider.setUpdateMode(UpdateMode.X_OR_Y);
 
-		trace = new Trace("Spectrum", plot.primaryXAxis, plot.primaryYAxis, traceDataProvider);
+		trace = new Trace("Spectrum", plot.getPrimaryXAxis(), plot.getPrimaryYAxis(), traceDataProvider);
 		trace.setAntiAliasing(true);
 		
-        plot.primaryXAxis.setTitle("Time-of-flight (" + Utils.MU + "s)");
-		plot.primaryXAxis.setDashGridLine(true);
-		plot.primaryXAxis.setAutoScale(true);
-        plot.primaryXAxis.setAutoScaleThreshold(0);
-        plot.primaryXAxis.setFormatPattern("0");
-				
-        plot.primaryYAxis.setTitle("Count (/" + Utils.MU + "s)");
-		plot.primaryYAxis.setDashGridLine(true);
-		plot.primaryYAxis.setAutoScale(true);
-        plot.primaryYAxis.setAutoScaleThreshold(0);
-        plot.primaryYAxis.setFormatPattern("0");
+        plot.getPrimaryXAxis().setTitle("Time-of-flight (" + Utils.MU + "s)");
+		plot.getPrimaryXAxis().setDashGridLine(true);
+		plot.getPrimaryXAxis().setAutoScale(true);
+        plot.getPrimaryXAxis().setAutoScaleThreshold(0);
+        plot.getPrimaryXAxis().setFormatPattern("0");
+
+        plot.getPrimaryYAxis().setTitle("");
+		plot.getPrimaryYAxis().setDashGridLine(true);
+		plot.getPrimaryYAxis().setAutoScale(true);
+        plot.getPrimaryYAxis().setAutoScaleThreshold(0);
+        plot.getPrimaryYAxis().setFormatPattern("0");
+        
 		plot.addTrace(trace);
 	}
 
@@ -124,25 +133,34 @@ public class SpectrumPlot extends Canvas {
 		if (spectrum != null) {
 			spectrum.removePropertyChangeListener(xDataListener);
 			spectrum.removePropertyChangeListener(yDataListener);
+			spectrum.removePropertyChangeListener(typeSelectionIndexListener);
 		}
 		
 		spectrum = newSpectrum;
 		spectrum.addPropertyChangeListener("xData", xDataListener);
 		spectrum.addPropertyChangeListener("yData", yDataListener);
+		spectrum.addPropertyChangeListener("typeSelectionIndex", typeSelectionIndexListener);
 
 		if (spectrum.xData().length > DAE_SPECTRUM_BUFFER_SIZE || spectrum.yData().length > DAE_SPECTRUM_BUFFER_SIZE) {
             LOG.warn("DAE graph is clipped because DAE_SPECTRUM_BUFFER_SIZE is not large enough.");
 		}
 		
 		traceDataProvider.clearTrace();
+		
+		updateYAxisTitle();
         
 		updateData();
+	}
+	
+	private void updateYAxisTitle() {
+		plot.getPrimaryYAxis().setTitle(
+				SpectrumYAxisTypes.values()[spectrum.getTypeSelectionIndex()].toString());
 	}
 
     /**
      * Update both the x and y data.
      */
-    public void updateData() {
+    private void updateData() {
         setXData();
 		setYData();
     }

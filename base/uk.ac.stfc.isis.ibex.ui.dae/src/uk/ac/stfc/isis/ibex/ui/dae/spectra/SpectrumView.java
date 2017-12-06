@@ -30,10 +30,12 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
+import uk.ac.stfc.isis.ibex.dae.spectra.SpectrumYAxisTypes;
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
 /**
@@ -43,6 +45,7 @@ public class SpectrumView extends Composite {
 	
     private Spinner number;
     private Spinner period;
+    private Combo spectrumType;
 	private SpectrumPlot spectrumFigure;
     private Timer timer = new Timer();
     private TimerTask timerTask;
@@ -86,9 +89,13 @@ public class SpectrumView extends Composite {
 		period.setLayoutData(gd_period);
         period.setMinimum(0);
         period.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
-
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
+        
+        spectrumType = new Combo(this, SWT.BORDER | SWT.DROP_DOWN | SWT.READ_ONLY);
+        String[] s = new String[SpectrumYAxisTypes.values().length];
+        for (int i = 0; i<SpectrumYAxisTypes.values().length; i++) {
+        	s[i] = SpectrumYAxisTypes.values()[i].toString();
+        }
+        spectrumType.setItems(s);
 
 		spectrumFigure = new SpectrumPlot(this, SWT.NONE);
         spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
@@ -104,7 +111,9 @@ public class SpectrumView extends Composite {
 		
 		bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.selection().observe(number), BeanProperties.value("number").observe(updatableSpectrum));
-		bindingContext.bindValue(WidgetProperties.selection().observe(period), BeanProperties.value("period").observe(updatableSpectrum));
+		bindingContext.bindValue(WidgetProperties.selection().observe(period), BeanProperties.value("period").observe(updatableSpectrum));		
+		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectrumType), 
+				BeanProperties.value("typeSelectionIndex").observe(updatableSpectrum));
 
         spectrum.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
