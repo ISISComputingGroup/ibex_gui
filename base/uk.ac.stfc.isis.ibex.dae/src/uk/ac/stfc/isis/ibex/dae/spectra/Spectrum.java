@@ -103,8 +103,8 @@ public class Spectrum extends ModelObject {
 					value[i] = 0;
 				}
 			} else {
-				for (int i=0; i<value.length - 1; i++) {
-					value[i] *= Math.abs(xData[i+1] - xData[i]);
+				for (int i = 0; i < value.length - 1; i++) {
+					value[i] *= Math.abs(xData[i + 1] - xData[i]);
 				}
 				value[value.length - 1] = 0;
 			}
@@ -115,7 +115,7 @@ public class Spectrum extends ModelObject {
 	/**
 	 * Sets the selection index of the Y axis type.
 	 * 
-	 * This is an index into the {@link SpectrumYAxisTypes} enum.
+	 * @param type an index into the {@link SpectrumYAxisTypes} enum.
 	 */
 	public void setTypeSelectionIndex(int type) {
 		firePropertyChange("typeSelectionIndex", spectrumYAxisTypeSelectionIndex, spectrumYAxisTypeSelectionIndex = type);

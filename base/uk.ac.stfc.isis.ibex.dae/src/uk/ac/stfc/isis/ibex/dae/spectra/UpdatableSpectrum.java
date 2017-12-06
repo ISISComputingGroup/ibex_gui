@@ -32,7 +32,7 @@ public class UpdatableSpectrum extends Spectrum {
 	 * Constructor.
 	 * @param preferenceStore the preference store to use.
 	 */
-	public UpdatableSpectrum(Preferences preferenceStore){
+	public UpdatableSpectrum(Preferences preferenceStore) {
 		super(preferenceStore);
 	}
 
