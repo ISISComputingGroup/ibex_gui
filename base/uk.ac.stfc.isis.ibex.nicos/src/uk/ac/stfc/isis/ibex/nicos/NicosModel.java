@@ -18,139 +18,135 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.apache.logging.log4j.Logger;
+import org.zeromq.ZMQException;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
-import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
-import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
-import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
- * The model that holds the connection to nicos.
+ * The model that holds the connection to NICOS.
  */
-public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveMessage> {
+public class NicosModel extends ModelObject {
 
     private static final Logger LOG = IsisLog.getLogger(NicosModel.class);
 
     /**
-     * The command that allows you to log in to nicos.
+     * Error for when a script fails to send.
      */
-    private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
+    public static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
 
-    private final SendReceiveSession session;
+    /**
+     * Error for when a login fails.
+     */
+    public static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
+
+    /**
+     * Error for when the protocol received from the server is unrecognised.
+     */
+    public static final String INVALID_PROTOCOL = "NICOS protocol is invalid";
+
+    /**
+     * Error for when the serialiser received from the server is unrecognised.
+     */
+    public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
+
+    private final ZMQSession session;
 
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
-
-    private SendMessageDetails scriptSendMessageDetails;
-    private SendMessageDetails loginSendMessageDetails;
-
     private String scriptSendErrorMessage = "";
 
     private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
     private String connectionErrorMessage = "";
+    
+    private RepeatingJob connectionJob;
 
     /**
      * Constructor for the model.
      * 
-     * This will initialise the connection to the appropriate ActiveMQ Queue and
-     * login to nicos.
+     * This will initialise the connection to zeroMQ and login to NICOS.
      * 
      * @param session
-     *            the session to use to send messages to the script sever
+     *            the session to use to send and receive messages to and from
+     *            the script sever
+     * @param connectionJob
+     *            the job that will periodically be run to reconnect to NICOS if
+     *            a connection has failed. (pulled out of class for testing)
+     * 
      */
-    public NicosModel(SendReceiveSession session) {
+    public NicosModel(ZMQSession session, RepeatingJob connectionJob) {
         this.session = session;
-        MessageParser<ReceiveMessage> parser = new NicosMessageParser();
-        parser.addMessageConsumer(this);
-        this.session.addMessageParser(parser);
-        this.session.addPropertyChangeListener("connection", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                Boolean isConnected = (Boolean) evt.getNewValue();
-                connectedChange(isConnected);
-            }
-
-        });
-        this.session.addPropertyChangeListener("connectionError", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setConnectionErrorMessage((String) evt.getNewValue());
-            }
-
-        });
-
-        setConnectionErrorMessage(this.session.getConnectionError());
-        connectedChange(this.session.isConnected());
+        this.connectionJob = connectionJob;
+        this.connectionJob.schedule();
     }
 
-    @Override
-    public void newMessage(ReceiveMessage nicosMessage) {
-        LOG.info("New data on ss_admin: " + nicosMessage.toString());
-
-        if (nicosMessage.isReplyTo(scriptSendMessageDetails)) {
-            if (nicosMessage.isSuccess()) {
-                setScriptSendStatus(ScriptSendStatus.SENT);
-                setScriptSendErrorMessage("");
-            } else {
-                setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-                setScriptSendErrorMessage(nicosMessage.getMessage());
-            }
-        } else if (nicosMessage.isReplyTo(loginSendMessageDetails)) {
-            if (nicosMessage.isSuccess()) {
-                setConnectionStatus(ConnectionStatus.CONNECTED);
-                setConnectionErrorMessage("");
-            } else {
-                LOG.error("Error returned from Nicos on login: " + nicosMessage.getMessage());
-                setConnectionStatus(ConnectionStatus.FAILED);
-                setConnectionErrorMessage("Can not log in: " + nicosMessage.getMessage());
-            }
-        }
+    private void failConnection(String message) {
+        setConnectionStatus(ConnectionStatus.FAILED);
+        LOG.error(message);
+        setConnectionErrorMessage(message);
+        connectionJob.setRunning(true);
     }
 
     /**
-     * The connection status has changed. Login if connected.
+     * Connect the model to a NICOS server.
      * 
-     * @param isConnected
-     *            is the server connected
+     * @param instrument
+     *            The instrument to connect to.
      */
-    private void connectedChange(Boolean isConnected) {
-        // new connection so reset script send status
-        setScriptSendStatus(ScriptSendStatus.NONE);
-        setScriptSendErrorMessage("");
+    public void connect(InstrumentInfo instrument) {
+        setConnectionStatus(ConnectionStatus.CONNECTING);
+        setConnectionErrorMessage("");
 
-        if (isConnected) {
-            LOG.info("Logging in to nicos");
-            setConnectionStatus(ConnectionStatus.CONNECTING);
-            setConnectionErrorMessage("");
-            loginSendMessageDetails = sendMessageToNicos(new Login());
-            if (!loginSendMessageDetails.isSent()) {
-                LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
-                        + "\'");
-                setConnectionStatus(ConnectionStatus.FAILED);
-                setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
-            }
-        } else {
-            setConnectionStatus(ConnectionStatus.DISCONNECTED);
+        try {
+            session.connect(instrument);
+        } catch (ZMQException e) {
+            failConnection(e.getMessage());
+            return;
         }
+
+        GetBanner getBanner = new GetBanner();
+        SendMessageDetails response = sendMessageToNicos(getBanner);
+        if (!response.isSent()) {
+            failConnection(response.getFailureReason());
+            return;
+        } else {
+            ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
+            if (!banner.protocolValid()) {
+                failConnection(INVALID_PROTOCOL);
+                return;
+            } else if (!banner.serializerValid()) {
+                failConnection(INVALID_SERIALISER);
+                return;
+            }
+        }
+
+        SendMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());
+        if (!loginSendMessageDetails.isSent()) {
+            failConnection(FAILED_LOGIN_MESSAGE + loginSendMessageDetails.getFailureReason());
+            return;
+        }
+
+        setConnectionStatus(ConnectionStatus.CONNECTED);
+        connectionJob.setRunning(false);
     }
-
-
-    @Override
-    public void clearMessages() {
-        // messages are not stored so there is no need to clear them.
+    
+    /**
+     * Disconnect the model from the NICOS server.
+     */
+    public void disconnect() {
+        session.disconnect();
+        setConnectionStatus(ConnectionStatus.DISCONNECTED);
+        setConnectionErrorMessage("");
+        connectionJob.setRunning(true);
     }
 
 
@@ -177,10 +173,12 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
     public void sendScript(String script) {
         setScriptSendStatus(ScriptSendStatus.SENDING);
         QueueScript nicosMessage = new QueueScript("ScriptFromGUI", script);
-        this.scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
-        if (!this.scriptSendMessageDetails.isSent()) {
+        SendMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+        if (!scriptSendMessageDetails.isSent()) {
             setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
             setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+        } else {
+            setScriptSendStatus(ScriptSendStatus.SENT);
         }
     }
 
@@ -191,15 +189,8 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
-        JsonSerialisingConverter<NicosSendMessage> serialiser =
-                new JsonSerialisingConverter<NicosSendMessage>(nicosMessage.getClass());
-        try {
-            return this.session.sendMessage(serialiser.convert(nicosMessage));
-        } catch (ConversionException e) {
-            LOG.error("Problem serialising the object before send a message to nicos.", e);
-            return SendMessageDetails.createSendFail("Can not convert message to json", "");
-        }
+    private SendMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
+        return session.sendMessage(nicosMessage);
     }
 
     /**

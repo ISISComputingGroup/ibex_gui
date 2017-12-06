@@ -19,40 +19,40 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.activemq;
+package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
  * Class to capture details about having sent a message. This is returned when a
- * message is sent to Nagios.
+ * message is sent to NICOS.
  */
-public class SendMessageDetails {
+public final class SendMessageDetails {
 
     private boolean isSent;
     private String failureReason;
-    private String messageId;
+    private ReceiveMessage response;
 
     /**
      * Creates the message details when the send fails.
      *
      * @param failureReason
      *            the failure reason
-     * @param messageId
-     *            the message id
+     * 
      * @return the failure send message details
      */
-    public static SendMessageDetails createSendFail(String failureReason, String messageId) {
-        return new SendMessageDetails(false, failureReason, messageId);
+    public static SendMessageDetails createSendFail(String failureReason) {
+        return new SendMessageDetails(false, failureReason, null);
     }
 
     /**
      * Creates the message details for a send success.
+     * 
+     * @param received
+     *            The message received from NICOS.
      *
-     * @param messageId
-     *            the message id
      * @return the send message details
      */
-    public static SendMessageDetails createSendSuccess(String messageId) {
-        return new SendMessageDetails(true, "", messageId);
+    public static SendMessageDetails createSendSuccess(ReceiveMessage received) {
+        return new SendMessageDetails(true, "", received);
     }
 
     /**
@@ -62,14 +62,20 @@ public class SendMessageDetails {
      *            true if the message has been sent; false otherwise
      * @param failureReason
      *            the reason for a failure
-     * @param messageId
-     *            the message id sent to JMS to coordinate messages and replies
+     * @param response
+     *            the message that was originally sent to NICOS.
      */
-    public SendMessageDetails(boolean isSent, String failureReason, String messageId) {
-        super();
+    private SendMessageDetails(boolean isSent, String failureReason, ReceiveMessage response) {
         this.isSent = isSent;
         this.failureReason = failureReason;
-        this.messageId = messageId;
+        this.response = response;
+    }
+
+    /**
+     * @return the message that was sent and it's response.
+     */
+    public ReceiveMessage getResponse() {
+        return response;
     }
 
     /**
@@ -84,20 +90,6 @@ public class SendMessageDetails {
      */
     public String getFailureReason() {
         return failureReason;
-    }
-
-    /**
-     * Message has the same message ID.
-     * 
-     * @param messageId
-     *            the message ID to check
-     * @return true if has the same message id; false otherwise
-     */
-    public boolean hasMessageId(String messageId) {
-        if (messageId == null) {
-            return false;
-        }
-        return this.messageId.equals(messageId);
     }
 
 }
