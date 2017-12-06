@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>TE:NDW1801:HFMAGPSU</PV_ROOT>
+    <PV_ROOT>TE:NDLT658:HFMAGPSU</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -293,7 +293,7 @@ hidden_mid.setValue(output)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -332,7 +332,7 @@ hidden_mid.setValue(output)]]></scriptText>
           <wuid>-4555ced6:15e60c584da:-19a3</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>MID target (G):</text>
+          <text>MID target:(G):</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -392,7 +392,7 @@ hidden_mid.setValue(output)]]></scriptText>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>81</width>
+          <width>96</width>
           <x>36</x>
           <name>Label_8</name>
           <y>77</y>
@@ -570,85 +570,6 @@ $(pv_value)</tooltip>
           <show_scrollbar>false</show_scrollbar>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
-          </font>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-          <toggle_button>false</toggle_button>
-          <border_style>0</border_style>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <push_action_index>0</push_action_index>
-          <rules>
-            <rule name="Visible When Not Ramping" prop_id="visible" out_exp="false">
-              <exp bool_exp="pv0 == 0">
-                <value>false</value>
-              </exp>
-              <exp bool_exp="pv0 == 1">
-                <value>true</value>
-              </exp>
-              <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
-            </rule>
-          </rules>
-          <enabled>true</enabled>
-          <wuid>-4555ced6:15e60c584da:-199c</wuid>
-          <pv_value />
-          <text>Ramp to TARGET</text>
-          <scripts />
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <height>34</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <image></image>
-          <visible>true</visible>
-          <pv_name>$(PV_ROOT)_01:PAUSE:SP</pv_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Button</widget_type>
-          <width>214</width>
-          <x>300</x>
-          <name>ramp_to_target</name>
-          <y>27</y>
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <actions hook="false" hook_all="true">
-            <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
-              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-mid_val = display.getWidget("set_mid").getValue()
-mid_set = display.getWidget("hidden_mid").getPV()
-
-mode = display.getWidget("hidden_output_mode").getPV()
-mode = PVUtil.getString(mode)
-
-constant = display.getWidget("constant").getPV()
-constant = PVUtil.getDouble(constant)
-
-if mode == "TESLA":
-	mid_set.setValue(float(mid_val/10000))
-else:
-	mid_set.setValue(float(mid_val/10000/constant))
-
-target = display.getWidget("hidden_ramp_target").getPV()
-target.setValue("MID")
-
-pv = widget.getPV()
-pv.setValue("OFF")
-
-]]></scriptText>
-              <embedded>true</embedded>
-              <description></description>
-            </action>
-          </actions>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
           </font>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -1131,6 +1052,84 @@ pv.setValue("ON")
             <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
           </font>
         </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules>
+            <rule name="Visible When Not Ramping" prop_id="visible" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>false</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)_01:PAUSE</pv>
+            </rule>
+          </rules>
+          <enabled>true</enabled>
+          <wuid>-4555ced6:15e60c584da:-199c</wuid>
+          <pv_value />
+          <text>Ramp to TARGET</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>34</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT)_01:PAUSE:SP</pv_name>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>214</width>
+          <x>300</x>
+          <name>ramp_to_target</name>
+          <y>27</y>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="true">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path></path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+mid_val = display.getWidget("set_mid").getValue()
+mid_final_set = display.getWidget("hidden_mid_final").getPV()
+
+mid_set = display.getWidget("hidden_mid").getPV()
+
+
+constant = display.getWidget("constant").getPV()
+constant = PVUtil.getDouble(constant)
+
+mid_final_set.setValue(float(mid_val/10000))
+mid_set.setValue(float(mid_val/10000))
+
+
+target = display.getWidget("hidden_ramp_target").getPV()
+target.setValue("MID")
+
+pv = widget.getPV()
+pv.setValue(0)
+
+]]></scriptText>
+              <embedded>true</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+          </font>
+        </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
         <border_style>0</border_style>
@@ -1141,7 +1140,7 @@ pv.setValue("ON")
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1554,7 +1553,7 @@ pv.setValue(1)]]></scriptText>
         <transparent>true</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>272</height>
+        <height>267</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2912,7 +2911,7 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <password_input>false</password_input>
-      <name>hidden_mid</name>
+      <name>hidden_mid_final</name>
       <width>43</width>
       <x>276</x>
       <y>72</y>
@@ -3122,7 +3121,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>false</visible>
-      <pv_name>$(PV_ROOT)_01:MIDFINALTARGET</pv_name>
+      <pv_name>$(PV_ROOT)_01:MID:SP</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -3136,7 +3135,7 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <password_input>false</password_input>
-      <name>final_target</name>
+      <name>hidden_mid</name>
       <width>43</width>
       <x>492</x>
       <y>72</y>
