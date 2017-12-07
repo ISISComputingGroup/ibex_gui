@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="229">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="230">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.python.pydev.feature.feature.group" version="6.1.0.201711051306"/>
+<unit id="org.python.pydev.feature.feature.group" version="6.2.0.201711281614"/>
 <repository location="http://pydev.org/updates"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
