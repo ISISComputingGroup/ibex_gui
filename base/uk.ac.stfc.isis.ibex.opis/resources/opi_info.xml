@@ -1156,5 +1156,22 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Galil Engineering View</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>GALIL_ENGINEERING</type>
+				<path>galil/galil.opi</path>
+				<description>The OPI giving a detailed engineering view of a galil.</description>
+				<macros>
+					<macro>
+						<name>M</name>
+						<description>The galil number to view. E.g. the galil at MOT:MTR0304 would be 03</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
