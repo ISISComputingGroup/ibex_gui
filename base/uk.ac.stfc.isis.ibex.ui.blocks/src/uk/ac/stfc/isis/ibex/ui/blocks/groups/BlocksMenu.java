@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
@@ -46,10 +47,11 @@ public class BlocksMenu extends MenuManager {
     private static final String EDIT_BLOCK_PREFIX = "Edit host ";
     private static final String COMPONENT_SUFFIX = "component";
     private static final String CONFIGURATION_SUFFIX = "configuration";
-	
+	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
+
 	private final IAction editBlockAction;
 	
-	private final BlockLogPerspectiveSwitcher switcher = BlocksView.switcher;
+	private final PerspectiveSwitcher switcher = BlocksView.switcher;
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
@@ -89,7 +91,7 @@ public class BlocksMenu extends MenuManager {
         IAction displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
-				switcher.switchPerspective();
+				switcher.switchPerspective(LOGPLOTTER_ID);
 				pvHistoryPresenter.displayHistory(block.blockServerAlias());
 			}
 		};

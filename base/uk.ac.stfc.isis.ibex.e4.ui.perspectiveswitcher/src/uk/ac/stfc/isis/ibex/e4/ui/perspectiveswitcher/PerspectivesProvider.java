@@ -56,24 +56,6 @@ public class PerspectivesProvider {
 	}
 	
 	/**
-	 * Returns the E4 model service.
-	 * 
-	 * @return The model service
-	 */
-	public EModelService getModelService() {
-		return modelService;
-	}
-	
-	/**
-	 * Returns the E4 application model.
-	 * 
-	 * @return The application model
-	 */
-	public MApplication getApp() {
-		return app;
-	}
-
-	/**
 	 * Returns the list of all perspectives.
 	 * 
 	 * @return The list of perspectives

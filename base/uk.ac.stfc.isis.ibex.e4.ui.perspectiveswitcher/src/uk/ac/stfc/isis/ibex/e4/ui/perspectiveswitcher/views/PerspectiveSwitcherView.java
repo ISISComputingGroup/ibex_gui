@@ -7,6 +7,8 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -16,9 +18,12 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSelectionAdapter;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
+/**
+ * The view containing the perspective buttons.
+ */
 public class PerspectiveSwitcherView {
 
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
@@ -44,16 +49,28 @@ public class PerspectiveSwitcherView {
 	}
 
 	private void addPerspectiveShortcuts() {		
-		PerspectiveSelectionAdapter selectionAdapter = new PerspectiveSelectionAdapter(perspectivesProvider);
+		final PerspectiveSwitcher switcher = new PerspectiveSwitcher(perspectivesProvider);
+		final String keyID = "TARGET_ID";
+		
 		for (MPerspective perspective : perspectivesProvider.getPerspectives()) {
 			ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
 			// TODO: E4 creates an orphan of some perspectives where the label is surrounded by <>. I haven't found a way to stop it.
-			shortcut.setText(perspective.getLabel().replace("<","").replace(">",""));
+			shortcut.setText(perspective.getLabel().replace("<", "").replace(">", ""));
 			shortcut.setToolTipText(perspective.getTooltip());
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
 			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
-			shortcut.setData(PerspectiveSelectionAdapter.ID_KEY, perspective.getElementId());
-			shortcut.addSelectionListener(selectionAdapter);
+			shortcut.setData(keyID, perspective.getElementId());
+			shortcut.addSelectionListener(new SelectionListener() {
+				@Override
+				public void widgetSelected(SelectionEvent event) {
+					String targetElementId = (String) ((ToolItem) event.getSource()).getData(keyID);
+					switcher.switchPerspective(targetElementId);
+				}
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					// irrelevant for this control
+				}
+			});
 		}
 	}
 	

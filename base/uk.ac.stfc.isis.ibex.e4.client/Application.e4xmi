@@ -277,7 +277,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_vR5b4KkKEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter" accessibilityPhrase="Log Plotter" label="Log Plotter" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.logplotter/icons/databrowsing.png" tooltip="View graphed logs">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_vR5b4KkKEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter" accessibilityPhrase="Log Plotter" label="Log Plotter" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.logplotter/icons/stocks2_32x24.png" tooltip="View graphed logs">
     <children xsi:type="basic:PartSashContainer" xmi:id="_NmT1kKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_WqnHoKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_fHGLwKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
