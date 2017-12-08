@@ -37,7 +37,7 @@ public class PerspectivesProvider {
 		this.modelService = modelService;
 		
 		perspectives = new ArrayList<>();
-		for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)){
+		for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
 			if (perspective.isVisible()) {
 				perspectives.add(perspective);
 			}

@@ -31,9 +31,14 @@ public class PerspectiveSwitcherView {
 	private ToolBar toolBar;
 	private PerspectivesProvider perspectivesProvider; 
 
-	public PerspectiveSwitcherView() {
-	}
-
+	/**
+	 * Create and initialise the controls within the view.
+	 * 
+	 * @param parent The parent container
+	 * @param app The E4 application model
+	 * @param partService The E4 service responsible for showing/hiding parts
+	 * @param modelService The E4 service responsible for handling model elements
+	 */
 	@PostConstruct
 	public void draw(Composite parent, MApplication app, EPartService partService, EModelService modelService) {
 		Composite composite = new Composite(parent, SWT.None);
