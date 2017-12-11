@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
@@ -79,9 +78,10 @@ public class NicosModel extends ModelObject {
     private RepeatingJob connectionJob;
 	private int status;
 	private int lineNumber;
-	private String script;
-
+	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
+
+	
 
     /**
      * Constructor for the model.
@@ -284,18 +284,10 @@ public class NicosModel extends ModelObject {
 		if (response == null) {
 			failConnection(NO_RESPONSE);
 		} else {
-			setStatus(response.status.get(0));
+			// Status is a tuple (list) of 2 items. Line number is second item in list.
 			setLineNumber(response.status.get(1));
-			setScript(response.script);
+			setCurrentlyExecutingScript(response.script);
 		}
-	}
-	
-	public void setStatus(int status) {
-		firePropertyChange("status", this.status, this.status = status);
-	}
-	
-	public int getStatus() {
-		return status;
 	}
 	
 	public void setLineNumber(int lineNumber) {
@@ -306,11 +298,11 @@ public class NicosModel extends ModelObject {
 		return lineNumber;
 	}
 	
-	public void setScript(String script) {
-		firePropertyChange("script", this.script, this.script = script);
+	public void setCurrentlyExecutingScript(String script) {
+		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}
 	
-	public String getScript() {
-		return script;
+	public String getCurrentlyExecutingScript() {
+		return currentlyExecutingScript;
 	}
 }
