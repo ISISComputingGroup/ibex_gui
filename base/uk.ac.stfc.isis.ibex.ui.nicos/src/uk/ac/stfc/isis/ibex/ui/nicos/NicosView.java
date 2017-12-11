@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -65,12 +66,15 @@ public class NicosView extends ViewPart {
 
 	private Label lblLineNum;
 
+	private ScriptStatusViewModel scriptStatusViewModel;
+
     /**
      * The default constructor for the view.
      */
     public NicosView() {
         model = Nicos.getDefault().getModel();
         queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+        scriptStatusViewModel = new ScriptStatusViewModel(model);
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
@@ -105,21 +109,17 @@ public class NicosView extends ViewPart {
                 BeanProperties.value("connectionErrorMessage").observe(model));
         
         Composite currentScriptInfoContainer = new Composite(parent, SWT.NONE);
-        currentScriptInfoContainer.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1));
-        currentScriptInfoContainer.setLayout(new GridLayout(3, false));
+        currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        currentScriptInfoContainer.setLayout(new GridLayout(2, false));
         
         lblCurrentScript = new Label(currentScriptInfoContainer, SWT.NONE);
-        lblCurrentScript.setText("Current Script");
-        
-        lblLineNum = new Label(currentScriptInfoContainer, SWT.NONE);
-        lblLineNum.setText("Line number: ");
+        lblCurrentScript.setText("Current script status: ");
         
         Label lineNumber = new Label(currentScriptInfoContainer, SWT.NONE);
-        GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        lineNumberLayout.minimumWidth = 50;
+        GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		lineNumber.setLayoutData(lineNumberLayout);
         bindingContext.bindValue(WidgetProperties.text().observe(lineNumber),
-                BeanProperties.value("lineNumber").observe(model));
+                BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
         
         Label lblOutput = new Label(parent, SWT.NONE);
         lblOutput.setText("Output");
