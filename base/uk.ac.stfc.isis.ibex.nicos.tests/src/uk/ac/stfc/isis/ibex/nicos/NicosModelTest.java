@@ -28,21 +28,29 @@ import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 public class NicosModelTest {
@@ -420,5 +428,53 @@ public class NicosModelTest {
         verify(zmqSession, atLeast(0)).sendMessage(message.capture());
         assertThat(message.getValue(), instanceOf(QueueScript.class));
     }
+    
+    @Test
+    public void GIVEN_successful_connection_but_no_reply_WHEN_get_script_status_THEN_connection_fail() {
+        connectSuccessfully();
+        
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(null));
+
+        model.updateScriptStatus();
+        
+        assertEquals(ConnectionStatus.FAILED, model.getConnectionStatus());
+        assertEquals(NicosModel.NO_RESPONSE, model.getConnectionErrorMessage());
+    }
+    
+    @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_line_number_extracted_from_second_element_of_list() {
+        connectSuccessfully();
+        
+        ReceiveScriptStatus response = new ReceiveScriptStatus();
+        
+        int linenum = 10;
+        
+        response.status = Arrays.asList(0, linenum);
+        
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals(linenum, model.getLineNumber());
+    }
+    
+    @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_script_extracted() {
+        connectSuccessfully();
+        
+        ReceiveScriptStatus response = new ReceiveScriptStatus();
+        
+        String script = "This is a really nice script \n with a newline in it.";
+        
+        response.status = Arrays.asList(0, 0);
+        response.script = script;
+        
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals(script, model.getCurrentlyExecutingScript());
+    }
+
 
 }

@@ -282,7 +282,7 @@ public class NicosModel extends ModelObject {
     /**
      * Gets the status of the currently executing script from the server.
      */
-	private void updateScriptStatus() {
+	public void updateScriptStatus() {
 		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
 		if (response == null) {
 			failConnection(NO_RESPONSE);
