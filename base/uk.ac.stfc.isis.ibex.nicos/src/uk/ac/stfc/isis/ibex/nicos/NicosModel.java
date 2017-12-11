@@ -65,6 +65,11 @@ public class NicosModel extends ModelObject {
      * Error for when the serialiser received from the server is unrecognised.
      */
     public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
+    
+    /**
+     * 
+     */
+    public static final String NO_RESPONSE = "Server did not respond to request.";
 
     private final ZMQSession session;
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
@@ -277,7 +282,7 @@ public class NicosModel extends ModelObject {
 	public void updateScriptStatus() {
 		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
 		if (response == null) {
-			failConnection("Server did not respond to request for script status.");
+			failConnection(NO_RESPONSE);
 		} else {
 			setStatus(response.status.get(0));
 			setLineNumber(response.status.get(1));
