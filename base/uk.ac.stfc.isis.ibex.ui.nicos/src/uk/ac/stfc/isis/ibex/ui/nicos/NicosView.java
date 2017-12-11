@@ -63,6 +63,8 @@ public class NicosView extends ViewPart {
 
     private Label lblCurrentScript;
 
+	private Label lblLineNum;
+
     /**
      * The default constructor for the view.
      */
@@ -102,8 +104,22 @@ public class NicosView extends ViewPart {
         bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
                 BeanProperties.value("connectionErrorMessage").observe(model));
         
-        lblCurrentScript = new Label(parent, SWT.NONE);
+        Composite currentScriptInfoContainer = new Composite(parent, SWT.NONE);
+        currentScriptInfoContainer.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1));
+        currentScriptInfoContainer.setLayout(new GridLayout(3, false));
+        
+        lblCurrentScript = new Label(currentScriptInfoContainer, SWT.NONE);
         lblCurrentScript.setText("Current Script");
+        
+        lblLineNum = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblLineNum.setText("Line number: ");
+        
+        Label lineNumber = new Label(currentScriptInfoContainer, SWT.NONE);
+        GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        lineNumberLayout.minimumWidth = 50;
+		lineNumber.setLayoutData(lineNumberLayout);
+        bindingContext.bindValue(WidgetProperties.text().observe(lineNumber),
+                BeanProperties.value("lineNumber").observe(model));
         
         Label lblOutput = new Label(parent, SWT.NONE);
         lblOutput.setText("Output");
@@ -120,7 +136,7 @@ public class NicosView extends ViewPart {
                 BeanProperties.value("script").observe(model));
         
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
-        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
         ssgLayout.marginRight = 10;
         ssgLayout.marginHeight = 10;
