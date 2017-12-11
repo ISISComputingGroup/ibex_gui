@@ -198,45 +198,45 @@ public class ExperimentSetup extends Closer  {
     }
 
     /**
-     * Returns an Observable for the name of the current instrument.
+     * Returns an Observable for the directory containing the period files.
      * 
-     * @return The instrument name.
+     * @return The directory.
      */
     public ForwardingObservable<String> getPeriodFilesDir() {
         return periodFilesDir;
     }
 
     /**
-     * Returns an Observable for the name of the current instrument.
+     * Returns an Observable for the directory containing the time channel files.
      * 
-     * @return The instrument name.
+     * @return The directory.
      */
     public ForwardingObservable<String> getTimeChannelsDir() {
         return timeChannelsDir;
     }
 
     /**
-     * Returns an Observable for the name of the current instrument.
+     * Returns an Observable for the directory containing the wiring tables.
      * 
-     * @return The instrument name.
+     * @return The directory.
      */
     public ForwardingObservable<String> getWiringTablesDir() {
         return wiringTablesDir;
     }
 
     /**
-     * Returns an Observable for the name of the current instrument.
+     * Returns an Observable for the directory containing the detector tables.
      * 
-     * @return The instrument name.
+     * @return The directory.
      */
     public ForwardingObservable<String> getDetectorTablesDir() {
         return detectorTablesDir;
     }
 
     /**
-     * Returns an Observable for the name of the current instrument.
+     * Returns an Observable for the directory containing the spectra tables.
      * 
-     * @return The instrument name.
+     * @return The directory.
      */
     public ForwardingObservable<String> getSpectraTablesDir() {
         return spectraTablesDir;
