@@ -56,7 +56,7 @@ public class DAEComboContentProvider {
      * @return the resulting array.
      */
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
+    	Collection<String> value = updated != null ? updated.getValue() : null;
         return value != null ? value.toArray(new String[0]) : new String[0];
     }
 
