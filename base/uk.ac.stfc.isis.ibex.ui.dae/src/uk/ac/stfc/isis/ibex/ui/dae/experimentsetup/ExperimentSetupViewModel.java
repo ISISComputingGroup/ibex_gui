@@ -45,13 +45,9 @@ public class ExperimentSetupViewModel {
 		this.model = model;			
 		daeSettings.setModel(model.daeSettings());
 		daeSettings.setUpdateSettings(model.updateSettings());
-        daeSettings.setComboContentProvider(
-        		new DAEComboContentProvider(model.getWiringTablesDir()),
-        		new DAEComboContentProvider(model.getDetectorTablesDir()),
-        		new DAEComboContentProvider(model.getSpectraTablesDir()));
-		daeSettings.setWiringTableList(model.wiringList());
-		daeSettings.setDetectorTableList(model.detectorTables());
-		daeSettings.setSpectraTableList(model.spectraTables());
+		daeSettings.setWiringTableList(model.wiringList(), model.getWiringTablesDir());
+		daeSettings.setDetectorTableList(model.detectorTables(), model.getDetectorTablesDir());
+		daeSettings.setSpectraTableList(model.spectraTables(), model.getSpectraTablesDir());
 		
 		timeChannels.setModel(model.timeChannels());
         timeChannels.setComboContentProvider(new DAEComboContentProvider(model.getTimeChannelsDir()));
