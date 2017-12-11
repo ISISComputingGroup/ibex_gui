@@ -41,7 +41,9 @@ public class DataAcquisitionViewModel extends ModelObject {
 
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
-    private DAEComboContentProvider comboContentProvider;
+    private DAEComboContentProvider wiringComboContentProvider;
+    private DAEComboContentProvider detectorComboContentProvider;
+    private DAEComboContentProvider spectraComboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -189,7 +191,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        return comboContentProvider.getContent(wiringTables, "wiring");
+        return wiringComboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -217,7 +219,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        return comboContentProvider.getContent(detectorTables, "det");
+        return detectorComboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -245,7 +247,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        return comboContentProvider.getContent(spectraTables, "spec");
+        return spectraComboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -532,7 +534,10 @@ public class DataAcquisitionViewModel extends ModelObject {
      * 
      * @param provider The content provider.
      */
-    public void setComboContentProvider(DAEComboContentProvider provider) {
-        this.comboContentProvider = provider;
+    public void setComboContentProvider(DAEComboContentProvider wiringProvider, 
+    		DAEComboContentProvider detectorProvider, DAEComboContentProvider spectraProvider) {
+        this.wiringComboContentProvider = wiringProvider;
+        this.detectorComboContentProvider = detectorProvider;
+        this.spectraComboContentProvider = spectraProvider;
     }
 }

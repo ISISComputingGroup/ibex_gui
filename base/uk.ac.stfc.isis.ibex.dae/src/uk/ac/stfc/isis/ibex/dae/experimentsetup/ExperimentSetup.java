@@ -53,7 +53,14 @@ public class ExperimentSetup extends Closer  {
 	private final UpdatedObservableAdapter<Collection<String>> wiringTables;
 	private final UpdatedObservableAdapter<Collection<String>> periodFiles;
     private final UpdatedObservableAdapter<Collection<String>> timeChannelFiles;
+    
     private final ForwardingObservable<String> instrumentName;
+    
+    private final ForwardingObservable<String> periodFilesDir;
+    private final ForwardingObservable<String> timeChannelsDir;
+    private final ForwardingObservable<String> wiringTablesDir;
+    private final ForwardingObservable<String> detectorTablesDir;
+    private final ForwardingObservable<String> spectraTablesDir;
 
     /**
      * Model of the experiment setup including DAE, period, time channel and
@@ -67,6 +74,12 @@ public class ExperimentSetup extends Closer  {
 		periodSettings = registerForClose(new ObservingPeriodSettings(observables.hardwarePeriods, writables.hardwarePeriods));
 		updateSettings = registerForClose(new ObservingUpdateSettings(observables.updateSettings, writables.updateSettings));
 		timeChannels = registerForClose(new ObservingTimeChannels(observables.timeChannelSettings, writables.timeChannelSettings));
+
+        periodFilesDir = observables.periodFilesDir;
+        timeChannelsDir = observables.timeChannelsDir;
+        wiringTablesDir = observables.wiringTablesDir;
+        detectorTablesDir = observables.detectorTablesDir;
+        spectraTablesDir = observables.spectraTablesDir;
 		
         instrumentName = observables.instrumentName;
 
@@ -182,5 +195,50 @@ public class ExperimentSetup extends Closer  {
      */
     public ForwardingObservable<String> getInstrumentName() {
         return instrumentName;
+    }
+
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
+    public ForwardingObservable<String> getPeriodFilesDir() {
+        return periodFilesDir;
+    }
+
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
+    public ForwardingObservable<String> getTimeChannelsDir() {
+        return timeChannelsDir;
+    }
+
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
+    public ForwardingObservable<String> getWiringTablesDir() {
+        return wiringTablesDir;
+    }
+
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
+    public ForwardingObservable<String> getDetectorTablesDir() {
+        return detectorTablesDir;
+    }
+
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
+    public ForwardingObservable<String> getSpectraTablesDir() {
+        return spectraTablesDir;
     }
 }

@@ -34,7 +34,6 @@ public class ExperimentSetupViewModel {
 	private DataAcquisitionViewModel daeSettings = new DataAcquisitionViewModel();
 	private TimeChannelsViewModel timeChannels = new TimeChannelsViewModel();
 	private PeriodsViewModel periodSettings = new PeriodsViewModel();
-    private DAEComboContentProvider comboContentProvider;
 
     /**
      * Sets all view models used in the experiment setup perspective to the
@@ -43,22 +42,23 @@ public class ExperimentSetupViewModel {
      * @param model the model of the experiment setup.
      */
 	public void setModel(ExperimentSetup model) {
-		this.model = model;	
-        comboContentProvider = new DAEComboContentProvider(model.getInstrumentName());
-		
+		this.model = model;			
 		daeSettings.setModel(model.daeSettings());
-        daeSettings.setComboContentProvider(comboContentProvider);
 		daeSettings.setUpdateSettings(model.updateSettings());
+        daeSettings.setComboContentProvider(
+        		new DAEComboContentProvider(model.getWiringTablesDir()),
+        		new DAEComboContentProvider(model.getDetectorTablesDir()),
+        		new DAEComboContentProvider(model.getSpectraTablesDir()));
 		daeSettings.setWiringTableList(model.wiringList());
 		daeSettings.setDetectorTableList(model.detectorTables());
 		daeSettings.setSpectraTableList(model.spectraTables());
 		
 		timeChannels.setModel(model.timeChannels());
-        timeChannels.setComboContentProvider(comboContentProvider);
+        timeChannels.setComboContentProvider(new DAEComboContentProvider(model.getTimeChannelsDir()));
         timeChannels.setTimeChannelFileList(model.timeChannelFiles());
 		
 		periodSettings.setSettings(model.periodSettings());
-        periodSettings.setComboContentProvider(comboContentProvider);
+        periodSettings.setComboContentProvider(new DAEComboContentProvider(model.getPeriodFilesDir()));
 		periodSettings.setPeriodFilesList(model.periodFiles());
 
 	}
