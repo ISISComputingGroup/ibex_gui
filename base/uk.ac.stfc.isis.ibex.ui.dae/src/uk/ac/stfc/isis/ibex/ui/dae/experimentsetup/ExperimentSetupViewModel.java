@@ -50,12 +50,10 @@ public class ExperimentSetupViewModel {
 		daeSettings.setSpectraTableList(model.spectraTables(), model.getSpectraTablesDir());
 		
 		timeChannels.setModel(model.timeChannels());
-        timeChannels.setComboContentProvider(new DAEComboContentProvider(model.getTimeChannelsDir()));
-        timeChannels.setTimeChannelFileList(model.timeChannelFiles());
+        timeChannels.setTimeChannelFileList(model.timeChannelFiles(), model.getTimeChannelsDir());
 		
 		periodSettings.setSettings(model.periodSettings());
-        periodSettings.setComboContentProvider(new DAEComboContentProvider(model.getPeriodFilesDir()));
-		periodSettings.setPeriodFilesList(model.periodFiles());
+		periodSettings.setPeriodFilesList(model.periodFiles(), model.getPeriodFilesDir());
 
 	}
 	
