@@ -18,78 +18,10 @@
 
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
-import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
-
 /**
  * A Message that has been received from NICOS.
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public abstract class ReceiveMessage implements IMessage {
-    private String messageId;
-
-    private boolean success;
-
-    /**
-     * A constructor for a basic message.
-     * 
-     * @param messageId
-     *            message id of the returned message, this can be correlated
-     *            with a sent id
-     * @param success
-     *            true if message is for a success; false otherwise
-     * 
-     */
-    public ReceiveMessage(String messageId, boolean success) {
-        this.messageId = messageId;
-        this.success = success;
-    }
-
-    /**
-     * @return true if the message is for success operation; false otherwise
-     */
-    public boolean isSuccess() {
-        return success;
-    }
-
-    /**
-     * Matches the sent message details to this message to see if if this is a
-     * response from the original message.
-     * 
-     * @param scriptSendMessageStatus
-     *            the details from the send step
-     * @return true if this message if the reply to the sent message; false
-     *         otherwise
-     */
-    public boolean isReplyTo(SendMessageDetails scriptSendMessageStatus) {
-        if (scriptSendMessageStatus == null) {
-            return false;
-        }
-        return scriptSendMessageStatus.hasMessageId(this.messageId);
-    }
-
-    /**
-     * Set the message Id.
-     * 
-     * @param messageId
-     *            the messageId to set
-     */
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    /**
-     * @return generic message for this replay
-     */
-    public abstract String getMessage();
-    
-    /**
-     * @return string representation
-     */
-    @Override
-    public String toString() {
-        return "[ID " + this.messageId + "] '" + getMessage() + "'";
-    }
-
+public interface ReceiveMessage {
 }

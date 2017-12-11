@@ -55,7 +55,7 @@ public class SpectraPlotsPanel extends Composite {
 		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		plots.setLayout(new GridLayout(2, false));
 		
-		for (int i=0; i<NUMBER_OF_SPECTRA; i++){
+		for (int i = 0; i < NUMBER_OF_SPECTRA; i++) {
 			SpectrumView plot = new SpectrumView(plots, SWT.NONE);
 			plot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			spectraPlots.add(plot);
@@ -74,7 +74,7 @@ public class SpectraPlotsPanel extends Composite {
 			throw new RuntimeException("The number of spectra view models should be the same as the number of spectra!");
 		}
 		
-		for (int i=0; i<NUMBER_OF_SPECTRA; i++) {
+		for (int i = 0; i < NUMBER_OF_SPECTRA; i++) {
 			spectraPlots.get(i).setModel(spectra.get(i));
 		}
 	}

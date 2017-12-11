@@ -19,11 +19,31 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.nicos.messages;
+package uk.ac.stfc.isis.ibex.nicos.comms;
+
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
- * A message that can be serialised and sent to Nicos.
+ * Switches the GUI to look at another instance of NICOS.
  */
-public interface NicosSendMessage {
+public class OnInstrumentSwitch implements InstrumentInfoReceiver {
+
+    Nicos nicos = Nicos.getDefault();
+
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        nicos.getModel().connect(instrument);
+    }
+
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        nicos.getModel().disconnect();
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+    }
 
 }

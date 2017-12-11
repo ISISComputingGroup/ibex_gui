@@ -32,7 +32,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
@@ -47,8 +46,7 @@ public class XmlLogMessageParser extends MessageParser<LogMessage> {
 	    .getLogger(XmlLogMessageParser.class);
 
     @Override
-    public LogMessage parseMessage(MessageDetails rawMessage) {
-        String xml = rawMessage.getText();
+    public LogMessage parseMessage(String xml) {
         LogMessage message = new LogMessage();
 
         Node root;

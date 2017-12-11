@@ -21,14 +21,15 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.Arrays;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+
 /**
  * Serialisable class to queue a script in Nicos.
  */
-public class QueueScript implements NicosSendMessage {
-    
-    String command = "queue";
-    String name;
-    String code;
+public class QueueScript extends NICOSMessage<String> {
     
     /**
      * Constructor.
@@ -39,8 +40,14 @@ public class QueueScript implements NicosSendMessage {
      *            code in script
      */
     public QueueScript(String name, String code) {
-        this.name = name;
-        this.code = code;
+        this.command = "queue";
+        this.parameters = Arrays.asList(name, code);
+    }
+
+    @Override
+    public ReceiveMessage parseResponse(String response) throws ConversionException {
+        JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
+        return new ReceiveStringMessage(deserial.convert(response));
     }
         
 }

@@ -16,39 +16,29 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.activemq.message;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.nicos.messages;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 
 /**
- * Details of a message obtained from activemq.
+ * Command that gets banner information from NICOS.
  */
-public class MessageDetails {
-
-    String text;
-    String messageID;
+public class GetBanner extends NICOSMessage<String> {
 
     /**
-     * @param text
-     *            text of the message
-     * @param messageID
-     *            message id
+     * Create the get banner command.
      */
-    public MessageDetails(String text, String messageID) {
-        this.text = text;
-        this.messageID = messageID;
+    public GetBanner() {
+        this.command = "getbanner";
     }
 
-    /**
-     * @return the text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * @return the messageID
-     */
-    public String getMessageID() {
-        return messageID;
+    @Override
+    public ReceiveBannerMessage parseResponse(String response) throws ConversionException {
+        return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).convert(response);
     }
 
 }
