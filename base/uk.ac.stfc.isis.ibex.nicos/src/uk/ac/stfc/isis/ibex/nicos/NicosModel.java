@@ -276,9 +276,13 @@ public class NicosModel extends ModelObject {
     
 	public void updateScriptStatus() {
 		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
-		setStatus(response.status.get(0));
-		setLineNumber(response.status.get(1));
-		setScript(response.script);
+		if (response == null) {
+			failConnection("Server did not respond to request for script status.");
+		} else {
+			setStatus(response.status.get(0));
+			setLineNumber(response.status.get(1));
+			setScript(response.script);
+		}
 	}
 	
 	public void setStatus(int status) {

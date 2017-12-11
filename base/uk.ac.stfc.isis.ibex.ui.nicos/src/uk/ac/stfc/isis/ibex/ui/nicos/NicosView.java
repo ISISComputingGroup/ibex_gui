@@ -62,9 +62,7 @@ public class NicosView extends ViewPart {
     private NicosModel model;
     private QueueScriptViewModel queueScriptViewModel;
 
-    private Label lblCurrentScript;
-
-	private Label lblLineNum;
+    private Label lblCurrentScriptStatus;
 
 	private ScriptStatusViewModel scriptStatusViewModel;
 
@@ -112,13 +110,13 @@ public class NicosView extends ViewPart {
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         currentScriptInfoContainer.setLayout(new GridLayout(2, false));
         
-        lblCurrentScript = new Label(currentScriptInfoContainer, SWT.NONE);
-        lblCurrentScript.setText("Current script status: ");
+        lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblCurrentScriptStatus.setText("Current script status: ");
         
-        Label lineNumber = new Label(currentScriptInfoContainer, SWT.NONE);
+        Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
         GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		lineNumber.setLayoutData(lineNumberLayout);
-        bindingContext.bindValue(WidgetProperties.text().observe(lineNumber),
+		lineNumberIndicator.setLayoutData(lineNumberLayout);
+        bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
                 BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
         
         Label lblOutput = new Label(parent, SWT.NONE);
@@ -175,7 +173,7 @@ public class NicosView extends ViewPart {
      */
     @Override
     public void setFocus() {
-        lblCurrentScript.setFocus();
+        lblCurrentScriptStatus.setFocus();
     }
 
 }
