@@ -30,7 +30,14 @@ import java.util.List;
  */
 @SuppressWarnings({ "checkstyle:membername", "unused" })
 public class ReceiveScriptStatus implements ReceiveMessage {
+	/**
+	 * Tuple of two items (status code, line number).
+	 */
     public List<Integer> status;
+    
+    /**
+     * The currently executing script.
+     */
     public String script;
 
 }

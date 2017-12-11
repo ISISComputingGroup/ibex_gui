@@ -66,7 +66,7 @@ public class NicosModel extends ModelObject {
     public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
     
     /**
-     * 
+     * Error for when a response was expected but none was received.
      */
     public static final String NO_RESPONSE = "Server did not respond to request.";
 
@@ -279,7 +279,10 @@ public class NicosModel extends ModelObject {
                 this.connectionErrorMessage = connectionErrorMessage);
     }
     
-	public void updateScriptStatus() {
+    /**
+     * Gets the status of the currently executing script from the server.
+     */
+	private void updateScriptStatus() {
 		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
 		if (response == null) {
 			failConnection(NO_RESPONSE);
@@ -290,18 +293,26 @@ public class NicosModel extends ModelObject {
 		}
 	}
 	
-	public void setLineNumber(int lineNumber) {
+	private void setLineNumber(int lineNumber) {
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
 	
+	/**
+	 * The currently executing line number.
+	 * @return the line number
+	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}
 	
-	public void setCurrentlyExecutingScript(String script) {
+	private void setCurrentlyExecutingScript(String script) {
 		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}
 	
+	/**
+	 * The currently executing script.
+	 * @return the script
+	 */
 	public String getCurrentlyExecutingScript() {
 		return currentlyExecutingScript;
 	}
