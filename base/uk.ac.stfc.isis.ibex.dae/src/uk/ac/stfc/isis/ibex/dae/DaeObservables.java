@@ -49,27 +49,27 @@ public class DaeObservables {
     public final ForwardingObservable<String> instrumentName;
 
     /**
-     * An observable on the name of the instrument.
+     * An observable on the directory containing the period files.
      */
     public final ForwardingObservable<String> periodFilesDir;
 
     /**
-     * An observable on the name of the instrument.
+     * An observable on the directory containing the time channel files.
      */
     public final ForwardingObservable<String> timeChannelsDir;
 
     /**
-     * An observable on the name of the instrument.
+     * An observable on the directory containing the wiring tables.
      */
     public final ForwardingObservable<String> wiringTablesDir;
 
     /**
-     * An observable on the name of the instrument.
+     * An observable on the directory containing the detector tables.
      */
     public final ForwardingObservable<String> detectorTablesDir;
 
     /**
-     * An observable on the name of the instrument.
+     * An observable on the directory containing the spectra tables.
      */
     public final ForwardingObservable<String> spectraTablesDir;
 
