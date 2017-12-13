@@ -23,16 +23,27 @@
 package uk.ac.stfc.isis.ibex.ui.dae.tests;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
+
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
+final class FileListStub extends UpdatedValue<Collection<String>> {
+	@Override
+	public void setValue(Collection<String> value) {
+		super.setValue(value);
+	}
+}
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname", "checkstyle:magicnumber" })
 public class DAEComboContentProviderTest {
@@ -46,11 +57,11 @@ public class DAEComboContentProviderTest {
         mockSource = mock(ForwardingObservable.class);
         when(mockSource.currentError()).thenReturn(null);
         when(mockSource.isConnected()).thenReturn(true);
+    	when(mockSource.getValue()).thenReturn(MOCK_TABLE_DIR);
     }
 
     @Test
-    public void
-            GIVEN_no_list_WHEN_content_requested_THEN_returned_value_contains_error_text() {
+    public void GIVEN_no_list_WHEN_content_requested_THEN_returned_value_contains_error_text() {
     	
     	// Arrange
     	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
@@ -60,5 +71,67 @@ public class DAEComboContentProviderTest {
 
         // Assert
         assertTrue(Arrays.asList(content).stream().map(String::toLowerCase).collect(Collectors.joining(" ")).contains("error"));
+    }
+
+    @Test
+    public void GIVEN_list_has_no_value_WHEN_content_requested_THEN_returned_value_contains_mock_dir() {
+    	
+    	// Arrange
+    	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
+    	UpdatedValue<Collection<String>>mockFileList = mock(UpdatedValue.class);
+    	when(mockFileList.getValue()).thenReturn(null);
+    	
+        // Act
+        String[] content = contentProvider.getContent(mockFileList, "mock");
+
+        // Assert
+        assertTrue(Arrays.asList(content).stream().map(String::toString).collect(Collectors.joining(" ")).contains(MOCK_TABLE_DIR));
+    }
+
+    @Test
+    public void GIVEN_list_with_values_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values_and_blank_line() {
+    	
+    	// Arrange
+    	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
+    	String pattern = "mock";
+
+    	FileListStub fileList = new FileListStub();
+    	final Collection<String> listValues = new ArrayList<String>();
+    	listValues.add(pattern + "Table1");
+    	listValues.add(pattern + "Table2");
+    	listValues.add(pattern + "Table3");
+    	fileList.setValue(listValues);
+    	
+    	String [] expectedValue = {" ", pattern + "Table1", pattern + "Table2", pattern + "Table3"};  // Blank line added at beginning 
+    	
+        // Act
+        String[] content = contentProvider.getContent(fileList, pattern);
+
+        // Assert
+        assertArrayEquals(expectedValue, content);
+    }
+
+    @Test
+    // The current GUI logic relies on the DAE IOC to filter out non-matching files
+    public void GIVEN_list_with_values_not_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values_and_blank_line() {
+    	
+    	// Arrange
+    	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
+    	String pattern = "mock";
+
+    	FileListStub fileList = new FileListStub();
+    	final Collection<String> listValues = new ArrayList<String>();
+    	listValues.add("Table1");
+    	listValues.add("Table2");
+    	listValues.add("Table3");
+    	fileList.setValue(listValues);
+    	
+    	String [] expectedValue = {" ", "Table1", "Table2", "Table3"};  // Blank line added at beginning 
+    	
+        // Act
+        String[] content = contentProvider.getContent(fileList, pattern);
+
+        // Assert
+        assertArrayEquals(expectedValue, content);
     }
 }
