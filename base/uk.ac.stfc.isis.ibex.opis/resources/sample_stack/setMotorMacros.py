@@ -85,7 +85,7 @@ def get_motor_pvs():
     
     for name in [PVUtil.getString(pv) for pv in pvs[1:]]:  # pvs[0] is for the number of motors
     
-        if is_unexpanded_macro(name):
+        if is_unexpanded_macro(name) or len(name)==0:
             motor_pvs.append(None)            
         else:                
             # Associate all PVs with the top-level display for ease. Shouldn't be any conflict
