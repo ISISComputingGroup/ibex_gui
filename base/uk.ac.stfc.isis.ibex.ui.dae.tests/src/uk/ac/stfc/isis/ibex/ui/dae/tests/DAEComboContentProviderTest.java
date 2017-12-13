@@ -39,6 +39,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 final class FileListStub extends UpdatedValue<Collection<String>> {
+	// Done with a stub rather than a mock because getValue returns a final that Mockito can't handle
+	
 	@Override
 	public void setValue(Collection<String> value) {
 		super.setValue(value);
