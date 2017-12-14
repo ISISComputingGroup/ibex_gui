@@ -22,14 +22,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.tests;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -72,7 +70,14 @@ public class DAEComboContentProviderTest {
         String[] content = contentProvider.getContent(null, "mock");
 
         // Assert
-        assertTrue(Arrays.asList(content).stream().map(String::toLowerCase).collect(Collectors.joining(" ")).contains("error"));
+        boolean containsError = false;
+        for (String line : content) {
+        	if (line.toLowerCase().contains("error")) {
+        		containsError = true;
+        		break;
+        	}
+        }
+        assertTrue(containsError);
     }
 
     @Test
@@ -87,7 +92,14 @@ public class DAEComboContentProviderTest {
         String[] content = contentProvider.getContent(mockFileList, "mock");
 
         // Assert
-        assertTrue(Arrays.asList(content).stream().map(String::toString).collect(Collectors.joining(" ")).contains(MOCK_TABLE_DIR));
+        boolean containsDir = false;
+        for (String line : content) {
+        	if (line.contains(MOCK_TABLE_DIR)) {
+        		containsDir = true;
+        		break;
+        	}
+        }
+        assertTrue(containsDir);
     }
 
     @Test
