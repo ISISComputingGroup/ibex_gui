@@ -19,6 +19,9 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -27,10 +30,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
 /**
@@ -59,16 +64,24 @@ public class NicosModel extends ModelObject {
      * Error for when the serialiser received from the server is unrecognised.
      */
     public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
+    
+    /**
+     * Error for when a response was expected but none was received.
+     */
+    public static final String NO_RESPONSE = "Server did not respond to request.";
 
     private final ZMQSession session;
-
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
     private String scriptSendErrorMessage = "";
-
     private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
     private String connectionErrorMessage = "";
-    
     private RepeatingJob connectionJob;
+	private int status;
+	private int lineNumber;
+	private String currentlyExecutingScript;
+	private RepeatingJob updateStatusJob;
+
+	
 
     /**
      * Constructor for the model.
@@ -87,6 +100,15 @@ public class NicosModel extends ModelObject {
         this.session = session;
         this.connectionJob = connectionJob;
         this.connectionJob.schedule();
+        
+        updateStatusJob = new RepeatingJob("update script status", 1000) {
+			@Override
+			protected IStatus doTask(IProgressMonitor monitor) {
+				updateScriptStatus();
+				return Status.OK_STATUS;
+			}
+        };
+        updateStatusJob.setRunning(false);
     }
 
     private void failConnection(String message) {
@@ -94,6 +116,7 @@ public class NicosModel extends ModelObject {
         LOG.error(message);
         setConnectionErrorMessage(message);
         connectionJob.setRunning(true);
+        updateStatusJob.setRunning(false);
     }
 
     /**
@@ -137,6 +160,7 @@ public class NicosModel extends ModelObject {
 
         setConnectionStatus(ConnectionStatus.CONNECTED);
         connectionJob.setRunning(false);
+        updateStatusJob.setRunning(true);
     }
     
     /**
@@ -147,6 +171,7 @@ public class NicosModel extends ModelObject {
         setConnectionStatus(ConnectionStatus.DISCONNECTED);
         setConnectionErrorMessage("");
         connectionJob.setRunning(true);
+        updateStatusJob.setRunning(false);
     }
 
 
@@ -253,4 +278,42 @@ public class NicosModel extends ModelObject {
         firePropertyChange("connectionErrorMessage", this.connectionErrorMessage,
                 this.connectionErrorMessage = connectionErrorMessage);
     }
+    
+    /**
+     * Gets the status of the currently executing script from the server.
+     */
+	public void updateScriptStatus() {
+		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
+		if (response == null) {
+			failConnection(NO_RESPONSE);
+		} else {
+			// Status is a tuple (list) of 2 items. Line number is second item in list.
+			setLineNumber(response.status.get(1));
+			setCurrentlyExecutingScript(response.script);
+		}
+	}
+	
+	private void setLineNumber(int lineNumber) {
+		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
+	}
+	
+	/**
+	 * The currently executing line number.
+	 * @return the line number
+	 */
+	public int getLineNumber() {
+		return lineNumber;
+	}
+	
+	private void setCurrentlyExecutingScript(String script) {
+		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
+	}
+	
+	/**
+	 * The currently executing script.
+	 * @return the script
+	 */
+	public String getCurrentlyExecutingScript() {
+		return currentlyExecutingScript;
+	}
 }

@@ -38,7 +38,7 @@ public class Nicos extends Plugin {
 	private static BundleContext context;
 	private static Nicos instance;
 
-    private NicosModel model;
+    private final NicosModel model;
 
     private static final int CONNECT_POLL_TIME = 10000;
 
