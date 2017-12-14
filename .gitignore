@@ -10,3 +10,4 @@ base/uk.ac.stfc.isis.ibex.opis/check_OPI_format_logs
 *.pyc
 *.iml
 .idea/*
+.recommenders/

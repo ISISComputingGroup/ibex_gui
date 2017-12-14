@@ -17,7 +17,7 @@
    </license>
 
    <includes
-         id="org.csstudio.trends.databrowser2.opiwidget.feature"
+         id="org.csstudio.trends.databrowser2.feature"
          version="0.0.0"/>
 
    <plugin
@@ -638,13 +638,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.trends.databrowser2"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.osgi.util"
          download-size="0"
          install-size="0"
@@ -815,13 +808,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.opibuilder.widgets.symbol"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.utility.file"
          download-size="0"
          install-size="0"
@@ -890,7 +876,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.e4.ui.css.core"
          download-size="0"
@@ -918,21 +904,21 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.csstudio.opibuilder"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.csstudio.simplepv"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.csstudio.utility.batik"
          download-size="0"
@@ -995,15 +981,15 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-  
-  <plugin
+
+   <plugin
          id="org.csstudio.swt.xygraph"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-  
-     <plugin
+
+   <plugin
          id="org.csstudio.swt.xygraph.rcp"
          download-size="0"
          install-size="0"
@@ -1016,21 +1002,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-         
-      <plugin
-         id="org.csstudio.trends.databrowser2"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.trends.databrowser2.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
@@ -1048,7 +1019,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.opibuilder.widgets.rcp"
+         id="org.csstudio.opibuilder.widgets.symbol"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.swt.widgets"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.trends.databrowser2.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1056,17 +1041,28 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.opibuilder.widgets.symbol"
+         id="org.csstudio.data"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-   
-      <plugin
-         id="org.csstudio.swt.widgets"
+
+   <plugin
+         id="org.eclipse.swt"
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.win32.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>
