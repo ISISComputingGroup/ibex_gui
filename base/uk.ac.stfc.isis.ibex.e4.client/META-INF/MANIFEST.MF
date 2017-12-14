@@ -10,9 +10,9 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.alarm;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.weblinks;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dae;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.banner;bundle-version=1.0.0,
- uk.ac.stfc.isis.ibex.ui.blocks;bundle-version=1.0.0,
- uk.ac.stfc.isis.ibex.ui.mainmenu;bundle-version=1.0.0,
+ uk.ac.stfc.isis.ibex.ui.banner;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.blocks;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.mainmenu;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.experimentdetails;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.scriptgenerator;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.ioccontrol;bundle-version="1.0.0",
@@ -25,10 +25,11 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.synoptic.editor;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.motor;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version=1.0.0,
- uk.ac.stfc.isis.ibex.ui.log;bundle-version=1.0.0,
+ uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.log;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.runcontrol;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.nicos;bundle-version=1.0.0
+ uk.ac.stfc.isis.ibex.ui.nicos;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: ISIS
