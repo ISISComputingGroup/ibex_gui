@@ -35,16 +35,17 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class DAEComboContentProvider {
     
     String instrumentName;
+    String dir;
 
     /**
-     * Constructor. Binds the name of the current instrument to display in
-     * messages.
+     * Constructor. Binds the directory containing the content to display in messages.
      * 
-     * @param instrument The instrument name.
+     * @param dir The directory where the content is
      */
-    public DAEComboContentProvider(ForwardingObservable<String> instrument) {
-        this.instrumentName = instrument.getValue();
-        instrument.addObserver(instrumentAdapter);
+    public DAEComboContentProvider(ForwardingObservable<String> dir) {
+        this.dir = dir.getValue();
+        dir.addObserver(dirAdapter);
+        
     }
 
     /**
@@ -55,7 +56,7 @@ public class DAEComboContentProvider {
      * @return the resulting array.
      */
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
+    	Collection<String> value = updated != null ? updated.getValue() : null;
         return value != null ? value.toArray(new String[0]) : new String[0];
     }
 
@@ -94,10 +95,9 @@ public class DAEComboContentProvider {
 
             // Use a sensible default if the instrument name PV is not available
             // yet.
-            String instrument = this.instrumentName == null ? "<instrument>" : this.instrumentName;
+            String displayDir = this.dir != null ? this.dir : "C:\\Instrument\\Setting\\Config\\<instrument>\\...";
 
-            tables = new String[] { "None found in C:\\Instrument\\Settings\\config\\" + instrument
-                    + "\\configurations\\tables\\ (file name must contain \"" + pattern + "\")." };
+            tables = new String[] { "None found in " + displayDir + " (file name must contain \"" + pattern + "\")." };
         }
 
         return addBlank(tables);
@@ -109,14 +109,14 @@ public class DAEComboContentProvider {
      * 
      * @param instrumentName the name of the new instrument.
      */
-    private void setInstrumentName(String instrumentName) {
-        this.instrumentName = instrumentName;
+    private void setDir(String dir) {
+    	this.dir = dir;
     }
 
-    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
+    private final BaseObserver<String> dirAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            setInstrumentName(value);
+            setDir(value);
         }
     };
 }
