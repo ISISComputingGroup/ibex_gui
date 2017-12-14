@@ -7,6 +7,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
@@ -65,15 +66,11 @@ public class PerspectiveSwitcherView {
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
 			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
 			shortcut.setData(keyID, perspective.getElementId());
-			shortcut.addSelectionListener(new SelectionListener() {
+			shortcut.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent event) {
 					String targetElementId = (String) ((ToolItem) event.getSource()).getData(keyID);
 					switcher.switchPerspective(targetElementId);
-				}
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					// irrelevant for this control
 				}
 			});
 		}
