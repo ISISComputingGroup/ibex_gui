@@ -49,6 +49,31 @@ public class DaeObservables {
     public final ForwardingObservable<String> instrumentName;
 
     /**
+     * An observable on the directory containing the period files.
+     */
+    public final ForwardingObservable<String> periodFilesDir;
+
+    /**
+     * An observable on the directory containing the time channel files.
+     */
+    public final ForwardingObservable<String> timeChannelsDir;
+
+    /**
+     * An observable on the directory containing the wiring tables.
+     */
+    public final ForwardingObservable<String> wiringTablesDir;
+
+    /**
+     * An observable on the directory containing the detector tables.
+     */
+    public final ForwardingObservable<String> detectorTablesDir;
+
+    /**
+     * An observable on the directory containing the spectra tables.
+     */
+    public final ForwardingObservable<String> spectraTablesDir;
+
+    /**
      * An observable on the status of the run.
      */
     public final ForwardingObservable<DaeRunState> runState;
@@ -364,6 +389,16 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("MONITORTO")));
         npRatio = obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("NPRATIO")));
+        periodFilesDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("PERIOD_DIR")));
+        timeChannelsDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("TCB_DIR")));
+        wiringTablesDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("WIRING_DIR")));
+        detectorTablesDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("DETECTOR_DIR")));
+        spectraTablesDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("SPECTRA_DIR")));
     }
 
     /**

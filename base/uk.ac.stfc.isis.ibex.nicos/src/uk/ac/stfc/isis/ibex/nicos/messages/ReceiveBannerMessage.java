@@ -19,48 +19,39 @@
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
- * An error has occurred receiving a message from NICOS.
+ * A Banner Message that has been received from NICOS. This message should be
+ * the first sent and details various things about the instance of NICOS that we
+ * are trying to connect to.
+ * 
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public class ReceiveErrorMessage extends ReceiveMessage {
-    private String errorMessage;
+@SuppressWarnings({ "checkstyle:membername", "unused" })
+public class ReceiveBannerMessage implements ReceiveMessage {
+    private String custom_path;
+    private String nicos_root;
+    private String rsakey;
+    private String daemon_version;
+    private String pw_hashing;
+    private String serializer;
+    private Integer protocol_version;
+    private String custom_version;
+
+    private static final String VALID_SERIALISER = "json";
+    private static final Integer VALID_VERSION = 15;
 
     /**
-     * A constructor for a basic message.
-     * 
-     * @param errorMessage
-     *            The error message.
-     * @param messageId
-     *            message id of the returned message, this can be correlated
-     *            with a sent id
-     * @param success
-     *            true if message is for a success; false otherwise
-     * 
+     * @return True if the server is using the correct serializer.
      */
-    public ReceiveErrorMessage(String errorMessage, String messageId, boolean success) {
-        super(messageId, success);
-        setErrorMessage(errorMessage);
+    public boolean serializerValid() {
+        return serializer.equals(VALID_SERIALISER);
     }
-
+    
     /**
-     * @return the error message
+     * @return True if the server is using the correct protocol.
      */
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    /**
-     * @param errorMessage
-     *            the error message to set
-     */
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    @Override
-    public String getMessage() {
-        return getErrorMessage();
+    public boolean protocolValid() {
+        return protocol_version == VALID_VERSION;
     }
 
 }

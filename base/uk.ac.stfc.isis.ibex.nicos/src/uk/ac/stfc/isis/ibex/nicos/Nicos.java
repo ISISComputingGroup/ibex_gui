@@ -18,22 +18,29 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
-import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 
 /**
  * Constructor for the NICOS plugin, which provides a connection between NICOS
  * and the GUI.
  */
-public class Nicos extends AbstractUIPlugin {
+public class Nicos extends Plugin {
 	
 	private static BundleContext context;
 	private static Nicos instance;
-    private NicosModel model;
-    private SendReceiveSession sendReceiveQueue;
+
+    private final NicosModel model;
+
+    private static final int CONNECT_POLL_TIME = 10000;
 
     /**
      * @return The instance of this singleton.
@@ -47,16 +54,22 @@ public class Nicos extends AbstractUIPlugin {
      */
 	public Nicos() {
         instance = this;
+        ZMQSession session = new ZMQSession(new ZMQWrapper());
+        RepeatingJob connectionJob = new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
+            
+            @Override
+            protected IStatus doTask(IProgressMonitor monitor) {
+                model.connect(Instrument.getInstance().currentInstrument());
+                return Status.OK_STATUS;
+            }
+        };
+        model = new NicosModel(session, connectionJob);
     }
 
     /**
      * @return The model that is connected to nicos on the instrument.
      */
     public NicosModel getModel() {
-        if (model == null) {
-            sendReceiveQueue = ActiveMQ.getInstance().openSendReceiveQueue("ss_admin", "username", "password");
-            model = new NicosModel(sendReceiveQueue);
-        }
         return model;
 	}
 	
@@ -86,8 +99,6 @@ public class Nicos extends AbstractUIPlugin {
      */
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        ActiveMQ.getInstance().closeSendReceiveQueue(sendReceiveQueue);
-        sendReceiveQueue = null;
         Nicos.context = null;
     }
 }
