@@ -68,7 +68,7 @@ public class BlockNameValidatorTest {
 		blockList.add(testEditableBlock);
 		
 		mockConfig = mock(EditableConfiguration.class);
-        when(mockConfig.getOtherBlocks()).thenReturn(blockList);
+        when(mockConfig.getAllBlocks()).thenReturn(blockList);
 		
 		validator = new BlockNameValidator(mockConfig, testBlock);
 	}

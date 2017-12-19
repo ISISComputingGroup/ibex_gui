@@ -87,7 +87,7 @@ public class GroupsTest extends EditableConfigurationTest {
 	}
 	
 	@Test
-	public void GIVEN_group_with_one_block_THEN_block_not_in_config_available_blocks() {
+	public void GIVEN_group_with_one_block_THEN_block_not_in_other_group() {
 		blocks.add(GAPY);
 		blocks.add(GAPX);
 		groups.add(JAWS);
