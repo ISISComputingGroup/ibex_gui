@@ -1185,5 +1185,22 @@
 				<macros/>
 			</value>
 		</entry>
+        <entry>
+            <key>SKF MB350 Chopper</key>
+			<value>
+			<categories>
+					<category>Choppers</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>skf_mb350.opi</path>
+				<description>The OPI for the SKF MB350 Chopper.</description>
+				<macros>
+					<macro>
+						<name>SKFMB350</name>
+						<description>The chopper PV prefix (e.g. SKFMB350_01).</description>
+					</macro>
+				</macros>        
+        	</value>
+		</entry>
 	</opis>
 </descriptions>
