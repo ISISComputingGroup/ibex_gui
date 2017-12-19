@@ -21,10 +21,13 @@ package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 
@@ -42,10 +45,10 @@ public class GroupsTest extends EditableConfigurationTest {
 	
 	@Test
 	public void a_group_can_be_removed() {
-		groups.add(JAWS);
+		groups.add(EMPTY_GROUP_01);
 		EditableConfiguration edited = edit(config());
 
-		assertContains(edited.asConfiguration().getGroups(), JAWS);
+		assertContains(edited.asConfiguration().getGroups(), EMPTY_GROUP_01);
 		
 		EditableGroup jaws = getFirst(edited.getEditableGroups());
 		edited.removeGroup(jaws);		
@@ -54,8 +57,8 @@ public class GroupsTest extends EditableConfigurationTest {
 	
 	@Test
 	public void two_groups_can_be_swapped() {
-		groups.add(JAWS);
-		groups.add(TEMPERATURE);
+		groups.add(EMPTY_GROUP_01);
+		groups.add(EMPTY_GROUP_02);
 		EditableConfiguration edited = edit(config());
 		
 		List<EditableGroup> grps = (List<EditableGroup>) edited.getEditableGroups();
@@ -64,8 +67,48 @@ public class GroupsTest extends EditableConfigurationTest {
 		
 		grps = (List<EditableGroup>) edited.getEditableGroups();
 			
-		assertEquals(grps.get(0).getName(), "TEMPERATURE");
-		assertEquals(grps.get(1).getName(), "JAWS");
+		assertEquals(grps.get(0).getName(), "EMPTY_GROUP_02");
+		assertEquals(grps.get(1).getName(), "EMPTY_GROUP_01");
+	}
+	
+	@Test
+	public void GIVEN_group_with_one_block_THEN_editable_group_contains_block() {
+		blocks.add(GAPX);
+		groups.add(JAWS);
+		EditableConfiguration edited = edit(config());
 		
+		List<Group> grps = (List<Group>) edited.asConfiguration().getGroups();
+
+		assertContains(grps, JAWS);
+		assertContains(grps.get(0).getBlocks(), "GAPX");
+		
+		Collection<EditableBlock> selectedBlocks = getFirst(edited.getEditableGroups()).getSelectedBlocks();
+		assertBlocksAreEqual(blocks, selectedBlocks);
+	}
+	
+	@Test
+	public void GIVEN_group_with_one_block_THEN_block_not_in_config_available_blocks() {
+		blocks.add(GAPY);
+		blocks.add(GAPX);
+		groups.add(JAWS);
+		EditableConfiguration edited = edit(config());
+		
+		List<EditableBlock> availableBlocks = (List<EditableBlock>) edited.getAvailableBlocks();
+
+		assertEquals(availableBlocks.size(), 1);
+		assertEquals(availableBlocks.get(0).getName(), "GAPY");
+	}
+	
+	@Test
+	public void GIVEN_group_with_one_block_THEN_other_block_in_groups_unselected_blocks() {
+		blocks.add(GAPY);
+		blocks.add(GAPX);
+		groups.add(JAWS);
+		EditableConfiguration edited = edit(config());
+		
+		List<EditableBlock> selectedBlocks = (List<EditableBlock>) getFirst(edited.getEditableGroups()).getUnselectedBlocks();
+
+		assertEquals(selectedBlocks.size(), 1);
+		assertEquals(selectedBlocks.get(0).getName(), "GAPY");
 	}
 }
