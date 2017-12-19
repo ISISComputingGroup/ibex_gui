@@ -93,7 +93,7 @@ public class GroupsTest extends EditableConfigurationTest {
 		groups.add(JAWS);
 		EditableConfiguration edited = edit(config());
 		
-		List<EditableBlock> availableBlocks = (List<EditableBlock>) edited.getAvailableBlocks();
+		List<EditableBlock> availableBlocks = (List<EditableBlock>) edited.getOtherBlocks();
 
 		assertEquals(availableBlocks.size(), 1);
 		assertEquals(availableBlocks.get(0).getName(), "GAPY");

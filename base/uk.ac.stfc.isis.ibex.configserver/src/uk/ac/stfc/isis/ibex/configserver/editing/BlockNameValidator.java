@@ -128,7 +128,7 @@ public class BlockNameValidator {
     }
 
     private boolean nameInBase(String name) {
-        for (EditableBlock block : config.getAvailableBlocks()) {
+        for (EditableBlock block : config.getOtherBlocks()) {
             if (isNotSelectedBlock(block) && block.getName().equalsIgnoreCase(name)) {
                 return true;
             }

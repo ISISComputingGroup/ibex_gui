@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,7 @@ public class EditableGroup extends Group {
 		super(group);
 
 		config = configuration;
-		blocksInGroup = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
+		blocksInGroup = lookupBlocksByName(config.getAllBlocks(), group.getBlocks());
 
 		for (EditableBlock block : blocksInGroup) {
 			if (!group.getName().equals("NONE")) {
@@ -78,7 +79,7 @@ public class EditableGroup extends Group {
 	}
 
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(config.getAvailableBlocks());
+		return new ArrayList<>(config.getOtherBlocks());
 	}
 
 	public Collection<EditableBlock> getSelectedBlocks() {
@@ -147,7 +148,7 @@ public class EditableGroup extends Group {
 	}
 
 	private void removeDeletedBlocks(EditableConfiguration config) {
-		Collection<EditableBlock> configBlocks = config.getEditableBlocks();
+		Collection<EditableBlock> configBlocks = config.getAllBlocks();
 		for (Iterator<EditableBlock> iterator = blocksInGroup.iterator(); iterator.hasNext();) {
 			EditableBlock block = iterator.next();
 			if (!configBlocks.contains(block)) {
@@ -179,13 +180,7 @@ public class EditableGroup extends Group {
 	}
 
 	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true));
-		List<String> allBlockNames = blockNames(blocks);
-		int blockIndex = allBlockNames.indexOf(name);
-		if (blockIndex >= 0) {
-			block = Iterables.get(blocks, blockIndex);
-		}
-		return block;
+		return lookupBlocksByName(blocks, Arrays.asList(name)).get(0);
 	}
 
 }
