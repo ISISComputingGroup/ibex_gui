@@ -281,19 +281,13 @@
       <tooltip></tooltip>
       <rules>
         <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;4">
+          <exp bool_exp="pv0&lt;3">
             <value>false</value>
           </exp>
           <pv trig="true">loc://ccd100:count</pv>
         </rule>
-        <rule name="X" prop_id="x" out_exp="false">
-          <exp bool_exp="pv0&lt;4">
-            <value>0</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
         <rule name="Y" prop_id="y" out_exp="false">
-          <exp bool_exp="pv0&lt;4">
+          <exp bool_exp="pv0&lt;3">
             <value>0</value>
           </exp>
           <pv trig="true">loc://ccd100:count</pv>
@@ -343,13 +337,13 @@
       <tooltip></tooltip>
       <rules>
         <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;5">
+          <exp bool_exp="pv0&lt;4">
             <value>false</value>
           </exp>
           <pv trig="true">loc://ccd100:count</pv>
         </rule>
         <rule name="Y" prop_id="y" out_exp="false">
-          <exp bool_exp="pv0&lt;5">
+          <exp bool_exp="pv0&lt;4">
             <value>0</value>
           </exp>
           <pv trig="true">loc://ccd100:count</pv>

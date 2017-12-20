@@ -23,7 +23,7 @@ def set_number_of_graph_traces(count):
     graph.setPropertyValue("trace_count", count)
     for index in range(count):
         graph.setPropertyValue("trace_"+str(index)+"_y_pv", "$(P)$(CCD_"+str(index+1)+"):READING")
-        graph.setPropertyValue("trace_"+str(index)+"_name", "Gas "+str(index))
+        graph.setPropertyValue("trace_"+str(index)+"_name", "Gas "+str(index+1))
 
 def main():
     count = get_count()
