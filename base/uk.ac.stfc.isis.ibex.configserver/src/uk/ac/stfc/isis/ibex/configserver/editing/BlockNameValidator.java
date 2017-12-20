@@ -124,27 +124,9 @@ public class BlockNameValidator {
     }
 
     private boolean nameIsDuplicated(String name) {
-        return nameInBase(name) || nameInComps(name);
-    }
-
-    private boolean nameInBase(String name) {
-        for (EditableBlock block : config.getAvailableBlocks()) {
+        for (EditableBlock block : config.getAllBlocks()) {
             if (isNotSelectedBlock(block) && block.getName().equalsIgnoreCase(name)) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean nameInComps(String name) {
-        if (config.getEditableComponents() == null) {
-            return false;
-        }
-        for (Configuration comp : config.getEditableComponents().getSelected()) {
-            for (Block block : comp.getBlocks()) {
-                if (block.getName().equalsIgnoreCase(name)) {
-                    return true;
-                }
             }
         }
         return false;
