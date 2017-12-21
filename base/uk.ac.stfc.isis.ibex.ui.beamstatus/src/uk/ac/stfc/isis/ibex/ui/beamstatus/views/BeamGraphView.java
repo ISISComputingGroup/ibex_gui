@@ -123,7 +123,6 @@ public class BeamGraphView implements ModelListener {
      */
     @PostConstruct 
     public void createPartControl(final Composite parent) {
-        
     	// Remember what shell we're using
         shell = parent.getShell();
         
@@ -138,7 +137,10 @@ public class BeamGraphView implements ModelListener {
         createTimeRangeRadioButtons(parent);
         
         // Create the basic plot
-        createBeamStatusPlot(parent);
+        Composite plotComposite = new Composite(parent, SWT.NONE);
+        plotComposite.setLayout(new GridLayout(1, false));
+        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        modelPlot = new ModelBasedPlot(plotComposite);
 
         // TODO Disabled until connection to archive engine is fixed
         // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
@@ -153,6 +155,7 @@ public class BeamGraphView implements ModelListener {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
+        createBeamStatusPlot();
     }
 
     private void createTimeRangeRadioButtons(final Composite parent) {
@@ -181,17 +184,10 @@ public class BeamGraphView implements ModelListener {
 
     }
 
-    private void createBeamStatusPlot(final Composite parent) {
-        Composite plotComposite = new Composite(parent, SWT.NONE);
-        plotComposite.setLayout(new GridLayout(1, false));
-        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-                
-        // Create plot with basic configuration
-        modelPlot = new ModelBasedPlot(plotComposite);
+    private void createBeamStatusPlot() {
         RTTimePlot rtPlot = modelPlot.getPlot();
         rtPlot.setTitle(Optional.of(PLOT_TITLE));
         rtPlot.setEnabled(false);
-        // TODO: Doesn't seem to actually hide the toolbar. Can we do that?
         rtPlot.showToolbar(false);
         rtPlot.showLegend(true);
         rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -267,7 +263,6 @@ public class BeamGraphView implements ModelListener {
      *            PV to add to the plot
      */
     protected void addTrace(final PVItem newItem) {
-
         // PV unknown or plot does not exist
         if (newItem == null || modelPlot == null) {
             return;
