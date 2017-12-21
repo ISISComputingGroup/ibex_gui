@@ -33,7 +33,7 @@ public final class Commands {
 			+ "load_script(None, globals()) \n";
 
     private Commands() {
-    };
+    }
 	
 	public static String setInstrument() {
 		InstrumentInfo info = Instrument.getInstance().currentInstrument();

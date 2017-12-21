@@ -133,7 +133,7 @@ public class Script {
      */
     public void setDoTransRows(ArrayList<PythonString> doTransRows) {
         this.doTransRows = doTransRows;
-    };
+    }
 
     @Override
     public String toString() {

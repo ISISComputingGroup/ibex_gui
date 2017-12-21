@@ -96,14 +96,8 @@ public class SendingChangesDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		Button button = createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-		button.setText("Dismiss");
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				"Dismiss", false);
 	}
 
 	/**

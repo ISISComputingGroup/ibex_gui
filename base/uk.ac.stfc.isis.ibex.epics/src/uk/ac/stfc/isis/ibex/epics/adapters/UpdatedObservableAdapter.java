@@ -59,13 +59,13 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	}
 		
 	protected void error(Exception e) {
-	};
+	}
 	
 	protected void connectionChanged(boolean isConnected) {
 		if (!isConnected) {
 			setValue(null);
 		}
-	};
+	}
 	
 	@Override
 	public void close() {

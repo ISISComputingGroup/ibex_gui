@@ -36,5 +36,5 @@ public class PVFilter extends ModelObject {
 				return true;
 			}
 		};
-	};
+	}
 }
