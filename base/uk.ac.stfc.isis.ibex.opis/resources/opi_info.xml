@@ -1188,11 +1188,19 @@
     <entry>
       <key>TRITON</key>
       <value>
-        <categories/>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
         <type>UNKNOWN</type>
         <path>triton.opi</path>
         <description>The OPI for the Triton</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>TRITON</name>
+            <description>The triton PV prefix (e.g. TRITON_01).</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>

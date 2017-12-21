@@ -9,6 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)$(TRITON)</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -261,7 +262,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SPEED</pv_name>
+      <pv_name>$(PV_ROOT):TEMP:SP:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -353,7 +354,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):P</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -445,7 +446,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):I</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -496,7 +497,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):D</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -536,7 +537,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT):TEMP:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -592,7 +593,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT):P:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -648,7 +649,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT):I:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -704,7 +705,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT):D:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -812,7 +813,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):HEATER:RANGE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -837,43 +838,58 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+      <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
-      <enabled>true</enabled>
-      <wuid>-6392638:16079499dc3:-7b4d</wuid>
       <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
+      <auto_size>false</auto_size>
+      <text>0.0</text>
+      <rotation_angle>0.0</rotation_angle>
+      <show_units>true</show_units>
+      <height>20</height>
+      <multiline_input>false</multiline_input>
       <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SPEED:SP:GUI</pv_name>
+      <pv_name>$(PV_ROOT):HEATER:RANGE:SP</pv_name>
+      <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <widget_type>Combo</widget_type>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Input</widget_type>
+      <confirm_message></confirm_message>
+      <name>Text Input_1</name>
+      <actions hook="false" hook_all="false" />
+      <border_style>3</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <enabled>true</enabled>
+      <wuid>40e2291d:160797758b5:-7d33</wuid>
+      <transparent>false</transparent>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <format_type>0</format_type>
+      <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
       <x>228</x>
-      <name>Combo</name>
-      <y>98</y>
+      <y>102</y>
+      <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <minimum>-1.7976931348623157E308</minimum>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
@@ -1026,7 +1042,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SPEED</pv_name>
+      <pv_name>$(PV_ROOT):MC:TEMP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1118,7 +1134,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):STIL:TEMP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1210,7 +1226,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):SORB:TEMP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1261,7 +1277,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):4KHX:TEMP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1353,7 +1369,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):DELAY</pv_name>
+      <pv_name>$(PV_ROOT):JTHX:TEMP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1925,26 +1941,7 @@ $(pv_value)</tooltip>
       <auto_size>false</auto_size>
       <read_only>true</read_only>
       <text></text>
-      <scripts>
-        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>setColour</scriptName>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil 
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil 
-from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
-
-#Get characters as Long Int array 
-#This has form e.g. 'array('l',[70L,69L,45L])' sans quotes 
-status = PVUtil.getString(pvs[0]) 
-
-widget.setPropertyValue("text",status)
-
-if status.startswith("System OK"):
-    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,255,255));
-else:
-    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,127,127));]]></scriptText>
-          <pv trig="true">$(PV_ROOT)STAT:DISP</pv>
-        </path>
-      </scripts>
+      <scripts />
       <show_units>true</show_units>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <height>55</height>
@@ -1957,7 +1954,7 @@ else:
       </scale_options>
       <show_v_scroll>true</show_v_scroll>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)STAT:DISP</pv_name>
+      <pv_name>$(PV_ROOT):STATUS</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1966,7 +1963,7 @@ else:
       <confirm_message></confirm_message>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>true</wrap_words>
-      <format_type>0</format_type>
+      <format_type>4</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -1995,33 +1992,14 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-6392638:16079499dc3:-77dc</wuid>
+      <wuid>40e2291d:160797758b5:-7d95</wuid>
       <show_h_scroll>false</show_h_scroll>
       <next_focus>0</next_focus>
       <pv_value />
       <auto_size>false</auto_size>
       <read_only>true</read_only>
       <text></text>
-      <scripts>
-        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>setColour</scriptName>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil 
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil 
-from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
-
-#Get characters as Long Int array 
-#This has form e.g. 'array('l',[70L,69L,45L])' sans quotes 
-status = PVUtil.getString(pvs[0]) 
-
-widget.setPropertyValue("text",status)
-
-if status.startswith("System OK"):
-    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,255,255));
-else:
-    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,127,127));]]></scriptText>
-          <pv trig="true">$(PV_ROOT)STAT:DISP</pv>
-        </path>
-      </scripts>
+      <scripts />
       <show_units>true</show_units>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <height>55</height>
@@ -2034,7 +2012,7 @@ else:
       </scale_options>
       <show_v_scroll>true</show_v_scroll>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)STAT:DISP</pv_name>
+      <pv_name>$(PV_ROOT):AUTOMATION</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -2043,7 +2021,7 @@ else:
       <confirm_message></confirm_message>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>true</wrap_words>
-      <format_type>0</format_type>
+      <format_type>4</format_type>
       <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -2191,7 +2169,7 @@ else:
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -2218,15 +2196,15 @@ else:
 $(trace_0_y_pv_value)</tooltip>
         <trace_0_concatenate_data>true</trace_0_concatenate_data>
         <trace_0_trace_type>0</trace_0_trace_type>
+        <trace_4_line_width>1</trace_4_line_width>
         <border_width>1</border_width>
+        <trace_3_point_size>4</trace_3_point_size>
         <trace_1_x_axis_index>0</trace_1_x_axis_index>
         <border_style>0</border_style>
         <axis_0_grid_color>
           <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
         </axis_0_grid_color>
-        <axis_2_visible>true</axis_2_visible>
-        <trace_0_name>TEMPERATURE</trace_0_name>
-        <axis_2_minimum>0.0</axis_2_minimum>
+        <trace_0_name>MC</trace_0_name>
         <trace_0_update_mode>4</trace_0_update_mode>
         <trace_1_x_pv></trace_1_x_pv>
         <wuid>-6392638:16079499dc3:-715c</wuid>
@@ -2239,57 +2217,68 @@ $(trace_0_y_pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
+        <trace_3_update_mode>4</trace_3_update_mode>
         <x>6</x>
         <y>6</y>
+        <trace_4_update_mode>4</trace_4_update_mode>
+        <trace_3_x_axis_index>0</trace_3_x_axis_index>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <axis_count>3</axis_count>
+        <axis_count>2</axis_count>
+        <trace_4_x_pv></trace_4_x_pv>
         <trace_1_point_size>4</trace_1_point_size>
-        <trace_1_anti_alias>true</trace_1_anti_alias>
+        <trace_1_anti_alias>false</trace_1_anti_alias>
         <pv_value />
-        <axis_2_grid_color>
-          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-        </axis_2_grid_color>
-        <trace_0_buffer_size>1000</trace_0_buffer_size>
-        <trace_2_buffer_size>100</trace_2_buffer_size>
-        <axis_1_maximum>50.0</axis_1_maximum>
+        <trace_0_buffer_size>10000</trace_0_buffer_size>
+        <trace_2_buffer_size>10000</trace_2_buffer_size>
+        <axis_1_maximum>400.0</axis_1_maximum>
         <axis_0_scale_font>
           <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
         </axis_0_scale_font>
-        <trigger_pv>$(P)CS:IOC:$(EURO):DEVIOS:HEARTBEAT</trigger_pv>
+        <trigger_pv>$(P)CS:IOC:$(TRITON):DEVIOS:HEARTBEAT</trigger_pv>
+        <trace_4_update_delay>100</trace_4_update_delay>
         <widget_type>XY Graph</widget_type>
         <trace_2_line_width>1</trace_2_line_width>
+        <trace_4_plot_mode>0</trace_4_plot_mode>
+        <trace_3_concatenate_data>true</trace_3_concatenate_data>
         <axis_1_axis_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </axis_1_axis_color>
         <axis_0_scale_format></axis_0_scale_format>
-        <axis_1_log_scale>false</axis_1_log_scale>
+        <axis_1_log_scale>true</axis_1_log_scale>
         <title></title>
         <trace_0_visible>true</trace_0_visible>
-        <trace_1_name>TEMPERATURE SETPOINT</trace_1_name>
+        <trace_4_buffer_size>10000</trace_4_buffer_size>
+        <trace_1_name>STIL</trace_1_name>
+        <trace_3_anti_alias>true</trace_3_anti_alias>
         <trace_1_y_pv_value />
-        <axis_2_auto_scale>true</axis_2_auto_scale>
+        <trace_4_y_pv>$(PV_ROOT):JTHX:TEMP</trace_4_y_pv>
         <show_legend>true</show_legend>
+        <trace_3_visible>true</trace_3_visible>
+        <trace_4_x_axis_index>0</trace_4_x_axis_index>
+        <trace_3_name>4KHX</trace_3_name>
         <axis_0_axis_title>Time</axis_0_axis_title>
         <axis_0_axis_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </axis_0_axis_color>
-        <axis_2_scale_font>
-          <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
-        </axis_2_scale_font>
+        <trace_3_update_delay>100</trace_3_update_delay>
         <trace_2_update_delay>100</trace_2_update_delay>
+        <trace_4_point_style>0</trace_4_point_style>
         <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
         <trace_0_point_style>0</trace_0_point_style>
         <trace_1_point_style>0</trace_1_point_style>
         <trace_0_line_width>1</trace_0_line_width>
-        <axis_2_y_axis>true</axis_2_y_axis>
         <axis_0_time_format>5</axis_0_time_format>
-        <trace_count>3</trace_count>
+        <trace_count>5</trace_count>
         <axis_1_show_grid>true</axis_1_show_grid>
+        <trace_3_x_pv></trace_3_x_pv>
         <trace_2_trace_color>
           <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0" />
         </trace_2_trace_color>
+        <trace_4_visible>true</trace_4_visible>
         <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+        <trace_3_buffer_size>10000</trace_3_buffer_size>
         <trace_2_trace_type>0</trace_2_trace_type>
+        <trace_3_line_width>1</trace_3_line_width>
         <show_toolbar>false</show_toolbar>
         <axis_0_visible>true</axis_0_visible>
         <axis_0_show_grid>true</axis_0_show_grid>
@@ -2299,98 +2288,100 @@ $(trace_0_y_pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <trace_1_y_pv>$(PV_ROOT_EURO):TEMP:SP:RBV</trace_1_y_pv>
+        <trace_1_y_pv>$(PV_ROOT):STIL:TEMP</trace_1_y_pv>
         <trace_2_concatenate_data>true</trace_2_concatenate_data>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <trace_2_y_pv_value />
         <trace_2_anti_alias>true</trace_2_anti_alias>
-        <axis_0_maximum>120.0</axis_0_maximum>
+        <axis_0_maximum>10000.0</axis_0_maximum>
         <trace_1_y_axis_index>1</trace_1_y_axis_index>
-        <trace_2_name>HEATER OUTPUT</trace_2_name>
-        <height>315</height>
+        <trace_2_name>SORB</trace_2_name>
+        <height>421</height>
         <trace_2_visible>true</trace_2_visible>
         <trigger_pv_value />
+        <trace_3_y_pv>$(PV_ROOT):4KHX:TEMP</trace_3_y_pv>
         <axis_1_grid_color>
           <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
         </axis_1_grid_color>
         <actions hook="false" hook_all="false" />
         <trace_2_point_size>4</trace_2_point_size>
-        <axis_2_axis_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </axis_2_axis_color>
+        <trace_4_concatenate_data>true</trace_4_concatenate_data>
         <axis_0_log_scale>false</axis_0_log_scale>
         <trace_0_x_pv_value />
         <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
         <rules />
         <axis_1_visible>true</axis_1_visible>
-        <axis_2_show_grid>true</axis_2_show_grid>
+        <trace_3_y_axis_index>1</trace_3_y_axis_index>
         <trace_0_update_delay>100</trace_0_update_delay>
         <trace_1_concatenate_data>true</trace_1_concatenate_data>
         <trace_1_trace_color>
           <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
         </trace_1_trace_color>
-        <pv_name>$(PV_ROOT_EURO):TEMP</pv_name>
-        <axis_2_log_scale>false</axis_2_log_scale>
-        <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
-        <name></name>
+        <trace_3_trace_color>
+          <color red="0" green="0" blue="0" />
+        </trace_3_trace_color>
+        <pv_name></pv_name>
+        <name>Temperatures</name>
         <trace_1_trace_type>0</trace_1_trace_type>
         <axis_0_auto_scale>true</axis_0_auto_scale>
         <axis_0_minimum>0.0</axis_0_minimum>
-        <trace_2_y_axis_index>2</trace_2_y_axis_index>
+        <trace_2_y_axis_index>1</trace_2_y_axis_index>
         <trace_1_update_delay>100</trace_1_update_delay>
-        <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
         <axis_1_axis_title>Temperature</axis_1_axis_title>
         <trace_2_x_pv_value />
-        <axis_1_auto_scale>true</axis_1_auto_scale>
+        <axis_1_auto_scale>false</axis_1_auto_scale>
         <trace_1_line_width>1</trace_1_line_width>
-        <trace_2_y_pv>$(PV_ROOT_EURO):OUTPUT</trace_2_y_pv>
+        <trace_3_trace_type>0</trace_3_trace_type>
+        <trace_2_y_pv>$(PV_ROOT):SORB:TEMP</trace_2_y_pv>
         <trace_1_plot_mode>0</trace_1_plot_mode>
         <border_color>
           <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
-        <axis_2_title_font>
-          <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-        </axis_2_title_font>
-        <trace_0_y_pv>$(PV_ROOT_EURO):TEMP</trace_0_y_pv>
+        <trace_3_point_style>0</trace_3_point_style>
+        <trace_0_y_pv>$(PV_ROOT):MC:TEMP</trace_0_y_pv>
         <trace_2_point_style>0</trace_2_point_style>
         <trace_0_plot_mode>0</trace_0_plot_mode>
+        <trace_4_trace_type>0</trace_4_trace_type>
         <enabled>true</enabled>
         <trace_0_x_pv></trace_0_x_pv>
         <axis_1_scale_font>
           <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
         </axis_1_scale_font>
         <axis_1_time_format>0</axis_1_time_format>
-        <axis_2_time_format>0</axis_2_time_format>
-        <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+        <trace_3_plot_mode>0</trace_3_plot_mode>
         <border_alarm_sensitive>false</border_alarm_sensitive>
-        <axis_2_maximum>100.0</axis_2_maximum>
         <show_plot_area_border>false</show_plot_area_border>
         <width>421</width>
         <trace_1_x_pv_value />
-        <axis_1_minimum>0.0</axis_1_minimum>
+        <axis_1_minimum>1.0E-6</axis_1_minimum>
         <title_font>
           <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
         </title_font>
+        <trace_4_anti_alias>true</trace_4_anti_alias>
         <trace_0_y_pv_value />
         <trace_1_visible>true</trace_1_visible>
         <plot_area_background_color>
           <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
         </plot_area_background_color>
+        <trace_4_point_size>4</trace_4_point_size>
         <axis_1_title_font>
           <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
         </axis_1_title_font>
         <visible>true</visible>
-        <axis_2_axis_title>Output</axis_2_axis_title>
-        <trace_1_buffer_size>1000</trace_1_buffer_size>
+        <trace_4_trace_color>
+          <color red="128" green="0" blue="255" />
+        </trace_4_trace_color>
+        <trace_1_buffer_size>10000</trace_1_buffer_size>
         <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <axis_2_scale_format></axis_2_scale_format>
         <scripts />
         <trace_0_point_size>4</trace_0_point_size>
         <trace_0_trace_color>
           <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
         </trace_0_trace_color>
-        <trace_0_anti_alias>true</trace_0_anti_alias>
+        <trace_0_anti_alias>false</trace_0_anti_alias>
+        <trace_4_name>JTHX</trace_4_name>
         <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+        <trace_4_y_axis_index>1</trace_4_y_axis_index>
         <trace_2_plot_mode>0</trace_2_plot_mode>
         <trace_2_x_pv></trace_2_x_pv>
         <foreground_color>
@@ -4825,7 +4816,7 @@ pv.setValue(2)
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
