@@ -1812,7 +1812,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>157</height>
+    <height>199</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1873,7 +1873,7 @@ $(pv_value)</tooltip>
       <width>73</width>
       <x>0</x>
       <name>Label_2</name>
-      <y>72</y>
+      <y>108</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1944,7 +1944,7 @@ $(pv_value)</tooltip>
       <scripts />
       <show_units>true</show_units>
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>55</height>
+      <height>97</height>
       <multiline_input>true</multiline_input>
       <border_width>2</border_width>
       <scale_options>
@@ -2029,7 +2029,7 @@ $(pv_value)</tooltip>
       <name>Text</name>
       <width>241</width>
       <x>78</x>
-      <y>72</y>
+      <y>108</y>
       <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
@@ -2046,7 +2046,7 @@ $(pv_value)</tooltip>
     <tooltip></tooltip>
     <tab_3_icon_path></tab_3_icon_path>
     <tab_4_enabled>true</tab_4_enabled>
-    <height>463</height>
+    <height>505</height>
     <tab_2_icon_path></tab_2_icon_path>
     <border_width>1</border_width>
     <border_color>
@@ -2159,7 +2159,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2296,7 +2296,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_maximum>10000.0</axis_0_maximum>
         <trace_1_y_axis_index>1</trace_1_y_axis_index>
         <trace_2_name>SORB</trace_2_name>
-        <height>421</height>
+        <height>469</height>
         <trace_2_visible>true</trace_2_visible>
         <trigger_pv_value />
         <trace_3_y_pv>$(PV_ROOT):4KHX:TEMP</trace_3_y_pv>
@@ -2398,7 +2398,7 @@ $(trace_0_y_pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2408,7 +2408,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -2527,7 +2527,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_maximum>10000.0</axis_0_maximum>
         <trace_1_y_axis_index>1</trace_1_y_axis_index>
         <trace_2_name>P3</trace_2_name>
-        <height>421</height>
+        <height>469</height>
         <trace_2_visible>true</trace_2_visible>
         <trigger_pv_value />
         <trace_3_y_pv>$(PV_ROOT):PRESSURE:P5</trace_3_y_pv>
@@ -2620,7 +2620,7 @@ $(trace_0_y_pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2846,7 +2846,7 @@ $(trace_0_y_pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2982,7 +2982,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V1:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3074,7 +3074,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V2:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3166,7 +3166,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V3:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3258,7 +3258,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V4:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3350,7 +3350,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V5:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3442,7 +3442,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V6:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3534,7 +3534,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V7:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3626,7 +3626,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V8:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3718,7 +3718,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V9:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3810,7 +3810,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):VOLTAGE</pv_name>
+          <pv_name>$(PV_ROOT):VALVES:V10:STATE</pv_name>
           <vertical_alignment>1</vertical_alignment>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3846,7 +3846,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3903,7 +3903,7 @@ $(pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>187</width>
+        <width>247</width>
         <x>12</x>
         <name>Channels</name>
         <y>12</y>
@@ -4186,7 +4186,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T1:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4239,7 +4239,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T2:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4292,7 +4292,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T3:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4345,7 +4345,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T4:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4398,7 +4398,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T5:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4451,7 +4451,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>true</keep_wh_ratio>
           </scale_options>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):STATUS.B3</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T6:STATE</pv_name>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -4490,7 +4490,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-6392638:16079499dc3:-6e09</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>On</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4502,7 +4502,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T1:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -4516,14 +4516,14 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendOne.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4540,9 +4540,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-6392638:16079499dc3:-6dfb</wuid>
+          <wuid>40e2291d:160797758b5:-7a91</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>On</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4554,7 +4554,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T2:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -4568,14 +4568,14 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendOne.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4592,9 +4592,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-6392638:16079499dc3:-6df4</wuid>
+          <wuid>40e2291d:160797758b5:-7a8a</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>On</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4606,28 +4606,28 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T3:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
           <width>61</width>
           <x>84</x>
-          <name>Button_2</name>
+          <name>Button_1</name>
           <y>52</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendOne.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4644,9 +4644,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-6392638:16079499dc3:-6ded</wuid>
+          <wuid>40e2291d:160797758b5:-7a83</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>On</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4658,7 +4658,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T4:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -4672,14 +4672,14 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendOne.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4696,9 +4696,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-6392638:16079499dc3:-6de6</wuid>
+          <wuid>40e2291d:160797758b5:-7a7c</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>On</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4710,13 +4710,325 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T5:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
           <width>61</width>
           <x>84</x>
+          <name>Button_1</name>
+          <y>100</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendOne.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a75</wuid>
+          <pv_value />
+          <text>On</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T6:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>84</x>
+          <name>Button_1</name>
+          <y>124</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendOne.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a2e</wuid>
+          <pv_value />
+          <text>Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T1:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>150</x>
+          <name>Button_1</name>
+          <y>4</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendZero.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a2d</wuid>
+          <pv_value />
+          <text>Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T2:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>150</x>
+          <name>Button_1</name>
+          <y>28</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendZero.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a2c</wuid>
+          <pv_value />
+          <text>Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T3:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>150</x>
+          <name>Button_2</name>
+          <y>52</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendZero.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a2b</wuid>
+          <pv_value />
+          <text>Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T4:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>150</x>
+          <name>Button_3</name>
+          <y>76</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>Common Scripts/sendZero.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+
+pv.setValue(2)
+]]></scriptText>
+              <embedded>false</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>40e2291d:160797758b5:-7a2a</wuid>
+          <pv_value />
+          <text>Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>23</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):CHANNELS:T5:STATE:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>61</width>
+          <x>150</x>
           <name>Button_4</name>
           <y>100</y>
           <foreground_color>
@@ -4724,14 +5036,14 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendZero.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4748,9 +5060,9 @@ $(pv_value)</tooltip>
           <push_action_index>0</push_action_index>
           <rules />
           <enabled>true</enabled>
-          <wuid>-6392638:16079499dc3:-6ddf</wuid>
+          <wuid>40e2291d:160797758b5:-7a29</wuid>
           <pv_value />
-          <text>On / Off</text>
+          <text>Off</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>23</height>
@@ -4762,13 +5074,13 @@ $(pv_value)</tooltip>
           </scale_options>
           <image></image>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT):COMMAND:SP</pv_name>
+          <pv_name>$(PV_ROOT):CHANNELS:T6:STATE:SP</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
           <width>61</width>
-          <x>84</x>
+          <x>150</x>
           <name>Button_5</name>
           <y>124</y>
           <foreground_color>
@@ -4776,14 +5088,14 @@ $(pv_value)</tooltip>
           </foreground_color>
           <actions hook="false" hook_all="false">
             <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
+              <path>Common Scripts/sendZero.py</path>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
 
 pv.setValue(2)
 ]]></scriptText>
-              <embedded>true</embedded>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -4802,7 +5114,7 @@ pv.setValue(2)
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>434</height>
+      <height>476</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -4812,7 +5124,7 @@ pv.setValue(2)
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
