@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
@@ -32,11 +31,6 @@ import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration
 
 @SuppressWarnings("checkstyle:methodname")
 public class ComponentFilteredConfigurationTest {
-	
-	@Before
-    public void setup() {
-	}
-	
     public static void assertGroupsAreEqual(Group expected, Group actual) {
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getComponent(), actual.getComponent());

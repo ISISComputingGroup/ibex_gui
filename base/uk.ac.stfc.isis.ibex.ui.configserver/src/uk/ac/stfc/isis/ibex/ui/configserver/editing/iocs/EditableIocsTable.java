@@ -109,13 +109,6 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 				
         initialise();
-        this.addSelectionChangedListener(new ISelectionChangedListener() {
-
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-
-            }
-        });
 	}
 
     /**

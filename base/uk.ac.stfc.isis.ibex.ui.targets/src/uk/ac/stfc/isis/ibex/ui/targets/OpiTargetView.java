@@ -113,8 +113,8 @@ public abstract class OpiTargetView extends OpiView {
 		}
 	}
 
-    private static List<IViewPart> openOPIs = new ArrayList<>();;
-    private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
+    private static List<IViewPart> openOPIs = new ArrayList<>();
+    private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();
 
     /**
      * Closes any OPIs that have been opened.

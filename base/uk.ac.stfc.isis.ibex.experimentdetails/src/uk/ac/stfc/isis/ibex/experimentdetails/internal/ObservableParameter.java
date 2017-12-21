@@ -37,7 +37,7 @@ public class ObservableParameter extends Parameter {
 		@Override
 		protected String defaultValue() {
 			return "Unknown";
-		};
+		}
 	};
 	
 	private final BaseObserver<String> unitsObserver = new ParameterFieldObserver() {

@@ -39,7 +39,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 
 	private static Synoptic synoptic = Synoptic.getInstance();
 	
-    private SynopticInfo lastSetDefaultSynoptic = new SynopticInfo("", "", false);;
+    private SynopticInfo lastSetDefaultSynoptic = new SynopticInfo("", "", false);
 
     private Collection<SynopticInfo> synopticList = new ArrayList<>();
     private ArrayList<String> synopticNamesList;

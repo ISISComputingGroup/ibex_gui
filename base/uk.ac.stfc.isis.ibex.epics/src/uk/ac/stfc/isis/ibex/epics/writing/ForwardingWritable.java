@@ -51,12 +51,12 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		@Override
         public void onError(Exception e) {
 			error(e);
-		};
+		}
 		
 		@Override
         public void onCanWriteChanged(boolean canWrite) {
 			canWriteChanged(canWrite);
-		};
+		}
 	};
 	
     private Subscription readingSubscription;
@@ -128,7 +128,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
         if (resource != null) {
             resource.close();
         }
-    };
+    }
 
     private void checkPreconditions(Writable<TOut> destination) {
         if (destination == null) {

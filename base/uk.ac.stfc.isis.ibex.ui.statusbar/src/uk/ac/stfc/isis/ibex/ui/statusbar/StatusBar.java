@@ -86,7 +86,7 @@ public class StatusBar extends AbstractUIPlugin {
 			configSubscription.removeObserver();
 		}
 		super.stop(context);
-	};
+	}
 	
 	private void setTitle(final String title, final String description) {
 		display.asyncExec(new Runnable() {

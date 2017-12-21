@@ -29,6 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -43,22 +44,12 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
  * Command to display the IOC control dialog.
  *
  */
-public class IocControlHandler implements IHandler {
+public class IocControlHandler extends AbstractHandler {
 	
 	private IocControl control;
 	
 	public IocControlHandler() {
 		control = Configurations.getInstance().iocControl();
-	}
-
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
-		
-	}
-
-	@Override
-	public void dispose() {
-		
 	}
 
 	/**
@@ -77,19 +68,4 @@ public class IocControlHandler implements IHandler {
 	private Shell shell() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-
-	@Override
-	public boolean isHandled() {
-		return true;
-	}
-
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {		
-	}
-
 }
