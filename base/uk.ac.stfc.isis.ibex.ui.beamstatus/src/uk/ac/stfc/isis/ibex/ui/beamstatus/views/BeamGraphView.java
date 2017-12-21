@@ -57,7 +57,7 @@ import org.eclipse.swt.widgets.Shell;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView implements ModelListener {
+public class BeamGraphView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -116,6 +116,11 @@ public class BeamStatusView implements ModelListener {
     /** Title for the plot. */
     private static final String PLOT_TITLE = "Beam Current";
 
+    /**
+     * Creates the Beam Graph view.
+     * 
+     * @param parent The parent container obtained via dependency injection
+     */
     @PostConstruct 
     public void createPartControl(final Composite parent) {
         
@@ -342,6 +347,9 @@ public class BeamStatusView implements ModelListener {
         return getCalendarSpec(getTimeRangeInMilliseconds());
     }
     
+    /**
+     * Disposes of the model before disposing of this view.
+     */
     @PreDestroy
     public void dispose() {
     	if (model != null) {

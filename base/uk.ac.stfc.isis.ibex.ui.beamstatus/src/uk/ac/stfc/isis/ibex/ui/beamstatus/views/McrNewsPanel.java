@@ -55,13 +55,11 @@ public class McrNewsPanel {
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
     private Text newsText;
-    
+
     /**
-     * Constructor for the MCR News Panel.
+     * Creates the MCR News view.
      * 
-     * @param parent Parent composite
-     * @param style SWT Style
-     * @return 
+     * @param parent The parent container obtained via dependency injection
      */
     @PostConstruct
     public void createPartControl(Composite parent) {

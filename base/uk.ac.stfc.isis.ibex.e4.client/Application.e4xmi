@@ -121,8 +121,16 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_HX2EYIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.4" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_IZXy0IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2">
-          <children xsi:type="basic:Part" xmi:id="_Wtrl8IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.ui.beamStatusView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView" label="Beam Status"/>
+        <children xsi:type="basic:PartStack" xmi:id="_IZXy0IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2" containerData="70">
+          <children xsi:type="basic:Part" xmi:id="_Wtrl8IcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.ui.beamgraph" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamGraphView" label="Beam Current"/>
+        </children>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ZEDrcOY5Eee0yf7w-lF8_g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.17" containerData="30">
+          <children xsi:type="basic:PartStack" xmi:id="_ayRgwOY5Eee0yf7w-lF8_g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.21" containerData="30">
+            <children xsi:type="basic:Part" xmi:id="_dCUQwOY5Eee0yf7w-lF8_g" elementId="uk.ac.stfc.isis.ibex.e4.ui.mcrnews" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.McrNewsPanel" label="MCR News"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_bL_BQOY5Eee0yf7w-lF8_g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="70">
+            <children xsi:type="basic:Part" xmi:id="_dR0FUOY5Eee0yf7w-lF8_g" elementId="uk.ac.stfc.isis.ibex.e4.ui.beaminfo" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.beamstatus/uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamInfoView" label="Beam Information"/>
+          </children>
         </children>
       </children>
     </children>

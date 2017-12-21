@@ -29,17 +29,16 @@ import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
 /**
- * The parent composite for the beam statistics widgets.
+ * The parent composite for the beam information widgets.
  */
-public class StatsPanel {
+public class BeamInfoView {
 
     /**
-     * The constructor.
+     * Creates the Beam Info view.
      * 
-     * @param parent the parent
-     * @param style the SWT style
-     * @return 
+     * @param parent The parent container obtained via dependency injection
      */
+    @SuppressWarnings("checkstyle:magicnumber")
 	@PostConstruct
     public void createPartControl(Composite parent) {
         parent.setLayout(new GridLayout(1, false));
