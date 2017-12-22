@@ -110,6 +110,7 @@ public class OpiDescription {
      * @param path the relative OPI path
      * @param description the description of the OPI
      * @param macros the macros for the OPI
+     * @param categories the categories that the OPI belong to
      */
     public OpiDescription(String type, String path, String description, List<MacroInfo> macros, List<String> categories) {
         this.type = type;

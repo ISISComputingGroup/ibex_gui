@@ -32,8 +32,6 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -46,26 +44,16 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
  */
 public class IocControlHandler extends AbstractHandler {
 	
-	private IocControl control;
-	
-	public IocControlHandler() {
-		control = Configurations.getInstance().iocControl();
-	}
+	private IocControl control = Configurations.getInstance().iocControl();
 
 	/**
      * Display the dialog.
      */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if (control != null) {
-			IocControlDialog dialog = new IocControlDialog(shell(), control);	
-			dialog.open();
-		}
-		
+		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		IocControlDialog dialog = new IocControlDialog(shell, control);	
+		dialog.open();
 		return null;
-	}
-	
-	private Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 }

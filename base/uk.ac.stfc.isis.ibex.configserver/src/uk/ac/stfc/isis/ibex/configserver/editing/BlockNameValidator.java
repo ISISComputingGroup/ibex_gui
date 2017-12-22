@@ -23,7 +23,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
 /**
  * This provides validation for block names. The validation checks for an empty block name, a name that starts with
