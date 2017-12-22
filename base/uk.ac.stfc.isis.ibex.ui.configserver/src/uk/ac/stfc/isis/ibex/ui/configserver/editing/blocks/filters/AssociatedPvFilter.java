@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
 public class AssociatedPvFilter extends PVFilter {
 	
-	private AssociatedPvViewerFilter filter = new AssociatedPvViewerFilter();;
+	private AssociatedPvViewerFilter filter = new AssociatedPvViewerFilter();
 	
 	public AssociatedPvFilter(final Collection<EditableIoc> availableIocs) {	
 		updateIocList(availableIocs);

@@ -60,7 +60,7 @@ public abstract class ForwardingWriter<TIn, TOut> implements ConfigurableWriter<
 		subscriptions.add(writerSubscription);
 		
 		return writerSubscription;
-	};
+	}
 
 	@Override
 	public void close() {

@@ -17,24 +17,29 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
+package uk.ac.stfc.isis.ibex.configserver.pv;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import java.util.Locale;
 
-/**
- * Class to extend when creating a new filter type for the available PVs.
- */
-public class PVFilter extends ModelObject {
-	protected boolean refresh;
-	
-	public ViewerFilter getFilter() {
-		return new ViewerFilter() {
-			@Override
-			public boolean select(Viewer arg0, Object arg1, Object arg2) {
-				return true;
-			}
-		};
+import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
+import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.NumberWithUnitsChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
+
+public final class ChannelTypeLookup {
+
+    private ChannelTypeLookup() {
+    }
+
+    public static ChannelType<String> get(String type) {
+		switch (type.toUpperCase(Locale.ENGLISH)) {
+		case "AI":
+			return new NumberWithUnitsChannel();
+		case "STRINGIN":
+		case "STRINGOUT":
+			return new StringChannel();
+		default:
+			return new DefaultChannel();
+		}
 	}
 }
