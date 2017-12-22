@@ -29,10 +29,18 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+/**
+ * PV filter that creates a viewer filter that will only give PVs that belong to the specified IOCs.
+ */
 public class AssociatedPvFilter extends PVFilter {
 	
 	private AssociatedPvViewerFilter filter = new AssociatedPvViewerFilter();
 	
+	/**
+	 * Constructor, adds listener to all specified IOCs to update the filter when the IOCs change.
+	 * 
+	 * @param availableIocs A list of IOCs to allow the PVs from.
+	 */
 	public AssociatedPvFilter(final Collection<EditableIoc> availableIocs) {	
 		updateIocList(availableIocs);
 		

@@ -29,6 +29,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class PVFilter extends ModelObject {
 	protected boolean refresh;
 	
+	/**
+	 * Get the viewer filter to apply to the viewer. 
+	 * 
+	 * The default behaviour filters nothing. Subclasses should override to provide their own filters.
+	 * @return the viewer filter to apply.
+	 */
 	public ViewerFilter getFilter() {
 		return new ViewerFilter() {
 			@Override
