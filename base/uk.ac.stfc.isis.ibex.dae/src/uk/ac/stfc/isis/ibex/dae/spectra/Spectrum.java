@@ -97,7 +97,7 @@ public class Spectrum extends ModelObject {
 		double[] value = yData.clone();
 		if (SpectrumYAxisTypes.values()[spectrumYAxisTypeSelectionIndex] == SpectrumYAxisTypes.ABSOLUTE_COUNTS) {
 			if (value.length != xData.length) {
-				for (int i=0; i<value.length; i++) {
+				for (int i = 0; i < value.length; i++) {
 					// Can't calculate widths if the lengths aren't the same.
 					// Just set everything to zero
 					value[i] = 0;

@@ -22,19 +22,30 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * Static factory class for commands to be sent to genie python.
+ */
 public final class Commands {
 
 	private static final String SET_INSTRUMENT = "set_instrument('%s')\n";
 
+	/**
+	 * The command to initialise genie.
+	 */
 	public static final String GENIE_INITIALISATION = 
 			"# Configuring GENIE PYTHON, please wait\n" 
 			+ "import sys;sys.executable=''\n" 
 			+ "from genie_python.genie_startup import * \n" 
-			+ "load_script(None, globals()) \n";
+			+ "load_script(None, globals()) \n"
+			+ "%matplotlib qt4 \n";
 
     private Commands() {
     }
 	
+    /**
+     * Creates the command to switch genie to the current instrument.
+     * @return the command to switch genie to the current instrument.
+     */
 	public static String setInstrument() {
 		InstrumentInfo info = Instrument.getInstance().currentInstrument();
 		String instrumentName = info.hostName().equals("localhost") ? info.pvPrefix() : info.hostName();

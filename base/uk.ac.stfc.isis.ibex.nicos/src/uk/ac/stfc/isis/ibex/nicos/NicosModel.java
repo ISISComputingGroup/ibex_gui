@@ -70,13 +70,17 @@ public class NicosModel extends ModelObject {
      */
     public static final String NO_RESPONSE = "Server did not respond to request.";
 
+    /**
+     * The period to ask the server for a status update (in ms).
+     */
+    private static final long UPDATE_STATUS_TIME = 1000;
+    
     private final ZMQSession session;
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
     private String scriptSendErrorMessage = "";
     private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
     private String connectionErrorMessage = "";
     private RepeatingJob connectionJob;
-	private int status;
 	private int lineNumber;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
@@ -101,7 +105,7 @@ public class NicosModel extends ModelObject {
         this.connectionJob = connectionJob;
         this.connectionJob.schedule();
         
-        updateStatusJob = new RepeatingJob("update script status", 1000) {
+        updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
 			@Override
 			protected IStatus doTask(IProgressMonitor monitor) {
 				updateScriptStatus();

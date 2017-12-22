@@ -97,7 +97,7 @@ public class DAEComboContentProvider {
             // yet.
             String displayDir = this.dir != null ? this.dir : "C:\\Instrument\\Setting\\Config\\<instrument>\\...";
 
-            tables = new String[] { "None found in " + displayDir + " (file name must contain \"" + pattern + "\")." };
+            tables = new String[] {"None found in " + displayDir + " (file name must contain \"" + pattern + "\")."};
         }
 
         return addBlank(tables);

@@ -92,7 +92,7 @@ public class SpectrumView extends Composite {
         
         spectrumType = new Combo(this, SWT.BORDER | SWT.DROP_DOWN | SWT.READ_ONLY);
         String[] s = new String[SpectrumYAxisTypes.values().length];
-        for (int i = 0; i<SpectrumYAxisTypes.values().length; i++) {
+        for (int i = 0; i < SpectrumYAxisTypes.values().length; i++) {
         	s[i] = SpectrumYAxisTypes.values()[i].toString();
         }
         spectrumType.setItems(s);
