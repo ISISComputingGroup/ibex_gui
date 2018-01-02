@@ -24,13 +24,25 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+/**
+ * A factory that creates PV filters.
+ */
 public class PVFilterFactory {
 	private final Collection<EditableIoc> availableIOCs;
 	
+	/**
+	 * Creates the factory.
+	 * @param availableIOCs A list of the IOCs that you may want to filter PVs against.
+	 */
 	public PVFilterFactory(Collection<EditableIoc> availableIOCs) {
 		this.availableIOCs = availableIOCs;
 	}
 	
+	/**
+	 * Returns a filter that filters PVs based on where they have come from.
+	 * @param type The source to filter on.
+	 * @return The filter.
+	 */
 	public PVFilter getFilter(SourceFilters type) {
 		switch (type) {
 			case ACTIVE:
@@ -42,6 +54,11 @@ public class PVFilterFactory {
 		}
 	}
 	
+	/**
+	 * Returns a filter that filters PVs based on their interest level.
+	 * @param type The interest level to filter on.
+	 * @return The filter.
+	 */
 	public PVFilter getFilter(InterestFilters type) {
 		switch (type) {
 			case HIGH:

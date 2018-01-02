@@ -42,7 +42,7 @@ public class DeviceScreensComparator extends ViewerComparator {
         TYPE,
         NAME,
         PERSISTENCE
-    };
+    }
 
     private SortedOnType sortedOn = SortedOnType.NAME;
     private boolean isDescending = true;

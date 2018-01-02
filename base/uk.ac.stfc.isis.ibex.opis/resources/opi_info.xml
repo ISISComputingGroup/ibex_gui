@@ -188,7 +188,7 @@
 				<categories>
 					<category>Jaws and slits</category>
 				</categories>
-				<type>UNCONFIRMED</type>
+				<type>JAWS</type>
 				<path>jaws/Jaws.opi</path>
 				<description>The OPI for a Jaw set.</description>
 				<macros>
@@ -411,7 +411,7 @@
 				<categories>
 					<category>Imaging cameras</category>
 				</categories>
-				<type>UNCONFIRMED</type>
+				<type>PIXELMAN</type>
 				<path>pixelman.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -617,7 +617,7 @@
 				<categories>
 					<category>Jaws and slits</category>
 				</categories>
-				<type>UNCONFIRMED</type>
+				<type>JAWS</type>
 				<path>slit_motors.opi</path>
 				<description>The OPI displaying the motors of a slit.</description>
 				<macros>

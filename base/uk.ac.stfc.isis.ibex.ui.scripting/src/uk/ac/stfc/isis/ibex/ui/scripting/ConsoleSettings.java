@@ -23,38 +23,22 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
- * 
+ * This closes and reopens the scripting perspective when instrument is switched.
  */
-public class ConsoleSettings implements InstrumentInfoReceiver {
-    
+public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
     private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
         scriptingPerspectiveReopener.reopenPerspective();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {       
         scriptingPerspectiveReopener.closePerspective();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // no action required.
-    }
-
 }

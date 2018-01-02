@@ -52,7 +52,7 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
                 @Override
                 public void onCanWriteChanged(boolean canWrite) {
                     setBaseEnabled(canWrite);
-                };
+                }
             };
 
     /**

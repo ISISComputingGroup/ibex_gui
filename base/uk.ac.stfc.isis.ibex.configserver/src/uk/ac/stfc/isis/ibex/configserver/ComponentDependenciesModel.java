@@ -44,7 +44,7 @@ public class ComponentDependenciesModel {
         @Override
         public void onValue(Collection<ConfigInfo> value) {
             updateObservers(value);
-        };
+        }
     };
 
     /**
@@ -97,7 +97,7 @@ public class ComponentDependenciesModel {
                 @Override
                 public void onValue(Collection<String> value) {
                     updateDependency(name, value);
-                };
+                }
             });
             observerRegister.put(name, server.dependencies(pv));
         }

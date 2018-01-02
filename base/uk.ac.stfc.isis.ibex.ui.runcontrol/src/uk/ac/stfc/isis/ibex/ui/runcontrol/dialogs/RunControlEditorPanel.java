@@ -75,7 +75,7 @@ public class RunControlEditorPanel extends Composite {
 		public void onCanWriteChanged(boolean canWrite) {
             canSend = canWrite;
             btnRestoreAll.setEnabled(canWrite);
-		};	
+		}	
 	};
 
     /**

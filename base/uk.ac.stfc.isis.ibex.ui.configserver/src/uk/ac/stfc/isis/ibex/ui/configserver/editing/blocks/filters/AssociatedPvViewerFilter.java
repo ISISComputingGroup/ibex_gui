@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -26,32 +27,26 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
+/**
+ * A PV filter that only allows PVs that belong to one of the specified IOCs.
+ */
 public class AssociatedPvViewerFilter extends ViewerFilter {
 	
-	private Collection<String> allowedIocNames;
+	private Collection<String> allowedIocNames = new ArrayList<String>();
 	
+	/**
+	 * Set the list of allowed IOCs to display PVs from.
+	 * @param iocNames the names of allowed IOCs.
+	 */
 	public void setAllowedIocs(Collection<String> iocNames) {
 		this.allowedIocNames = iocNames;
 	}
 	
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (allowedIocNames == null) {
-			return true;
-		}
-		
-		if (allowedIocNames.isEmpty()) {
-			return false;
-		}
-		
 		PV p = (PV) element;
-		String pvIoc = p.iocName();
 		
-		if (allowedIocNames.contains(pvIoc)) {
-			return true;
-		}
-		
-		return false;
+		return allowedIocNames.contains(p.iocName());
 	}
 
 }
