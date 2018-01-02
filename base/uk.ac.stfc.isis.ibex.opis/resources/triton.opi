@@ -2634,7 +2634,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -5061,7 +5061,7 @@ pv.setValue(2)
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -5171,29 +5171,21 @@ $(pv_value)</tooltip>
           <auto_size>false</auto_size>
           <text>######</text>
           <rotation_angle>0.0</rotation_angle>
-          <show_units>true</show_units>
+          <show_units>false</show_units>
           <height>20</height>
           <multiline_input>false</multiline_input>
           <border_width>1</border_width>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)ARBITRARY:SP</pv_name>
+          <pv_name>$(PV_ROOT):ARBITRARY:SP {"longString":true}</pv_name>
           <selector_type>0</selector_type>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
-          <precision_from_pv>true</precision_from_pv>
+          <precision_from_pv>false</precision_from_pv>
           <widget_type>Text Input</widget_type>
           <confirm_message></confirm_message>
           <name></name>
-          <actions hook="false" hook_all="false">
-            <action type="EXECUTE_PYTHONSCRIPT">
-              <path></path>
-              <scriptText><![CDATA[widget = display.getWidget("Calibration_file_SP")
-widget.setPropertyValue("text",widget.getPropertyValue('text').strip())]]></scriptText>
-              <embedded>true</embedded>
-              <description>Trim white space from requested value</description>
-            </action>
-          </actions>
+          <actions hook="false" hook_all="false" />
           <border_style>3</border_style>
           <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <enabled>true</enabled>
@@ -5208,19 +5200,17 @@ widget.setPropertyValue("text",widget.getPropertyValue('text').strip())]]></scri
           </scale_options>
           <vertical_alignment>1</vertical_alignment>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <format_type>0</format_type>
-          <limits_from_pv>false</limits_from_pv>
+          <format_type>4</format_type>
+          <limits_from_pv>true</limits_from_pv>
           <background_color>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
           <width>301</width>
           <x>84</x>
           <y>15</y>
-          <maximum>1.7976931348623157E308</maximum>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <minimum>-1.7976931348623157E308</minimum>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
           </font>
@@ -5296,7 +5286,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <show_v_scroll>false</show_v_scroll>
           <visible>true</visible>
-          <pv_name>$(PV_ROOT)ARBITRARY</pv_name>
+          <pv_name>$(PV_ROOT):ARBITRARY</pv_name>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -5305,7 +5295,7 @@ $(pv_value)</tooltip>
           <confirm_message></confirm_message>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <wrap_words>true</wrap_words>
-          <format_type>0</format_type>
+          <format_type>4</format_type>
           <limits_from_pv>false</limits_from_pv>
           <background_color>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
