@@ -13,7 +13,7 @@ def is_active_macro(value):
 def get_count():
     count = 0
     macros = display.getPropertyValue("macros").getMacrosMap()
-    for i in range(1,5):
+    for i in range(1, 5):
         if is_active_macro(macros.get("CCD_"+str(i))):
             count = i
     return count
