@@ -7,7 +7,6 @@
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts>
     <path pathString="updateControlsForNumberOfChannels.py" checkConnect="true" sfe="false" seoe="false">
-      <pv trig="false">loc://ccd100:count</pv>
       <pv trig="true">CS:INSTLIST</pv>
     </path>
   </scripts>
@@ -126,14 +125,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
     <tooltip></tooltip>
-    <rules>
-      <rule name="Height" prop_id="height" out_exp="true">
-        <exp bool_exp="true">
-          <value>30*pv0+35</value>
-        </exp>
-        <pv trig="true">loc://ccd100:count</pv>
-      </rule>
-    </rules>
+    <rules />
     <enabled>true</enabled>
     <wuid>-4805f29c:1579922e8d6:-7f64</wuid>
     <transparent>false</transparent>
@@ -173,14 +165,7 @@
       <opi_file>single_channel.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules>
-        <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;1">
-            <value>false</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-1be97a08:160734ec8eb:-7ae3</wuid>
       <auto_size>false</auto_size>
@@ -223,20 +208,7 @@
       <opi_file>single_channel.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules>
-        <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;2">
-            <value>false</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-        <rule name="Y" prop_id="y" out_exp="false">
-          <exp bool_exp="pv0&lt;2">
-            <value>0</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-1be97a08:160734ec8eb:-7a5e</wuid>
       <auto_size>false</auto_size>
@@ -279,20 +251,7 @@
       <opi_file>single_channel.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules>
-        <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;3">
-            <value>false</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-        <rule name="Y" prop_id="y" out_exp="false">
-          <exp bool_exp="pv0&lt;3">
-            <value>0</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-1be97a08:160734ec8eb:-7a4f</wuid>
       <auto_size>false</auto_size>
@@ -335,20 +294,7 @@
       <opi_file>single_channel.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules>
-        <rule name="Visible" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0&lt;4">
-            <value>false</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-        <rule name="Y" prop_id="y" out_exp="false">
-          <exp bool_exp="pv0&lt;4">
-            <value>0</value>
-          </exp>
-          <pv trig="true">loc://ccd100:count</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-1be97a08:160734ec8eb:-7a38</wuid>
       <auto_size>false</auto_size>
@@ -421,6 +367,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <axis_count>2</axis_count>
+    <trace_3_y_pv_value />
     <trace_1_point_size>4</trace_1_point_size>
     <trace_1_anti_alias>true</trace_1_anti_alias>
     <pv_value />
@@ -443,6 +390,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_visible>true</trace_0_visible>
     <trace_1_name>$(trace_1_y_pv)</trace_1_name>
     <trace_3_anti_alias>true</trace_3_anti_alias>
+    <trace_1_y_pv_value />
     <show_legend>true</show_legend>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_name>$(trace_3_y_pv)</trace_3_name>
@@ -456,6 +404,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_point_style>0</trace_0_point_style>
     <trace_1_point_style>0</trace_1_point_style>
     <trace_0_line_width>1</trace_0_line_width>
+    <trace_3_x_pv_value />
     <axis_0_time_format>5</axis_0_time_format>
     <trace_count>4</trace_count>
     <axis_1_show_grid>true</axis_1_show_grid>
@@ -479,6 +428,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_y_pv></trace_1_y_pv>
     <trace_2_concatenate_data>true</trace_2_concatenate_data>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <trace_2_y_pv_value />
     <trace_2_anti_alias>false</trace_2_anti_alias>
     <axis_0_maximum>120.0</axis_0_maximum>
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
@@ -493,6 +443,7 @@ $(trace_0_y_pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <trace_2_point_size>4</trace_2_point_size>
     <axis_0_log_scale>false</axis_0_log_scale>
+    <trace_0_x_pv_value />
     <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
     <rules />
     <axis_1_visible>true</axis_1_visible>
@@ -513,6 +464,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_1_update_delay>100</trace_1_update_delay>
     <axis_1_axis_title>Flow</axis_1_axis_title>
+    <trace_2_x_pv_value />
     <axis_1_auto_scale>true</axis_1_auto_scale>
     <trace_1_line_width>1</trace_1_line_width>
     <trace_3_trace_type>0</trace_3_trace_type>
@@ -535,10 +487,12 @@ $(trace_0_y_pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <show_plot_area_border>false</show_plot_area_border>
     <width>775</width>
+    <trace_1_x_pv_value />
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
       <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </title_font>
+    <trace_0_y_pv_value />
     <trace_1_visible>true</trace_1_visible>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />

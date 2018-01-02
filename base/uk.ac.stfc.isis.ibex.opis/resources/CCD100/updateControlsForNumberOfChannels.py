@@ -1,33 +1,34 @@
-from org.csstudio.opibuilder.scriptUtil import PVUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-from time import sleep
-
 def is_active_macro(value):
-    if value is None or len(value)==0:
+    if value is None or len(value) == 0:
         return False  # Empty macro
-    elif len(value)>=3 and value[:2]=="$(" and value[-1]==")":
+    elif len(value) >= 3 and value[:2] == "$(" and value[-1] == ")":
         return False  # Unexpanded macro
     else:
         return True
-    
-def get_count():
-    count = 0
-    macros = display.getPropertyValue("macros").getMacrosMap()
-    for i in range(1, 5):
-        if is_active_macro(macros.get("CCD_"+str(i))):
-            count = i
-    return count
-    
-def set_number_of_graph_traces(count):
-    graph = display.getWidget("GasFlowGraph")
-    graph.setPropertyValue("trace_count", count)
-    for index in range(count):
-        graph.setPropertyValue("trace_"+str(index)+"_y_pv", "$(P)$(CCD_"+str(index+1)+"):READING")
-        graph.setPropertyValue("trace_"+str(index)+"_name", "Gas "+str(index+1))
+
 
 def main():
-    count = get_count()
-    pvs[0].setValue(count)
-    set_number_of_graph_traces(count)
+    count = 0
+    graph = display.getWidget("GasFlowGraph")
+    macros = display.getPropertyValue("macros").getMacrosMap()
+    for i in range(1, 5):
+        data_row = display.getWidget("CCD_"+str(i))
+        if is_active_macro(macros.get("CCD_"+str(i))):
+            graph.setPropertyValue("trace_"+str(count)+"_y_pv", "$(P)$(CCD_"+str(i)+"):READING")
+            graph.setPropertyValue("trace_"+str(count)+"_name", "Gas "+str(i))
             
+            y_position = 30*count
+            visible = True
+            
+            count += 1
+        else:
+            y_position = 0
+            visible = False
+        data_row.setPropertyValue("visible", visible)
+        data_row.setPropertyValue("y", y_position)
+        
+    display.getWidget("Readings").setPropertyValue("height", 30*count+35)
+    graph.setPropertyValue("trace_count", count)
+
+
 main()
