@@ -70,6 +70,7 @@ public class RunInformationPanel extends Composite {
 	private Label npRatio;
 	private Label monitorFrom;
 	private Label monitorTo;
+	private Label daeSimMode;
 
 	private DataBindingContext bindingContext;
 
@@ -300,6 +301,19 @@ public class RunInformationPanel extends Composite {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
+		Label lblDaeSimMode = new Label(grpSetup, SWT.RIGHT);
+		GridData gdLblDaeSimMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblDaeSimMode.widthHint = 110;
+		lblDaeSimMode.setLayoutData(gdLblIsisCycle);
+		lblDaeSimMode.setText("Simulated DAE:");
+		
+		daeSimMode = new Label(grpSetup, SWT.NONE);
+		GridData gdDaeSimMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdDaeSimMode.widthHint = 65;
+		daeSimMode.setLayoutData(gdDaeSimMode);
+		daeSimMode.setText("UNKNOWN");
+		
+		
 		Group titleGroup = new Group(this, SWT.NONE);
 		titleGroup.setLayout(new GridLayout(2, false));
 		titleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -525,6 +539,7 @@ public class RunInformationPanel extends Composite {
 		bindLabel(npRatio, viewModel.npRatio);
 		bindLabel(monitorFrom, viewModel.monitorFrom);
 		bindLabel(monitorTo, viewModel.monitorTo);
+		bindLabel(daeSimMode, viewModel.simMode);
 	}
 	
 	private void bindLabel(Label label, UpdatedValue<?> value) {

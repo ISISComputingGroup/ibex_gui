@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
@@ -53,12 +54,6 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 @SuppressWarnings("checkstyle:magicnumber")
 public class BannerView extends ViewPart implements ISizeProvider {
 
-    /**
-     * Standard constructor.
-     */
-    public BannerView() {
-    }
-
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
     /**
@@ -70,6 +65,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private final Banner banner = Banner.getInstance();
 
+    private final IndicatorModel daeSimulationModeModel = new DaeSimulationModeModel();
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
@@ -79,13 +75,17 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private GridLayout glBannerItemPanel;
 
     private Indicator managerMode;
+    private Indicator daeSimulationMode;
     private Indicator batonUser;
     private Indicator inMotion;
     private Control motionControl;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(5, false);
+        GridLayout glParent = new GridLayout(6, false);
         glParent.marginRight = 2;
         glParent.horizontalSpacing = 8;
         glParent.verticalSpacing = 0;
@@ -99,6 +99,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
+        
+        daeSimulationMode = new Indicator(parent, SWT.NONE, daeSimulationModeModel, ALARM_FONT);
+        GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdDaeSimulationMode.widthHint = 210;
+        daeSimulationMode.setLayoutData(gdDaeSimulationMode);
 
         managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
         GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -121,22 +126,26 @@ public class BannerView extends ViewPart implements ISizeProvider {
         motionControl.setLayoutData(gdMotionControl);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getSizeFlags(boolean width) {
         return SWT.MIN | SWT.MAX;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
             int preferredResult) {
         return width ? 0 : FIXED_HEIGHT;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFocus() {
     }
