@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.banner;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.instrument.baton;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.managermode;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.dae
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

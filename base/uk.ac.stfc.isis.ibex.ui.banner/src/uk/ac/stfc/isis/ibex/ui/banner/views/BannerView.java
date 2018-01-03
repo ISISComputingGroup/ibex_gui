@@ -36,11 +36,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.banner.Banner;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
@@ -67,7 +65,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private final IndicatorModel daeSimulationModeModel = new DaeSimulationModeModel();
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
-    private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
 
@@ -85,7 +82,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
      */
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(6, false);
+        GridLayout glParent = new GridLayout(5, false);
         glParent.marginRight = 2;
         glParent.horizontalSpacing = 8;
         glParent.verticalSpacing = 0;
@@ -109,11 +106,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
         GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdManagerMode.widthHint = 210;
         managerMode.setLayoutData(gdManagerMode);
-
-        batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
-        GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdBatonUser.widthHint = 210;
-        batonUser.setLayoutData(gdBatonUser);
 
         inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
         GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
