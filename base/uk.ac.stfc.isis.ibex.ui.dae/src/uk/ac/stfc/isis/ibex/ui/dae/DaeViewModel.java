@@ -26,7 +26,9 @@ import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
@@ -38,6 +40,8 @@ import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
  * the DAE.
  */
 public class DaeViewModel extends Closer {
+	
+	private static final String DEFAULT_TITLE = "DAE Control Program";
 	
     /** What tab is active in the DAE view. */
     enum ActiveTab {
@@ -58,6 +62,8 @@ public class DaeViewModel extends Closer {
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
 
+	private SettableUpdatedValue<String> daeTitle = new SettableUpdatedValue<>();
+
     /**
      * Binds a model to this view model.
      * 
@@ -73,6 +79,25 @@ public class DaeViewModel extends Closer {
 		vetos = registerForClose(new TextUpdatedObservableAdapter(model.vetos()));
 		
 		isRunning = new UpdatedObservableAdapter<>(model.isRunning());
+		
+		model.simulationMode().addObserver(new BaseObserver<Boolean>() {
+			@Override
+			public void onValue(Boolean value) {
+				if (value) {
+					daeTitle.setValue(DEFAULT_TITLE + " (simulation mode)");
+				} else {
+					daeTitle.setValue(DEFAULT_TITLE);
+				}
+				
+			}
+			
+			@Override
+			public void onConnectionStatus(boolean status) {
+				if (!status) {
+					daeTitle.setValue(DEFAULT_TITLE + " (not connected)");
+				}
+			}
+		});
 	}
 	
     /**
@@ -155,5 +180,9 @@ public class DaeViewModel extends Closer {
      */
     public DetectorDiagnosticsViewModel detectorDiagnostics() {
         return detectorDiagnosticsViewModel;
+    }
+    
+    public UpdatedValue<String> title() {
+    	return daeTitle;
     }
 }
