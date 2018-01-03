@@ -54,7 +54,7 @@
 			<key>CCD100</key>
 			<value>
 				<type>CCD100</type>
-				<path>CCD100.opi</path>
+				<path>CCD100/CCD100.opi</path>
 				<description>The OPI for a Chell CCD100</description>
 				<macros>
 					<macro>		
