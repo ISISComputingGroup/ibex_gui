@@ -26,9 +26,12 @@ def main():
             visible = False
         data_row.setPropertyValue("visible", visible)
         data_row.setPropertyValue("y", y_position)
-        
-    display.getWidget("Readings").setPropertyValue("height", 30*count+35)
+    
+    readings_container = display.getWidget("Readings") 
+    readings_container.setPropertyValue("height", 30*count+35)        
+    readings_container.setPropertyValue("visible", count != 0)
     graph.setPropertyValue("trace_count", count)
+    display.getWidget("Warning").setPropertyValue("visible", count == 0)
 
 
 main()
