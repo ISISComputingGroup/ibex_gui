@@ -73,7 +73,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private Indicator managerMode;
     private Indicator daeSimulationMode;
-    private Indicator batonUser;
     private Indicator inMotion;
     private Control motionControl;
 

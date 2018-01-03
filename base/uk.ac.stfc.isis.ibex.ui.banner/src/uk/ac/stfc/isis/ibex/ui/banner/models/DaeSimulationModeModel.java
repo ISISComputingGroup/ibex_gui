@@ -24,7 +24,6 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.dae.Dae;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
@@ -38,24 +37,24 @@ public class DaeSimulationModeModel extends Closer implements IndicatorModel {
     private DaeSimulationModeObserver observer;
 
     /**
-     * Constructor for the manager mode banner model.
+     * Constructor for the dae simulation mode banner model.
      */
     public DaeSimulationModeModel() {
-    	ForwardingObservable<Boolean> observable = Dae.getInstance().model().simulationMode();
-        observer = registerForClose(new DaeSimulationModeObserver(observable) {
+        observer = registerForClose(new DaeSimulationModeObserver(Dae.getInstance().model().simulationMode()) {
 			
 			@Override
 			protected void setUnknown() {
-				text.setValue("DAE simulation mode: unknown");
+				text.setValue("Simulation mode: unknown");
                 color.setValue(IndicatorColours.RED);
 			}
 			
 			@Override
 			protected void setSimMode(Boolean value) {
 				if (value) {
-                    text.setValue("DAE simulation mode: active");
+                    text.setValue("Simulation mode: active");
                     color.setValue(IndicatorColours.RED);
                 } else {
+                	// Display no message if not in simulation mode.
                     text.setValue("");
                     color.setValue(IndicatorColours.BLACK);
                 }	
@@ -63,16 +62,25 @@ public class DaeSimulationModeModel extends Closer implements IndicatorModel {
 		});
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UpdatedValue<String> text() {
         return observer.text();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UpdatedValue<Color> color() {
         return observer.color();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UpdatedValue<Boolean> availability() {
         return observer.availability();
