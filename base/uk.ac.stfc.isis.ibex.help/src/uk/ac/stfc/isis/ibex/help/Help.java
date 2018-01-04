@@ -97,7 +97,10 @@ public class Help extends Closer implements BundleActivator {
 		return date;
 	}
 
-    public String GetPvPrefix() {
+    /**
+     * @return Returns the PV Prefix of the active Instrument.
+     */
+    public String getPvPrefix() {
         return Instrument.getInstance().getPvPrefix();
     }
 }
