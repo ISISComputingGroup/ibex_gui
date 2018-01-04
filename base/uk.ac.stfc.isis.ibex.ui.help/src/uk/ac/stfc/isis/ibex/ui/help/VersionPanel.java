@@ -50,7 +50,7 @@ public class VersionPanel extends Composite {
     /** The path to the Java that the client is using */
     private Label javaPathLabel;
     /** The PV prefix the client is using */
-    private Label clientPVPrefix;
+    private Label clientPvPrefix;
 
     /**
      * Construct a new version panel.
@@ -73,15 +73,15 @@ public class VersionPanel extends Composite {
         final String versionText = Platform.getBundle(versionBundleId).getVersion().toString();
         clientVersion.setText(versionText);
 
-        Label lblPVPrefix = new Label(this, SWT.NONE);
-        lblPVPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblPVPrefix.setText("Client PV Prefix:");
+        Label lblPvPrefix = new Label(this, SWT.NONE);
+        lblPvPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPvPrefix.setText("Client PV Prefix:");
 
-        clientPVPrefix = new Label(this, SWT.NONE);
-        clientPVPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        clientPvPrefix = new Label(this, SWT.NONE);
+        clientPvPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
-        final String PVPrefix = Help.getInstance().GetPVPrefix();
-        clientPVPrefix.setText(PVPrefix);
+        final String PvPrefix = Help.getInstance().GetPvPrefix();
+        clientPvPrefix.setText(PvPrefix);
 
 		Label lblServerVersion = new Label(this, SWT.NONE);
 		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

@@ -46,7 +46,6 @@ public class Help extends Closer implements BundleActivator {
 	private Observables observables;
 	private UpdatedValue<String> serverRevision;
 	private UpdatedValue<String> date;
-    private String pvprefix;
 	
     /**
      * Constructor that creates and registers the observables.
@@ -98,8 +97,7 @@ public class Help extends Closer implements BundleActivator {
 		return date;
 	}
 
-    public String GetPVPrefix() {
-        pvprefix = Instrument.getInstance().getPvPrefix();
-        return pvprefix;
+    public String GetPvPrefix() {
+        return Instrument.getInstance().getPvPrefix();
     }
 }
