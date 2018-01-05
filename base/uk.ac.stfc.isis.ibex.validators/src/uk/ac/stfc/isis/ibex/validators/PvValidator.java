@@ -63,7 +63,8 @@ public class PvValidator {
 
         if (pvAddress.isEmpty()) {
             setErrorMessage(ADDRESS_EMPTY);
-        } else if (!(pvAddress.matches("^[a-zA-Z0-9_\\-:]+(\\.[a-zA-Z0-9_:\\-]+)?$"))) {
+        } else if (!(pvAddress.matches("^[a-zA-Z0-9_\\-:]+(\\.[a-zA-Z0-9_:\\-]+)?$"))
+                || pvAddress.matches(".*(:)\\1+.*")) {
             setErrorMessage(ADDRESS_FORMAT);
         } else {
             isValid = true;
