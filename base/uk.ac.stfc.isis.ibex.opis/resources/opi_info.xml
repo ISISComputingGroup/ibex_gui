@@ -1135,8 +1135,8 @@
 			    <categories>
 					<category>Monitors</category>
 				</categories>
-				<type>Gaussmeter</type>
-				<path>lakeshore460.opi</path>
+				<type>LKSH460</type>
+				<path>Lakeshore460/lakeshore460.opi</path>
 				<description>The OPI for the Lakeshore 460 Gaussmeter.</description>
 				<macros>
 					<macro>

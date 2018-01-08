@@ -115,7 +115,7 @@ public final class ComponentIcons {
             case LAKESHORE:
                 return "lakeshore";
 			case LKSH460:
-				return "magnet_gaussmeter"
+                return "magnet_gaussmeter";
             case CCD100:
             case PRESSURE_GAUGE:
                 return "pressure_gauge";
