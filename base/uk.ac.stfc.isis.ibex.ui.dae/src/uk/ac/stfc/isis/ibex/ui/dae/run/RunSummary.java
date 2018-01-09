@@ -64,7 +64,7 @@ public class RunSummary {
     }
 
     /**
-     * Instantiates the viewpart.
+     * Instantiates this viewpart.
      * 
      * @param parent The parent composite obtained from the eclipse context
      */

@@ -25,6 +25,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -76,16 +77,31 @@ public class RunInformationPanel {
 
 	private DataBindingContext bindingContext;
     private DaeViewModel viewModel;
+    
+    private static final int FIXED_WIDTH = 725;
+    private static final int FIXED_HEIGHT = 375;
 
+    /**
+     * The constructor.
+     */
     public RunInformationPanel() {
         this.viewModel = DaeUI.getDefault().viewModel();
     }
 
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
     @PostConstruct
     public void createPart(Composite parent) {
-        parent.setLayout(new GridLayout(1, false));
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        
+        Composite content = new Composite(scrolled, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
 		
-        Group grpSetup = new Group(parent, SWT.NONE);
+        Group grpSetup = new Group(content, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSetup.setText("Setup");
 		GridLayout glGrpSetup = new GridLayout(6, false);
@@ -308,7 +324,7 @@ public class RunInformationPanel {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
-        Group titleGroup = new Group(parent, SWT.NONE);
+        Group titleGroup = new Group(content, SWT.NONE);
 		titleGroup.setLayout(new GridLayout(2, false));
 		titleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
@@ -332,7 +348,7 @@ public class RunInformationPanel {
 		users.setLayoutData(gdUsers);
 		users.setText("UNKNOWN");
 		
-        Group grpPeriods = new Group(parent, SWT.NONE);
+        Group grpPeriods = new Group(content, SWT.NONE);
 		GridLayout glGrpPeriods = new GridLayout(6, false);
 		glGrpPeriods.horizontalSpacing = 20;
 		grpPeriods.setLayout(glGrpPeriods);
@@ -425,7 +441,7 @@ public class RunInformationPanel {
 		new Label(grpPeriods, SWT.NONE);
 		new Label(grpPeriods, SWT.NONE);
 		
-        Group grpMonitor = new Group(parent, SWT.NONE);
+        Group grpMonitor = new Group(content, SWT.NONE);
 		GridLayout glGrpMonitor = new GridLayout(6, false);
 		glGrpMonitor.horizontalSpacing = 20;
 		grpMonitor.setLayout(glGrpMonitor);
@@ -494,6 +510,11 @@ public class RunInformationPanel {
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
 
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        scrolled.setContent(content);
+        
         setModel(viewModel);
 	}
 	
