@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -63,6 +64,8 @@ public class ExperimentSetup {
     private UpdatedValue<Boolean> modelIsRunningProperty;
 
     private static final Display DISPLAY = Display.getCurrent();
+    private static final int FIXED_WIDTH = 700;
+    private static final int FIXED_HEIGHT = 550;
 	
     /**
      * Constructor.
@@ -81,14 +84,17 @@ public class ExperimentSetup {
     public void createPart(Composite parent) {
 
         sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        
 		GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginHeight = 0;
         gridLayout.verticalSpacing = 5;
         gridLayout.marginWidth = 0;
 		gridLayout.horizontalSpacing = 0;
-        parent.setLayout(gridLayout);
+        scrolled.setLayout(gridLayout);
 		
-        CTabFolder tabFolder = new CTabFolder(parent, SWT.BORDER);
+        CTabFolder tabFolder = new CTabFolder(scrolled, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
@@ -123,7 +129,7 @@ public class ExperimentSetup {
         tabFolder.setLayoutData(tabFolderGridData);
 
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
-        SendChangesButton btnSendChanges = new SendChangesButton(parent, SWT.NONE, rsvm.actions().begin);
+        SendChangesButton btnSendChanges = new SendChangesButton(scrolled, SWT.NONE, rsvm.actions().begin);
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -136,6 +142,11 @@ public class ExperimentSetup {
         btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
 
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        scrolled.setContent(tabFolder);
+        
         bind(viewModel.experimentSetup());
         setModel(viewModel);
 	}
