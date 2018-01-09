@@ -25,6 +25,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -51,6 +52,9 @@ public class RunSummary {
 	
 	private DaeActionButtonPanel daeButtonPanel;
     private RunSummaryViewModel model;
+    
+    private static final int FIXED_WIDTH = 825;
+    private static final int FIXED_HEIGHT = 400;
 	
     /**
      * Creates a view that shows a summary of the current run.
@@ -59,24 +63,35 @@ public class RunSummary {
         model = DaeUI.getDefault().viewModel().runSummary();
     }
 
+    /**
+     * Instantiates the viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
     @PostConstruct
     public void createPart(Composite parent) {
+
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+    	scrolled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    	
+    	Composite content = new Composite(scrolled, SWT.NONE);
+    	content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
 		gridLayout.verticalSpacing = 0;
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
-        parent.setLayout(gridLayout);
-		
-        Composite lhsComposite = new Composite(parent, SWT.NONE);
+        content.setLayout(gridLayout);
+        
+        Composite lhsComposite = new Composite(content, SWT.NONE);
 		lhsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         GridLayout gl = new GridLayout(1, false);
         gl.verticalSpacing = 25;
         lhsComposite.setLayout(gl);
         
         Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
-        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         infoComposite.setLayout(new GridLayout(5, false));
 
 		Label lblInstrument = new Label(infoComposite, SWT.NONE);
@@ -155,9 +170,14 @@ public class RunSummary {
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-        daeButtonPanel = new DaeActionButtonPanel(parent, SWT.NONE, model.actions());
+        daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        scrolled.setContent(content);
+		
         setModel(model);
 	}
 
