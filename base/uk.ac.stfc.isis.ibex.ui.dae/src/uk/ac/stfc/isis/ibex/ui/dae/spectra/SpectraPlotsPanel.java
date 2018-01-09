@@ -56,6 +56,11 @@ public class SpectraPlotsPanel {
         this.model = DaeUI.getDefault().viewModel().spectra();
     }
 
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
     @PostConstruct
     public void createPart(Composite parent) {
 
