@@ -86,6 +86,9 @@ public class ExperimentSetup {
         sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
         
         ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
         
 		GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginHeight = 0;
@@ -96,7 +99,8 @@ public class ExperimentSetup {
 		
         CTabFolder tabFolder = new CTabFolder(scrolled, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		
+        scrolled.setContent(tabFolder);
+        
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setText("Time Channels");
 		
@@ -141,11 +145,6 @@ public class ExperimentSetup {
         });
         btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
-
-        scrolled.setExpandHorizontal(true);
-        scrolled.setExpandVertical(true);
-        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
-        scrolled.setContent(tabFolder);
         
         bind(viewModel.experimentSetup());
         setModel(viewModel);

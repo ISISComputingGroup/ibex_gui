@@ -24,6 +24,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,7 +44,10 @@ public class SpectraPlotsPanel {
 	private SpectrumView plot4;
 	private Composite plots;
     private List<? extends UpdatableSpectrum> model;
-	
+
+    private static final int FIXED_WIDTH = 700;
+    private static final int FIXED_HEIGHT = 500;
+    
     /**
      * The constructor for the panel.
      * 
@@ -54,11 +58,17 @@ public class SpectraPlotsPanel {
 
     @PostConstruct
     public void createPart(Composite parent) {
-        parent.setLayout(new GridLayout(1, false));
-		
-        plots = new Composite(parent, SWT.NONE);
+
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setLayout(new GridLayout(1, false));
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        plots = new Composite(scrolled, SWT.NONE);
 		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		plots.setLayout(new GridLayout(2, false));
+		scrolled.setContent(plots);
 		
 		plot1 = new SpectrumView(plots, SWT.NONE);
 		plot1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

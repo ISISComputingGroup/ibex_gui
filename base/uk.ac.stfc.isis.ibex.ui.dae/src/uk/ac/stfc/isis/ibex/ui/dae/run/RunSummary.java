@@ -73,9 +73,13 @@ public class RunSummary {
 
         ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
     	scrolled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    	
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
     	Composite content = new Composite(scrolled, SWT.NONE);
     	content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scrolled.setContent(content);
 
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
@@ -172,11 +176,6 @@ public class RunSummary {
 		
         daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-        scrolled.setExpandHorizontal(true);
-        scrolled.setExpandVertical(true);
-        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
-        scrolled.setContent(content);
 		
         setModel(model);
 	}

@@ -97,9 +97,13 @@ public class RunInformationPanel {
     public void createPart(Composite parent) {
         
         ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
         
         Composite content = new Composite(scrolled, SWT.NONE);
         content.setLayout(new GridLayout(1, false));
+        scrolled.setContent(content);
 		
         Group grpSetup = new Group(content, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -510,11 +514,6 @@ public class RunInformationPanel {
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
 
-        scrolled.setExpandHorizontal(true);
-        scrolled.setExpandVertical(true);
-        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
-        scrolled.setContent(content);
-        
         setModel(viewModel);
 	}
 	
