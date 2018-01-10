@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,14 +88,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** The IOCs associated with the components. */
     private final List<EditableIoc> componentIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
-    private final List<EditableGroup> editableGroups = new ArrayList<>();
-    /** The blocks associated with the configuration. */
-    private final List<EditableBlock> editableBlocks = new ArrayList<>();
-    /**
-     * The blocks that are available to the configuration (i.e. including those
-     * associated with components.
-     */
-    private final List<EditableBlock> availableBlocks = new ArrayList<>();
+    private List<EditableGroup> editableGroups = new ArrayList<>();
+    /** All of the blocks associated with the configuration (including those associated with components). */
+    private final List<EditableBlock> allBlocks = new ArrayList<>();
+    /** The blocks in the configuration that are not in a group (including those associated with components). */
+    private final List<EditableBlock> otherBlocks = new ArrayList<>();
     /** The components associated with the configuration. */
     private final EditableComponents editableComponents;
     /** Dates when the configuration has been changed. */
@@ -162,7 +160,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
         for (Block block : config.getBlocks()) {
             EditableBlock eb = new EditableBlock(block);
-            editableBlocks.add(eb);
+            allBlocks.add(eb);
             if (!block.hasComponent()) {
                 makeBlockAvailable(eb);
             }
@@ -172,6 +170,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Group group : config.getGroups()) {
             editableGroups.add(new EditableGroup(this, group));
         }
+
+        editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 
         for (EditableIoc ioc : allIocs) {
             iocMap.put(ioc.getName(), ioc);
@@ -321,7 +321,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return The blocks associated with the configuration
      */
     Collection<Block> transformBlocks() {
-        return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
+        return Lists.newArrayList(Iterables.transform(allBlocks, new Function<EditableBlock, Block>() {
             @Override
             public Block apply(EditableBlock block) {
                 return block;
@@ -446,24 +446,24 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * @return The editable blocks associated with the configuration
+     * @return All of the blocks associated with the configuration, including those from components.
      */
-    public Collection<EditableBlock> getEditableBlocks() {
-        return new ArrayList<>(editableBlocks);
+    public Collection<EditableBlock> getAllBlocks() {
+        return new ArrayList<>(allBlocks);
     }
 
     /**
-     * @return All of the blocks available to the configuration
+     * @return All of the blocks in the configuration that are not in a group
      */
-    public Collection<EditableBlock> getAvailableBlocks() {
-        return new ArrayList<>(availableBlocks);
+    public Collection<EditableBlock> getOtherBlocks() {
+        return new ArrayList<>(otherBlocks);
     }
 
     /**
      * @return The editable groups associated with the configuration
      */
     public Collection<EditableGroup> getEditableGroups() {
-        return new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
+        return new ArrayList<>(editableGroups);
     }
 
     /**
@@ -486,7 +486,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
         if (blockNameIsUnique(block.getName())) {
             Collection<Block> blocksBeforeAdd = transformBlocks();
-            editableBlocks.add(0, block);
+            allBlocks.add(0, block);
             makeBlockAvailable(block);
             addRenameListener(block);
             firePropertyChange("blocks", blocksBeforeAdd, transformBlocks());
@@ -503,8 +503,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the name whose uniqueness is checked
      * @return whether the name is unique as boolean
      */
-    public boolean blockNameIsUnique(String name) {
-        for (EditableBlock existingBlock : editableBlocks) {
+    private boolean blockNameIsUnique(String name) {
+        for (EditableBlock existingBlock : allBlocks) {
             if (existingBlock.getName().equals(name)) {
                 return false;
             }
@@ -519,7 +519,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to make unavailable
      */
     public void makeBlockUnavailable(EditableBlock block) {
-        availableBlocks.remove(block);
+        otherBlocks.remove(block);
     }
 
     /**
@@ -529,8 +529,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to make available
      */
     public void makeBlockAvailable(EditableBlock block) {
-        if (!availableBlocks.contains(block)) {
-            availableBlocks.add(0, block);
+        if (!otherBlocks.contains(block)) {
+            otherBlocks.add(0, block);
         }
     }
 
@@ -541,10 +541,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to remove
      */
     public void removeBlock(EditableBlock block) {
-        Collection<Block> blocksBefore = transformBlocks();
-        editableBlocks.remove(block);
-        makeBlockUnavailable(block);
-        firePropertyChange("blocks", blocksBefore, transformBlocks());
+    	removeBlocks(Arrays.asList(block));
     }
 
     /**
@@ -556,7 +553,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public void removeBlocks(List<EditableBlock> blocks) {
         Collection<Block> blocksBefore = transformBlocks();
         for (EditableBlock block : blocks) {
-            editableBlocks.remove(block);
+            allBlocks.remove(block);
             makeBlockUnavailable(block);
         }
         firePropertyChange("blocks", blocksBefore, transformBlocks());

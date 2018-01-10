@@ -153,10 +153,6 @@ public class DisplayBlock extends ModelObject {
             lastBlockState = state;
             setBlockState(state);
         }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-        }
     };
 
     private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {

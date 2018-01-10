@@ -43,6 +43,12 @@ public class GroupNameValidator implements IValidator {
     /** Message to issue on duplicate group name. */
     private static final String DUPLICATE_GROUP_MESSAGE = "Group names must all be unique";
 	
+    /** Message to issue on attempt to name group Other. */
+    private static final String OTHER_NAME_MESSAGE = "Group must not be named Other";
+
+    /** Reserved name of default group. */
+    private static final String OTHER = "Other";
+
     /** provider of group names. */
     private final GroupNamesProvider groupNameProvider;
 
@@ -105,8 +111,12 @@ public class GroupNameValidator implements IValidator {
                 }
             }
 
-            if (groupNameProvider != null && isDuplicateName((String) text)) {
+            if (isDuplicateName((String) text)) {
                 status = ValidationStatus.error(DUPLICATE_GROUP_MESSAGE);
+                return setErrorAndReturnStatus(status);
+            }
+            if (isNameOther((String) text)) {
+                status = ValidationStatus.error(OTHER_NAME_MESSAGE);
                 return setErrorAndReturnStatus(status);
             }
         }
@@ -138,6 +148,10 @@ public class GroupNameValidator implements IValidator {
             i++;
         }
         return false;
+    }
+
+    private boolean isNameOther(String newGroupName) {
+        return newGroupName.equalsIgnoreCase(OTHER);
     }
 
     /**

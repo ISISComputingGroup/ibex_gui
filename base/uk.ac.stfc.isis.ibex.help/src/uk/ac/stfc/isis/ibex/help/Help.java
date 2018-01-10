@@ -25,6 +25,7 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.help.internal.Observables;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -83,7 +84,7 @@ public class Help extends Closer implements BundleActivator {
 	}
 	
     /**
-     * @return An updating sting that holds the server revision.
+     * @return An updating string that holds the server revision.
      */
 	public UpdatedValue<String> revision() {
 		return serverRevision;
@@ -95,4 +96,11 @@ public class Help extends Closer implements BundleActivator {
 	public UpdatedValue<String> date() {
 		return date;
 	}
+
+    /**
+     * @return Returns the PV Prefix of the active Instrument.
+     */
+    public String getPvPrefix() {
+        return Instrument.getInstance().getPvPrefix();
+    }
 }

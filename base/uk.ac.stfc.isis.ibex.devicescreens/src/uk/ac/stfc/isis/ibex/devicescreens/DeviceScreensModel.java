@@ -73,7 +73,7 @@ public class DeviceScreensModel extends ModelObject {
             public void onCanWriteChanged(boolean canWrite) {
                 super.onCanWriteChanged(canWrite);
                 setCanWriteRemote(canWrite);
-            };
+            }
         };
 
         this.writableDeviceScreenDescriptions.writeTo(writableDeviceScreenDescriptions);

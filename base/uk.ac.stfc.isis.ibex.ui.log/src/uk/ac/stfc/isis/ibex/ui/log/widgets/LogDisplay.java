@@ -46,12 +46,12 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -345,11 +345,7 @@ public class LogDisplay extends Canvas {
 		table.setLinesVisible(true);
 
 		// Remove selected messages from the current view if delete is pressed
-		table.addKeyListener(new KeyListener() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-
+		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.keyCode == SWT.DEL) {
@@ -530,7 +526,7 @@ public class LogDisplay extends Canvas {
      */
 	private void addDoubleClickListener(final TableViewer viewer) {
 		final Shell shell = this.getShell();
-		viewer.getTable().addMouseListener(new MouseListener() {
+		viewer.getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 
@@ -546,14 +542,6 @@ public class LogDisplay extends Canvas {
 					dialog.setLogMessage(selectedMessage);
 					dialog.open();
 				}
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
 			}
 		});
 	}
