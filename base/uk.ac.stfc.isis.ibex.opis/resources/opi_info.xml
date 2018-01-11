@@ -960,6 +960,7 @@
 			</value>
 		</entry>
 		<entry>
+
 			<key>Superlogics</key>
 			<value>
 				<type>MERCURY</type>
@@ -974,6 +975,15 @@
 			</value>
 		</entry>
 		<entry>
+			<key>HIFI Cryomagnet PSU</key>
+			<value>
+				<type>HFMAGPSU</type>
+				<path>HFMAGPSU/hifiCryomagPSU.opi</path>
+				<description>OPI for the HIFI Cryomagnet Power Supply</description>
+				<macros>
+					<macro>
+						<name>HFMAGPSU</name>
+						<description>The Hifi Cryomagnet PSU prefix</description>
 			<key>XY Shutter Arm Beam-stop</key>
 			<value>
 				<categories>

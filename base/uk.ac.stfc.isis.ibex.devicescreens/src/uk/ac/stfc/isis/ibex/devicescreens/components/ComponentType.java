@@ -47,7 +47,9 @@ public enum ComponentType {
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
-	CAEN,
+	CAEN, 
+	/** HFMAGPSU component type. */
+	HFMAGPSU,
     /** CCD100 component type. */
     CCD100,
     /** Kepco component type. */
