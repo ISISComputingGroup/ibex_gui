@@ -115,6 +115,10 @@ public class SynopticSelectionViewModel extends ModelObject {
             lastSetDefaultSynoptic = newDefaultSynoptic;
         }
     }
+    
+    public void setLastDefault() {
+    	setSelected(lastSetDefaultSynoptic.name());
+    }
 
     public String getSelected() {
         return selected;

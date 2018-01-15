@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -91,7 +92,7 @@ public class Configuration extends ModelObject {
 			Collection<String> history) {
 		this.name = name;
 		this.description = description;
-		this.synoptic = defaultSynoptic;
+		this.synoptic = defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME : defaultSynoptic;
 		this.pv = "";
 		
 		for (Ioc ioc : iocs) {
