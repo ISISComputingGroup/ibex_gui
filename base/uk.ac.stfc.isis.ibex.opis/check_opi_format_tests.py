@@ -1,4 +1,5 @@
 import unittest
+from hamcrest import *
 from lxml import etree
 
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour, \
@@ -7,6 +8,8 @@ from check_OPI_format_utils.text import check_label_punctuation, check_container
     check_label_case_inside_containers, check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
+from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
+
 
 def make_widget_with_colour(widget, colour_type, colour_name=None):
     colour_str = '<color {} red="0" green="255" blue="0" />'
@@ -433,6 +436,58 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(errors), 1)
+
+    def test_that_if_a_graph_has_different_buffer_sizes_then_error(self):
+        # Arrange
+        point0 = "1000"
+        point1 = "1000"
+        point2 = "100"
+        trace0 = "trace1"
+        trace1 = "trace2"
+        trace2 = "trace3"
+        xml = """<widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                    <trace_0_buffer_size>{point0}</trace_0_buffer_size>
+                    <trace_0_name>{trace0}</trace_0_name>
+                    <trace_1_buffer_size>{point1}</trace_1_buffer_size>
+                    <trace_1_name>{trace1}</trace_1_name>
+                    <trace_2_buffer_size>{point2}</trace_2_buffer_size>
+                    <trace_2_name>{trace2}</trace_2_name>
+                </widget>
+              """.format(point0=point0, point1=point1, point2=point2, trace0=trace0, trace1=trace1, trace2=trace2)
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(1), "number of errors")
+        line_number, buffer_size, expected_size = errors[0]
+        assert_that(line_number, is_(6), "line number")
+        assert_that(buffer_size, is_(point2), "buffer size")
+        assert_that(expected_size, is_(point0), "expected buffer size")
+
+    def test_that_if_there_are_two_graphs_with_different_buffer_sizes_there_is_no_error(self):
+        # Arrange
+        point0 = "1000"
+        point1 = "100"
+        xml = """<root>
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                    <trace_0_buffer_size>{point0}</trace_0_buffer_size>
+                    <trace_1_buffer_size>{point0}</trace_1_buffer_size>
+                </widget>
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                    <trace_0_buffer_size>{point1}</trace_0_buffer_size>
+                    <trace_1_buffer_size>{point1}</trace_1_buffer_size>
+                </widget>
+                </root>
+              """.format(point0=point0, point1=point1)
+        root = etree.fromstring(xml)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
 
 
 if __name__ == '__main__':
