@@ -97,9 +97,7 @@ public class DeviceScreensModel extends ModelObject {
                 }
 
                 for (DeviceDescription device : localDevices.getDevices()) {
-                    DeviceDescription deviceCopy = new DeviceDescription(device);
-                    deviceCopy.setPersist(false);
-                    copy.addDevice(deviceCopy);
+                    copy.addDevice(device);
                 }
 
                 setDeviceScreensDescription(copy);
@@ -132,12 +130,15 @@ public class DeviceScreensModel extends ModelObject {
     public synchronized void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
                 this.deviceScreensDescription = deviceScreensDescription);
-        localDevices = deviceScreensDescription.getDevices(false);
+        localDevices = deviceScreensDescription.getFilteredDevices(false);
     }
     
+    /**
+     * Writes to the pv.
+     */
     public void writeToPv() {
     	if (writableDeviceScreenDescriptions.canWrite()) {
-            writableDeviceScreenDescriptions.uncheckedWrite(deviceScreensDescription.getDevices(true));
+            writableDeviceScreenDescriptions.uncheckedWrite(deviceScreensDescription.getFilteredDevices(true));
         }
     	
     }

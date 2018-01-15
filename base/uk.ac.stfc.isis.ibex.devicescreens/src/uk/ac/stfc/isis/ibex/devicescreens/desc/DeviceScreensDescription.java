@@ -90,7 +90,12 @@ public class DeviceScreensDescription {
         devices.add(device);
     }
     
-    public DeviceScreensDescription getDevices(boolean remote) {
+    /**
+     * Gets a new device screen description filtered to only include either local or remote devices.
+     * @param remote the remote
+     * @return the device screen description
+     */
+    public DeviceScreensDescription getFilteredDevices(boolean remote) {
     	DeviceScreensDescription devices = new DeviceScreensDescription();
     	for (DeviceDescription device : this.devices) {
     		if (device.getPersist() == remote) {
