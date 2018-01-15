@@ -83,15 +83,14 @@ public class DeviceScreensModel extends ModelObject {
 
             @Override
             public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {
-                if (value != null) {
-                    onValue(value);
-                }
+            	if (value != null) {
+            		onValue(value);
+            	}
             }
 
             @Override
             public void onValue(DeviceScreensDescription remoteDeviceScreenDescription) {
-
-                DeviceScreensDescription copy = new DeviceScreensDescription(remoteDeviceScreenDescription);
+            	DeviceScreensDescription copy = new DeviceScreensDescription(remoteDeviceScreenDescription);
 
                 for (DeviceDescription device : copy.getDevices()) {
                     device.setPersist(true);
@@ -106,15 +105,13 @@ public class DeviceScreensModel extends ModelObject {
                 setDeviceScreensDescription(copy);
             }
             
-            @Override
             public void onConnectionStatus(boolean isConnected) {
             	if (!isConnected) {
             		setDeviceScreensDescription(localDevices);
             	}
             }
+         
         });
-        
-    	setDeviceScreensDescription(localDevices);
     }
 
     /**
@@ -132,39 +129,16 @@ public class DeviceScreensModel extends ModelObject {
      * @param deviceScreensDescription
      *            the device screens description to set
      */
-    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+    public synchronized void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
                 this.deviceScreensDescription = deviceScreensDescription);
-        updateDeviceScreensDescription(deviceScreensDescription);
+        localDevices = deviceScreensDescription.getDevices(false);
     }
-
-    /**
-     * Separates the device screens into local and remote and sets the remote on
-     * the server.
-     * 
-     * @param deviceScreensDescription
-     *            the device screens description to set
-     */
-    private void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
-
-        DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
-
-        localDevices = new DeviceScreensDescription();
-
-        for (DeviceDescription device : deviceScreensDescription.getDevices()) {
-
-            if (device.getPersist()) {
-                remoteDevices.addDevice(device);
-            } else {
-                localDevices.addDevice(device);
-            }
-
+    
+    public void writeToPv() {
+    	if (writableDeviceScreenDescriptions.canWrite()) {
+            writableDeviceScreenDescriptions.uncheckedWrite(deviceScreensDescription.getDevices(true));
         }
-
-        if (writableDeviceScreenDescriptions.canWrite()) {
-            writableDeviceScreenDescriptions.uncheckedWrite(remoteDevices);
-        }
-        
+    	
     }
-
 }

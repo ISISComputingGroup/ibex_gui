@@ -89,6 +89,17 @@ public class DeviceScreensDescription {
     public void addDevice(DeviceDescription device) {
         devices.add(device);
     }
+    
+    public DeviceScreensDescription getDevices(boolean remote) {
+    	DeviceScreensDescription devices = new DeviceScreensDescription();
+    	for (DeviceDescription device : this.devices) {
+    		if (device.getPersist() == remote) {
+    			devices.addDevice(device);
+    		}
+    	}
+    	
+        return devices;
+    }
 
     @Override
     public String toString() {
