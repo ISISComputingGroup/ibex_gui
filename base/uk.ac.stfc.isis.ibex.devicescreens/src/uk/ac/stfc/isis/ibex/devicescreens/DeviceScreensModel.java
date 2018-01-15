@@ -134,7 +134,7 @@ public class DeviceScreensModel extends ModelObject {
     }
     
     /**
-     * Writes to the pv.
+     * Writes to the pv the remote devices.
      */
     public void writeToPv() {
     	if (writableDeviceScreenDescriptions.canWrite()) {
