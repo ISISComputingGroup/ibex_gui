@@ -21,7 +21,10 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableSynoptic;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
@@ -31,6 +34,8 @@ import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
 public class SynopticModel extends ModelObject {
 	
+	private static final Logger LOG = IsisLog.getLogger(SynopticModel.class);
+			
 	private final Variables variables;
 
 	private ObservableSynoptic instrument; 
@@ -56,7 +61,13 @@ public class SynopticModel extends ModelObject {
 	}
 	
 	public void setSynopticFromDescription(SynopticDescription description) {
-        instrument = getInstrument(description);
+		try {
+			instrument = getInstrument(description);
+		} catch (Exception ex) {
+			LOG.error("Creating synoptic support object from xml: " + ex.getLocalizedMessage(), ex);
+			instrument = getInstrument(SynopticDescription.getEmptySynopticDescription());
+			throw ex;
+		}
 	}
 	
 	public InstrumentNavigationGraph instrumentGraph() {
