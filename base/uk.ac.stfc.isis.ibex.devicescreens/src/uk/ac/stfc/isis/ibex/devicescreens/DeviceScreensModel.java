@@ -105,7 +105,16 @@ public class DeviceScreensModel extends ModelObject {
 
                 setDeviceScreensDescription(copy);
             }
+            
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+            	if (!isConnected) {
+            		setDeviceScreensDescription(localDevices);
+            	}
+            }
         });
+        
+    	setDeviceScreensDescription(localDevices);
     }
 
     /**
