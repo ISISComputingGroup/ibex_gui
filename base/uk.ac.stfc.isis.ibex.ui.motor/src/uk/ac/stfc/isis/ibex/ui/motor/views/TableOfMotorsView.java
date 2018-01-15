@@ -23,6 +23,7 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
@@ -132,10 +133,7 @@ public class TableOfMotorsView extends ViewPart {
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
 			
-			MotorOPIView motorView = (MotorOPIView) view;
-			motorView.setOPITitle(secondaryID);
-			motorView.setMotorName(motor.motorAddress());
-			motorView.initialiseOPI();		
+			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
 			
 		} catch (PartInitException e) {
 			e.printStackTrace();
