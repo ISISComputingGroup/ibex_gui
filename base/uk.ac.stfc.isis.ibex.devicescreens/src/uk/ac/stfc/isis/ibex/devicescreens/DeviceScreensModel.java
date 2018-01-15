@@ -130,7 +130,7 @@ public class DeviceScreensModel extends ModelObject {
     public synchronized void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
                 this.deviceScreensDescription = deviceScreensDescription);
-        localDevices = deviceScreensDescription.getFilteredDevices(false);
+        localDevices = deviceScreensDescription.getFilteredDeviceScreenDescription(false);
     }
     
     /**
@@ -138,8 +138,7 @@ public class DeviceScreensModel extends ModelObject {
      */
     public void writeToPv() {
     	if (writableDeviceScreenDescriptions.canWrite()) {
-            writableDeviceScreenDescriptions.uncheckedWrite(deviceScreensDescription.getFilteredDevices(true));
+            writableDeviceScreenDescriptions.uncheckedWrite(deviceScreensDescription.getFilteredDeviceScreenDescription(true));
         }
-    	
     }
 }

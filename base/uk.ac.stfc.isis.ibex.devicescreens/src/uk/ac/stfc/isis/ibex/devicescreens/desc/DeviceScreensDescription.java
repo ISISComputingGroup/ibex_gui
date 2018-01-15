@@ -95,7 +95,7 @@ public class DeviceScreensDescription {
      * @param remote the remote
      * @return the device screen description
      */
-    public DeviceScreensDescription getFilteredDevices(boolean remote) {
+    public DeviceScreensDescription getFilteredDeviceScreenDescription(boolean remote) {
     	DeviceScreensDescription devices = new DeviceScreensDescription();
     	for (DeviceDescription device : this.devices) {
     		if (device.getPersist() == remote) {
