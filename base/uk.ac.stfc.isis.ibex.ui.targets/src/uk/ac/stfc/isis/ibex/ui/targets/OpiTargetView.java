@@ -93,7 +93,7 @@ public abstract class OpiTargetView extends OpiView {
         try {
             return Opi.getDefault().opiProvider().pathFromName(opiName);
         } catch (NullPointerException ex) {
-            throw new OPIViewCreationException("OPI key or path can not be found.");
+            throw new OPIViewCreationException("OPI key or path can not be found for '" + opiName + "'");
         }
 	}
 	
