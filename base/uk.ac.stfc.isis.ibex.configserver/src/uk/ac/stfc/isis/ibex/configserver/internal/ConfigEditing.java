@@ -29,6 +29,16 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
 public class ConfigEditing extends Closer implements Editing {
+	
+    /**
+     * The name associated with the "blank" synoptic from the BlockServer.
+     */
+    public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
+
+    /**
+     * The pv associated with the "blank" synoptic from the BlockServer.
+     */
+    public static final String NONE_SYNOPTIC_PV = "__BLANK__";
 
 	private final ConfigServer configServer;
 

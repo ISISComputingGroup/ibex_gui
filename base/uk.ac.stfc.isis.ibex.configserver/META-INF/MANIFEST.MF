@@ -17,8 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.runcontrol,
  org.eclipse.core.databinding,
  uk.ac.stfc.isis.ibex.epics.switching,
- uk.ac.stfc.isis.ibex.alarm,
- uk.ac.stfc.isis.ibex.synoptic
+ uk.ac.stfc.isis.ibex.alarm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;
@@ -38,7 +37,8 @@ Export-Package: uk.ac.stfc.isis.ibex.configserver;
    uk.ac.stfc.isis.ibex.model,
    uk.ac.stfc.isis.ibex.configserver,
    uk.ac.stfc.isis.ibex.configserver.configuration,
-   uk.ac.stfc.isis.ibex.epics.observing"
+   uk.ac.stfc.isis.ibex.epics.observing",
+ uk.ac.stfc.isis.ibex.configserver.internal
 Import-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.validators
