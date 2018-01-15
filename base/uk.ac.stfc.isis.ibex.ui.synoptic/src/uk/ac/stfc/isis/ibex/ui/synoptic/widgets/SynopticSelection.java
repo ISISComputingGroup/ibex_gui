@@ -66,6 +66,14 @@ public class SynopticSelection extends Composite {
 		loadDefaultButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		loadDefaultButton.setBackground(BACKGROUND);
 		
+		loadDefaultButton.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setLastDefault();
+			}
+		});
+		
         refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
 		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
