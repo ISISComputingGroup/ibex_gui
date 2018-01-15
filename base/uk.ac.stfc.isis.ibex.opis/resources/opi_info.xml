@@ -1240,13 +1240,39 @@
 			</value>
 		</entry>
 	    <entry>
+	    	<key>MotionSetPoint</key>
+	    	<categories>
+				<category>Miscellaneous motion control</category>
+				<category>Sample stacks and goniometers</category>
+				<category>Sample changers</category>
+			</categories>
+			<value>
+				<type>UNKNOWN</type>
+	    		<path>stage/motion_setpoint.opi</path>
+	    		<description>The OPI for motion setpoints</description>
+	    		<macros>
+	    			<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+					</macro>	    		
+	    		</macros>
+	    	</value>
+		</entry>
+		<entry>
 	    	<key>SAMSM300</key>
-	    	<value>
-	    	<categories/>
-	    	<type>UNKNOWN</type>
-	    		<path>samsm300.opi</path>
-	    		<description>The OPI for the SAMSM300</description>
-	    		<macros/>
+	    	<categories>
+				<category>Sample changers</category>
+			</categories>
+			<value>
+				<type>UNKNOWN</type>
+	    		<path>sample_stack/sm300sampos.opi</path>
+	    		<description>The OPI for the SM300 Sample poistioner</description>
+	    		<macros>
+	    			<macro>
+						<name>SM300</name>
+						<description>The particualr SM300 IOC being used(e.g. SM300_01)</description>
+					</macro>	    		
+	    		</macros>
 	    	</value>
 		</entry>
 	</opis>    
