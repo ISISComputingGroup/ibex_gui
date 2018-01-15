@@ -12,6 +12,8 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
 from xmlrunner import XMLTestRunner
+
+from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
 from check_opi_format_tests import TestCheckOpiFormatMethods
 
 # Directory to iterate through
@@ -55,6 +57,13 @@ class CheckOpiFormat(unittest.TestCase):
         if len(errors):
             self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
 
+    def _assert_trace_buffers_are_the_same(self):
+        errors = get_traces_with_different_buffer_sizes(self.xml_root)
+
+        if len(errors):
+            self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
+                                .format(*error) for error in errors]))
+
     def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
         self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
 
@@ -72,6 +81,9 @@ class CheckOpiFormat(unittest.TestCase):
 
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
+    def test_GIVEN_an_opi_file_with_graph_widgets_WHEN_checking_buffer_sizes_THEN_all_buffer_sizes_are_the_same(self):
+        self._assert_trace_buffers_are_the_same()
 
     def test_GIVEN_a_label_THEN_it_ends_in_a_colon(self):
         errors = check_label_punctuation(self.xml_root)
