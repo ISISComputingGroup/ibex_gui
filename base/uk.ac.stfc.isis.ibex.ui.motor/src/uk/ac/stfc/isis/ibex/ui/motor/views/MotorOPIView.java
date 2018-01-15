@@ -27,13 +27,13 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * The Class MotorOPIView which is the opi view generated from opening an opi
  * from the motors page.
  */
-public class MotorOPIView extends OpiView {
+public class MotorOPIView extends OpiTargetView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
 	private String partName = "Motor view";
