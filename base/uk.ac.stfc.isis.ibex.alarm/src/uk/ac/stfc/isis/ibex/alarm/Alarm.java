@@ -23,6 +23,7 @@ import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -97,13 +98,19 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
                 counter.setAlarmModel(alarmModel);
             }
             
-            System.out.println("alarm config changed: " + alarmModel.setConfigurationName("Instrument", null));
 		} catch (Exception e) {
 			LOG.info("Alarm Client Model not found");
 		}
     }
     
+    /**
+     * Return the alarm client model used after checking it has been set up correctly.
+     * @return The alarm client model
+     */
     public AlarmClientModel getAlarmClientModel() {
+    	if (!alarmModel.getConfigurationName().equals("Instrument")) {
+    		setInstrument(Instrument.getInstance().currentInstrument());
+    	}
     	return alarmModel;
     }
 
@@ -164,6 +171,7 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
     public void setInstrument(InstrumentInfo instrument) {
         alarmSettings.setInstrument(instrument);
         setupAlarmModel();
+        alarmModel.setConfigurationName("Instrument", null);
     }
 
     /**
