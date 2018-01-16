@@ -45,10 +45,10 @@ public class AlarmView extends ViewPart {
     private GUI gui;
 
     @Override
-    public void createPartControl(final Composite parent)
-    {
+    public void createPartControl(final Composite parent) {
+		Alarm.getInstance().initInstrument();
         try {
-			model = Alarm.getInstance().getAlarmClientModel();
+			model = AlarmClientModel.getInstance();
 		} catch (Exception e) {
             Logger.getLogger(Activator.ID).log(Level.SEVERE, "Cannot load alarm model", e); //$NON-NLS-1$
 		}
@@ -63,16 +63,14 @@ public class AlarmView extends ViewPart {
     }
 
     @Override
-    public void setFocus()
-    {
+    public void setFocus() {
     	gui.setFocus();
     }
     
     @Override
     public void dispose() {
     	super.dispose();
-    	if (model!=null)
-    	{
+    	if (model != null) {
     		model.release();
     	}
         model = null;

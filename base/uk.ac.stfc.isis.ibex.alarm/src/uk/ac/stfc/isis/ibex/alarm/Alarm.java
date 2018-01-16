@@ -102,17 +102,6 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 			LOG.info("Alarm Client Model not found");
 		}
     }
-    
-    /**
-     * Return the alarm client model used after checking it has been set up correctly.
-     * @return The alarm client model
-     */
-    public AlarmClientModel getAlarmClientModel() {
-    	if (!alarmModel.getConfigurationName().equals("Instrument")) {
-    		setInstrument(Instrument.getInstance().currentInstrument());
-    	}
-    	return alarmModel;
-    }
 
     /**
      * Stop the bundle releasing all the resources.
@@ -162,6 +151,14 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
         return alarmConnectionCloser;
     }
 
+	/**
+	 * Set up alarm messages for the current instrument. Called when view is
+	 * being instantiated to avoid delay in displaying the alarms.
+	 */
+	public void initInstrument() {
+		setInstrument(Instrument.getInstance().currentInstrument());
+	}
+    
     /**
      * Set up the alarm model default value and create the new alarm model.
      * 
@@ -171,8 +168,19 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
     public void setInstrument(InstrumentInfo instrument) {
         alarmSettings.setInstrument(instrument);
         setupAlarmModel();
-        alarmModel.setConfigurationName("Instrument", null);
+        forceRefresh();
     }
+
+	/**
+	 * This forces BEAST to reinitialise the communicator when the URLs have
+	 * changed.
+	 */
+	private void forceRefresh() {
+		if (alarmModel != null) {
+			alarmModel.setConfigurationName("Annunciator", null);
+			alarmModel.setConfigurationName("Instrument", null);
+		}
+	}
 
     /**
      * Close the current alarm model.
