@@ -22,10 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.alarm;
 
-import org.csstudio.alarm.beast.Preferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -40,14 +38,14 @@ public class AlarmSettings {
      */
     private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
 
-    private IPreferenceStore preferences;
+    private Preferences preferences;
 
 
     /**
      * Instantiates a new alarm settings with default preferences store.
      */
     public AlarmSettings() {
-        this(new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID));
+        this(InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_ID));
     }
 
 
@@ -56,7 +54,7 @@ public class AlarmSettings {
      *
      * @param preferenceStore the preferences store to use
      */
-    public AlarmSettings(IPreferenceStore preferenceStore) {
+    public AlarmSettings(Preferences preferenceStore) {
         this.preferences = preferenceStore;
     }
 
@@ -67,8 +65,9 @@ public class AlarmSettings {
      */
     public void setInstrument(InstrumentInfo instrument) {
         String hostName = instrument.hostName();
-        preferences.setValue(Preferences.RDB_URL, buildRdbUrl(hostName));
-        preferences.setValue(Preferences.JMS_URL, buildJmsUrl(hostName));
+        System.out.println("setting url");
+        preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName));
+        preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
     }
 
     /**

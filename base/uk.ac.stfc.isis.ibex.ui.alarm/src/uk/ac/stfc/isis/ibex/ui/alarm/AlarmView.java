@@ -28,13 +28,18 @@ import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+
 
 /**
  * The Class AlarmView which is the view which contains the alarm tree.
  */
 public class AlarmView extends ViewPart {
 	
-    final public static String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
+	/**
+	 * The ID for this class.
+	 */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 
     private AlarmClientModel model;
     private GUI gui;
@@ -43,7 +48,7 @@ public class AlarmView extends ViewPart {
     public void createPartControl(final Composite parent)
     {
         try {
-			model = AlarmClientModel.getInstance();
+			model = Alarm.getInstance().getAlarmClientModel();
 		} catch (Exception e) {
             Logger.getLogger(Activator.ID).log(Level.SEVERE, "Cannot load alarm model", e); //$NON-NLS-1$
 		}
@@ -52,9 +57,6 @@ public class AlarmView extends ViewPart {
         
         // There's nothing on the default menu we currently want
         gui.getTreeViewer().getTree().setMenu(null);
-        
-        // Gives choice of "Annunciator" and "Instrument". We definitely want the latter
-        model.setConfigurationName("Instrument", null);
         
         // Lots of other controls available (see AlarmTreeView). For now they're just clutter
         getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());

@@ -96,9 +96,15 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
                 alarmModel = AlarmClientModel.getInstance();
                 counter.setAlarmModel(alarmModel);
             }
+            
+            System.out.println("alarm config changed: " + alarmModel.setConfigurationName("Instrument", null));
 		} catch (Exception e) {
 			LOG.info("Alarm Client Model not found");
 		}
+    }
+    
+    public AlarmClientModel getAlarmClientModel() {
+    	return alarmModel;
     }
 
     /**
