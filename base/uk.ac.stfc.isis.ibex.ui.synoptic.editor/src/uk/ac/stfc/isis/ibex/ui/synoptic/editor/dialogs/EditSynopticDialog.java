@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
@@ -53,6 +54,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	
 	private EditorPanel editor;
 	private boolean isBlank;
+    private Button previewBtn;
 	private Button saveAsBtn;
 	private Button saveBtn;
 	
@@ -92,6 +94,16 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
+        // createButton(parent, IDialogConstants.OK_ID, "Save", true);
+        previewBtn = createButton(parent, IDialogConstants.CLIENT_ID + 3, "Synoptic Preview", false);
+        previewBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getSynoptic());
+                previewDialog.open();
+            }
+
+        });
 
 		if (!isBlank) { 
 			// createButton(parent, IDialogConstants.OK_ID, "Save", true);
