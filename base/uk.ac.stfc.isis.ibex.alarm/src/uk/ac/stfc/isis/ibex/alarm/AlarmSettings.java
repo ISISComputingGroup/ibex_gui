@@ -52,10 +52,10 @@ public class AlarmSettings {
     /**
      * Instantiates a new alarm settings with desired preferences.
      *
-     * @param preferenceStore the preferences store to use
+     * @param preferences The preferences to use
      */
-    public AlarmSettings(Preferences preferenceStore) {
-        this.preferences = preferenceStore;
+    public AlarmSettings(Preferences preferences) {
+        this.preferences = preferences;
     }
 
     /**
@@ -65,7 +65,6 @@ public class AlarmSettings {
      */
     public void setInstrument(InstrumentInfo instrument) {
         String hostName = instrument.hostName();
-        System.out.println("setting url");
         preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName));
         preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
     }
