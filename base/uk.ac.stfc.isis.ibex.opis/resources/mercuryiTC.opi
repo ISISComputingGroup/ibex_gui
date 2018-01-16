@@ -6,7 +6,7 @@
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts />
-  <height>600</height>
+  <height>620</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
@@ -32,201 +32,419 @@
     <color red="192" green="192" blue="192" />
   </foreground_color>
   <actions hook="false" hook_all="false" />
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>mercuryiTC_single.opi</opi_file>
-    <border_style>3</border_style>
-    <tooltip></tooltip>
-    <rules>
-      <rule name="Visibility at startup" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;\&quot;\&quot;&quot; || pvStr0 == &quot;&quot;">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://TEMP_NUM1_$(DID)("$(TEMP_NUM1)")</pv>
-      </rule>
-    </rules>
-    <enabled>true</enabled>
-    <wuid>-1c6864:1559161122d:-7fbf</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>100</height>
+  <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
+    <active_tab>0</active_tab>
+    <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
+    <tab_3_icon_path></tab_3_icon_path>
+    <height>531</height>
+    <tab_2_icon_path></tab_2_icon_path>
     <border_width>1</border_width>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <tab_0_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_0_foreground_color>
+    <actions hook="false" hook_all="false" />
+    <tab_1_enabled>true</tab_1_enabled>
+    <border_style>0</border_style>
+    <enabled>true</enabled>
+    <wuid>-7d8c0c3:160fede6a8a:-770c</wuid>
+    <tab_1_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_1_background_color>
+    <tab_1_icon_path></tab_1_icon_path>
+    <tab_2_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_2_foreground_color>
+    <tab_1_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_1_font>
+    <tab_3_title>Card 4</tab_3_title>
+    <tab_2_enabled>true</tab_2_enabled>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>793</width>
+    <x>6</x>
+    <horizontal_tabs>true</horizontal_tabs>
+    <y>84</y>
+    <rules />
+    <tab_3_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_3_font>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <visible>true</visible>
+    <tab_0_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_0_background_color>
+    <tab_3_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_3_foreground_color>
+    <widget_type>Tabbed Container</widget_type>
+    <tab_2_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_2_font>
+    <tab_3_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_3_background_color>
+    <tab_3_enabled>true</tab_3_enabled>
+    <name>Tabbed Container</name>
+    <minimum_tab_height>10</minimum_tab_height>
+    <tab_2_title>Card 3</tab_2_title>
+    <tab_0_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_0_font>
+    <tab_2_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_2_background_color>
+    <tab_0_title>Card 1</tab_0_title>
+    <tab_1_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_1_foreground_color>
+    <tab_1_title>Card 2</tab_1_title>
+    <scripts />
+    <tab_count>4</tab_count>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-      <TEMP_NUM>$(TEMP_NUM1)</TEMP_NUM>
-    </macros>
-    <visible>true</visible>
-    <group_name></group_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Linking Container</widget_type>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <zoom_to_fit>false</zoom_to_fit>
-    <width>559</width>
-    <x>12</x>
-    <name>Linking Container</name>
-    <y>60</y>
+    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_enabled>true</tab_0_enabled>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>mercuryiTC_single.opi</opi_file>
-    <border_style>3</border_style>
-    <tooltip></tooltip>
-    <rules>
-      <rule name="Visibility at startup" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;\&quot;\&quot;&quot; || pvStr0 == &quot;&quot;">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://TEMP_NUM2_$(DID)("$(TEMP_NUM2)")</pv>
-      </rule>
-    </rules>
-    <enabled>true</enabled>
-    <wuid>-1c6864:1559161122d:-7f5e</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>100</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-      <TEMP_NUM>$(TEMP_NUM2)</TEMP_NUM>
-    </macros>
-    <visible>true</visible>
-    <group_name></group_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Linking Container</widget_type>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <zoom_to_fit>false</zoom_to_fit>
-    <width>559</width>
-    <x>12</x>
-    <name>Linking Container_1</name>
-    <y>165</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>mercuryiTC_single.opi</opi_file>
-    <border_style>3</border_style>
-    <tooltip></tooltip>
-    <rules>
-      <rule name="Visibility at startup" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;\&quot;\&quot;&quot; || pvStr0 == &quot;&quot;">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://TEMP_NUM3_$(DID)("$(TEMP_NUM3)")</pv>
-      </rule>
-    </rules>
-    <enabled>true</enabled>
-    <wuid>-1c6864:1559161122d:-7e8a</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>100</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-      <TEMP_NUM>$(TEMP_NUM3)</TEMP_NUM>
-    </macros>
-    <visible>true</visible>
-    <group_name></group_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Linking Container</widget_type>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <zoom_to_fit>false</zoom_to_fit>
-    <width>559</width>
-    <x>12</x>
-    <name>Linking Container_2</name>
-    <y>270</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>mercuryiTC_single.opi</opi_file>
-    <border_style>3</border_style>
-    <tooltip></tooltip>
-    <rules>
-      <rule name="Visibility at startup" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;\&quot;\&quot;&quot; || pvStr0 == &quot;&quot;">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://TEMP_NUM4_$(DID)("$(TEMP_NUM4)")</pv>
-      </rule>
-    </rules>
-    <enabled>true</enabled>
-    <wuid>-1c6864:1559161122d:-7e30</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>100</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-      <TEMP_NUM>$(TEMP_NUM4)</TEMP_NUM>
-    </macros>
-    <visible>true</visible>
-    <group_name></group_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Linking Container</widget_type>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <zoom_to_fit>false</zoom_to_fit>
-    <width>559</width>
-    <x>12</x>
-    <name>Linking Container_3</name>
-    <y>375</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>true</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Card 1</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>mercuryiTC_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-7d1e</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>495</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CARD_NUM>1</CARD_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Card 2</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>mercuryiTC_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-560e</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>495</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CARD_NUM>2</CARD_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Card 3</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>mercuryiTC_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-55a2</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>495</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CARD_NUM>3</CARD_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fac</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Card 4</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>mercuryiTC_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-53236bab:15635d9faea:-7f38</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>495</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CARD_NUM>4</CARD_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
     <border_style>0</border_style>
@@ -234,12 +452,12 @@
     <horizontal_alignment>0</horizontal_alignment>
     <rules />
     <enabled>true</enabled>
-    <wuid>-1c6864:1559161122d:-7505</wuid>
+    <wuid>-7d8c0c3:160fede6a8a:-757c</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>$(NAME)</text>
+    <text>Mercury Cryostat</text>
     <scripts />
-    <height>33</height>
+    <height>37</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -249,16 +467,16 @@
     <visible>true</visible>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <widget_type>Label</widget_type>
     <wrap_words>true</wrap_words>
     <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>611</width>
+    <width>787</width>
     <x>6</x>
-    <name>Label</name>
+    <name>Label_1</name>
     <y>6</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -266,7 +484,48 @@
     <actions hook="false" hook_all="false" />
     <show_scrollbar>false</show_scrollbar>
     <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+      <opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-7d8c0c3:160fede6a8a:-757b</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>$(NAME)</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>787</width>
+    <x>6</x>
+    <name>Label_2</name>
+    <y>42</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
     </font>
   </widget>
 </display>
