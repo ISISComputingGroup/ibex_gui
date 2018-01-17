@@ -169,7 +169,6 @@
     </tab_4_font>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <CHANNEL>V</CHANNEL>
     </macros>
     <visible>true</visible>
     <tab_0_background_color>
@@ -234,7 +233,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -2458,6 +2457,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
+          <CHANNEL>X</CHANNEL>
         </macros>
         <visible>true</visible>
         <group_name></group_name>
@@ -2665,7 +2665,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2703,6 +2703,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
+          <CHANNEL>V</CHANNEL>
         </macros>
         <visible>true</visible>
         <group_name></group_name>
