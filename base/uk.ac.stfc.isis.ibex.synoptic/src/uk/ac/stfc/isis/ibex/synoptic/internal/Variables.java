@@ -65,10 +65,19 @@ public class Variables {
      */
     public static final String NONE_SYNOPTIC_PV = ConfigEditing.NONE_SYNOPTIC_PV;
 
+    /**
+     * Facilitates setting the current synoptic.
+     */
     public final Writable<String> synopticSetter;
 
+    /**
+     * Facilitates deleting synoptics.
+     */
     public final Writable<Collection<String>> synopticsDeleter;
 
+    /**
+     * A list of information about the currently available synoptics.
+     */
     public final ForwardingObservable<Collection<SynopticInfo>> available;
 
     /**

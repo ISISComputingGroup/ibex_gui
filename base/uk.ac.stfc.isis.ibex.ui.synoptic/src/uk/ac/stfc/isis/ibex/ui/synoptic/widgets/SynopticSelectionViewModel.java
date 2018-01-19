@@ -31,10 +31,25 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
  */
 public class SynopticSelectionViewModel extends ModelObject {
     
+	/**
+	 * Property name for binding to synoptic list changes.
+	 */
     public static final String SYNOPTIC_LIST = "synopticList";
+
+	/**
+	 * Property name for binding to selected synoptic changes.
+	 */
     public static final String SELECTED = "selected";
+    
+
+	/**
+	 * Property name for binding to synoptic control enablement changes.
+	 */
     public static final String ENABLED = "enabled";
 
+    /**
+     * Time for databinding to wait to avoid synchronicity issues.
+     */
     public static final int DATABINDING_WAIT_TIME_MS = 100;
 
 	private static Synoptic synoptic = Synoptic.getInstance();
@@ -73,14 +88,25 @@ public class SynopticSelectionViewModel extends ModelObject {
         }
 	};
 	
+	/**
+	 * Get the view model for the synoptic selector.
+	 */
     public SynopticSelectionViewModel() {
         synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
     }
 
+    /**
+     * Put an empty list in the currently available synoptic list.
+     */
     private void setEmptySynopticList() {
         updateSynopticList(new ArrayList<SynopticInfo>());
     }
 
+    /**
+     * Put a new set of synoptics in the list of available synoptics.
+     * 
+     * @param value The new set of available synoptics.
+     */
     private void updateSynopticList(Collection<SynopticInfo> value) {
         synopticList = value;
         ArrayList<String> names = new ArrayList<String>(SynopticInfo.names(synopticList));
@@ -116,10 +142,16 @@ public class SynopticSelectionViewModel extends ModelObject {
         }
     }
     
+    /**
+     * Set the selected synoptic to be the synoptic identified as the latest default.
+     */
     public void setLastDefault() {
     	setSelected(lastSetDefaultSynoptic.name());
     }
 
+    /**
+     * @return The name of the currently selected synoptic.
+     */
     public String getSelected() {
         return selected;
     }
@@ -135,10 +167,16 @@ public class SynopticSelectionViewModel extends ModelObject {
         firePropertyChange(SELECTED, this.selected, this.selected = selected);
     }
 	
+    /**
+     * @return A list of names of currently available synoptics
+     */
 	public ArrayList<String> getSynopticList() {
         return synopticNamesList;
 	}
 	
+	/**
+	 * Refresh the currently selected synoptic.
+	 */
 	public void refreshSynoptic() {
         SynopticInfo synopticToRefresh = synoptic.currentObservingViewerModel().getSynopticInfo();
 		synoptic.setViewerSynoptic(synopticToRefresh);

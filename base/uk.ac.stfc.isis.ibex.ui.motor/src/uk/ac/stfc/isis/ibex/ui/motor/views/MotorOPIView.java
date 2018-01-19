@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -81,11 +79,12 @@ public class MotorOPIView extends OpiTargetView {
 		return new OpiTarget(partName, MOTOR_OPI);
 	}
 	
-    /**
-     * Display an OPI Target in the Motors perspective Screen.
-     * 
-     * @param opiTarget the opi target
-     */
+	/**
+	 * Display an OPI Target in the Motors perspective Screen.
+	 * 
+	 * @param title Title to give to the OPI.
+	 * @param motorName Name of the motor being opened.
+	 */
     public void displayOpi(String title, String motorName) {
     	setMotorName(motorName);
     	setOPITitle(title);
