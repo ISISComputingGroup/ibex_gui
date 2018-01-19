@@ -1,13 +1,19 @@
-from isActiveMacro import is_active_macro
+def is_active_int_macro(value):
+    if value is None or len(value) == 0:
+        return False  # Empty macro
+    elif len(value) >= 3 and value[:2] == "$(" and value[-1] == ")":
+        return False  # Unexpanded macro
+    else:
+    	try:
+    		int(value)
+    		return True
+    	except:
+    	    return False
 
 
 def get_macros():
     return display.getPropertyValue("macros").getMacrosMap()
-    
-
-def levels_requested():
-    return any([is_active_macro(get_macros().get("LEVEL_NUM"+str(i))) for i in range(1,3)])
-    
+        
 
 def reload_widget(widget):
     original_opi = widget.getPropertyValue("opi_file")
@@ -23,11 +29,12 @@ def add_macro(widget, name, value):
     
 def populate_tabs(count, card_type, type_count, container):
     for i in range(1, 1 + type_count):
-        if is_active_macro(get_macros().get(card_type.upper() + "_NUM" + str(i))):
+        card_number = get_macros().get(card_type.upper() + "_NUM" + str(i))
+        if is_active_int_macro(card_number):
             tab = display.getWidget("Tab"+str(count))
             tab.setPropertyValue("opi_file", "mercuryiTC_single_" + card_type.lower() + ".opi")
-            add_macro(tab, "CARD_NUM", i)
-            container.setPropertyValue("tab_" + str(count) + "_title", card_type.title() + " card " + str(i))
+            add_macro(tab, "CARD_NUM", int(card_number))
+            container.setPropertyValue("tab_" + str(count) + "_title", card_type.title() + " card " + str(card_number))
             count += 1
     return count
 
