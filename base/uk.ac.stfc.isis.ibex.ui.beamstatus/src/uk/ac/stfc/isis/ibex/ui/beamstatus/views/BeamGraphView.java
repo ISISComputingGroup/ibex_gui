@@ -57,7 +57,7 @@ import org.eclipse.swt.widgets.Shell;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusView implements ModelListener {
+public class BeamGraphView implements ModelListener {
 	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -116,9 +116,13 @@ public class BeamStatusView implements ModelListener {
     /** Title for the plot. */
     private static final String PLOT_TITLE = "Beam Current";
 
+    /**
+     * Creates the Beam Graph view.
+     * 
+     * @param parent The parent container obtained via dependency injection
+     */
     @PostConstruct 
     public void createPartControl(final Composite parent) {
-        
     	// Remember what shell we're using
         shell = parent.getShell();
         
@@ -133,7 +137,10 @@ public class BeamStatusView implements ModelListener {
         createTimeRangeRadioButtons(parent);
         
         // Create the basic plot
-        createBeamStatusPlot(parent);
+        Composite plotComposite = new Composite(parent, SWT.NONE);
+        plotComposite.setLayout(new GridLayout(1, false));
+        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        modelPlot = new ModelBasedPlot(plotComposite);
 
         // TODO Disabled until connection to archive engine is fixed
         // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
@@ -148,6 +155,7 @@ public class BeamStatusView implements ModelListener {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
+        createBeamStatusPlot();
     }
 
     private void createTimeRangeRadioButtons(final Composite parent) {
@@ -176,17 +184,10 @@ public class BeamStatusView implements ModelListener {
 
     }
 
-    private void createBeamStatusPlot(final Composite parent) {
-        Composite plotComposite = new Composite(parent, SWT.NONE);
-        plotComposite.setLayout(new GridLayout(1, false));
-        plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-                
-        // Create plot with basic configuration
-        modelPlot = new ModelBasedPlot(plotComposite);
+    private void createBeamStatusPlot() {
         RTTimePlot rtPlot = modelPlot.getPlot();
         rtPlot.setTitle(Optional.of(PLOT_TITLE));
         rtPlot.setEnabled(false);
-        // TODO: Doesn't seem to actually hide the toolbar. Can we do that?
         rtPlot.showToolbar(false);
         rtPlot.showLegend(true);
         rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -262,7 +263,6 @@ public class BeamStatusView implements ModelListener {
      *            PV to add to the plot
      */
     protected void addTrace(final PVItem newItem) {
-
         // PV unknown or plot does not exist
         if (newItem == null || modelPlot == null) {
             return;
@@ -342,6 +342,9 @@ public class BeamStatusView implements ModelListener {
         return getCalendarSpec(getTimeRangeInMilliseconds());
     }
     
+    /**
+     * Disposes of the model before disposing of this view.
+     */
     @PreDestroy
     public void dispose() {
     	if (model != null) {
