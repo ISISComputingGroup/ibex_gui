@@ -24,8 +24,6 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.csstudio.alarm.beast.Preferences;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -34,8 +32,11 @@ import org.mockito.stubbing.Answer;
 import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * Tests for the AlarmSettings class.
+ */
 @SuppressWarnings("checkstyle:methodname")
-public class AlarmTest {
+public class AlarmSettingsTest {
 
     /**
      * Localhost instrument name.
@@ -191,7 +192,7 @@ public class AlarmTest {
     /**
      * Preference store.
      */
-    private IPreferenceStore preferenceStore;
+    private org.osgi.service.prefs.Preferences preferences;
 
     /**
      * Return value for mocked preference store jms value.
@@ -212,35 +213,35 @@ public class AlarmTest {
         mockRdbUrl = DEFAULT_RDB_URL;
         mockJmsUrl = DEFAULT_JMS_URL;
 
-        preferenceStore = mock(PreferenceStore.class);
+        preferences = mock(org.osgi.service.prefs.Preferences.class);
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 mockRdbUrl = (String) invocation.getArguments()[1];
                 return null;
             }
-        }).when(preferenceStore).setValue(eq(Preferences.RDB_URL), anyString());
+        }).when(preferences).put(eq(Preferences.RDB_URL), anyString());
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 mockJmsUrl = (String) invocation.getArguments()[1];
                 return null;
             }
-        }).when(preferenceStore).setValue(eq(Preferences.JMS_URL), anyString());
+        }).when(preferences).put(eq(Preferences.JMS_URL), anyString());
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
                 return mockJmsUrl;
             }
-        }).when(preferenceStore).getString(eq(Preferences.JMS_URL));
+        }).when(preferences).get(eq(Preferences.JMS_URL), anyString());
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
                 return mockRdbUrl;
             }
-        }).when(preferenceStore).getString(eq(Preferences.RDB_URL));
+        }).when(preferences).get(eq(Preferences.RDB_URL), anyString());
 
-        alarmSettings = new AlarmSettings(preferenceStore);
+        alarmSettings = new AlarmSettings(preferences);
 
         mockLocalHost = mockInstrument(LOCALHOST);
         mockLarmor = mockInstrument(NDXLARMOR);
@@ -263,13 +264,13 @@ public class AlarmTest {
     @Test
     public void default_rdb_url_is_set_correctly() {
         // Assert
-        assertEquals(DEFAULT_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(DEFAULT_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
     public void default_jms_url_is_set_correctly() {
         // Assert
-        assertEquals(DEFAULT_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(DEFAULT_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -278,7 +279,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLarmor);
 
         // Assert
-        assertEquals(LARMOR_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(LARMOR_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -287,7 +288,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLarmor);
 
         // Assert
-        assertEquals(LARMOR_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(LARMOR_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
 
@@ -298,7 +299,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockDemo);
 
         // Assert
-        assertEquals(DEMO_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(DEMO_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -308,7 +309,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockDemo);
 
         // Assert
-        assertEquals(DEMO_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(DEMO_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -318,7 +319,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(DEFAULT_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(DEFAULT_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -328,7 +329,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(DEFAULT_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(DEFAULT_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -337,7 +338,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockCustom);
 
         // Assert
-        assertEquals(CUSTOM_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(CUSTOM_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -346,7 +347,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockCustom);
 
         // Assert
-        assertEquals(CUSTOM_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(CUSTOM_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -356,7 +357,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLarmor);
 
         // Assert
-        assertEquals(LARMOR_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(LARMOR_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -366,7 +367,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLarmor);
 
         // Assert
-        assertEquals(LARMOR_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(LARMOR_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -377,7 +378,7 @@ public class AlarmTest {
 
         // Assert
         assertEquals(DEFAULT_RDB_URL.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
-                preferenceStore.getString(Preferences.RDB_URL));
+                preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -385,10 +386,10 @@ public class AlarmTest {
         // Act
         alarmSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE));
         alarmSettings.setInstrument(mockLocalHost);
-
+        
         // Assert
         assertEquals(DEFAULT_RDB_URL.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
-                preferenceStore.getString(Preferences.RDB_URL));
+                preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -397,7 +398,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME));
 
         // Assert
-        assertEquals(NON_ISIS_INST_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(NON_ISIS_INST_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -406,7 +407,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME));
 
         // Assert
-        assertEquals(NON_ISIS_INST_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(NON_ISIS_INST_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -415,7 +416,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockInstrument(IP_ADDRESS));
 
         // Assert
-        assertEquals(IP_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(IP_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -424,7 +425,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockInstrument(IP_ADDRESS));
 
         // Assert
-        assertEquals(IP_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(IP_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
@@ -433,7 +434,7 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(LOCALHOST_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(LOCALHOST_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
     @Test
@@ -442,16 +443,16 @@ public class AlarmTest {
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(LOCALHOST_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(LOCALHOST_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
     public void switching_from_larmor_to_larmor_causes_no_change_to_jms_url() {
         // Act
         alarmSettings.setInstrument(mockLarmor);
-        String expectedUrl = preferenceStore.getString(Preferences.JMS_URL);
+        String expectedUrl = preferences.get(Preferences.JMS_URL, null);
         alarmSettings.setInstrument(mockLarmor);
-        String actualUrl = preferenceStore.getString(Preferences.JMS_URL);
+        String actualUrl = preferences.get(Preferences.JMS_URL, null);
 
         // Assert
         assertEquals(expectedUrl, actualUrl);
@@ -461,9 +462,9 @@ public class AlarmTest {
     public void switching_from_larmor_to_larmor_causes_no_change_to_rdb_url() {
         // Act
         alarmSettings.setInstrument(mockLarmor);
-        String expectedUrl = preferenceStore.getString(Preferences.RDB_URL);
+        String expectedUrl = preferences.get(Preferences.RDB_URL, null);
         alarmSettings.setInstrument(mockLarmor);
-        String actualUrl = preferenceStore.getString(Preferences.RDB_URL);
+        String actualUrl = preferences.get(Preferences.RDB_URL, null);
 
         // Assert
         assertEquals(expectedUrl, actualUrl);
@@ -472,22 +473,22 @@ public class AlarmTest {
     @Test
     public void switching_to_instrument_called_jdbc_and_back_does_not_affect_rdb_url() {
         // Act
-        String expectedUrl = preferenceStore.getString(Preferences.RDB_URL);
+        String expectedUrl = preferences.get(Preferences.RDB_URL, null);
         alarmSettings.setInstrument(mockInstrument("jdbc"));
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(expectedUrl, preferenceStore.getString(Preferences.RDB_URL));
+        assertEquals(expectedUrl, preferences.get(Preferences.RDB_URL, null));
     }
 
     @Test
     public void switching_to_instrument_called_failover_and_back_does_not_affect_jms_url() {
         // Act
-        String expectedUrl = preferenceStore.getString(Preferences.JMS_URL);
+        String expectedUrl = preferences.get(Preferences.JMS_URL, null);
         alarmSettings.setInstrument(mockInstrument("failover"));
         alarmSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertEquals(expectedUrl, preferenceStore.getString(Preferences.JMS_URL));
+        assertEquals(expectedUrl, preferences.get(Preferences.JMS_URL, null));
     }
 }

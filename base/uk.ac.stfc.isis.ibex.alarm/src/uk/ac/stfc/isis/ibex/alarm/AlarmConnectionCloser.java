@@ -27,6 +27,7 @@ import java.lang.reflect.Field;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.JMSCommunicationThread;
@@ -83,7 +84,7 @@ public class AlarmConnectionCloser {
         try {
             Field connectionField = JMSCommunicationThread.class.getDeclaredField("connection");
             connectionField.setAccessible(true);
-            connection = (Connection) connectionField.get(communicator);
+            connection = (ActiveMQConnection) connectionField.get(communicator);
 
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException
                 | LinkageError e) {
