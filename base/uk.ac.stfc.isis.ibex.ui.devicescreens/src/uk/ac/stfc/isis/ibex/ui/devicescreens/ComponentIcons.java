@@ -129,6 +129,8 @@ public final class ComponentIcons {
                 return "neocera";
             case KHLY2400:
                 return "keithley2400";
+            case KHLY2700:
+                return "multimeter";
             case ROT_SAMPLE_CHANGER:
                 return "rotating_sample_changer";
             case STRESS_RIG:
