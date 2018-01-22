@@ -31,6 +31,7 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -58,7 +59,9 @@ public class DetectorDiagnosticsPanel {
     private Text spinnerIntegralTimeRangeFrom;
     private Text spinnerIntegralTimeRangeTo;
     private Spinner spinnerMaximumFrames;
-    
+
+    private static final int FIXED_WIDTH = 800;
+    private static final int FIXED_HEIGHT = 300;
     private static final int MAX_NUMBER_OF_SPECTRA = 256;
     private static final int MAX_SPECTRA_NUMBER = 1000000;
     private static final int MAX_SPECTRA_PERIODS = Integer.MAX_VALUE;
@@ -73,11 +76,23 @@ public class DetectorDiagnosticsPanel {
         model = DaeUI.getDefault().viewModel().detectorDiagnostics();
     }
 
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
     @PostConstruct
     public void createPart(Composite parent) {
-        parent.setLayout(new GridLayout(1, true));
-        
-        Composite container = new Composite(parent, SWT.NONE);
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+
+        Composite content = new Composite(scrolled, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
+        scrolled.setContent(content);
+		
+        Composite container = new Composite(content, SWT.NONE);
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         container.setLayoutData(layoutData);
         container.setLayout(new GridLayout(7, true));
@@ -126,12 +141,12 @@ public class DetectorDiagnosticsPanel {
         spinnerMaximumFrames.setMaximum(MAX_FRAMES);
         spinnerMaximumFrames.setLayoutData(centeredGridItem);
         
-        errorLabel = new Label(parent, SWT.LEAD);
+        errorLabel = new Label(content, SWT.LEAD);
         GridData labelLayoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         errorLabel.setLayoutData(labelLayoutData);
         errorLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 
-        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(parent, SWT.NONE, SWT.NONE);
+        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(content, SWT.NONE, SWT.NONE);
         table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
