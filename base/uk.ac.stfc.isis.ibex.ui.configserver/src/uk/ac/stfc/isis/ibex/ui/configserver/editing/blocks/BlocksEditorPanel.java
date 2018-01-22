@@ -152,7 +152,7 @@ public class BlocksEditorPanel extends Composite {
 	}
 
 	private void setBlocks(EditableConfiguration config) {
-		table.setRows(config.getEditableBlocks());
+		table.setRows(config.getAllBlocks());
 		table.refresh();
 	}
 	
@@ -219,15 +219,5 @@ public class BlocksEditorPanel extends Composite {
     private void openEditBlockDialog(EditableBlock toEdit) {
         EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
         dialog.open();
-    }
-
-    public void openEditBlockDialog(String blockName) {
-        for (EditableBlock block : config.getEditableBlocks()) {
-            if (block.getName().equals(blockName)) {
-                openEditBlockDialog(block);
-                return;
-            }
-        }
-
     }
 }

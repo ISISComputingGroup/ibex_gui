@@ -116,7 +116,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
-	};
+	}
 	
 	@Override
 	public int getSizeFlags(boolean width) {

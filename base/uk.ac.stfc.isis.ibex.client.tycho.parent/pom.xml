@@ -226,7 +226,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.epics.switching.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.alarm</module>
-		<module>../uk.ac.stfc.isis.ibex.instrument.baton</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>

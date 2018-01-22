@@ -293,6 +293,12 @@ public class DaeObservables {
      * An observable on the neutron proton ratio.
      */
     public final ForwardingObservable<Double> npRatio;
+    
+
+    /**
+     * An observable on the simulation mode state.
+     */
+    public final ForwardingObservable<Boolean> simulationMode;
 
     /**
      * The default constructor for the class. Binds the observables to PVs.
@@ -399,6 +405,8 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("DETECTOR_DIR")));
         spectraTablesDir = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("SPECTRA_DIR")));
+        simulationMode = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("SIM_MODE")));
     }
 
     /**

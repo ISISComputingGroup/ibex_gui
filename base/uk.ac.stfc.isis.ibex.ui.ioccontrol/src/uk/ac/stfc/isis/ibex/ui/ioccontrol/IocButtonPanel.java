@@ -50,7 +50,7 @@ public class IocButtonPanel extends Composite {
 	private static final UpdateValueStrategy WITH_NEGATION = new UpdateValueStrategy();
 	static {
 		WITH_NEGATION.setConverter(new NegatingConverter());
-	};
+	}
 	
     private IocState ioc;
 	private final IocControl control;

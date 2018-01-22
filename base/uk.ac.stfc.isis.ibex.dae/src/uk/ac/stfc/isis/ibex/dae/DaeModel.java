@@ -58,68 +58,115 @@ public class DaeModel extends Closer implements IDae {
 		isRunning = registerForClose(new ForwardingObservable<>(new DaeIsRunning(observables.runState)));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
 	public ForwardingObservable<String> instrument() {
 		return observables.instrumentName;
 	}
 	
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<String> runNumber() {
 		return observables.runNumber;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<DaeRunState> runState() {
 		return observables.runState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<Boolean> isRunning() {
 		return isRunning;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<String> isisCycle() {
 		return observables.isisCycle;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<String> title() {
 		return observables.title;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public ForwardingObservable<Boolean> displayTitle() {
         return observables.displayTitle;
     }
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Writable<String> setTitle() {
 		return writables.title;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Writable<Long> setDisplayTitle() {
         return writables.displayTitle;
     }
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<String> vetos() {
 		return observables.vetos;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public ExperimentSetup experimentSetup() {
 		return experimentSetup;
 	}
 		
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DaeActions actions() {
 		return actions;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
     public Spectra spectra() {
 		return spectra;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForwardingObservable<Boolean> simulationMode() {
+		return observables.simulationMode;
 	}
 }

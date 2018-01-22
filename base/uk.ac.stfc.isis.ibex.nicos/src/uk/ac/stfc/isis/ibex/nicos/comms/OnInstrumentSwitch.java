@@ -22,13 +22,13 @@
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
  * Switches the GUI to look at another instance of NICOS.
  */
-public class OnInstrumentSwitch implements InstrumentInfoReceiver {
+public class OnInstrumentSwitch extends InstrumentInfoReceiverAdapter {
 
     Nicos nicos = Nicos.getDefault();
 
@@ -41,9 +41,4 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
     public void preSetInstrument(InstrumentInfo instrument) {
         nicos.getModel().disconnect();
     }
-
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-    }
-
 }

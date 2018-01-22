@@ -197,6 +197,11 @@ public class RunInformationViewModel extends Closer {
      * The neutron/proton ratio.
      */
 	public UpdatedObservableAdapter<Double> npRatio;
+	
+	/**
+     * The simulation mode status.
+     */
+	public UpdatedObservableAdapter<Boolean> simMode;
 
     /**
      * The constructor that binds updating values to observables.
@@ -225,6 +230,7 @@ public class RunInformationViewModel extends Closer {
 		timeChannels = adapt(observables.timeChannels);
 		spectra = adapt(observables.spectra);		
 		isisCycle = adapt(observables.isisCycle);
+		simMode = adapt(observables.simulationMode);
 		
 		title = adapt(observables.title);
         displayTitle = adapt(observables.displayTitle);
