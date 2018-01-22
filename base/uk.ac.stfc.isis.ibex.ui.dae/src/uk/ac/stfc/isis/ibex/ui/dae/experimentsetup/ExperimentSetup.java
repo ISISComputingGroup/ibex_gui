@@ -65,7 +65,7 @@ public class ExperimentSetup {
 
     private static final Display DISPLAY = Display.getCurrent();
     private static final int FIXED_WIDTH = 700;
-    private static final int FIXED_HEIGHT = 550;
+    private static final int FIXED_HEIGHT = 600;
 	
     /**
      * Constructor.
@@ -90,16 +90,18 @@ public class ExperimentSetup {
         scrolled.setExpandVertical(true);
         scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
         
+        Composite content = new Composite(scrolled, SWT.NONE);
+        
 		GridLayout gridLayout = new GridLayout(1, false);
-        gridLayout.marginHeight = 0;
-        gridLayout.verticalSpacing = 5;
         gridLayout.marginWidth = 0;
+        gridLayout.marginTop = 0;
+		gridLayout.marginBottom = 10;
 		gridLayout.horizontalSpacing = 0;
-        scrolled.setLayout(gridLayout);
+        content.setLayout(gridLayout);
 		
-        CTabFolder tabFolder = new CTabFolder(scrolled, SWT.BORDER);
+        CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-        scrolled.setContent(tabFolder);
+        scrolled.setContent(content);
         
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setText("Time Channels");
@@ -133,7 +135,7 @@ public class ExperimentSetup {
         tabFolder.setLayoutData(tabFolderGridData);
 
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
-        SendChangesButton btnSendChanges = new SendChangesButton(scrolled, SWT.NONE, rsvm.actions().begin);
+        SendChangesButton btnSendChanges = new SendChangesButton(content, SWT.NONE, rsvm.actions().begin);
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -143,7 +145,7 @@ public class ExperimentSetup {
                 sendingChanges.open();
             }
         });
-        btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btnSendChanges.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
         
         bind(viewModel.experimentSetup());
