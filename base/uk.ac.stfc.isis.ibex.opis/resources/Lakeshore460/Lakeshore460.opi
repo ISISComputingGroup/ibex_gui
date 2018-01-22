@@ -632,7 +632,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-f23565e:1600305cac5:5bc</wuid>
           <pv_value />
-          <text>CLEAR ALL MAX VALUES</text>
+          <text>Clear all max values</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1007,7 +1007,7 @@ $(pv_value)</tooltip>
           <wuid>-29b141c2:15e85c9a1f9:-7334</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>Relative Mode:</text>
+          <text>Relative mode:</text>
           <scripts />
           <height>35</height>
           <border_width>1</border_width>
@@ -1101,7 +1101,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-f23565e:1600305cac5:3e</wuid>
           <pv_value />
-          <text>CLEAR</text>
+          <text>Clear</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1397,7 +1397,8 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-f23565e:1600305cac5:3e</wuid>
           <pv_value />
-          <text>CLEAR</text>
+          <text>Clear&#xD;
+</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1499,7 +1500,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-f23565e:1600305cac5:3e</wuid>
           <pv_value />
-          <text>CLEAR</text>
+          <text>Clear</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1601,7 +1602,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>-f23565e:1600305cac5:3e</wuid>
           <pv_value />
-          <text>CLEAR</text>
+          <text>Clear</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>

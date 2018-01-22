@@ -1690,7 +1690,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-f23565e:160690529dd:-7786</wuid>
       <pv_value />
-      <text>MAX CLEAR</text>
+      <text>Max clear</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>28</height>
