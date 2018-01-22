@@ -1133,7 +1133,7 @@
 			<key>Lakeshore 460</key>
 			<value>
 			    <categories>
-					<category>Monitors</category>
+					<category>Gaussmeter</category>
 				</categories>
 				<type>LKSH460</type>
 				<path>Lakeshore460/lakeshore460.opi</path>
