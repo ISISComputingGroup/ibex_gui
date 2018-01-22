@@ -60,23 +60,10 @@ public class MotorOPIView extends OpiTargetView {
 		macros().put("P", Instrument.getInstance().currentInstrument().pvPrefix());
 		macros().put("MM", motorName);		
 	}
-	
-    /**
-     * Sets the OPI title.
-     *
-     * @param partName the new OPI title
-     */
-	private void setOPITitle(String partName) {
-		this.partName = partName;
-	}
 
 	@Override
 	protected Path opi() {
 		return Opi.getDefault().opiProvider().pathFromName(MOTOR_OPI);
-	}
-	
-	private OpiTarget getTarget() {
-		return new OpiTarget(partName, MOTOR_OPI);
 	}
 	
 	/**
@@ -87,9 +74,8 @@ public class MotorOPIView extends OpiTargetView {
 	 */
     public void displayOpi(String title, String motorName) {
     	setMotorName(motorName);
-    	setOPITitle(title);
         try {
-			OpiTargetView.displayOpi(getTarget(), ID);
+			OpiTargetView.displayOpi(new OpiTarget(title, MOTOR_OPI), ID);
 		} catch (OPIViewCreationException e) {
 			LOG.error("Unable to create motor OPI");
 		}
