@@ -129,7 +129,7 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
     <active_tab>0</active_tab>
-    <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
+    <tooltip></tooltip>
     <tab_3_icon_path></tab_3_icon_path>
     <tab_4_enabled>true</tab_4_enabled>
     <height>531</height>
