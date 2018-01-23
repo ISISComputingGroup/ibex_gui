@@ -1210,7 +1210,7 @@
 				</categories>
 				<type>HE_LEVEL_GAUGE</type>
 				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<description>The OPI for the helium level gauge.</description>
 				<macros>
 					<macro>
 						<name>HLG</name>
