@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 public final class ChannelTypeLookup {
 
     private ChannelTypeLookup() {
-    };
+    }
 
     public static ChannelType<String> get(String type) {
 		switch (type.toUpperCase(Locale.ENGLISH)) {

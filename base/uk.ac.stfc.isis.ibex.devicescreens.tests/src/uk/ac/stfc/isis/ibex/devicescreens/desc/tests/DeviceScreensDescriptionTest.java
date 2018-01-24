@@ -70,4 +70,28 @@ public class DeviceScreensDescriptionTest {
         assertTrue(description.getDevices().contains(device1));
         assertTrue(description.getDevices().contains(device2));
     }
+    
+    @Test
+    public void GIVEN_device_screens_WHEN_filtered_THEN_filtered_list_only_contains_device_screens_that_match_the_filter() {
+        // Arrange
+        DeviceDescription device1 = new DeviceDescription();
+        device1.setPersist(true);
+        DeviceDescription device2 = new DeviceDescription();
+        device2.setPersist(false);
+
+        // Act
+        description.addDevice(device1);
+        description.addDevice(device2);
+        
+        DeviceScreensDescription remoteOnly = description.getFilteredDeviceScreenDescription(true);
+        DeviceScreensDescription localOnly = description.getFilteredDeviceScreenDescription(false);
+
+
+        // Assert
+        assertTrue(remoteOnly.getDevices().contains(device1));
+        assertFalse(remoteOnly.getDevices().contains(device2));
+        
+        assertFalse(localOnly.getDevices().contains(device1));
+        assertTrue(localOnly.getDevices().contains(device2));
+    }
 }

@@ -123,12 +123,12 @@ public abstract class DaeAction extends Action implements Closable {
 	}
 
 	@Override
-	public void execute() {
+	public synchronized void execute() {
 	    actionWriter.uncheckedWrite("1");
 	}
 
 	@Override
-	public void close() {
+	public synchronized void close() {
 		runStateSubscription.removeObserver();
 		transitionSubscription.removeObserver();
 		targetSubscribtion.removeObserver();
@@ -145,22 +145,22 @@ public abstract class DaeAction extends Action implements Closable {
      */
 	protected abstract boolean allowed(DaeRunState runState);
 	
-	private void setCanWrite(boolean canWrite) {
+	private synchronized void setCanWrite(boolean canWrite) {
 		this.canWrite = canWrite;
 		setCanExecute(canExecute());
 	}
 	
-	private void setInTransition(boolean inTransition) {
+	private synchronized void setInTransition(boolean inTransition) {
 		this.inTransition = inTransition;
 		setCanExecute(canExecute());
 	}
 	
-	private void setRunState(DaeRunState runState) {
+	private synchronized void setRunState(DaeRunState runState) {
 		this.runState = runState;
 		setCanExecute(canExecute());
 	}
 	
-	private boolean canExecute() {
+	private synchronized boolean canExecute() {
 		return canWrite && !inTransition && allowed(runState);
 	}
 }

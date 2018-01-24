@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeChannels;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
@@ -128,9 +129,11 @@ public class TimeChannelsViewModel extends ModelObject {
      * Sets the list of time channel configuration files available.
      * 
      * @param files a collection containing the available time channel files
+     * @param dir the directory containing the files
      */
-    public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
+    public void setTimeChannelFileList(UpdatedValue<Collection<String>> files, ForwardingObservable<String> dir) {
         model.setTimeChannelFileList(files);
+        comboContentProvider = new DAEComboContentProvider(dir);
     }
 
     /**

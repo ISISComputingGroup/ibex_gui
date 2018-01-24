@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <show_close_button>true</show_close_button>
+  <rules />
+  <wuid>-336ad6f:141c65e96ed:-7fff</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts />
+  <height>620</height>
+  <macros>
+    <include_parent_macros>false</include_parent_macros>
+    <IOC_NUM>01</IOC_NUM>
+    <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+  </macros>
+  <boy_version>3.1.4.201301231545</boy_version>
+  <show_edit_range>true</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+  </background_color>
+  <width>800</width>
+  <x>18</x>
+  <name>$(NAME)</name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>30</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+  </foreground_color>
+  <actions hook="false" hook_all="false" />
+  <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
+    <active_tab>0</active_tab>
+    <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
+    <tab_3_icon_path></tab_3_icon_path>
+    <tab_4_enabled>true</tab_4_enabled>
+    <tab_6_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_6_background_color>
+    <tab_6_title>Sensor 7</tab_6_title>
+    <height>531</height>
+    <tab_6_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_6_foreground_color>
+    <tab_2_icon_path></tab_2_icon_path>
+    <border_width>1</border_width>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <tab_0_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_0_foreground_color>
+    <actions hook="false" hook_all="false" />
+    <tab_1_enabled>true</tab_1_enabled>
+    <border_style>0</border_style>
+    <tab_4_title>Sensor 5</tab_4_title>
+    <tab_5_enabled>true</tab_5_enabled>
+    <enabled>true</enabled>
+    <wuid>4fbad31a:1436c3e166f:-6fb0</wuid>
+    <tab_1_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_1_background_color>
+    <tab_1_icon_path></tab_1_icon_path>
+    <tab_2_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_2_foreground_color>
+    <tab_1_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_1_font>
+    <tab_3_title>Sensor 4</tab_3_title>
+    <tab_4_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_4_background_color>
+    <tab_4_icon_path></tab_4_icon_path>
+    <tab_2_enabled>true</tab_2_enabled>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>793</width>
+    <x>6</x>
+    <horizontal_tabs>true</horizontal_tabs>
+    <y>84</y>
+    <tab_6_enabled>true</tab_6_enabled>
+    <tab_5_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_5_foreground_color>
+    <rules>
+      <rule name="EnableTabEuro1" prop_id="tab_0_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro2" prop_id="tab_1_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro3" prop_id="tab_2_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro4" prop_id="tab_3_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A04:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro5" prop_id="tab_4_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A05:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro6" prop_id="tab_5_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A06:ACTIVE</pv>
+      </rule>
+      <rule name="EnableTabEuro7" prop_id="tab_6_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):A07:ACTIVE</pv>
+      </rule>
+    </rules>
+    <tab_3_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_3_font>
+    <tab_5_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_5_background_color>
+    <tab_4_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_4_font>
+    <tab_6_icon_path></tab_6_icon_path>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <visible>true</visible>
+    <tab_0_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_0_background_color>
+    <tab_3_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_3_foreground_color>
+    <widget_type>Tabbed Container</widget_type>
+    <tab_2_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_2_font>
+    <tab_3_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_3_background_color>
+    <tab_5_title>Sensor 6</tab_5_title>
+    <tab_5_icon_path></tab_5_icon_path>
+    <tab_3_enabled>true</tab_3_enabled>
+    <tab_5_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_5_font>
+    <name>Tabbed Container</name>
+    <minimum_tab_height>10</minimum_tab_height>
+    <tab_2_title>Sensor 3</tab_2_title>
+    <tab_0_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_0_font>
+    <tab_2_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_2_background_color>
+    <tab_6_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
+    </tab_6_font>
+    <tab_0_title>Sensor 1</tab_0_title>
+    <tab_1_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_1_foreground_color>
+    <tab_1_title>Sensor 2</tab_1_title>
+    <scripts />
+    <tab_count>7</tab_count>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_enabled>true</tab_0_enabled>
+    <foreground_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </foreground_color>
+    <tab_4_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_4_foreground_color>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>true</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 1</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-7d1e</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>495</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>1</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 2</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-560e</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>2</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 3</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>6892be24:156313795e2:-55a2</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>3</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fbad31a:1436c3e166f:-6fac</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 4</name>
+      <y>1</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-53236bab:15635d9faea:-7f38</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>4</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-53236bab:15635d9faea:-7edb</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 5</name>
+      <y>1</y>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-53236bab:15635d9faea:-7eca</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>5</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-53236bab:15635d9faea:-7eda</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 6</name>
+      <y>1</y>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-53236bab:15635d9faea:-7e65</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>6</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-53236bab:15635d9faea:-7ed9</wuid>
+      <transparent>true</transparent>
+      <lock_children>false</lock_children>
+      <scripts />
+      <height>502</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Grouping Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <width>791</width>
+      <x>1</x>
+      <name>Sensor 7</name>
+      <y>1</y>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>true</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Eurotherm_single.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-53236bab:15635d9faea:-7dfc</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>475</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <EURO_NUM>7</EURO_NUM>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>787</width>
+        <x>0</x>
+        <name>Linking Container</name>
+        <y>0</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+    </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>4fdc1aa2:158de06471b:-7a02</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>Eurotherm Temperature Controller</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
+    </background_color>
+    <width>787</width>
+    <x>6</x>
+    <name>Label</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>4fdc1aa2:158de06471b:-7a01</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>$(NAME)</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>787</width>
+    <x>6</x>
+    <name>Label_1</name>
+    <y>42</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
+    </font>
+  </widget>
+</display>

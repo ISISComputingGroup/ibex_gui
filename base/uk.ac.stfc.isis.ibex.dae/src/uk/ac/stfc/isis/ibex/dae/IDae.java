@@ -101,4 +101,9 @@ public interface IDae {
      */
 	DaeActions actions();
 
+	/**
+     * @return An observable on a boolean giving whether or not the DAE is in simulation mode.
+     */
+    ForwardingObservable<Boolean> simulationMode();
+
 }

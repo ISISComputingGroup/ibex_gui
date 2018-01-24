@@ -27,13 +27,14 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * The Class MotorOPIView which is the opi view generated from opening an opi
  * from the motors page.
  */
-public class MotorOPIView extends OpiView {
+public class MotorOPIView extends OpiTargetView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
 	private String partName = "Motor view";
@@ -55,32 +56,28 @@ public class MotorOPIView extends OpiView {
      *
      * @param motorName the new motor name
      */
-	public void setMotorName(String motorName) {
+	private void setMotorName(String motorName) {
 		macros().put("P", Instrument.getInstance().currentInstrument().pvPrefix());
 		macros().put("MM", motorName);		
-	}
-	
-    /**
-     * Sets the OPI title.
-     *
-     * @param partName the new OPI title
-     */
-	public void setOPITitle(String partName) {
-		this.partName = partName;
-	}
-	
-	@Override
-	public void initialiseOPI() {
-	    try {
-	        super.initialiseOPI();
-	        super.setPartName(partName);
-	    } catch (OPIViewCreationException ex) {
-            LOG.catching(ex);
-	    }
 	}
 
 	@Override
 	protected Path opi() {
 		return Opi.getDefault().opiProvider().pathFromName(MOTOR_OPI);
 	}
+	
+	/**
+	 * Display an OPI Target in the Motors perspective Screen.
+	 * 
+	 * @param title Title to give to the OPI.
+	 * @param motorName Name of the motor being opened.
+	 */
+    public void displayOpi(String title, String motorName) {
+    	setMotorName(motorName);
+        try {
+			OpiTargetView.displayOpi(new OpiTarget(title, MOTOR_OPI), ID);
+		} catch (OPIViewCreationException e) {
+			LOG.error("Unable to create motor OPI");
+		}
+    }
 }

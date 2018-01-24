@@ -41,7 +41,7 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
 	@Override
 	protected boolean canEdit(Object element) {
 		return canEdit;
-	};
+	}
 	
 	@Override
 	protected String valueFromString(String value) {

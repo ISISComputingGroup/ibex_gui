@@ -111,7 +111,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
         try {
-            if (!config.getEditableBlocks().contains(this.block)) {
+            if (!config.getAllBlocks().contains(this.block)) {
                 config.addNewBlock(this.block);
             }
             super.okPressed();

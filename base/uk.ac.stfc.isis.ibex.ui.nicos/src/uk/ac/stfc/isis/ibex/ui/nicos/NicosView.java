@@ -41,45 +41,49 @@ import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
  * The main view for the NICOS scripting perspective.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosView extends ViewPart {
-	
-	/**
-	 * The public ID of this class.
-	 */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
+    
+    /**
+     * The public ID of this class.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
 
     private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
-	
-	private final Shell shell;
+    
+    private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
-	
+    
     private NicosModel model;
     private QueueScriptViewModel queueScriptViewModel;
 
-    private Label lblCurrentScript;
+    private Label lblCurrentScriptStatus;
 
-	/**
-	 * The default constructor for the view.
-	 */
-	public NicosView() {
+	private ScriptStatusViewModel scriptStatusViewModel;
+
+    /**
+     * The default constructor for the view.
+     */
+    public NicosView() {
         model = Nicos.getDefault().getModel();
         queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+        scriptStatusViewModel = new ScriptStatusViewModel(model);
 
-		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	}
+        shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+    }
 
-	@Override
-	public void createPartControl(Composite parent) {
-		GridLayout glParent = new GridLayout(2, false);
-		glParent.marginRight = 10;
-		glParent.marginHeight = 10;
-		glParent.marginWidth = 10;
-		parent.setLayout(glParent);
+    @Override
+    public void createPartControl(Composite parent) {
+        GridLayout glParent = new GridLayout(2, false);
+        glParent.marginRight = 10;
+        glParent.marginHeight = 10;
+        glParent.marginWidth = 10;
+        parent.setLayout(glParent);
 
         // Connection info
         Composite connectionGrp = new Composite(parent, SWT.NONE);
@@ -101,23 +105,36 @@ public class NicosView extends ViewPart {
         lblConnectionError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
                 BeanProperties.value("connectionErrorMessage").observe(model));
-		
-		lblCurrentScript = new Label(parent, SWT.NONE);
-		lblCurrentScript.setText("Current Script");
-		
-		Label lblOutput = new Label(parent, SWT.NONE);
-		lblOutput.setText("Output");
-		
-		StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
-		txtCurrentScript.setEditable(false);
-		txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		StyledText txtOutput = new StyledText(parent, SWT.BORDER);
-		txtOutput.setEditable(false);
-		txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+        
+        Composite currentScriptInfoContainer = new Composite(parent, SWT.NONE);
+        currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        currentScriptInfoContainer.setLayout(new GridLayout(2, false));
+        
+        lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblCurrentScriptStatus.setText("Current script status: ");
+        
+        Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
+        GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		lineNumberIndicator.setLayoutData(lineNumberLayout);
+        bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
+                BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
+        
+        Label lblOutput = new Label(parent, SWT.NONE);
+        lblOutput.setText("Output");
+        
+        StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
+        txtCurrentScript.setEditable(false);
+        txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        StyledText txtOutput = new StyledText(parent, SWT.BORDER);
+        txtOutput.setEditable(false);
+        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
+                BeanProperties.value("currentlyExecutingScript").observe(model));
+        
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
-        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
         ssgLayout.marginRight = 10;
         ssgLayout.marginHeight = 10;
@@ -125,9 +142,9 @@ public class NicosView extends ViewPart {
         scriptSendGrp.setLayout(ssgLayout);
 
         Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-		btnCreateScript.setText("Create Script");
+        btnCreateScript.setText("Create Script");
         btnCreateScript.setLayoutData(new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1));
-		
+        
         Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
         GridData layoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
         layoutData.widthHint = 80;
@@ -141,22 +158,22 @@ public class NicosView extends ViewPart {
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
                 BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
 
-		btnCreateScript.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
+        btnCreateScript.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
-				dialog.open();
-			}
-		});
+                dialog.open();
+            }
+        });
 
-	}
+    }
 
     /**
      * 
      */
     @Override
     public void setFocus() {
-        lblCurrentScript.setFocus();
+        lblCurrentScriptStatus.setFocus();
     }
 
 }

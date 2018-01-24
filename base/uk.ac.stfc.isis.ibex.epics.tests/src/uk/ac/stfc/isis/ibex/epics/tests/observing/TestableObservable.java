@@ -22,4 +22,4 @@ final class TestableObservable<T> extends ClosableObservable<T> {
 	public void setConnectionStatus(boolean isConnected) {
 		super.setConnectionStatus(isConnected);
 	}
-};
+}
