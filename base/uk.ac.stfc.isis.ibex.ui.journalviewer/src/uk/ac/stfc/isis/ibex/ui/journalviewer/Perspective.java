@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
  */
 public class Perspective extends BasePerspective {
 	
-	private final static String PERSPECTIVE_ID = "Journal Viewer";
+	private final static String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective";
 	private final static String PERSPECTIVE_NAME = "&Journal Viewer";
 	
 	@Override
