@@ -84,6 +84,8 @@ public enum ComponentType {
     LINKAM95,
     /** Lakeshore component type. */
     LAKESHORE,
+    /** Lakeshore 460 component type. */
+    LKSH460,
     /** Attenuator component type. */
     ATTENUATOR,
     /** Mercury component type. */
