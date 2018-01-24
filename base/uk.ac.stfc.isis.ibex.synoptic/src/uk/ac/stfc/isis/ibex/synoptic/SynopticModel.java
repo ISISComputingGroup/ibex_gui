@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
+/**
+ * Model for the IBEX synoptic perspective.
+ */
 public class SynopticModel extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(SynopticModel.class);
@@ -41,25 +44,39 @@ public class SynopticModel extends ModelObject {
 	private ObservableSynoptic instrument; 
 	private SynopticWriter setCurrentSynoptic;
 	
+	/**
+	 * @param variables Data associated with viewing and editing synoptics (e.g. PV, schemas).
+	 */
 	public SynopticModel(Variables variables) {
 		this.variables = variables;
 		instrument = getInstrument(new SynopticDescription());
 		
         setCurrentSynoptic = new SynopticWriter(variables.synopticSetter, variables.synopticSchema);
 	}
-
+	
 	public Synoptic instrument() {
 		return instrument;
 	}
 	
+	/**
+	 * @return An object that will accept synoptic names and request their deletion.
+	 */
 	public Writable<Collection<String>> deleteSynoptics() {
 		return variables.synopticsDeleter;
 	}
-	
+
+	/**
+	 * @return An object that will request the current synoptic is saved.
+	 */
 	public SynopticWriter saveSynoptic() {
 		return setCurrentSynoptic;
 	}
 	
+	/**
+	 * Set the current synoptic to one that matches a given description.
+	 * 
+	 * @param description The description of the synoptic to be set.
+	 */
 	public void setSynopticFromDescription(SynopticDescription description) {
 		try {
 			instrument = getInstrument(description);

@@ -28,6 +28,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
+/**
+ * Helper class that serves up configs for editing from the config server.
+ */
 public class ConfigEditing extends Closer implements Editing {
 	
     /**

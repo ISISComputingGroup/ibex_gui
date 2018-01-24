@@ -551,12 +551,12 @@
 					<category>Choppers</category>
 				</categories>
 				<type>CHOPPER</type>
-				<path>SKFChopper.opi</path>
+				<path>SKFG5Chopper/SKFChopper.opi</path>
 				<description>The OPI for the SKF G5 chopper controllers.</description>
 				<macros>
 					<macro>
 						<name>DEFAULT_ACTIVE_TAB</name>
-						<description>The tab which is displayed when the OPI is opened (0 to 4).</description>  
+						<description>The tab which is displayed when the OPI is opened (1 to 5).</description>  
 					</macro>
 				</macros>
 			</value>

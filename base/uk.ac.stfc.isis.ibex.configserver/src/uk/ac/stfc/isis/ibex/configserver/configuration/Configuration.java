@@ -92,7 +92,7 @@ public class Configuration extends ModelObject {
 			Collection<String> history) {
 		this.name = name;
 		this.description = description;
-		this.synoptic = defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME : defaultSynoptic;
+		this.synoptic = defaultSynoptic == null || defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME : defaultSynoptic;
 		this.pv = "";
 		
 		for (Ioc ioc : iocs) {
