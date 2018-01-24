@@ -364,6 +364,21 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_EEs1QAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer" label="Journal Viewer" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.journalviewer/icons/journal_viewer_32x24.png">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_QZEw8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.17">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Rqjm8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="32">
+          <children xsi:type="advanced:Placeholder" xmi:id="_glcR4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_ekSScAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="68">
+          <children xsi:type="advanced:Placeholder" xmi:id="_g7MfcAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_SW36YAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.21" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_V00A4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.journalviewer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.journalviewer/uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView" label="Journal Viewer"/>
+      </children>
+    </children>
+  </snippets>
   <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.current" commandName="Edit or View current configuration" description="Edit or view current configuration depending on permissions"/>
   <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_McQNQHtYEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.load" commandName="Load configuration" description="Select and load a new configuration into the instrument" category="_La_dMHtbEeeIzM7lvAxMoQ"/>

@@ -19,17 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * Journal viewer main view.
  */
-public class JournalViewerView extends ViewPart {
+public class JournalViewerView {
 
     /**
      * The view ID.
@@ -40,7 +41,7 @@ public class JournalViewerView extends ViewPart {
 	 * Create contents of the view part.
 	 * @param parent
 	 */
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
 		
@@ -51,13 +52,5 @@ public class JournalViewerView extends ViewPart {
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
-	}
-	
-	@Override
-	public void dispose() {
-	}
-
-	@Override
-	public void setFocus() {		
 	}
 }

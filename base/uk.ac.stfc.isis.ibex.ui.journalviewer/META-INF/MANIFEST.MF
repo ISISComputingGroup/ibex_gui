@@ -6,13 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerUI
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.preferences,
- com.google.common,
- org.eclipse.core.databinding,
- org.eclipse.jface.databinding,
- org.eclipse.core.databinding.property;bundle-version="1.4.100",
- org.eclipse.core.databinding.beans,
- org.eclipse.swt,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
