@@ -51,7 +51,6 @@
     </scale_options>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <MOTION_SET_POINT>LKUP:SAMPLE</MOTION_SET_POINT>
     </macros>
     <visible>true</visible>
     <group_name></group_name>
@@ -64,9 +63,9 @@
     </background_color>
     <zoom_to_fit>false</zoom_to_fit>
     <width>416</width>
-    <x>0</x>
+    <x>6</x>
     <name>Moition Setpoints</name>
-    <y>0</y>
+    <y>6</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -103,9 +102,9 @@
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>132</width>
-    <x>415</x>
+    <x>421</x>
     <name>Actions</name>
-    <y>78</y>
+    <y>84</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -137,7 +136,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(P)$(SM300):RESET_AND_HOME</pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):RESET_AND_HOME</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -184,7 +183,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(P)$(SM300):DISCONNECT</pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):DISCONNECT</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>

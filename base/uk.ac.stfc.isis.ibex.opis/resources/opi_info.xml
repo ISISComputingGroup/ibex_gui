@@ -1266,8 +1266,8 @@
 				<description>The OPI for the SM300 Sample changer</description>
 				<macros>
 					<macro>
-						<name>SM300</name>
-						<description>The prefix of the SM300 IOC being used(e.g. SM300_01)</description>
+						<name>MOTION_SET_POINT</name>
+						<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
 					</macro>				
 				</macros>
 			</value>
