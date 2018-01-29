@@ -44,14 +44,14 @@ public class DaeSimulationModeModel extends Closer implements IndicatorModel {
 			
 			@Override
 			protected void setUnknown() {
-				text.setValue("Simulation mode: unknown");
+				text.setValue("DAE Simulation mode: unknown");
                 color.setValue(IndicatorColours.RED);
 			}
 			
 			@Override
 			protected void setSimMode(Boolean value) {
 				if (value) {
-                    text.setValue("Simulation mode: active");
+                    text.setValue("DAE Simulation mode: active");
                     color.setValue(IndicatorColours.RED);
                 } else {
                 	// Display no message if not in simulation mode.
