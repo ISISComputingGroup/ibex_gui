@@ -123,7 +123,11 @@ public enum ComponentType {
     /** Helium Level Gauge.*/
     HE_LEVEL_GAUGE,
     /** LET oscillating collimator. */
-    OSCILLATING_COLLIMATOR;
+    OSCILLATING_COLLIMATOR,
+    /** SM300 sample changer.*/
+    SM300_SAMPLE_CHANGER,
+    /** Motion setpoints.*/
+    MOTION_SET_POINTS;
 
 	
 	private Target target;
