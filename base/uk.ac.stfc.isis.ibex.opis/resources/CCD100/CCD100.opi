@@ -410,7 +410,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_show_grid>true</axis_1_show_grid>
     <trace_3_x_pv></trace_3_x_pv>
     <trace_2_trace_color>
-      <color red="33" green="179" blue="33" />
+      <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0" />
     </trace_2_trace_color>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
     <trace_3_buffer_size>100</trace_3_buffer_size>
@@ -451,10 +451,10 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_update_delay>100</trace_0_update_delay>
     <trace_1_concatenate_data>true</trace_1_concatenate_data>
     <trace_1_trace_color>
-      <color red="242" green="26" blue="26" />
+      <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
     </trace_1_trace_color>
     <trace_3_trace_color>
-      <color red="0" green="0" blue="0" />
+      <color name="ISIS_Trace_4_NEW" red="255" green="109" blue="182" />
     </trace_3_trace_color>
     <pv_name></pv_name>
     <name>GasFlowGraph</name>
@@ -506,7 +506,7 @@ $(trace_0_y_pv_value)</tooltip>
     <scripts />
     <trace_0_point_size>4</trace_0_point_size>
     <trace_0_trace_color>
-      <color red="21" green="21" blue="196" />
+      <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
     </trace_0_trace_color>
     <trace_0_anti_alias>true</trace_0_anti_alias>
     <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
