@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
 	<opis>
 		<entry>
@@ -1196,7 +1196,7 @@
         <entry>
             <key>SKF MB350 Chopper</key>
 			<value>
-			<categories>
+			    <categories>
 					<category>Choppers</category>
 				</categories>
 				<type>CHOPPER</type>
@@ -1212,16 +1212,13 @@
 		</entry>
 		<entry>
 			<key>HLG</key>
-			<categories>
-				<category>Gas handling systems</category>
-			</categories>
 			<value>
 				<categories>
 					<category>Cryogenics</category>
 				</categories>
 				<type>HE_LEVEL_GAUGE</type>
 				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<description>The OPI for the helium level gauge.</description>
 				<macros>
 					<macro>
 						<name>HLG</name>
@@ -1232,10 +1229,10 @@
 		</entry>
 		<entry>
 			<key>OscillatingCollimator</key>
-			<categories>
-				<category>Miscellaneous motion control</category>
-			</categories>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>OSCILLATING_COLLIMATOR</type>
 				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
 				<description>The OPI for the LET oscillating collimator.</description>
@@ -1244,6 +1241,42 @@
 						<name>MOT</name>
 						<description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
 					</macro>
+				</macros>
+			</value>
+		</entry>
+	    <entry>
+	    	<key>Motion Set Point</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+					<category>Sample stacks and goniometers</category>
+					<category>Sample changers</category>
+				</categories>
+				<type>MOTION_SET_POINTS</type>
+	    		<path>stage/motion_setpoint.opi</path>
+	    		<description>The OPI for motion setpoints</description>
+	    		<macros>
+	    			<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+					</macro>	    		
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>SM300 Sample Changer</key>
+			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
+				<type>SM300_SAMPLE_CHANGER</type>
+				<path>sample_stack/sm300sampos.opi</path>
+				<description>The OPI for the SM300 Sample changer</description>
+				<macros>
+					<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+					</macro>				
 				</macros>
 			</value>
 		</entry>
