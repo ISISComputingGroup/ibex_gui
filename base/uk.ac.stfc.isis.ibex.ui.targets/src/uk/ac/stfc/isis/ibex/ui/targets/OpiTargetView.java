@@ -93,7 +93,7 @@ public abstract class OpiTargetView extends OpiView {
         try {
             return Opi.getDefault().opiProvider().pathFromName(opiName);
         } catch (NullPointerException ex) {
-            throw new OPIViewCreationException("OPI key or path can not be found.");
+            throw new OPIViewCreationException("OPI key or path can not be found for '" + opiName + "'");
         }
 	}
 	
@@ -156,6 +156,7 @@ public abstract class OpiTargetView extends OpiView {
             view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
             OpiTargetView viewAsOPITarget = (OpiTargetView) view;
             viewAsOPITarget.setOpi(opiTarget);
+            viewAsOPITarget.setPartName(opiTarget.name());
             openOPIs.add(view);
             openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
         } catch (PartInitException e) {

@@ -134,7 +134,7 @@
 					<category>Cryogenics</category>
 				</categories>
 				<type>MERCURY</type>
-				<path>mercuryiTC.opi</path>
+				<path>mercuryiTC\mercuryiTC.opi</path>
 				<description>The OPI for the Mercury temperature controller.</description>
 				<macros>
 					<macro>
@@ -143,19 +143,27 @@
 					</macro>
 					<macro>
 						<name>TEMP_NUM1</name>
-						<description>The first card number (e.g. 1, optional).</description>
+						<description>The first temperature card number (e.g. 1, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM2</name>
-						<description>The second card number (e.g. 2, optional).</description>
+						<description>The second temperature card number (e.g. 2, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM3</name>
-						<description>The third card number (e.g. 3, optional).</description>
+						<description>The third temperature card number (e.g. 3, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM4</name>
-						<description>The fourth card number (e.g. 4, optional).</description>
+						<description>The fourth temperature card number (e.g. 4, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM1</name>
+						<description>The first level card number (e.g. 1, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM2</name>
+						<description>The second level card number (e.g. 1, optional).</description>
 					</macro>                   
 				</macros>
 			</value>
@@ -543,12 +551,12 @@
 					<category>Choppers</category>
 				</categories>
 				<type>CHOPPER</type>
-				<path>SKFChopper.opi</path>
+				<path>SKFG5Chopper/SKFChopper.opi</path>
 				<description>The OPI for the SKF G5 chopper controllers.</description>
 				<macros>
 					<macro>
 						<name>DEFAULT_ACTIVE_TAB</name>
-						<description>The tab which is displayed when the OPI is opened (0 to 4).</description>  
+						<description>The tab which is displayed when the OPI is opened (1 to 5).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -1269,6 +1277,23 @@
 						<name>MOTION_SET_POINT</name>
 						<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
 					</macro>				
+				</macros>
+			</value>
+		</entry>
+        <entry>
+			<key>Lakeshore 460</key>
+			<value>
+			    <categories>
+					<category>Gaussmeter</category>
+				</categories>
+				<type>LKSH460</type>
+				<path>Lakeshore460/lakeshore460.opi</path>
+				<description>The OPI for the Lakeshore 460 Gaussmeter.</description>
+				<macros>
+					<macro>
+						<name>LKSH460</name>
+						<description>The Lakeshore460 PV prefix (e.g. LKSH460_01).</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
