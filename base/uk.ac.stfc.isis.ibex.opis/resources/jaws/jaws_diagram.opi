@@ -268,84 +268,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
         <rules />
         <enabled>true</enabled>
-        <wuid>3933b49:161475a757c:-6d2c</wuid>
-        <transparent>false</transparent>
-        <pv_value />
-        <alpha>255</alpha>
-        <bg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </bg_gradient_color>
-        <scripts>
-          <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-            <scriptName>TopToBottom</scriptName>
-            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-
-r = 1.05*PVUtil.getDouble(pvs[1])
-height =  -100*PVUtil.getDouble(pvs[0])/r + 100
-
-if height < 1:
-	height = 1
-elif height > 200:
-	height = 200
-
-widget.setPropertyValue("height", height)
-
-]]></scriptText>
-            <pv trig="true">$(P)$(J):JN</pv>
-            <pv trig="true">$(P)$(J):MAXN</pv>
-          </path>
-        </scripts>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <height>100</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <visible>true</visible>
-        <pv_name></pv_name>
-        <gradient>false</gradient>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <anti_alias>true</anti_alias>
-        <line_style>0</line_style>
-        <widget_type>Rectangle</widget_type>
-        <fg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </fg_gradient_color>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-        </background_color>
-        <width>200</width>
-        <x>0</x>
-        <name>Rectangle_2</name>
-        <y>0</y>
-        <fill_level>0.0</fill_level>
-        <foreground_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <font>
-          <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-        </font>
-        <line_color>
-          <color name="ISIS_Purple" red="128" green="0" blue="255" />
-        </line_color>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-        <border_style>1</border_style>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <line_width>0</line_width>
-        <horizontal_fill>true</horizontal_fill>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>3933b49:161475a757c:-6d2d</wuid>
+        <wuid>7f94559c:141357de30e:-7f2f</wuid>
         <transparent>false</transparent>
         <pv_value />
         <alpha>255</alpha>
@@ -401,64 +324,7 @@ widget.setPropertyValue("x", TR_X - width)
         </background_color>
         <width>100</width>
         <x>100</x>
-        <name>Rectangle_1</name>
-        <y>0</y>
-        <fill_level>0.0</fill_level>
-        <foreground_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <font>
-          <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-        </font>
-        <line_color>
-          <color name="ISIS_Purple" red="128" green="0" blue="255" />
-        </line_color>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-        <border_style>1</border_style>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <line_width>0</line_width>
-        <horizontal_fill>true</horizontal_fill>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>7f94559c:141357de30e:-7d96</wuid>
-        <transparent>false</transparent>
-        <pv_value />
-        <alpha>255</alpha>
-        <bg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </bg_gradient_color>
-        <scripts />
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <height>200</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <visible>true</visible>
-        <pv_name></pv_name>
-        <gradient>false</gradient>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <anti_alias>true</anti_alias>
-        <line_style>0</line_style>
-        <widget_type>Rectangle</widget_type>
-        <fg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </fg_gradient_color>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </background_color>
-        <width>200</width>
-        <x>0</x>
-        <name>JawBackground</name>
+        <name>East_Blade</name>
         <y>0</y>
         <fill_level>0.0</fill_level>
         <foreground_color>
@@ -505,8 +371,7 @@ widget.setPropertyValue("width", width)
 
 ]]></scriptText>
             <pv trig="true">$(P)$(J):JW</pv>
-            <pv trig="false">$(P)$(J):MAXE</pv>
-            <pv trig="false">$(P)$(J):MINW</pv>
+            <pv trig="true">$(P)$(J):MAXE</pv>
           </path>
         </scripts>
         <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -535,7 +400,7 @@ widget.setPropertyValue("width", width)
         </background_color>
         <width>100</width>
         <x>0</x>
-        <name>Rectangle</name>
+        <name>West_Blade</name>
         <y>0</y>
         <fill_level>0.0</fill_level>
         <foreground_color>
@@ -558,7 +423,7 @@ widget.setPropertyValue("width", width)
 $(pv_value)</tooltip>
         <rules />
         <enabled>true</enabled>
-        <wuid>7f94559c:141357de30e:-7f2f</wuid>
+        <wuid>3933b49:161475a757c:-6d2c</wuid>
         <transparent>false</transparent>
         <pv_value />
         <alpha>255</alpha>
@@ -567,30 +432,27 @@ $(pv_value)</tooltip>
         </bg_gradient_color>
         <scripts>
           <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-            <scriptName>RightToLeft</scriptName>
+            <scriptName>TopToBottom</scriptName>
             <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
-TR_X = display.getWidget("JawBackground").getPropertyValue("x") +display.getWidget("JawBackground").getPropertyValue("width")
+r = 1.05*PVUtil.getDouble(pvs[1])
+height =  -100*PVUtil.getDouble(pvs[0])/r + 100
 
-r = PVUtil.getDouble(pvs[1])*1.05
-width =  -100*PVUtil.getDouble(pvs[0])/r + 100
+if height < 1:
+	height = 1
+elif height > 200:
+	height = 200
 
-if width < 1:
-	width = 1
-elif width > 200:
-	width = 200
-
-widget.setPropertyValue("width", width)
-widget.setPropertyValue("x", TR_X - width)
+widget.setPropertyValue("height", height)
 
 ]]></scriptText>
-            <pv trig="true">$(P)$(J):JE</pv>
-            <pv trig="false">$(P)$(J):MAXE</pv>
-            <pv trig="true">$(P)$(J):MINW</pv>
+            <pv trig="true">$(P)$(J):JN</pv>
+            <pv trig="true">$(P)$(J):MAXN</pv>
           </path>
         </scripts>
         <border_alarm_sensitive>false</border_alarm_sensitive>
-        <height>200</height>
+        <height>100</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -613,86 +475,9 @@ widget.setPropertyValue("x", TR_X - width)
         <background_color>
           <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
         </background_color>
-        <width>100</width>
-        <x>100</x>
-        <name>Rectangle_1</name>
-        <y>0</y>
-        <fill_level>0.0</fill_level>
-        <foreground_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <font>
-          <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-        </font>
-        <line_color>
-          <color name="ISIS_Purple" red="128" green="0" blue="255" />
-        </line_color>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-        <border_style>1</border_style>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <line_width>0</line_width>
-        <horizontal_fill>true</horizontal_fill>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>3933b49:161475a757c:-6d2b</wuid>
-        <transparent>false</transparent>
-        <pv_value />
-        <alpha>255</alpha>
-        <bg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </bg_gradient_color>
-        <scripts>
-          <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-            <scriptName>LeftToRight</scriptName>
-            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-r = PVUtil.getDouble(pvs[1])*1.05
-width =  100*PVUtil.getDouble(pvs[0])/r + 100
-
-if width < 1:
-	width = 1
-elif width > 200:
-	width = 200
-
-widget.setPropertyValue("width", width)
-
-]]></scriptText>
-            <pv trig="true">$(P)$(J):JW</pv>
-            <pv trig="false">$(P)$(J):MAXE</pv>
-            <pv trig="false">$(P)$(J):MINW</pv>
-          </path>
-        </scripts>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <height>200</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <visible>true</visible>
-        <pv_name></pv_name>
-        <gradient>false</gradient>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <anti_alias>true</anti_alias>
-        <line_style>0</line_style>
-        <widget_type>Rectangle</widget_type>
-        <fg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </fg_gradient_color>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-        </background_color>
-        <width>100</width>
+        <width>200</width>
         <x>0</x>
-        <name>Rectangle</name>
+        <name>North_Blade</name>
         <y>0</y>
         <fill_level>0.0</fill_level>
         <foreground_color>
@@ -769,88 +554,8 @@ widget.setPropertyValue("height", height)
         </background_color>
         <width>200</width>
         <x>0</x>
-        <name>Rectangle_2</name>
+        <name>North_Blade</name>
         <y>0</y>
-        <fill_level>0.0</fill_level>
-        <foreground_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <font>
-          <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-        </font>
-        <line_color>
-          <color name="ISIS_Purple" red="128" green="0" blue="255" />
-        </line_color>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-        <border_style>1</border_style>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <line_width>0</line_width>
-        <horizontal_fill>true</horizontal_fill>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>7f94559c:141357de30e:-7d44</wuid>
-        <transparent>false</transparent>
-        <pv_value />
-        <alpha>255</alpha>
-        <bg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </bg_gradient_color>
-        <scripts>
-          <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-            <scriptName>BottomToTop</scriptName>
-            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-BL_Y = display.getWidget("JawBackground").getPropertyValue("y") +display.getWidget("JawBackground").getPropertyValue("height")
-
-r = PVUtil.getDouble(pvs[1])*1.05
-height =  100*PVUtil.getDouble(pvs[0])/r + 100
-
-if height < 1:
-	height = 1
-elif height > 200:
-	height = 200
-
-widget.setPropertyValue("height", height)
-widget.setPropertyValue("y", BL_Y - height)
-
-]]></scriptText>
-            <pv trig="true">$(P)$(J):JS</pv>
-            <pv trig="false">$(P)$(J):MAXN</pv>
-            <pv trig="true">$(P)$(J):MINS</pv>
-          </path>
-        </scripts>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <height>100</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <visible>true</visible>
-        <pv_name></pv_name>
-        <gradient>false</gradient>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <anti_alias>true</anti_alias>
-        <line_style>0</line_style>
-        <widget_type>Rectangle</widget_type>
-        <fg_gradient_color>
-          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-        </fg_gradient_color>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-        </background_color>
-        <width>200</width>
-        <x>0</x>
-        <name>Rectangle_3</name>
-        <y>100</y>
         <fill_level>0.0</fill_level>
         <foreground_color>
           <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -928,7 +633,7 @@ widget.setPropertyValue("y", BL_Y - height)
         </background_color>
         <width>200</width>
         <x>0</x>
-        <name>Rectangle_3</name>
+        <name>South_Blade</name>
         <y>100</y>
         <fill_level>0.0</fill_level>
         <foreground_color>

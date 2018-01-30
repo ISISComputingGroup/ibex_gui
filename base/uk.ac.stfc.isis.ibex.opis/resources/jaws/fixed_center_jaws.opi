@@ -41,7 +41,7 @@
     <wuid>17eb3304:15d2cf8bad5:-7472</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Jaws Set $(J)</text>
+    <text>Jaw Set $(J)</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -143,7 +143,7 @@
       <width>79</width>
       <x>6</x>
       <name>Label_2</name>
-      <y>18</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -195,7 +195,7 @@ $(pv_value)</tooltip>
       <width>55</width>
       <x>168</x>
       <name>Text Update_1</name>
-      <y>18</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -250,7 +250,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>57</width>
       <x>96</x>
-      <y>18</y>
+      <y>48</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -291,7 +291,7 @@ $(pv_value)</tooltip>
       <width>91</width>
       <x>-6</x>
       <name>Label_2</name>
-      <y>48</y>
+      <y>18</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -343,7 +343,7 @@ $(pv_value)</tooltip>
       <width>55</width>
       <x>168</x>
       <name>Text Update_1</name>
-      <y>48</y>
+      <y>18</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -398,7 +398,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>57</width>
       <x>96</x>
-      <y>48</y>
+      <y>18</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />

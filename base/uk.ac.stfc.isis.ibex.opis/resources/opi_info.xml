@@ -197,7 +197,7 @@
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
-				<path>jaws/Jaws.opi</path>
+				<path>jaws/jaws.opi</path>
 				<description>The OPI for a Jaw set.</description>
 				<macros>
 					<macro>
