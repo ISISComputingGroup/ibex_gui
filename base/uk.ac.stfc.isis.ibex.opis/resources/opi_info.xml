@@ -1044,7 +1044,24 @@
 					</macro>            
 				</macros>
 			</value>
-		</entry>        
+		</entry>
+		<entry>
+			<key>Fixed center jaw</key>
+			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
+				<type>JAWS</type>
+				<path>jaws/fixed_center_jaws.opi</path>
+				<description>The OPI for a jawset with a fixed center.</description>
+				<macros>
+					<macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>            
+				</macros>
+			</value>
+		</entry>      
 		<entry>
 			<key>Zoom FINS PLC</key>
 			<value>
