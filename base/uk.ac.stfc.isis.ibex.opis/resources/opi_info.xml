@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
 	<opis>
 		<entry>
@@ -134,7 +134,7 @@
 					<category>Cryogenics</category>
 				</categories>
 				<type>MERCURY</type>
-				<path>mercuryiTC.opi</path>
+				<path>mercuryiTC\mercuryiTC.opi</path>
 				<description>The OPI for the Mercury temperature controller.</description>
 				<macros>
 					<macro>
@@ -143,19 +143,27 @@
 					</macro>
 					<macro>
 						<name>TEMP_NUM1</name>
-						<description>The first card number (e.g. 1, optional).</description>
+						<description>The first temperature card number (e.g. 1, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM2</name>
-						<description>The second card number (e.g. 2, optional).</description>
+						<description>The second temperature card number (e.g. 2, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM3</name>
-						<description>The third card number (e.g. 3, optional).</description>
+						<description>The third temperature card number (e.g. 3, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM4</name>
-						<description>The fourth card number (e.g. 4, optional).</description>
+						<description>The fourth temperature card number (e.g. 4, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM1</name>
+						<description>The first level card number (e.g. 1, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM2</name>
+						<description>The second level card number (e.g. 1, optional).</description>
 					</macro>                   
 				</macros>
 			</value>
@@ -1188,7 +1196,7 @@
         <entry>
             <key>SKF MB350 Chopper</key>
 			<value>
-			<categories>
+			    <categories>
 					<category>Choppers</category>
 				</categories>
 				<type>CHOPPER</type>
@@ -1204,16 +1212,13 @@
 		</entry>
 		<entry>
 			<key>HLG</key>
-			<categories>
-				<category>Gas handling systems</category>
-			</categories>
 			<value>
 				<categories>
 					<category>Cryogenics</category>
 				</categories>
 				<type>HE_LEVEL_GAUGE</type>
 				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<description>The OPI for the helium level gauge.</description>
 				<macros>
 					<macro>
 						<name>HLG</name>
@@ -1224,10 +1229,10 @@
 		</entry>
 		<entry>
 			<key>OscillatingCollimator</key>
-			<categories>
-				<category>Miscellaneous motion control</category>
-			</categories>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>OSCILLATING_COLLIMATOR</type>
 				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
 				<description>The OPI for the LET oscillating collimator.</description>
@@ -1239,7 +1244,60 @@
 				</macros>
 			</value>
 		</entry>
-<entry>
+	    <entry>
+	    	<key>Motion Set Point</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+					<category>Sample stacks and goniometers</category>
+					<category>Sample changers</category>
+				</categories>
+				<type>MOTION_SET_POINTS</type>
+	    		<path>stage/motion_setpoint.opi</path>
+	    		<description>The OPI for motion setpoints</description>
+	    		<macros>
+	    			<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+					</macro>	    		
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>SM300 Sample Changer</key>
+			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
+				<type>SM300_SAMPLE_CHANGER</type>
+				<path>sample_stack/sm300sampos.opi</path>
+				<description>The OPI for the SM300 Sample changer</description>
+				<macros>
+					<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+					</macro>				
+				</macros>
+			</value>
+		</entry>
+        <entry>
+			<key>Lakeshore 460</key>
+			<value>
+			    <categories>
+					<category>Gaussmeter</category>
+				</categories>
+				<type>LKSH460</type>
+				<path>Lakeshore460/lakeshore460.opi</path>
+				<description>The OPI for the Lakeshore 460 Gaussmeter.</description>
+				<macros>
+					<macro>
+						<name>LKSH460</name>
+						<description>The Lakeshore460 PV prefix (e.g. LKSH460_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+       <entry>
       <key>Triton dilution fridge</key>
       <value>
         <categories>
