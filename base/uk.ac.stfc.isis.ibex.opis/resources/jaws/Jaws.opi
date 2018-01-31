@@ -823,7 +823,7 @@ $(pv_value)</tooltip>
       <wuid>3933b49:161475a757c:-5fcf</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Vertical Gap:</text>
+      <text>Vertical gap:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -971,7 +971,7 @@ $(pv_value)</tooltip>
       <wuid>3933b49:161475a757c:-5fcc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Horizontal Gap:</text>
+      <text>Horizontal gap:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1119,7 +1119,7 @@ $(pv_value)</tooltip>
       <wuid>3933b49:161475a757c:-5fb1</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Horizontal Cent:</text>
+      <text>Horizontal cent:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1374,7 +1374,7 @@ $(pv_value)</tooltip>
       <wuid>3933b49:161475a757c:-5fb4</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Vertical Cent:</text>
+      <text>Vertical cent:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
