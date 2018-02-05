@@ -34,26 +34,25 @@ public class JournalModel extends ModelObject {
     private static final String UNKNOWN_DATABASE_MESSAGE = "Unknown database name.";
     private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
 
-    private String errorMsg = "";
+    private String message = "";
 
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        query();
+        refresh();
     }
 
-    private void query() {
+    public void refresh() {
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
             String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
             String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
             Rdb rdb = Rdb.connectToDatabase(schema, user, password);
-            setErrorMsg("");
+            setMessage("Connected");
 
         } catch (Exception ex) {
-            setErrorMsg(errorMessage(ex));
+            setMessage(errorMessage(ex));
         }
-
     }
 
     private String errorMessage(Exception ex) {
@@ -68,12 +67,12 @@ public class JournalModel extends ModelObject {
         return ACCESS_DENIED_MESSAGE;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        firePropertyChange("errorMsg", this.errorMsg, this.errorMsg = errorMsg);
+    public void setMessage(String message) {
+        firePropertyChange("message", this.message, this.message = message);
     }
 
-    public String getErrorMsg() {
-        return this.errorMsg;
+    public String getMessage() {
+        return this.message;
     }
 
 }

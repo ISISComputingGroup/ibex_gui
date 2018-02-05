@@ -19,33 +19,36 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
+package uk.ac.stfc.isis.ibex.journal;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
-import uk.ac.stfc.isis.ibex.journal.Journal;
-import uk.ac.stfc.isis.ibex.journal.JournalModel;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+/**
+ * This class is responsible for updating all connections when an instrument is
+ * switched.
+ */
+public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
-public class JournalViewModel extends ModelObject {
-
-    private JournalModel model;
-
-    PropertyChangeListener passThroughListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-        }
-    };
-
-    public JournalViewModel() {
-        model = Journal.getInstance().getModel();
-        model.addPropertyChangeListener(passThroughListener);
+    /**
+     * Updates the journal model on switching instrument.
+     * 
+     * @param instrument
+     *            The instrument to switch to.
+     */
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        //
     }
 
-    public String getMessage() {
-        return model.getMessage();
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        //
     }
 
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        System.out.println("SETINST");
+        Journal.getInstance().getModel().refresh();
+    }
 }

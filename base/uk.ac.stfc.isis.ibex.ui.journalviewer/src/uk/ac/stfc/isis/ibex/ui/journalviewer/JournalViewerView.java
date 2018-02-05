@@ -71,7 +71,7 @@ public class JournalViewerView extends ViewPart {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
-                BeanProperties.value("errorMsg").observe(model));
+                BeanProperties.value("message").observe(model));
 
     }
 
