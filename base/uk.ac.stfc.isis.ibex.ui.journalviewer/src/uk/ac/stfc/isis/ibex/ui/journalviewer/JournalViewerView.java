@@ -41,7 +41,8 @@ public class JournalViewerView extends ViewPart {
 	
 	/**
 	 * Create contents of the view part.
-	 * @param parent
+	 * 
+	 * @param parent - Parent UI element
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
