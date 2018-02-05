@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.core.resources,
  uk.ac.stfc.isis.ibex.databases,
- org.eclipse.osgi
+ org.eclipse.osgi,
+ uk.ac.stfc.isis.ibex.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.journal

@@ -19,14 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.journal.Journal;
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
 /**
  * Journal viewer main view.
@@ -38,6 +42,8 @@ public class JournalViewerView extends ViewPart {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
 	
+    private Label lblError;
+
 	/**
 	 * Create contents of the view part.
 	 * @param parent
@@ -54,9 +60,21 @@ public class JournalViewerView extends ViewPart {
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
 
-        Journal j = Journal.getInstance();
+        lblError = new Label(parent, SWT.NONE);
+        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setText("placeholder");
+
+        bind(JournalViewerUI.getDefault().getModel());
 	}
 	
+    private void bind(JournalViewModel model) {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
+                BeanProperties.value("errorMsg").observe(model));
+
+    }
+
 	@Override
 	public void dispose() {
 	}

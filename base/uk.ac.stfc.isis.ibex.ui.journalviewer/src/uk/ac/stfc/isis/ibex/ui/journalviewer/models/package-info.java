@@ -17,6 +17,6 @@
  */
 
 /**
- * The front end classes for the Journal Viewer.
+ * The viewmodels used by the journal viewer front end.
  */
-package uk.ac.stfc.isis.ibex.ui.journalviewer;
+package uk.ac.stfc.isis.ibex.ui.journalviewer.models;

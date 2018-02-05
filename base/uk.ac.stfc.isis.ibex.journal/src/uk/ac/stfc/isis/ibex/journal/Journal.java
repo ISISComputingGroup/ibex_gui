@@ -22,6 +22,10 @@ public class Journal extends AbstractUIPlugin {
         return instance;
     }
 
+    public JournalModel getModel() {
+        return model;
+    }
+
     /**
      * The constructor for the activator. Creates a new model and counter.
      */

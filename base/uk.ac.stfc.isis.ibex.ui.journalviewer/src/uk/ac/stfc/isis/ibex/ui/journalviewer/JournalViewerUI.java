@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -35,11 +36,13 @@ public class JournalViewerUI extends AbstractUIPlugin {
 
 	// The shared instance
 	private static JournalViewerUI plugin;
+    private JournalViewModel model;
 	
 	/**
      * The constructor.
      */
 	public JournalViewerUI() {
+        model = new JournalViewModel();
 	}
 	
 	/*
@@ -70,5 +73,9 @@ public class JournalViewerUI extends AbstractUIPlugin {
 	public static JournalViewerUI getDefault() {
 		return plugin;
 	}
+
+    public JournalViewModel getModel() {
+        return model;
+    }
 
 }

@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.journal;
 
 import java.sql.SQLRecoverableException;
@@ -27,33 +24,36 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class JournalModel {
+public class JournalModel extends ModelObject {
 
     IPreferenceStore preferenceStore;
-    Rdb rdb;
 
     private static final String CONNECTION_ERROR_MESSAGE = "Error connecting to MySQL database.";
     private static final String UNKNOWN_DATABASE_MESSAGE = "Unknown database name.";
     private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
 
+    private String errorMsg = "";
+
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        connect();
+        query();
     }
 
-    private void connect() {
+    private void query() {
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
             String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
             String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
-            rdb = Rdb.connectToDatabase(schema, user, password);
+            Rdb rdb = Rdb.connectToDatabase(schema, user, password);
+            setErrorMsg("");
 
         } catch (Exception ex) {
-            // TODO handle properly
-            System.out.println(errorMessage(ex));
+            setErrorMsg(errorMessage(ex));
         }
+
     }
 
     private String errorMessage(Exception ex) {
@@ -66,6 +66,14 @@ public class JournalModel {
         }
 
         return ACCESS_DENIED_MESSAGE;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        firePropertyChange("errorMsg", this.errorMsg, this.errorMsg = errorMsg);
+    }
+
+    public String getErrorMsg() {
+        return this.errorMsg;
     }
 
 }
