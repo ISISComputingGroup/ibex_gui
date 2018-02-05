@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.journal.Journal;
+
 /**
  * Journal viewer main view.
  */
@@ -43,7 +45,7 @@ public class JournalViewerView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
-		
+
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
@@ -51,6 +53,8 @@ public class JournalViewerView extends ViewPart {
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+
+        Journal j = Journal.getInstance();
 	}
 	
 	@Override

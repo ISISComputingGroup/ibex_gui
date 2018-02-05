@@ -7,7 +7,6 @@ public class Journal extends AbstractUIPlugin {
 
     private static Journal instance;
     private static JournalModel model;
-//    private static BundleContext context;
 
     /**
      * @return The instance of this singleton.
@@ -23,30 +22,23 @@ public class Journal extends AbstractUIPlugin {
         return instance;
     }
 
-//    private final JournalModel model;
-
     /**
      * The constructor for the activator. Creates a new model and counter.
      */
     public Journal() {
         super();
+        instance = this;
+        model = new JournalModel(getPreferenceStore());
     }
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
         super.start(bundleContext);
-        instance = this;
     }
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        instance = null;
         super.stop(bundleContext);
-//        model.stop();
-    }
-
-    public static void saySomething() {
-        System.out.println("something");
     }
 
 }
