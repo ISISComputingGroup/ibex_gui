@@ -29,16 +29,34 @@ import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class JournalModel extends ModelObject {
+public class JournalModel extends ModelObject implements Runnable {
 
     IPreferenceStore preferenceStore;
 
     private String message = "";
     private boolean connectionSuccess = false;
 
+    private final static int REFRESH_INTERVAL = 60 * 1000;
+
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        refresh();
+        Thread thread = new Thread(this);
+        thread.start();
+    }
+
+    /**
+     * Periodically tries to fetch new data from the database.
+     */
+    @Override
+    public void run() {
+        while (true) {
+            refresh();
+            try {
+                Thread.sleep(REFRESH_INTERVAL);
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+            }
+        }
     }
 
     public void refresh() {
