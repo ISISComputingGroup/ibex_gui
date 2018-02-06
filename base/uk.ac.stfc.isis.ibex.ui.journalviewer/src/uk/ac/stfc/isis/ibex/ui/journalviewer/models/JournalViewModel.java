@@ -24,28 +24,60 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.wb.swt.SWTResourceManager;
+
 import uk.ac.stfc.isis.ibex.journal.Journal;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class JournalViewModel extends ModelObject {
 
-    private JournalModel model;
+    private final static Color NEUTRAL_COLOR = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+    private final static Color ERROR_COLOR = SWTResourceManager.getColor(SWT.COLOR_RED);
 
-    PropertyChangeListener passThroughListener = new PropertyChangeListener() {
+    private JournalModel model;
+    private Color color;
+    private String message;
+
+    PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            update();
         }
     };
 
     public JournalViewModel() {
         model = Journal.getInstance().getModel();
-        model.addPropertyChangeListener(passThroughListener);
+        model.addPropertyChangeListener(listener);
+    }
+
+    private void update() {
+        if (model.getConnectionSuccess()) {
+            setMessage("Last refresh: " + model.getMessage());
+            setColor(NEUTRAL_COLOR);
+        } else {
+            setMessage("Error retrieving data: " + model.getMessage());
+            setColor(ERROR_COLOR);
+        }
     }
 
     public String getMessage() {
-        return model.getMessage();
+        return message;
+    }
+
+    private void setMessage(String message) {
+        firePropertyChange("message", this.message, this.message = message);
+    }
+
+
+    public Color getColor() {
+        return color;
+    }
+
+    private void setColor(Color color) {
+        firePropertyChange("color", this.color, this.color = color);
     }
 
 }

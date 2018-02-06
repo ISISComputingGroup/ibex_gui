@@ -19,35 +19,35 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.journal;
-
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+package uk.ac.stfc.isis.ibex.databases;
 
 /**
- * This class is responsible for updating all connections when an instrument is
- * switched.
+ *
  */
-public class OnInstrumentSwitch implements InstrumentInfoReceiver {
-
+public enum DbError {
     /**
-     * Updates the journal model on switching instrument.
-     * 
-     * @param instrument
-     *            The instrument to switch to.
+     * Motors are moving.
      */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        // Nothing to be done
+    CONNECTION_ERROR("Could not establish connection to database"),
+    /**
+     * Motors are stationary.
+     */
+    UNKNOWN_DB("Unknown database name"),
+    /**
+     * Motor state is unknown.
+     */
+    ACCESS_DENIED("Access to database denied");
+
+    private final String message;
+
+    private DbError(String message) {
+        this.message = message;
     }
 
     @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        // Nothing to be done
+    public String toString() {
+        return message;
     }
 
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        Journal.getInstance().getModel().refresh();
-    }
 }
+

@@ -19,9 +19,12 @@
 package uk.ac.stfc.isis.ibex.journal;
 
 import java.sql.SQLRecoverableException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
+import uk.ac.stfc.isis.ibex.databases.DbError;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -30,11 +33,8 @@ public class JournalModel extends ModelObject {
 
     IPreferenceStore preferenceStore;
 
-    private static final String CONNECTION_ERROR_MESSAGE = "Error connecting to MySQL database.";
-    private static final String UNKNOWN_DATABASE_MESSAGE = "Unknown database name.";
-    private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
-
     private String message = "";
+    private boolean connectionSuccess = false;
 
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
@@ -48,23 +48,25 @@ public class JournalModel extends ModelObject {
             String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
             Rdb rdb = Rdb.connectToDatabase(schema, user, password);
-            setMessage("Connected");
+
+            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
+            setConnectionSuccess(true);
+            setMessage(timeStamp);
 
         } catch (Exception ex) {
-            setMessage(errorMessage(ex));
+            setConnectionSuccess(false);
+            setMessage(getError(ex).toString());
         }
     }
 
-    private String errorMessage(Exception ex) {
+    private DbError getError(Exception ex) {
         if (ex instanceof SQLRecoverableException) {
-            return CONNECTION_ERROR_MESSAGE;
+            return DbError.CONNECTION_ERROR;
         }
-
         if (ex.getMessage().startsWith("Unknown database")) {
-            return UNKNOWN_DATABASE_MESSAGE;
+            return DbError.UNKNOWN_DB;
         }
-
-        return ACCESS_DENIED_MESSAGE;
+        return DbError.ACCESS_DENIED;
     }
 
     public void setMessage(String message) {
@@ -73,6 +75,14 @@ public class JournalModel extends ModelObject {
 
     public String getMessage() {
         return this.message;
+    }
+
+    public void setConnectionSuccess(boolean connectionSuccess) {
+        firePropertyChange("connectionSuccess", this.connectionSuccess, this.connectionSuccess = connectionSuccess);
+    }
+
+    public boolean getConnectionSuccess() {
+        return this.connectionSuccess;
     }
 
 }

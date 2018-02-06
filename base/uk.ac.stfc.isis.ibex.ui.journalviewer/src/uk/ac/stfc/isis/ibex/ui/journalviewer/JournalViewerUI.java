@@ -74,6 +74,11 @@ public class JournalViewerUI extends AbstractUIPlugin {
 		return plugin;
 	}
 
+    /**
+     * Returns the viewmodel for the Journal Viewer UI.
+     * 
+     * @return the viewmodel
+     */
     public JournalViewModel getModel() {
         return model;
     }
