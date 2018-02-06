@@ -28,14 +28,23 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.journal.Journal;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The viewmodel providing data for the journal viewer view.
+ */
 public class JournalViewModel extends ModelObject {
 
-    private final static Color NEUTRAL_COLOR = SWTResourceManager.getColor(SWT.COLOR_BLACK);
-    private final static Color ERROR_COLOR = SWTResourceManager.getColor(SWT.COLOR_RED);
+    /**
+     * A neutral color for the status message text.
+     */
+    private static final Color NEUTRAL_COLOR = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+
+    /**
+     * A color indicating an error for the status message text.
+     */
+    private static final Color ERROR_COLOR = SWTResourceManager.getColor(SWT.COLOR_RED);
 
     private JournalModel model;
     private Color color;
@@ -48,9 +57,15 @@ public class JournalViewModel extends ModelObject {
         }
     };
 
-    public JournalViewModel() {
-        model = Journal.getInstance().getModel();
-        model.addPropertyChangeListener(listener);
+    /**
+     * Constructor for the viewmodel. Takes a model of the journal backend to
+     * observe.
+     * 
+     * @param model The backend model
+     */
+    public JournalViewModel(JournalModel model) {
+        this.model = model;
+        this.model.addPropertyChangeListener(listener);
     }
 
     private void update() {
@@ -63,6 +78,9 @@ public class JournalViewModel extends ModelObject {
         }
     }
 
+    /**
+     * @return The connection status message.
+     */
     public String getMessage() {
         return message;
     }
@@ -71,7 +89,9 @@ public class JournalViewModel extends ModelObject {
         firePropertyChange("message", this.message, this.message = message);
     }
 
-
+    /**
+     * @return The color indicating the current connection status.
+     */
     public Color getColor() {
         return color;
     }

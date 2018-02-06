@@ -38,6 +38,11 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	private Model model;
 	private SearchModel searchModel;
 
+    /**
+     * Return the bundle context of this plugin.
+     * 
+     * @return The context.
+     */
 	static BundleContext getContext() {
 		return context;
 	}

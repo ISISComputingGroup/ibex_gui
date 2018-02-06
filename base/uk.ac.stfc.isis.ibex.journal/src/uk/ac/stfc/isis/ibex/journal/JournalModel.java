@@ -59,6 +59,9 @@ public class JournalModel extends ModelObject implements Runnable {
         }
     }
 
+    /**
+     * Attempts to connect to the database and updates the status accordingly.
+     */
     public void refresh() {
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
@@ -87,18 +90,34 @@ public class JournalModel extends ModelObject implements Runnable {
         return DbError.ACCESS_DENIED;
     }
 
+    /**
+     * Sets the connection status message to display.
+     * 
+     * @param message The message
+     */
     public void setMessage(String message) {
         firePropertyChange("message", this.message, this.message = message);
     }
 
+    /**
+     * @return The connection status message
+     */
     public String getMessage() {
         return this.message;
     }
 
+    /**
+     * Sets the current connection status.
+     * 
+     * @param connectionSuccess The connection status
+     */
     public void setConnectionSuccess(boolean connectionSuccess) {
         firePropertyChange("connectionSuccess", this.connectionSuccess, this.connectionSuccess = connectionSuccess);
     }
 
+    /**
+     * @return The connection status
+     */
     public boolean getConnectionSuccess() {
         return this.connectionSuccess;
     }
