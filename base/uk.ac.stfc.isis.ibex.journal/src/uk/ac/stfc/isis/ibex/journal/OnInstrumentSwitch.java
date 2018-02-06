@@ -48,6 +48,6 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        Journal.getInstance().getModel().refresh();
+        Journal.getDefault().getModel().refresh();
     }
 }

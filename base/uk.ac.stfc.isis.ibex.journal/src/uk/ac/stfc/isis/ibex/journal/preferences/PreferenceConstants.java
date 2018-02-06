@@ -22,7 +22,7 @@
 package uk.ac.stfc.isis.ibex.journal.preferences;
 
 /**
- *
+ * Preference constants related to the journal viewer.
  */
 public class PreferenceConstants {
 

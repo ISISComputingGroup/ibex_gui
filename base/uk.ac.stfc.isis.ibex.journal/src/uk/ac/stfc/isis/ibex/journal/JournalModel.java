@@ -29,6 +29,9 @@ import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Fetches and stores journal data from a SQL database.
+ */
 public class JournalModel extends ModelObject implements Runnable {
 
     IPreferenceStore preferenceStore;

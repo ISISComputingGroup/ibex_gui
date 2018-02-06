@@ -26,11 +26,15 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.journal.Journal;
 
+/**
+ * Initialises preferences related to the journal viewer in the preference store
+ * with default values.
+ */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
     @Override
     public void initializeDefaultPreferences() {
-        IPreferenceStore store = Journal.getInstance().getPreferenceStore();
+        IPreferenceStore store = Journal.getDefault().getPreferenceStore();
 
         store.setDefault(PreferenceConstants.P_JOURNAL_SQL_USERNAME, PreferenceConstants.DEFAULT_JOURNAL_SQL_USERNAME);
         store.setDefault(PreferenceConstants.P_JOURNAL_SQL_PASSWORD, PreferenceConstants.DEFAULT_JOURNAL_SQL_PASSWORD);

@@ -3,6 +3,9 @@ package uk.ac.stfc.isis.ibex.journal;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The singleton class for the journal backend.
+ */
 public class Journal extends AbstractUIPlugin {
 
     private static Journal instance;
@@ -11,17 +14,13 @@ public class Journal extends AbstractUIPlugin {
     /**
      * @return The instance of this singleton.
      */
-    public static Journal getInstance() {
-        return instance;
-    }
-
-    /**
-     * @return The instance of this singleton.
-     */
     public static Journal getDefault() {
         return instance;
     }
 
+    /**
+     * @return The journal model.
+     */
     public JournalModel getModel() {
         return model;
     }

@@ -43,7 +43,7 @@ public class JournalViewerUI extends AbstractUIPlugin {
      * The constructor.
      */
 	public JournalViewerUI() {
-        model = new JournalViewModel(Journal.getInstance().getModel());
+        model = new JournalViewModel(Journal.getDefault().getModel());
 	}
 	
 	/*

@@ -74,7 +74,6 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
                 BeanProperties.value("color").observe(model));
-
     }
 
 	@Override
