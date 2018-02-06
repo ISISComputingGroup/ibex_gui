@@ -66,6 +66,7 @@ public class JournalViewModel extends ModelObject {
     public JournalViewModel(JournalModel model) {
         this.model = model;
         this.model.addPropertyChangeListener(listener);
+        update();
     }
 
     private void update() {

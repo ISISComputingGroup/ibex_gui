@@ -17,6 +17,6 @@
  */
 
 /**
- * Contains tests for the journal plug-in.
+ * Contains tests for the journal viewer UI plug-in.
  */
-package uk.ac.stfc.isis.ibex.journal.tests;
+package uk.ac.stfc.isis.ibex.ui.journalviewer.tests;

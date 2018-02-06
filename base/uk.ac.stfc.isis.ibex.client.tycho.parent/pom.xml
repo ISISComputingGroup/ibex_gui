@@ -258,6 +258,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer</module>
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 	</modules>
 </project>
 
