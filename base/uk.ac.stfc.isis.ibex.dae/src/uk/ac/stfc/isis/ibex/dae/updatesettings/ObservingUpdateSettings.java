@@ -19,10 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.dae.updatesettings;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class ObservingUpdateSettings extends XMLBackedUpdateSettings implements Closable {
 	
@@ -43,7 +46,7 @@ public class ObservingUpdateSettings extends XMLBackedUpdateSettings implements 
 		};
 	}
 	
-	public void sendUpdate() {
+	public void sendUpdate() throws IOException {
 		gateway.sendUpdate();
 	}
 

@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.dae.experimentsetup;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
@@ -35,6 +36,7 @@ import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -175,11 +177,13 @@ public class ExperimentSetup extends Closer  {
     /**
      * Sends all changes made to the experiment setup in the GUI to the server.
      */
-	public void sendAllSettings() {
+	public synchronized void sendAllSettings() throws IOException {
+		IsisLog.getLogger(this.getClass()).info("Sending new DAE settings...");
 		daeSettings.sendUpdate();
 		periodSettings.sendUpdate();
 		updateSettings.sendUpdate();
 		timeChannels.sendUpdate();
+		IsisLog.getLogger(this.getClass()).info("Finished sending new DAE settings.");
 	}
 	
 	private UpdatedObservableAdapter<Collection<String>> createAdapter(

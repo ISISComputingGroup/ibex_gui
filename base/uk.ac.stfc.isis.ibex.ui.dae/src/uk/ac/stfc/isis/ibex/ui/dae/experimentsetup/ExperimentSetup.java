@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
+import java.io.IOException;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -34,6 +37,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
@@ -112,10 +116,15 @@ public class ExperimentSetup extends Composite {
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (viewModel != null) {
-                    viewModel.updateDae();
-                }
-                sendingChanges.open();
+            	try {
+            		viewModel.updateDae();
+            		sendingChanges.open();
+        		} catch (Exception err) {
+        			// Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
+        			IsisLog.getLogger(this.getClass()).error(err);
+        			MessageDialog.openError(getShell(), "Internal IBEX Error", 
+        					"Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
+        		}
             }
         });
         btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
