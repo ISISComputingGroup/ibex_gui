@@ -22,7 +22,7 @@
 package uk.ac.stfc.isis.ibex.databases;
 
 /**
- *
+ * Types of error that can arise when connecting to an external database.
  */
 public enum DbError {
     /**
@@ -40,7 +40,12 @@ public enum DbError {
 
     private final String message;
 
-    private DbError(String message) {
+    /**
+     * Constructor that allows attaching a message to the error type.
+     * 
+     * @param message The message.
+     */
+    DbError(String message) {
         this.message = message;
     }
 
