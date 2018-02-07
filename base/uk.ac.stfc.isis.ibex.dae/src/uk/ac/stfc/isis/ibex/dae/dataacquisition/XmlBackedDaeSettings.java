@@ -121,7 +121,6 @@ public class XmlBackedDaeSettings extends DaeSettings {
      * @return the xml
      */
 	public String xml() {
-		System.out.println(xmlFile.toString());
         return xmlFile.toString();
 	} 
 	
@@ -157,7 +156,6 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	
 	@Override
 	public void setNewSpectraTable(String value) {
-		System.out.println("New spectra table: " + value);
 		super.setNewSpectraTable(value);
         spectraTable.setValue(value);
 	}
@@ -241,8 +239,6 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	}
 	
 	private void initialiseFromXml() {
-		
-		System.out.println("INITIALIZING FROM XML");
 		
         for (XmlNode<?> node : nodes) {
             if (node == null || node.value() == null) {
