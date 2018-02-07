@@ -27,13 +27,10 @@ import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.activemq.ReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
-import uk.ac.stfc.isis.ibex.databases.DbError;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.log.jms.XmlLogMessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
@@ -140,7 +137,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
             LogMessageQuery query = new LogMessageQuery(rdb);
             return query.getMessages(field, value, from, to);
         } catch (SQLException ex) {
-            throw new Exception(getError(ex).toString(), ex);
+            throw new Exception(Rdb.getError(ex).toString(), ex);
         }
     }
 
@@ -150,17 +147,5 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
             receiver.clearMessages();
         }
-    }
-
-    private DbError getError(SQLException ex) {
-        if (ex instanceof CommunicationsException) {
-            return DbError.CONNECTION_ERROR;
-        }
-
-        if (ex.getMessage().startsWith("Unknown database")) {
-            return DbError.UNKNOWN_DB;
-        }
-
-        return DbError.ACCESS_DENIED;
     }
 }

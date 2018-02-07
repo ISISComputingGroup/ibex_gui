@@ -20,6 +20,7 @@ package uk.ac.stfc.isis.ibex.databases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLRecoverableException;
 
 import org.apache.logging.log4j.Logger;
 
@@ -92,5 +93,21 @@ public class Rdb {
 		    LOG.error("Error closing connection to database (" + schema + "): "
 			    + ex.getMessage());
 		}
+    }
+
+    /**
+     * Returns an appropriate DbError with message based on a given exception.
+     * 
+     * @param ex The exception
+     * @return The relevant error message
+     */
+    public static DbError getError(Exception ex) {
+        if (ex instanceof SQLRecoverableException) {
+            return DbError.CONNECTION_ERROR;
+        }
+        if (ex.getMessage().startsWith("Unknown database")) {
+            return DbError.UNKNOWN_DB;
+        }
+        return DbError.ACCESS_DENIED;
     }
 }

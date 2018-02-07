@@ -4,7 +4,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The singleton class for the journal backend.
+ * The singleton class for the journal back end.
  */
 public class Journal extends AbstractUIPlugin {
 

@@ -18,13 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.sql.SQLRecoverableException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import uk.ac.stfc.isis.ibex.databases.DbError;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -41,6 +39,12 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private final static int REFRESH_INTERVAL = 60 * 1000;
 
+	/**
+	 * Constructor for the journal model. Takes a preferenceStore as an argument
+	 * from which to extract the journal db details.
+	 * 
+	 * @param preferenceStore The preference store
+	 */
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
         Thread thread = new Thread(this);
@@ -79,18 +83,8 @@ public class JournalModel extends ModelObject implements Runnable {
 
         } catch (Exception ex) {
             setConnectionSuccess(false);
-            setMessage(getError(ex).toString());
+            setMessage(Rdb.getError(ex).toString());
         }
-    }
-
-    private DbError getError(Exception ex) {
-        if (ex instanceof SQLRecoverableException) {
-            return DbError.CONNECTION_ERROR;
-        }
-        if (ex.getMessage().startsWith("Unknown database")) {
-            return DbError.UNKNOWN_DB;
-        }
-        return DbError.ACCESS_DENIED;
     }
 
     /**
