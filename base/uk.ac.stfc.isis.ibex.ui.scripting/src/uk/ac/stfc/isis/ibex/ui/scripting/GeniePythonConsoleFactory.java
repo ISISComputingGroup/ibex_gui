@@ -63,12 +63,6 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
     private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
 
-    private static final String GENIE_INITIALISATION = "# Configuring genie_python, please wait\n"
-			+ "import sys;sys.executable=''\n" 
-			+ "from genie_python.genie_startup import * \n" 
-			+ "load_script(None, globals()) \n"
-			+ "%matplotlib qt4 \n";
-
 	@Override
 	public void createConsole(String additionalInitialComands) {
         try {
@@ -82,11 +76,11 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	private void setInitialInterpreterCommands() {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.python.pydev.debug");
 		String commands = pydevDebugPreferenceStore.getDefaultString(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS);
-		if (commands == null || commands.contains(GENIE_INITIALISATION)) {
+		if (commands == null || commands.contains(Commands.GENIE_INITIALISATION)) {
 			return;
 		}
 
-		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS, GENIE_INITIALISATION);
+		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS, Commands.GENIE_INITIALISATION);
 	}
 
     PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {

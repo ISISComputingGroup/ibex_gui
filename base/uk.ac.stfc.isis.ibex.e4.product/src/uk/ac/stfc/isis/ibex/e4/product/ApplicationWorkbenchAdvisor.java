@@ -53,7 +53,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
         // set save and restore to false here to avoid restoring
         // window layout restored in ApplicationWorkbenchWindowAdvisor
         configurer.setSaveAndRestore(false);
-	};
+	}
 	
 	@Override
 	public boolean preShutdown() {

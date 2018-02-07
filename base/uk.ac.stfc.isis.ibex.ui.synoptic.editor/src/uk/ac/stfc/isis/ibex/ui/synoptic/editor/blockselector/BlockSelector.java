@@ -51,7 +51,7 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 	 */
 	@Override
     public void safeExecute(Shell shell) {
-        Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAvailableBlocks();
+        Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAllBlocks();
 		
         BlockSelectorDialog dialog = new BlockSelectorDialog(null, availableBlocks);
 		if (dialog.open() == Window.OK) {

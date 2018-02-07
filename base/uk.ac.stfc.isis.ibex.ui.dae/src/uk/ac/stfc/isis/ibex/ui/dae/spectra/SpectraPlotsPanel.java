@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -38,10 +39,8 @@ import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SpectraPlotsPanel {
 
-	private SpectrumView plot1;
-	private SpectrumView plot2;
-	private SpectrumView plot3;
-	private SpectrumView plot4;
+	private static final int NUMBER_OF_SPECTRA = 4;
+	private List<SpectrumView> spectraPlots = new ArrayList<>(NUMBER_OF_SPECTRA);
 	private Composite plots;
     private List<? extends UpdatableSpectrum> model;
 
@@ -71,25 +70,15 @@ public class SpectraPlotsPanel {
         scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
         
         plots = new Composite(scrolled, SWT.NONE);
-		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		plots.setLayout(new GridLayout(2, false));
 		scrolled.setContent(plots);
 		
-		plot1 = new SpectrumView(plots, SWT.NONE);
-		plot1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		plot1.setSize(398, 258);
-		
-		plot2 = new SpectrumView(plots, SWT.NONE);
-		plot2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		plot2.setSize(399, 258);
-		
-		plot3 = new SpectrumView(plots, SWT.NONE);
-		plot3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		plot3.setSize(398, 258);
-		
-		plot4 = new SpectrumView(plots, SWT.NONE);
-		plot4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		plot4.setSize(399, 258);
+		for (int i = 0; i < NUMBER_OF_SPECTRA; i++) {
+			SpectrumView plot = new SpectrumView(plots, SWT.NONE);
+			plot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			spectraPlots.add(plot);
+		}
 
         setModel(model);
 	}
@@ -98,12 +87,16 @@ public class SpectraPlotsPanel {
      * Set the model which the spectra graphs are updated from.
      * 
      * @param spectra
-     *            A list of four updating spectrum
+     *            A list of NUMBER_OF_SPECTRA updating spectrum
      */
 	public void setModel(List<? extends UpdatableSpectrum> spectra) {
-		plot1.setModel(spectra.get(0));
-		plot2.setModel(spectra.get(1));
-		plot3.setModel(spectra.get(2));
-		plot4.setModel(spectra.get(3));
+		
+		if (spectra.size() != NUMBER_OF_SPECTRA) {
+			throw new RuntimeException("The number of spectra view models should be the same as the number of spectra!");
+		}
+		
+		for (int i = 0; i < NUMBER_OF_SPECTRA; i++) {
+			spectraPlots.get(i).setModel(spectra.get(i));
+		}
 	}
 }

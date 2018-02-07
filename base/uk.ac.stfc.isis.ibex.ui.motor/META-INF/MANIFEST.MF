@@ -25,7 +25,9 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  com.google.guava,
  javax.inject,
  org.eclipse.e4.ui.model.workbench,
- org.eclipse.e4.core.di.annotations
+ org.eclipse.e4.core.di.annotations,
+ uk.ac.stfc.isis.ibex.ui.targets,
+ uk.ac.stfc.isis.ibex.targets
 Export-Package: uk.ac.stfc.isis.ibex.ui.motor.displayoptions,
  uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .

@@ -137,5 +137,5 @@ public class BlocksView {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
-	};
+	}
 }

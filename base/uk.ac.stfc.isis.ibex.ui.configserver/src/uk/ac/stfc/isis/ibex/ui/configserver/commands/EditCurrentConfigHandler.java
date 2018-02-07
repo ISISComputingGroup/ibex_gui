@@ -59,11 +59,6 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 		}
 
 		@Override
-        public void onValue(Configuration value) {
-
-        }
-
-		@Override
 		public void onError(Exception e) {
 			canViewOrEditConfig(false);
 		}

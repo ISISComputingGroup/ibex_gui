@@ -234,7 +234,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.logplotter.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.alarm</module>
-		<module>../uk.ac.stfc.isis.ibex.instrument.baton</module>
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.validators.tests</module>
@@ -249,6 +248,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.dae.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>

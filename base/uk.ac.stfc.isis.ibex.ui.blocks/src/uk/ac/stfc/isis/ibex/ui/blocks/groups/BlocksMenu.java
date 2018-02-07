@@ -73,7 +73,7 @@ public class BlocksMenu extends MenuManager {
 					}
 				}
 			});
-		};	
+		}	
 	};
 	
     /**

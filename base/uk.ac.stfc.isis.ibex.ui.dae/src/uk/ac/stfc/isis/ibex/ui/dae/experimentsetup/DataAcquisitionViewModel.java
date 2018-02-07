@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -41,7 +42,9 @@ public class DataAcquisitionViewModel extends ModelObject {
 
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
-    private DAEComboContentProvider comboContentProvider;
+    private DAEComboContentProvider wiringComboContentProvider;
+    private DAEComboContentProvider detectorComboContentProvider;
+    private DAEComboContentProvider spectraComboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -82,9 +85,11 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of wiring tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the wiring tables
      */
-	public void setWiringTableList(UpdatedValue<Collection<String>> tables) {
+	public void setWiringTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		wiringTables = tables;
+		wiringComboContentProvider = new DAEComboContentProvider(dir);
 		
 		wiringTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
@@ -99,9 +104,11 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of detector tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the detector tables
      */
-	public void setDetectorTableList(UpdatedValue<Collection<String>> tables) {
+	public void setDetectorTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		detectorTables = tables;
+		detectorComboContentProvider = new DAEComboContentProvider(dir);
 		
 		detectorTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
@@ -116,9 +123,11 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of spectra tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the spectra tables
      */
-	public void setSpectraTableList(UpdatedValue<Collection<String>> tables) {
+	public void setSpectraTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		spectraTables = tables;
+		spectraComboContentProvider = new DAEComboContentProvider(dir);
 		
 		spectraTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
@@ -189,7 +198,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        return comboContentProvider.getContent(wiringTables, "wiring");
+        return wiringComboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -217,7 +226,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        return comboContentProvider.getContent(detectorTables, "det");
+        return detectorComboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -245,7 +254,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        return comboContentProvider.getContent(spectraTables, "spec");
+        return spectraComboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -525,14 +534,4 @@ public class DataAcquisitionViewModel extends ModelObject {
 	private static BinaryChoice vetoIsActive(Boolean selected) {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
-
-    /**
-     * Sets the object responsible for filling the file selection combo boxes
-     * with appropriate options.
-     * 
-     * @param provider The content provider.
-     */
-    public void setComboContentProvider(DAEComboContentProvider provider) {
-        this.comboContentProvider = provider;
-    }
 }

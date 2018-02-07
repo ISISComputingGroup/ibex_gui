@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
@@ -57,17 +58,26 @@ public class Variables {
     /**
      * The name associated with the "blank" synoptic from the BlockServer.
      */
-    public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
+    public static final String NONE_SYNOPTIC_NAME = ConfigEditing.NONE_SYNOPTIC_NAME;
 
     /**
      * The pv associated with the "blank" synoptic from the BlockServer.
      */
-    public static final String NONE_SYNOPTIC_PV = "__BLANK__";
+    public static final String NONE_SYNOPTIC_PV = ConfigEditing.NONE_SYNOPTIC_PV;
 
+    /**
+     * Facilitates setting the current synoptic.
+     */
     public final Writable<String> synopticSetter;
 
+    /**
+     * Facilitates deleting synoptics.
+     */
     public final Writable<Collection<String>> synopticsDeleter;
 
+    /**
+     * A list of information about the currently available synoptics.
+     */
     public final ForwardingObservable<Collection<SynopticInfo>> available;
 
     /**

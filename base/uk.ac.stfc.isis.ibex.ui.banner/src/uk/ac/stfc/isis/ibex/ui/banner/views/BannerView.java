@@ -36,11 +36,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.banner.Banner;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
@@ -53,12 +52,6 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 @SuppressWarnings("checkstyle:magicnumber")
 public class BannerView {
 
-    /**
-     * Standard constructor.
-     */
-    public BannerView() {
-    }
-
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
     /**
@@ -69,8 +62,8 @@ public class BannerView {
 
     private final Banner banner = Banner.getInstance();
 
+    private final IndicatorModel daeSimulationModeModel = new DaeSimulationModeModel();
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
-    private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
 
@@ -78,7 +71,7 @@ public class BannerView {
     private GridLayout glBannerItemPanel;
 
     private Indicator managerMode;
-    private Indicator batonUser;
+    private Indicator daeSimulationMode;
     private Indicator inMotion;
     private Control motionControl;
     
@@ -104,16 +97,16 @@ public class BannerView {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
+        
+        daeSimulationMode = new Indicator(parent, SWT.NONE, daeSimulationModeModel, ALARM_FONT);
+        GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdDaeSimulationMode.widthHint = 210;
+        daeSimulationMode.setLayoutData(gdDaeSimulationMode);
 
         managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
         GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdManagerMode.widthHint = 210;
         managerMode.setLayoutData(gdManagerMode);
-
-        batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
-        GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdBatonUser.widthHint = 210;
-        batonUser.setLayoutData(gdBatonUser);
 
         inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
         GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);

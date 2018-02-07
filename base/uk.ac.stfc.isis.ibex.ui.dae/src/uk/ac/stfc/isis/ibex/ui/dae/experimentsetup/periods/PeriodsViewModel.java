@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
@@ -64,9 +65,11 @@ public class PeriodsViewModel extends ModelObject {
      * Sets the list of period files currently available to the instrument.
      * 
      * @param files the list of currently available period files.
+     * @param dir the directory containing the files
      */
-	public void setPeriodFilesList(UpdatedValue<Collection<String>> files) {
+	public void setPeriodFilesList(UpdatedValue<Collection<String>> files, ForwardingObservable<String> dir) {
 		periodFiles = files;
+		comboContentProvider = new DAEComboContentProvider(dir);
 		
 		periodFiles.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override

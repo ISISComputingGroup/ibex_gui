@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -33,6 +36,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -56,6 +60,7 @@ public class ExperimentSetup {
 	private DataAcquisitionPanel dataAcquisition;
 	private PeriodsPanel periods;
 	
+	private DataBindingContext bindingContext = new DataBindingContext();
 	private final int timeToDisplayDialog = 2;
     private SendingChangesDialog sendingChanges;
 
@@ -134,8 +139,7 @@ public class ExperimentSetup {
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
 
-        RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
-        SendChangesButton btnSendChanges = new SendChangesButton(content, SWT.NONE, rsvm.actions().begin);
+        Button btnSendChanges = new Button(content, SWT.NONE);
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -147,6 +151,10 @@ public class ExperimentSetup {
         });
         btnSendChanges.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
+        
+        //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
+        RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));
         
         bind(viewModel.experimentSetup());
         setModel(viewModel);

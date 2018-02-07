@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.help.Help;
 
+
 /**
  * A panel showing the Ibex client and server version numbers.
  */
@@ -48,6 +49,8 @@ public class VersionPanel extends Composite {
     private Label javaVersion;
     /** The path to the Java that the client is using */
     private Label javaPathLabel;
+    /** The PV prefix the client is using */
+    private Label clientPvPrefix;
 
     /**
      * Construct a new version panel.
@@ -59,26 +62,36 @@ public class VersionPanel extends Composite {
 	public VersionPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
-		
-		Label lblClientVersion = new Label(this, SWT.NONE);
-		lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblClientVersion.setText("Client Version:");
-		
-		clientVersion = new Label(this, SWT.NONE);
-		clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        Label lblClientVersion = new Label(this, SWT.NONE);
+        lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblClientVersion.setText("Client Version:");
+
+        clientVersion = new Label(this, SWT.NONE);
+        clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
         final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
         clientVersion.setText(versionText);
-		
+
+        Label lblPvPrefix = new Label(this, SWT.NONE);
+        lblPvPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPvPrefix.setText("Client PV Prefix:");
+
+        clientPvPrefix = new Label(this, SWT.NONE);
+        clientPvPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        // Not bound as fixed
+        final String PvPrefix = Help.getInstance().getPvPrefix();
+        clientPvPrefix.setText(PvPrefix);
+
 		Label lblServerVersion = new Label(this, SWT.NONE);
 		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblServerVersion.setText("Server Version:");
-		
+
 		serverVersion = new Label(this, SWT.NONE);
 		GridData serverVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		serverVersionGd.widthHint = AboutDialogBox.WIDTH;
 		serverVersion.setLayoutData(serverVersionGd);
-		
+
         Label lblJavaVersion = new Label(this, SWT.NONE);
         lblJavaVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaVersion.setText("Java Version:");

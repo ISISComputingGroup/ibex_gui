@@ -46,4 +46,4 @@ final class TestableIOSObservable<T> extends ForwardingObservable<T> {
 	public void setConnectionStatus(boolean isConnected) {
 		super.setConnectionStatus(isConnected);
 	}
-};
+}

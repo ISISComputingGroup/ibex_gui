@@ -18,4 +18,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gef;bundle-version="3.10.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: uk.ac.stfc.isis.ibex.ui.dae
+Export-Package: uk.ac.stfc.isis.ibex.ui.dae,
+ uk.ac.stfc.isis.ibex.ui.dae.experimentsetup
