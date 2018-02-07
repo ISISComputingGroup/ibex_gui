@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Journal
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.journal;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.journal.Journal
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui.workbench,
+ org.eclipse.jface,
+ org.eclipse.core.resources,
+ uk.ac.stfc.isis.ibex.databases,
+ org.eclipse.osgi,
+ uk.ac.stfc.isis.ibex.model,
+ uk.ac.stfc.isis.ibex.instrument
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.stfc.isis.ibex.journal

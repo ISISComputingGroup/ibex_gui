@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the preferences for dealing with the log messages.
+ * The viewmodels used by the journal viewer front end.
  */
-package uk.ac.stfc.isis.ibex.log.preferences;
+package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
