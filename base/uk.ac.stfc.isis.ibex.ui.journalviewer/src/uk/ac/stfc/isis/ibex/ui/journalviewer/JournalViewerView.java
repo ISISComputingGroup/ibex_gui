@@ -42,22 +42,26 @@ public class JournalViewerView extends ViewPart {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
 	
+	private static final int LABEL_FONT_SIZE = 11;
+	private static final int HEADER_FONT_SIZE = 16;
+	
     private Label lblError;
 
 	/**
 	 * Create contents of the view part.
-	 * @param parent
+	 * 
+	 * @param parent - Parent UI element
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
 
 		Label lblTitle = new Label(parent, SWT.NONE);
-		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
+		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
 		Label lblDescription = new Label(parent, SWT.NONE);
-		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
 
         lblError = new Label(parent, SWT.NONE);
