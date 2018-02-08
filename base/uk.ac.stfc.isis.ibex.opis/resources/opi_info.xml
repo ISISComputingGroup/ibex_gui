@@ -902,6 +902,19 @@
 				<macros>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Gem jaw set</key>
+			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
+				<type>JAWS</type>
+				<path>jaws/gem_jaws/Jaws_gem.opi</path>
+				<description>The OPI for the Gem jaw set. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>		
 		<entry>
 			<key>Instron stress rig</key>
