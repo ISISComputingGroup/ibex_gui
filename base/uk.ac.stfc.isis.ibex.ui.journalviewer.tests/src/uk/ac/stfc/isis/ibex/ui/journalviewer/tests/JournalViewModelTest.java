@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -27,7 +27,6 @@ import static org.mockito.Mockito.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,9 +43,6 @@ public class JournalViewModelTest {
 
     @Before
     public void setUp() {
-        if (Display.getCurrent() == null) {
-            new Display();
-        }
         model = mock(JournalModel.class);
     }
 
@@ -70,7 +66,7 @@ public class JournalViewModelTest {
     public void GIVEN_connection_success_THEN_message_colour_is_neutral() {
         // Arrange
         when(model.getConnectionSuccess()).thenReturn(true);
-        Color expected = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+        Color expected = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
 
         // Act
         viewModel = new JournalViewModel(model);
@@ -100,7 +96,7 @@ public class JournalViewModelTest {
     public void GIVEN_connection_failed_THEN_message_colour_is_error() {
         // Arrange
         when(model.getConnectionSuccess()).thenReturn(false);
-        Color expected = SWTResourceManager.getColor(SWT.COLOR_RED);
+        Color expected = Display.getDefault().getSystemColor(SWT.COLOR_RED);
 
         // Act
         viewModel = new JournalViewModel(model);

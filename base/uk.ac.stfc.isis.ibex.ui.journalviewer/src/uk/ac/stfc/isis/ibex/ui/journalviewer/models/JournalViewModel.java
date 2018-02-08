@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -26,7 +26,7 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -39,12 +39,12 @@ public class JournalViewModel extends ModelObject {
     /**
      * A neutral color for the status message text.
      */
-    private static final Color NEUTRAL_COLOR = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+    private static final Color NEUTRAL_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
 
     /**
      * A color indicating an error for the status message text.
      */
-    private static final Color ERROR_COLOR = SWTResourceManager.getColor(SWT.COLOR_RED);
+    private static final Color ERROR_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_RED);
 
     private JournalModel model;
     private Color color;

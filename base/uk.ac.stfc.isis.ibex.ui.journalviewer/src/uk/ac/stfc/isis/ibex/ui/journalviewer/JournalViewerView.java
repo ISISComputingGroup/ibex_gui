@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -42,6 +42,9 @@ public class JournalViewerView {
      * The view ID.
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
+	
+	private static final int LABEL_FONT_SIZE = 11;
+	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
 
