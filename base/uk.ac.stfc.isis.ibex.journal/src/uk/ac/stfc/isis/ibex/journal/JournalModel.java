@@ -21,10 +21,12 @@ package uk.ac.stfc.isis.ibex.journal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -38,6 +40,7 @@ public class JournalModel extends ModelObject implements Runnable {
     private boolean connectionSuccess = false;
 
     private final static int REFRESH_INTERVAL = 60 * 1000;
+    private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -84,6 +87,7 @@ public class JournalModel extends ModelObject implements Runnable {
         } catch (Exception ex) {
             setConnectionSuccess(false);
             setMessage(Rdb.getError(ex).toString());
+            LOG.error(ex);
         }
     }
 

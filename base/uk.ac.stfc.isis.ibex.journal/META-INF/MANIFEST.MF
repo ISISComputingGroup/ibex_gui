@@ -11,7 +11,9 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.databases,
  org.eclipse.osgi,
  uk.ac.stfc.isis.ibex.model,
- uk.ac.stfc.isis.ibex.instrument
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.logger
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.journal
+Import-Package: org.apache.logging.log4j
