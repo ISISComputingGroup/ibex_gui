@@ -41,7 +41,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>175</height>
+    <height>151</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -102,7 +102,7 @@
       <width>109</width>
       <x>-6</x>
       <name>Label_2</name>
-      <y>30</y>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -143,7 +143,7 @@
       <width>109</width>
       <x>-6</x>
       <name>Label_2</name>
-      <y>60</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -184,7 +184,7 @@
       <width>64</width>
       <x>210</x>
       <name>Label_2</name>
-      <y>6</y>
+      <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -225,7 +225,7 @@
       <width>64</width>
       <x>114</x>
       <name>Label_2</name>
-      <y>6</y>
+      <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -277,7 +277,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>204</x>
       <name>Text Update</name>
-      <y>60</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -328,7 +328,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>204</x>
       <name>Text Update</name>
-      <y>30</y>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -379,7 +379,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>114</x>
       <name>Text Update</name>
-      <y>60</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -430,7 +430,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>114</x>
       <name>Text Update</name>
-      <y>30</y>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -481,7 +481,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>162</x>
       <name>Text Update</name>
-      <y>30</y>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -532,7 +532,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>162</x>
       <name>Text Update</name>
-      <y>60</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -583,7 +583,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>252</x>
       <name>Text Update</name>
-      <y>30</y>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -634,7 +634,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>252</x>
       <name>Text Update</name>
-      <y>60</y>
+      <y>48</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -674,7 +674,7 @@ $(pv_value)</tooltip>
       <width>109</width>
       <x>-6</x>
       <name>Label_2</name>
-      <y>90</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -712,10 +712,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>109</width>
-      <x>-6</x>
+      <width>103</width>
+      <x>0</x>
       <name>Label_1</name>
-      <y>120</y>
+      <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -751,7 +751,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:JAWS$(NUMBER):HGAP</pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HCENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -767,7 +767,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>204</x>
       <name>Text Update</name>
-      <y>120</y>
+      <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -802,7 +802,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:JAWS$(NUMBER):VGAP</pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VCENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -818,7 +818,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>204</x>
       <name>Text Update_1</name>
-      <y>90</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -853,7 +853,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:JAWS$(NUMBER):HGAP:SP</pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HCENT:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -869,7 +869,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>114</x>
       <name>Text Update_2</name>
-      <y>120</y>
+      <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -904,7 +904,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:JAWS$(NUMBER):VGAP:SP</pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VCENT:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -920,7 +920,7 @@ $(pv_value)</tooltip>
       <width>49</width>
       <x>114</x>
       <name>Text Update_3</name>
-      <y>90</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -971,7 +971,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>162</x>
       <name>Text Update_4</name>
-      <y>90</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1022,7 +1022,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>162</x>
       <name>Text Update_5</name>
-      <y>120</y>
+      <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1073,7 +1073,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>252</x>
       <name>Text Update_6</name>
-      <y>90</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1124,7 +1124,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>252</x>
       <name>Text Update_7</name>
-      <y>120</y>
+      <y>96</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
