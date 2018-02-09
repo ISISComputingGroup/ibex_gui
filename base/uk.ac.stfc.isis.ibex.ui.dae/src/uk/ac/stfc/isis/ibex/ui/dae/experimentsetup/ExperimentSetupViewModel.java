@@ -62,6 +62,8 @@ public class ExperimentSetupViewModel {
     /**
      * updates the experiment setup saved in the blockserver with changes made
      * in the frontend.
+     * 
+     * @throws IOException if the update failed
      */
 	public void updateDae() throws IOException {
 		model.sendAllSettings();

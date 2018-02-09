@@ -57,6 +57,8 @@ public abstract class SettingsGateway implements Closable {
 	
 	/**
 	 * Sends the update.
+	 * 
+	 * @throws IOException if the send failed
 	 */
 	public synchronized void sendUpdate() throws IOException {
 		updateWriter.write(asText());

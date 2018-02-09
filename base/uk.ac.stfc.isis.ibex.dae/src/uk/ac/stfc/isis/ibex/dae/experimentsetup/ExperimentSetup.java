@@ -176,6 +176,8 @@ public class ExperimentSetup extends Closer  {
 	
     /**
      * Sends all changes made to the experiment setup in the GUI to the server.
+     * 
+     * @throws IOException if the send failed
      */
 	public synchronized void sendAllSettings() throws IOException {
 		IsisLog.getLogger(this.getClass()).info("Sending new DAE settings...");

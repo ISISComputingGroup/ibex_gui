@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class ObservingUpdateSettings extends XMLBackedUpdateSettings implements Closable {
 	
@@ -46,10 +45,18 @@ public class ObservingUpdateSettings extends XMLBackedUpdateSettings implements 
 		};
 	}
 	
+	/**
+	 * Sends the update via the settings gateway.
+	 * @see SettingsGateway.sendUpdate
+	 * @throws IOException if the send failed
+	 */
 	public void sendUpdate() throws IOException {
 		gateway.sendUpdate();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
 		gateway.close();

@@ -45,10 +45,18 @@ public class ObservingDaeSettings extends XmlBackedDaeSettings implements Closab
 		};
 	}
 	
+	/**
+	 * Sends the update via the settings gateway.
+	 * @see SettingsGateway.sendUpdate
+	 * @throws IOException if the send failed
+	 */
 	public void sendUpdate() throws IOException {
 		gateway.sendUpdate();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
 		gateway.close();
