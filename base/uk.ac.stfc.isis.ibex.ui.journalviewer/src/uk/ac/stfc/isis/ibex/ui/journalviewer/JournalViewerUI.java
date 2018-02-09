@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.journal.Journal;
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -35,11 +37,13 @@ public class JournalViewerUI extends AbstractUIPlugin {
 
 	// The shared instance
 	private static JournalViewerUI plugin;
+    private JournalViewModel model;
 	
 	/**
      * The constructor.
      */
 	public JournalViewerUI() {
+        model = new JournalViewModel(Journal.getDefault().getModel());
 	}
 	
 	/*
@@ -70,5 +74,14 @@ public class JournalViewerUI extends AbstractUIPlugin {
 	public static JournalViewerUI getDefault() {
 		return plugin;
 	}
+
+    /**
+     * Returns the viewmodel for the Journal Viewer UI.
+     * 
+     * @return the viewmodel
+     */
+    public JournalViewModel getModel() {
+        return model;
+    }
 
 }

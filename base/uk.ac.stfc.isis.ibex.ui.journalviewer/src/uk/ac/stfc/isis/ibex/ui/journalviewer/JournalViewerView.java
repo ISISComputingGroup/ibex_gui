@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,12 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
 /**
  * Journal viewer main view.
@@ -39,6 +45,8 @@ public class JournalViewerView extends ViewPart {
 	private static final int LABEL_FONT_SIZE = 11;
 	private static final int HEADER_FONT_SIZE = 16;
 	
+    private Label lblError;
+
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -47,7 +55,7 @@ public class JournalViewerView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
-		
+
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
@@ -55,8 +63,23 @@ public class JournalViewerView extends ViewPart {
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+
+        lblError = new Label(parent, SWT.NONE);
+        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setText("placeholder");
+
+        bind(JournalViewerUI.getDefault().getModel());
 	}
 	
+    private void bind(JournalViewModel model) {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
+                BeanProperties.value("message").observe(model));
+        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
+                BeanProperties.value("color").observe(model));
+    }
+
 	@Override
 	public void dispose() {
 	}
