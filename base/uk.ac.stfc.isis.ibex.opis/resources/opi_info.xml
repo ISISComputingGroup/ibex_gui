@@ -1303,7 +1303,7 @@
         <categories>
           <category>Cryogenics</category>
         </categories>
-        <type>CRYO_LEVEL_GUAGE</type>
+        <type>CRYO_LEVEL_GAUGE</type>
         <path>ilm200.opi</path>
         <description>The OPI for the ILM200</description>
         <macros>
