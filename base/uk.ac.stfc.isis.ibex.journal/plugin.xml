@@ -7,12 +7,10 @@
             class="uk.ac.stfc.isis.ibex.journal.preferences.PreferenceInitializer">
       </initializer>
    </extension>
-   
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
             class="uk.ac.stfc.isis.ibex.journal.OnInstrumentSwitch">
       </InstrumentInfoReceiver>
    </extension>
-
 </plugin>
