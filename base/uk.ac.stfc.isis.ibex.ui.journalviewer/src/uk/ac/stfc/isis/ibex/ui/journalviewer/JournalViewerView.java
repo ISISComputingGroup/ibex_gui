@@ -46,6 +46,7 @@ public class JournalViewerView extends ViewPart {
 	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
+    private Label lblDescription;
 
 	/**
 	 * Create contents of the view part.
@@ -60,7 +61,7 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-		Label lblDescription = new Label(parent, SWT.NONE);
+		lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
 
@@ -78,6 +79,8 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
                 BeanProperties.value("color").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
+                BeanProperties.value("runs").observe(model));
     }
 
 	@Override

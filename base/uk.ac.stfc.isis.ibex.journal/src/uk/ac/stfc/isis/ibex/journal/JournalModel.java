@@ -18,8 +18,21 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
+import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -39,7 +52,11 @@ public class JournalModel extends ModelObject implements Runnable {
     private String message = "";
     private boolean connectionSuccess = false;
 
-    private final static int REFRESH_INTERVAL = 60 * 1000;
+	private List<Map<JournalField, String>> runs = Collections.emptyList();
+
+	private EnumSet<JournalField> selectedFields = EnumSet.allOf(JournalField.class);
+
+    private final static int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
 
 	/**
@@ -73,22 +90,97 @@ public class JournalModel extends ModelObject implements Runnable {
      * Attempts to connect to the database and updates the status accordingly.
      */
     public void refresh() {
+    	Connection connection = null;
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
             String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
             String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
-            Rdb rdb = Rdb.connectToDatabase(schema, user, password);
+            connection = Rdb.connectToDatabase(schema, user, password).getConnection();
 
             String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
             setConnectionSuccess(true);
             setMessage(timeStamp);
-
+            updateRuns(connection);
         } catch (Exception ex) {
             setConnectionSuccess(false);
             setMessage(Rdb.getError(ex).toString());
+            setRuns(Collections.emptyList());
             LOG.error(ex);
+        } finally {
+        	try {
+        		connection.close();
+        	} catch (SQLException | NullPointerException e) {
+				// Do nothing - connection was null, or already closed.
+			}
         }
+    }
+    
+    /**
+     * Updates the runs from the database.
+     * @param connection - the SQL connection to use
+     * @throws SQLException - If there was an error while querying the database
+     */
+    private void updateRuns(Connection connection) throws SQLException {
+    	
+    	if (getSelectedFields().size() <= 0) {
+    		setRuns(Collections.emptyList());
+    		return;
+    	}
+    	
+    	ResultSet rs = connection.createStatement().executeQuery(constructSQLQuery());
+    	
+    	List<Map<JournalField, String>> runs = new ArrayList<>();
+    	
+    	while(rs.next()) {
+    		Map<JournalField, String> run = new HashMap<>();
+    		for (JournalField property : selectedFields) {
+    			try {
+    				run.put(property, rs.getString(property.getSqlFieldName()));
+    			} catch (SQLException e) {
+					run.put(property, "None");
+				}
+    		}  
+    		runs.add(Collections.unmodifiableMap(run));
+    	}
+    	
+    	setRuns(Collections.unmodifiableList(runs));
+    }
+    
+    private String constructSQLQuery() {
+    	
+    	Set<JournalField> selectedFields = getSelectedFields();
+    	
+    	Set<String> selectedFieldNames = new HashSet<String>();
+    	for (JournalField field : selectedFields) {
+    		selectedFieldNames.add(field.getSqlFieldName());
+    	}
+    	
+    	String fields;
+    	if(selectedFieldNames.size() > 0) {
+    		fields = String.join(", ", selectedFieldNames.toArray(new String[selectedFieldNames.size()]));
+    	} else {
+    		fields = "null";
+    	}
+    	
+    	String query = String.format("SELECT %s FROM journal_entries LIMIT 1000", fields);
+    	return query;
+    }
+    
+    private void setRuns(List<Map<JournalField, String>> runs) {
+    	firePropertyChange("runs", this.runs, this.runs = runs);
+    }
+    
+    public List<Map<JournalField, String>> getRuns() {
+    	return runs;
+    }
+    
+    public void setSelectedFields(EnumSet<JournalField> selected) {
+    	firePropertyChange("selected_fields", this.selectedFields, this.selectedFields = selected);
+    }
+    
+    public EnumSet<JournalField> getSelectedFields() {
+    	return selectedFields;
     }
 
     /**
