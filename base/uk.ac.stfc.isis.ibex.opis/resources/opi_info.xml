@@ -1216,7 +1216,7 @@
         <categories>
           <category>Cryogenics</category>
         </categories>
-        <type>HE_LEVEL_GAUGE</type>
+        <type>CRYO_LEVEL_GAUGE</type>
         <path>hlg.opi</path>
         <description>The OPI for the helium level gauge.</description>
         <macros>
@@ -1300,8 +1300,10 @@
     <entry>
       <key>ILM200</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <type>CRYO_LEVEL_GUAGE</type>
         <path>ilm200.opi</path>
         <description>The OPI for the ILM200</description>
         <macros>

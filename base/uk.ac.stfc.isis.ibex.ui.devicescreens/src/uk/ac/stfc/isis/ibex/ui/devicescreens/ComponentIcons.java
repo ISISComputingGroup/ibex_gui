@@ -137,8 +137,8 @@ public final class ComponentIcons {
                 return "stress_rig";
             case GAS_EXCHANGE:
                 return "gas_exchange";
-            case HE_LEVEL_GAUGE:
-                return "he_level_gauge";
+            case CRYO_LEVEL_GAUGE:
+                return "cryo_level_gauge";
             case OSCILLATING_COLLIMATOR:
                 return "oscillating_collimator";
             case SM300_SAMPLE_CHANGER:
