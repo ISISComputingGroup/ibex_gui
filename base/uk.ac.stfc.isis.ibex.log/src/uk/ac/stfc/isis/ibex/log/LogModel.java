@@ -27,8 +27,6 @@ import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.activemq.ReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
@@ -51,12 +49,6 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * cache. When the cache size is exceeded, older messages will be dropped
      */
     private static final int MAX_CACHE_MESSAGES = 10000;
-
-    private static final String CONNECTION_ERROR_MESSAGE = "Error connecting to MySQL database.";
-
-    private static final String UNKNOWN_DATABASE_MESSAGE = "Unknown database name.";
-
-    private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
 
     private IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
 
@@ -145,7 +137,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
             LogMessageQuery query = new LogMessageQuery(rdb);
             return query.getMessages(field, value, from, to);
         } catch (SQLException ex) {
-            throw new Exception(errorMessage(ex), ex);
+            throw new Exception(Rdb.getError(ex).toString(), ex);
         }
     }
 
@@ -155,17 +147,5 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
             receiver.clearMessages();
         }
-    }
-
-    private String errorMessage(SQLException ex) {
-        if (ex instanceof CommunicationsException) {
-            return CONNECTION_ERROR_MESSAGE;
-        }
-
-        if (ex.getMessage().startsWith("Unknown database")) {
-            return UNKNOWN_DATABASE_MESSAGE;
-        }
-
-        return ACCESS_DENIED_MESSAGE;
     }
 }
