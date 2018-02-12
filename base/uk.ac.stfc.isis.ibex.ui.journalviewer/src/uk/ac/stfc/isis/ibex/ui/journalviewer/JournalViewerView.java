@@ -29,6 +29,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -49,6 +50,7 @@ public class JournalViewerView extends ViewPart {
 	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
+    private Label lblLastUpdate;
     private Button btnRefresh;
 
 	/**
@@ -71,7 +73,12 @@ public class JournalViewerView extends ViewPart {
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
+        
+        lblLastUpdate = new Label(parent, SWT.NONE);
+        lblLastUpdate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        lblLastUpdate.setText("placeholder");
 
         bind(JournalViewerUI.getDefault().getModel());
 	}
@@ -81,8 +88,8 @@ public class JournalViewerView extends ViewPart {
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("color").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
+                BeanProperties.value("lastUpdate").observe(model));
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override

@@ -18,7 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.logging.log4j.Logger;
@@ -38,8 +37,9 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private String message = "";
     private boolean connectionSuccess = false;
+    private Date lastUpdate;
 
-    private final static int REFRESH_INTERVAL = 60 * 1000;
+    private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
 
 	/**
@@ -52,6 +52,8 @@ public class JournalModel extends ModelObject implements Runnable {
         this.preferenceStore = preferenceStore;
         Thread thread = new Thread(this);
         thread.start();
+
+        // TODO get last update
     }
 
     /**
@@ -64,7 +66,7 @@ public class JournalModel extends ModelObject implements Runnable {
             try {
                 Thread.sleep(REFRESH_INTERVAL);
             } catch (InterruptedException e) {
-                // e.printStackTrace();
+                LOG.error("Interrupted while trying to fetch journal data: " + e.getMessage());
             }
         }
     }
@@ -80,9 +82,9 @@ public class JournalModel extends ModelObject implements Runnable {
 
             Rdb rdb = Rdb.connectToDatabase(schema, user, password);
 
-            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
             setConnectionSuccess(true);
-            setMessage(timeStamp);
+            setMessage("");
+            setLastUpdate(new Date());
 
         } catch (Exception ex) {
             setConnectionSuccess(false);
@@ -123,4 +125,20 @@ public class JournalModel extends ModelObject implements Runnable {
         return this.connectionSuccess;
     }
 
+    /**
+     * Sets the date of the last successful update.
+     * 
+     * @param lastUpdate
+     *            The date of the last update
+     */
+    public void setLastUpdate(Date lastUpdate) {
+        firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
+    }
+
+    /**
+     * @return The date of the last successful update.
+     */
+    public Date getLastUpdate() {
+        return this.lastUpdate;
+    }
 }
