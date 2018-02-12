@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.journal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -48,7 +47,7 @@ public class JournalModel extends ModelObject implements Runnable {
     IPreferenceStore preferenceStore;
 
     private String message = "";
-    private boolean connectionSuccess = false;
+    private Date lastUpdate;
 
 	private List<Map<JournalField, String>> runs = Collections.emptyList();
 
@@ -79,7 +78,7 @@ public class JournalModel extends ModelObject implements Runnable {
             try {
                 Thread.sleep(REFRESH_INTERVAL);
             } catch (InterruptedException e) {
-                // e.printStackTrace();
+                LOG.error("Interrupted while trying to fetch journal data: " + e.getMessage());
             }
         }
     }
@@ -96,14 +95,11 @@ public class JournalModel extends ModelObject implements Runnable {
 
             connection = Rdb.connectToDatabase(schema, user, password).getConnection();
 
-            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
-            setConnectionSuccess(true);
-            setMessage(timeStamp);
+            setMessage("");
+            setLastUpdate(new Date());
             updateRuns(connection);
         } catch (Exception ex) {
-            setConnectionSuccess(false);
             setMessage(Rdb.getError(ex).toString());
-            setRuns(Collections.<Map<JournalField, String>>emptyList());
             LOG.error(ex);
         } finally {
         	try {
@@ -112,6 +108,10 @@ public class JournalModel extends ModelObject implements Runnable {
 				// Do nothing - connection was null, or already closed.
 			}
         }
+    }
+    
+    public void clearRuns() {
+    	
     }
     
     /**
@@ -222,19 +222,19 @@ public class JournalModel extends ModelObject implements Runnable {
     }
 
     /**
-     * Sets the current connection status.
+     * Sets the date of the last successful update.
      * 
-     * @param connectionSuccess The connection status
+     * @param lastUpdate
+     *            The date of the last update
      */
-    public void setConnectionSuccess(boolean connectionSuccess) {
-        firePropertyChange("connectionSuccess", this.connectionSuccess, this.connectionSuccess = connectionSuccess);
+    public void setLastUpdate(Date lastUpdate) {
+        firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
     }
 
     /**
-     * @return The connection status
+     * @return The date of the last successful update.
      */
-    public boolean getConnectionSuccess() {
-        return this.connectionSuccess;
+    public Date getLastUpdate() {
+        return this.lastUpdate;
     }
-
 }

@@ -29,6 +29,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -51,9 +52,12 @@ public class JournalViewerView extends ViewPart {
 	
     private Label lblError;
     private Label lblDescription;
+    private Label lblLastUpdate;
     
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
+    
+    private Button btnRefresh;
 
 	/**
 	 * Create contents of the view part.
@@ -67,6 +71,9 @@ public class JournalViewerView extends ViewPart {
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
+		
+        btnRefresh = new Button(parent, SWT.NONE);
+        btnRefresh.setText("Refresh");
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
@@ -92,7 +99,12 @@ public class JournalViewerView extends ViewPart {
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
+        
+        lblLastUpdate = new Label(parent, SWT.NONE);
+        lblLastUpdate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        lblLastUpdate.setText("placeholder");
 
         bind();
 	}
@@ -100,10 +112,18 @@ public class JournalViewerView extends ViewPart {
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("color").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
+                BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
                 BeanProperties.value("runs").observe(model));
+        
+        btnRefresh.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.refresh();
+            }
+        });
+        
     }
 
     /**
