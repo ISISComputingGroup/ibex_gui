@@ -145,6 +145,11 @@ public class JournalModel extends ModelObject implements Runnable {
     	setRuns(Collections.unmodifiableList(runs));
     }
     
+    /**
+     * Constructs the SQL query which extracts all relevant information from the database.
+     * @see getSelectedFields for the fields which will be selected.
+     * @return the SQL query to be executed.
+     */
     private String constructSQLQuery() {
     	
     	Set<JournalField> selectedFields = getSelectedFields();
@@ -169,15 +174,33 @@ public class JournalModel extends ModelObject implements Runnable {
     	firePropertyChange("runs", this.runs, this.runs = runs);
     }
     
+    /**
+     * Gets the runs that were extracted from the database.
+     * 
+     * Format is a List of Maps, where each element in the list is a single run.
+     * 
+     * The Maps map a JournalField enum to their value as extracted from the database. 
+     * A JournalField will only be present in this map if it is selected (@see getSelectedFields).
+     * 
+     * @return the runs
+     */
     public List<Map<JournalField, String>> getRuns() {
     	return runs;
     }
     
+    /**
+     * Sets the selected fields.
+     * @param selected an enumset containing all of the JournalFields which are currently selected
+     */
     public void setSelectedFields(EnumSet<JournalField> selected) {
     	this.selectedFields = selected;
     	refresh();
     }
     
+    /**
+     * Gets the set of fields which are currently selected.
+     * @return an enumset instance containing the elements of the JournalField enum which are currently selected
+     */
     public EnumSet<JournalField> getSelectedFields() {
     	return selectedFields;
     }

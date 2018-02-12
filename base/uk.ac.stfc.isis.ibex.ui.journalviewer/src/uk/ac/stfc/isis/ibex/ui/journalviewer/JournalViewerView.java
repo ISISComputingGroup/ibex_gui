@@ -99,17 +99,17 @@ public class JournalViewerView extends ViewPart {
 	}
 	
     private void bind() {
-        
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
                 BeanProperties.value("color").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
                 BeanProperties.value("runs").observe(model));
-        
-        
     }
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void setFocus() {
 	}
