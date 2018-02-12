@@ -26,7 +26,7 @@ public class StringNode extends XmlNode<String> {
 	}
 
 	@Override
-	public String value() {
+	public synchronized String value() {
 		if (node() == null) {
 			return null;
 		}
@@ -35,7 +35,7 @@ public class StringNode extends XmlNode<String> {
 	}
 
 	@Override
-	public void setValue(String value) {
+	public synchronized void setValue(String value) {
 		if (node() != null) {
 			node().setTextContent(value);		
 		}

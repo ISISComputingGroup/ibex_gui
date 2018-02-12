@@ -103,7 +103,7 @@ public class DAEComboContentProviderTest {
     }
 
     @Test
-    public void GIVEN_list_with_values_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values_and_blank_line() {
+    public void GIVEN_list_with_values_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values() {
     	
     	// Arrange
     	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
@@ -116,7 +116,7 @@ public class DAEComboContentProviderTest {
     	listValues.add(pattern + "Table3");
     	fileList.setValue(listValues);
     	
-    	String [] expectedValue = {" ", pattern + "Table1", pattern + "Table2", pattern + "Table3"};  // Blank line added at beginning 
+    	String [] expectedValue = {pattern + "Table1", pattern + "Table2", pattern + "Table3"};
     	
         // Act
         String[] content = contentProvider.getContent(fileList, pattern);
@@ -127,7 +127,7 @@ public class DAEComboContentProviderTest {
 
     @Test
     // The current GUI logic relies on the DAE IOC to filter out non-matching files
-    public void GIVEN_list_with_values_not_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values_and_blank_line() {
+    public void GIVEN_list_with_values_not_matching_pattern_WHEN_content_requested_THEN_returned_value_contains_all_list_values() {
     	
     	// Arrange
     	DAEComboContentProvider contentProvider = new DAEComboContentProvider(mockSource);
@@ -140,7 +140,7 @@ public class DAEComboContentProviderTest {
     	listValues.add("Table3");
     	fileList.setValue(listValues);
     	
-    	String [] expectedValue = {" ", "Table1", "Table2", "Table3"};  // Blank line added at beginning 
+    	String [] expectedValue = {"Table1", "Table2", "Table3"};
     	
         // Act
         String[] content = contentProvider.getContent(fileList, pattern);

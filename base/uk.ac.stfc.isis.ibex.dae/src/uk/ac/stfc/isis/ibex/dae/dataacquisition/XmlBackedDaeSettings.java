@@ -6,12 +6,12 @@
 *
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* terms of the Eclipse public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE public LICENSE V1.0, THE PROGRAM 
 * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+* OR CONDITIONS OF ANY KIND.  See the Eclipse public License v1.0 for more details.
 *
-* You should have received a copy of the Eclipse Public License v1.0
+* You should have received a copy of the Eclipse public License v1.0
 * along with this program; if not, you can obtain a copy from
 * https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
@@ -239,6 +239,7 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	}
 	
 	private void initialiseFromXml() {
+		
         for (XmlNode<?> node : nodes) {
             if (node == null || node.value() == null) {
                 LOG.info("Error, Dae Settings were not initialised correctly from the XML.");
@@ -246,29 +247,33 @@ public class XmlBackedDaeSettings extends DaeSettings {
             }
         }
 
-        super.setMonitorSpectrum(monitorSpectrum.value());
-        super.setFrom(from.value());
-        super.setTo(to.value());
+        setMonitorSpectrum(monitorSpectrum.value());
+        setFrom(from.value());
+        setTo(to.value());
+        
+        setWiringTable(wiringTable.value());
+        setDetectorTable(detectorTable.value());
+        setSpectraTable(spectraTable.value());
 		
-        super.setWiringTable(wiringTable.value());
-        super.setDetectorTable(detectorTable.value());
-        super.setSpectraTable(spectraTable.value());
+        setNewWiringTable(wiringTable.value());
+        setNewDetectorTable(detectorTable.value());
+        setNewSpectraTable(spectraTable.value());
 		
-        super.setTimingSource(daeTimingSource.value());
+        setTimingSource(daeTimingSource.value());
 
-        super.setSmpVeto(smpVeto.value());
-        super.setVeto0(veto0.value());
-        super.setVeto1(veto1.value());
-        super.setVeto2(veto2.value());
-        super.setVeto3(veto3.value());
-        super.setTs2PulseVeto(ts2PulseVeto.value());
-        super.setIsis50HzVeto(isis50HzVeto.value());
-        super.setFermiChopperVeto(fermiChopperVeto.value());
+        setSmpVeto(smpVeto.value());
+        setVeto0(veto0.value());
+        setVeto1(veto1.value());
+        setVeto2(veto2.value());
+        setVeto3(veto3.value());
+        setTs2PulseVeto(ts2PulseVeto.value());
+        setIsis50HzVeto(isis50HzVeto.value());
+        setFermiChopperVeto(fermiChopperVeto.value());
 		
-        super.setFcDelay(fcDelay.value());
-        super.setFcWidth(fcWidth.value());
+        setFcDelay(fcDelay.value());
+        setFcWidth(fcWidth.value());
 		
-        super.setMuonCerenkovPulse(muonCerenkovPulse.value());
-        super.setMuonMsMode(muonMsMode.value());
+        setMuonCerenkovPulse(muonCerenkovPulse.value());
+        setMuonMsMode(muonMsMode.value());
 	}
 }
