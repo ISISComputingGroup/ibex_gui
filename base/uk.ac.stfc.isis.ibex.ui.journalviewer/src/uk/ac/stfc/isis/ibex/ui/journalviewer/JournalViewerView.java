@@ -79,7 +79,7 @@ public class JournalViewerView extends ViewPart {
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
 		selectedContainer.setLayout(gl);
 		
-		for(final JournalField property : JournalField.values()) {
+		for (final JournalField property : JournalField.values()) {
 			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
 			checkbox.setText(property.getFriendlyName());
 			checkbox.setSelection(model.getFieldSelected(property));
