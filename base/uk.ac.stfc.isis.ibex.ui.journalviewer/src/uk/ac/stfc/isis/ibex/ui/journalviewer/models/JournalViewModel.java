@@ -111,7 +111,7 @@ public class JournalViewModel extends ModelObject {
     public String getRuns() {
     	StringBuilder sb = new StringBuilder();
     	for (Map<JournalField, String> run : runs) {
-    		List<JournalField> keys = new ArrayList<>(run.keySet());;
+    		List<JournalField> keys = new ArrayList<>(run.keySet());
     		Collections.sort(keys);
     		for (JournalField field : keys) {
     			sb.append(field.getFriendlyName() + " = " + run.get(field) + ", ");
@@ -126,7 +126,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * Sets a particular journal field to be selected or deselected
+     * Sets a particular journal field to be selected or deselected.
      * @param field an element of the JournalField enum to select
      * @param selected true to select this field, false to deselect it
      */
@@ -141,7 +141,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * Gets whether a particular field is currently selected
+     * Gets whether a particular field is currently selected.
      * @param field the field to get
      * @return true if the field is selected, false otherwise
      */
