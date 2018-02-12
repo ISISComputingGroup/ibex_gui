@@ -101,4 +101,11 @@ public class JournalViewModel extends ModelObject {
         firePropertyChange("color", this.color, this.color = color);
     }
 
+    /**
+     * Refreshes the data from the journal database.
+     */
+    public void refresh() {
+        model.refresh();
+    }
+
 }
