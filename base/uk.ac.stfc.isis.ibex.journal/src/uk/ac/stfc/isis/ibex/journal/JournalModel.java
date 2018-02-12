@@ -103,7 +103,7 @@ public class JournalModel extends ModelObject implements Runnable {
         } catch (Exception ex) {
             setConnectionSuccess(false);
             setMessage(Rdb.getError(ex).toString());
-            setRuns(Collections.emptyList());
+            setRuns(Collections.<Map<JournalField, String>>emptyList());
             LOG.error(ex);
         } finally {
         	try {
@@ -122,7 +122,7 @@ public class JournalModel extends ModelObject implements Runnable {
     private void updateRuns(Connection connection) throws SQLException {
     	
     	if (getSelectedFields().size() <= 0) {
-    		setRuns(Collections.emptyList());
+    		setRuns(Collections.<Map<JournalField, String>>emptyList());
     		return;
     	}
     	
