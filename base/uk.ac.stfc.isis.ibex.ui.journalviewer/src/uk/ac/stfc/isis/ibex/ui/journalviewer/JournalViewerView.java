@@ -52,8 +52,8 @@ public class JournalViewerView extends ViewPart {
     private Label lblError;
     private Label lblDescription;
     
-    private DataBindingContext bindingContext = new DataBindingContext();
-    private JournalViewModel model = JournalViewerUI.getDefault().getModel();
+    private final DataBindingContext bindingContext = new DataBindingContext();
+    private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
 
 	/**
 	 * Create contents of the view part.
@@ -72,9 +72,8 @@ public class JournalViewerView extends ViewPart {
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
 		selectedContainer.setLayout(gl);
 		
-		for(JournalField property : JournalField.values()) {
-			Button checkbox;
-			checkbox = new Button(selectedContainer, SWT.CHECK);
+		for(final JournalField property : JournalField.values()) {
+			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
 			checkbox.setText(property.getFriendlyName());
 			checkbox.setSelection(model.getFieldSelected(property));
 			checkbox.addSelectionListener(new SelectionAdapter() {
