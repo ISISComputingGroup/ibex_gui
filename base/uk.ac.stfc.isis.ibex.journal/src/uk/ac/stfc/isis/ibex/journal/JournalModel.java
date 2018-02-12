@@ -36,7 +36,6 @@ public class JournalModel extends ModelObject implements Runnable {
     IPreferenceStore preferenceStore;
 
     private String message = "";
-    private boolean connectionSuccess = false;
     private Date lastUpdate;
 
     private static final int REFRESH_INTERVAL = 10 * 1000;
@@ -52,8 +51,6 @@ public class JournalModel extends ModelObject implements Runnable {
         this.preferenceStore = preferenceStore;
         Thread thread = new Thread(this);
         thread.start();
-
-        // TODO get last update
     }
 
     /**
@@ -82,12 +79,10 @@ public class JournalModel extends ModelObject implements Runnable {
 
             Rdb rdb = Rdb.connectToDatabase(schema, user, password);
 
-            setConnectionSuccess(true);
             setMessage("");
             setLastUpdate(new Date());
 
         } catch (Exception ex) {
-            setConnectionSuccess(false);
             setMessage(Rdb.getError(ex).toString());
             LOG.error(ex);
         }
@@ -107,22 +102,6 @@ public class JournalModel extends ModelObject implements Runnable {
      */
     public String getMessage() {
         return this.message;
-    }
-
-    /**
-     * Sets the current connection status.
-     * 
-     * @param connectionSuccess The connection status
-     */
-    public void setConnectionSuccess(boolean connectionSuccess) {
-        firePropertyChange("connectionSuccess", this.connectionSuccess, this.connectionSuccess = connectionSuccess);
-    }
-
-    /**
-     * @return The connection status
-     */
-    public boolean getConnectionSuccess() {
-        return this.connectionSuccess;
     }
 
     /**

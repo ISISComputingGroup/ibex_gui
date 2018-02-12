@@ -50,41 +50,9 @@ public class JournalViewModelTest {
     }
 
     @Test
-    public void GIVEN_connection_success_THEN_last_update_time_is_correct() {
+    public void GIVEN_message_in_model_THEN_viewmodel_returns_same_message() {
         // Arrange
-        Date lastUpdate = new Date();
-        when(model.getConnectionSuccess()).thenReturn(true);
-        when(model.getLastUpdate()).thenReturn(lastUpdate);
-        String expected = LAST_UPDATE_MESSAGE + DateFormat.getTimeInstance(DateFormat.MEDIUM).format(lastUpdate);
-
-        // Act
-        viewModel = new JournalViewModel(model);
-        String actual = viewModel.getLastUpdate();
-
-        // Assert
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void GIVEN_last_update_not_today_THEN_last_update_time_contains_day() {
-        // Arrange
-        Date lastUpdate = new Date(System.currentTimeMillis() - DAY_IN_MILLIS);
-        when(model.getConnectionSuccess()).thenReturn(true);
-        when(model.getLastUpdate()).thenReturn(lastUpdate);
-        String expected = LAST_UPDATE_MESSAGE + DateFormat.getDateTimeInstance().format(lastUpdate);
-        // Act
-        viewModel = new JournalViewModel(model);
-        String actual = viewModel.getLastUpdate();
-
-        // Assert
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void GIVEN_connection_failed_THEN_message_shows_error() {
-        // Arrange
-        String error = "Something went wrong";
-        when(model.getConnectionSuccess()).thenReturn(false);
+        String error = "Some message";
         when(model.getMessage()).thenReturn(error);
         String expected = error;
 
@@ -97,9 +65,23 @@ public class JournalViewModelTest {
     }
 
     @Test
+    public void GIVEN_last_updated_is_today_THEN_last_updated_string_contains_time_only() {
+        // Arrange
+        Date lastUpdate = new Date();
+        when(model.getLastUpdate()).thenReturn(lastUpdate);
+        String expected = LAST_UPDATE_MESSAGE + DateFormat.getTimeInstance(DateFormat.MEDIUM).format(lastUpdate);
+
+        // Act
+        viewModel = new JournalViewModel(model);
+        String actual = viewModel.getLastUpdate();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void GIVEN_no_successful_update_THEN_last_update_time_is_NA() {
         // Arrange
-        when(model.getConnectionSuccess()).thenReturn(false);
         when(model.getLastUpdate()).thenReturn(null);
         String expected = LAST_UPDATE_MESSAGE + "N/A";
 
@@ -111,4 +93,18 @@ public class JournalViewModelTest {
         assertEquals(expected, actual);
     }
 
+
+    @Test
+    public void GIVEN_last_update_not_today_THEN_last_updated_string_contains_date_and_time() {
+        // Arrange
+        Date lastUpdate = new Date(System.currentTimeMillis() - DAY_IN_MILLIS);
+        when(model.getLastUpdate()).thenReturn(lastUpdate);
+        String expected = LAST_UPDATE_MESSAGE + DateFormat.getDateTimeInstance().format(lastUpdate);
+        // Act
+        viewModel = new JournalViewModel(model);
+        String actual = viewModel.getLastUpdate();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
