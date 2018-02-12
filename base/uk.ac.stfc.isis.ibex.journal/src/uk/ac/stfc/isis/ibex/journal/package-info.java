@@ -17,6 +17,6 @@
 */
 
 /**
- * Provides the preferences for dealing with the journal database.
+ * Contains classes responsible for communicating with the journal database.
  */
-package uk.ac.stfc.isis.ibex.journal.preferences;
+package uk.ac.stfc.isis.ibex.journal;

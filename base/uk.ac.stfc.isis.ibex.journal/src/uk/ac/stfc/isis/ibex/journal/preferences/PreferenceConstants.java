@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.journal.preferences;
 /**
  * Preference constants related to the journal viewer.
  */
-public class PreferenceConstants {
+public final class PreferenceConstants {
 
     /** The username to connect to the journal database. **/
     public static final String P_JOURNAL_SQL_USERNAME = "sqlJournalUsername";

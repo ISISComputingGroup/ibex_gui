@@ -23,10 +23,9 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -36,19 +35,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class JournalViewModel extends ModelObject {
 
-    /**
-     * A neutral color for the status message text.
-     */
-    private static final Color NEUTRAL_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-
-    /**
-     * A color indicating an error for the status message text.
-     */
-    private static final Color ERROR_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_RED);
-
     private JournalModel model;
-    private Color color;
     private String message;
+    private String lastUpdate;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -70,13 +59,8 @@ public class JournalViewModel extends ModelObject {
     }
 
     private void update() {
-        if (model.getConnectionSuccess()) {
-            setMessage("Last refresh: " + model.getMessage());
-            setColor(NEUTRAL_COLOR);
-        } else {
-            setMessage("Error retrieving data: " + model.getMessage());
-            setColor(ERROR_COLOR);
-        }
+        setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
+        setMessage(model.getMessage());
     }
 
     /**
@@ -91,14 +75,39 @@ public class JournalViewModel extends ModelObject {
     }
 
     /**
-     * @return The color indicating the current connection status.
+     * @return The connection status message.
      */
-    public Color getColor() {
-        return color;
+    public String getLastUpdate() {
+        return lastUpdate;
     }
 
-    private void setColor(Color color) {
-        firePropertyChange("color", this.color, this.color = color);
+    private void setLastUpdate(String lastUpdate) {
+        firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
+    }
+    /**
+     * Refreshes the data from the journal database.
+     */
+    public void refresh() {
+        model.refresh();
     }
 
+    private String dateToString(Date lastUpdate) {
+        if (lastUpdate == null) {
+            return "N/A";
+        }
+        if (isToday(lastUpdate)) {
+            return DateFormat.getTimeInstance(DateFormat.MEDIUM).format(lastUpdate);
+        } else {
+            return DateFormat.getDateTimeInstance().format(lastUpdate);
+        }
+    }
+
+    private boolean isToday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date today = calendar.getTime();
+        return date.after(today);
+    }
 }

@@ -23,9 +23,13 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -46,6 +50,8 @@ public class JournalViewerView extends ViewPart {
 	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
+    private Label lblLastUpdate;
+    private Button btnRefresh;
 
 	/**
 	 * Create contents of the view part.
@@ -60,24 +66,37 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-		Label lblDescription = new Label(parent, SWT.NONE);
-		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
-		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+        new Label(parent, SWT.NONE);
+
+        btnRefresh = new Button(parent, SWT.NONE);
+        btnRefresh.setText("Refresh");
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
+        
+        lblLastUpdate = new Label(parent, SWT.NONE);
+        lblLastUpdate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        lblLastUpdate.setText("placeholder");
 
         bind(JournalViewerUI.getDefault().getModel());
 	}
 	
-    private void bind(JournalViewModel model) {
+    private void bind(final JournalViewModel model) {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("color").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
+                BeanProperties.value("lastUpdate").observe(model));
+        
+        btnRefresh.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.refresh();
+            }
+        });
     }
 
 	@Override
