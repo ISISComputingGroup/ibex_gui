@@ -18,13 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
@@ -163,7 +161,7 @@ public class JournalModel extends ModelObject implements Runnable {
     		fields = "null";
     	}
     	
-    	String query = String.format("SELECT %s FROM journal_entries LIMIT 1000", fields);
+    	String query = String.format("SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT 1000", fields);
     	return query;
     }
     
@@ -176,7 +174,8 @@ public class JournalModel extends ModelObject implements Runnable {
     }
     
     public void setSelectedFields(EnumSet<JournalField> selected) {
-    	firePropertyChange("selected_fields", this.selectedFields, this.selectedFields = selected);
+    	this.selectedFields = selected;
+    	refresh();
     }
     
     public EnumSet<JournalField> getSelectedFields() {

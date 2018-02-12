@@ -23,13 +23,17 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
 /**
@@ -47,6 +51,9 @@ public class JournalViewerView extends ViewPart {
 	
     private Label lblError;
     private Label lblDescription;
+    
+    private DataBindingContext bindingContext = new DataBindingContext();
+    private JournalViewModel model = JournalViewerUI.getDefault().getModel();
 
 	/**
 	 * Create contents of the view part.
@@ -61,6 +68,23 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
+		Composite selectedContainer = new Composite(parent, SWT.NONE);
+		selectedContainer.setLayout(new GridLayout(JournalField.values().length, false));
+		
+		for(JournalField property : JournalField.values()) {
+			Button checkbox;
+			checkbox = new Button(selectedContainer, SWT.CHECK);
+			checkbox.setText(property.getFriendlyName());
+			checkbox.setSelection(model.getFieldSelected(property));
+			checkbox.addSelectionListener(new SelectionAdapter() {
+	            @Override
+	            public void widgetSelected(SelectionEvent e) {
+	                super.widgetSelected(e);
+	                model.setFieldSelected(property, checkbox.getSelection());
+	            }
+	        });
+		}
+		
 		lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
@@ -69,25 +93,22 @@ public class JournalViewerView extends ViewPart {
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
         lblError.setText("placeholder");
 
-        bind(JournalViewerUI.getDefault().getModel());
+        bind();
 	}
 	
-    private void bind(JournalViewModel model) {
-        DataBindingContext bindingContext = new DataBindingContext();
-
+    private void bind() {
+        
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
                 BeanProperties.value("color").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
                 BeanProperties.value("runs").observe(model));
+        
+        
     }
 
 	@Override
-	public void dispose() {
-	}
-
-	@Override
-	public void setFocus() {		
+	public void setFocus() {
 	}
 }
