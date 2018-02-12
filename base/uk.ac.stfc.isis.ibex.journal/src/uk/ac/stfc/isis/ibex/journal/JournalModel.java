@@ -52,7 +52,7 @@ public class JournalModel extends ModelObject implements Runnable {
 
 	private List<Map<JournalField, String>> runs = Collections.emptyList();
 
-	private EnumSet<JournalField> selectedFields = EnumSet.allOf(JournalField.class);
+	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
     private final static int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);

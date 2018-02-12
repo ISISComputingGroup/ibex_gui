@@ -23,6 +23,8 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -110,8 +112,9 @@ public class JournalViewModel extends ModelObject {
     public String getRuns() {
     	StringBuilder sb = new StringBuilder();
     	for (Map<JournalField, String> run : runs) {
-    		
-    		for (JournalField field : run.keySet()) {
+    		List<JournalField> keys = new ArrayList<>(run.keySet());;
+    		Collections.sort(keys);
+    		for (JournalField field : keys) {
     			sb.append(field.getFriendlyName() + " = " + run.get(field) + ", ");
     		}
     		sb.append("\n");
@@ -123,25 +126,17 @@ public class JournalViewModel extends ModelObject {
     	firePropertyChange("runs", this.runs, this.runs = newRuns);
     }
     
-    public void setSelectedFields(EnumSet<JournalField> selectedFields) {
-    	model.setSelectedFields(selectedFields);
-    }
-    
-    private EnumSet<JournalField> getSelectedFields() {
-    	return model.getSelectedFields();
-    }
-    
     public void setFieldSelected(JournalField field, boolean selected) {
-    	EnumSet<JournalField> selectedFields = getSelectedFields();
+    	EnumSet<JournalField> selectedFields = model.getSelectedFields();
     	if (selected) {
     		selectedFields.add(field);
     	} else if (selectedFields.contains(field)) {
     		selectedFields.remove(field);
     	}
-    	setSelectedFields(selectedFields);
+    	model.setSelectedFields(selectedFields);
     }
     
     public boolean getFieldSelected(JournalField field) {
-    	return getSelectedFields().contains(field);
+    	return model.getSelectedFields().contains(field);
     }
 }

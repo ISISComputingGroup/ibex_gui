@@ -68,8 +68,9 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-		Composite selectedContainer = new Composite(parent, SWT.NONE);
-		selectedContainer.setLayout(new GridLayout(JournalField.values().length, false));
+		Composite selectedContainer = new Composite(parent, SWT.FILL);
+		GridLayout gl = new GridLayout(JournalField.values().length, false);
+		selectedContainer.setLayout(gl);
 		
 		for(JournalField property : JournalField.values()) {
 			Button checkbox;
@@ -88,6 +89,7 @@ public class JournalViewerView extends ViewPart {
 		lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
 		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+		lblDescription.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
