@@ -5,12 +5,33 @@ package uk.ac.stfc.isis.ibex.journal;
  */
 public enum JournalField {
 	
+	/** 
+	 * Run number. 
+	 */
 	RUN_NUMBER("Run number", "run_number"),
+	/** 
+	 * Title. 
+	 */
     TITLE("Title", "title"),
+    /** 
+	 * Start time. 
+	 */
 	START_TIME("Start time", "start_time"),
+	/** 
+	 * Duration. 
+	 */
 	DURATION("Duration", "duration"),
+	/** 
+	 * Uamps. 
+	 */
 	UAMPS("uAh", "uamps"),
+	/** 
+	 * RB Number. 
+	 */
 	RB_NUMBER("RB Number", "rb_number"),
+	/** 
+	 * Users. 
+	 */
 	USERS("Users", "users");
 	
 	private final String friendlyName;

@@ -53,7 +53,7 @@ public class JournalModel extends ModelObject implements Runnable {
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
-    private final static int REFRESH_INTERVAL = 10 * 1000;
+    private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
 
 	/**
@@ -111,7 +111,7 @@ public class JournalModel extends ModelObject implements Runnable {
     }
     
     public void clearRuns() {
-    	
+    	setRuns(Collections.<Map<JournalField, String>>emptyList());
     }
     
     /**
@@ -130,7 +130,7 @@ public class JournalModel extends ModelObject implements Runnable {
     	
     	List<Map<JournalField, String>> runs = new ArrayList<>();
     	
-    	while(rs.next()) {
+    	while (rs.next()) {
     		Map<JournalField, String> run = new HashMap<>();
     		for (JournalField property : selectedFields) {
     			try {
@@ -160,7 +160,7 @@ public class JournalModel extends ModelObject implements Runnable {
     	}
     	
     	String fields;
-    	if(selectedFieldNames.size() > 0) {
+    	if (selectedFieldNames.size() > 0) {
     		fields = String.join(", ", selectedFieldNames.toArray(new String[selectedFieldNames.size()]));
     	} else {
     		fields = "null";
