@@ -21,8 +21,10 @@
  */
 package uk.ac.stfc.isis.ibex.ui.journalviewer.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
+import java.util.EnumSet;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -30,6 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
@@ -104,6 +107,24 @@ public class JournalViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void GIVEN_model_says_title_is_selected_THEN_viewmodel_says_title_is_selected() {
+    	when(model.getSelectedFields()).thenReturn(EnumSet.of(JournalField.TITLE));
+    	
+    	viewModel = new JournalViewModel(model);
+    	
+    	assertTrue(viewModel.getFieldSelected(JournalField.TITLE));
+    }
+    
+    @Test
+    public void GIVEN_model_says_title_is_not_selected_THEN_viewmodel_says_title_is_not_selected() {
+    	when(model.getSelectedFields()).thenReturn(EnumSet.noneOf(JournalField.class));
+    	
+    	viewModel = new JournalViewModel(model);
+    	
+    	assertFalse(viewModel.getFieldSelected(JournalField.TITLE));
     }
 
 }
