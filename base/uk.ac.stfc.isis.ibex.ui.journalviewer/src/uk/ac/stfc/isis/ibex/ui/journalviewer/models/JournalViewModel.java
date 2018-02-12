@@ -103,7 +103,6 @@ public class JournalViewModel extends ModelObject {
     }
 
     private boolean isToday(Date date) {
-        System.out.println("Date is " + date);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
