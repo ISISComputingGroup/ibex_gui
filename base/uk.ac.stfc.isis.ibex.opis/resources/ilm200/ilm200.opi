@@ -123,8 +123,14 @@
     <wuid>42e1bc3b:16170739db8:-21f9</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
-    <scripts />
-    <height>175</height>
+    <scripts>
+      <path pathString="disable_nitrogen_controls.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(PV_ROOT)CH1:TYPE</pv>
+        <pv trig="true">$(PV_ROOT)CH1:CURRENT</pv>
+        <pv trig="true">CS:INSTLIST</pv>
+      </path>
+    </scripts>
+    <height>205</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -142,7 +148,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>319</width>
+    <width>313</width>
     <x>6</x>
     <name>Channel 1</name>
     <y>78</y>
@@ -163,7 +169,7 @@
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Current level:</text>
+      <text>Level:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -185,7 +191,7 @@
       <width>96</width>
       <x>6</x>
       <name>Label</name>
-      <y>6</y>
+      <y>34</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -204,7 +210,7 @@
       <wuid>-48159ee9:1567f536160:-5a81</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Fill:</text>
+      <text>Filling:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -226,7 +232,7 @@
       <width>96</width>
       <x>6</x>
       <name>Label_3</name>
-      <y>34</y>
+      <y>62</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -278,7 +284,7 @@ $(pv_value)</tooltip>
       <width>85</width>
       <x>120</x>
       <name>Text Update</name>
-      <y>6</y>
+      <y>34</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -329,7 +335,7 @@ $(pv_value)</tooltip>
       <x>120</x>
       <name>LED</name>
       <data_type>0</data_type>
-      <y>31</y>
+      <y>59</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -371,7 +377,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_9</name>
-      <y>62</y>
+      <y>90</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -423,7 +429,7 @@ $(pv_value)</tooltip>
       <x>122</x>
       <name>LED_1</name>
       <data_type>0</data_type>
-      <y>61</y>
+      <y>89</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -464,8 +470,8 @@ $(pv_value)</tooltip>
       </background_color>
       <width>96</width>
       <x>6</x>
-      <name>Label_2</name>
-      <y>90</y>
+      <name>Scan rate 1 label</name>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -516,8 +522,8 @@ $(pv_value)</tooltip>
       </background_color>
       <width>67</width>
       <x>120</x>
-      <name>Text Update</name>
-      <y>90</y>
+      <name>Scan rate 1 RBV</name>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -554,16 +560,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>90</width>
-      <x>192</x>
-      <name>Button</name>
-      <y>87</y>
+      <width>72</width>
+      <x>204</x>
+      <name>Scan rate 1 button</name>
+      <y>115</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/binarySwitch.py</path>
+          <path>../Common Scripts/binarySwitch.py</path>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 ]]></scriptText>
           <embedded>false</embedded>
@@ -605,7 +611,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_2</name>
-      <y>120</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -657,7 +663,7 @@ $(pv_value)</tooltip>
       <width>162</width>
       <x>120</x>
       <name>Text Update</name>
-      <y>120</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -666,56 +672,16 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-    <border_style>13</border_style>
-    <tooltip></tooltip>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>326f8559:1617a72c3ec:-7dc0</wuid>
-    <transparent>false</transparent>
-    <lock_children>false</lock_children>
-    <scripts />
-    <height>61</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <visible>true</visible>
-    <border_color>
-      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Grouping Container</widget_type>
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>319</width>
-    <x>6</x>
-    <name>Information</name>
-    <y>252</y>
-    <foreground_color>
-      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <show_scrollbar>true</show_scrollbar>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-    </font>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
       <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-48159ee9:1567f536160:-5c7e</wuid>
+      <wuid>337ab1a3:1618ae5e1dc:-7fd5</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Version:</text>
+      <text>He probe current:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -734,10 +700,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
-      <x>6</x>
-      <name>Label</name>
-      <y>6</y>
+      <width>102</width>
+      <x>0</x>
+      <name>Helium current 1 label</name>
+      <y>146</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -756,7 +722,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-48159ee9:1567f536160:-5a1b</wuid>
+      <wuid>337ab1a3:1618ae5e1dc:-7fd4</wuid>
       <transparent>true</transparent>
       <pv_value />
       <auto_size>false</auto_size>
@@ -773,7 +739,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)VERSION</pv_name>
+      <pv_name>$(PV_ROOT)CH2:CURRENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -786,10 +752,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>211</width>
-      <x>72</x>
-      <name>Text Update</name>
-      <y>6</y>
+      <width>162</width>
+      <x>120</x>
+      <name>Helium current 1 RBV</name>
+      <y>146</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -804,11 +770,17 @@ $(pv_value)</tooltip>
     <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>326f8559:1617a72c3ec:-7bd4</wuid>
+    <wuid>337ab1a3:1618ae5e1dc:-7f63</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
-    <scripts />
-    <height>175</height>
+    <scripts>
+      <path pathString="disable_nitrogen_controls.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(PV_ROOT)CH2:TYPE</pv>
+        <pv trig="true">$(PV_ROOT)CH2:CURRENT</pv>
+        <pv trig="true">CS:INSTLIST</pv>
+      </path>
+    </scripts>
+    <height>205</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -826,8 +798,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>319</width>
-    <x>324</x>
+    <width>313</width>
+    <x>318</x>
     <name>Channel 2</name>
     <y>78</y>
     <foreground_color>
@@ -847,7 +819,7 @@ $(pv_value)</tooltip>
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Current level:</text>
+      <text>Level:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -869,7 +841,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label</name>
-      <y>6</y>
+      <y>34</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -888,7 +860,7 @@ $(pv_value)</tooltip>
       <wuid>-48159ee9:1567f536160:-5a81</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Fill:</text>
+      <text>Filling:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -910,7 +882,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_3</name>
-      <y>34</y>
+      <y>62</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -962,7 +934,7 @@ $(pv_value)</tooltip>
       <width>85</width>
       <x>120</x>
       <name>Text Update</name>
-      <y>6</y>
+      <y>34</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1013,7 +985,7 @@ $(pv_value)</tooltip>
       <x>120</x>
       <name>LED</name>
       <data_type>0</data_type>
-      <y>31</y>
+      <y>59</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1055,7 +1027,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_9</name>
-      <y>62</y>
+      <y>90</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1107,7 +1079,7 @@ $(pv_value)</tooltip>
       <x>122</x>
       <name>LED_1</name>
       <data_type>0</data_type>
-      <y>61</y>
+      <y>89</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -1148,8 +1120,8 @@ $(pv_value)</tooltip>
       </background_color>
       <width>96</width>
       <x>6</x>
-      <name>Label_2</name>
-      <y>90</y>
+      <name>Scan rate 2 label</name>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1200,8 +1172,8 @@ $(pv_value)</tooltip>
       </background_color>
       <width>67</width>
       <x>120</x>
-      <name>Text Update</name>
-      <y>90</y>
+      <name>Scan rate 2 RBV</name>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1238,16 +1210,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>90</width>
-      <x>192</x>
-      <name>Button</name>
-      <y>87</y>
+      <width>72</width>
+      <x>204</x>
+      <name>Scan rate 2 button</name>
+      <y>115</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/binarySwitch.py</path>
+          <path>../Common Scripts/binarySwitch.py</path>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 ]]></scriptText>
           <embedded>false</embedded>
@@ -1289,7 +1261,7 @@ $(pv_value)</tooltip>
       <width>96</width>
       <x>6</x>
       <name>Label_2</name>
-      <y>120</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1341,7 +1313,99 @@ $(pv_value)</tooltip>
       <width>162</width>
       <x>120</x>
       <name>Text Update</name>
-      <y>120</y>
+      <y>6</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <horizontal_alignment>2</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>337ab1a3:1618ae5e1dc:-7fd5</wuid>
+      <transparent>false</transparent>
+      <auto_size>false</auto_size>
+      <text>He probe current:</text>
+      <scripts />
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>102</width>
+      <x>0</x>
+      <name>Helium current 2 label</name>
+      <y>146</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>337ab1a3:1618ae5e1dc:-7fd4</wuid>
+      <transparent>true</transparent>
+      <pv_value />
+      <auto_size>false</auto_size>
+      <text>######</text>
+      <rotation_angle>0.0</rotation_angle>
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <show_units>true</show_units>
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)CH2:CURRENT</pv_name>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Update</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <wrap_words>false</wrap_words>
+      <format_type>0</format_type>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>162</width>
+      <x>120</x>
+      <name>Helium current 2 RBV</name>
+      <y>146</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
