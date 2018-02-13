@@ -1207,7 +1207,14 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
-      <rules />
+      <rules>
+        <rule name="visible_on_HCENT_DISP" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(P)$(J):HCENT:SP.DISP</pv>
+        </rule>
+      </rules>
       <pv_value />
       <auto_size>false</auto_size>
       <text>0.0</text>
@@ -1314,7 +1321,14 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
-      <rules />
+      <rules>
+        <rule name="visible_on_VCENT_DISP" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(P)$(J):VCENT:SP.DISP</pv>
+        </rule>
+      </rules>
       <pv_value />
       <auto_size>false</auto_size>
       <text>0.0</text>
