@@ -106,12 +106,17 @@ public class JournalModel extends ModelObject implements Runnable {
         		connection.close();
         	} catch (SQLException | NullPointerException e) {
 				// Do nothing - connection was null, or already closed.
+                LOG.warn("Tried closing non-existent connection.");
 			}
         }
     }
     
-    public void clearRuns() {
+    /**
+     * Clears instrument specific data in the model.
+     */
+    public void clearModel() {
     	setRuns(Collections.<Map<JournalField, String>>emptyList());
+        lastUpdate = null;
     }
     
     /**
