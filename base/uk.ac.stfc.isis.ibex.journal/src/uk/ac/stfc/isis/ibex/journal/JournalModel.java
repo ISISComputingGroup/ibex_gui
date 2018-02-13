@@ -18,7 +18,18 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -37,6 +48,10 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private String message = "";
     private Date lastUpdate;
+
+	private List<Map<JournalField, String>> runs = Collections.emptyList();
+
+	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
     private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
@@ -72,20 +87,127 @@ public class JournalModel extends ModelObject implements Runnable {
      * Attempts to connect to the database and updates the status accordingly.
      */
     public void refresh() {
+    	Connection connection = null;
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
             String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
             String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
-            Rdb rdb = Rdb.connectToDatabase(schema, user, password);
+            connection = Rdb.connectToDatabase(schema, user, password).getConnection();
 
             setMessage("");
             setLastUpdate(new Date());
-
+            updateRuns(connection);
         } catch (Exception ex) {
             setMessage(Rdb.getError(ex).toString());
             LOG.error(ex);
+        } finally {
+        	try {
+        		connection.close();
+        	} catch (SQLException | NullPointerException e) {
+				// Do nothing - connection was null, or already closed.
+                LOG.warn("Tried closing non-existent connection.");
+			}
         }
+    }
+    
+    /**
+     * Clears instrument specific data in the model.
+     */
+    public void clearModel() {
+    	setRuns(Collections.<Map<JournalField, String>>emptyList());
+        lastUpdate = null;
+    }
+    
+    /**
+     * Updates the runs from the database.
+     * @param connection - the SQL connection to use
+     * @throws SQLException - If there was an error while querying the database
+     */
+    private void updateRuns(Connection connection) throws SQLException {
+    	
+    	if (getSelectedFields().size() <= 0) {
+    		setRuns(Collections.<Map<JournalField, String>>emptyList());
+    		return;
+    	}
+    	
+    	ResultSet rs = connection.createStatement().executeQuery(constructSQLQuery());
+    	
+    	List<Map<JournalField, String>> runs = new ArrayList<>();
+    	
+    	while (rs.next()) {
+    		Map<JournalField, String> run = new HashMap<>();
+    		for (JournalField property : selectedFields) {
+    			try {
+    				run.put(property, rs.getString(property.getSqlFieldName()));
+    			} catch (SQLException e) {
+					run.put(property, "None");
+				}
+    		}  
+    		runs.add(Collections.unmodifiableMap(run));
+    	}
+    	
+    	setRuns(Collections.unmodifiableList(runs));
+    }
+    
+    /**
+     * Constructs the SQL query which extracts all relevant information from the database.
+     * @see getSelectedFields for the fields which will be selected.
+     * @return the SQL query to be executed.
+     */
+    private String constructSQLQuery() {
+    	
+    	Set<JournalField> selectedFields = getSelectedFields();
+    	
+    	Set<String> selectedFieldNames = new HashSet<String>();
+    	for (JournalField field : selectedFields) {
+    		selectedFieldNames.add(field.getSqlFieldName());
+    	}
+    	
+    	String fields;
+    	if (selectedFieldNames.size() > 0) {
+    		fields = String.join(", ", selectedFieldNames.toArray(new String[selectedFieldNames.size()]));
+    	} else {
+    		fields = "null";
+    	}
+    	
+    	String query = String.format("SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT 1000", fields);
+    	return query;
+    }
+    
+    private void setRuns(List<Map<JournalField, String>> runs) {
+    	firePropertyChange("runs", this.runs, this.runs = runs);
+    }
+    
+    /**
+     * Gets the runs that were extracted from the database.
+     * 
+     * Format is a List of Maps, where each element in the list is a single run.
+     * 
+     * The Maps map a JournalField enum to their value as extracted from the database. 
+     * A JournalField will only be present in this map if it is selected (@see getSelectedFields).
+     * 
+     * @return the runs
+     */
+    public List<Map<JournalField, String>> getRuns() {
+    	return runs;
+    }
+    
+    /**
+     * Sets the selected fields.
+     * @param selected an enumset containing all of the JournalFields which are currently selected
+     */
+    public void setSelectedFields(EnumSet<JournalField> selected) {
+    	this.selectedFields = selected;
+    	refresh();
+    }
+    
+    /**
+     * Gets the set of fields which are currently selected.
+     * @return an enumset instance containing the elements of the JournalField enum which are currently selected
+     */
+    public EnumSet<JournalField> getSelectedFields() {
+    	return selectedFields;
     }
 
     /**
