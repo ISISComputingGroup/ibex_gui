@@ -33,7 +33,6 @@ import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -58,7 +57,8 @@ public class JournalModel extends ModelObject implements Runnable {
     
     private static final int PAGE_SIZE = 2;
     
-    private int pageNumber = 0;
+    private int pageNumber = 1;
+    private int pageMax = 0;
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -152,6 +152,10 @@ public class JournalModel extends ModelObject implements Runnable {
     	}
     	
     	setRuns(Collections.unmodifiableList(runs));
+    	
+    	rs = connection.createStatement().executeQuery(constructCountFieldsSQLQuery());
+    	rs.next();
+	    setPageMax((int) Math.ceil(rs.getInt(1)/(double) PAGE_SIZE));
     }
     
     /**
@@ -176,8 +180,12 @@ public class JournalModel extends ModelObject implements Runnable {
     	}
     	
     	String query = String.format(
-    			"SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT %s, %s", fields, pageNumber * PAGE_SIZE, PAGE_SIZE);
+    			"SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT %s, %s", fields, (pageNumber-1) * PAGE_SIZE, PAGE_SIZE);
     	return query;
+    }
+    
+    private String constructCountFieldsSQLQuery() {
+    	return "SELECT COUNT(*) FROM journal_entries";
     }
     
     private void setRuns(List<Map<JournalField, String>> runs) {
@@ -265,4 +273,12 @@ public class JournalModel extends ModelObject implements Runnable {
     public int getPage() {
         return pageNumber;
     }
+    
+    public void setPageMax(int max) {
+    	firePropertyChange("pageNumberMax", this.pageMax, this.pageMax = max);
+    }
+
+	public int getPageMax() {
+		return pageMax;
+	}
 }

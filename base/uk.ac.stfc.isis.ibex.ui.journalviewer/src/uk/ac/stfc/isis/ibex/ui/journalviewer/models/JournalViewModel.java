@@ -45,7 +45,6 @@ public class JournalViewModel extends ModelObject {
     private String message;
     private List<Map<JournalField, String>> runs;
     private String lastUpdate;
-    private int pageNumber;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -71,6 +70,7 @@ public class JournalViewModel extends ModelObject {
         setMessage(model.getMessage());
         setRuns(model.getRuns());
         setPageNumber(model.getPage());
+        setPageNumberMax(model.getPageMax());
     }
 
     /**
@@ -182,4 +182,15 @@ public class JournalViewModel extends ModelObject {
     public int getPageNumber() {
     	return model.getPage();
     }
+    
+
+    
+    public void setPageNumberMax(int max) {
+	    firePropertyChange("pageNumberMax", 0, model.getPageMax());
+    }
+    
+    public int getPageNumberMax() {
+    	return model.getPageMax();
+    }
+
 }

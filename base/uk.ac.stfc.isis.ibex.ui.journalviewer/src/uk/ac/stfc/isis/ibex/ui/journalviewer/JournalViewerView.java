@@ -74,11 +74,17 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-        btnRefresh = new Button(parent, SWT.NONE);
-        btnRefresh.setText("Refresh");
+		Composite controls = new Composite(parent, SWT.FILL);
+		controls.setLayout(new GridLayout(3, false));
+		
+		Label lblPage = new Label(controls, SWT.NONE);
+		lblPage.setText("Page number: ");
         
-        spinnerPageNumber = new Spinner(parent, SWT.NONE);
-        spinnerPageNumber.setMinimum(0);
+        spinnerPageNumber = new Spinner(controls, SWT.BORDER);
+        spinnerPageNumber.setMinimum(1);
+		
+        btnRefresh = new Button(controls, SWT.NONE);
+        btnRefresh.setText("Refresh data");
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
@@ -123,6 +129,8 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("runs").observe(model));
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumber").observe(model));
+        bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumberMax").observe(model));
 
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
