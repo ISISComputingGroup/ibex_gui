@@ -274,10 +274,18 @@ public class JournalModel extends ModelObject implements Runnable {
         return pageNumber;
     }
     
+    /**
+     * The maximum page number that can be selected.
+     * @param max the new maximum selectable page number
+     */
     public void setPageMax(int max) {
     	firePropertyChange("pageNumberMax", this.pageMax, this.pageMax = max);
     }
 
+    /**
+     * Gets the maximum page number with data in it.
+     * @return the maximum page number
+     */
 	public int getPageMax() {
 		return pageMax;
 	}
