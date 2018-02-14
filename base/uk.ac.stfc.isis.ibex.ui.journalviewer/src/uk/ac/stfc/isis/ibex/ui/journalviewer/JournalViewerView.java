@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -58,6 +59,7 @@ public class JournalViewerView extends ViewPart {
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
     
     private Button btnRefresh;
+    private Spinner spinnerPageNumber;
 
 	/**
 	 * Create contents of the view part.
@@ -74,6 +76,9 @@ public class JournalViewerView extends ViewPart {
 		
         btnRefresh = new Button(parent, SWT.NONE);
         btnRefresh.setText("Refresh");
+        
+        spinnerPageNumber = new Spinner(parent, SWT.NONE);
+        spinnerPageNumber.setMinimum(0);
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
@@ -116,6 +121,9 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
                 BeanProperties.value("runs").observe(model));
+        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumber").observe(model));
+
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override

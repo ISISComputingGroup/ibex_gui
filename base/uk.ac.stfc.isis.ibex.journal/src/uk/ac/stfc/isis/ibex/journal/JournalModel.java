@@ -55,6 +55,10 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
+    
+    private static final int PAGE_SIZE = 2;
+    
+    private int pageNumber = 0;
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -171,7 +175,8 @@ public class JournalModel extends ModelObject implements Runnable {
     		fields = "null";
     	}
     	
-    	String query = String.format("SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT 1000", fields);
+    	String query = String.format(
+    			"SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT %s, %s", fields, pageNumber * PAGE_SIZE, PAGE_SIZE);
     	return query;
     }
     
@@ -241,5 +246,23 @@ public class JournalModel extends ModelObject implements Runnable {
      */
     public Date getLastUpdate() {
         return this.lastUpdate;
+    }
+    
+    /**
+     * Sets the page number that is being looked at.
+     * 
+     * @param page The new page number
+     */
+    public void setPage(int pageNumber) {
+        firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+        refresh();
+    }
+
+    /**
+     * Returns the current page number.
+     * @return The page number.
+     */
+    public int getPage() {
+        return pageNumber;
     }
 }

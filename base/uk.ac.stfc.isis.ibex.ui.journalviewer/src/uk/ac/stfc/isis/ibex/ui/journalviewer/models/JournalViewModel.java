@@ -45,6 +45,7 @@ public class JournalViewModel extends ModelObject {
     private String message;
     private List<Map<JournalField, String>> runs;
     private String lastUpdate;
+    private int pageNumber;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -69,6 +70,7 @@ public class JournalViewModel extends ModelObject {
         setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
         setMessage(model.getMessage());
         setRuns(model.getRuns());
+        setPageNumber(model.getPage());
     }
 
     /**
@@ -148,6 +150,7 @@ public class JournalViewModel extends ModelObject {
     public boolean getFieldSelected(JournalField field) {
     	return model.getSelectedFields().contains(field);
     }
+    
     private String dateToString(Date lastUpdate) {
         if (lastUpdate == null) {
             return "N/A";
@@ -166,5 +169,17 @@ public class JournalViewModel extends ModelObject {
         calendar.set(Calendar.SECOND, 0);
         Date today = calendar.getTime();
         return date.after(today);
+    }
+    
+    public void setPageNumber(int pageNumber) {
+    	if (pageNumber != model.getPage()) {
+    		int previousPage = model.getPage();
+	    	model.setPage(pageNumber);
+	    	firePropertyChange("pageNumber", previousPage, model.getPage());
+    	}
+    }
+    
+    public int getPageNumber() {
+    	return model.getPage();
     }
 }
