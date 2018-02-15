@@ -54,11 +54,11 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
-    private static final int PAGE_SIZE = 2;
+    private static final int PAGE_SIZE = 30;
     
     // In ms. If a query takes longer than this, issue a warning.
     // Exact choice of number is arbitrary.
-    private static final int QUERY_DURATION_WARNING_LEVEL = 250; 
+    private static final int QUERY_DURATION_WARNING_LEVEL = 500; 
     
     private int pageNumber = 1;
     private int pageMax = 1;
