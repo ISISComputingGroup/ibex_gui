@@ -1310,5 +1310,22 @@
 				</macros>
 			</value>
 		</entry>
+    <entry>
+      <key>ILM200</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <type>CRYO_LEVEL_GAUGE</type>
+        <path>ilm200\ilm200.opi</path>
+        <description>The OPI for the ILM200</description>
+        <macros>
+          <macro>
+            <name>ILM200</name>
+            <description>The ILM200 PV prefix (e.g. ILM200_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>

@@ -120,8 +120,8 @@ public enum ComponentType {
     ZOOM_SAMPLE_STACK,
     /** Sample changer for HRPD/POLARIS/GEM. */
     ROT_SAMPLE_CHANGER,
-    /** Helium Level Gauge.*/
-    HE_LEVEL_GAUGE,
+    /** Cryogenics Level Gauge.*/
+    CRYO_LEVEL_GAUGE,
     /** LET oscillating collimator. */
     OSCILLATING_COLLIMATOR,
     /** SM300 sample changer.*/
