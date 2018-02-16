@@ -145,6 +145,8 @@ public final class ComponentIcons {
             	return "sm300_sample_changer";
             case MOTION_SET_POINTS:
             	return "motion_set_points";
+            case DILUTION_FRIDGE:
+            	return "dilution_fridge";
             default:
                 return "cog";
         }

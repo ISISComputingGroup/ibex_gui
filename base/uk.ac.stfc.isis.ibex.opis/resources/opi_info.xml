@@ -1304,7 +1304,7 @@
           <category>Cryogenics</category>
           <category>Temperature controllers</category>
         </categories>
-        <type>UNKNOWN</type>
+        <type>DILUTION_FRIDGE</type>
         <path>triton\triton.opi</path>
         <description>The OPI for the Triton</description>
         <macros>
