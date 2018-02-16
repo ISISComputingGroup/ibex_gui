@@ -61,22 +61,6 @@ public class DAEComboContentProvider {
     }
 
     /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of available files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
-    }
-
-    /**
      * Gets the list of detector tables currently available to the instrument,
      * or an appropriate error message.
      * 
@@ -100,7 +84,7 @@ public class DAEComboContentProvider {
             tables = new String[] {"None found in " + displayDir + " (file name must contain \"" + pattern + "\")."};
         }
 
-        return addBlank(tables);
+        return tables;
     }
 
     /**
