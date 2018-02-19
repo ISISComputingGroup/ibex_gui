@@ -17,6 +17,6 @@
  */
 
 /**
- * The front end classes for the Journal Viewer
+ * The front end classes for the Journal Viewer.
  */
 package uk.ac.stfc.isis.ibex.ui.journalviewer;

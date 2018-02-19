@@ -902,6 +902,19 @@
 				<macros>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Gem jaw set</key>
+			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
+				<type>JAWS</type>
+				<path>jaws/gem_jaws/Jaws_gem.opi</path>
+				<description>The OPI for the Gem jaw set. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>		
 		<entry>
 			<key>Instron stress rig</key>
@@ -1296,8 +1309,8 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
-       <entry>
+	    </entry>
+    <entry>
       <key>Triton dilution fridge</key>
       <value>
         <categories>
@@ -1311,6 +1324,23 @@
           <macro>
             <name>TRITON</name>
             <description>The triton PV prefix (e.g. TRITON_01).</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>ILM200</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <type>CRYO_LEVEL_GAUGE</type>
+        <path>ilm200\ilm200.opi</path>
+        <description>The OPI for the ILM200</description>
+        <macros>
+          <macro>
+            <name>ILM200</name>
+            <description>The ILM200 PV prefix (e.g. ILM200_01)</description>
           </macro>
         </macros>
       </value>

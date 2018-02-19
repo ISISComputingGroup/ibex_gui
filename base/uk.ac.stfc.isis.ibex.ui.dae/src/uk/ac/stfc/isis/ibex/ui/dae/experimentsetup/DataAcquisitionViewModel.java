@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.BinaryChoice;
@@ -96,6 +97,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on wiringTableList not wiringTables
 				firePropertyChange("wiringTableList", null, null);
+				firePropertyChange("newWiringTable", null, null);
 			}
 		});	
 	}
@@ -115,6 +117,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on detectorTableList not detectorTables
 				firePropertyChange("detectorTableList", null, null);
+				firePropertyChange("newDetectorTable", null, null);
 			}
 		});	
 	}
@@ -134,6 +137,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on spectraTableList not spectraTables
 				firePropertyChange("spectraTableList", null, null);
+				firePropertyChange("newSpectraTable", null, null);
 			}
 		});	
 	}
@@ -214,10 +218,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new wiring table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new wiring table.
+     * @param index the index in the list of wiring tables of the one that has been selected.
      */
-	public void setNewWiringTable(String value) {
-		settings.setNewWiringTable(value);
+	public void setNewWiringTable(int index) {
+		settings.setNewWiringTable(getWiringTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new wiring table.
+	 */
+	public int getNewWiringTable() {
+		return Arrays.asList(getWiringTableList()).indexOf(settings.getNewWiringTable());
 	}
 	
     /**
@@ -242,10 +253,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new detector table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new detector table.
+     * @param index the index in the list of detector tables of the one that has been selected.
      */
-	public void setNewDetectorTable(String value) {
-		settings.setNewDetectorTable(value);
+	public void setNewDetectorTable(int index) {
+		settings.setNewDetectorTable(getDetectorTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new detector table.
+	 */
+	public int getNewDetectorTable() {
+		return Arrays.asList(getDetectorTableList()).indexOf(settings.getNewDetectorTable());
 	}
 
     /**
@@ -270,10 +288,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new spectra table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new spectra table.
+     * @param index the index in the list of spectra tables of the one that has been selected.
      */
-	public void setNewSpectraTable(String value) {
-		settings.setNewSpectraTable(value);
+	public void setNewSpectraTable(int index) {
+		settings.setNewSpectraTable(getSpectraTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new spectra table.
+	 */
+	public int getNewSpectraTable() {
+		return Arrays.asList(getSpectraTableList()).indexOf(settings.getNewSpectraTable());
 	}
 	
 	/**
