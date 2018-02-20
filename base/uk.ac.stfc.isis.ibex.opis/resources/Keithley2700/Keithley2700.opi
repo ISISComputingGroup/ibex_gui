@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <show_close_button>true</show_close_button>
+  <rules />
+  <wuid>6ebe0d97:160d54afb65:d7</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts />
+  <height>600</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)$(KHLY2700)</PV_ROOT>
+  </macros>
+  <boy_version>3.1.4.201301231545</boy_version>
+  <show_edit_range>true</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <width>800</width>
+  <x>-1</x>
+  <name></name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <actions hook="false" hook_all="false" />
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:160d54afb65:390</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>$(NAME)</text>
+    <scripts />
+    <height>31</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>775</width>
+    <x>6</x>
+    <name>Label_1</name>
+    <y>42</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:160d54afb65:391</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>Keithley 2700 Multimeter</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
+    </background_color>
+    <width>775</width>
+    <x>6</x>
+    <name>Label</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.table" version="1.0">
+    <border_style>4</border_style>
+    <tooltip></tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:160d54afb65:6dd</wuid>
+    <column_header_visible>true</column_header_visible>
+    <scripts>
+      <path pathString="display_table_values.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(PV_ROOT):CHNL:101:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:102:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:103:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:104:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:105:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:106:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:107:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:108:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:109:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:110:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:201:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:202:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:203:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:204:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:205:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:206:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:207:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:208:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:209:READING</pv>
+        <pv trig="true">$(PV_ROOT):CHNL:210:READING</pv>
+      </path>
+    </scripts>
+    <height>433</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <editable>true</editable>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <column_headers>
+      <row>
+        <col>Sensors</col>
+        <col>130</col>
+        <col>no</col>
+      </row>
+      <row>
+        <col>Temp (K)</col>
+        <col>90</col>
+        <col>no</col>
+      </row>
+      <row>
+        <col>Drift (K/Min)</col>
+        <col>90</col>
+        <col>no</col>
+      </row>
+      <row>
+        <col>Resistance (O)</col>
+        <col>90</col>
+        <col>no</col>
+      </row>
+    </column_headers>
+    <widget_type>Table</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <width>409</width>
+    <x>30</x>
+    <name>Table</name>
+    <y>108</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <columns_count>4</columns_count>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+    <default_content>
+      <row>
+        <col></col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Middle Coil B Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Outer Coil A Top</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Outer Coil A Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Outer Coil B Top</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Outer Coil B Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shim Z Inner A</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shim Z Inner B</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shim XY</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shim Z Outer A</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shim Z Outer B</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>1st Stage</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Shield I</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Switch</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>2nd Stage A</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>2nd Stage B</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Inner Coil A Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Inner Coil B Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Middle Coil A Top</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Middle Coil A Base</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+      <row>
+        <col>Central Former</col>
+        <col></col>
+        <col></col>
+        <col></col>
+      </row>
+    </default_content>
+  </widget>
+</display>
