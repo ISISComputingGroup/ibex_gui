@@ -290,8 +290,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>6</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -438,8 +438,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>30</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -586,8 +586,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>54</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -734,8 +734,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>78</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -882,8 +882,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>102</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1030,8 +1030,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>90</width>
-      <x>282</x>
+      <width>96</width>
+      <x>276</x>
       <y>126</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1053,7 +1053,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>56d22e05:1600c731b11:-7ad0</wuid>
       <pv_value />
-      <text>Restore defauts</text>
+      <text>Restore defaults</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>28</height>
@@ -1070,8 +1070,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>91</width>
-      <x>281</x>
+      <width>97</width>
+      <x>275</x>
       <name>Button_1</name>
       <y>156</y>
       <foreground_color>
