@@ -126,6 +126,8 @@ public enum ComponentType {
     OSCILLATING_COLLIMATOR,
     /** SM300 sample changer.*/
     SM300_SAMPLE_CHANGER,
+    /** Dilution fridge.*/
+    DILUTION_FRIDGE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS;
 

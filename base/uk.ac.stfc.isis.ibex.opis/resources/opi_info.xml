@@ -1309,7 +1309,25 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
+	    </entry>
+    <entry>
+      <key>Triton dilution fridge</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>DILUTION_FRIDGE</type>
+        <path>triton\triton.opi</path>
+        <description>The OPI for the Triton</description>
+        <macros>
+          <macro>
+            <name>TRITON</name>
+            <description>The triton PV prefix (e.g. TRITON_01).</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>ILM200</key>
       <value>
