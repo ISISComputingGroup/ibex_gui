@@ -124,7 +124,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>464</height>
+    <height>484</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -143,7 +143,7 @@
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>175</width>
-    <x>456</x>
+    <x>462</x>
     <name>Settings</name>
     <y>87</y>
     <foreground_color>
@@ -365,7 +365,16 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="true">
+        <action type="OPEN_DISPLAY">
+          <path>display_log.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+          </macros>
+          <replace>2</replace>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
@@ -537,12 +546,12 @@ $(pv_value)</tooltip>
       <width>127</width>
       <x>13</x>
       <y>198</y>
-      <maximum>Infinity</maximum>
+      <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <minimum>-Infinity</minimum>
+      <minimum>-1.7976931348623157E308</minimum>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
@@ -557,7 +566,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>464</height>
+    <height>484</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -575,7 +584,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>439</width>
+    <width>445</width>
     <x>18</x>
     <name></name>
     <y>87</y>
@@ -657,9 +666,49 @@ $(pv_value)</tooltip>
           <pv trig="true">$(PV_ROOT):CHNL:208:READING</pv>
           <pv trig="true">$(PV_ROOT):CHNL:209:READING</pv>
           <pv trig="true">$(PV_ROOT):CHNL:210:READING</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:101:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:102:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:103:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:104:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:105:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:106:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:107:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:108:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:109:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:110:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:201:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:202:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:203:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:204:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:205:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:206:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:207:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:208:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:209:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:210:TEMP</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:101:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:102:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:103:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:104:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:105:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:106:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:107:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:108:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:109:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:110:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:201:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:202:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:203:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:204:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:205:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:206:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:207:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:208:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:209:DRIFT</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:210:DRIFT</pv>
         </path>
       </scripts>
-      <height>433</height>
+      <height>451</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
