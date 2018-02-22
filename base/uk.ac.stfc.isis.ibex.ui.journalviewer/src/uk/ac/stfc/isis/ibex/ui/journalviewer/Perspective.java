@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -29,8 +29,8 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
  */
 public class Perspective extends BasePerspective {
 	
-	private final static String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective";
-	private final static String PERSPECTIVE_NAME = "&Journal Viewer";
+	private static final String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective";
+	private static final String PERSPECTIVE_NAME = "&Journal Viewer";
 	
 	@Override
 	public String id() {
