@@ -44,7 +44,7 @@
     <auto_size>false</auto_size>
     <text></text>
     <scripts />
-    <height>607</height>
+    <height>583</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -64,7 +64,7 @@
     <width>769</width>
     <x>0</x>
     <name>Label_1</name>
-    <y>36</y>
+    <y>60</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -83,7 +83,7 @@
     <wuid>6ebe0d97:160d54afb65:1ca8</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Keithley 2700 Multimeter</text>
+    <text>HIFI Temperature Scanner</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -156,670 +156,6 @@
       <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
     </font>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
-    <axis_1_scale_format></axis_1_scale_format>
-    <trace_16_update_delay>100</trace_16_update_delay>
-    <trace_2_x_axis_index>0</trace_2_x_axis_index>
-    <tooltip>$(trace_0_y_pv)
-$(trace_0_y_pv_value)</tooltip>
-    <trace_14_plot_mode>0</trace_14_plot_mode>
-    <trace_17_visible>true</trace_17_visible>
-    <trace_19_x_pv></trace_19_x_pv>
-    <trace_0_concatenate_data>true</trace_0_concatenate_data>
-    <trace_0_trace_type>0</trace_0_trace_type>
-    <trace_4_line_width>1</trace_4_line_width>
-    <trace_14_x_pv_value />
-    <trace_15_trace_type>1</trace_15_trace_type>
-    <trace_16_y_pv_value />
-    <trace_12_y_pv>$(PV_ROOT):CHNL:105:READING</trace_12_y_pv>
-    <border_width>1</border_width>
-    <trace_11_anti_alias>true</trace_11_anti_alias>
-    <trace_6_update_delay>100</trace_6_update_delay>
-    <trace_18_anti_alias>true</trace_18_anti_alias>
-    <trace_3_point_size>4</trace_3_point_size>
-    <trace_7_update_delay>100</trace_7_update_delay>
-    <trace_1_x_axis_index>0</trace_1_x_axis_index>
-    <border_style>0</border_style>
-    <trace_17_update_delay>100</trace_17_update_delay>
-    <trace_8_point_size>4</trace_8_point_size>
-    <trace_10_buffer_size>100</trace_10_buffer_size>
-    <trace_8_anti_alias>true</trace_8_anti_alias>
-    <axis_0_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_0_grid_color>
-    <trace_11_y_pv_value />
-    <axis_2_visible>true</axis_2_visible>
-    <trace_0_name>Temp 1</trace_0_name>
-    <axis_2_minimum>1.0</axis_2_minimum>
-    <trace_0_update_mode>4</trace_0_update_mode>
-    <trace_1_x_pv></trace_1_x_pv>
-    <wuid>6ebe0d97:160d54afb65:1daa</wuid>
-    <transparent>false</transparent>
-    <trace_1_update_mode>0</trace_1_update_mode>
-    <trace_19_x_pv_value />
-    <axis_0_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_0_title_font>
-    <trace_12_plot_mode>0</trace_12_plot_mode>
-    <trace_7_trace_type>1</trace_7_trace_type>
-    <trace_5_y_pv>$(PV_ROOT):CHNL:206:READING</trace_5_y_pv>
-    <trace_14_visible>true</trace_14_visible>
-    <trace_8_y_pv_value />
-    <trace_15_update_delay>100</trace_15_update_delay>
-    <trace_15_x_pv></trace_15_x_pv>
-    <trace_12_x_axis_index>0</trace_12_x_axis_index>
-    <trace_11_name>$(trace_11_y_pv)</trace_11_name>
-    <trace_7_update_mode>0</trace_7_update_mode>
-    <trace_18_y_axis_index>1</trace_18_y_axis_index>
-    <trace_11_point_size>4</trace_11_point_size>
-    <trace_6_plot_mode>0</trace_6_plot_mode>
-    <trace_8_update_mode>0</trace_8_update_mode>
-    <trace_10_trace_type>0</trace_10_trace_type>
-    <trace_9_update_mode>0</trace_9_update_mode>
-    <trace_2_update_mode>0</trace_2_update_mode>
-    <trace_5_trace_type>1</trace_5_trace_type>
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <trace_3_update_mode>0</trace_3_update_mode>
-    <trace_19_line_width>1</trace_19_line_width>
-    <trace_11_concatenate_data>true</trace_11_concatenate_data>
-    <x>12</x>
-    <trace_6_update_mode>0</trace_6_update_mode>
-    <y>84</y>
-    <trace_9_y_axis_index>1</trace_9_y_axis_index>
-    <trace_7_y_axis_index>1</trace_7_y_axis_index>
-    <trace_4_update_mode>0</trace_4_update_mode>
-    <trace_3_x_axis_index>0</trace_3_x_axis_index>
-    <trace_5_update_mode>0</trace_5_update_mode>
-    <trace_12_x_pv></trace_12_x_pv>
-    <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_19_point_style>0</trace_19_point_style>
-    <axis_count>3</axis_count>
-    <trace_4_x_pv></trace_4_x_pv>
-    <trace_14_update_mode>0</trace_14_update_mode>
-    <trace_18_update_mode>0</trace_18_update_mode>
-    <trace_8_name>$(trace_8_y_pv)</trace_8_name>
-    <trace_3_y_pv_value />
-    <trace_13_point_size>4</trace_13_point_size>
-    <trace_13_point_style>0</trace_13_point_style>
-    <trace_1_point_size>4</trace_1_point_size>
-    <trace_1_anti_alias>true</trace_1_anti_alias>
-    <trace_16_update_mode>0</trace_16_update_mode>
-    <trace_18_name>$(trace_18_y_pv)</trace_18_name>
-    <trace_11_point_style>0</trace_11_point_style>
-    <trace_17_line_width>1</trace_17_line_width>
-    <trace_14_concatenate_data>true</trace_14_concatenate_data>
-    <pv_value />
-    <trace_9_y_pv>$(PV_ROOT):CHNL:210:READING</trace_9_y_pv>
-    <axis_2_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_2_grid_color>
-    <trace_19_name>$(trace_19_y_pv)</trace_19_name>
-    <trace_10_update_mode>0</trace_10_update_mode>
-    <trace_12_update_mode>0</trace_12_update_mode>
-    <trace_10_plot_mode>0</trace_10_plot_mode>
-    <trace_0_buffer_size>1000</trace_0_buffer_size>
-    <trace_2_buffer_size>100</trace_2_buffer_size>
-    <trace_9_update_delay>100</trace_9_update_delay>
-    <axis_1_maximum>1.0</axis_1_maximum>
-    <trace_5_update_delay>100</trace_5_update_delay>
-    <axis_0_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
-    </axis_0_scale_font>
-    <trigger_pv>$(P)CS:IOC:$(KHLY2700):DEVIOS:HEARTBEAT</trigger_pv>
-    <trace_4_update_delay>100</trace_4_update_delay>
-    <widget_type>XY Graph</widget_type>
-    <trace_16_y_pv>$(PV_ROOT):CHNL:109:READING</trace_16_y_pv>
-    <trace_2_line_width>1</trace_2_line_width>
-    <trace_4_plot_mode>0</trace_4_plot_mode>
-    <trace_3_concatenate_data>true</trace_3_concatenate_data>
-    <trace_15_buffer_size>100</trace_15_buffer_size>
-    <trace_4_x_pv_value />
-    <trace_15_point_style>0</trace_15_point_style>
-    <trace_11_buffer_size>100</trace_11_buffer_size>
-    <trace_13_buffer_size>100</trace_13_buffer_size>
-    <trace_13_trace_type>1</trace_13_trace_type>
-    <trace_17_point_style>0</trace_17_point_style>
-    <axis_1_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_1_axis_color>
-    <trace_8_update_delay>100</trace_8_update_delay>
-    <trace_15_y_pv>$(PV_ROOT):CHNL:108:READING</trace_15_y_pv>
-    <trace_16_plot_mode>0</trace_16_plot_mode>
-    <axis_0_scale_format></axis_0_scale_format>
-    <trace_11_x_pv></trace_11_x_pv>
-    <trace_6_line_width>1</trace_6_line_width>
-    <axis_1_log_scale>false</axis_1_log_scale>
-    <trace_5_anti_alias>true</trace_5_anti_alias>
-    <title></title>
-    <trace_16_x_pv></trace_16_x_pv>
-    <trace_6_x_pv_value />
-    <trace_8_buffer_size>100</trace_8_buffer_size>
-    <trace_17_buffer_size>100</trace_17_buffer_size>
-    <trace_0_visible>true</trace_0_visible>
-    <trace_4_buffer_size>100</trace_4_buffer_size>
-    <trace_6_buffer_size>100</trace_6_buffer_size>
-    <trace_19_buffer_size>100</trace_19_buffer_size>
-    <trace_17_y_axis_index>1</trace_17_y_axis_index>
-    <trace_11_x_axis_index>0</trace_11_x_axis_index>
-    <trace_1_name>$(trace_1_y_pv)</trace_1_name>
-    <trace_17_trace_type>1</trace_17_trace_type>
-    <trace_3_anti_alias>true</trace_3_anti_alias>
-    <trace_1_y_pv_value />
-    <axis_2_auto_scale>false</axis_2_auto_scale>
-    <trace_4_y_pv>$(PV_ROOT):CHNL:205:READING</trace_4_y_pv>
-    <trace_15_x_axis_index>0</trace_15_x_axis_index>
-    <show_legend>false</show_legend>
-    <trace_3_visible>true</trace_3_visible>
-    <trace_6_y_axis_index>1</trace_6_y_axis_index>
-    <trace_8_x_pv_value />
-    <trace_5_x_pv></trace_5_x_pv>
-    <trace_4_x_axis_index>0</trace_4_x_axis_index>
-    <trace_7_name>$(trace_7_y_pv)</trace_7_name>
-    <trace_12_name>$(trace_12_y_pv)</trace_12_name>
-    <trace_6_x_axis_index>0</trace_6_x_axis_index>
-    <trace_12_trace_color>
-      <color name="MEDM_COLOR_50" red="153" green="255" blue="255" />
-    </trace_12_trace_color>
-    <trace_3_name>$(trace_3_y_pv)</trace_3_name>
-    <axis_0_axis_title>Time</axis_0_axis_title>
-    <axis_0_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_0_axis_color>
-    <trace_16_trace_color>
-      <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
-    </trace_16_trace_color>
-    <trace_14_y_axis_index>1</trace_14_y_axis_index>
-    <axis_2_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
-    </axis_2_scale_font>
-    <trace_13_trace_color>
-      <color name="MEDM_COLOR_50" red="153" green="255" blue="255" />
-    </trace_13_trace_color>
-    <trace_17_trace_color>
-      <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
-    </trace_17_trace_color>
-    <trace_18_trace_type>0</trace_18_trace_type>
-    <trace_16_line_width>1</trace_16_line_width>
-    <trace_14_point_size>4</trace_14_point_size>
-    <trace_9_trace_type>1</trace_9_trace_type>
-    <trace_3_update_delay>100</trace_3_update_delay>
-    <trace_2_update_delay>100</trace_2_update_delay>
-    <trace_5_y_pv_value />
-    <trace_13_y_pv>$(PV_ROOT):CHNL:106:READING</trace_13_y_pv>
-    <trace_19_y_pv_value />
-    <trace_10_visible>true</trace_10_visible>
-    <trace_4_point_style>0</trace_4_point_style>
-    <trace_5_point_style>0</trace_5_point_style>
-    <trace_10_name>$(trace_10_y_pv)</trace_10_name>
-    <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
-    <trace_0_point_style>0</trace_0_point_style>
-    <trace_1_point_style>0</trace_1_point_style>
-    <trace_6_anti_alias>true</trace_6_anti_alias>
-    <trace_15_line_width>1</trace_15_line_width>
-    <trace_19_update_delay>100</trace_19_update_delay>
-    <trace_5_x_axis_index>0</trace_5_x_axis_index>
-    <trace_5_name>$(trace_5_y_pv)</trace_5_name>
-    <trace_11_update_delay>100</trace_11_update_delay>
-    <trace_5_point_size>4</trace_5_point_size>
-    <trace_17_concatenate_data>true</trace_17_concatenate_data>
-    <trace_7_x_axis_index>0</trace_7_x_axis_index>
-    <trace_0_line_width>1</trace_0_line_width>
-    <trace_9_visible>true</trace_9_visible>
-    <trace_11_trace_type>1</trace_11_trace_type>
-    <trace_15_anti_alias>true</trace_15_anti_alias>
-    <trace_8_point_style>0</trace_8_point_style>
-    <trace_9_point_style>0</trace_9_point_style>
-    <trace_18_concatenate_data>true</trace_18_concatenate_data>
-    <axis_2_y_axis>true</axis_2_y_axis>
-    <trace_3_x_pv_value />
-    <axis_0_time_format>3</axis_0_time_format>
-    <trace_18_x_pv></trace_18_x_pv>
-    <trace_count>20</trace_count>
-    <trace_14_x_axis_index>0</trace_14_x_axis_index>
-    <trace_11_y_pv>$(PV_ROOT):CHNL:104:READING</trace_11_y_pv>
-    <axis_1_show_grid>true</axis_1_show_grid>
-    <trace_14_anti_alias>true</trace_14_anti_alias>
-    <trace_6_point_size>4</trace_6_point_size>
-    <trace_14_y_pv_value />
-    <trace_17_update_mode>0</trace_17_update_mode>
-    <trace_18_update_delay>100</trace_18_update_delay>
-    <trace_18_y_pv>$(PV_ROOT):CHNL:201:READING</trace_18_y_pv>
-    <trace_8_y_pv>$(PV_ROOT):CHNL:209:READING</trace_8_y_pv>
-    <trace_18_plot_mode>0</trace_18_plot_mode>
-    <trace_11_visible>true</trace_11_visible>
-    <trace_10_update_delay>100</trace_10_update_delay>
-    <trace_12_point_style>0</trace_12_point_style>
-    <trace_3_x_pv></trace_3_x_pv>
-    <trace_13_x_pv></trace_13_x_pv>
-    <trace_13_update_mode>0</trace_13_update_mode>
-    <trace_16_y_axis_index>1</trace_16_y_axis_index>
-    <trace_2_trace_color>
-      <color name="MEDM_COLOR_38" red="139" green="26" blue="150" />
-    </trace_2_trace_color>
-    <trace_4_visible>true</trace_4_visible>
-    <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
-    <trace_3_buffer_size>100</trace_3_buffer_size>
-    <trace_14_trace_type>0</trace_14_trace_type>
-    <trace_2_trace_type>0</trace_2_trace_type>
-    <trace_6_y_pv>$(PV_ROOT):CHNL:207:READING</trace_6_y_pv>
-    <trace_14_buffer_size>100</trace_14_buffer_size>
-    <trace_6_trace_color>
-      <color name="MEDM_COLOR_64" red="26" green="115" blue="9" />
-    </trace_6_trace_color>
-    <trace_8_concatenate_data>true</trace_8_concatenate_data>
-    <trace_16_point_style>0</trace_16_point_style>
-    <trace_18_y_pv_value />
-    <trace_6_y_pv_value />
-    <trace_3_line_width>1</trace_3_line_width>
-    <show_toolbar>true</show_toolbar>
-    <axis_0_visible>true</axis_0_visible>
-    <trace_15_name>$(trace_15_y_pv)</trace_15_name>
-    <trace_16_visible>true</trace_16_visible>
-    <trace_7_plot_mode>0</trace_7_plot_mode>
-    <trace_16_x_pv_value />
-    <axis_0_show_grid>true</axis_0_show_grid>
-    <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_5_concatenate_data>false</trace_5_concatenate_data>
-    <trace_7_buffer_size>100</trace_7_buffer_size>
-    <trace_18_buffer_size>100</trace_18_buffer_size>
-    <trace_15_y_axis_index>1</trace_15_y_axis_index>
-    <trace_8_plot_mode>0</trace_8_plot_mode>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <trace_7_x_pv_value />
-    <trace_8_x_pv></trace_8_x_pv>
-    <trace_13_x_axis_index>0</trace_13_x_axis_index>
-    <trace_19_plot_mode>0</trace_19_plot_mode>
-    <trace_1_y_pv>$(PV_ROOT):CHNL:102:READING</trace_1_y_pv>
-    <trace_2_concatenate_data>true</trace_2_concatenate_data>
-    <trace_12_line_width>1</trace_12_line_width>
-    <trace_12_x_pv_value />
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <trace_2_y_pv_value />
-    <trace_7_line_width>1</trace_7_line_width>
-    <trace_18_point_size>4</trace_18_point_size>
-    <trace_2_anti_alias>true</trace_2_anti_alias>
-    <trace_8_y_axis_index>1</trace_8_y_axis_index>
-    <axis_0_maximum>120.0</axis_0_maximum>
-    <trace_9_concatenate_data>true</trace_9_concatenate_data>
-    <trace_5_x_pv_value />
-    <trace_9_plot_mode>0</trace_9_plot_mode>
-    <trace_13_name>$(trace_13_y_pv)</trace_13_name>
-    <trace_1_y_axis_index>1</trace_1_y_axis_index>
-    <trace_2_name>$(trace_2_y_pv)</trace_2_name>
-    <trace_15_plot_mode>0</trace_15_plot_mode>
-    <height>385</height>
-    <trace_15_concatenate_data>true</trace_15_concatenate_data>
-    <trace_2_visible>true</trace_2_visible>
-    <trigger_pv_value />
-    <trace_3_y_pv>$(PV_ROOT):CHNL:204:READING</trace_3_y_pv>
-    <trace_10_y_axis_index>1</trace_10_y_axis_index>
-    <trace_9_point_size>4</trace_9_point_size>
-    <trace_17_anti_alias>true</trace_17_anti_alias>
-    <trace_10_y_pv>$(PV_ROOT):CHNL:103:READING</trace_10_y_pv>
-    <axis_1_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_1_grid_color>
-    <trace_10_y_pv_value />
-    <actions hook="false" hook_all="false" />
-    <trace_2_point_size>4</trace_2_point_size>
-    <trace_4_concatenate_data>true</trace_4_concatenate_data>
-    <trace_18_line_width>1</trace_18_line_width>
-    <trace_17_y_pv_value />
-    <trace_9_x_axis_index>0</trace_9_x_axis_index>
-    <trace_7_y_pv_value />
-    <axis_2_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_2_axis_color>
-    <trace_6_x_pv></trace_6_x_pv>
-    <trace_6_name>$(trace_6_y_pv)</trace_6_name>
-    <trace_12_point_size>4</trace_12_point_size>
-    <trace_12_anti_alias>true</trace_12_anti_alias>
-    <axis_0_log_scale>false</axis_0_log_scale>
-    <trace_0_x_pv_value />
-    <trace_6_trace_type>0</trace_6_trace_type>
-    <trace_15_y_pv_value />
-    <trace_9_anti_alias>true</trace_9_anti_alias>
-    <trace_14_y_pv>$(PV_ROOT):CHNL:107:READING</trace_14_y_pv>
-    <trace_18_x_axis_index>0</trace_18_x_axis_index>
-    <trace_17_name>$(trace_17_y_pv)</trace_17_name>
-    <trace_10_point_size>4</trace_10_point_size>
-    <trace_5_visible>true</trace_5_visible>
-    <trace_11_line_width>1</trace_11_line_width>
-    <trace_15_visible>true</trace_15_visible>
-    <trace_19_point_size>4</trace_19_point_size>
-    <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-    <rules>
-      <rule name="Middle Coil B Base Visibility" prop_id="trace_0_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_0_visible(1)</pv>
-      </rule>
-      <rule name="1st Stage Visibility" prop_id="trace_1_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_1_visible(1)</pv>
-      </rule>
-      <rule name="Outer Coil A Base Trace 10 CHNL103 " prop_id="trace_10_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_10_visible(1)</pv>
-      </rule>
-      <rule name="Outer Coil B Top Trace 11 CHNL104 " prop_id="trace_11_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_11_visible(1)</pv>
-      </rule>
-      <rule name="Outer Coil B Base Trace 12 CHNL105 " prop_id="trace_12_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_12_visible(1)</pv>
-      </rule>
-      <rule name="Shim Z Inner A Trace 13 CHNL106 " prop_id="trace_13_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_13_visible(1)</pv>
-      </rule>
-      <rule name="Shim Z Inner B Trace 14 CHNL107 " prop_id="trace_14_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_14_visible(1)</pv>
-      </rule>
-      <rule name="Shim XY Trace 15 CHNL108" prop_id="trace_15_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_15_visible(1)</pv>
-      </rule>
-      <rule name="Shim Z Outer A  Trace 16 CHNL 109" prop_id="trace_16_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_16_visible(1)</pv>
-      </rule>
-      <rule name="Shim Z Outer B Trace 17 CHNL 110" prop_id="trace_17_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_17_visible(1)</pv>
-      </rule>
-      <rule name="1st Stage Trace 18 CHNL 201" prop_id="trace_18_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_18_visible(1)</pv>
-      </rule>
-      <rule name="Shield I Trace 19 CHNL 202" prop_id="trace_19_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_19_visible(1)</pv>
-      </rule>
-      <rule name="Switch I Trace 2 CHNL 203" prop_id="trace_2_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_12_visible(1)</pv>
-      </rule>
-      <rule name="2nd Stage A Trace 3 CHNL 204" prop_id="trace_3_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_3_visible(1)</pv>
-      </rule>
-      <rule name="2nd Stage B Trace 4 CHNL 205" prop_id="trace_4_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_4_visible(1)</pv>
-      </rule>
-      <rule name="Inner Coil A Base Trace 5 CHNL 206" prop_id="trace_5_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_5_visible(1)</pv>
-      </rule>
-      <rule name="Inner Coil B Base Trace 6 CHNL 207" prop_id="trace_6_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_6_visible(1)</pv>
-      </rule>
-      <rule name="Middle Coil A Top Trace 7 CHNL 208" prop_id="trace_7_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_7_visible(1)</pv>
-      </rule>
-      <rule name="Middle Coil A Base Trace 8 CHNL 209" prop_id="trace_8_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_8_visible(1)</pv>
-      </rule>
-      <rule name="Central Former Trace 9 CHNL 210" prop_id="trace_9_visible" out_exp="true">
-        <exp bool_exp="true">
-          <value>pv0==1</value>
-        </exp>
-        <pv trig="true">loc://$(DID)_trace_9_visible(1)</pv>
-      </rule>
-    </rules>
-    <trace_8_trace_type>0</trace_8_trace_type>
-    <trace_9_y_pv_value />
-    <trace_5_plot_mode>1</trace_5_plot_mode>
-    <axis_1_visible>true</axis_1_visible>
-    <axis_2_show_grid>true</axis_2_show_grid>
-    <trace_8_x_axis_index>0</trace_8_x_axis_index>
-    <trace_3_y_axis_index>1</trace_3_y_axis_index>
-    <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_19_anti_alias>true</trace_19_anti_alias>
-    <trace_1_concatenate_data>true</trace_1_concatenate_data>
-    <trace_12_y_pv_value />
-    <trace_1_trace_color>
-      <color name="MEDM_COLOR_32" red="238" green="182" blue="43" />
-    </trace_1_trace_color>
-    <trace_3_trace_color>
-      <color name="MEDM_COLOR_38" red="139" green="26" blue="150" />
-    </trace_3_trace_color>
-    <pv_name></pv_name>
-    <trace_15_x_pv_value />
-    <trace_17_plot_mode>0</trace_17_plot_mode>
-    <trace_5_trace_color>
-      <color name="Header SubColor" red="255" green="255" blue="0" />
-    </trace_5_trace_color>
-    <axis_2_log_scale>false</axis_2_log_scale>
-    <trace_6_concatenate_data>true</trace_6_concatenate_data>
-    <trace_7_anti_alias>true</trace_7_anti_alias>
-    <trace_8_visible>true</trace_8_visible>
-    <trace_9_trace_color>
-      <color name="MEDM_COLOR_34" red="205" green="97" blue="0" />
-    </trace_9_trace_color>
-    <trace_10_anti_alias>true</trace_10_anti_alias>
-    <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
-    <trace_7_trace_color>
-      <color name="MEDM_COLOR_64" red="26" green="115" blue="9" />
-    </trace_7_trace_color>
-    <trace_11_plot_mode>0</trace_11_plot_mode>
-    <name>XY Graph</name>
-    <trace_12_concatenate_data>true</trace_12_concatenate_data>
-    <trace_1_trace_type>1</trace_1_trace_type>
-    <trace_13_x_pv_value />
-    <axis_0_auto_scale>true</axis_0_auto_scale>
-    <axis_0_minimum>0.0</axis_0_minimum>
-    <trace_19_trace_type>1</trace_19_trace_type>
-    <trace_12_visible>true</trace_12_visible>
-    <trace_2_y_axis_index>1</trace_2_y_axis_index>
-    <trace_15_point_size>4</trace_15_point_size>
-    <trace_1_update_delay>100</trace_1_update_delay>
-    <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
-    <trace_10_x_pv></trace_10_x_pv>
-    <trace_13_y_axis_index>1</trace_13_y_axis_index>
-    <axis_1_axis_title>Temperature [K]</axis_1_axis_title>
-    <trace_13_line_width>1</trace_13_line_width>
-    <trace_17_x_pv></trace_17_x_pv>
-    <trace_11_x_pv_value />
-    <trace_17_point_size>4</trace_17_point_size>
-    <trace_8_line_width>1</trace_8_line_width>
-    <trace_19_x_axis_index>0</trace_19_x_axis_index>
-    <trace_12_trace_type>0</trace_12_trace_type>
-    <trace_10_trace_color>
-      <color name="MEDM_COLOR_35" red="255" green="176" blue="255" />
-    </trace_10_trace_color>
-    <trace_13_concatenate_data>true</trace_13_concatenate_data>
-    <trace_13_visible>true</trace_13_visible>
-    <trace_12_update_delay>100</trace_12_update_delay>
-    <trace_2_x_pv_value />
-    <trace_11_trace_color>
-      <color name="MEDM_COLOR_35" red="255" green="176" blue="255" />
-    </trace_11_trace_color>
-    <trace_14_trace_color>
-      <color name="MEDM_COLOR_52" red="78" green="165" blue="249" />
-    </trace_14_trace_color>
-    <trace_18_trace_color>
-      <color name="MEDM_COLOR_21" red="222" green="19" blue="9" />
-    </trace_18_trace_color>
-    <axis_1_auto_scale>true</axis_1_auto_scale>
-    <trace_1_line_width>1</trace_1_line_width>
-    <trace_3_trace_type>1</trace_3_trace_type>
-    <trace_2_y_pv>$(PV_ROOT):CHNL:203:READING</trace_2_y_pv>
-    <trace_15_trace_color>
-      <color name="MEDM_COLOR_52" red="78" green="165" blue="249" />
-    </trace_15_trace_color>
-    <trace_1_plot_mode>0</trace_1_plot_mode>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <trace_6_point_style>0</trace_6_point_style>
-    <trace_19_trace_color>
-      <color name="MEDM_COLOR_21" red="222" green="19" blue="9" />
-    </trace_19_trace_color>
-    <axis_2_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_2_title_font>
-    <trace_9_x_pv></trace_9_x_pv>
-    <trace_17_x_pv_value />
-    <trace_3_point_style>0</trace_3_point_style>
-    <trace_0_y_pv>$(PV_ROOT):CHNL:101:READING</trace_0_y_pv>
-    <trace_6_visible>true</trace_6_visible>
-    <trace_2_point_style>0</trace_2_point_style>
-    <trace_0_plot_mode>0</trace_0_plot_mode>
-    <trace_4_trace_type>0</trace_4_trace_type>
-    <trace_13_update_delay>100</trace_13_update_delay>
-    <trace_18_visible>true</trace_18_visible>
-    <enabled>true</enabled>
-    <trace_0_x_pv></trace_0_x_pv>
-    <trace_7_point_style>0</trace_7_point_style>
-    <axis_1_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
-    </axis_1_scale_font>
-    <axis_1_time_format>0</axis_1_time_format>
-    <axis_2_time_format>0</axis_2_time_format>
-    <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
-    <trace_7_x_pv></trace_7_x_pv>
-    <trace_3_plot_mode>0</trace_3_plot_mode>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <axis_2_maximum>-1.0</axis_2_maximum>
-    <trace_7_concatenate_data>true</trace_7_concatenate_data>
-    <trace_16_x_axis_index>0</trace_16_x_axis_index>
-    <trace_13_y_pv_value />
-    <trace_5_y_axis_index>1</trace_5_y_axis_index>
-    <show_plot_area_border>true</show_plot_area_border>
-    <width>529</width>
-    <trace_14_name>$(trace_14_y_pv)</trace_14_name>
-    <trace_1_x_pv_value />
-    <trace_17_y_pv>$(PV_ROOT):CHNL:110:READING</trace_17_y_pv>
-    <trace_19_update_mode>0</trace_19_update_mode>
-    <trace_16_anti_alias>true</trace_16_anti_alias>
-    <trace_16_point_size>4</trace_16_point_size>
-    <trace_18_point_style>0</trace_18_point_style>
-    <trace_13_anti_alias>true</trace_13_anti_alias>
-    <axis_1_minimum>-1.0</axis_1_minimum>
-    <trace_14_line_width>1</trace_14_line_width>
-    <trace_15_update_mode>0</trace_15_update_mode>
-    <title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-    </title_font>
-    <trace_9_name>$(trace_9_y_pv)</trace_9_name>
-    <trace_4_anti_alias>true</trace_4_anti_alias>
-    <trace_7_point_size>4</trace_7_point_size>
-    <trace_12_y_axis_index>1</trace_12_y_axis_index>
-    <trace_0_y_pv_value />
-    <trace_1_visible>true</trace_1_visible>
-    <trace_10_point_style>0</trace_10_point_style>
-    <plot_area_background_color>
-      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-    </plot_area_background_color>
-    <trace_14_x_pv></trace_14_x_pv>
-    <trace_11_update_mode>0</trace_11_update_mode>
-    <trace_14_update_delay>100</trace_14_update_delay>
-    <trace_5_line_width>1</trace_5_line_width>
-    <trace_4_point_size>4</trace_4_point_size>
-    <trace_10_x_axis_index>0</trace_10_x_axis_index>
-    <axis_1_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_1_title_font>
-    <trace_18_x_pv_value />
-    <visible>true</visible>
-    <trace_10_concatenate_data>true</trace_10_concatenate_data>
-    <axis_2_axis_title>Field [T]</axis_2_axis_title>
-    <trace_19_y_pv>$(PV_ROOT):CHNL:202:READING</trace_19_y_pv>
-    <trace_4_trace_color>
-      <color name="Header SubColor" red="255" green="255" blue="0" />
-    </trace_4_trace_color>
-    <trace_1_buffer_size>100</trace_1_buffer_size>
-    <trace_19_visible>true</trace_19_visible>
-    <trace_14_point_style>0</trace_14_point_style>
-    <trace_12_buffer_size>100</trace_12_buffer_size>
-    <trace_8_trace_color>
-      <color name="MEDM_COLOR_34" red="205" green="97" blue="0" />
-    </trace_8_trace_color>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <trace_10_x_pv_value />
-    <axis_2_scale_format></axis_2_scale_format>
-    <trace_11_y_axis_index>1</trace_11_y_axis_index>
-    <trace_16_buffer_size>100</trace_16_buffer_size>
-    <trace_9_line_width>1</trace_9_line_width>
-    <trace_16_name>$(trace_16_y_pv)</trace_16_name>
-    <trace_5_buffer_size>100</trace_5_buffer_size>
-    <trace_4_y_pv_value />
-    <scripts />
-    <trace_0_point_size>4</trace_0_point_size>
-    <trace_0_trace_color>
-      <color name="MEDM_COLOR_32" red="238" green="182" blue="43" />
-    </trace_0_trace_color>
-    <trace_0_anti_alias>true</trace_0_anti_alias>
-    <trace_4_name>$(trace_4_y_pv)</trace_4_name>
-    <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
-    <trace_7_visible>true</trace_7_visible>
-    <trace_17_x_axis_index>0</trace_17_x_axis_index>
-    <trace_19_y_axis_index>1</trace_19_y_axis_index>
-    <trace_13_plot_mode>0</trace_13_plot_mode>
-    <trace_19_concatenate_data>true</trace_19_concatenate_data>
-    <trace_10_line_width>1</trace_10_line_width>
-    <trace_9_buffer_size>100</trace_9_buffer_size>
-    <trace_4_y_axis_index>1</trace_4_y_axis_index>
-    <trace_16_concatenate_data>true</trace_16_concatenate_data>
-    <trace_16_trace_type>0</trace_16_trace_type>
-    <trace_9_x_pv_value />
-    <trace_2_plot_mode>0</trace_2_plot_mode>
-    <trace_2_x_pv></trace_2_x_pv>
-    <trace_7_y_pv>$(PV_ROOT):CHNL:208:READING</trace_7_y_pv>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
     <tooltip></tooltip>
@@ -829,7 +165,7 @@ $(trace_0_y_pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>565</height>
+    <height>529</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -848,9 +184,9 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>205</width>
-    <x>558</x>
+    <x>540</x>
     <name>Trace Displays</name>
-    <y>66</y>
+    <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -892,8 +228,8 @@ $(pv_value)</tooltip>
       </background_color>
       <width>17</width>
       <x>156</x>
-      <name>check_box_101</name>
-      <y>6</y>
+      <name>check_box_trace_0</name>
+      <y>18</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -924,7 +260,7 @@ display.getWidget("keithley_graph).setPropertyValue("trace_0_trace_color", RED)
       <wuid>6ebe0d97:160d54afb65:2908</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Middle Coil B Base</text>
+      <text>Middle coil B base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -946,7 +282,7 @@ display.getWidget("keithley_graph).setPropertyValue("trace_0_trace_color", RED)
       <width>110</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>6</y>
+      <y>18</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1000,7 +336,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle</name>
-      <y>12</y>
+      <y>24</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1047,7 +383,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box</name>
-      <y>31</y>
+      <y>38</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1065,7 +401,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2a67</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Outer Coil A Top</text>
+      <text>Outer coil A top:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1087,7 +423,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>31</y>
+      <y>38</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1141,7 +477,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle</name>
-      <y>40</y>
+      <y>44</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1188,7 +524,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box</name>
-      <y>57</y>
+      <y>58</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1206,7 +542,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b4d</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Outer Coil A Base</text>
+      <text>Outer coil A base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1228,7 +564,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>57</y>
+      <y>58</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1282,7 +618,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle</name>
-      <y>63</y>
+      <y>64</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1329,7 +665,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_1</name>
-      <y>82</y>
+      <y>78</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1347,7 +683,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b50</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Outer Coil B Top</text>
+      <text>Outer coil B top:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1369,7 +705,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>82</y>
+      <y>78</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1423,7 +759,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>88</y>
+      <y>84</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1470,7 +806,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box</name>
-      <y>107</y>
+      <y>98</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1488,7 +824,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b88</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Outer Coil B Base</text>
+      <text>Outer coil B base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1510,7 +846,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>107</y>
+      <y>98</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1564,7 +900,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle</name>
-      <y>113</y>
+      <y>104</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1611,7 +947,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_1</name>
-      <y>132</y>
+      <y>118</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1629,7 +965,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b8b</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shim Z Inner A</text>
+      <text>Shim Z inner A:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1651,7 +987,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>132</y>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1695,7 +1031,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_2</name>
-      <y>158</y>
+      <y>138</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1713,7 +1049,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b8e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shim Z Inner B</text>
+      <text>Shim Z inner B:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1735,7 +1071,7 @@ $(pv_value)</tooltip>
       <width>90</width>
       <x>6</x>
       <name>DELAY_2</name>
-      <y>158</y>
+      <y>138</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1789,7 +1125,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_2</name>
-      <y>164</y>
+      <y>144</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -1836,7 +1172,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_3</name>
-      <y>183</y>
+      <y>158</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1854,7 +1190,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2b91</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shim XY</text>
+      <text>Shim XY:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1876,7 +1212,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_3</name>
-      <y>183</y>
+      <y>158</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1920,7 +1256,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box</name>
-      <y>207</y>
+      <y>178</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1938,7 +1274,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2bf9</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shim Z Outer A</text>
+      <text>Shim Z outer A:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -1960,7 +1296,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>207</y>
+      <y>178</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2014,7 +1350,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle</name>
-      <y>213</y>
+      <y>184</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -2061,7 +1397,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_1</name>
-      <y>232</y>
+      <y>198</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2079,7 +1415,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2bfc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shim Z Outer B</text>
+      <text>Shim Z outer B:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2101,7 +1437,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_1</name>
-      <y>232</y>
+      <y>198</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2145,7 +1481,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_2</name>
-      <y>258</y>
+      <y>218</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2163,7 +1499,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2bff</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>1st Stage</text>
+      <text>1st Stage:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2185,7 +1521,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_2</name>
-      <y>258</y>
+      <y>218</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2239,7 +1575,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_2</name>
-      <y>264</y>
+      <y>224</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -2286,7 +1622,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_3</name>
-      <y>283</y>
+      <y>238</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2304,7 +1640,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2c02</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Shield I	</text>
+      <text>Shield:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2326,7 +1662,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_3</name>
-      <y>283</y>
+      <y>238</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2370,7 +1706,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_4</name>
-      <y>308</y>
+      <y>258</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2388,7 +1724,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2c05</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Switch</text>
+      <text>Switch:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2410,7 +1746,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_4</name>
-      <y>308</y>
+      <y>258</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2464,7 +1800,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_4</name>
-      <y>314</y>
+      <y>264</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -2511,7 +1847,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_5</name>
-      <y>333</y>
+      <y>278</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2529,7 +1865,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2c08</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>2nd Stage A</text>
+      <text>2nd Stage A:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2551,7 +1887,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_5</name>
-      <y>333</y>
+      <y>278</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2595,7 +1931,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_6</name>
-      <y>359</y>
+      <y>298</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2613,7 +1949,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2c0b</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>2nd Stage B</text>
+      <text>2nd Stage B:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2635,7 +1971,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_6</name>
-      <y>359</y>
+      <y>298</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2689,7 +2025,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_6</name>
-      <y>365</y>
+      <y>304</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -2736,7 +2072,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_7</name>
-      <y>384</y>
+      <y>318</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2754,7 +2090,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:2c0e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Inner Coil A Base</text>
+      <text>Inner coil A base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2776,7 +2112,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_7</name>
-      <y>384</y>
+      <y>318</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2820,7 +2156,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_4</name>
-      <y>411</y>
+      <y>338</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2838,8 +2174,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:33e6</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Inner Coil B Base&#xD;
-</text>
+      <text>Inner coil B base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2861,7 +2196,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_4</name>
-      <y>411</y>
+      <y>338</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2915,7 +2250,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_4</name>
-      <y>417</y>
+      <y>344</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -2962,7 +2297,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_5</name>
-      <y>436</y>
+      <y>358</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2980,7 +2315,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:33e9</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Middle Coil A Top</text>
+      <text>Middle coil A top:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -3002,7 +2337,7 @@ $(pv_value)</tooltip>
       <width>102</width>
       <x>6</x>
       <name>DELAY_5</name>
-      <y>436</y>
+      <y>358</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3046,7 +2381,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_6</name>
-      <y>462</y>
+      <y>378</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -3064,7 +2399,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:33ec</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Middle Coil A Base</text>
+      <text>Middle coil A base:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -3086,7 +2421,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_6</name>
-      <y>462</y>
+      <y>378</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3140,7 +2475,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_6</name>
-      <y>468</y>
+      <y>384</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3187,7 +2522,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_7</name>
-      <y>487</y>
+      <y>398</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -3205,7 +2540,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:33ef</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Central Former</text>
+      <text>Central former:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -3227,7 +2562,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_7</name>
-      <y>487</y>
+      <y>398</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3258,7 +2593,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>loc://$(DID)_trace_mag_field_visible</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -3271,7 +2606,7 @@ $(pv_value)</tooltip>
       <width>17</width>
       <x>156</x>
       <name>Check Box_7</name>
-      <y>512</y>
+      <y>456</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -3289,7 +2624,7 @@ $(pv_value)</tooltip>
       <wuid>6ebe0d97:160d54afb65:36d0</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Magnetic Field (T)</text>
+      <text>Magnetic field (T)</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -3311,7 +2646,7 @@ $(pv_value)</tooltip>
       <width>110</width>
       <x>6</x>
       <name>DELAY_7</name>
-      <y>512</y>
+      <y>456</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -3365,7 +2700,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_7</name>
-      <y>518</y>
+      <y>462</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3593,7 +2928,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>138</y>
+      <y>124</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3650,7 +2985,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_9</name>
-      <y>129</y>
+      <y>119</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3707,7 +3042,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_7</name>
-      <y>130</y>
+      <y>120</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3764,7 +3099,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_8</name>
-      <y>129</y>
+      <y>119</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3821,7 +3156,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>189</y>
+      <y>164</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3878,7 +3213,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_7</name>
-      <y>181</y>
+      <y>164</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3935,7 +3270,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_8</name>
-      <y>180</y>
+      <y>164</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -3992,7 +3327,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_9</name>
-      <y>188</y>
+      <y>164</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4049,7 +3384,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>238</y>
+      <y>204</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4106,7 +3441,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_8</name>
-      <y>229</y>
+      <y>198</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4163,7 +3498,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_9</name>
-      <y>229</y>
+      <y>198</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4220,7 +3555,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_7</name>
-      <y>230</y>
+      <y>198</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4277,7 +3612,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>289</y>
+      <y>244</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4334,7 +3669,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_7</name>
-      <y>281</y>
+      <y>244</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4391,7 +3726,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_8</name>
-      <y>280</y>
+      <y>244</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4448,7 +3783,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_9</name>
-      <y>280</y>
+      <y>244</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4505,7 +3840,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_11</name>
-      <y>339</y>
+      <y>284</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4562,7 +3897,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_12</name>
-      <y>331</y>
+      <y>284</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4619,7 +3954,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_13</name>
-      <y>330</y>
+      <y>284</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4676,7 +4011,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_14</name>
-      <y>330</y>
+      <y>284</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4733,7 +4068,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_11</name>
-      <y>390</y>
+      <y>324</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4790,7 +4125,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_12</name>
-      <y>382</y>
+      <y>324</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4847,7 +4182,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_13</name>
-      <y>381</y>
+      <y>324</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4904,7 +4239,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_14</name>
-      <y>381</y>
+      <y>324</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -4961,7 +4296,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <x>118</x>
       <name>Rectangle_11</name>
-      <y>442</y>
+      <y>364</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5018,7 +4353,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_12</name>
-      <y>434</y>
+      <y>364</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5075,7 +4410,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_13</name>
-      <y>433</y>
+      <y>364</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5132,7 +4467,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_14</name>
-      <y>433</y>
+      <y>364</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5189,7 +4524,7 @@ $(pv_value)</tooltip>
       <width>32</width>
       <x>118</x>
       <name>Rectangle_1</name>
-      <y>493</y>
+      <y>404</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5246,7 +4581,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_8</name>
-      <y>484</y>
+      <y>404</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5303,7 +4638,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>133</x>
       <name>Rectangle_7</name>
-      <y>485</y>
+      <y>404</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5360,7 +4695,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>124</x>
       <name>Rectangle_9</name>
-      <y>484</y>
+      <y>404</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5417,7 +4752,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>123</x>
       <name>Rectangle_6</name>
-      <y>31</y>
+      <y>37</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5474,7 +4809,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>132</x>
       <name>Rectangle_4</name>
-      <y>31</y>
+      <y>34</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5531,7 +4866,7 @@ $(pv_value)</tooltip>
       <width>3</width>
       <x>141</x>
       <name>Rectangle_5</name>
-      <y>31</y>
+      <y>37</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
@@ -5545,82 +4880,896 @@ $(pv_value)</tooltip>
       </line_color>
     </widget>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <line_width>0</line_width>
-    <horizontal_fill>true</horizontal_fill>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_style>13</border_style>
+    <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>6ebe0d97:160d54afb65:43d7</wuid>
+    <wuid>6ebe0d97:161b8a4b322:-34e7</wuid>
     <transparent>false</transparent>
-    <pv_value />
-    <alpha>255</alpha>
-    <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </bg_gradient_color>
+    <lock_children>false</lock_children>
     <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>20</height>
+    <height>529</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
     <visible>true</visible>
-    <pv_name></pv_name>
-    <gradient>false</gradient>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
     </border_color>
-    <anti_alias>true</anti_alias>
-    <line_style>0</line_style>
-    <widget_type>Rectangle</widget_type>
-    <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </fg_gradient_color>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <widget_type>Grouping Container</widget_type>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>3</width>
-    <x>907</x>
-    <name>Rectangle</name>
-    <y>127</y>
-    <fill_level>0.0</fill_level>
+    <width>535</width>
+    <x>6</x>
+    <name>Graphs</name>
+    <y>78</y>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
     </font>
-    <line_color>
-      <color red="128" green="0" blue="255" />
-    </line_color>
+    <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+      <axis_1_scale_format></axis_1_scale_format>
+      <trace_16_update_delay>100</trace_16_update_delay>
+      <trace_2_x_axis_index>0</trace_2_x_axis_index>
+      <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+      <trace_14_plot_mode>0</trace_14_plot_mode>
+      <trace_17_visible>true</trace_17_visible>
+      <trace_19_x_pv></trace_19_x_pv>
+      <trace_0_concatenate_data>true</trace_0_concatenate_data>
+      <trace_0_trace_type>0</trace_0_trace_type>
+      <trace_4_line_width>1</trace_4_line_width>
+      <trace_14_x_pv_value />
+      <trace_15_trace_type>1</trace_15_trace_type>
+      <trace_16_y_pv_value />
+      <trace_12_y_pv>$(PV_ROOT):CHNL:105:TEMP</trace_12_y_pv>
+      <border_width>1</border_width>
+      <trace_11_anti_alias>true</trace_11_anti_alias>
+      <trace_6_update_delay>100</trace_6_update_delay>
+      <trace_18_anti_alias>true</trace_18_anti_alias>
+      <trace_3_point_size>4</trace_3_point_size>
+      <trace_7_update_delay>100</trace_7_update_delay>
+      <trace_1_x_axis_index>0</trace_1_x_axis_index>
+      <border_style>0</border_style>
+      <trace_17_update_delay>100</trace_17_update_delay>
+      <trace_8_point_size>4</trace_8_point_size>
+      <trace_10_buffer_size>100</trace_10_buffer_size>
+      <trace_8_anti_alias>true</trace_8_anti_alias>
+      <axis_0_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_0_grid_color>
+      <trace_11_y_pv_value />
+      <axis_2_visible>false</axis_2_visible>
+      <trace_0_name>Temp 1</trace_0_name>
+      <axis_2_minimum>1.0</axis_2_minimum>
+      <trace_0_update_mode>4</trace_0_update_mode>
+      <trace_1_x_pv></trace_1_x_pv>
+      <wuid>6ebe0d97:160d54afb65:1daa</wuid>
+      <transparent>false</transparent>
+      <trace_1_update_mode>0</trace_1_update_mode>
+      <trace_19_x_pv_value />
+      <axis_0_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_0_title_font>
+      <trace_12_plot_mode>0</trace_12_plot_mode>
+      <trace_7_trace_type>1</trace_7_trace_type>
+      <trace_5_y_pv>$(PV_ROOT):CHNL:206:TEMP</trace_5_y_pv>
+      <trace_14_visible>true</trace_14_visible>
+      <trace_8_y_pv_value />
+      <trace_15_update_delay>100</trace_15_update_delay>
+      <trace_15_x_pv></trace_15_x_pv>
+      <trace_12_x_axis_index>0</trace_12_x_axis_index>
+      <trace_11_name>$(trace_11_y_pv)</trace_11_name>
+      <trace_7_update_mode>0</trace_7_update_mode>
+      <trace_18_y_axis_index>1</trace_18_y_axis_index>
+      <trace_11_point_size>4</trace_11_point_size>
+      <trace_6_plot_mode>0</trace_6_plot_mode>
+      <trace_8_update_mode>0</trace_8_update_mode>
+      <trace_10_trace_type>0</trace_10_trace_type>
+      <trace_9_update_mode>0</trace_9_update_mode>
+      <trace_2_update_mode>0</trace_2_update_mode>
+      <trace_5_trace_type>1</trace_5_trace_type>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <trace_3_update_mode>0</trace_3_update_mode>
+      <trace_19_line_width>1</trace_19_line_width>
+      <trace_11_concatenate_data>true</trace_11_concatenate_data>
+      <x>6</x>
+      <trace_6_update_mode>0</trace_6_update_mode>
+      <y>12</y>
+      <trace_9_y_axis_index>1</trace_9_y_axis_index>
+      <trace_7_y_axis_index>1</trace_7_y_axis_index>
+      <trace_4_update_mode>0</trace_4_update_mode>
+      <trace_3_x_axis_index>0</trace_3_x_axis_index>
+      <trace_5_update_mode>0</trace_5_update_mode>
+      <trace_12_x_pv></trace_12_x_pv>
+      <trace_0_x_axis_index>0</trace_0_x_axis_index>
+      <trace_19_point_style>0</trace_19_point_style>
+      <axis_count>3</axis_count>
+      <trace_4_x_pv></trace_4_x_pv>
+      <trace_14_update_mode>0</trace_14_update_mode>
+      <trace_18_update_mode>0</trace_18_update_mode>
+      <trace_8_name>$(trace_8_y_pv)</trace_8_name>
+      <trace_3_y_pv_value />
+      <trace_13_point_size>4</trace_13_point_size>
+      <trace_13_point_style>0</trace_13_point_style>
+      <trace_1_point_size>4</trace_1_point_size>
+      <trace_1_anti_alias>true</trace_1_anti_alias>
+      <trace_16_update_mode>0</trace_16_update_mode>
+      <trace_18_name>$(trace_18_y_pv)</trace_18_name>
+      <trace_11_point_style>0</trace_11_point_style>
+      <trace_17_line_width>1</trace_17_line_width>
+      <trace_14_concatenate_data>true</trace_14_concatenate_data>
+      <pv_value />
+      <trace_9_y_pv>$(PV_ROOT):CHNL:210:TEMP</trace_9_y_pv>
+      <axis_2_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_2_grid_color>
+      <trace_19_name>$(trace_19_y_pv)</trace_19_name>
+      <trace_10_update_mode>0</trace_10_update_mode>
+      <trace_12_update_mode>0</trace_12_update_mode>
+      <trace_10_plot_mode>0</trace_10_plot_mode>
+      <trace_0_buffer_size>1000</trace_0_buffer_size>
+      <trace_2_buffer_size>100</trace_2_buffer_size>
+      <trace_9_update_delay>100</trace_9_update_delay>
+      <axis_1_maximum>1.0</axis_1_maximum>
+      <trace_5_update_delay>100</trace_5_update_delay>
+      <axis_0_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_0_scale_font>
+      <trigger_pv>$(P)CS:IOC:$(KHLY2700):DEVIOS:HEARTBEAT</trigger_pv>
+      <trace_4_update_delay>100</trace_4_update_delay>
+      <widget_type>XY Graph</widget_type>
+      <trace_16_y_pv>$(PV_ROOT):CHNL:109:TEMP</trace_16_y_pv>
+      <trace_2_line_width>1</trace_2_line_width>
+      <trace_4_plot_mode>0</trace_4_plot_mode>
+      <trace_3_concatenate_data>true</trace_3_concatenate_data>
+      <trace_15_buffer_size>100</trace_15_buffer_size>
+      <trace_4_x_pv_value />
+      <trace_15_point_style>0</trace_15_point_style>
+      <trace_11_buffer_size>100</trace_11_buffer_size>
+      <trace_13_buffer_size>100</trace_13_buffer_size>
+      <trace_13_trace_type>1</trace_13_trace_type>
+      <trace_17_point_style>0</trace_17_point_style>
+      <axis_1_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_1_axis_color>
+      <trace_8_update_delay>100</trace_8_update_delay>
+      <trace_15_y_pv>$(PV_ROOT):CHNL:108:TEMP</trace_15_y_pv>
+      <trace_16_plot_mode>0</trace_16_plot_mode>
+      <axis_0_scale_format></axis_0_scale_format>
+      <trace_11_x_pv></trace_11_x_pv>
+      <trace_6_line_width>1</trace_6_line_width>
+      <axis_1_log_scale>false</axis_1_log_scale>
+      <trace_5_anti_alias>true</trace_5_anti_alias>
+      <title>Keithley Sensors</title>
+      <trace_16_x_pv></trace_16_x_pv>
+      <trace_6_x_pv_value />
+      <trace_8_buffer_size>100</trace_8_buffer_size>
+      <trace_17_buffer_size>100</trace_17_buffer_size>
+      <trace_0_visible>true</trace_0_visible>
+      <trace_4_buffer_size>100</trace_4_buffer_size>
+      <trace_6_buffer_size>100</trace_6_buffer_size>
+      <trace_19_buffer_size>100</trace_19_buffer_size>
+      <trace_17_y_axis_index>1</trace_17_y_axis_index>
+      <trace_11_x_axis_index>0</trace_11_x_axis_index>
+      <trace_1_name>$(trace_1_y_pv)</trace_1_name>
+      <trace_17_trace_type>1</trace_17_trace_type>
+      <trace_3_anti_alias>true</trace_3_anti_alias>
+      <trace_1_y_pv_value />
+      <axis_2_auto_scale>false</axis_2_auto_scale>
+      <trace_4_y_pv>$(PV_ROOT):CHNL:205:TEMP</trace_4_y_pv>
+      <trace_15_x_axis_index>0</trace_15_x_axis_index>
+      <show_legend>false</show_legend>
+      <trace_3_visible>true</trace_3_visible>
+      <trace_6_y_axis_index>1</trace_6_y_axis_index>
+      <trace_8_x_pv_value />
+      <trace_5_x_pv></trace_5_x_pv>
+      <trace_4_x_axis_index>0</trace_4_x_axis_index>
+      <trace_7_name>$(trace_7_y_pv)</trace_7_name>
+      <trace_12_name>$(trace_12_y_pv)</trace_12_name>
+      <trace_6_x_axis_index>0</trace_6_x_axis_index>
+      <trace_12_trace_color>
+        <color name="MEDM_COLOR_50" red="153" green="255" blue="255" />
+      </trace_12_trace_color>
+      <trace_3_name>$(trace_3_y_pv)</trace_3_name>
+      <axis_0_axis_title>Time</axis_0_axis_title>
+      <axis_0_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_0_axis_color>
+      <trace_16_trace_color>
+        <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
+      </trace_16_trace_color>
+      <trace_14_y_axis_index>1</trace_14_y_axis_index>
+      <axis_2_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_2_scale_font>
+      <trace_13_trace_color>
+        <color name="MEDM_COLOR_50" red="153" green="255" blue="255" />
+      </trace_13_trace_color>
+      <trace_17_trace_color>
+        <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
+      </trace_17_trace_color>
+      <trace_18_trace_type>0</trace_18_trace_type>
+      <trace_16_line_width>1</trace_16_line_width>
+      <trace_14_point_size>4</trace_14_point_size>
+      <trace_9_trace_type>1</trace_9_trace_type>
+      <trace_3_update_delay>100</trace_3_update_delay>
+      <trace_2_update_delay>100</trace_2_update_delay>
+      <trace_5_y_pv_value />
+      <trace_13_y_pv>$(PV_ROOT):CHNL:106:TEMP</trace_13_y_pv>
+      <trace_19_y_pv_value />
+      <trace_10_visible>true</trace_10_visible>
+      <trace_4_point_style>0</trace_4_point_style>
+      <trace_5_point_style>0</trace_5_point_style>
+      <trace_10_name>$(trace_10_y_pv)</trace_10_name>
+      <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+      <trace_0_point_style>0</trace_0_point_style>
+      <trace_1_point_style>0</trace_1_point_style>
+      <trace_6_anti_alias>true</trace_6_anti_alias>
+      <trace_15_line_width>1</trace_15_line_width>
+      <trace_19_update_delay>100</trace_19_update_delay>
+      <trace_5_x_axis_index>0</trace_5_x_axis_index>
+      <trace_5_name>$(trace_5_y_pv)</trace_5_name>
+      <trace_11_update_delay>100</trace_11_update_delay>
+      <trace_5_point_size>4</trace_5_point_size>
+      <trace_17_concatenate_data>true</trace_17_concatenate_data>
+      <trace_7_x_axis_index>0</trace_7_x_axis_index>
+      <trace_0_line_width>1</trace_0_line_width>
+      <trace_9_visible>true</trace_9_visible>
+      <trace_11_trace_type>1</trace_11_trace_type>
+      <trace_15_anti_alias>true</trace_15_anti_alias>
+      <trace_8_point_style>0</trace_8_point_style>
+      <trace_9_point_style>0</trace_9_point_style>
+      <trace_18_concatenate_data>true</trace_18_concatenate_data>
+      <axis_2_y_axis>true</axis_2_y_axis>
+      <trace_3_x_pv_value />
+      <axis_0_time_format>3</axis_0_time_format>
+      <trace_18_x_pv></trace_18_x_pv>
+      <trace_count>20</trace_count>
+      <trace_14_x_axis_index>0</trace_14_x_axis_index>
+      <trace_11_y_pv>$(PV_ROOT):CHNL:104:TEMP</trace_11_y_pv>
+      <axis_1_show_grid>true</axis_1_show_grid>
+      <trace_14_anti_alias>true</trace_14_anti_alias>
+      <trace_6_point_size>4</trace_6_point_size>
+      <trace_14_y_pv_value />
+      <trace_17_update_mode>0</trace_17_update_mode>
+      <trace_18_update_delay>100</trace_18_update_delay>
+      <trace_18_y_pv>$(PV_ROOT):CHNL:201:TEMP</trace_18_y_pv>
+      <trace_8_y_pv>$(PV_ROOT):CHNL:209:TEMP</trace_8_y_pv>
+      <trace_18_plot_mode>0</trace_18_plot_mode>
+      <trace_11_visible>true</trace_11_visible>
+      <trace_10_update_delay>100</trace_10_update_delay>
+      <trace_12_point_style>0</trace_12_point_style>
+      <trace_3_x_pv></trace_3_x_pv>
+      <trace_13_x_pv></trace_13_x_pv>
+      <trace_13_update_mode>0</trace_13_update_mode>
+      <trace_16_y_axis_index>1</trace_16_y_axis_index>
+      <trace_2_trace_color>
+        <color name="MEDM_COLOR_38" red="139" green="26" blue="150" />
+      </trace_2_trace_color>
+      <trace_4_visible>true</trace_4_visible>
+      <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+      <trace_3_buffer_size>100</trace_3_buffer_size>
+      <trace_14_trace_type>0</trace_14_trace_type>
+      <trace_2_trace_type>0</trace_2_trace_type>
+      <trace_6_y_pv>$(PV_ROOT):CHNL:207:TEMP</trace_6_y_pv>
+      <trace_14_buffer_size>100</trace_14_buffer_size>
+      <trace_6_trace_color>
+        <color name="MEDM_COLOR_64" red="26" green="115" blue="9" />
+      </trace_6_trace_color>
+      <trace_8_concatenate_data>true</trace_8_concatenate_data>
+      <trace_16_point_style>0</trace_16_point_style>
+      <trace_18_y_pv_value />
+      <trace_6_y_pv_value />
+      <trace_3_line_width>1</trace_3_line_width>
+      <show_toolbar>true</show_toolbar>
+      <axis_0_visible>true</axis_0_visible>
+      <trace_15_name>$(trace_15_y_pv)</trace_15_name>
+      <trace_16_visible>true</trace_16_visible>
+      <trace_7_plot_mode>0</trace_7_plot_mode>
+      <trace_16_x_pv_value />
+      <axis_0_show_grid>true</axis_0_show_grid>
+      <trace_0_y_axis_index>1</trace_0_y_axis_index>
+      <trace_5_concatenate_data>false</trace_5_concatenate_data>
+      <trace_7_buffer_size>100</trace_7_buffer_size>
+      <trace_18_buffer_size>100</trace_18_buffer_size>
+      <trace_15_y_axis_index>1</trace_15_y_axis_index>
+      <trace_8_plot_mode>0</trace_8_plot_mode>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <trace_7_x_pv_value />
+      <trace_8_x_pv></trace_8_x_pv>
+      <trace_13_x_axis_index>0</trace_13_x_axis_index>
+      <trace_19_plot_mode>0</trace_19_plot_mode>
+      <trace_1_y_pv>$(PV_ROOT):CHNL:102:TEMP</trace_1_y_pv>
+      <trace_2_concatenate_data>true</trace_2_concatenate_data>
+      <trace_12_line_width>1</trace_12_line_width>
+      <trace_12_x_pv_value />
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <trace_2_y_pv_value />
+      <trace_7_line_width>1</trace_7_line_width>
+      <trace_18_point_size>4</trace_18_point_size>
+      <trace_2_anti_alias>true</trace_2_anti_alias>
+      <trace_8_y_axis_index>1</trace_8_y_axis_index>
+      <axis_0_maximum>120.0</axis_0_maximum>
+      <trace_9_concatenate_data>true</trace_9_concatenate_data>
+      <trace_5_x_pv_value />
+      <trace_9_plot_mode>0</trace_9_plot_mode>
+      <trace_13_name>$(trace_13_y_pv)</trace_13_name>
+      <trace_1_y_axis_index>1</trace_1_y_axis_index>
+      <trace_2_name>$(trace_2_y_pv)</trace_2_name>
+      <trace_15_plot_mode>0</trace_15_plot_mode>
+      <height>235</height>
+      <trace_15_concatenate_data>true</trace_15_concatenate_data>
+      <trace_2_visible>true</trace_2_visible>
+      <trigger_pv_value />
+      <trace_3_y_pv>$(PV_ROOT):CHNL:204:TEMP</trace_3_y_pv>
+      <trace_10_y_axis_index>1</trace_10_y_axis_index>
+      <trace_9_point_size>4</trace_9_point_size>
+      <trace_17_anti_alias>true</trace_17_anti_alias>
+      <trace_10_y_pv>$(PV_ROOT):CHNL:103:TEMP</trace_10_y_pv>
+      <axis_1_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_1_grid_color>
+      <trace_10_y_pv_value />
+      <actions hook="false" hook_all="false" />
+      <trace_2_point_size>4</trace_2_point_size>
+      <trace_4_concatenate_data>true</trace_4_concatenate_data>
+      <trace_18_line_width>1</trace_18_line_width>
+      <trace_17_y_pv_value />
+      <trace_9_x_axis_index>0</trace_9_x_axis_index>
+      <trace_7_y_pv_value />
+      <axis_2_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_2_axis_color>
+      <trace_6_x_pv></trace_6_x_pv>
+      <trace_6_name>$(trace_6_y_pv)</trace_6_name>
+      <trace_12_point_size>4</trace_12_point_size>
+      <trace_12_anti_alias>true</trace_12_anti_alias>
+      <axis_0_log_scale>false</axis_0_log_scale>
+      <trace_0_x_pv_value />
+      <trace_6_trace_type>0</trace_6_trace_type>
+      <trace_15_y_pv_value />
+      <trace_9_anti_alias>true</trace_9_anti_alias>
+      <trace_14_y_pv>$(PV_ROOT):CHNL:107:TEMP</trace_14_y_pv>
+      <trace_18_x_axis_index>0</trace_18_x_axis_index>
+      <trace_17_name>$(trace_17_y_pv)</trace_17_name>
+      <trace_10_point_size>4</trace_10_point_size>
+      <trace_5_visible>true</trace_5_visible>
+      <trace_11_line_width>1</trace_11_line_width>
+      <trace_15_visible>true</trace_15_visible>
+      <trace_19_point_size>4</trace_19_point_size>
+      <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+      <rules>
+        <rule name="Middle Coil B Base Visibility" prop_id="trace_0_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_0_visible(1)</pv>
+        </rule>
+        <rule name="1st Stage Visibility" prop_id="trace_1_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <exp bool_exp="true">
+            <value>pv1==0</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_1_visible(1)</pv>
+          <pv trig="true">loc://$(DID)_trace_all(1)</pv>
+        </rule>
+        <rule name="Outer Coil A Base Trace 10 CHNL103 " prop_id="trace_10_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_10_visible(1)</pv>
+        </rule>
+        <rule name="Outer Coil B Top Trace 11 CHNL104 " prop_id="trace_11_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_11_visible(1)</pv>
+        </rule>
+        <rule name="Outer Coil B Base Trace 12 CHNL105 " prop_id="trace_12_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_12_visible(1)</pv>
+        </rule>
+        <rule name="Shim Z Inner A Trace 13 CHNL106 " prop_id="trace_13_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_13_visible(1)</pv>
+        </rule>
+        <rule name="Shim Z Inner B Trace 14 CHNL107 " prop_id="trace_14_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_14_visible(1)</pv>
+        </rule>
+        <rule name="Shim XY Trace 15 CHNL108" prop_id="trace_15_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_15_visible(1)</pv>
+        </rule>
+        <rule name="Shim Z Outer A  Trace 16 CHNL 109" prop_id="trace_16_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_16_visible(1)</pv>
+        </rule>
+        <rule name="Shim Z Outer B Trace 17 CHNL 110" prop_id="trace_17_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_17_visible(1)</pv>
+        </rule>
+        <rule name="1st Stage Trace 18 CHNL 201" prop_id="trace_18_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_18_visible(1)</pv>
+        </rule>
+        <rule name="Shield I Trace 19 CHNL 202" prop_id="trace_19_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_19_visible(1)</pv>
+        </rule>
+        <rule name="Switch I Trace 2 CHNL 203" prop_id="trace_2_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_12_visible(1)</pv>
+        </rule>
+        <rule name="2nd Stage A Trace 3 CHNL 204" prop_id="trace_3_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_3_visible(1)</pv>
+        </rule>
+        <rule name="2nd Stage B Trace 4 CHNL 205" prop_id="trace_4_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_4_visible(1)</pv>
+        </rule>
+        <rule name="Inner Coil A Base Trace 5 CHNL 206" prop_id="trace_5_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_5_visible(1)</pv>
+        </rule>
+        <rule name="Inner Coil B Base Trace 6 CHNL 207" prop_id="trace_6_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_6_visible(1)</pv>
+        </rule>
+        <rule name="Middle Coil A Top Trace 7 CHNL 208" prop_id="trace_7_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_7_visible(1)</pv>
+        </rule>
+        <rule name="Middle Coil A Base Trace 8 CHNL 209" prop_id="trace_8_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_8_visible(1)</pv>
+        </rule>
+        <rule name="Central Former Trace 9 CHNL 210" prop_id="trace_9_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_9_visible(1)</pv>
+        </rule>
+        <rule name="Toggle All Trace Visibility" prop_id="trace_count" out_exp="true">
+          <exp bool_exp="true">
+            <value>20</value>
+          </exp>
+          <exp bool_exp="false">
+            <value>0</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_all(1)</pv>
+        </rule>
+      </rules>
+      <trace_8_trace_type>0</trace_8_trace_type>
+      <trace_9_y_pv_value />
+      <trace_5_plot_mode>1</trace_5_plot_mode>
+      <axis_1_visible>true</axis_1_visible>
+      <axis_2_show_grid>true</axis_2_show_grid>
+      <trace_8_x_axis_index>0</trace_8_x_axis_index>
+      <trace_3_y_axis_index>1</trace_3_y_axis_index>
+      <trace_0_update_delay>100</trace_0_update_delay>
+      <trace_19_anti_alias>true</trace_19_anti_alias>
+      <trace_1_concatenate_data>true</trace_1_concatenate_data>
+      <trace_12_y_pv_value />
+      <trace_1_trace_color>
+        <color name="MEDM_COLOR_32" red="238" green="182" blue="43" />
+      </trace_1_trace_color>
+      <trace_3_trace_color>
+        <color name="MEDM_COLOR_38" red="139" green="26" blue="150" />
+      </trace_3_trace_color>
+      <pv_name></pv_name>
+      <trace_15_x_pv_value />
+      <trace_17_plot_mode>0</trace_17_plot_mode>
+      <trace_5_trace_color>
+        <color name="Header SubColor" red="255" green="255" blue="0" />
+      </trace_5_trace_color>
+      <axis_2_log_scale>false</axis_2_log_scale>
+      <trace_6_concatenate_data>true</trace_6_concatenate_data>
+      <trace_7_anti_alias>true</trace_7_anti_alias>
+      <trace_8_visible>true</trace_8_visible>
+      <trace_9_trace_color>
+        <color name="MEDM_COLOR_34" red="205" green="97" blue="0" />
+      </trace_9_trace_color>
+      <trace_10_anti_alias>true</trace_10_anti_alias>
+      <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
+      <trace_7_trace_color>
+        <color name="MEDM_COLOR_64" red="26" green="115" blue="9" />
+      </trace_7_trace_color>
+      <trace_11_plot_mode>0</trace_11_plot_mode>
+      <name>keithley_graph</name>
+      <trace_12_concatenate_data>true</trace_12_concatenate_data>
+      <trace_1_trace_type>1</trace_1_trace_type>
+      <trace_13_x_pv_value />
+      <axis_0_auto_scale>true</axis_0_auto_scale>
+      <axis_0_minimum>0.0</axis_0_minimum>
+      <trace_19_trace_type>1</trace_19_trace_type>
+      <trace_12_visible>true</trace_12_visible>
+      <trace_2_y_axis_index>1</trace_2_y_axis_index>
+      <trace_15_point_size>4</trace_15_point_size>
+      <trace_1_update_delay>100</trace_1_update_delay>
+      <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
+      <trace_10_x_pv></trace_10_x_pv>
+      <trace_13_y_axis_index>1</trace_13_y_axis_index>
+      <axis_1_axis_title>Temperature [K]</axis_1_axis_title>
+      <trace_13_line_width>1</trace_13_line_width>
+      <trace_17_x_pv></trace_17_x_pv>
+      <trace_11_x_pv_value />
+      <trace_17_point_size>4</trace_17_point_size>
+      <trace_8_line_width>1</trace_8_line_width>
+      <trace_19_x_axis_index>0</trace_19_x_axis_index>
+      <trace_12_trace_type>0</trace_12_trace_type>
+      <trace_10_trace_color>
+        <color name="MEDM_COLOR_35" red="255" green="176" blue="255" />
+      </trace_10_trace_color>
+      <trace_13_concatenate_data>true</trace_13_concatenate_data>
+      <trace_13_visible>true</trace_13_visible>
+      <trace_12_update_delay>100</trace_12_update_delay>
+      <trace_2_x_pv_value />
+      <trace_11_trace_color>
+        <color name="MEDM_COLOR_35" red="255" green="176" blue="255" />
+      </trace_11_trace_color>
+      <trace_14_trace_color>
+        <color name="MEDM_COLOR_52" red="78" green="165" blue="249" />
+      </trace_14_trace_color>
+      <trace_18_trace_color>
+        <color name="MEDM_COLOR_21" red="222" green="19" blue="9" />
+      </trace_18_trace_color>
+      <axis_1_auto_scale>true</axis_1_auto_scale>
+      <trace_1_line_width>1</trace_1_line_width>
+      <trace_3_trace_type>1</trace_3_trace_type>
+      <trace_2_y_pv>$(PV_ROOT):CHNL:203:TEMP</trace_2_y_pv>
+      <trace_15_trace_color>
+        <color name="MEDM_COLOR_52" red="78" green="165" blue="249" />
+      </trace_15_trace_color>
+      <trace_1_plot_mode>0</trace_1_plot_mode>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <trace_6_point_style>0</trace_6_point_style>
+      <trace_19_trace_color>
+        <color name="MEDM_COLOR_21" red="222" green="19" blue="9" />
+      </trace_19_trace_color>
+      <axis_2_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_2_title_font>
+      <trace_9_x_pv></trace_9_x_pv>
+      <trace_17_x_pv_value />
+      <trace_3_point_style>0</trace_3_point_style>
+      <trace_0_y_pv>$(PV_ROOT):CHNL:101:TEMP</trace_0_y_pv>
+      <trace_6_visible>true</trace_6_visible>
+      <trace_2_point_style>0</trace_2_point_style>
+      <trace_0_plot_mode>0</trace_0_plot_mode>
+      <trace_4_trace_type>0</trace_4_trace_type>
+      <trace_13_update_delay>100</trace_13_update_delay>
+      <trace_18_visible>true</trace_18_visible>
+      <enabled>true</enabled>
+      <trace_0_x_pv></trace_0_x_pv>
+      <trace_7_point_style>0</trace_7_point_style>
+      <axis_1_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_1_scale_font>
+      <axis_1_time_format>0</axis_1_time_format>
+      <axis_2_time_format>0</axis_2_time_format>
+      <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+      <trace_7_x_pv></trace_7_x_pv>
+      <trace_3_plot_mode>0</trace_3_plot_mode>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <axis_2_maximum>-1.0</axis_2_maximum>
+      <trace_7_concatenate_data>true</trace_7_concatenate_data>
+      <trace_16_x_axis_index>0</trace_16_x_axis_index>
+      <trace_13_y_pv_value />
+      <trace_5_y_axis_index>1</trace_5_y_axis_index>
+      <show_plot_area_border>true</show_plot_area_border>
+      <width>469</width>
+      <trace_14_name>$(trace_14_y_pv)</trace_14_name>
+      <trace_1_x_pv_value />
+      <trace_17_y_pv>$(PV_ROOT):CHNL:110:TEMP</trace_17_y_pv>
+      <trace_19_update_mode>0</trace_19_update_mode>
+      <trace_16_anti_alias>true</trace_16_anti_alias>
+      <trace_16_point_size>4</trace_16_point_size>
+      <trace_18_point_style>0</trace_18_point_style>
+      <trace_13_anti_alias>true</trace_13_anti_alias>
+      <axis_1_minimum>-1.0</axis_1_minimum>
+      <trace_14_line_width>1</trace_14_line_width>
+      <trace_15_update_mode>0</trace_15_update_mode>
+      <title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </title_font>
+      <trace_9_name>$(trace_9_y_pv)</trace_9_name>
+      <trace_4_anti_alias>true</trace_4_anti_alias>
+      <trace_7_point_size>4</trace_7_point_size>
+      <trace_12_y_axis_index>1</trace_12_y_axis_index>
+      <trace_0_y_pv_value />
+      <trace_1_visible>true</trace_1_visible>
+      <trace_10_point_style>0</trace_10_point_style>
+      <plot_area_background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      </plot_area_background_color>
+      <trace_14_x_pv></trace_14_x_pv>
+      <trace_11_update_mode>0</trace_11_update_mode>
+      <trace_14_update_delay>100</trace_14_update_delay>
+      <trace_5_line_width>1</trace_5_line_width>
+      <trace_4_point_size>4</trace_4_point_size>
+      <trace_10_x_axis_index>0</trace_10_x_axis_index>
+      <axis_1_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_1_title_font>
+      <trace_18_x_pv_value />
+      <visible>true</visible>
+      <trace_10_concatenate_data>true</trace_10_concatenate_data>
+      <axis_2_axis_title>Field [T]</axis_2_axis_title>
+      <trace_19_y_pv>$(PV_ROOT):CHNL:202:TEMP</trace_19_y_pv>
+      <trace_4_trace_color>
+        <color name="Header SubColor" red="255" green="255" blue="0" />
+      </trace_4_trace_color>
+      <trace_1_buffer_size>100</trace_1_buffer_size>
+      <trace_19_visible>true</trace_19_visible>
+      <trace_14_point_style>0</trace_14_point_style>
+      <trace_12_buffer_size>100</trace_12_buffer_size>
+      <trace_8_trace_color>
+        <color name="MEDM_COLOR_34" red="205" green="97" blue="0" />
+      </trace_8_trace_color>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <trace_10_x_pv_value />
+      <axis_2_scale_format></axis_2_scale_format>
+      <trace_11_y_axis_index>1</trace_11_y_axis_index>
+      <trace_16_buffer_size>100</trace_16_buffer_size>
+      <trace_9_line_width>1</trace_9_line_width>
+      <trace_16_name>$(trace_16_y_pv)</trace_16_name>
+      <trace_5_buffer_size>100</trace_5_buffer_size>
+      <trace_4_y_pv_value />
+      <scripts />
+      <trace_0_point_size>4</trace_0_point_size>
+      <trace_0_trace_color>
+        <color name="MEDM_COLOR_32" red="238" green="182" blue="43" />
+      </trace_0_trace_color>
+      <trace_0_anti_alias>true</trace_0_anti_alias>
+      <trace_4_name>$(trace_4_y_pv)</trace_4_name>
+      <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+      <trace_7_visible>true</trace_7_visible>
+      <trace_17_x_axis_index>0</trace_17_x_axis_index>
+      <trace_19_y_axis_index>1</trace_19_y_axis_index>
+      <trace_13_plot_mode>0</trace_13_plot_mode>
+      <trace_19_concatenate_data>true</trace_19_concatenate_data>
+      <trace_10_line_width>1</trace_10_line_width>
+      <trace_9_buffer_size>100</trace_9_buffer_size>
+      <trace_4_y_axis_index>1</trace_4_y_axis_index>
+      <trace_16_concatenate_data>true</trace_16_concatenate_data>
+      <trace_16_trace_type>0</trace_16_trace_type>
+      <trace_9_x_pv_value />
+      <trace_2_plot_mode>0</trace_2_plot_mode>
+      <trace_2_x_pv></trace_2_x_pv>
+      <trace_7_y_pv>$(PV_ROOT):CHNL:208:TEMP</trace_7_y_pv>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+      <axis_1_scale_format></axis_1_scale_format>
+      <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+      <trace_0_concatenate_data>true</trace_0_concatenate_data>
+      <trace_0_trace_type>0</trace_0_trace_type>
+      <border_width>1</border_width>
+      <border_style>0</border_style>
+      <axis_0_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_0_grid_color>
+      <axis_2_visible>false</axis_2_visible>
+      <trace_0_name>Temp 1</trace_0_name>
+      <axis_2_minimum>1.0</axis_2_minimum>
+      <trace_0_update_mode>4</trace_0_update_mode>
+      <wuid>6ebe0d97:161b8a4b322:-3839</wuid>
+      <transparent>false</transparent>
+      <axis_0_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_0_title_font>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <x>6</x>
+      <y>252</y>
+      <trace_0_x_axis_index>0</trace_0_x_axis_index>
+      <axis_count>3</axis_count>
+      <pv_value />
+      <axis_2_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_2_grid_color>
+      <trace_0_buffer_size>1000</trace_0_buffer_size>
+      <axis_1_maximum>1.0</axis_1_maximum>
+      <axis_0_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_0_scale_font>
+      <trigger_pv>$(P)CS:IOC:$(KHLY2700):DEVIOS:HEARTBEAT</trigger_pv>
+      <widget_type>XY Graph</widget_type>
+      <axis_1_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_1_axis_color>
+      <axis_0_scale_format></axis_0_scale_format>
+      <axis_1_log_scale>false</axis_1_log_scale>
+      <title>Magnetic Field</title>
+      <trace_0_visible>true</trace_0_visible>
+      <axis_2_auto_scale>false</axis_2_auto_scale>
+      <show_legend>false</show_legend>
+      <axis_0_axis_title>Time</axis_0_axis_title>
+      <axis_0_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_0_axis_color>
+      <axis_2_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_2_scale_font>
+      <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+      <trace_0_point_style>0</trace_0_point_style>
+      <trace_0_line_width>1</trace_0_line_width>
+      <axis_2_y_axis>true</axis_2_y_axis>
+      <axis_0_time_format>3</axis_0_time_format>
+      <trace_count>1</trace_count>
+      <axis_1_show_grid>true</axis_1_show_grid>
+      <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+      <show_toolbar>true</show_toolbar>
+      <axis_0_visible>true</axis_0_visible>
+      <axis_0_show_grid>true</axis_0_show_grid>
+      <trace_0_y_axis_index>1</trace_0_y_axis_index>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <axis_0_maximum>120.0</axis_0_maximum>
+      <height>235</height>
+      <trigger_pv_value />
+      <axis_1_grid_color>
+        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+      </axis_1_grid_color>
+      <actions hook="false" hook_all="false" />
+      <axis_2_axis_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </axis_2_axis_color>
+      <axis_0_log_scale>false</axis_0_log_scale>
+      <trace_0_x_pv_value />
+      <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+      <rules>
+        <rule name="Rule" prop_id="trace_0_visible" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0==1</value>
+          </exp>
+          <pv trig="true">loc://$(DID)_trace_mag_field_visible(1)</pv>
+        </rule>
+      </rules>
+      <axis_1_visible>true</axis_1_visible>
+      <axis_2_show_grid>true</axis_2_show_grid>
+      <trace_0_update_delay>100</trace_0_update_delay>
+      <pv_name></pv_name>
+      <axis_2_log_scale>false</axis_2_log_scale>
+      <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
+      <name>keithley_graph_1</name>
+      <axis_0_auto_scale>true</axis_0_auto_scale>
+      <axis_0_minimum>0.0</axis_0_minimum>
+      <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
+      <axis_1_axis_title>Field [T]</axis_1_axis_title>
+      <axis_1_auto_scale>true</axis_1_auto_scale>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <axis_2_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_2_title_font>
+      <trace_0_y_pv>$(PV_ROOT):CHNL:101:READING</trace_0_y_pv>
+      <trace_0_plot_mode>0</trace_0_plot_mode>
+      <enabled>true</enabled>
+      <trace_0_x_pv></trace_0_x_pv>
+      <axis_1_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
+      </axis_1_scale_font>
+      <axis_1_time_format>0</axis_1_time_format>
+      <axis_2_time_format>0</axis_2_time_format>
+      <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <axis_2_maximum>-1.0</axis_2_maximum>
+      <show_plot_area_border>true</show_plot_area_border>
+      <width>469</width>
+      <axis_1_minimum>-1.0</axis_1_minimum>
+      <title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </title_font>
+      <trace_0_y_pv_value />
+      <plot_area_background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      </plot_area_background_color>
+      <axis_1_title_font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
+      </axis_1_title_font>
+      <visible>true</visible>
+      <axis_2_axis_title>Field [T]</axis_2_axis_title>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <axis_2_scale_format></axis_2_scale_format>
+      <scripts />
+      <trace_0_point_size>4</trace_0_point_size>
+      <trace_0_trace_color>
+        <color name="Blue" red="0" green="0" blue="255" />
+      </trace_0_trace_color>
+      <trace_0_anti_alias>true</trace_0_anti_alias>
+      <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+    </widget>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
     <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <line_width>0</line_width>
-    <horizontal_fill>true</horizontal_fill>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
     <rules />
     <enabled>true</enabled>
-    <wuid>6ebe0d97:160d54afb65:43f9</wuid>
+    <wuid>6ebe0d97:161b8a4b322:-27bf</wuid>
     <transparent>false</transparent>
-    <pv_value />
-    <alpha>255</alpha>
-    <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </bg_gradient_color>
+    <auto_size>false</auto_size>
+    <text>Reviewer notes:&#xD;
+&#xD;
+- These graphs display CHNL:XXX:TEMP which has not been calculated yet. It's the work of another ticket.&#xD;
+&#xD;
+Trace values can be substituted with CHNL:101:READING to simulate and test the on/off toggles. &#xD;
+&#xD;
+- There are two graphs (the VI has a single graph for all values) as CSS graphs are limited to 20 trace lines. &#xD;
+&#xD;
+- The Magnetic Field graph value is returned from another component of HIFI which has not been completed.&#xD;
+&#xD;
+</text>
     <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>20</height>
+    <height>343</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -5628,92 +5777,26 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name></pv_name>
-    <gradient>false</gradient>
+    <vertical_alignment>1</vertical_alignment>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
-    <anti_alias>true</anti_alias>
-    <line_style>0</line_style>
-    <widget_type>Rectangle</widget_type>
-    <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </fg_gradient_color>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
     <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>3</width>
-    <x>916</x>
-    <name>Rectangle_2</name>
-    <y>127</y>
-    <fill_level>0.0</fill_level>
+    <width>169</width>
+    <x>768</x>
+    <name>DELAY_1</name>
+    <y>228</y>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
     </font>
-    <line_color>
-      <color red="128" green="0" blue="255" />
-    </line_color>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <line_width>0</line_width>
-    <horizontal_fill>true</horizontal_fill>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:160d54afb65:440b</wuid>
-    <transparent>false</transparent>
-    <pv_value />
-    <alpha>255</alpha>
-    <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </bg_gradient_color>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>20</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <gradient>false</gradient>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <anti_alias>true</anti_alias>
-    <line_style>0</line_style>
-    <widget_type>Rectangle</widget_type>
-    <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </fg_gradient_color>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>3</width>
-    <x>898</x>
-    <name>Rectangle_3</name>
-    <y>127</y>
-    <fill_level>0.0</fill_level>
-    <foreground_color>
-      <color red="255" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-    <line_color>
-      <color red="128" green="0" blue="255" />
-    </line_color>
   </widget>
 </display>
