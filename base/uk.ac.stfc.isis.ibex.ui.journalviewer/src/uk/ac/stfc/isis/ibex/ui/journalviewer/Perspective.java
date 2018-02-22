@@ -46,4 +46,9 @@ public class Perspective extends BasePerspective {
 	public Image image() {
 		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.journalviewer", "icons/journal_viewer_32x24.png");
 	}
+	
+	@Override
+	public boolean isVisibleDefault() {
+		return false;
+	}
 }
