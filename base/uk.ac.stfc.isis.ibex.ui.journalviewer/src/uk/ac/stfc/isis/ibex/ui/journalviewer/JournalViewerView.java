@@ -19,9 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -31,11 +41,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
  * Journal viewer main view.
@@ -58,6 +71,8 @@ public class JournalViewerView extends ViewPart {
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
     
     private Button btnRefresh;
+
+	private DataboundTable table;
 
 	/**
 	 * Create contents of the view part.
@@ -92,10 +107,23 @@ public class JournalViewerView extends ViewPart {
 	        });
 		}
 		
-		lblDescription = new Label(parent, SWT.NONE);
-		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
-		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
-		lblDescription.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
+//		lblDescription = new Label(parent, SWT.NONE);
+//		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
+//		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+//		lblDescription.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
+		
+		final int tableStyle = SWT.BORDER | SWT.FILL;
+		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle) {
+			@Override
+			protected void addColumns() {
+				for (JournalField field : JournalField.values()) {
+					createColumn(field.getFriendlyName(), model.getFieldSelected(field) ? 1 : 0, model.getFieldSelected(field));
+				}
+			}
+		};
+		table.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
@@ -109,13 +137,39 @@ public class JournalViewerView extends ViewPart {
         bind();
 	}
 	
+	private void refreshTable() {
+		
+//		if (table.getTable().isDisposed()) {
+//			return;
+//		}
+//		
+//		for (JournalField field : JournalField.values()) {
+//			TableColumn viewerColumn = table.getTable().getColumn(Arrays.asList(JournalField.values()).indexOf(field));
+//			
+//			viewerColumn.setWidth(model.getFieldSelected(field) ? 200 : 0);
+//			viewerColumn.setResizable(model.getFieldSelected(field));
+//		}
+//		
+//		table.setContentProvider(ArrayContentProvider.getInstance());
+//		
+//		for (Map<JournalField, String> data : model.getRuns()) {
+//			for (JournalField field : data.keySet()) {
+//				table.getTable();
+//				
+//				DataboundTable<Object> h;
+//			}
+//		}
+		
+		// table.refresh();
+	}
+	
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
-                BeanProperties.value("runs").observe(model));
+//        bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
+//                BeanProperties.value("runs").observe(model));
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -123,6 +177,13 @@ public class JournalViewerView extends ViewPart {
                 model.refresh();
             }
         });
+        
+        model.addPropertyChangeListener("runs", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				refreshTable();	
+			}
+		});
         
     }
 

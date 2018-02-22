@@ -273,7 +273,7 @@ public abstract class DataboundTable<TRow> extends Composite {
     /**
      * Completes the setup of the table.
      */
-	protected void initialise() {
+	public void initialise() {
 		addColumns();
 		
 		viewer.setContentProvider(contentProvider);	

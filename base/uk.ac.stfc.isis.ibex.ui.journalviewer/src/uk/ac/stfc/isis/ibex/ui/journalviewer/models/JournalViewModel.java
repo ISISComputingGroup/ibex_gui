@@ -101,24 +101,12 @@ public class JournalViewModel extends ModelObject {
 
     
     /**
-     * Gets a string representation of the runs in the journal.
+     * Gets the runs in the journal.
      * 
-     * @deprecated This function will be replaced in ticket 2905 
-     * @see https://github.com/ISISComputingGroup/IBEX/issues/2905
-     * 
-     * @return a string representation of the runs.
+     * @return the runs.
      */
-    public String getRuns() {
-    	StringBuilder sb = new StringBuilder();
-    	for (Map<JournalField, String> run : runs) {
-    		List<JournalField> keys = new ArrayList<>(run.keySet());
-    		Collections.sort(keys);
-    		for (JournalField field : keys) {
-    			sb.append(field.getFriendlyName() + " = " + run.get(field) + ", ");
-    		}
-    		sb.append("\n");
-    	}
-    	return sb.toString();
+    public List<Map<JournalField, String>> getRuns() {
+    	return model.getRuns();
     }
     
     private void setRuns(List<Map<JournalField, String>> newRuns) {
@@ -148,6 +136,7 @@ public class JournalViewModel extends ModelObject {
     public boolean getFieldSelected(JournalField field) {
     	return model.getSelectedFields().contains(field);
     }
+    
     private String dateToString(Date lastUpdate) {
         if (lastUpdate == null) {
             return "N/A";
