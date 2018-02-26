@@ -21,17 +21,14 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.lang.reflect.Method;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -41,7 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -74,6 +71,8 @@ public class JournalViewerView extends ViewPart {
 
 	private DataboundTable table;
 
+	private Composite parent;
+
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -81,6 +80,7 @@ public class JournalViewerView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
 		parent.setLayout(new GridLayout(1, false));
 
 		Label lblTitle = new Label(parent, SWT.NONE);
@@ -113,7 +113,7 @@ public class JournalViewerView extends ViewPart {
 //		lblDescription.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
 		
 		final int tableStyle = SWT.BORDER | SWT.FILL;
-		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle) {
+		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle, 0) {
 			@Override
 			protected void addColumns() {
 				for (JournalField field : JournalField.values()) {
@@ -139,28 +139,20 @@ public class JournalViewerView extends ViewPart {
 	
 	private void refreshTable() {
 		
-//		if (table.getTable().isDisposed()) {
-//			return;
-//		}
-//		
-//		for (JournalField field : JournalField.values()) {
-//			TableColumn viewerColumn = table.getTable().getColumn(Arrays.asList(JournalField.values()).indexOf(field));
-//			
-//			viewerColumn.setWidth(model.getFieldSelected(field) ? 200 : 0);
-//			viewerColumn.setResizable(model.getFieldSelected(field));
-//		}
-//		
-//		table.setContentProvider(ArrayContentProvider.getInstance());
-//		
-//		for (Map<JournalField, String> data : model.getRuns()) {
-//			for (JournalField field : data.keySet()) {
-//				table.getTable();
-//				
-//				DataboundTable<Object> h;
-//			}
-//		}
+		for (TableColumn col : table.table().getColumns()) {
+			col.dispose();
+		}
 		
-		// table.refresh();
+		for (JournalField field : JournalField.values()) {
+			if (model.getFieldSelected(field)) {
+				table.createColumn(field.getFriendlyName(), 1, true);
+			}
+		}
+		
+		// This is terrible. 
+		// I couldn't find any other way to get the view to work properly.
+		table.setSize(table.getSize().x, table.getSize().y + 1);
+		table.setSize(table.getSize().x, table.getSize().y - 1);
 	}
 	
     private void bind() {

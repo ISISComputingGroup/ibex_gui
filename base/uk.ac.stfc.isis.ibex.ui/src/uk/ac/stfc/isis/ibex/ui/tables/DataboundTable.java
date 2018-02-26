@@ -19,10 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.tables;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
@@ -60,7 +64,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 public abstract class DataboundTable<TRow> extends Composite {
 
     private static final int DEFAULT_FONT_HEIGHT = 10;
-    private static final int MIN_TABLE_COLUMN_WIDTH = 50;
+    private final int minTableColumnWidth;
 
     private int tableStyle;
 	private Table table;
@@ -71,8 +75,11 @@ public abstract class DataboundTable<TRow> extends Composite {
 	
 	private Class<TRow> rowType;
 	
-    /**
-     * Instantiates a new databound table.
+	private Map<String, TableColumn> columns = new HashMap<>();
+	
+	
+	/**
+     * Instantiates a new databound table with a minimum column width of 50.
      *
      * @param parent the parent
      * @param style the style
@@ -80,7 +87,23 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param tableStyle the table style
      */
 	public DataboundTable(Composite parent, int style, Class<TRow> rowType, int tableStyle) {
+		this(parent, style, rowType, tableStyle, 50);
+	}
+	
+    /**
+     * Instantiates a new databound table.
+     *
+     * @param parent the parent
+     * @param style the style
+     * @param rowType the row type
+     * @param tableStyle the table style
+     * @param minTableColumnWidth the minimum width of columns in the table
+     */
+	public DataboundTable(Composite parent, int style, Class<TRow> rowType, int tableStyle, int minTableColumnWidth) {
 		super(parent, style);
+		
+		this.minTableColumnWidth = minTableColumnWidth;
+		
 		this.tableStyle = tableStyle | SWT.BORDER;
 		this.rowType = rowType;
 
@@ -290,7 +313,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @return the table viewer
      */
-	protected TableViewer viewer() { 
+	public TableViewer viewer() { 
 		return viewer;
 	}
 
@@ -299,7 +322,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @return the table
      */
-	protected Table table() { 
+	public Table table() { 
 		return table;
 	}
 
@@ -360,8 +383,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 				public void controlResized(ControlEvent e) {
 					for (TableColumn otherCol : cols) {
 						// Column can't be smaller than minimum width
-						if (otherCol.getWidth() < MIN_TABLE_COLUMN_WIDTH) {
-							otherCol.setWidth(MIN_TABLE_COLUMN_WIDTH);
+						if (otherCol.getWidth() < minTableColumnWidth) {
+							otherCol.setWidth(minTableColumnWidth);
 						}
 					}
 				}
@@ -407,13 +430,43 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param resizable whether the column is resizable
      * @return the table viewer column
      */
-	protected TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
+	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
 		TableViewerColumn tableColumn = createColumn(title);
         TableColumn col = tableColumn.getColumn();
-		tableColumnLayout().setColumnData(col,
-                new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
-        col.setResizable(resizable);
+        columns.put(title, col);
+        setColumnWeightData(title, widthWeighting, resizable);
 		return tableColumn;
+	}
+	
+	public void setColumnWeightData(String title, int widthWeighting, boolean resizable) {
+		setColumnWeightData(title, new ColumnWeightData(widthWeighting, minTableColumnWidth, resizable));
+	}
+	
+	public void setColumnWeightData(String title, ColumnWeightData data) {
+		if (!columns.containsKey(title)) {
+			throw new IllegalArgumentException("Could not find the requested column");
+		}
+		TableColumn col = columns.get(title);
+		col.setWidth(Integer.MAX_VALUE);
+		tableColumnLayout.setColumnData(col, data);
+		col.setResizable(data.resizable);
+		
+
+		
+//		try {
+//		Method method = tableColumnLayout.getClass().getDeclaredMethod("updateColumnData");
+//		method.setAccessible(true);
+//		for (TableColumn c : columns.values()) {
+//			method.invoke(c, c);
+//		}
+//	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+//		e.printStackTrace();
+//	}
+        
+		//for ( TableColumn column: columns.values()) {
+		//col.pack();
+		// col.setWidth(100);
+		//}
 	}
 	
     /**
