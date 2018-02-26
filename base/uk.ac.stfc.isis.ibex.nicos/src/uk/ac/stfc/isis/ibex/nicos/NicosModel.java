@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -30,11 +32,13 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetConsoleLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveConsoleLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
@@ -84,6 +88,7 @@ public class NicosModel extends ModelObject {
 	private int lineNumber;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
+    private List<String> messages;
 
 	
 
@@ -109,6 +114,7 @@ public class NicosModel extends ModelObject {
 			@Override
 			protected IStatus doTask(IProgressMonitor monitor) {
 				updateScriptStatus();
+                updateLogMessages();
 				return Status.OK_STATUS;
 			}
         };
@@ -192,6 +198,18 @@ public class NicosModel extends ModelObject {
         firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
     }
 
+    /**
+     * Get the status of the last script that was sent.
+     * 
+     * @return the status of sending a script
+     */
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    private void setMessages(List<String> messages) {
+        firePropertyChange("messages", this.messages, this.messages = messages);
+    }
     /**
      * Send a script to Nicos. Do not wait for a reply the acknowledgement can
      * be found in script send status.
@@ -296,7 +314,20 @@ public class NicosModel extends ModelObject {
 			setCurrentlyExecutingScript(response.script);
 		}
 	}
-	
+
+    /**
+     * Gets the status of the currently executing script from the server.
+     */
+    public void updateLogMessages() {
+        ReceiveConsoleLogMessage response =
+                (ReceiveConsoleLogMessage) sendMessageToNicos(new GetConsoleLog("5")).getResponse();
+        if (response == null) {
+            failConnection(NO_RESPONSE);
+        } else {
+            // Do something
+        }
+    }
+
 	private void setLineNumber(int lineNumber) {
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
