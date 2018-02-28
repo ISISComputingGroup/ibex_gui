@@ -16,9 +16,9 @@ public class GetLog extends NICOSMessage<String> {
      * @param n
      *            The number of last messages to fetch
      */
-    public GetLog(String n) {
+    public GetLog(int n) {
         command = "getmessages";
-        parameters = Arrays.asList(n);
+        parameters = Arrays.asList(Integer.toString(n));
     }
 
 	/**

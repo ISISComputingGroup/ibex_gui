@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -91,7 +92,10 @@ public class NicosModel extends ModelObject {
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
     private List<NicosLogEntry> newLogEntries;
-    private long lastLogTime = 0;
+    private long lastEntryTime;
+
+    private static final int MESSAGES_SCALE_FACTOR = 10;
+    private static final int MESSAGES_THRESHOLD = 1000;
 
     /**
      * Constructor for the model.
@@ -110,6 +114,7 @@ public class NicosModel extends ModelObject {
         this.session = session;
         this.connectionJob = connectionJob;
         this.connectionJob.schedule();
+        this.lastEntryTime = System.currentTimeMillis();
         
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
 			@Override
@@ -210,7 +215,7 @@ public class NicosModel extends ModelObject {
 
     private void setLogEntries(List<NicosLogEntry> newLogEntries) {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
-        this.lastLogTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
+        this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
     }
     /**
      * Send a script to Nicos. Do not wait for a reply the acknowledgement can
@@ -318,25 +323,37 @@ public class NicosModel extends ModelObject {
 	}
 
     /**
-     * Gets the status of the currently executing script from the server.
+     * Gets the latest messages from the NICOS log.
      */
     public void updateLogEntries() {
-        ReceiveLogMessage response =
-                (ReceiveLogMessage) sendMessageToNicos(new GetLog("5")).getResponse();
-        if (response == null) {
-            failConnection(NO_RESPONSE);
-        } else {
-            List<NicosLogEntry> newEntries = filterOld(response.entries);
-            if (!newEntries.isEmpty()) {
-                setLogEntries(newEntries);
+        int numMessages = 1;
+        long firstEntryTime = 0;
+        ReceiveLogMessage response = null;
+        do {
+            if (numMessages > MESSAGES_THRESHOLD) {
+                response.entries.add(
+                        new NicosLogEntry(new Date(),
+                                "WARNING: Message volume is too high. Some messages may be ommitted."));
+                break;
             }
+            response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
+            if (response == null) {
+                failConnection(NO_RESPONSE);
+            }
+            firstEntryTime = response.entries.get(0).getTimeStamp();
+            numMessages *= MESSAGES_SCALE_FACTOR;
+        } while (firstEntryTime > this.lastEntryTime);
+
+        List<NicosLogEntry> newEntries = filterOld(response.entries);
+        if (!newEntries.isEmpty()) {
+            setLogEntries(newEntries);
         }
     }
 
     private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
         List<NicosLogEntry> filtered = new ArrayList<NicosLogEntry>();
         for (NicosLogEntry entry : entries) {
-            if (entry.getTimeStamp() > this.lastLogTime) {
+            if (entry.getTimeStamp() > this.lastEntryTime) {
                 filtered.add(entry);
             }
         }
