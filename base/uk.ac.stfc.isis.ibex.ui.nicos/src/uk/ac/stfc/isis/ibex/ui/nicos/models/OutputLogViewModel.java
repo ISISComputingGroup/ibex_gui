@@ -24,7 +24,7 @@ public class OutputLogViewModel extends ModelObject {
         model.addPropertyChangeListener("messages", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-                appendLog(model.getMessages());
+                appendLog(model.getLogEntries());
 			}
 		});
 	}
@@ -38,7 +38,7 @@ public class OutputLogViewModel extends ModelObject {
 	}
 
     private void setLog(String log) {
-        firePropertyChange("messages", this.log, this.log = log);
+        firePropertyChange("logEntries", this.log, this.log = log);
     }
 	
 	/**

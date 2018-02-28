@@ -44,4 +44,8 @@ public class NicosLogEntry {
     public String toString() {
         return TIME_FORMAT.format(timestamp) + " " + message;
     }
+
+    public long getTimeStamp() {
+        return timestamp.getTime();
+    }
 }

@@ -18,6 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -31,12 +32,12 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
-import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
@@ -89,9 +90,8 @@ public class NicosModel extends ModelObject {
 	private int lineNumber;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
-    private List<NicosLogEntry> messages;
-
-	
+    private List<NicosLogEntry> newLogEntries;
+    private long lastLogTime = 0;
 
     /**
      * Constructor for the model.
@@ -115,7 +115,7 @@ public class NicosModel extends ModelObject {
 			@Override
 			protected IStatus doTask(IProgressMonitor monitor) {
 				updateScriptStatus();
-                updateLogMessages();
+                updateLogEntries();
 				return Status.OK_STATUS;
 			}
         };
@@ -204,12 +204,13 @@ public class NicosModel extends ModelObject {
      * 
      * @return the status of sending a script
      */
-    public List<NicosLogEntry> getMessages() {
-        return messages;
+    public List<NicosLogEntry> getLogEntries() {
+        return newLogEntries;
     }
 
-    private void setMessages(List<NicosLogEntry> messages) {
-        firePropertyChange("messages", this.messages, this.messages = messages);
+    private void setLogEntries(List<NicosLogEntry> newLogEntries) {
+        firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
+        this.lastLogTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
     }
     /**
      * Send a script to Nicos. Do not wait for a reply the acknowledgement can
@@ -319,14 +320,27 @@ public class NicosModel extends ModelObject {
     /**
      * Gets the status of the currently executing script from the server.
      */
-    public void updateLogMessages() {
+    public void updateLogEntries() {
         ReceiveLogMessage response =
                 (ReceiveLogMessage) sendMessageToNicos(new GetLog("5")).getResponse();
         if (response == null) {
             failConnection(NO_RESPONSE);
         } else {
-            setMessages(response.entries);
+            List<NicosLogEntry> newEntries = filterOld(response.entries);
+            if (!newEntries.isEmpty()) {
+                setLogEntries(newEntries);
+            }
         }
+    }
+
+    private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
+        List<NicosLogEntry> filtered = new ArrayList<NicosLogEntry>();
+        for (NicosLogEntry entry : entries) {
+            if (entry.getTimeStamp() > this.lastLogTime) {
+                filtered.add(entry);
+            }
+        }
+        return filtered;
     }
 
 	private void setLineNumber(int lineNumber) {
