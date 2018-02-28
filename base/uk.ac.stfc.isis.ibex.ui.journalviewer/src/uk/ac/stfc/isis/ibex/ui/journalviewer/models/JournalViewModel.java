@@ -69,6 +69,8 @@ public class JournalViewModel extends ModelObject {
         setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
         setMessage(model.getMessage());
         setRuns(model.getRuns());
+        setPageNumber(model.getPage());
+        setPageNumberMax(model.getPageMax());
     }
 
     /**
@@ -148,6 +150,7 @@ public class JournalViewModel extends ModelObject {
     public boolean getFieldSelected(JournalField field) {
     	return model.getSelectedFields().contains(field);
     }
+    
     private String dateToString(Date lastUpdate) {
         if (lastUpdate == null) {
             return "N/A";
@@ -167,4 +170,27 @@ public class JournalViewModel extends ModelObject {
         Date today = calendar.getTime();
         return date.after(today);
     }
+    
+    public void setPageNumber(int pageNumber) {
+    	if (pageNumber != model.getPage()) {
+    		int previousPage = model.getPage();
+	    	model.setPage(pageNumber);
+	    	firePropertyChange("pageNumber", previousPage, model.getPage());
+    	}
+    }
+    
+    public int getPageNumber() {
+    	return model.getPage();
+    }
+    
+
+    
+    public void setPageNumberMax(int max) {
+	    firePropertyChange("pageNumberMax", 0, model.getPageMax());
+    }
+    
+    public int getPageNumberMax() {
+    	return model.getPageMax();
+    }
+
 }

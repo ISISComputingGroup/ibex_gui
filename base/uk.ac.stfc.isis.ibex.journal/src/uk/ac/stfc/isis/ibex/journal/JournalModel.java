@@ -26,13 +26,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
+
+import java.sql.PreparedStatement;
 
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
@@ -55,6 +54,14 @@ public class JournalModel extends ModelObject implements Runnable {
 
     private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
+    private static final int PAGE_SIZE = 30;
+    
+    // In ms. If a query takes longer than this, issue a warning.
+    // Exact choice of number is arbitrary.
+    private static final int QUERY_DURATION_WARNING_LEVEL = 500; 
+    
+    private int pageNumber = 1;
+    private int pageMax = 1;
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -125,16 +132,11 @@ public class JournalModel extends ModelObject implements Runnable {
      * @throws SQLException - If there was an error while querying the database
      */
     private void updateRuns(Connection connection) throws SQLException {
-    	
-    	if (getSelectedFields().size() <= 0) {
-    		setRuns(Collections.<Map<JournalField, String>>emptyList());
-    		return;
-    	}
-    	
-    	ResultSet rs = connection.createStatement().executeQuery(constructSQLQuery());
+    	long startTime = System.currentTimeMillis();
+
+    	ResultSet rs = constructSQLQuery(connection).executeQuery();
     	
     	List<Map<JournalField, String>> runs = new ArrayList<>();
-    	
     	while (rs.next()) {
     		Map<JournalField, String> run = new HashMap<>();
     		for (JournalField property : selectedFields) {
@@ -146,33 +148,56 @@ public class JournalModel extends ModelObject implements Runnable {
     		}  
     		runs.add(Collections.unmodifiableMap(run));
     	}
+    	rs.close();
     	
     	setRuns(Collections.unmodifiableList(runs));
+    	updateRunsCount(connection);
+	    
+	    long totalTime = System.currentTimeMillis() - startTime;
+	    if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
+	    	LOG.warn(String.format(
+	    			"Journal parser SQL queries took %s ms. Should have taken less than %s ms.",
+	    			totalTime, QUERY_DURATION_WARNING_LEVEL));
+	    }
+    }
+    
+    private void updateRunsCount(Connection connection) throws SQLException {
+    	ResultSet rs = constructCountFieldsSQLQuery(connection).executeQuery();
+    	if (!rs.next()) {
+    		throw new RuntimeException("No results returned from SQL query to count rows.");
+    	}
+	    setTotalResults(rs.getInt(1));
+	    rs.close();
+    }
+
+	/**
+     * Constructs the SQL query which extracts all relevant information from the database.
+     * 
+     * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
+     * accidentally as that could lead to a SQL injection vulnerability.
+     * 
+     * @return a SQL prepared statement ready to be executed.
+     * @throws SQLException if a SQL exception occurred while preparing the statement
+     */
+    private PreparedStatement constructSQLQuery(Connection connection) throws SQLException {
+    	String query = "SELECT * FROM journal_entries ORDER BY run_number DESC LIMIT ?, ?";
+        PreparedStatement st = connection.prepareStatement(query);
+    	st.setInt(1, (pageNumber-1) * PAGE_SIZE);
+    	st.setInt(2, PAGE_SIZE);
+    	return st;
     }
     
     /**
-     * Constructs the SQL query which extracts all relevant information from the database.
-     * @see getSelectedFields for the fields which will be selected.
-     * @return the SQL query to be executed.
+     * Constructs a SQL query which gets the number of runs available.
+     * 
+     * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
+     * accidentally as that could lead to a SQL injection vulnerability.
+     * 
+     * @return a SQL prepared statement ready to be executed.
+     * @throws SQLException if a SQL exception occurred while preparing the statement
      */
-    private String constructSQLQuery() {
-    	
-    	Set<JournalField> selectedFields = getSelectedFields();
-    	
-    	Set<String> selectedFieldNames = new HashSet<String>();
-    	for (JournalField field : selectedFields) {
-    		selectedFieldNames.add(field.getSqlFieldName());
-    	}
-    	
-    	String fields;
-    	if (selectedFieldNames.size() > 0) {
-    		fields = String.join(", ", selectedFieldNames.toArray(new String[selectedFieldNames.size()]));
-    	} else {
-    		fields = "null";
-    	}
-    	
-    	String query = String.format("SELECT %s FROM journal_entries ORDER BY run_number DESC LIMIT 1000", fields);
-    	return query;
+    private PreparedStatement constructCountFieldsSQLQuery(Connection connection) throws SQLException {
+    	return connection.prepareStatement("SELECT COUNT(*) FROM journal_entries");
     }
     
     private void setRuns(List<Map<JournalField, String>> runs) {
@@ -242,4 +267,42 @@ public class JournalModel extends ModelObject implements Runnable {
     public Date getLastUpdate() {
         return this.lastUpdate;
     }
+    
+    /**
+     * Sets the page number that is being looked at.
+     * 
+     * @param page The new page number
+     */
+    public void setPage(int pageNumber) {
+        firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+        refresh();
+    }
+
+    /**
+     * Returns the current page number.
+     * @return The page number.
+     */
+    public int getPage() {
+        return pageNumber;
+    }
+    
+    private void setTotalResults(int totalResults) {
+    	setPageMax((int) Math.ceil(totalResults/(double) PAGE_SIZE));
+	}
+    
+    /**
+     * The maximum page number that can be selected.
+     * @param max the new maximum selectable page number
+     */
+    public void setPageMax(int max) {
+    	firePropertyChange("pageNumberMax", this.pageMax, this.pageMax = max);
+    }
+
+    /**
+     * Gets the maximum page number with data in it.
+     * @return the maximum page number
+     */
+	public int getPageMax() {
+		return pageMax;
+	}
 }
