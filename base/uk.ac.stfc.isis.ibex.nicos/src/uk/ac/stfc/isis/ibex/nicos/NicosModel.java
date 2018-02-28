@@ -95,7 +95,7 @@ public class NicosModel extends ModelObject {
     private long lastEntryTime;
 
     private static final int MESSAGES_SCALE_FACTOR = 10;
-    private static final int MESSAGES_THRESHOLD = 1000;
+    private static final int MESSAGES_THRESHOLD = 100;
 
     /**
      * Constructor for the model.
@@ -113,7 +113,6 @@ public class NicosModel extends ModelObject {
     public NicosModel(ZMQSession session, RepeatingJob connectionJob) {
         this.session = session;
         this.connectionJob = connectionJob;
-        this.connectionJob.schedule();
         this.lastEntryTime = System.currentTimeMillis();
         
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
@@ -125,6 +124,7 @@ public class NicosModel extends ModelObject {
 			}
         };
         updateStatusJob.setRunning(false);
+        this.connectionJob.schedule();
     }
 
     private void failConnection(String message) {
