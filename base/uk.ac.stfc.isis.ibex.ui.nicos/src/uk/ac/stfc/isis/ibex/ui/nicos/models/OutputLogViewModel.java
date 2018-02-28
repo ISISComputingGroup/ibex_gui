@@ -21,7 +21,7 @@ public class OutputLogViewModel extends ModelObject {
 	 */
 	public OutputLogViewModel(final NicosModel model) {
 		
-        model.addPropertyChangeListener("messages", new PropertyChangeListener() {
+        model.addPropertyChangeListener("logEntries", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
                 appendLog(model.getLogEntries());
@@ -38,7 +38,7 @@ public class OutputLogViewModel extends ModelObject {
 	}
 
     private void setLog(String log) {
-        firePropertyChange("logEntries", this.log, this.log = log);
+        firePropertyChange("log", this.log, this.log = log);
     }
 	
 	/**

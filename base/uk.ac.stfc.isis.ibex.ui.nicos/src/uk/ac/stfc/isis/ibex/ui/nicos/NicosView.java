@@ -135,6 +135,9 @@ public class NicosView extends ViewPart {
         
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
+
+        bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
+                BeanProperties.value("log").observe(outputLogViewModel));
         
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
