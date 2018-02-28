@@ -31,14 +31,15 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
-import uk.ac.stfc.isis.ibex.nicos.messages.GetConsoleLog;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveConsoleLogMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 
@@ -88,7 +89,7 @@ public class NicosModel extends ModelObject {
 	private int lineNumber;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
-    private List<String> messages;
+    private List<NicosLogEntry> messages;
 
 	
 
@@ -203,11 +204,11 @@ public class NicosModel extends ModelObject {
      * 
      * @return the status of sending a script
      */
-    public List<String> getMessages() {
+    public List<NicosLogEntry> getMessages() {
         return messages;
     }
 
-    private void setMessages(List<String> messages) {
+    private void setMessages(List<NicosLogEntry> messages) {
         firePropertyChange("messages", this.messages, this.messages = messages);
     }
     /**
@@ -319,12 +320,12 @@ public class NicosModel extends ModelObject {
      * Gets the status of the currently executing script from the server.
      */
     public void updateLogMessages() {
-        ReceiveConsoleLogMessage response =
-                (ReceiveConsoleLogMessage) sendMessageToNicos(new GetConsoleLog("5")).getResponse();
+        ReceiveLogMessage response =
+                (ReceiveLogMessage) sendMessageToNicos(new GetLog("5")).getResponse();
         if (response == null) {
             failConnection(NO_RESPONSE);
         } else {
-            // Do something
+            setMessages(response.entries);
         }
     }
 

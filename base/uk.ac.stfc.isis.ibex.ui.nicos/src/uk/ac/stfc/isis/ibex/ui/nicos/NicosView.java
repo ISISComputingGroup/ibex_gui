@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
@@ -65,6 +66,7 @@ public class NicosView extends ViewPart {
     private Label lblCurrentScriptStatus;
 
 	private ScriptStatusViewModel scriptStatusViewModel;
+    private OutputLogViewModel outputLogViewModel;
 
     /**
      * The default constructor for the view.
@@ -73,6 +75,7 @@ public class NicosView extends ViewPart {
         model = Nicos.getDefault().getModel();
         queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
         scriptStatusViewModel = new ScriptStatusViewModel(model);
+        outputLogViewModel = new OutputLogViewModel(model);
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }

@@ -16,22 +16,34 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
- *
+ * A log message that has been received from NICOS. This should contain a list
+ * of the last n messages in the NICOS console (where n is specified in the
+ * query).
+ * 
+ * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public class ConsoleLogEntry {
-    Date timestamp;
-    String message;
+@SuppressWarnings({ "checkstyle:magicnumber" })
+public class ReceiveLogMessage implements ReceiveMessage {
+	/**
+	 * Tuple of two items (status code, line number).
+	 */
+    public List<NicosLogEntry> entries;
 
-    public ConsoleLogEntry(Date timestamp, String message) {
-        this.timestamp = timestamp;
-        this.message = message;
+    public ReceiveLogMessage(String[][] strings) {
+        List<NicosLogEntry> entries = new ArrayList<NicosLogEntry>();
+        for (int i = 0; i < strings.length; i++) {
+            String[] current = strings[i];
+            Date timestamp = new Date((long) Double.parseDouble(current[1]) * 1000);
+            String message = current[3];
+            entries.add(new NicosLogEntry(timestamp, message));
+        }
+        this.entries = entries;
     }
 }

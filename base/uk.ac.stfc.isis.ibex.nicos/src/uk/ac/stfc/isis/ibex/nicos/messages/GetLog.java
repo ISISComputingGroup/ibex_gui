@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Gets the latest messages from the Nicos console log.
  */
-public class GetConsoleLog extends NICOSMessage<String> {
+public class GetLog extends NICOSMessage<String> {
 	
 	/**
      * Gets the last n log messages from Nicos.
@@ -16,7 +16,7 @@ public class GetConsoleLog extends NICOSMessage<String> {
      * @param n
      *            The number of last messages to fetch
      */
-    public GetConsoleLog(String n) {
+    public GetLog(String n) {
         command = "getmessages";
         parameters = Arrays.asList(n);
     }
@@ -25,9 +25,9 @@ public class GetConsoleLog extends NICOSMessage<String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-    public ReceiveConsoleLogMessage parseResponse(String response) throws ConversionException {
+    public ReceiveLogMessage parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String[][]> deserial = new JsonDeserialisingConverter<>(String[][].class);
-        return new ReceiveConsoleLogMessage(deserial.convert(response));
+        return new ReceiveLogMessage(deserial.convert(response));
 	}
 
 }
