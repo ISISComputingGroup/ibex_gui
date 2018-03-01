@@ -182,7 +182,7 @@ public class JournalModel extends ModelObject implements Runnable {
     private PreparedStatement constructSQLQuery(Connection connection) throws SQLException {
     	String query = "SELECT * FROM journal_entries ORDER BY run_number DESC LIMIT ?, ?";
         PreparedStatement st = connection.prepareStatement(query);
-    	st.setInt(1, (pageNumber-1) * PAGE_SIZE);
+    	st.setInt(1, (pageNumber - 1) * PAGE_SIZE);
     	st.setInt(2, PAGE_SIZE);
     	return st;
     }
@@ -287,7 +287,7 @@ public class JournalModel extends ModelObject implements Runnable {
     }
     
     private void setTotalResults(int totalResults) {
-    	setPageMax((int) Math.ceil(totalResults/(double) PAGE_SIZE));
+    	setPageMax((int) Math.ceil(totalResults / (double) PAGE_SIZE));
 	}
     
     /**
