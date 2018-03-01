@@ -329,6 +329,11 @@ public class NicosModel extends ModelObject {
         long firstEntryTime = 0;
         List<NicosLogEntry> newEntries = new ArrayList<NicosLogEntry>();
         do {
+            if (numMessages > MESSAGES_THRESHOLD) {
+                newEntries.add(new NicosLogEntry(new Date(),
+                        "WARNING: Message volume is too high. Some messages may be ommitted.\n"));
+                break;
+            }
             ReceiveLogMessage response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
             if (response == null) {
                 failConnection(NO_RESPONSE);
@@ -337,14 +342,10 @@ public class NicosModel extends ModelObject {
                 // nothing more to fetch
                 break;
             }
+            
             newEntries = new ArrayList<NicosLogEntry>(response.getEntries());
             firstEntryTime = newEntries.get(0).getTimeStamp();
             numMessages *= MESSAGES_SCALE_FACTOR;
-            if (numMessages > MESSAGES_THRESHOLD) {
-                newEntries.add(new NicosLogEntry(new Date(),
-                        "WARNING: Message volume is too high. Some messages may be ommitted."));
-                break;
-            }
         } while (firstEntryTime > this.lastEntryTime);
 
         newEntries = filterOld(newEntries);
