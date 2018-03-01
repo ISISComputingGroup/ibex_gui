@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -205,9 +205,7 @@ public class NicosModel extends ModelObject {
     }
 
     /**
-     * Get the status of the last script that was sent.
-     * 
-     * @return the status of sending a script
+     * @return the latest log entries
      */
     public List<NicosLogEntry> getLogEntries() {
         return newLogEntries;
@@ -217,6 +215,7 @@ public class NicosModel extends ModelObject {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
         this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
     }
+
     /**
      * Send a script to Nicos. Do not wait for a reply the acknowledgement can
      * be found in script send status.
@@ -328,23 +327,27 @@ public class NicosModel extends ModelObject {
     public void updateLogEntries() {
         int numMessages = 1;
         long firstEntryTime = 0;
-        ReceiveLogMessage response = null;
+        List<NicosLogEntry> newEntries = new ArrayList<NicosLogEntry>();
         do {
-            if (numMessages > MESSAGES_THRESHOLD) {
-                response.entries.add(
-                        new NicosLogEntry(new Date(),
-                                "WARNING: Message volume is too high. Some messages may be ommitted."));
-                break;
-            }
-            response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
+            ReceiveLogMessage response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
             if (response == null) {
                 failConnection(NO_RESPONSE);
             }
-            firstEntryTime = response.entries.get(0).getTimeStamp();
+            if (newEntries.size() == response.getEntries().size()) {
+                // nothing more to fetch
+                break;
+            }
+            newEntries = new ArrayList<NicosLogEntry>(response.getEntries());
+            firstEntryTime = newEntries.get(0).getTimeStamp();
             numMessages *= MESSAGES_SCALE_FACTOR;
+            if (numMessages > MESSAGES_THRESHOLD) {
+                newEntries.add(new NicosLogEntry(new Date(),
+                        "WARNING: Message volume is too high. Some messages may be ommitted."));
+                break;
+            }
         } while (firstEntryTime > this.lastEntryTime);
 
-        List<NicosLogEntry> newEntries = filterOld(response.entries);
+        newEntries = filterOld(newEntries);
         if (!newEntries.isEmpty()) {
             setLogEntries(newEntries);
         }

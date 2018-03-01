@@ -31,19 +31,30 @@ import java.util.List;
  */
 @SuppressWarnings({ "checkstyle:magicnumber" })
 public class ReceiveLogMessage implements ReceiveMessage {
-	/**
-	 * Tuple of two items (status code, line number).
-	 */
-    public List<NicosLogEntry> entries;
 
-    public ReceiveLogMessage(String[][] strings) {
+    private List<NicosLogEntry> entries;
+
+    /**
+     * Constructor, takes a list of log messages (each made up of a list of
+     * fields).
+     * 
+     * @param log The message containing the log entries
+     */
+    public ReceiveLogMessage(String[][] log) {
         List<NicosLogEntry> entries = new ArrayList<NicosLogEntry>();
-        for (int i = 0; i < strings.length; i++) {
-            String[] current = strings[i];
-            Date timestamp = new Date((long) Double.parseDouble(current[1]) * 1000);
-            String message = current[3];
+        for (int i = 0; i < log.length; i++) {
+            String[] currentLine = log[i];
+            Date timestamp = new Date((long) Double.parseDouble(currentLine[1]) * 1000);
+            String message = currentLine[3];
             entries.add(new NicosLogEntry(timestamp, message));
         }
         this.entries = entries;
+    }
+
+    /**
+     * @return The entries in this log update message.
+     */
+    public List<NicosLogEntry> getEntries() {
+        return entries;
     }
 }

@@ -9,16 +9,18 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 
 /**
- * View model for the content of the output log.
+ * View model for the content of the NICOS output log.
  */
 public class OutputLogViewModel extends ModelObject {
 
     private String log = "";
 
 	/**
-	 * Constructor.
-	 * @param model the NicosModel to observe
-	 */
+     * Constructor.
+     * 
+     * @param model
+     *            the NicosModel to observe
+     */
 	public OutputLogViewModel(final NicosModel model) {
 		
         model.addPropertyChangeListener("logEntries", new PropertyChangeListener() {
@@ -42,9 +44,8 @@ public class OutputLogViewModel extends ModelObject {
     }
 	
 	/**
-	 * A formatted string representation of the line number to display on the user interface.
-	 * @return a formatted string representation of the line number to display on the user interface
-	 */
+     * @return The entries from the NICOS log parsed into a single string.
+     */
     public String getLog() {
         return log;
 	}

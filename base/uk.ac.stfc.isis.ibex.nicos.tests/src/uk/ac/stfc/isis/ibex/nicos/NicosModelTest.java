@@ -29,6 +29,8 @@ import static org.mockito.Mockito.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,11 +41,14 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
@@ -471,5 +476,52 @@ public class NicosModelTest {
         assertEquals(script, model.getCurrentlyExecutingScript());
     }
 
+    @Test
+    public void GIVEN_successful_connection_WHEN_update_log_THEN_log_messages_parsed_correctly() {
+        // Arrange
+        connectSuccessfully();
 
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        Date now = new Date();
+        NicosLogEntry entry = new NicosLogEntry(now, "first message");
+
+        when(response.getEntries()).thenReturn(Arrays.asList(entry));
+        List<NicosLogEntry> expected = Arrays.asList(entry);
+
+        // Act
+        model.updateLogEntries();
+        List<NicosLogEntry> actual = model.getLogEntries();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_message_contains_old_entries_WHEN_updating_log_THEN_model_only_reads_new_entries() {
+        // Arrange
+        connectSuccessfully();
+
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        Date now1 = new Date();
+        NicosLogEntry entry1 = new NicosLogEntry(now1, "first message");
+
+        when(response.getEntries()).thenReturn(Arrays.asList(entry1));
+        model.updateLogEntries();
+
+        // Act
+        Date now2 = new Date();
+        NicosLogEntry entry2 = new NicosLogEntry(now2, "second message");
+        when(response.getEntries()).thenReturn(Arrays.asList(entry1, entry2));
+        List<NicosLogEntry> expected = Arrays.asList(entry2);
+
+        model.updateLogEntries();
+        List<NicosLogEntry> actual = model.getLogEntries();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }

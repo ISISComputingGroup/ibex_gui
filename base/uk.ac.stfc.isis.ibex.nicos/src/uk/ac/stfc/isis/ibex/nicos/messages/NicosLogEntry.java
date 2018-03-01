@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * An entry in the NICOS console log.
  */
 public class NicosLogEntry {
 
@@ -35,6 +35,12 @@ public class NicosLogEntry {
     private Date timestamp;
     private String message;
 
+    /**
+     * The constructor.
+     * 
+     * @param timestamp The log entry's timestamp.
+     * @param message The log entry's message.
+     */
     public NicosLogEntry(Date timestamp, String message) {
         this.timestamp = timestamp;
         this.message = message;
@@ -45,6 +51,9 @@ public class NicosLogEntry {
         return TIME_FORMAT.format(timestamp) + " " + message;
     }
 
+    /**
+     * @return The time stamp of this entry in milliseconds.
+     */
     public long getTimeStamp() {
         return timestamp.getTime();
     }
