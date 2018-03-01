@@ -30,7 +30,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -128,8 +130,8 @@ public class NicosView extends ViewPart {
         StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-        StyledText txtOutput = new StyledText(parent, SWT.BORDER);
+
+        final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtOutput.setEditable(false);
         txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
@@ -139,6 +141,13 @@ public class NicosView extends ViewPart {
         bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
                 BeanProperties.value("log").observe(outputLogViewModel));
         
+        txtOutput.addListener(SWT.Modify, new Listener() {
+            @Override
+            public void handleEvent(Event e) {
+                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
+            }
+        });
+
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);

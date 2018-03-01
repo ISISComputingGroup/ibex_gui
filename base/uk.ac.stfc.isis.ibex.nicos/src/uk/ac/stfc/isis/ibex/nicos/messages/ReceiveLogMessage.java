@@ -44,7 +44,7 @@ public class ReceiveLogMessage implements ReceiveMessage {
         List<NicosLogEntry> entries = new ArrayList<NicosLogEntry>();
         for (int i = 0; i < log.length; i++) {
             String[] currentLine = log[i];
-            Date timestamp = new Date((long) Double.parseDouble(currentLine[1]) * 1000);
+            Date timestamp = new Date(Math.round(Double.parseDouble(currentLine[1]) * 1000));
             String message = currentLine[3];
             entries.add(new NicosLogEntry(timestamp, message));
         }
