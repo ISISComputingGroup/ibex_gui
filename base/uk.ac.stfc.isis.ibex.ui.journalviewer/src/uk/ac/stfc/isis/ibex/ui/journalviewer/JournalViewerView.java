@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 /**
  * Journal viewer main view.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class JournalViewerView extends ViewPart {
 
     /**

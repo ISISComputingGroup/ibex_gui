@@ -271,7 +271,7 @@ public class JournalModel extends ModelObject implements Runnable {
     /**
      * Sets the page number that is being looked at.
      * 
-     * @param page The new page number
+     * @param pageNumber The new page number.
      */
     public void setPage(int pageNumber) {
         firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
