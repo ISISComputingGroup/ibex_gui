@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -43,7 +44,7 @@ public class JournalViewModel extends ModelObject {
 
     private JournalModel model;
     private String message;
-    private List<Map<JournalField, String>> runs;
+    private List<JournalRow> runs;
     private String lastUpdate;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
@@ -105,11 +106,11 @@ public class JournalViewModel extends ModelObject {
      * 
      * @return the runs.
      */
-    public List<Map<JournalField, String>> getRuns() {
+    public List<JournalRow> getRuns() {
     	return model.getRuns();
     }
     
-    private void setRuns(List<Map<JournalField, String>> newRuns) {
+    private void setRuns(List<JournalRow> newRuns) {
     	firePropertyChange("runs", this.runs, this.runs = newRuns);
     }
     

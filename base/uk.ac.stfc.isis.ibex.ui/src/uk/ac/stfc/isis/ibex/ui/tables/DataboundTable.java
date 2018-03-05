@@ -422,7 +422,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param propertyName the property name
      * @return the observable map
      */
-	protected IObservableMap observeProperty(String propertyName) {
+	public IObservableMap observeProperty(String propertyName) {
 		return BeanProperties.value(rowType, propertyName).observeDetail(contentProvider.getKnownElements());
 	}	
 

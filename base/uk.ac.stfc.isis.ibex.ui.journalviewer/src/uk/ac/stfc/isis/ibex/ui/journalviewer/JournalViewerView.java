@@ -26,9 +26,11 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,6 +42,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -63,7 +66,7 @@ public class JournalViewerView extends ViewPart {
     
     private Button btnRefresh;
 
-	private DataboundTable<Object> table;
+	private DataboundTable<JournalRow> table;
 
 	/**
 	 * Create contents of the view part.
@@ -99,7 +102,7 @@ public class JournalViewerView extends ViewPart {
 		}
 		
 		final int tableStyle = SWT.FILL;
-		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle) {
+		table = new DataboundTable<JournalRow>(parent, tableStyle, JournalRow.class, tableStyle) {
 			@Override
 			protected void addColumns() {
 				changeTableColumns();
@@ -129,27 +132,29 @@ public class JournalViewerView extends ViewPart {
 		}
 		
 		for (JournalField field : JournalField.values()) {
-			if (model.getFieldSelected(field) && !getColumnNames().contains(field.getFriendlyName())) {
-				table.createColumn(field.getFriendlyName(), 1, true).getColumn().setText(field.getFriendlyName());
+			if (model.getFieldSelected(field)) {
+				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
+				col.getColumn().setText(field.getFriendlyName());
+				
+//				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+//		            @Override
+//		            protected String valueFromRow(JournalRow row) {
+//		                return row.get(field);
+//		            }
+//		        });
 			}
 		}
 		
 		forceResizeTable();
 	}
 	
+	/**
+	 * This is a dirty hack but is the only way I found to ensure the columns displayed properly.
+	 */
 	private void forceResizeTable() {
-		table.setSize(table.getSize().x + 1, table.getSize().y);
-		table.setSize(table.getSize().x - 1, table.getSize().y);
-	}
-	
-	private List<String> getColumnNames() {
-		List<String> names = new ArrayList<>();
-		for (TableColumn col : table.table().getColumns()) {
-			if (!col.isDisposed()) {
-				names.add(col.getText());
-			}
-		}
-		return names;
+		Point prevSize = table.getSize();
+		table.setSize(0, 0);
+		table.setSize(prevSize);
 	}
 	
     private void bind() {
@@ -157,8 +162,6 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
-//        bindingContext.bindValue(WidgetProperties.text().observe(lblDescription),
-//                BeanProperties.value("runs").observe(model));
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -171,6 +174,7 @@ public class JournalViewerView extends ViewPart {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				changeTableColumns();	
+				// table.setRows(model.getRuns());
 			}
 		});
         

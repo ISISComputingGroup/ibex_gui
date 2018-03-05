@@ -49,7 +49,7 @@ public class JournalModel extends ModelObject implements Runnable {
     private String message = "";
     private Date lastUpdate;
 
-	private List<Map<JournalField, String>> runs = Collections.emptyList();
+	private List<JournalRow> runs = Collections.emptyList();
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
@@ -115,7 +115,7 @@ public class JournalModel extends ModelObject implements Runnable {
      * Clears instrument specific data in the model.
      */
     public void clearModel() {
-    	setRuns(Collections.<Map<JournalField, String>>emptyList());
+    	setRuns(Collections.<JournalRow>emptyList());
         lastUpdate = null;
     }
     
@@ -127,16 +127,16 @@ public class JournalModel extends ModelObject implements Runnable {
     private void updateRuns(Connection connection) throws SQLException {
     	
     	if (getSelectedFields().size() <= 0) {
-    		setRuns(Collections.<Map<JournalField, String>>emptyList());
+    		setRuns(Collections.<JournalRow>emptyList());
     		return;
     	}
     	
     	ResultSet rs = connection.createStatement().executeQuery(constructSQLQuery());
     	
-    	List<Map<JournalField, String>> runs = new ArrayList<>();
+    	List<JournalRow> runs = new ArrayList<>();
     	
     	while (rs.next()) {
-    		Map<JournalField, String> run = new HashMap<>();
+    		JournalRow run = new JournalRow();
     		for (JournalField property : selectedFields) {
     			try {
     				run.put(property, rs.getString(property.getSqlFieldName()));
@@ -144,7 +144,6 @@ public class JournalModel extends ModelObject implements Runnable {
 					run.put(property, "None");
 				}
     		}  
-    		runs.add(Collections.unmodifiableMap(run));
     	}
     	
     	setRuns(Collections.unmodifiableList(runs));
@@ -175,7 +174,7 @@ public class JournalModel extends ModelObject implements Runnable {
     	return query;
     }
     
-    private void setRuns(List<Map<JournalField, String>> runs) {
+    private void setRuns(List<JournalRow> runs) {
     	firePropertyChange("runs", this.runs, this.runs = runs);
     }
     
@@ -189,7 +188,7 @@ public class JournalModel extends ModelObject implements Runnable {
      * 
      * @return the runs
      */
-    public List<Map<JournalField, String>> getRuns() {
+    public List<JournalRow> getRuns() {
     	return runs;
     }
     
