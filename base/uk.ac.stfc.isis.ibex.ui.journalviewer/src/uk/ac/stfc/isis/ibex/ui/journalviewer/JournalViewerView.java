@@ -21,14 +21,11 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -38,7 +35,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -57,11 +53,9 @@ public class JournalViewerView extends ViewPart {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
 	
-	private static final int LABEL_FONT_SIZE = 11;
 	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
-    private Label lblDescription;
     private Label lblLastUpdate;
     
     private final DataBindingContext bindingContext = new DataBindingContext();
@@ -69,9 +63,7 @@ public class JournalViewerView extends ViewPart {
     
     private Button btnRefresh;
 
-	private DataboundTable table;
-
-	private Composite parent;
+	private DataboundTable<Object> table;
 
 	/**
 	 * Create contents of the view part.
@@ -80,7 +72,6 @@ public class JournalViewerView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		this.parent = parent;
 		parent.setLayout(new GridLayout(1, false));
 
 		Label lblTitle = new Label(parent, SWT.NONE);
@@ -107,26 +98,19 @@ public class JournalViewerView extends ViewPart {
 	        });
 		}
 		
-//		lblDescription = new Label(parent, SWT.NONE);
-//		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", LABEL_FONT_SIZE, SWT.NORMAL));
-//		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
-//		lblDescription.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true));
-		
-		final int tableStyle = SWT.BORDER | SWT.FILL;
-		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle, 0) {
+		final int tableStyle = SWT.FILL;
+		table = new DataboundTable<Object>(parent, tableStyle, Object.class, tableStyle) {
 			@Override
 			protected void addColumns() {
-				for (JournalField field : JournalField.values()) {
-					createColumn(field.getFriendlyName(), model.getFieldSelected(field) ? 1 : 0, model.getFieldSelected(field));
-				}
+				changeTableColumns();
 			}
 		};
-		table.setLayoutData(new GridData(GridData.FILL_BOTH));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
-        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
         lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
         
@@ -137,22 +121,35 @@ public class JournalViewerView extends ViewPart {
         bind();
 	}
 	
-	private void refreshTable() {
+	private void changeTableColumns() {
+		// Dispose all the columns and re-add them, otherwise the columns may not be in the expected order.
 		
 		for (TableColumn col : table.table().getColumns()) {
 			col.dispose();
 		}
 		
 		for (JournalField field : JournalField.values()) {
-			if (model.getFieldSelected(field)) {
-				table.createColumn(field.getFriendlyName(), 1, true);
+			if (model.getFieldSelected(field) && !getColumnNames().contains(field.getFriendlyName())) {
+				table.createColumn(field.getFriendlyName(), 1, true).getColumn().setText(field.getFriendlyName());
 			}
 		}
 		
-		// This is terrible. 
-		// I couldn't find any other way to get the view to work properly.
-		table.setSize(table.getSize().x, table.getSize().y + 1);
-		table.setSize(table.getSize().x, table.getSize().y - 1);
+		forceResizeTable();
+	}
+	
+	private void forceResizeTable() {
+		table.setSize(table.getSize().x + 1, table.getSize().y);
+		table.setSize(table.getSize().x - 1, table.getSize().y);
+	}
+	
+	private List<String> getColumnNames() {
+		List<String> names = new ArrayList<>();
+		for (TableColumn col : table.table().getColumns()) {
+			if (!col.isDisposed()) {
+				names.add(col.getText());
+			}
+		}
+		return names;
 	}
 	
     private void bind() {
@@ -173,7 +170,7 @@ public class JournalViewerView extends ViewPart {
         model.addPropertyChangeListener("runs", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				refreshTable();	
+				changeTableColumns();	
 			}
 		});
         

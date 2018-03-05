@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.journal;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.model
+ uk.ac.stfc.isis.ibex.model,
+ uk.ac.stfc.isis.ibex.logger
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
