@@ -100,7 +100,11 @@ public class JournalViewerView extends ViewPart {
         btnRefresh.setText("Refresh data");
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
-		selectedContainer.setLayout(new RowLayout());
+		RowLayout rl = new RowLayout();
+		rl.justify = false;
+		rl.pack = true;
+		rl.type = SWT.HORIZONTAL;
+		selectedContainer.setLayout(rl);
 		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
 		for (final JournalField property : JournalField.values()) {
@@ -141,7 +145,6 @@ public class JournalViewerView extends ViewPart {
 	
 	private void changeTableColumns() {
 		// Dispose all the columns and re-add them, otherwise the columns may not be in the expected order.
-		
 		for (TableColumn col : table.table().getColumns()) {
 			col.dispose();
 		}
@@ -165,12 +168,14 @@ public class JournalViewerView extends ViewPart {
 	}
 	
 	/**
+	 * Forces the table to display the columns correctly.
+	 * 
 	 * This is a dirty hack but is the only way I found to ensure the columns displayed properly.
 	 */
 	private void forceResizeTable() {
 		table.setRedraw(false);
 		Point prevSize = table.getSize();
-		table.setSize(0, 0);
+		table.setSize(prevSize.x, prevSize.y - 1);
 		table.setSize(prevSize);
 		table.setRedraw(true);
 	}
