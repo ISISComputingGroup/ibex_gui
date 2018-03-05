@@ -290,7 +290,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @return the table viewer
      */
-	protected TableViewer viewer() { 
+	public TableViewer viewer() { 
 		return viewer;
 	}
 

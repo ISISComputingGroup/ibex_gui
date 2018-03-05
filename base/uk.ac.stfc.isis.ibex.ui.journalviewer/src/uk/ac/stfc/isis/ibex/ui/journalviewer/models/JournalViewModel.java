@@ -23,11 +23,8 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -113,7 +110,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     private void setRuns(List<JournalRow> newRuns) {
-    	firePropertyChange("runs", this.runs, this.runs = newRuns);
+    	firePropertyChange("runs", null, this.runs = newRuns);
     }
     
     /**
@@ -175,7 +172,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * @return The current jouranl entries page.
+     * @return The current journal entries page.
      */
     public int getPageNumber() {
     	return model.getPage();

@@ -145,7 +145,8 @@ public class JournalModel extends ModelObject implements Runnable {
     			} catch (SQLException e) {
 					run.put(property, "None");
 				}
-    		}  
+    		}
+    		runs.add(run);
     	}
     	rs.close();
     	

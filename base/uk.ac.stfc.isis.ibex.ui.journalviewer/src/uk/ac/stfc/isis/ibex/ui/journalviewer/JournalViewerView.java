@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -45,6 +43,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
@@ -148,12 +147,13 @@ public class JournalViewerView extends ViewPart {
 				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
 				col.getColumn().setText(field.getFriendlyName());
 				
-//				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
-//		            @Override
-//		            protected String valueFromRow(JournalRow row) {
-//		                return row.get(field);
-//		            }
-//		        });
+				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+					@Override
+		            protected String valueFromRow(JournalRow row) {
+						return row.get(field);
+					}
+				});
+				
 			}
 		}
 		
@@ -164,9 +164,11 @@ public class JournalViewerView extends ViewPart {
 	 * This is a dirty hack but is the only way I found to ensure the columns displayed properly.
 	 */
 	private void forceResizeTable() {
+		table.setRedraw(false);
 		Point prevSize = table.getSize();
 		table.setSize(0, 0);
 		table.setSize(prevSize);
+		table.setRedraw(true);
 	}
 	
     private void bind() {
@@ -189,9 +191,14 @@ public class JournalViewerView extends ViewPart {
         
         model.addPropertyChangeListener("runs", new PropertyChangeListener() {
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				changeTableColumns();	
-				// table.setRows(model.getRuns());
+			public void propertyChange(PropertyChangeEvent evt) {		
+				Display.getDefault().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						changeTableColumns();	
+						table.setRows(model.getRuns());
+					}
+				});
 			}
 		});
         
