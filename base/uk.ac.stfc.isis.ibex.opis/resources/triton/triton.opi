@@ -5491,7 +5491,7 @@ type</text>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>60</y>
@@ -5588,7 +5588,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>84</y>
@@ -5630,7 +5630,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>108</y>
@@ -5672,7 +5672,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>132</y>
@@ -5714,7 +5714,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>156</y>
@@ -5756,7 +5756,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>180</y>
@@ -5798,7 +5798,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>204</y>
@@ -5840,7 +5840,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>228</y>
@@ -5882,7 +5882,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>252</y>
@@ -5924,7 +5924,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>276</y>
@@ -5966,7 +5966,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>300</y>
@@ -6008,7 +6008,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>324</y>
@@ -6050,7 +6050,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>348</y>
@@ -6092,7 +6092,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>372</y>
@@ -6134,7 +6134,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>396</y>
@@ -6176,7 +6176,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>368</width>
+        <width>374</width>
         <x>12</x>
         <name>A Linking Container That Looks Like a Group Box</name>
         <y>420</y>
@@ -6208,7 +6208,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -6228,6 +6228,436 @@ $(pv_value)</tooltip>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+        <border_style>13</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-129264c6:1614c75ab9d:-7cc0</wuid>
+        <transparent>false</transparent>
+        <lock_children>false</lock_children>
+        <scripts />
+        <height>163</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <visible>true</visible>
+        <border_color>
+          <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Grouping Container</widget_type>
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <width>421</width>
+        <x>6</x>
+        <name>PID File Lookup</name>
+        <y>12</y>
+        <foreground_color>
+          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <show_scrollbar>true</show_scrollbar>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+        </font>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+          <precision>0</precision>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <horizontal_alignment>0</horizontal_alignment>
+          <rules />
+          <pv_value />
+          <auto_size>false</auto_size>
+          <text>######</text>
+          <rotation_angle>0.0</rotation_angle>
+          <show_units>true</show_units>
+          <height>20</height>
+          <multiline_input>false</multiline_input>
+          <border_width>1</border_width>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):LKUP:RAMP_FILE:SP</pv_name>
+          <selector_type>0</selector_type>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <precision_from_pv>true</precision_from_pv>
+          <widget_type>Text Input</widget_type>
+          <confirm_message></confirm_message>
+          <name>Ramp_file_sp</name>
+          <actions hook="false" hook_all="false" />
+          <border_style>3</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <enabled>true</enabled>
+          <wuid>2986015a:148e62770aa:-7ce5</wuid>
+          <transparent>false</transparent>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <vertical_alignment>1</vertical_alignment>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <format_type>0</format_type>
+          <limits_from_pv>false</limits_from_pv>
+          <background_color>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </background_color>
+          <width>298</width>
+          <x>81</x>
+          <y>48</y>
+          <maximum>1.7976931348623157E308</maximum>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <minimum>-1.7976931348623157E308</minimum>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <precision>3</precision>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <horizontal_alignment>0</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>56cea2ac:1566aedc538:-7f6a</wuid>
+          <transparent>true</transparent>
+          <pv_value />
+          <auto_size>false</auto_size>
+          <text>######</text>
+          <rotation_angle>0.0</rotation_angle>
+          <scripts />
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <show_units>true</show_units>
+          <height>22</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):LKUP:RAMP_FILE</pv_name>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <precision_from_pv>true</precision_from_pv>
+          <widget_type>Text Update</widget_type>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <wrap_words>false</wrap_words>
+          <format_type>0</format_type>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>298</width>
+          <x>81</x>
+          <name>Ramp_file</name>
+          <y>72</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <precision>3</precision>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <horizontal_alignment>0</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>4ff392da:1566e7eb989:-7fc7</wuid>
+          <transparent>false</transparent>
+          <pv_value />
+          <auto_size>false</auto_size>
+          <text>######</text>
+          <rotation_angle>0.0</rotation_angle>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <show_units>false</show_units>
+          <height>20</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):LKUP:READ_RAMP_DIRBASE</pv_name>
+          <vertical_alignment>0</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <precision_from_pv>false</precision_from_pv>
+          <widget_type>Text Update</widget_type>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <wrap_words>true</wrap_words>
+          <format_type>4</format_type>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>298</width>
+          <x>81</x>
+          <name>Ramp_dir_text</name>
+          <y>108</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+          <border_style>0</border_style>
+          <tooltip></tooltip>
+          <horizontal_alignment>2</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>4fdc1aa2:158de06471b:-784c</wuid>
+          <transparent>false</transparent>
+          <auto_size>false</auto_size>
+          <text>File:</text>
+          <scripts />
+          <height>20</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Label</widget_type>
+          <wrap_words>true</wrap_words>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>31</width>
+          <x>42</x>
+          <name>Ramp_file_label</name>
+          <y>48</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <show_scrollbar>false</show_scrollbar>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+          <border_style>0</border_style>
+          <tooltip></tooltip>
+          <horizontal_alignment>2</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>4fdc1aa2:158de06471b:-77b0</wuid>
+          <transparent>false</transparent>
+          <auto_size>false</auto_size>
+          <text>Dir:</text>
+          <scripts />
+          <height>20</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Label</widget_type>
+          <wrap_words>true</wrap_words>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>31</width>
+          <x>42</x>
+          <name>Ramp_dir_label</name>
+          <y>108</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <show_scrollbar>false</show_scrollbar>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+          <border_style>0</border_style>
+          <tooltip></tooltip>
+          <horizontal_alignment>2</horizontal_alignment>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>-129264c6:1614c75ab9d:-7c4b</wuid>
+          <transparent>false</transparent>
+          <auto_size>false</auto_size>
+          <text>Use file:</text>
+          <scripts />
+          <height>19</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <vertical_alignment>1</vertical_alignment>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Label</widget_type>
+          <wrap_words>true</wrap_words>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <width>73</width>
+          <x>0</x>
+          <name>Lookup_label</name>
+          <y>12</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <show_scrollbar>false</show_scrollbar>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+          </font>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <rules />
+          <effect_3d>true</effect_3d>
+          <bit>-1</bit>
+          <enabled>true</enabled>
+          <wuid>-129264c6:1614c75ab9d:-7c4c</wuid>
+          <on_color>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </on_color>
+          <pv_value />
+          <scripts />
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <height>25</height>
+          <on_label>ON</on_label>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>true</keep_wh_ratio>
+          </scale_options>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):LKUP:LUTON</pv_name>
+          <border_color>
+            <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+          </border_color>
+          <widget_type>LED</widget_type>
+          <off_color>
+            <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+          </off_color>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <square_led>false</square_led>
+          <width>25</width>
+          <x>81</x>
+          <name>Lookup_LED</name>
+          <data_type>0</data_type>
+          <y>9</y>
+          <foreground_color>
+            <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+          </foreground_color>
+          <actions hook="false" hook_all="false" />
+          <show_boolean_label>false</show_boolean_label>
+          <font>
+            <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+          </font>
+          <off_label>OFF</off_label>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+          <toggle_button>false</toggle_button>
+          <border_style>0</border_style>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <push_action_index>0</push_action_index>
+          <rules />
+          <enabled>true</enabled>
+          <wuid>-129264c6:1614c75ab9d:-7c4a</wuid>
+          <pv_value />
+          <text>On/Off</text>
+          <scripts />
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <height>22</height>
+          <border_width>1</border_width>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <image></image>
+          <visible>true</visible>
+          <pv_name>$(PV_ROOT):LKUP:LUTON:SP</pv_name>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <widget_type>Button</widget_type>
+          <width>67</width>
+          <x>114</x>
+          <name>Lookup_setpoint</name>
+          <y>11</y>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <actions hook="false" hook_all="false">
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path></path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)
+]]></scriptText>
+              <embedded>true</embedded>
+              <description></description>
+            </action>
+          </actions>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+          </font>
+        </widget>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
       <border_style>0</border_style>
@@ -6248,7 +6678,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>

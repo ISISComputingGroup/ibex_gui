@@ -70,6 +70,8 @@ public class JournalViewModel extends ModelObject {
         setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
         setMessage(model.getMessage());
         setRuns(model.getRuns());
+        setPageNumber(model.getPage());
+        setPageNumberMax(model.getPageMax());
     }
 
     /**
@@ -149,6 +151,9 @@ public class JournalViewModel extends ModelObject {
         }
     }
 
+    /**
+     * @param date Is the provided date the same as today's date
+     */
     private boolean isToday(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -157,4 +162,37 @@ public class JournalViewModel extends ModelObject {
         Date today = calendar.getTime();
         return date.after(today);
     }
+    
+    /**
+     * @param pageNumber The number of the results page.
+     */
+    public void setPageNumber(int pageNumber) {
+    	if (pageNumber != model.getPage()) {
+    		int previousPage = model.getPage();
+	    	model.setPage(pageNumber);
+	    	firePropertyChange("pageNumber", previousPage, model.getPage());
+    	}
+    }
+    
+    /**
+     * @return The current jouranl entries page.
+     */
+    public int getPageNumber() {
+    	return model.getPage();
+    }
+    
+    /**
+     * @param max The maximum number of pages supported by the journal view.
+     */
+    public void setPageNumberMax(int max) {
+	    firePropertyChange("pageNumberMax", 0, model.getPageMax());
+    }
+    
+    /**
+     * @return The maximum number of pages supported by the journal view.
+     */
+    public int getPageNumberMax() {
+    	return model.getPageMax();
+    }
+
 }

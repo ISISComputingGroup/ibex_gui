@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -49,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 /**
  * Journal viewer main view.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class JournalViewerView extends ViewPart {
 
     /**
@@ -65,6 +67,7 @@ public class JournalViewerView extends ViewPart {
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
     
     private Button btnRefresh;
+    private Spinner spinnerPageNumber;
 
 	private DataboundTable<JournalRow> table;
 
@@ -81,8 +84,17 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-        btnRefresh = new Button(parent, SWT.NONE);
-        btnRefresh.setText("Refresh");
+		Composite controls = new Composite(parent, SWT.FILL);
+		controls.setLayout(new GridLayout(3, false));
+		
+		Label lblPage = new Label(controls, SWT.NONE);
+		lblPage.setText("Page number: ");
+        
+        spinnerPageNumber = new Spinner(controls, SWT.BORDER);
+        spinnerPageNumber.setMinimum(1);
+		
+        btnRefresh = new Button(controls, SWT.NONE);
+        btnRefresh.setText("Refresh data");
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		GridLayout gl = new GridLayout(JournalField.values().length, false);
@@ -162,6 +174,11 @@ public class JournalViewerView extends ViewPart {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
+        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumber").observe(model));
+        bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumberMax").observe(model));
+
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
