@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -31,6 +32,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -78,6 +80,8 @@ public class JournalViewerView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+		parent.setLayoutData(gd);
 
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
@@ -96,8 +100,8 @@ public class JournalViewerView extends ViewPart {
         btnRefresh.setText("Refresh data");
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
-		GridLayout gl = new GridLayout(JournalField.values().length, false);
-		selectedContainer.setLayout(gl);
+		selectedContainer.setLayout(new RowLayout());
+		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
 		for (final JournalField property : JournalField.values()) {
 			final Button checkbox = new Button(selectedContainer, SWT.CHECK);

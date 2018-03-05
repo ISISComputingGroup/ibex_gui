@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -52,9 +50,9 @@ public class JournalModel extends ModelObject implements Runnable {
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
-    private static final int REFRESH_INTERVAL = 10 * 1000;
+    private static final int REFRESH_INTERVAL = 60 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
-    private static final int PAGE_SIZE = 30;
+    private static final int PAGE_SIZE = 25;
     
     // In ms. If a query takes longer than this, issue a warning.
     // Exact choice of number is arbitrary.

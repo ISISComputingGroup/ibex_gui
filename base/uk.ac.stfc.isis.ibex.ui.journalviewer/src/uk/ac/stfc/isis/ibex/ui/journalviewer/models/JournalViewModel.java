@@ -110,7 +110,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     private void setRuns(List<JournalRow> newRuns) {
-    	firePropertyChange("runs", null, this.runs = newRuns);
+    	firePropertyChange("runs", this.runs, this.runs = newRuns);
     }
     
     /**
