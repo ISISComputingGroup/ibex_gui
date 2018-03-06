@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.journal;
 
-import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
