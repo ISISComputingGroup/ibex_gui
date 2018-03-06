@@ -151,7 +151,7 @@ public class JournalViewerView extends ViewPart {
 			col.dispose();
 		}
 		
-		for (JournalField field : JournalField.values()) {
+		for (final JournalField field : JournalField.values()) {
 			if (model.getFieldSelected(field)) {
 				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
 				col.getColumn().setText(field.getFriendlyName());
