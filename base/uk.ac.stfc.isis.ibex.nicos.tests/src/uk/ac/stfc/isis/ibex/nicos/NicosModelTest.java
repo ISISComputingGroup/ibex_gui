@@ -76,6 +76,20 @@ public class NicosModelTest {
     private ReceiveLoginMessage loginResponse = mock(ReceiveLoginMessage.class);
     private NICOSMessage sendMessage = mock(NICOSMessage.class);
 
+    private Answer incrementalLog = new Answer() {
+        // Simulate responses to requests for log entries with
+        // increasing volume
+        private int count = 0;
+
+        @Override
+        public Object answer(InvocationOnMock invocation) {
+            int lastEntryTime = 1050;
+            int n = (int) Math.pow(10, count);
+            count++;
+            return createNEntries(n, lastEntryTime);
+        }
+    };
+
     @Before
     public void setUp() {
         model = new NicosModel(zmqSession, connJob, 0);
@@ -570,19 +584,7 @@ public class NicosModelTest {
         reset(response);
 
         // Act
-        when(response.getEntries()).thenAnswer(new Answer() {
-            // Simulate responses to requests for log entries with
-            // increasing volume
-            private int count = 0;
-
-            @Override
-            public Object answer(InvocationOnMock invocation) {
-                int lastEntryTime = 1050;
-                int n = (int) Math.pow(10, count);
-                count++;
-                return createNEntries(n, lastEntryTime);
-            }
-        });
+        when(response.getEntries()).thenAnswer(incrementalLog);
         model.updateLogEntries();
 
         // Assert
@@ -594,5 +596,26 @@ public class NicosModelTest {
         int expected = 50;
         int actual = model.getLogEntries().size();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_entry_volume_greater_than_threshold_WHEN_updating_log_THEN_model_throws_away_excess() {
+        // Arrange
+        connectSuccessfully();
+        int threshold = 100;
+
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+
+        // Act
+        when(response.getEntries()).thenAnswer(incrementalLog);
+        model.updateLogEntries();
+
+        // Assert
+        int expected = threshold + 1; // Add 1 for appended error message
+        int actual = model.getLogEntries().size();
+        assertEquals(expected, actual);
+        
     }
 }
