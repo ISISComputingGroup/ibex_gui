@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
-import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -39,11 +38,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.PartAdapter;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -211,7 +213,22 @@ public class JournalViewerView extends ViewPart {
 			}
 		});
         
-        model.refresh();
+        // Add a listener to refresh the page whenever it becomes visible
+        try {
+	        getSite().getPage().addPartListener(new PartAdapter() {
+	        	/**
+	    		 * {@inheritDoc}
+	    		 */
+	    		@Override
+	    		public void partVisible(IWorkbenchPartReference partRef) {
+	    			super.partVisible(partRef);
+	    			model.refresh();
+	    		}
+	        });
+        } catch (NullPointerException e) {
+        	// If getSite or getPage return null then log the error but carry on.
+        	IsisLog.getLogger(getClass()).info("Couldn't add visibility listener to Journal view");
+        }
     }
 
     /**
@@ -220,4 +237,5 @@ public class JournalViewerView extends ViewPart {
 	@Override
 	public void setFocus() {
 	}
+	
 }
