@@ -98,6 +98,22 @@ public class NicosModel extends ModelObject {
     private static final int MESSAGES_THRESHOLD = 100;
 
     /**
+     * Default constructor.
+     * 
+     * This will initialise the connection to zeroMQ and login to NICOS.
+     * 
+     * @param session
+     *            the session to use to send and receive messages to and from
+     *            the script sever
+     * @param connectionJob
+     *            the job that will periodically be run to reconnect to NICOS if
+     *            a connection has failed. (pulled out of class for testing)
+     */
+    public NicosModel(ZMQSession session, RepeatingJob connectionJob) {
+        this(session, connectionJob, System.currentTimeMillis());
+    }
+
+    /**
      * Constructor for the model.
      * 
      * This will initialise the connection to zeroMQ and login to NICOS.
@@ -108,20 +124,22 @@ public class NicosModel extends ModelObject {
      * @param connectionJob
      *            the job that will periodically be run to reconnect to NICOS if
      *            a connection has failed. (pulled out of class for testing)
-     * 
+     * @param initialTime
+     *            the time the model was initialised. Disregards NICOS log
+     *            messages prior to this time.
      */
-    public NicosModel(ZMQSession session, RepeatingJob connectionJob) {
+    public NicosModel(ZMQSession session, RepeatingJob connectionJob, long initialTime) {
         this.session = session;
         this.connectionJob = connectionJob;
-        this.lastEntryTime = System.currentTimeMillis();
-        
+        this.lastEntryTime = initialTime;
+
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
-			@Override
-			protected IStatus doTask(IProgressMonitor monitor) {
-				updateScriptStatus();
+            @Override
+            protected IStatus doTask(IProgressMonitor monitor) {
+                updateScriptStatus();
                 updateLogEntries();
-				return Status.OK_STATUS;
-			}
+                return Status.OK_STATUS;
+            }
         };
         updateStatusJob.setRunning(false);
         this.connectionJob.schedule();
@@ -338,12 +356,13 @@ public class NicosModel extends ModelObject {
             if (response == null) {
                 failConnection(NO_RESPONSE);
             }
-            if (newEntries.size() == response.getEntries().size()) {
+            List<NicosLogEntry> current = response.getEntries();
+            if (newEntries.size() == current.size()) {
                 // nothing more to fetch
                 break;
             }
             
-            newEntries = new ArrayList<NicosLogEntry>(response.getEntries());
+            newEntries = new ArrayList<NicosLogEntry>(current);
             firstEntryTime = newEntries.get(0).getTimeStamp();
             numMessages *= MESSAGES_SCALE_FACTOR;
         } while (firstEntryTime > this.lastEntryTime);
