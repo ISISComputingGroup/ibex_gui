@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * Fetches and stores journal data from a SQL database.
  */
-public class JournalModel extends ModelObject implements Runnable {
+public class JournalModel extends ModelObject {
 
     IPreferenceStore preferenceStore;
 
@@ -50,7 +50,6 @@ public class JournalModel extends ModelObject implements Runnable {
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
-    private static final int REFRESH_INTERVAL = 60 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
     private static final int PAGE_SIZE = 25;
     
@@ -69,23 +68,6 @@ public class JournalModel extends ModelObject implements Runnable {
 	 */
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        Thread thread = new Thread(this);
-        thread.start();
-    }
-
-    /**
-     * Periodically tries to fetch new data from the database.
-     */
-    @Override
-    public void run() {
-        while (true) {
-            refresh();
-            try {
-                Thread.sleep(REFRESH_INTERVAL);
-            } catch (InterruptedException e) {
-                LOG.error("Interrupted while trying to fetch journal data: " + e.getMessage());
-            }
-        }
     }
 
     /**

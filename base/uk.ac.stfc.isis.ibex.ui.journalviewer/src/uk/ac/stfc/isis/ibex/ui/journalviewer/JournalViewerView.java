@@ -120,7 +120,7 @@ public class JournalViewerView extends ViewPart {
 	        });
 		}
 		
-		final int tableStyle = SWT.FILL;
+		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
 		table = new DataboundTable<JournalRow>(parent, tableStyle, JournalRow.class, tableStyle) {
 			@Override
 			protected void addColumns() {
