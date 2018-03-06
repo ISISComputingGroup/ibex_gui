@@ -588,11 +588,11 @@ public class NicosModelTest {
         model.updateLogEntries();
 
         // Assert
-        // Response requested 3 times with increasing volume
+        // Response should be requested 3 times with increasing volume
         verify(response, times(3)).getEntries();
 
-        // initial messages was at timestamp 1000;
-        // new messages from timestamp 1001 - 1050
+        // initial entry was at timestamp 1000;
+        // 50 new entries from timestamp 1001 - 1050
         int expected = 50;
         int actual = model.getLogEntries().size();
         assertEquals(expected, actual);
