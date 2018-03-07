@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
  org.eclipse.core.databinding.property;bundle-version="1.4.100",
- uk.ac.stfc.isis.ibex.ui.statusbar,
+ uk.ac.stfc.isis.ibex.ui.statusbar;visibility:=reexport,
  uk.ac.stfc.isis.ibex.alarm;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences
 Bundle-ActivationPolicy: lazy
