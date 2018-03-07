@@ -23,7 +23,8 @@
 
    <windowImages i16="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
-
+   <splash
+      location="uk.ac.stfc.isis.ibex.e4.product" />
    <launcher>
       <solaris/>
       <win useIco="true">
@@ -49,6 +50,7 @@
    <features>
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css"/>
+      <feature id="org.python.pydev.feature"/>
    </features>
 
    <configurations>
