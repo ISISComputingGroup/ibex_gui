@@ -524,18 +524,15 @@ public class NicosModelTest {
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
         when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
 
-        Date now = new Date();
-        NicosLogEntry entry = new NicosLogEntry(now, "first message");
-
-        when(response.getEntries()).thenReturn(Arrays.asList(entry));
-        List<NicosLogEntry> expected = Arrays.asList(entry);
+        when(response.getEntries()).thenReturn(createNEntries(1, 1));
+        List<NicosLogEntry> expected = createNEntries(1, 1);
 
         // Act
         model.updateLogEntries();
         List<NicosLogEntry> actual = model.getLogEntries();
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected.get(0).toString(), actual.get(0).toString());
     }
 
     @Test
@@ -546,23 +543,19 @@ public class NicosModelTest {
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
         when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
 
-        Date now1 = new Date();
-        NicosLogEntry entry1 = new NicosLogEntry(now1, "first message");
-
-        when(response.getEntries()).thenReturn(Arrays.asList(entry1));
+        when(response.getEntries()).thenReturn(createNEntries(1, 1));
         model.updateLogEntries();
 
         // Act
-        Date now2 = new Date();
-        NicosLogEntry entry2 = new NicosLogEntry(now2, "second message");
-        when(response.getEntries()).thenReturn(Arrays.asList(entry1, entry2));
-        List<NicosLogEntry> expected = Arrays.asList(entry2);
+        when(response.getEntries()).thenReturn(createNEntries(1, 2));
+        List<NicosLogEntry> expected = createNEntries(1, 2);
 
         model.updateLogEntries();
         List<NicosLogEntry> actual = model.getLogEntries();
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected.get(0).toString(), actual.get(0).toString());
     }
 
     @Test
