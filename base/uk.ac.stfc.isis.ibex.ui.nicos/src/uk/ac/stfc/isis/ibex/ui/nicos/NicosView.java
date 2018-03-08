@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2016 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -30,7 +30,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -39,6 +41,7 @@ import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
@@ -65,6 +68,7 @@ public class NicosView extends ViewPart {
     private Label lblCurrentScriptStatus;
 
 	private ScriptStatusViewModel scriptStatusViewModel;
+    private OutputLogViewModel outputLogViewModel;
 
     /**
      * The default constructor for the view.
@@ -73,6 +77,7 @@ public class NicosView extends ViewPart {
         model = Nicos.getDefault().getModel();
         queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
         scriptStatusViewModel = new ScriptStatusViewModel(model);
+        outputLogViewModel = new OutputLogViewModel(model);
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
@@ -125,14 +130,24 @@ public class NicosView extends ViewPart {
         StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-        StyledText txtOutput = new StyledText(parent, SWT.BORDER);
+
+        final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtOutput.setEditable(false);
         txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
+
+        bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
+                BeanProperties.value("log").observe(outputLogViewModel));
         
+        txtOutput.addListener(SWT.Modify, new Listener() {
+            @Override
+            public void handleEvent(Event e) {
+                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
+            }
+        });
+
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
