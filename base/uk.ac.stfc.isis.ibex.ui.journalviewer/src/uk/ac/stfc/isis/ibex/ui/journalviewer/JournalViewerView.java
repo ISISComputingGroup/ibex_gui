@@ -89,6 +89,16 @@ public class JournalViewerView extends ViewPart {
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
+
+		Composite selectedContainer = new Composite(parent, SWT.FILL);
+		RowLayout rl = new RowLayout();
+		rl.justify = false;
+		rl.pack = false;
+		rl.type = SWT.HORIZONTAL;
+		selectedContainer.setLayout(rl);
+		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		
 		Composite controls = new Composite(parent, SWT.FILL);
 		controls.setLayout(new GridLayout(3, false));
 		
@@ -97,17 +107,11 @@ public class JournalViewerView extends ViewPart {
         
         spinnerPageNumber = new Spinner(controls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
+        spinnerPageNumber.setSize(500, spinnerPageNumber.getSize().y);
 		
         btnRefresh = new Button(controls, SWT.NONE);
         btnRefresh.setText("Refresh data");
 		
-		Composite selectedContainer = new Composite(parent, SWT.FILL);
-		RowLayout rl = new RowLayout();
-		rl.justify = false;
-		rl.pack = true;
-		rl.type = SWT.HORIZONTAL;
-		selectedContainer.setLayout(rl);
-		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
 		for (final JournalField property : JournalField.values()) {
 			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
