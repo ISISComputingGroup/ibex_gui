@@ -107,7 +107,6 @@ public class JournalViewerView extends ViewPart {
         
         spinnerPageNumber = new Spinner(controls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
-        spinnerPageNumber.setSize(500, spinnerPageNumber.getSize().y);
 		
         btnRefresh = new Button(controls, SWT.NONE);
         btnRefresh.setText("Refresh data");

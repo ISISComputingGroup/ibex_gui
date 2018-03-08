@@ -43,4 +43,15 @@ public class JournalRow extends ModelObject {
 	public JournalRow getRow() {
 		return this;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String toString() {
+		if (values.size() > 0) {
+			return "Journal row (values = " + values + ")";
+		} else {
+			return "Journal row (no values set)";
+		}
+	}
 }
