@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
@@ -82,6 +83,7 @@ public class NicosModel extends ModelObject {
     private String connectionErrorMessage = "";
     private RepeatingJob connectionJob;
 	private int lineNumber;
+    private ScriptStatus scriptStatus;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
 
@@ -212,6 +214,16 @@ public class NicosModel extends ModelObject {
     }
 
     /**
+     * Send a command for controlling the execution of the current script.
+     * 
+     * @param instruction
+     *            The execution instruction to send to the server.
+     */
+    public void sendExecutionInstruction(ExecutionInstruction instruction) {
+        sendMessageToNicos(instruction);
+    }
+
+    /**
      * Send a message to Nicos
      * 
      * @param nicosMessage
@@ -291,8 +303,10 @@ public class NicosModel extends ModelObject {
 		if (response == null) {
 			failConnection(NO_RESPONSE);
 		} else {
-			// Status is a tuple (list) of 2 items. Line number is second item in list.
-			setLineNumber(response.status.get(1));
+            // Status is a tuple (list) of 2 items - execution status and line
+            // number.
+            setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
+            setLineNumber(response.status.get(1));
 			setCurrentlyExecutingScript(response.script);
 		}
 	}
@@ -309,6 +323,19 @@ public class NicosModel extends ModelObject {
 		return lineNumber;
 	}
 	
+    private void setScriptStatus(ScriptStatus scriptStatus) {
+        firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
+    }
+
+    /**
+     * The current script execution status.
+     * 
+     * @return the script status
+     */
+    public ScriptStatus getScriptStatus() {
+        return scriptStatus;
+    }
+
 	private void setCurrentlyExecutingScript(String script) {
 		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}

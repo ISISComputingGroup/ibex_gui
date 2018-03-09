@@ -166,7 +166,8 @@ public class NicosView extends ViewPart {
             }
         });
         
-        NicosControlButtonPanel controlPanel = new NicosControlButtonPanel(parent, SWT.NONE);
+        NicosControlButtonPanel controlPanel =
+                new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
         controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
     }

@@ -21,7 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,25 +34,32 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
+
 /**
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosControlButtonPanel extends Composite {
 
-    private Button btnStop;
-    private Button btnToggleRun;
+    DataBindingContext bindingContext = new DataBindingContext();
 
-    public NicosControlButtonPanel(Composite parent, int style) {
+    private Button btnStop;
+    private Button btnTogglePause;
+    private ScriptStatusViewModel statusModel;
+
+    public NicosControlButtonPanel(Composite parent, int style, ScriptStatusViewModel statusModel) {
         super(parent, style);
 
-        GridLayout gridLayout = new GridLayout(3, false);
+        this.statusModel = statusModel;
+
+        GridLayout gridLayout = new GridLayout(3, true);
         setLayout(gridLayout);
 
-        btnToggleRun = new Button(this, SWT.CENTER);
-        btnToggleRun.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-        btnToggleRun.setText("Start");
-        btnToggleRun.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
+        btnTogglePause = new Button(this, SWT.CENTER);
+        btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+        btnTogglePause.setText("Pause");
+        btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
@@ -56,5 +68,32 @@ public class NicosControlButtonPanel extends Composite {
 
         Label spacer = new Label(this, SWT.NONE);
         spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        bind();
+    }
+
+    private void bind() {
+        bindingContext.bindValue(WidgetProperties.text().observe(btnTogglePause),
+                BeanProperties.value("toggleButtonText").observe(statusModel));
+        bindingContext.bindValue(WidgetProperties.image().observe(btnTogglePause),
+                BeanProperties.value("toggleButtonIcon").observe(statusModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnTogglePause),
+                BeanProperties.value("enableButtons").observe(statusModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
+                BeanProperties.value("enableButtons").observe(statusModel));
+        
+        btnTogglePause.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                statusModel.toggleExecution();
+            }
+        });
+
+        btnStop.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                statusModel.stopExecution();
+            }
+        });
     }
 }
