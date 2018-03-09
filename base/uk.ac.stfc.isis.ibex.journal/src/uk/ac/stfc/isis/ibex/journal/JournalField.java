@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.journal;
 
 import uk.ac.stfc.isis.ibex.journal.formatters.DateTimeJournalFormatter;
+import uk.ac.stfc.isis.ibex.journal.formatters.DecimalPlacesFormatter;
 import uk.ac.stfc.isis.ibex.journal.formatters.IJournalFormatter;
 import uk.ac.stfc.isis.ibex.journal.formatters.NoopJournalFormatter;
 import uk.ac.stfc.isis.ibex.journal.formatters.DurationJournalFormatter;
@@ -33,7 +34,7 @@ public enum JournalField {
     /** 
      * Uamps. 
      */
-    UAMPS("Uamps", "uamps"),
+    UAMPS("Uamps", "uamps", new DecimalPlacesFormatter(4)),
     /** 
      * Rb number. 
      */
