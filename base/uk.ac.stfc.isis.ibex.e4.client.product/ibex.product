@@ -32,7 +32,6 @@
       </win>
    </launcher>
 
-
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
@@ -49,6 +48,7 @@
    <features>
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css"/>
+      <feature id="org.python.pydev.feature"/>
    </features>
 
    <configurations>

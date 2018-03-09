@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="231">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="233">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.python.pydev.feature.feature.group" version="6.2.0.201711281614"/>
-<repository location="http://pydev.org/updates"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="1.0.0.201605312033"/>
 <repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
@@ -38,6 +34,10 @@
 <unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201707191527"/>
 <unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201707191514"/>
 <repository location="http://download.controlsystemstudio.org/updates/4.4"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.python.pydev.feature.feature.group" version="5.2.0.201608171824"/>
+<repository location="http://www.pydev.org/update_sites/5.2.0/"/>
 </location>
 </locations>
 <environment>
