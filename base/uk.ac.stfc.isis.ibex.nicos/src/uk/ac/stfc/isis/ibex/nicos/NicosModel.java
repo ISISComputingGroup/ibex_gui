@@ -369,6 +369,7 @@ public class NicosModel extends ModelObject {
             ReceiveLogMessage response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
             if (response == null) {
                 failConnection(NO_RESPONSE);
+                break;
             }
             List<NicosLogEntry> current = response.getEntries();
             if (newEntries.size() == current.size()) {

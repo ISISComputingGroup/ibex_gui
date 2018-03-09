@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -34,8 +34,6 @@ import uk.ac.stfc.isis.ibex.nicos.ExecutionInstructionType;
  */
 public class ExecutionInstruction extends NICOSMessage<Integer> {
 
-    String command;
-    BreakLevel level;
 
     /**
      * The constructor.

@@ -82,7 +82,6 @@ public class ScriptStatusViewModel extends ModelObject {
 	
     private void setScriptStatus(ScriptStatus status) {
         setEnableButtons(true);
-        System.out.println("SCRIPT IS " + status.toString());
         this.status = status;
         switch (status) {
             case IDLEEXC:
