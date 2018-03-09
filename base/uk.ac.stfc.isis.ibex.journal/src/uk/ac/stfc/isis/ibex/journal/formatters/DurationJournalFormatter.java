@@ -22,7 +22,7 @@ public class DurationJournalFormatter implements IJournalFormatter {
 			long minutes = (duration % (SECONDS_PER_MINUTE * MINUTES_PER_HOUR)) / MINUTES_PER_HOUR;
 			long hours = duration / (SECONDS_PER_MINUTE * MINUTES_PER_HOUR);
 
-			return String.format("%d:%02d:%02d", duration, hours, minutes, seconds);
+			return String.format("%d:%02d:%02d", hours, minutes, seconds);
 		} catch (NumberFormatException e) {
 			// If failed to parse, return the number of seconds rather than crashing.
 			return input + " s";
