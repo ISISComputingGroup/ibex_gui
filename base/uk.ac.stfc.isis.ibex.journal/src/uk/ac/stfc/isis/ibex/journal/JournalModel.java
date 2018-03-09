@@ -121,7 +121,9 @@ public class JournalModel extends ModelObject {
     		JournalRow run = new JournalRow();
     		for (JournalField property : selectedFields) {
     			try {
-    				run.put(property, rs.getString(property.getSqlFieldName()));
+    				String sqlValue = rs.getString(property.getSqlFieldName());
+    				String value = property.getFormatter().format(sqlValue);
+    				run.put(property, value);
     			} catch (SQLException e) {
 					run.put(property, "None");
 				}

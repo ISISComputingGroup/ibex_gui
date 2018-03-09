@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.core.databinding.observable,
  uk.ac.stfc.isis.ibex.logger,
- org.csstudio.platform.libs.jdbc
+ org.csstudio.platform.libs.jdbc,
+ com.ibm.icu
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.journal

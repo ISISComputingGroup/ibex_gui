@@ -1,5 +1,10 @@
 package uk.ac.stfc.isis.ibex.journal;
 
+import uk.ac.stfc.isis.ibex.journal.formatters.DateTimeJournalFormatter;
+import uk.ac.stfc.isis.ibex.journal.formatters.IJournalFormatter;
+import uk.ac.stfc.isis.ibex.journal.formatters.NoopJournalFormatter;
+import uk.ac.stfc.isis.ibex.journal.formatters.DurationJournalFormatter;
+
 /**
  * Enum constants representing the column names in the SQL schema.
  */
@@ -16,11 +21,15 @@ public enum JournalField {
     /** 
      * Start time. 
      */
-    START_TIME("Start time", "start_time"),
+    START_TIME("Start time", "start_time", new DateTimeJournalFormatter()),
+    /** 
+     * End time. 
+     */
+    END_TIME("End time", "end_time", new DateTimeJournalFormatter()),
     /** 
      * Duration. 
      */
-    DURATION("Duration", "duration"),
+    DURATION("Duration", "duration", new DurationJournalFormatter()),
     /** 
      * Uamps. 
      */
@@ -28,7 +37,7 @@ public enum JournalField {
     /** 
      * Rb number. 
      */
-    RB_NUMBER("Rb number", "rb_number"),
+    RB_NUMBER("RB number", "rb_number"),
     /** 
      * Users. 
      */
@@ -52,7 +61,7 @@ public enum JournalField {
     /** 
      * Sample id. 
      */
-    SAMPLE_ID("Sample id", "sample_id"),
+    SAMPLE_ID("Sample ID", "sample_id"),
     /** 
      * Measurement first run. 
      */
@@ -60,7 +69,7 @@ public enum JournalField {
     /** 
      * Measurement id. 
      */
-    MEASUREMENT_ID("Measurement id", "measurement_id"),
+    MEASUREMENT_ID("Measurement ID", "measurement_id"),
     /** 
      * Measurement label. 
      */
@@ -73,10 +82,6 @@ public enum JournalField {
      * Measurement subid. 
      */
     MEASUREMENT_SUBID("Measurement subid", "measurement_subid"),
-    /** 
-     * End time. 
-     */
-    END_TIME("End time", "end_time"),
     /** 
      * Raw frames. 
      */
@@ -108,7 +113,7 @@ public enum JournalField {
     /** 
      * Icp version. 
      */
-    ICP_VERSION("Icp version", "icp_version"),
+    ICP_VERSION("ICP version", "icp_version"),
     /** 
      * Detector table. 
      */
@@ -164,15 +169,11 @@ public enum JournalField {
     /** 
      * Np ratio. 
      */
-    NP_RATIO("Np ratio", "np_ratio"),
+    NP_RATIO("NP ratio", "np_ratio"),
     /** 
      * Isis cycle. 
      */
     ISIS_CYCLE("Isis cycle", "isis_cycle"),
-    /** 
-     * Seci config. 
-     */
-    SECI_CONFIG("Seci config", "seci_config"),
     /** 
      * Event mode. 
      */
@@ -180,10 +181,16 @@ public enum JournalField {
 	
 	private final String friendlyName;
     private final String sqlFieldName;
+    private final IJournalFormatter formatter;
     
     private JournalField(String friendlyName, String sqlFieldName) {
+    	this(friendlyName, sqlFieldName, new NoopJournalFormatter());
+    }
+    
+    private JournalField(String friendlyName, String sqlFieldName, IJournalFormatter formatter) {
     	this.friendlyName = friendlyName;
     	this.sqlFieldName = sqlFieldName;
+    	this.formatter = formatter;
     }
     
     /**
@@ -200,6 +207,14 @@ public enum JournalField {
      */
     public String getFriendlyName() {
     	return friendlyName;
+    }
+    
+    /**
+     * Gets a formatter to convert this field's SQL representation into a user-facing representation.
+     * @return the name
+     */
+    public IJournalFormatter getFormatter() {
+    	return formatter;
     }
     
 }
