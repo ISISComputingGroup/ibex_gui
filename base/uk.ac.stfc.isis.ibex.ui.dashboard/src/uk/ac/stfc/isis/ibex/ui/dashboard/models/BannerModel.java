@@ -21,15 +21,16 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import org.eclipse.swt.graphics.Color;
 
-import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Model for the banner within the dashboard view.
+ */
 public class BannerModel extends Closer {
 		
 	private final UpdatedValue<String> instrumentName;
@@ -39,6 +40,10 @@ public class BannerModel extends Closer {
 	private final UpdatedValue<Boolean> simulationMode;
 	private final ShutterState shutterState;
 	
+	/**
+	 * Constructor for the banner model.
+	 * @param observables
+	 */
 	public BannerModel(DashboardObservables observables) {
 		instrumentName = Instrument.getInstance().name();
 		instrumentState = registerForClose(new InstrumentState(observables.dae.runState));
@@ -49,30 +54,58 @@ public class BannerModel extends Closer {
 		shutterState = registerForClose(new ShutterState(observables.shutter));
 	}
 	
+	/**
+	 * The text of the banner (e.g. IRIS is RUNNING).
+	 * @return an updated value wrapping the text.
+	 */
 	public UpdatedValue<String> bannerText() {
 		return bannerText;
 	}
 	
+	/**
+	 * The instrument name as a string (e.g. IRIS, LARMOR).
+	 * @return an updated value wrapping the instrument name string.
+	 */
 	public UpdatedValue<String> instrumentName() {
 		return instrumentName;
 	}
 	
+	/**
+	 * The run state as a string (e.g. RUNNING, SETUP).
+	 * @return an updated value wrapping the run state string.
+	 */
 	public UpdatedValue<String> runState() {
 		return instrumentState.text();
 	}
 	
+	/**
+	 * The colour of the dashboard.
+	 * @return an updated value wrapping the dashboard colour.
+	 */
 	public UpdatedValue<Color> background() {
 		return instrumentState.color();
 	}
 	
+	/**
+	 * Gets the run number as a string.
+	 * @return an updated value wrapping the run number string
+	 */
 	public UpdatedValue<String> runNumber() {
 		return runNumber;
 	}
 	
+	/**
+	 * Gets the shutter status of the current instrument as a string.
+	 * @return an updated value wrapping the shutter status string
+	 */
 	public UpdatedValue<String> shutter() {
 		return shutterState.text();
 	}
 	
+	/**
+	 * Whether the DAE is in simulation mode or not
+	 * @return Updated value where true means the DAE is in simulation mode and false means it is not in simulation mode.
+	 */
 	public UpdatedValue<Boolean> daeSimMode() {
 		return simulationMode;
 	}
