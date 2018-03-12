@@ -6,7 +6,7 @@
       <view
             class="uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"
             id="uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"
-            name="DAE Control Program">
+            name="Journal viewer">
       </view>
    </extension>
    <extension

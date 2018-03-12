@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -41,20 +39,19 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * Fetches and stores journal data from a SQL database.
  */
-public class JournalModel extends ModelObject implements Runnable {
+public class JournalModel extends ModelObject {
 
     IPreferenceStore preferenceStore;
 
     private String message = "";
     private Date lastUpdate;
 
-	private List<Map<JournalField, String>> runs = Collections.emptyList();
+	private List<JournalRow> runs = Collections.emptyList();
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 
-    private static final int REFRESH_INTERVAL = 10 * 1000;
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
-    private static final int PAGE_SIZE = 30;
+    private static final int PAGE_SIZE = 25;
     
     // In ms. If a query takes longer than this, issue a warning.
     // Exact choice of number is arbitrary.
@@ -71,23 +68,6 @@ public class JournalModel extends ModelObject implements Runnable {
 	 */
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        Thread thread = new Thread(this);
-        thread.start();
-    }
-
-    /**
-     * Periodically tries to fetch new data from the database.
-     */
-    @Override
-    public void run() {
-        while (true) {
-            refresh();
-            try {
-                Thread.sleep(REFRESH_INTERVAL);
-            } catch (InterruptedException e) {
-                LOG.error("Interrupted while trying to fetch journal data: " + e.getMessage());
-            }
-        }
     }
 
     /**
@@ -122,7 +102,7 @@ public class JournalModel extends ModelObject implements Runnable {
      * Clears instrument specific data in the model.
      */
     public void clearModel() {
-    	setRuns(Collections.<Map<JournalField, String>>emptyList());
+    	setRuns(Collections.<JournalRow>emptyList());
         lastUpdate = null;
     }
     
@@ -136,17 +116,19 @@ public class JournalModel extends ModelObject implements Runnable {
 
     	ResultSet rs = constructSQLQuery(connection).executeQuery();
     	
-    	List<Map<JournalField, String>> runs = new ArrayList<>();
+    	List<JournalRow> runs = new ArrayList<>();
     	while (rs.next()) {
-    		Map<JournalField, String> run = new HashMap<>();
+    		JournalRow run = new JournalRow();
     		for (JournalField property : selectedFields) {
     			try {
-    				run.put(property, rs.getString(property.getSqlFieldName()));
+    				String sqlValue = rs.getString(property.getSqlFieldName());
+    				String value = property.getFormatter().format(sqlValue);
+    				run.put(property, value);
     			} catch (SQLException e) {
 					run.put(property, "None");
 				}
-    		}  
-    		runs.add(Collections.unmodifiableMap(run));
+    		}
+    		runs.add(run);
     	}
     	rs.close();
     	
@@ -200,7 +182,7 @@ public class JournalModel extends ModelObject implements Runnable {
     	return connection.prepareStatement("SELECT COUNT(*) FROM journal_entries");
     }
     
-    private void setRuns(List<Map<JournalField, String>> runs) {
+    private void setRuns(List<JournalRow> runs) {
     	firePropertyChange("runs", this.runs, this.runs = runs);
     }
     
@@ -214,7 +196,7 @@ public class JournalModel extends ModelObject implements Runnable {
      * 
      * @return the runs
      */
-    public List<Map<JournalField, String>> getRuns() {
+    public List<JournalRow> getRuns() {
     	return runs;
     }
     

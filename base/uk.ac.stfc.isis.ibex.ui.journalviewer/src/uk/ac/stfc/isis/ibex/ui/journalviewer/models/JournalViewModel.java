@@ -23,16 +23,14 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -43,7 +41,7 @@ public class JournalViewModel extends ModelObject {
 
     private JournalModel model;
     private String message;
-    private List<Map<JournalField, String>> runs;
+    private List<JournalRow> runs;
     private String lastUpdate;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
@@ -103,27 +101,15 @@ public class JournalViewModel extends ModelObject {
 
     
     /**
-     * Gets a string representation of the runs in the journal.
+     * Gets the runs in the journal.
      * 
-     * @deprecated This function will be replaced in ticket 2905 
-     * @see https://github.com/ISISComputingGroup/IBEX/issues/2905
-     * 
-     * @return a string representation of the runs.
+     * @return the runs.
      */
-    public String getRuns() {
-    	StringBuilder sb = new StringBuilder();
-    	for (Map<JournalField, String> run : runs) {
-    		List<JournalField> keys = new ArrayList<>(run.keySet());
-    		Collections.sort(keys);
-    		for (JournalField field : keys) {
-    			sb.append(field.getFriendlyName() + " = " + run.get(field) + ", ");
-    		}
-    		sb.append("\n");
-    	}
-    	return sb.toString();
+    public List<JournalRow> getRuns() {
+    	return model.getRuns();
     }
     
-    private void setRuns(List<Map<JournalField, String>> newRuns) {
+    private void setRuns(List<JournalRow> newRuns) {
     	firePropertyChange("runs", this.runs, this.runs = newRuns);
     }
     
@@ -186,7 +172,7 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * @return The current jouranl entries page.
+     * @return The current journal entries page.
      */
     public int getPageNumber() {
     	return model.getPage();

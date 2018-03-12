@@ -273,7 +273,7 @@ public abstract class DataboundTable<TRow> extends Composite {
     /**
      * Completes the setup of the table.
      */
-	protected void initialise() {
+	public void initialise() {
 		addColumns();
 		
 		viewer.setContentProvider(contentProvider);	
@@ -290,7 +290,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @return the table viewer
      */
-	protected TableViewer viewer() { 
+	public TableViewer viewer() { 
 		return viewer;
 	}
 
@@ -299,7 +299,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @return the table
      */
-	protected Table table() { 
+	public Table table() { 
 		return table;
 	}
 
@@ -407,7 +407,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param resizable whether the column is resizable
      * @return the table viewer column
      */
-	protected TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
+	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
 		TableViewerColumn tableColumn = createColumn(title);
         TableColumn col = tableColumn.getColumn();
 		tableColumnLayout().setColumnData(col,
@@ -422,7 +422,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param propertyName the property name
      * @return the observable map
      */
-	protected IObservableMap observeProperty(String propertyName) {
+	public IObservableMap observeProperty(String propertyName) {
 		return BeanProperties.value(rowType, propertyName).observeDetail(contentProvider.getKnownElements());
 	}	
 
