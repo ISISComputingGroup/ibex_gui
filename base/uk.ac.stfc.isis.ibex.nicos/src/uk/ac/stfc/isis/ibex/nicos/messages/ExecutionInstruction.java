@@ -57,7 +57,11 @@ public class ExecutionInstruction extends NICOSMessage<Integer> {
      */
     @Override
     public ReceiveMessage parseResponse(String response) throws ConversionException {
-        return new JsonDeserialisingConverter<>(ReceiveScriptStatus.class).convert(response);
+        return new JsonDeserialisingConverter<>(ReceiveNullMessage.class).convert(response);
     }
 
+    @Override
+    public String toString() {
+        return command;
+    }
 }

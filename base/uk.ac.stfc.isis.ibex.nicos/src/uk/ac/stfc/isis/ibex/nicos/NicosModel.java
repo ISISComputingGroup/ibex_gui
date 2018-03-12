@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -262,7 +263,13 @@ public class NicosModel extends ModelObject {
      *            The execution instruction to send to the server.
      */
     public void sendExecutionInstruction(ExecutionInstruction instruction) {
-        sendMessageToNicos(instruction);
+        SendMessageDetails response = sendMessageToNicos(instruction);
+        if (!response.isSent()) {
+            NicosLogEntry error = new NicosLogEntry(new Date(),
+                    "Error sending " + instruction.toString() + " command: " + response.getFailureReason() + "\n");
+            setLogEntries(Arrays.asList(error));
+            getScriptStatus();
+        }
     }
 
     /**
