@@ -40,8 +40,9 @@ public class Banner extends Composite {
 	private final Label runNumber;
 	private final Label lblShutter;
 	private final Label shutter;
+	private final Label simMode;
 	
-	public Banner(Composite parent, int style, BannerModel model, Font titleFont, Font textFont) {
+	public Banner(Composite parent, int style, BannerModel model, Font titleFont, Font textFont, Font simulationModeFont) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginWidth = 0;
@@ -57,7 +58,7 @@ public class Banner extends Composite {
 		
 		details = new Composite(this, SWT.NONE);
 		details.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
-		details.setLayout(new GridLayout(4, false));
+		details.setLayout(new GridLayout(5, false));
 		details.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		lblRun = new Label(details, SWT.NONE);
@@ -68,6 +69,11 @@ public class Banner extends Composite {
 		runNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		runNumber.setFont(textFont);
 		runNumber.setText("0000001");
+		
+		simMode = new Label(details, SWT.NONE);
+		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		simMode.setFont(simulationModeFont);
+		simMode.setText("SIMULATION MODE");
 		
 		lblShutter = new Label(details, SWT.NONE);
 		lblShutter.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -93,5 +99,6 @@ public class Banner extends Composite {
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(model.runNumber()));
 		bindingContext.bindValue(WidgetProperties.text().observe(shutter), BeanProperties.value("value").observe(model.shutter()));
+		bindingContext.bindValue(WidgetProperties.visible().observe(simMode), BeanProperties.value("value").observe(model.daeSimMode()));
 	}
 }

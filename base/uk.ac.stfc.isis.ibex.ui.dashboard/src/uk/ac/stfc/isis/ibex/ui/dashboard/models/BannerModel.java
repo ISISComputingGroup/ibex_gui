@@ -21,10 +21,13 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import org.eclipse.swt.graphics.Color;
 
+import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class BannerModel extends Closer {
@@ -33,6 +36,7 @@ public class BannerModel extends Closer {
 	private final InstrumentState instrumentState;
 	private final BannerText bannerText;
 	private final UpdatedValue<String> runNumber;
+	private final UpdatedValue<Boolean> simulationMode;
 	private final ShutterState shutterState;
 	
 	public BannerModel(DashboardObservables observables) {
@@ -41,6 +45,7 @@ public class BannerModel extends Closer {
 		bannerText = new BannerText(instrumentName, instrumentState.text());
 		
 		runNumber = registerForClose(new TextUpdatedObservableAdapter(observables.dae.runNumber));
+		simulationMode = registerForClose(new UpdatedObservableAdapter<Boolean>(observables.dae.simulationMode));
 		shutterState = registerForClose(new ShutterState(observables.shutter));
 	}
 	
@@ -66,5 +71,9 @@ public class BannerModel extends Closer {
 	
 	public UpdatedValue<String> shutter() {
 		return shutterState.text();
+	}
+	
+	public UpdatedValue<Boolean> daeSimMode() {
+		return simulationMode;
 	}
 }
