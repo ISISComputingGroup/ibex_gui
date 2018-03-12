@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
