@@ -28,43 +28,47 @@ public enum ScriptStatus {
     /**
      * Nothing started, last script raised exception.
      */
-    IDLEEXC(-2),
+    IDLEEXC(-2, "Idle (last script failed)"),
 
     /**
      * Nothing started.
      */
-    IDLE(-1),
+    IDLE(-1, "Idle"),
 
     /**
      * Execution running.
      */
-    RUNNING(0),
+    RUNNING(0, "Running"),
 
     /**
      * Execution halted, in break function.
      */
-    INBREAK(1),
+    INBREAK(1, "Paused"),
 
     /**
      * Stop exception raised, waiting for propagation.
      */
-    STOPPING(2),
+    STOPPING(2, "Stopping"),
     
     /**
      * Invalid state requested.
      */
-    INVALID(-5);
+    INVALID(-5, "Invalid");
 
     private int numVal;
+    private String description;
 
     /**
      * Constructor with custom integer value.
      * 
      * @param numVal
      *            The value representing this status.
+     * @param desc
+     *            A description of the status.
      */
-    ScriptStatus(int numVal) {
+    ScriptStatus(int numVal, String desc) {
         this.numVal = numVal;
+        this.description = desc;
     }
 
     /**
@@ -72,6 +76,13 @@ public enum ScriptStatus {
      */
     public int getNumVal() {
         return numVal;
+    }
+
+    /**
+     * @return The description of this status.
+     */
+    public String getDesc() {
+        return description;
     }
 
     /**

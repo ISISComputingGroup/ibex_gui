@@ -44,6 +44,7 @@ public class NicosControlButtonPanel extends Composite {
 
     DataBindingContext bindingContext = new DataBindingContext();
 
+    private Label lblStatusReadback;
     private Button btnStop;
     private Button btnTogglePause;
     private ScriptStatusViewModel statusModel;
@@ -54,20 +55,22 @@ public class NicosControlButtonPanel extends Composite {
         this.statusModel = statusModel;
 
         GridLayout gridLayout = new GridLayout(3, true);
+        gridLayout.marginHeight = 10;
+        gridLayout.marginWidth = 10;
         setLayout(gridLayout);
 
+        lblStatusReadback = new Label(this, SWT.NONE);
+        lblStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
         btnTogglePause = new Button(this, SWT.CENTER);
-        btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+        btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnTogglePause.setText("Pause");
         btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
 
         btnStop = new Button(this, SWT.CENTER);
-        btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+        btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnStop.setText("Stop");
         btnStop.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/stop.png"));
-
-        Label spacer = new Label(this, SWT.NONE);
-        spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         bind();
     }
@@ -81,6 +84,8 @@ public class NicosControlButtonPanel extends Composite {
                 BeanProperties.value("enableButtons").observe(statusModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblStatusReadback),
+                BeanProperties.value("statusReadback").observe(statusModel));
         
         btnTogglePause.addSelectionListener(new SelectionAdapter() {
             @Override

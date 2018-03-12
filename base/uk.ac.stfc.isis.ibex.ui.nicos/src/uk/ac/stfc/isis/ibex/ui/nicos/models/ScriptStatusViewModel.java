@@ -41,6 +41,7 @@ public class ScriptStatusViewModel extends ModelObject {
     private boolean enableButtons = false;
 
     private String toggleButtonText = "Pause";
+    private String statusReadback = "";
     private Image toggleButtonIcon = PAUSE_ICON;
 
     private NicosModel model;
@@ -83,6 +84,7 @@ public class ScriptStatusViewModel extends ModelObject {
     private void setScriptStatus(ScriptStatus status) {
         setEnableButtons(true);
         this.status = status;
+        setStatusReadback(status);
         switch (status) {
             case IDLEEXC:
             case IDLE:
@@ -148,5 +150,15 @@ public class ScriptStatusViewModel extends ModelObject {
 
     public boolean getEnableButtons() {
         return enableButtons;
+    }
+
+    private void setStatusReadback(ScriptStatus status) {
+        String displayString = "Status is: " + status.getDesc();
+        firePropertyChange("statusReadback", statusReadback, statusReadback = displayString);
+
+    }
+
+    public String getStatusReadback() {
+        return statusReadback;
     }
 }
