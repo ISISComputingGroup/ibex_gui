@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
