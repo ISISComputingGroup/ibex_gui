@@ -265,6 +265,7 @@ public class NicosModel extends ModelObject {
     public void sendExecutionInstruction(ExecutionInstruction instruction) {
         SendMessageDetails response = sendMessageToNicos(instruction);
         if (!response.isSent()) {
+            updateLogEntries();
             NicosLogEntry error = new NicosLogEntry(new Date(),
                     "Error sending " + instruction.toString() + " command: " + response.getFailureReason() + "\n");
             setLogEntries(Arrays.asList(error));
