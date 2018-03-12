@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2018 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -27,17 +27,17 @@ package uk.ac.stfc.isis.ibex.nicos;
 public enum ExecutionInstructionType {
 
     /**
-     * Instruction to resume the execution of the current script.
+     * Resume the execution of the current script.
      */
     CONTINUE("continue"),
 
     /**
-     * Instruction to pause the execution of the current script.
+     * Pause the execution of the current script.
      */
     BREAK("break"),
 
     /**
-     * Instruction to stop the execution of the current script.
+     * Stop the execution of the current script.
      */
     STOP("stop");
 

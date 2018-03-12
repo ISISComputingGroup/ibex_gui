@@ -120,6 +120,9 @@ public class ScriptStatusViewModel extends ModelObject {
         firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
 
+    /**
+     * @return The icon on the toggle pause button
+     */
     public Image getToggleButtonIcon() {
         return toggleButtonIcon;
     }
@@ -128,14 +131,25 @@ public class ScriptStatusViewModel extends ModelObject {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
     }
 
+    /**
+     * @return The text on the toggle pause button
+     */
     public String getToggleButtonText() {
         return toggleButtonText;
     }
 
+    /**
+     * Send a message to the NICOS server telling it to stop the current script
+     * execution.
+     */
     public void stopExecution() {
         model.sendExecutionInstruction(STOP_INSTRUCTION);
     }
 
+    /**
+     * Send a message to the NICOS server telling it to pause the current script
+     * after the current line.
+     */
     public void toggleExecution() {
         if (status == ScriptStatus.INBREAK) {
             model.sendExecutionInstruction(RESUME_INSTRUCTION);
@@ -148,6 +162,9 @@ public class ScriptStatusViewModel extends ModelObject {
         firePropertyChange("enableButtons", enableButtons, enableButtons = enable);
     }
 
+    /**
+     * @return Whether the script run control buttons should be enabled.
+     */
     public boolean getEnableButtons() {
         return enableButtons;
     }
@@ -158,6 +175,9 @@ public class ScriptStatusViewModel extends ModelObject {
 
     }
 
+    /**
+     * @return The text to display indicating the current execution status
+     */
     public String getStatusReadback() {
         return statusReadback;
     }

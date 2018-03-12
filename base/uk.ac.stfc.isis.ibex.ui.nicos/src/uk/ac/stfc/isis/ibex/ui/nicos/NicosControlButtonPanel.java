@@ -49,6 +49,17 @@ public class NicosControlButtonPanel extends Composite {
     private Button btnTogglePause;
     private ScriptStatusViewModel statusModel;
 
+    /**
+     * The constructor.
+     * 
+     * @param parent
+     *            The parent composite
+     * @param style
+     *            The SWT style
+     * @param statusModel
+     *            The viewmodel for styling the view based on the script
+     *            execution status
+     */
     public NicosControlButtonPanel(Composite parent, int style, ScriptStatusViewModel statusModel) {
         super(parent, style);
 
