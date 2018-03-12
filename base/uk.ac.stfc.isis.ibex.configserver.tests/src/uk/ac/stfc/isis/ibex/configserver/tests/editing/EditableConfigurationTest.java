@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -188,5 +189,15 @@ public class EditableConfigurationTest {
 
         // Assert
         assertNull(config.getBlockByName(GAPX.getName()));
+    }
+    
+    @Test
+    public void GIVEN_two_editable_configurations_created_from_same_list_of_iocs_with_macros_THEN_editable_configurations_do_not_share_state() {
+    	EditableConfiguration config1 = edit(config());    	
+    	allIocs.add(new EditableIoc(GALIL01));	
+    	EditableConfiguration config2 = edit(config());
+    	
+    	assertFalse(config1.getAvailableIocs().equals(allIocs));
+    	assertTrue(config2.getAvailableIocs().equals(allIocs));
     }
 }
