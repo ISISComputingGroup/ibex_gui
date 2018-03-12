@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
@@ -103,7 +104,7 @@ public class EditableIoc extends Ioc {
      *            The new macros to apply to the IOC
      */
 	public void setAvailableMacros(Collection<Macro> macros) {
-		firePropertyChange("availableMacros", this.availableMacros, this.availableMacros = macros);
+		firePropertyChange("availableMacros", this.availableMacros, this.availableMacros = new ArrayList<>(macros));
 	}
 
     /**
