@@ -81,7 +81,13 @@ public class ScriptStatusViewModel extends ModelObject {
 		firePropertyChange("lineNumber", lineNumberStr, lineNumberStr = line);
 	}
 	
-    private void setScriptStatus(ScriptStatus status) {
+    /**
+     * Modify the view model to reflect the run status of the script server.
+     * 
+     * @param status
+     *            The run status of the script server.
+     */
+    public void setScriptStatus(ScriptStatus status) {
         setEnableButtons(true);
         this.status = status;
         setStatusReadback(status);
