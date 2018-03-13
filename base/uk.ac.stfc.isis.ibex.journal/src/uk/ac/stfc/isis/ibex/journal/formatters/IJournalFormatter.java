@@ -12,5 +12,5 @@ public interface IJournalFormatter {
 	 * @param input the input data from MySQL
 	 * @return the string as displayed in the journal view
 	 */
-	public String format(String input);
+	String format(String input);
 }

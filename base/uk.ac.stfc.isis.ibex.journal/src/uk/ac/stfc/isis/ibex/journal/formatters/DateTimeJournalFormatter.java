@@ -11,6 +11,9 @@ public class DateTimeJournalFormatter implements IJournalFormatter {
 	private static final SimpleDateFormat SQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
 	private static final SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String format(String input) {
 		try {
