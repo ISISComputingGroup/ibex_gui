@@ -108,14 +108,14 @@ public class PVItemWithUnits extends PVItem {
 	 * @param pvAddress the pv address to get the EGU of.
 	 * @return the PV that contains the EGU.
 	 */
-	private static String getEguPv(String pvAddress) {
+	public static String getEguPv(String pvAddress) {
 		
 		// If the PV ends in .VAL, strip off the .VAL
 		if (pvAddress.endsWith(VAL_SUFFIX)) {
 			pvAddress = pvAddress.substring(0, pvAddress.length() - VAL_SUFFIX.length());
 		}
 		
-		// If the PV is a field, we don't have a way to get the EGU for it, so just return null here.
+		// If the PV is still a field, we don't have a way to get the EGU for it, so just return null here.
 		if (pvAddress.contains(FIELD_SEPARATOR)) {
 			return null;
 		}
