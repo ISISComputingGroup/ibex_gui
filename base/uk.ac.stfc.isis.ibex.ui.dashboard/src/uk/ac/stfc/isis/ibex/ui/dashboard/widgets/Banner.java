@@ -31,6 +31,9 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 
+/**
+ * The view for the instrument dashboard banner showing the instrument state.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Banner extends Composite {
 
@@ -42,6 +45,16 @@ public class Banner extends Composite {
 	private final Label shutter;
 	private final Label simMode;
 	
+	/**
+	 * The constructor. 
+	 * 
+	 * @param parent The parent composite
+	 * @param style The SWT style
+	 * @param model The model holding data to display in the view
+	 * @param titleFont The font for the banner title
+	 * @param textFont The font for the banner text
+	 * @param simulationModeFont The font for the simulation mode indicator
+	 */
 	public Banner(Composite parent, int style, BannerModel model, Font titleFont, Font textFont, Font simulationModeFont) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(1, false);
@@ -93,7 +106,7 @@ public class Banner extends Composite {
 		}
 	}
 	
-	public void bind(BannerModel model) {		
+    private void bind(BannerModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(bannerText), BeanProperties.value("value").observe(model.bannerText()));
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));

@@ -42,7 +42,7 @@ public class BannerModel extends Closer {
 	
 	/**
 	 * Constructor for the banner model.
-	 * @param observables
+	 * @param observables The observables for values displayed on the dashboard banner
 	 */
 	public BannerModel(DashboardObservables observables) {
 		instrumentName = Instrument.getInstance().name();
@@ -103,7 +103,7 @@ public class BannerModel extends Closer {
 	}
 	
 	/**
-	 * Whether the DAE is in simulation mode or not
+	 * Whether the DAE is in simulation mode or not.
 	 * @return Updated value where true means the DAE is in simulation mode and false means it is not in simulation mode.
 	 */
 	public UpdatedValue<Boolean> daeSimMode() {
