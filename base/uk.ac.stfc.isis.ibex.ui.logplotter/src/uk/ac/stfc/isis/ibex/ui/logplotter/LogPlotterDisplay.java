@@ -45,7 +45,7 @@ public class LogPlotterDisplay {
 	    final Model model = editor.getModel();
 	    final double period = Preferences.getScanPeriod();
 	    try {
-			final PVItem item = new PVItem(pvAddress, period);
+			final PVItem item = new PVItemWithUnits(pvAddress, period);
 			item.useDefaultArchiveDataSources();
 			// Add item to new axes
 			item.setAxis(model.addAxis(item.getDisplayName()));
