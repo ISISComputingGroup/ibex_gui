@@ -84,7 +84,7 @@ public class NicosView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(2, false);
+        GridLayout glParent = new GridLayout(2, true);
         glParent.marginRight = 10;
         glParent.marginHeight = 10;
         glParent.marginWidth = 10;
@@ -119,8 +119,7 @@ public class NicosView extends ViewPart {
         lblCurrentScriptStatus.setText("Current script status: ");
         
         Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
-        GridData lineNumberLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		lineNumberIndicator.setLayoutData(lineNumberLayout);
+        lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
                 BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
         
@@ -149,19 +148,18 @@ public class NicosView extends ViewPart {
         });
 
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
-        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
+        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
-        ssgLayout.marginRight = 10;
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
         scriptSendGrp.setLayout(ssgLayout);
 
         Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
         btnCreateScript.setText("Create Script");
-        btnCreateScript.setLayoutData(new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1));
+        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         
         Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
+        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
         layoutData.widthHint = 80;
         lblQueueScriptStatus.setLayoutData(layoutData);
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
@@ -180,6 +178,10 @@ public class NicosView extends ViewPart {
                 dialog.open();
             }
         });
+        
+        NicosControlButtonPanel controlPanel =
+                new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
+        controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
     }
 
