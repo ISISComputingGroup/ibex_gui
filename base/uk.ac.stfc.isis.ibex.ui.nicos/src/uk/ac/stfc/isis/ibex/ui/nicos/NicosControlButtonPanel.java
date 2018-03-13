@@ -80,7 +80,7 @@ public class NicosControlButtonPanel extends Composite {
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnStop.setText("Stop");
+        btnStop.setText("Stop Script Execution");
         btnStop.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/stop.png"));
 
         bind();

@@ -84,7 +84,7 @@ public class NicosView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(2, false);
+        GridLayout glParent = new GridLayout(2, true);
         glParent.marginRight = 10;
         glParent.marginHeight = 10;
         glParent.marginWidth = 10;

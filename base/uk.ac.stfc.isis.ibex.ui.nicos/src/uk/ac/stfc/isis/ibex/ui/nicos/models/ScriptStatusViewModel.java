@@ -23,8 +23,8 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final Image RESUME_ICON =
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/resume.png");
 
-    private static final String PAUSE_TEXT = "Pause";
-    private static final String RESUME_TEXT = "Resume";
+    private static final String PAUSE_TEXT = "Pause Script Execution";
+    private static final String RESUME_TEXT = "Resume Script Execution";
 
     private static final ExecutionInstruction STOP_INSTRUCTION =
             new ExecutionInstruction(ExecutionInstructionType.STOP, BreakLevel.NOW);
@@ -35,12 +35,12 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	private static final String NOT_EXECUTING = "Execution finished.";
 	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
-	private String lineNumberStr = "";
-    private ScriptStatus status = ScriptStatus.IDLE;
 
     private boolean enableButtons = false;
 
-    private String toggleButtonText = "Pause";
+    private ScriptStatus status = ScriptStatus.IDLE;
+    private String lineNumberStr = "";
+    private String toggleButtonText = "";
     private String statusReadback = "";
     private Image toggleButtonIcon = PAUSE_ICON;
 
