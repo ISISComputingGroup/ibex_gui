@@ -4,6 +4,9 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.ui.logplotter.PVItemWithUnits;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests for the PVItemWithUnits class.
+ */
 public class PVItemWithUnitsTest {
 	@Test
     public void WHEN_get_egu_pv_is_called_with_a_bare_pv_THEN_appends_egu_field() {

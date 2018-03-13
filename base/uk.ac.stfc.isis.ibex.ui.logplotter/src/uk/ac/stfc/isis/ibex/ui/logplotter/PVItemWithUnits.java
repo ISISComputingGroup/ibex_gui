@@ -45,16 +45,25 @@ public class PVItemWithUnits extends PVItem {
 			
 			unitsObservable.addObserver(new BaseObserver<String>() {
 				
+				/**
+				 * @{inheritDoc}
+				 */
 				@Override
 				public void onValue(String value) {
 					setUnits(value);
 				}
 				
+				/**
+				 * @{inheritDoc}
+				 */
 				@Override
 				public void onError(Exception e) {
 					setUnits(null);
 				}
 				
+				/**
+				 * @{inheritDoc}
+				 */
 				@Override
 				public void onConnectionStatus(boolean isConnected) {
 					if (!isConnected) {
