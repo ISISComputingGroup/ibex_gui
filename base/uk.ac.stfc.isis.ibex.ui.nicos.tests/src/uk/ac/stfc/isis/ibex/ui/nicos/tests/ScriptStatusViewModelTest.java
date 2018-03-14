@@ -45,8 +45,8 @@ public class ScriptStatusViewModelTest {
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png");
     private static final Image RESUME_ICON =
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/resume.png");
-    private static final String PAUSE_TEXT = "Pause";
-    private static final String RESUME_TEXT = "Resume";
+    private static final String PAUSE_TEXT = "Pause Script Execution";
+    private static final String RESUME_TEXT = "Resume Script Execution";
 
     private NicosModel model;
     private ScriptStatusViewModel viewModel;
