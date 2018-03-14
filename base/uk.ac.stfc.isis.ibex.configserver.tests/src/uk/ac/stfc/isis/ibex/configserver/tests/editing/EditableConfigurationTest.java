@@ -189,4 +189,14 @@ public class EditableConfigurationTest {
         // Assert
         assertNull(config.getBlockByName(GAPX.getName()));
     }
+    
+    @Test
+    public void GIVEN_two_editable_configurations_created_from_same_list_of_iocs_with_macros_THEN_editable_configurations_do_not_share_state() {
+    	EditableConfiguration config1 = edit(config());    	
+    	allIocs.add(new EditableIoc(GALIL01));	
+    	EditableConfiguration config2 = edit(config());
+    	
+    	assertFalse(config1.getAvailableIocs().equals(allIocs));
+    	assertTrue(config2.getAvailableIocs().equals(allIocs));
+    }
 }
