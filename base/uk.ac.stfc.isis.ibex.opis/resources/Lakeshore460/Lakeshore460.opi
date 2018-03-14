@@ -5483,37 +5483,4 @@ $(pv_value)</tooltip>
       </widget>
     </widget>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.webbrowser" version="1.0">
-    <border_style>1</border_style>
-    <show_toolbar>true</show_toolbar>
-    <tooltip></tooltip>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:5c33</wuid>
-    <scripts />
-    <height>300</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <border_color>
-      <color red="192" green="192" blue="192" />
-    </border_color>
-    <widget_type>Web Browser</widget_type>
-    <url></url>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>450</width>
-    <x>825</x>
-    <name>Web Browser</name>
-    <y>206</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-  </widget>
 </display>
