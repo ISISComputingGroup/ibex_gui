@@ -25,7 +25,8 @@ public class PVItemWithUnits extends PVItem {
 	/**
 	 * Constructor for a PV item with units. Attempts to figure out the location of the relevant EGU PV.
 	 * 
-	 * {@inheritDoc}
+	 * @param pvAddress the address of the PV to plot
+	 * @param period the period
 	 */
 	public PVItemWithUnits(String pvAddress, double period) throws Exception {
 		this(pvAddress, getEguPv(pvAddress), period);
@@ -34,7 +35,9 @@ public class PVItemWithUnits extends PVItem {
 	/**
 	 * Constructor for a PV item with units, with an explicit PV to use for the EGU.
 	 * 
-	 * {@inheritDoc}
+	 * @param pvAddress the address of the PV to plot
+	 * @param eguPv the PV which contains the EGU
+	 * @param period the period
 	 */
 	public PVItemWithUnits(String pvAddress, String eguPv, double period) throws Exception {
 		super(pvAddress, period);
