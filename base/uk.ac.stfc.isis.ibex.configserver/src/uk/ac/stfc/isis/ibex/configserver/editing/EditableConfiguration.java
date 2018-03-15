@@ -148,7 +148,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.name = config.name();
 		this.description = config.description();
 		this.synoptic = config.synoptic();
-        this.allIocs = iocs;
+		
+		this.allIocs = new ArrayList<>();
+		
+		for (EditableIoc ioc : iocs) {
+			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
+			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
+			this.allIocs.add(newIoc);
+		}
 
         this.history = new ArrayList<>();
 

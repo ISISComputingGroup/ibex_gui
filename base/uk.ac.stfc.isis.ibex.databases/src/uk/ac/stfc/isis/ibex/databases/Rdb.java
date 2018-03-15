@@ -105,7 +105,7 @@ public class Rdb {
         if (ex instanceof SQLRecoverableException) {
             return DbError.CONNECTION_ERROR;
         }
-        if (ex.getMessage().startsWith("Unknown database")) {
+        if (ex != null && ex.getMessage().startsWith("Unknown database")) {
             return DbError.UNKNOWN_DB;
         }
         return DbError.ACCESS_DENIED;

@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 /**
  * The dashboard view.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class DashboardView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
@@ -54,6 +55,7 @@ public class DashboardView {
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
 	private final Font textFont = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+	private final Font simulationModeFont = SWTResourceManager.getFont("Arial", 20, SWT.BOLD);
 	
 	private final Dashboard dashboard = Dashboard.getInstance();
 	
@@ -81,7 +83,7 @@ public class DashboardView {
 		dashboardLayout.verticalSpacing = 0;
 		dashboardControl.setLayout(dashboardLayout);
 		
-		Banner banner = new Banner(dashboardControl, SWT.NONE, bannerModel, bannerTitleFont, bannerFont);
+		Banner banner = new Banner(dashboardControl, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
         banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
 		Label separator1 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);

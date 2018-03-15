@@ -31,10 +31,15 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
  * The main view for the NICOS Script Output view.
@@ -51,8 +56,12 @@ public class NicosOutputView {
     private static final int FIXED_HEIGHT = 225;
 	
     private DataBindingContext bindingContext = new DataBindingContext();
+	private ScriptStatusViewModel scriptStatusViewModel;
+	private OutputLogViewModel outputLogViewModel;
 	
     private NicosModel model;
+    
+    StyledText txtOutput;
 
 
 	/**
@@ -60,6 +69,8 @@ public class NicosOutputView {
 	 */
 	public NicosOutputView() {
         model = Nicos.getDefault().getModel();
+        scriptStatusViewModel = new ScriptStatusViewModel(model);
+        outputLogViewModel = new OutputLogViewModel(model);
 	}
 
 	@PostConstruct
@@ -71,37 +82,50 @@ public class NicosOutputView {
 		scrolledComposite.setContent(nicosComposite);
         scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
 		
-		GridLayout glParent = new GridLayout(2, false);
+		GridLayout glParent = new GridLayout(1, false);
 		glParent.marginHeight = 10;
 		glParent.marginWidth = 10;
-		glParent.marginBottom = 57;
 		nicosComposite.setLayout(glParent);
 
-        // Connection info
-        Composite connectionGrp = new Composite(nicosComposite, SWT.NONE);
-        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
-        GridLayout connLayout = new GridLayout(2, false);
-        connLayout.marginHeight = 10;
-        connLayout.marginWidth = 10;
-        connectionGrp.setLayout(connLayout);
-
-        Label lblConnectionStatus = new Label(connectionGrp, SWT.NONE);
-        GridData connStatusLayoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
-        connStatusLayoutData.widthHint = 100;
-        lblConnectionStatus.setLayoutData(connStatusLayoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionStatus),
-                BeanProperties.value("connectionStatus").observe(model), null, new ConnectionStatusConverter());
-
-        Label lblConnectionError = new Label(connectionGrp, SWT.NONE);
-        lblConnectionError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
-                BeanProperties.value("connectionErrorMessage").observe(model));
-		
-		
-		StyledText txtOutput = new StyledText(nicosComposite, SWT.BORDER);
+        Composite currentScriptInfoContainer = new Composite(nicosComposite, SWT.NONE);
+        currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        GridLayout currScriptInfoLayout = new GridLayout(2, false);
+        currScriptInfoLayout.marginHeight = 10;
+        currScriptInfoLayout.marginWidth = 10;
+        currentScriptInfoContainer.setLayout(currScriptInfoLayout);
+        
+        Label lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblCurrentScriptStatus.setText("Current script status: ");
+        
+        Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
+        lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
+                BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
+        
+		txtOutput = new StyledText(nicosComposite, SWT.BORDER);
 		txtOutput.setEditable(false);
 		txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
+        NicosControlButtonPanel controlPanel =
+                new NicosControlButtonPanel(nicosComposite, SWT.NONE, scriptStatusViewModel);
+        controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        
+        bind();
+	}
+	
+	private void bind() {
+
+        bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
+                BeanProperties.value("log").observe(outputLogViewModel));
+        
+        txtOutput.addListener(SWT.Modify, new Listener() {
+            @Override
+            public void handleEvent(Event e) {
+                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
+            }
+        });
+
+
 	}
 
 }

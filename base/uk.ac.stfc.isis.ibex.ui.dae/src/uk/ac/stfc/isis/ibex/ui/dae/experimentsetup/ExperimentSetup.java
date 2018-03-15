@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -41,6 +43,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
@@ -86,7 +89,7 @@ public class ExperimentSetup {
      */
     @PostConstruct
     @SuppressWarnings("checkstyle:magicnumber")
-    public void createPart(Composite parent) {
+    public void createPart(final Composite parent) {
 
         sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
         
@@ -143,10 +146,15 @@ public class ExperimentSetup {
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (viewModel != null) {
-                    viewModel.experimentSetup().updateDae();
-                }
-                sendingChanges.open();
+            	try {
+            		viewModel.experimentSetup().updateDae();
+            		sendingChanges.open();
+        		} catch (Exception err) {
+        			// Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
+        			IsisLog.getLogger(this.getClass()).error(err);
+        			MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
+        					"Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
+        		}
             }
         });
         btnSendChanges.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));

@@ -28,22 +28,31 @@ import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
+import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
@@ -67,9 +76,23 @@ public class NicosModelTest {
     private ReceiveLoginMessage loginResponse = mock(ReceiveLoginMessage.class);
     private NICOSMessage sendMessage = mock(NICOSMessage.class);
 
+    private Answer incrementalLog = new Answer() {
+        // Simulate responses to requests for log entries with
+        // increasing volume
+        private int count = 0;
+
+        @Override
+        public Object answer(InvocationOnMock invocation) {
+            int lastEntryTime = 1050;
+            int n = (int) Math.pow(10, count);
+            count++;
+            return createNEntries(n, lastEntryTime);
+        }
+    };
+
     @Before
     public void setUp() {
-        model = new NicosModel(zmqSession, connJob);
+        model = new NicosModel(zmqSession, connJob, 0);
 
         model.addPropertyChangeListener("connectionStatus", connectionStatusListener);
         model.addPropertyChangeListener("connectionErrorMessage", connectionErrorListener);
@@ -98,6 +121,28 @@ public class NicosModelTest {
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
+    }
+
+    /**
+     * Create a list of n log entries for simulating a response from the nicos
+     * log. Entries are 1 ms apart for simplicity.
+     * 
+     * @param n
+     *            The number of log entries in the message
+     * @param lastTime
+     *            The timestamp of the final message
+     * @return A list of n consecutive Nicos log entries.
+     */
+    private List<NicosLogEntry> createNEntries(int n, long lastTime) {
+        List<NicosLogEntry> entries = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            Date now1 = new Date(lastTime - i);
+            NicosLogEntry entry = new NicosLogEntry(now1, "message at " + (lastTime - i));
+            entries.add(entry);
+        }
+        Collections.reverse(entries); // Reverse so that timestamps are in
+                                      // ascending order.
+        return entries;
     }
 
     @Test
@@ -471,5 +516,99 @@ public class NicosModelTest {
         assertEquals(script, model.getCurrentlyExecutingScript());
     }
 
+    @Test
+    public void GIVEN_successful_connection_WHEN_update_log_THEN_log_messages_parsed_correctly() {
+        // Arrange
+        connectSuccessfully();
 
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        when(response.getEntries()).thenReturn(createNEntries(1, 1));
+        List<NicosLogEntry> expected = createNEntries(1, 1);
+
+        // Act
+        model.updateLogEntries();
+        List<NicosLogEntry> actual = model.getLogEntries();
+
+        // Assert
+        assertEquals(expected.get(0).toString(), actual.get(0).toString());
+    }
+
+    @Test
+    public void GIVEN_message_contains_old_entries_WHEN_updating_log_THEN_model_only_reads_new_entries() {
+        // Arrange
+        connectSuccessfully();
+
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        when(response.getEntries()).thenReturn(createNEntries(1, 1));
+        model.updateLogEntries();
+
+        // Act
+        when(response.getEntries()).thenReturn(createNEntries(1, 2));
+        List<NicosLogEntry> expected = createNEntries(1, 2);
+
+        model.updateLogEntries();
+        List<NicosLogEntry> actual = model.getLogEntries();
+
+        // Assert
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected.get(0).toString(), actual.get(0).toString());
+    }
+
+    @Test
+    public void
+            GIVEN_first_entry_in_response_after_latest_entry_read_WHEN_updating_log_THEN_query_for_more_entries() {
+        // Arrange
+        connectSuccessfully();
+
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        // Receive an initial message with timestamp to compare against
+        Date initialDate = new Date(1000);
+        NicosLogEntry initialEntry = new NicosLogEntry(initialDate, "initial entry message");
+        when(response.getEntries()).thenReturn(Arrays.asList(initialEntry));
+        model.updateLogEntries();
+
+        // Reset method invocation count for later verification
+        reset(response);
+
+        // Act
+        when(response.getEntries()).thenAnswer(incrementalLog);
+        model.updateLogEntries();
+
+        // Assert
+        // Response should be requested 3 times with increasing volume
+        verify(response, times(3)).getEntries();
+
+        // initial entry was at timestamp 1000;
+        // 50 new entries from timestamp 1001 - 1050
+        int expected = 50;
+        int actual = model.getLogEntries().size();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_entry_volume_greater_than_threshold_WHEN_updating_log_THEN_model_throws_away_excess() {
+        // Arrange
+        connectSuccessfully();
+        int threshold = 100;
+
+        ReceiveLogMessage response = mock(ReceiveLogMessage.class);
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+
+        // Act
+        when(response.getEntries()).thenAnswer(incrementalLog);
+        model.updateLogEntries();
+
+        // Assert
+        int expected = threshold + 1; // Add 1 for appended error message
+        int actual = model.getLogEntries().size();
+        assertEquals(expected, actual);
+        
+    }
 }

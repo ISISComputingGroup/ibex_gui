@@ -6,4 +6,15 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.mockito;bundle-version="1.9.5",
- org.junit;bundle-version="4.11.0"
+ org.junit;bundle-version="4.11.0",
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.csstudio.trends.databrowser2;bundle-version="3.2.17",
+ uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui,
+ uk.ac.stfc.isis.ibex.ui.blocks.presentation;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.preferences,
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.epics.switching,
+ uk.ac.stfc.isis.ibex.logger,
+ org.csstudio.swt.xygraph;bundle-version="2.0.3"

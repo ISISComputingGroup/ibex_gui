@@ -24,8 +24,6 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -71,8 +69,7 @@ public class DataAcquisitionPanel extends Composite {
     private Label spectraTableRB;
 
     private DataBindingContext bindingContext;
-    private DataAcquisitionViewModel model;
-
+    
     /**
      * The maximum spectrum number that can be set in the data acquisition tab.
      */
@@ -328,26 +325,6 @@ public class DataAcquisitionPanel extends Composite {
         autosaveUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         autosaveUnits.setItems(AutosaveUnit.allToString().toArray(new String[0]));
 
-        wiringTableSelector.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.setNewWiringTable(wiringTableSelector.getText());
-            }
-        });
-
-        detectorTableSelector.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.setNewDetectorTable(detectorTableSelector.getText());
-            }
-        });
-
-        spectraTableSelector.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.setNewSpectraTable(spectraTableSelector.getText());
-            }
-        });
     }
 
     /**
@@ -356,24 +333,28 @@ public class DataAcquisitionPanel extends Composite {
      * @param viewModel the model holding the DAE settings.
      */
     public void setModel(DataAcquisitionViewModel viewModel) {
-        this.model = viewModel;
-
         bindingContext = new DataBindingContext();
 
         bindingContext.bindList(WidgetProperties.items().observe(wiringTableSelector),
                 BeanProperties.list("wiringTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(wiringTableRB),
                 BeanProperties.value("wiringTable").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(wiringTableSelector), 
+        		BeanProperties.value("newWiringTable").observe(viewModel));
 
         bindingContext.bindList(WidgetProperties.items().observe(detectorTableSelector),
                 BeanProperties.list("detectorTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(detectorTableRB),
                 BeanProperties.value("detectorTable").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(detectorTableSelector), 
+        		BeanProperties.value("newDetectorTable").observe(viewModel));
 
         bindingContext.bindList(WidgetProperties.items().observe(spectraTableSelector),
                 BeanProperties.list("spectraTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(spectraTableRB),
                 BeanProperties.value("spectraTable").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectraTableSelector), 
+        		BeanProperties.value("newSpectraTable").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(monitorSpectrum),
                 BeanProperties.value("monitorSpectrum").observe(viewModel));

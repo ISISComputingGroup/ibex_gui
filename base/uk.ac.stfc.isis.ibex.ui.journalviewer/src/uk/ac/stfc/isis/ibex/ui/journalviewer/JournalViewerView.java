@@ -19,23 +19,43 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import javax.annotation.PostConstruct;
 
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
+import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.PartAdapter;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
  * Journal viewer main view.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class JournalViewerView {
 
     /**
@@ -43,40 +63,179 @@ public class JournalViewerView {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
 	
-	private static final int LABEL_FONT_SIZE = 11;
 	private static final int HEADER_FONT_SIZE = 16;
 	
     private Label lblError;
+    private Label lblLastUpdate;
+    
+    private final DataBindingContext bindingContext = new DataBindingContext();
+    private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
+    
+    private Button btnRefresh;
+    private Spinner spinnerPageNumber;
+
+	private DataboundTable<JournalRow> table;
+	
+	private EPartService partService;
 
 	/**
 	 * Create contents of the view part.
-	 * @param parent
+	 * @param parent The parent view part.
 	 */
 	@PostConstruct
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+		parent.setLayoutData(gd);
 
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-		Label lblDescription = new Label(parent, SWT.NONE);
-		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		lblDescription.setText("This is the future home of the Journal Viewer. Watch this space...");
+		this.partService = partService;
+		
+		Composite selectedContainer = new Composite(parent, SWT.FILL);
+		RowLayout rl = new RowLayout();
+		rl.justify = false;
+		rl.pack = false;
+		rl.type = SWT.HORIZONTAL;
+		selectedContainer.setLayout(rl);
+		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		
+		Composite controls = new Composite(parent, SWT.FILL);
+		controls.setLayout(new GridLayout(3, false));
+		
+		Label lblPage = new Label(controls, SWT.NONE);
+		lblPage.setText("Page number: ");
+        
+        spinnerPageNumber = new Spinner(controls, SWT.BORDER);
+        spinnerPageNumber.setMinimum(1);
+		
+        btnRefresh = new Button(controls, SWT.NONE);
+        btnRefresh.setText("Refresh data");
+		
+		
+		for (final JournalField property : JournalField.values()) {
+			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
+			checkbox.setText(property.getFriendlyName());
+			checkbox.setSelection(model.getFieldSelected(property));
+			checkbox.addSelectionListener(new SelectionAdapter() {
+	            @Override
+	            public void widgetSelected(SelectionEvent e) {
+	                super.widgetSelected(e);
+	                model.setFieldSelected(property, checkbox.getSelection());
+	            }
+	        });
+		}
+		
+		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
+		table = new DataboundTable<JournalRow>(parent, tableStyle, JournalRow.class, tableStyle) {
+			@Override
+			protected void addColumns() {
+				changeTableColumns();
+			}
+		};
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
-        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true));
+        lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
+        lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
+        
+        lblLastUpdate = new Label(parent, SWT.NONE);
+        lblLastUpdate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        lblLastUpdate.setText("placeholder");
 
-        bind(JournalViewerUI.getDefault().getModel());
+        bind();
 	}
 	
-    private void bind(JournalViewModel model) {
-        DataBindingContext bindingContext = new DataBindingContext();
-
+	private void changeTableColumns() {
+		// Dispose all the columns and re-add them, otherwise the columns may not be in the expected order.
+		for (TableColumn col : table.table().getColumns()) {
+			col.dispose();
+		}
+		
+		for (final JournalField field : JournalField.values()) {
+			if (model.getFieldSelected(field)) {
+				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
+				col.getColumn().setText(field.getFriendlyName());
+				
+				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+					@Override
+		            protected String valueFromRow(JournalRow row) {
+						return row.get(field);
+					}
+				});
+				
+			}
+		}
+		
+		forceResizeTable();
+	}
+	
+	/**
+	 * Forces the table to display the columns correctly.
+	 * 
+	 * This is a dirty hack but is the only way I found to ensure the columns displayed properly.
+	 */
+	private void forceResizeTable() {
+		table.setRedraw(false);
+		Point prevSize = table.getSize();
+		table.setSize(prevSize.x, prevSize.y - 1);
+		table.setSize(prevSize);
+		table.setRedraw(true);
+	}
+	
+    private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
-        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
-                BeanProperties.value("color").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
+                BeanProperties.value("lastUpdate").observe(model));
+        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumber").observe(model));
+        bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
+                BeanProperties.value("pageNumberMax").observe(model));
+
+        
+        btnRefresh.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.refresh();
+            }
+        });
+        
+        model.addPropertyChangeListener("runs", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {		
+				Display.getDefault().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						changeTableColumns();	
+						table.setRows(model.getRuns());
+					}
+				});
+			}
+		});
+        
+        // TODO do this the E4 way
+//        // Add a listener to refresh the page whenever it becomes visible
+//        try {
+//	        partService.addPartListener(new PartAdapter() {
+//	        	/**
+//	    		 * {@inheritDoc}
+//	    		 */
+//	    		@Override
+//	    		public void partVisible(IWorkbenchPartReference partRef) {
+//	    			super.partVisible(partRef);
+//	    			model.refresh();
+//	    		}
+//	        });
+//        } catch (NullPointerException e) {
+//        	// If getSite or getPage return null then log the error but carry on.
+//        	IsisLog.getLogger(getClass()).info("Couldn't add visibility listener to Journal view");
+//        }
     }
 }

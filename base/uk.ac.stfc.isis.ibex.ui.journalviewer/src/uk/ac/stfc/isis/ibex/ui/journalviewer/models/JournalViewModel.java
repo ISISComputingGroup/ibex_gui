@@ -23,12 +23,15 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
+import java.util.EnumSet;
+import java.util.List;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -36,19 +39,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class JournalViewModel extends ModelObject {
 
-    /**
-     * A neutral color for the status message text.
-     */
-    private static final Color NEUTRAL_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-
-    /**
-     * A color indicating an error for the status message text.
-     */
-    private static final Color ERROR_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_RED);
-
     private JournalModel model;
-    private Color color;
     private String message;
+    private List<JournalRow> runs;
+    private String lastUpdate;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -70,13 +64,11 @@ public class JournalViewModel extends ModelObject {
     }
 
     private void update() {
-        if (model.getConnectionSuccess()) {
-            setMessage("Last refresh: " + model.getMessage());
-            setColor(NEUTRAL_COLOR);
-        } else {
-            setMessage("Error retrieving data: " + model.getMessage());
-            setColor(ERROR_COLOR);
-        }
+        setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
+        setMessage(model.getMessage());
+        setRuns(model.getRuns());
+        setPageNumber(model.getPage());
+        setPageNumberMax(model.getPageMax());
     }
 
     /**
@@ -91,14 +83,113 @@ public class JournalViewModel extends ModelObject {
     }
 
     /**
-     * @return The color indicating the current connection status.
+     * @return The connection status message.
      */
-    public Color getColor() {
-        return color;
+    public String getLastUpdate() {
+        return lastUpdate;
     }
 
-    private void setColor(Color color) {
-        firePropertyChange("color", this.color, this.color = color);
+    private void setLastUpdate(String lastUpdate) {
+        firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
+    }
+    /**
+     * Refreshes the data from the journal database.
+     */
+    public void refresh() {
+        model.refresh();
+    }
+
+    
+    /**
+     * Gets the runs in the journal.
+     * 
+     * @return the runs.
+     */
+    public List<JournalRow> getRuns() {
+    	return model.getRuns();
+    }
+    
+    private void setRuns(List<JournalRow> newRuns) {
+    	firePropertyChange("runs", this.runs, this.runs = newRuns);
+    }
+    
+    /**
+     * Sets a particular journal field to be selected or deselected.
+     * @param field an element of the JournalField enum to select
+     * @param selected true to select this field, false to deselect it
+     */
+    public void setFieldSelected(JournalField field, boolean selected) {
+    	EnumSet<JournalField> selectedFields = model.getSelectedFields();
+    	if (selected) {
+    		selectedFields.add(field);
+    	} else if (selectedFields.contains(field)) {
+    		selectedFields.remove(field);
+    	}
+    	model.setSelectedFields(selectedFields);
+    }
+    
+    /**
+     * Gets whether a particular field is currently selected.
+     * @param field the field to get
+     * @return true if the field is selected, false otherwise
+     */
+    public boolean getFieldSelected(JournalField field) {
+    	return model.getSelectedFields().contains(field);
+    }
+    
+    private String dateToString(Date lastUpdate) {
+        if (lastUpdate == null) {
+            return "N/A";
+        }
+        if (isToday(lastUpdate)) {
+            return DateFormat.getTimeInstance(DateFormat.MEDIUM).format(lastUpdate);
+        } else {
+            return DateFormat.getDateTimeInstance().format(lastUpdate);
+        }
+    }
+
+    /**
+     * @param date Is the provided date the same as today's date
+     */
+    private boolean isToday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date today = calendar.getTime();
+        return date.after(today);
+    }
+    
+    /**
+     * @param pageNumber The number of the results page.
+     */
+    public void setPageNumber(int pageNumber) {
+    	if (pageNumber != model.getPage()) {
+    		int previousPage = model.getPage();
+	    	model.setPage(pageNumber);
+	    	firePropertyChange("pageNumber", previousPage, model.getPage());
+    	}
+    }
+    
+    /**
+     * @return The current journal entries page.
+     */
+    public int getPageNumber() {
+    	return model.getPage();
+    }
+    
+    /**
+     * @param max The maximum number of pages supported by the journal view.
+     */
+    public void setPageNumberMax(int max) {
+	    firePropertyChange("pageNumberMax", 0, model.getPageMax());
+    }
+    
+    /**
+     * @return The maximum number of pages supported by the journal view.
+     */
+    public int getPageNumberMax() {
+    	return model.getPageMax();
     }
 
 }
