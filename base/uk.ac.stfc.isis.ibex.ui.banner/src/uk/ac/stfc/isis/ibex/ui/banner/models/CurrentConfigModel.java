@@ -23,6 +23,8 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 
 import org.eclipse.swt.graphics.Color;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -32,31 +34,29 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 /**
  * Dae simulation mode model.
  */
-public class DaeSimulationModeModel extends Closer implements IndicatorModel {
+public class CurrentConfigModel extends Closer implements IndicatorModel {
 
-    private IndicatorObserver<Boolean> observer;
+    private IndicatorObserver<DisplayConfiguration> observer;
 
     /**
      * Constructor for the dae simulation mode banner model.
      */
-    public DaeSimulationModeModel() {
-        observer = registerForClose(new IndicatorObserver<Boolean>(Dae.getInstance().model().simulationMode()) {
+    public CurrentConfigModel() {
+        observer = registerForClose(new IndicatorObserver<DisplayConfiguration>(Configurations.getInstance().display().displayCurrentConfig()) {
 			
 			@Override
 			protected void setUnknown() {
-				text.setValue("DAE Simulation mode: unknown");
+				text.setValue("Configuration is unknown");
                 color.setValue(IndicatorColours.RED);
 			}
 			
 			@Override
-			protected void setSimMode(Boolean value) {
-				if (value) {
-                    text.setValue("DAE Simulation mode: active");
-                    color.setValue(IndicatorColours.RED);
-                } else {
-                	// Display no message if not in simulation mode.
-                    text.setValue("");
+			protected void setSimMode(DisplayConfiguration value) {
+				if (value != null) {
+                    text.setValue("Configuration: " + value.name());
                     color.setValue(IndicatorColours.BLACK);
+                } else {
+                	setUnknown();
                 }	
 			}
 		});

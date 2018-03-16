@@ -227,7 +227,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.statusbar</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting</module>
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
 		<module>../uk.ac.stfc.isis.ibex.validators</module>

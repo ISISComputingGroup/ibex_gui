@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
@@ -66,10 +67,12 @@ public class BannerView {
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
+    private final IndicatorModel currentConfigModel = new CurrentConfigModel();
 
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
 
+    private Indicator currentConfig;
     private Indicator managerMode;
     private Indicator daeSimulationMode;
     private Indicator inMotion;
@@ -98,6 +101,11 @@ public class BannerView {
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
         
+        currentConfig = new Indicator(parent, SWT.NONE, currentConfigModel, ALARM_FONT);
+        GridData gdCurrentConfig = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+        gdCurrentConfig.widthHint = 210;
+        currentConfig.setLayoutData(gdCurrentConfig);
+        
         daeSimulationMode = new Indicator(parent, SWT.NONE, daeSimulationModeModel, ALARM_FONT);
         GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdDaeSimulationMode.widthHint = 210;
@@ -117,6 +125,7 @@ public class BannerView {
         GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdMotionControl.widthHint = 100;
         motionControl.setLayoutData(gdMotionControl);
+       
     }
 
     /**

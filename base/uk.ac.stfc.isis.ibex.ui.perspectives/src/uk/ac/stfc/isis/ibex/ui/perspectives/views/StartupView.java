@@ -25,7 +25,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
-import uk.ac.stfc.isis.ibex.ui.statusbar.StatusBar;
 import uk.ac.stfc.isis.ibex.ui.widgets.VerticalGradientComposite;
 
 public class StartupView extends ViewPart {
@@ -48,7 +47,6 @@ public class StartupView extends ViewPart {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
-        StatusBar.getInstance().subscribeToConfig();
 	}
 	
 	/**

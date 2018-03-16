@@ -33,14 +33,15 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
- *
+ * This is an observer to support indicators.
+ * @param <T> The data type being observed.
  */
-public abstract class DaeSimulationModeObserver implements Closable {
+public abstract class IndicatorObserver<T> implements Closable {
     private Subscription subscription;
 
-    private final Observer<Boolean> observer = new BaseObserver<Boolean>() {
+    private final Observer<T> observer = new BaseObserver<T>() {
         @Override
-        public void onValue(Boolean value) {
+        public void onValue(T value) {
             setSimMode(value);
         }
 
@@ -65,7 +66,7 @@ public abstract class DaeSimulationModeObserver implements Closable {
      * Constructor for a dae simulation mode observer.
      * @param observable the observable to use
      */
-    public DaeSimulationModeObserver(ForwardingObservable<Boolean> observable) {
+    public IndicatorObserver(ForwardingObservable<T> observable) {
         text = new SettableUpdatedValue<>();
         color = new SettableUpdatedValue<>();
         availability = new SettableUpdatedValue<>();
@@ -85,7 +86,7 @@ public abstract class DaeSimulationModeObserver implements Closable {
      * Called when the dae simulation mode PV updates.
      * @param value the new status of dae simulation mode
      */
-    protected abstract void setSimMode(Boolean value);
+    protected abstract void setSimMode(T value);
 
     /**
      * Called when the dae simulation mode PV becomes disconnected.

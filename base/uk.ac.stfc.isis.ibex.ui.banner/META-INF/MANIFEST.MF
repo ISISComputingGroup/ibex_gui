@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.managermode;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.dae
+ uk.ac.stfc.isis.ibex.dae,
+ uk.ac.stfc.isis.ibex.configserver
 Export-Package: uk.ac.stfc.isis.ibex.ui.banner.indicators,
  uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
 Import-Package: com.google.common.base,
