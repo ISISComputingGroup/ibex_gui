@@ -25,23 +25,24 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
 /**
- * Dae simulation mode model.
+ * Current configuration indicator model.
  */
-public class CurrentConfigModel extends Closer implements IndicatorModel {
+public class CurrentConfigIndicatorModel extends Closer implements IndicatorModel {
 
-    private IndicatorObserver<DisplayConfiguration> observer;
+    private static final String ELIPSES = "...";
+	protected static final int MAX_CONFIG_DISPLAY_LENGTH = 30;
+	private IndicatorObserver<DisplayConfiguration> observer;
 
     /**
-     * Constructor for the dae simulation mode banner model.
+     * Constructor.
      */
-    public CurrentConfigModel() {
+    public CurrentConfigIndicatorModel() {
         observer = registerForClose(new IndicatorObserver<DisplayConfiguration>(Configurations.getInstance().display().displayCurrentConfig()) {
 			
 			@Override
@@ -53,7 +54,11 @@ public class CurrentConfigModel extends Closer implements IndicatorModel {
 			@Override
 			protected void setSimMode(DisplayConfiguration value) {
 				if (value != null) {
-                    text.setValue("Configuration: " + value.name());
+					String name = value.name();
+					if (name.length() > MAX_CONFIG_DISPLAY_LENGTH) {
+						name = name.substring(0, MAX_CONFIG_DISPLAY_LENGTH - ELIPSES.length()) + ELIPSES;
+					}
+                    text.setValue("Configuration: " + name);
                     color.setValue(IndicatorColours.BLACK);
                 } else {
                 	setUnknown();

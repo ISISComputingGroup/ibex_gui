@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigIndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
@@ -67,7 +67,7 @@ public class BannerView {
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
-    private final IndicatorModel currentConfigModel = new CurrentConfigModel();
+    private final IndicatorModel currentConfigModel = new CurrentConfigIndicatorModel();
 
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
@@ -101,15 +101,15 @@ public class BannerView {
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
         
-        currentConfig = new Indicator(parent, SWT.NONE, currentConfigModel, ALARM_FONT);
-        GridData gdCurrentConfig = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-        gdCurrentConfig.widthHint = 210;
-        currentConfig.setLayoutData(gdCurrentConfig);
-        
         daeSimulationMode = new Indicator(parent, SWT.NONE, daeSimulationModeModel, ALARM_FONT);
         GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdDaeSimulationMode.widthHint = 210;
         daeSimulationMode.setLayoutData(gdDaeSimulationMode);
+        
+        currentConfig = new Indicator(parent, SWT.NONE, currentConfigModel, ALARM_FONT);
+        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdCurrentConfig.widthHint = 360;
+        currentConfig.setLayoutData(gdCurrentConfig);
 
         managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
         GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
