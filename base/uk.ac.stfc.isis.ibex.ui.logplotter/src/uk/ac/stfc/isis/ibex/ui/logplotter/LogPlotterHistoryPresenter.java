@@ -19,15 +19,58 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import java.lang.reflect.Method;
+
+import org.csstudio.trends.databrowser2.Messages;
+import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.Model;
+import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.part.WorkbenchPart;
+
+import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
+/**
+ * The class that is responsible for displaying the log plotter.
+ */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
-
-	private final LogPlotterDisplay display = new LogPlotterDisplay();
 	
 	@Override
-	public void displayHistory(String pvAddress) {
-		display.displayPVHistory(pvAddress);
+	public void displayHistory(String pvAddress, String displayName) {
+		UI.getDefault().switchPerspective(Perspective.ID);
+		
+	    // Create new editor
+	    final DataBrowserEditor editor = DataBrowserEditor.createInstance();
+	    if (editor == null) {
+	        return;
+	    }
+	    
+	    // Disgusting hack to change the part title, roll on E4!
+	    try {	    
+	    	Method method = WorkbenchPart.class.getDeclaredMethod("setPartName", String.class); 
+	    	method.setAccessible(true); 
+			method.invoke(editor, displayName);
+		} catch (Exception e) {
+		}
+	    
+	    // Add received items
+	    final Model model = editor.getModel();
+	    final double period = Preferences.getScanPeriod();
+	    try {
+			final PVItem item = new PVItemWithUnits(pvAddress, period);
+			item.setDisplayName(displayName);
+			item.useDefaultArchiveDataSources();
+			// Add item to new axes
+			item.setAxis(model.addAxis(displayName));
+			model.addItem(item);
+	    } catch (Exception ex) {
+	        MessageDialog.openError(editor.getSite().getShell(),
+	                Messages.Error,
+	                NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+	    }
 	}
 
 }

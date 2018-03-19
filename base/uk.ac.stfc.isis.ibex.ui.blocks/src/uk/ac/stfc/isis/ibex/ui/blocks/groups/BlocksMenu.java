@@ -88,7 +88,7 @@ public class BlocksMenu extends MenuManager {
         IAction displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
-				pvHistoryPresenter.displayHistory(block.blockServerAlias());
+				pvHistoryPresenter.displayHistory(block.blockServerAlias(), block.getName());
 			}
 		};
 		

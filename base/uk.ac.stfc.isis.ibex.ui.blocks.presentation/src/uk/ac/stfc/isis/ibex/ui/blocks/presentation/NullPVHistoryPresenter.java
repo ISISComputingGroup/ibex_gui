@@ -19,10 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-public class DoNothingPVHistoryPresenter implements PVHistoryPresenter {
-
+/**
+ * A null object for the PV history presenter, to use when a real object is unavailable.
+ *
+ */
+public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	@Override
-	public void displayHistory(String pvAddress) {
+	public void displayHistory(String pvAddress, String displayName) {
 		// do nothing
 	}
 
