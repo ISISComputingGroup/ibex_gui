@@ -19,16 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import java.lang.reflect.Method;
-
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.part.WorkbenchPart;
+
 
 import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
@@ -39,22 +38,19 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	
 	@Override
-	public void displayHistory(String pvAddress, String displayName) {
+	public void displayHistory(String pvAddress, final String displayName) {
 		UI.getDefault().switchPerspective(Perspective.ID);
 		
 	    // Create new editor
-	    final DataBrowserEditor editor = DataBrowserEditor.createInstance();
+	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
+	    	@Override
+	    	public String getName() {
+	    		return displayName;
+	    	}
+	    });
 	    if (editor == null) {
 	        return;
 	    }
-	    
-	    // Disgusting hack to change the part title, roll on E4!
-	    try {	    
-	    	Method method = WorkbenchPart.class.getDeclaredMethod("setPartName", String.class); 
-	    	method.setAccessible(true); 
-			method.invoke(editor, displayName);
-		} catch (Exception e) {
-		}
 	    
 	    // Add received items
 	    final Model model = editor.getModel();
