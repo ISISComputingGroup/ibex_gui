@@ -19,15 +19,50 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import org.csstudio.trends.databrowser2.Messages;
+import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.AxisConfig;
+import org.csstudio.trends.databrowser2.model.Model;
+import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.csstudio.ui.util.EmptyEditorInput;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
+/**
+ * The class that is responsible for displaying the log plotter.
+ */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
-
-	private final LogPlotterDisplay display = new LogPlotterDisplay();
 	
 	@Override
-	public void displayHistory(String pvAddress) {
-		display.displayPVHistory(pvAddress);
+	public void displayHistory(String pvAddress, final String displayName) {	
+		// Create new editor
+		DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
+            @Override
+            public String getName() {
+                return displayName;
+            }
+		});
+
+		final Model model = editor.getModel();
+		model.setSaveChanges(false);
+		
+		final double period = Preferences.getScanPeriod();
+		try {
+			final PVItem item = new PVItem(pvAddress, period);
+			item.setDisplayName(displayName);
+			item.useDefaultArchiveDataSources();
+			// Add item to new axes
+			AxisConfig axisConfig = new AxisConfig(item.getDisplayName());
+			axisConfig.setAutoScale(true);
+			model.addAxis(axisConfig);
+			model.addItem(item);
+			
+		} catch (Exception ex) {
+			MessageDialog.openError(editor.getSite().getShell(), Messages.Error,
+					NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+		}
 	}
 
 }

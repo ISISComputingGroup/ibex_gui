@@ -77,7 +77,7 @@ public class Presenter extends Plugin {
 		IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.ui.blocks.presentation");
 		
 		if (elements.length == 0) {
-			return new DoNothingPVHistoryPresenter();
+			return new NullPVHistoryPresenter();
 		}
 		
 		try {
@@ -87,7 +87,7 @@ public class Presenter extends Plugin {
 			e.printStackTrace();
 		}
 		
-		return new DoNothingPVHistoryPresenter();
+		return new NullPVHistoryPresenter();
 	}
 
 }

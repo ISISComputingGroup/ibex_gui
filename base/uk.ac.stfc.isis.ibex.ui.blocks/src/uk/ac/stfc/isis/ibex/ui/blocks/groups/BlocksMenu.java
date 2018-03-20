@@ -92,7 +92,7 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void run() {
 				switcher.switchPerspective(LOGPLOTTER_ID);
-				pvHistoryPresenter.displayHistory(block.blockServerAlias());
+				pvHistoryPresenter.displayHistory(block.blockServerAlias(), block.getName());
 			}
 		};
 		
