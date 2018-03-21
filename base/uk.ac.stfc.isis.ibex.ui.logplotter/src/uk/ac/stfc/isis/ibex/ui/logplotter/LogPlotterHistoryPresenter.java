@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -27,7 +30,9 @@ import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
-
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
@@ -37,23 +42,35 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
  */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	
-	@Override
-	public void displayHistory(String pvAddress, final String displayName) {
-		UI.getDefault().switchPerspective(Perspective.ID);
+	private ArrayList<DataBrowserEditor> getCurrentDataBrowsers() {
+		ArrayList<DataBrowserEditor> dataBrowserEditors = new ArrayList<>();
 		
-	    // Create new editor
-	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
-	    	@Override
-	    	public String getName() {
-	    		return displayName;
-	    	}
-	    });
-	    if (editor == null) {
+		IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
+		
+		for (IEditorReference editorRef : editorRefs) {
+			IEditorPart editor = editorRef.getEditor(false);
+			if (editor instanceof DataBrowserEditor) {
+				dataBrowserEditors.add((DataBrowserEditor)editor);
+			}
+		}
+		return dataBrowserEditors;
+	}
+	
+	@Override
+	public ArrayList<String> getCurrentPresenters() {
+		ArrayList<String> editorNames = new ArrayList<>();
+		for (DataBrowserEditor editor : getCurrentDataBrowsers()) {
+			editorNames.add(editor.getTitle());
+		}
+		return editorNames;
+	}
+	
+	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
+		if (editor == null) {
 	        return;
 	    }
-	    
-	    // Add received items
-	    final Model model = editor.getModel();
+		Model model = editor.getModel();
+		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
 			final PVItem item = new PVItemWithUnits(pvAddress, period);
@@ -67,6 +84,41 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	                Messages.Error,
 	                NLS.bind(Messages.ErrorFmt, ex.getMessage()));
 	    }
+	}
+	
+	@Override
+	public void newPresenter(String pvAddress, final String displayName) {	
+		UI.getDefault().switchPerspective(Perspective.ID);
+		
+	    // Create new editor
+	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
+	    	@Override
+	    	public String getName() {
+	    		return displayName;
+	    	}
+	    });
+	    
+	    addPVToEditor(pvAddress, displayName, editor);
+	}
+
+	@Override
+	public void addToPresenter(String pvAddress, String display, String presenterName) {
+		UI.getDefault().switchPerspective(Perspective.ID);
+		
+		DataBrowserEditor editor = null;
+		for (DataBrowserEditor e : getCurrentDataBrowsers()) {
+			if (e.getTitle().equals(presenterName)) {
+				editor = e;
+			}
+		}
+		
+		if (editor == null) {
+			// Can't find the editor to add to, make a new one
+			newPresenter(pvAddress, display);
+		} else {	
+			addPVToEditor(pvAddress, display, editor);
+			//TODO: Chaneg the title?
+		}
 	}
 
 }

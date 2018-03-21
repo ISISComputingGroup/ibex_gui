@@ -23,6 +23,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
 
@@ -85,14 +87,35 @@ public class BlocksMenu extends MenuManager {
 		
         add(new GroupMarker(BLOCK_MENU_GROUP));
 
-        IAction displayHistory = new Action("Display block history") {
+        final MenuManager logSubMenu = new MenuManager("Display block history...");
+        logSubMenu.add(new Action("never shown entry"){
+        	//needed if it's a submenu
+        }); 
+        logSubMenu.setRemoveAllWhenShown(true);
+        
+        final IAction displayHistory = new Action("New Plot") {
 			@Override
 			public void run() {
-				pvHistoryPresenter.displayHistory(block.blockServerAlias(), block.getName());
+				pvHistoryPresenter.newPresenter(block.blockServerAlias(), block.getName());
 			}
 		};
+        
+        logSubMenu.addMenuListener(new IMenuListener() {
+			@Override
+			public void menuAboutToShow(IMenuManager manager) {
+				logSubMenu.add(displayHistory);
+				for (final String plot : pvHistoryPresenter.getCurrentPresenters()) {
+					logSubMenu.add(new Action("Add to " + plot + " plot"){
+						@Override
+						public void run() {
+							pvHistoryPresenter.addToPresenter(block.blockServerAlias(), block.getName(), plot);
+						}
+					});
+				}
+			}
+        });
 		
-        appendToGroup(BLOCK_MENU_GROUP, displayHistory);
+        appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
 
         String editBlockLabel = EDIT_BLOCK_PREFIX;
         if (this.block.hasComponent()) {
