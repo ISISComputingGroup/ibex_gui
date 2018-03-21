@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
@@ -43,6 +42,9 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
  */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	
+	/**
+	 * @return An arraylist of all the current databrowsers.
+	 */
 	private ArrayList<DataBrowserEditor> getCurrentDataBrowsers() {
 		ArrayList<DataBrowserEditor> dataBrowserEditors = new ArrayList<>();
 		
@@ -51,7 +53,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		for (IEditorReference editorRef : editorRefs) {
 			IEditorPart editor = editorRef.getEditor(false);
 			if (editor instanceof DataBrowserEditor) {
-				dataBrowserEditors.add((DataBrowserEditor)editor);
+				dataBrowserEditors.add((DataBrowserEditor) editor);
 			}
 		}
 		return dataBrowserEditors;

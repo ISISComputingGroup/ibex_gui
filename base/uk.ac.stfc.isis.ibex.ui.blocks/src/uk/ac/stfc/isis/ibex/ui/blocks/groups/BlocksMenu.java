@@ -76,7 +76,7 @@ public class BlocksMenu extends MenuManager {
 	};
 	
     /**
-     * The constructor.
+     * The constructor, creates the menu for when the specific block is right-clicked on.
      * 
      * @param displayBlock the selected block
      */
@@ -90,20 +90,21 @@ public class BlocksMenu extends MenuManager {
         final MenuManager logSubMenu = new MenuManager("Display block history...");
         logSubMenu.add(new Action("never shown entry"){
         	//needed if it's a submenu
-        }); 
+        });
+        // Allows the menu to be dynamic
         logSubMenu.setRemoveAllWhenShown(true);
         
-        final IAction displayHistory = new Action("New Plot") {
+        final IAction newPresenter = new Action("New Plot") {
 			@Override
 			public void run() {
 				pvHistoryPresenter.newPresenter(block.blockServerAlias(), block.getName());
 			}
 		};
-        
+		
         logSubMenu.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
-				logSubMenu.add(displayHistory);
+				logSubMenu.add(newPresenter);
 				for (final String plot : pvHistoryPresenter.getCurrentPresenters()) {
 					logSubMenu.add(new Action("Add to " + plot + " plot"){
 						@Override
