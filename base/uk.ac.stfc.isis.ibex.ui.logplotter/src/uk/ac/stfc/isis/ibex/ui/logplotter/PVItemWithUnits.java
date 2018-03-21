@@ -16,7 +16,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  */
 public class PVItemWithUnits extends PVItem {
 
-	private String units;
+	private String displayNameWithoutUnits;
 	
 	private static final String FIELD_SEPARATOR = ".";
 	private static final String EGU_SUFFIX = FIELD_SEPARATOR + "EGU";
@@ -25,22 +25,27 @@ public class PVItemWithUnits extends PVItem {
 	/**
 	 * Constructor for a PV item with units. Attempts to figure out the location of the relevant EGU PV.
 	 * 
+	 * @param displayName the user friendly name of the PV
 	 * @param pvAddress the address of the PV to plot
-	 * @param period the period
+	 * @param period the scan period in seconds
+	 * @throws Exception on error
 	 */
-	public PVItemWithUnits(String pvAddress, double period) throws Exception {
-		this(pvAddress, getEguPv(pvAddress), period);
+	public PVItemWithUnits(String displayName, String pvAddress, double period) throws Exception {
+		this(displayName, pvAddress, getEguPv(pvAddress), period);
 	}
 	
 	/**
 	 * Constructor for a PV item with units, with an explicit PV to use for the EGU.
 	 * 
+	 * @param displayName the user friendly name of the PV
 	 * @param pvAddress the address of the PV to plot
 	 * @param eguPv the PV which contains the EGU
-	 * @param period the period
+	 * @param period the scan period in seconds
+	 * @throws Exception on error
 	 */
-	public PVItemWithUnits(String pvAddress, String eguPv, double period) throws Exception {
+	public PVItemWithUnits(String displayName, String pvAddress, String eguPv, double period) throws Exception {
 		super(pvAddress, period);
+		this.displayNameWithoutUnits = displayName;
 		
 		if (!Strings.isNullOrEmpty(eguPv)) {
 			final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
@@ -78,41 +83,21 @@ public class PVItemWithUnits extends PVItem {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * Overrides the default implementation of getDisplayName to append the units in brackets (if non-null).
-	 * 
-	 * If the units are null, falls back to the default implementation.
-	 */
-	@Override
-	public synchronized String getDisplayName() {		
-		if (Strings.isNullOrEmpty(getUnits())) {
-			return super.getDisplayName();
-		} else {
-			return String.format("%s (%s)", super.getDisplayName(), getUnits());
-		}
-	}
-	
-	/**
 	 * Sets the units and fires a property change on the GUI thread to let CSS know something has changed.
 	 * @param units the new units to set.
 	 */
 	private synchronized void setUnits(String units) {
-		this.units = units;
+		if (Strings.isNullOrEmpty(units)) {
+			setDisplayName(displayNameWithoutUnits);
+		} else {
+			setDisplayName(String.format("%s (%s)", displayNameWithoutUnits, units));
+		}
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				fireItemLookChanged();
 			}
 		});
-	}
-	
-	/**
-	 * Gets the units of this PV.
-	 * @return the units.
-	 */
-	private String getUnits() {
-		return units;
 	}
 	
 	/**
