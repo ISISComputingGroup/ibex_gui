@@ -24,6 +24,7 @@ import java.util.Arrays;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
@@ -77,7 +78,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			item.setDisplayName(displayName);
 			item.useDefaultArchiveDataSources();
 			// Add item to new axes
-			item.setAxis(model.addAxis(displayName));
+			AxisConfig axis = model.addAxis(displayName);
+			axis.setAutoScale(false);
+			item.setAxis(axis);
 			model.addItem(item);
 	    } catch (Exception ex) {
 	        MessageDialog.openError(editor.getSite().getShell(),
@@ -117,7 +120,6 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			newPresenter(pvAddress, display);
 		} else {	
 			addPVToEditor(pvAddress, display, editor);
-			//TODO: Chaneg the title?
 		}
 	}
 
