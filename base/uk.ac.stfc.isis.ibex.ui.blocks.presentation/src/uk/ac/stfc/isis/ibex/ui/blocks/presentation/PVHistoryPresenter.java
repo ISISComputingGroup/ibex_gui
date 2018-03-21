@@ -21,12 +21,15 @@ package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
 import java.util.ArrayList;
 
+/**
+ * The interface for a class that displays the history of a PV in some way.
+ */
 public interface PVHistoryPresenter {
 	/**
 	 * Get all the presenters that the PV History could be added to.
 	 * @return A list of the names of the presenters.
 	 */
-	public ArrayList<String> getCurrentPresenters();
+	ArrayList<String> getCurrentPresenters();
 	
 	/**
 	 * Creates a new presenter and plots the PV history on it.

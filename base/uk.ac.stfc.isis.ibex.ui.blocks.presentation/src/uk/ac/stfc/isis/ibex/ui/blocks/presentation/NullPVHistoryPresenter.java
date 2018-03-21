@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 /**
  * A null object for the PV history presenter, to use when a real object is unavailable.
- *
  */
 public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	@Override
