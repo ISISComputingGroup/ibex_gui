@@ -25,6 +25,7 @@ REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
+if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
 if "%EXIT%" == "YES" exit
 
 REM Copy zip to installs area
@@ -45,7 +46,10 @@ if "%RELEASE%" == "YES" (
 if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
-if not "%RELEASE%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+if not "%RELEASE%" == "YES" (
+    if "%IS_E4_DEPLOY%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
+    if "%DEPLOY%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+) 
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
 if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
