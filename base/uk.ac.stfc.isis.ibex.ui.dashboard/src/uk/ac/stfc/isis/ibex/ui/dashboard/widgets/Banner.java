@@ -81,15 +81,15 @@ public class Banner extends Composite {
 		runNumber = new Label(details, SWT.NONE);
 		runNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		runNumber.setFont(textFont);
-		runNumber.setText("00000001");
+		runNumber.setText("0000001");
 		
 		simMode = new Label(details, SWT.NONE);
-		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		simMode.setFont(simulationModeFont);
 		simMode.setText("SIMULATION MODE");
 		
 		lblShutter = new Label(details, SWT.NONE);
-		lblShutter.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblShutter.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		lblShutter.setFont(textFont);
 		lblShutter.setText("Shutter:");
 		

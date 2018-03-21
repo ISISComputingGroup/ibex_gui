@@ -110,7 +110,7 @@ public class Group extends Composite {
 		for (int i = 0; i < blocksList.size(); i++) {
 
 			DisplayBlock currentBlock = blocksList.get(i);
-
+                
 			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
 			rows.add(row);
 
