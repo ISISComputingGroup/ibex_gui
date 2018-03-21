@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -27,49 +26,42 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
-public class Presenter extends Plugin {
-
-	public static final Logger LOG = IsisLog.getLogger("Blocks");
-	
-	private static BundleContext context;
-
+/**
+ * This plugin creates an extension point for other plugins to hook into if they have a method for displaying historic PV data.
+ */
+public class Presenter extends Plugin {	
     private static Presenter instance;
 	private PVHistoryPresenter pvHistoryPresenter;
 
-    public static Presenter getInstance() { 
+	/**
+	 * Get the singleton instance of this class.
+	 * @return The instance of this class.
+	 */
+    public static Presenter getInstance() {
     	return instance; 
     }
-	
-	static BundleContext getContext() {
-		return context;
-	}
 
+    /**
+     * Default constructor for the plugin.
+     */
 	public Presenter() {
 		instance = this;
 	}
 	
+	/**
+	 * Get the PV history presenter.
+	 * @return The PV history presenter.
+	 */
 	public PVHistoryPresenter pvHistoryPresenter() {
 		return pvHistoryPresenter;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	/**
+	 * Starts the plugin and finds all presenters that are extending the extension point.
+	 * @param bundleContext the context for this plugin
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		Presenter.context = bundleContext;
-		
+	public void start(BundleContext bundleContext) {
 		pvHistoryPresenter = locatePVHistoryPresenter();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		Presenter.context = null;
 	}
 	
 	private PVHistoryPresenter locatePVHistoryPresenter() {
