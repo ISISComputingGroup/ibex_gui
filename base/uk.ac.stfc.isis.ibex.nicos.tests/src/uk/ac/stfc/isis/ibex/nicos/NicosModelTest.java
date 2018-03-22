@@ -55,6 +55,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
 
 public class NicosModelTest {
@@ -514,6 +515,29 @@ public class NicosModelTest {
         model.updateScriptStatus();
         
         assertEquals(script, model.getCurrentlyExecutingScript());
+    }
+    
+    @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_queued_scripts_extracted() {
+        connectSuccessfully();
+        
+        ReceiveScriptStatus response = new ReceiveScriptStatus();
+        
+        QueuedScript queuedScript = new QueuedScript(); 
+        queuedScript.name = "instrument_script";
+        queuedScript.reqid = "weifj9032l90djk239";
+        queuedScript.user = "IBEX";
+        queuedScript.script = "This is a really nice script \n with a newline in it.";
+        
+        response.status = Arrays.asList(0, 0);
+        response.script = "";
+        response.requests = Arrays.asList(queuedScript);
+        
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals(queuedScript, model.getQueuedScripts().get(0));
     }
 
     @Test

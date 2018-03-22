@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
 
 /**
@@ -96,6 +97,7 @@ public class NicosModel extends ModelObject {
 	private RepeatingJob updateStatusJob;
     private List<NicosLogEntry> newLogEntries;
     private long lastEntryTime;
+    private List<QueuedScript> queuedScripts;
 
     private static final int MESSAGES_SCALE_FACTOR = 10;
     private static final int MESSAGES_THRESHOLD = 100;
@@ -358,6 +360,7 @@ public class NicosModel extends ModelObject {
             setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
             setLineNumber(response.status.get(1));
 			setCurrentlyExecutingScript(response.script);
+			setQueuedScripts(response.requests);
 		}
 	}
 
@@ -406,7 +409,7 @@ public class NicosModel extends ModelObject {
         return filtered;
     }
 
-	private void setLineNumber(int lineNumber) {
+	private void setLineNumber(int lineNumber) {		
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
 	
@@ -416,6 +419,18 @@ public class NicosModel extends ModelObject {
 	 */
 	public int getLineNumber() {
 		return lineNumber;
+	}
+	
+	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {		
+		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
+	}
+	
+	/**
+	 * The currently queued scripts.
+	 * @return the queued scripts
+	 */
+	public List<QueuedScript> getQueuedScripts() {
+		return queuedScripts;
 	}
 	
     private void setScriptStatus(ScriptStatus scriptStatus) {
