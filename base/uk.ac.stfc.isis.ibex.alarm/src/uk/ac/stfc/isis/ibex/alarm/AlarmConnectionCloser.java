@@ -27,6 +27,7 @@ import java.lang.reflect.Field;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.JMSCommunicationThread;
@@ -83,9 +84,12 @@ public class AlarmConnectionCloser {
         try {
             Field connectionField = JMSCommunicationThread.class.getDeclaredField("connection");
             connectionField.setAccessible(true);
-            connection = (Connection) connectionField.get(communicator);
+            connection = (ActiveMQConnection) connectionField.get(communicator);
 
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException
+                | LinkageError e) {
+            // TODO: Catching a LinkageError was added during E4 migration and
+            // is almost certainly not the right behaviour.
             LOG.warn("While getting reference to the connection from the communicator we had an error. ");
             LOG.catching(Level.WARN, e);
             return;

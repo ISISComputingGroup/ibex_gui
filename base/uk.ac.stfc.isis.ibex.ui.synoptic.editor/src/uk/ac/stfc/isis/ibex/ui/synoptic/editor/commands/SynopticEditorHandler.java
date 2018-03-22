@@ -19,18 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Collection;
 
-import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.xml.sax.SAXParseException;
 
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -41,32 +40,61 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * Handles opening the Synoptic Editor and saving the synoptic when updated.
  * 
  */
-public abstract class SynopticEditorHandler extends AbstractHandler {
-
-	protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
-    protected static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-    private final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+public abstract class SynopticEditorHandler {
 	
-    /**
-     * Constructor for the handler that adds a listener for when the destination
-     * can not written to.
-     */
-    public SynopticEditorHandler() {
-        writer.canSave().addPropertyChangeListener(new PropertyChangeListener() {
+	protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
+    protected final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+	/** can execute the handler */
+	private boolean canExecute;
+	
+	public SynopticEditorHandler() {
+		synopticService.writeTo(SYNOPTIC.delete());
+		SYNOPTIC.delete().subscribe(synopticService);
+	}
+	
+	/**
+	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
+	 * for modifying the command if the underlying PV cannot be written to.
+	 */
+	protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
+		@Override
+		public void onCanWriteChanged(boolean canWrite) {
+			canWriteChanged(canWrite);
+		};
+	};
 
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                Boolean canSave = (Boolean) evt.getNewValue();
-                setBaseEnabled(canSave);
-            }
-        });
-        setBaseEnabled(writer.canWrite());
-    }
+    /**
+     * Handle a change in write status.
+     * 
+     * @param canWrite whether can write or not
+     */
+	public void canWriteChanged(boolean canWrite) {
+		setCanExecute(canWrite);		
+	}
+
+	/**
+	 * The Handler can be executed.
+	 * @param canExecute true if it can be executed; false otherwise
+	 */
+	protected void setCanExecute(boolean canExecute) {
+		this.canExecute = canExecute;
+	}
+	
+	/**
+	 * 
+	 * @return whether the handler can be executed
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return this.canExecute;
+	}
 
     /**
      * Handle the sequence of opening a synoptic editor dialog and the
      * subsequent cancel/save.
      * 
+     * @param shell
+     * 			  The shell that contains the synoptic editor
      * @param synoptic
      *            The synoptic to edit
      * @param title
@@ -75,26 +103,26 @@ public abstract class SynopticEditorHandler extends AbstractHandler {
      *            Whether the requested synoptic has existing components or it
      *            is blank
      */
-	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
+	protected void openDialog(Shell shell, SynopticDescription synoptic, String title, boolean isBlank) {
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
         EditSynopticDialog editDialog =
-                new EditSynopticDialog(SHELL, title, isBlank, viewModel);
+                new EditSynopticDialog(shell, title, isBlank, viewModel);
 		if (editDialog.open() == Window.OK) {
 		    try {
 		        writer.write(viewModel.getSynoptic());
 		    } catch (IOException e) {
-		        handleError(e);
+		        handleError(shell, e);
 		    }
 		    
             Exception error = writer.lastError();
             if (error != null) {
-                handleError(error);
+                handleError(shell, error);
             }
 		}
 	}
 	
-	private void handleError(Exception error) {
-        MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
+	private void handleError(Shell shell, Exception error) {
+        MessageBox dialog = new MessageBox(shell, SWT.ERROR | SWT.OK);
         dialog.setText("Error saving synoptic");
         if (error.getCause().getClass() == SAXParseException.class) {
             dialog.setMessage(

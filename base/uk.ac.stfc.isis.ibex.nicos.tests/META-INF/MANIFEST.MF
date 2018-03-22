@@ -6,5 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0"
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito;bundle-version="1.9.5",
- org.csstudio.platform.libs.jms
+ uk.ac.stfc.isis.ibex.activemq,
+ org.csstudio.platform.utility.jms;bundle-version="1.1.3"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

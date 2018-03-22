@@ -22,44 +22,65 @@ package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 
 /**
  * A panel that allows the user to plot various spectra from the DAE.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SpectraPlotsPanel extends Composite {
+public class SpectraPlotsPanel {
 
 	private static final int NUMBER_OF_SPECTRA = 4;
 	private List<SpectrumView> spectraPlots = new ArrayList<>(NUMBER_OF_SPECTRA);
 	private Composite plots;
-	
+    private List<? extends UpdatableSpectrum> model;
+
+    private static final int FIXED_WIDTH = 700;
+    private static final int FIXED_HEIGHT = 500;
+    
     /**
      * The constructor for the panel.
      * 
-     * @param parent
-     *            The parent composite that the panel belongs to.
-     * @param style
-     *            The SWT style flags for the panel.
      */
-	public SpectraPlotsPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
-		
-		plots = new Composite(this, SWT.NONE);
+    public SpectraPlotsPanel() {
+        this.model = DaeUI.getDefault().viewModel().spectra();
+    }
+
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
+    @PostConstruct
+    public void createPart(Composite parent) {
+
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setLayout(new GridLayout(1, false));
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        plots = new Composite(scrolled, SWT.NONE);
 		plots.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		plots.setLayout(new GridLayout(2, false));
+		scrolled.setContent(plots);
 		
 		for (int i = 0; i < NUMBER_OF_SPECTRA; i++) {
 			SpectrumView plot = new SpectrumView(plots, SWT.NONE);
 			plot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			spectraPlots.add(plot);
 		}
+
+        setModel(model);
 	}
 	
     /**

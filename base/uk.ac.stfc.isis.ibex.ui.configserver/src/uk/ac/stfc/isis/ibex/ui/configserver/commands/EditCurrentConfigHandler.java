@@ -19,32 +19,34 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.util.Map;
+import java.util.List;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
-import org.eclipse.ui.menus.UIElement;
+import org.eclipse.e4.ui.di.AboutToShow;
+import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenuFactory;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.ui.configserver.BundleConstants;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
 
 /**
- * The handler class for editing the current config.
+ * The handler class for editing the current config. 
+ * 
+ * It sets the menu labels, and opens the dialogue for editing or viewing a configuration.
  */
-public class EditCurrentConfigHandler extends ConfigHandler<Configuration> implements IElementUpdater {
+public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 
     private static final String EDIT_MENU_TEXT = "Edit Current Configuration...";
     private static final String READ_ONLY_TEXT = "View Current Configuration...";
-    
-    private static final String ID = "uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfig";
-    
-    private Boolean canWrite = false;
+    private static final String MENU_MNEMONIC = "C";
+
+    private boolean canWrite;
 
 	/**
 	 * This is an inner anonymous class will disable the menu item if the current config is not available.
@@ -53,20 +55,19 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			updateDisabled(isConnected);
+			canViewOrEditConfig(isConnected);
 		}
 
 		@Override
 		public void onError(Exception e) {
-			updateDisabled(false);
+			canViewOrEditConfig(false);
 		}
 		
-		private void updateDisabled(boolean isConnected) {
-			if (!(canWrite)) {
-				setBaseEnabled(isConnected);
-			}
+		private void canViewOrEditConfig(boolean isConnected) {
+			setCanExecute(isConnected);
 		}
 	};
+	
 	
     /**
      * Create the handler for opening the editor via the menu.
@@ -76,52 +77,48 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
 
-    /**
-     * {@inheritDoc}
-     */
+	/**
+	 * Execute the handler to open the edit/view config dialogue.
+	 *
+	 * @param shell the shell to user
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
-        ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());
+    public void safeExecute(Shell shell) {
+        ConfigHelper helper;
+        if (canWrite)  {
+        	helper = new EditConfigHelper(shell, SERVER);
+        } else {
+        	helper = new ViewConfigHelper(shell);
+        }
         helper.createDialogCurrent();
 	}
 
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void updateElement(UIElement element, Map parameters) {
-		// Added so as to update text for viewing/editing configs
+	/**
+	 * Generate the menu item as the menu is about to be shown.
+	 * 
+	 * It must be dynamic because the menu has a different label depending on the state of the config pv.
+	 * @param items menu items to add to
+	 */
+	@AboutToShow
+	public void aboutToShow(List<MMenuElement> items) {
+		String menuText;
 		if (canWrite) {
-			element.setText(EDIT_MENU_TEXT);
-			setBaseEnabled(true);
+			menuText = EDIT_MENU_TEXT;
 		} else {
-			element.setText(READ_ONLY_TEXT);
-			setBaseEnabled(SERVER.currentConfig().isConnected());
+			menuText = READ_ONLY_TEXT;
 		}
+				
+		MDirectMenuItem dynamicItem = MMenuFactory.INSTANCE.createDirectMenuItem();
+		
+	    dynamicItem.setLabel(menuText);
+	    dynamicItem.setMnemonics(MENU_MNEMONIC);
+	    dynamicItem.setContributorURI(BundleConstants.getPlatformPlugin()); // plugin in which this menu item exists
+	    dynamicItem.setContributionURI(BundleConstants.getClassURI(EditCurrentConfigHandler.class));    
+	    items.add(dynamicItem);	
 	}
 
 	@Override
 	public void canWriteChanged(final boolean canWrite) {
-		// Update the element
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-                ICommandService commandService = (ICommandService) activeWindow().getService(ICommandService.class);
-				if (commandService != null) {
-					setCanWrite(canWrite);
-					commandService.refreshElements(ID, null);
-				}
-			}
-		});
-	}
-	
-    /**
-     * Handles the setting of "can write".
-     * 
-     * @param canWrite True for can write
-     */
-	protected void setCanWrite(Boolean canWrite) {
-		if (this.canWrite != canWrite) {
-			this.canWrite = canWrite;
-		}
+		this.canWrite = canWrite;
 	}
 }

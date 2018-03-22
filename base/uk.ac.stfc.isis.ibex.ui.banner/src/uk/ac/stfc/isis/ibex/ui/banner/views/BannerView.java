@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -29,8 +31,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigIndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
@@ -50,7 +51,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
  * View of the spangle banner containing various instrument status messages.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BannerView extends ViewPart implements ISizeProvider {
+public class BannerView {
 
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
@@ -58,7 +59,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
      * View ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
-    private static final int FIXED_HEIGHT = 35;
     private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
@@ -67,21 +67,26 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
+    private final IndicatorModel currentConfigModel = new CurrentConfigIndicatorModel();
 
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
 
+    private Indicator currentConfig;
     private Indicator managerMode;
     private Indicator daeSimulationMode;
     private Indicator inMotion;
     private Control motionControl;
-
+    
     /**
-     * {@inheritDoc}
+     * Create the controls for the part.
+     * 
+     * @param parent parent panel to add controls to
      */
-    @Override
+    @PostConstruct
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(5, false);
+
+        GridLayout glParent = new GridLayout(10, false);
         glParent.marginRight = 2;
         glParent.horizontalSpacing = 8;
         glParent.verticalSpacing = 0;
@@ -100,6 +105,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdDaeSimulationMode.widthHint = 210;
         daeSimulationMode.setLayoutData(gdDaeSimulationMode);
+        
+        currentConfig = new Indicator(parent, SWT.NONE, currentConfigModel, ALARM_FONT);
+        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdCurrentConfig.widthHint = 360;
+        currentConfig.setLayoutData(gdCurrentConfig);
 
         managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
         GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -115,30 +125,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
         GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdMotionControl.widthHint = 100;
         motionControl.setLayoutData(gdMotionControl);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getSizeFlags(boolean width) {
-        return SWT.MIN | SWT.MAX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
-            int preferredResult) {
-        return width ? 0 : FIXED_HEIGHT;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setFocus() {
+       
     }
 
     /**

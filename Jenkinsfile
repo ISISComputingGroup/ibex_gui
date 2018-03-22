@@ -9,6 +9,7 @@ pipeline {
   
   triggers {
     pollSCM('H/2 * * * *')
+    cron('H H/12 * * *')
   }
   
   stages {  
@@ -33,14 +34,22 @@ pipeline {
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
+                env.IS_E4_DEPLOY = "NO"
             }
             else if (env.GIT_BRANCH == "origin/master") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
+                env.IS_E4_DEPLOY = "NO"
+            }
+            else if (env.GIT_BRANCH == "origin/master_E4") {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "NO"
+                env.IS_E4_DEPLOY = "YES"
             }
             else {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "NO"
+                env.IS_E4_DEPLOY = "NO"
             }
         }
         

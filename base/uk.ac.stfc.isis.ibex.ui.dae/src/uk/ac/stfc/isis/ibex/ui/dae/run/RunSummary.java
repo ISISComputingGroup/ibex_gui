@@ -19,10 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.run;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -32,11 +35,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class RunSummary extends Composite {
+public class RunSummary {
 
 	private Label instrument;
 	private Label runStatus;
@@ -47,34 +51,51 @@ public class RunSummary extends Composite {
 	private LogMessageBox messageBox;
 	
 	private DaeActionButtonPanel daeButtonPanel;
+    private RunSummaryViewModel model;
+    
+    private static final int FIXED_WIDTH = 825;
+    private static final int FIXED_HEIGHT = 400;
 	
     /**
      * Creates a view that shows a summary of the current run.
-     * 
-     * @param parent
-     *            The parent composite for this view.
-     * @param style
-     *            The SWT style for this view.
-     * @param model
-     *            The view model that holds the run summary information.
      */
-    public RunSummary(Composite parent, int style, final RunSummaryViewModel model) {
-		super(parent, style);
+    public RunSummary() {
+        model = DaeUI.getDefault().viewModel().runSummary();
+    }
+
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
+    @PostConstruct
+    public void createPart(Composite parent) {
+
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+    	scrolled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+    	Composite content = new Composite(scrolled, SWT.NONE);
+    	content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scrolled.setContent(content);
+
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
 		gridLayout.verticalSpacing = 0;
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
-		setLayout(gridLayout);
-		
-		Composite lhsComposite = new Composite(this, SWT.NONE);
+        content.setLayout(gridLayout);
+        
+        Composite lhsComposite = new Composite(content, SWT.NONE);
 		lhsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         GridLayout gl = new GridLayout(1, false);
         gl.verticalSpacing = 25;
         lhsComposite.setLayout(gl);
         
         Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
-        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         infoComposite.setLayout(new GridLayout(5, false));
 
 		Label lblInstrument = new Label(infoComposite, SWT.NONE);
@@ -153,8 +174,10 @@ public class RunSummary extends Composite {
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		daeButtonPanel = new DaeActionButtonPanel(this, SWT.NONE, model.actions());
+        daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+        setModel(model);
 	}
 
     /**
@@ -162,7 +185,7 @@ public class RunSummary extends Composite {
      * 
      * @param viewModel the model containing the run information
      */
-	public void setModel(RunSummaryViewModel viewModel) {
+    private void setModel(RunSummaryViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(instrument), BeanProperties.value("value").observe(viewModel.instrument()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runStatus), BeanProperties.value("value").observe(viewModel.runStatus()));

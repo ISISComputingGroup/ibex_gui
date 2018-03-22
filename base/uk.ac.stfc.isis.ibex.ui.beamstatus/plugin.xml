@@ -12,8 +12,8 @@
             name="Beam Status Graph"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
-            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView">
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamGraphView">
       </view>
    </extension>
    <extension
@@ -26,18 +26,12 @@
       </perspective>
    </extension>
    <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-      <contribution
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.Perspective">
-      </contribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="uk.ac.stfc.isis.ibex.ui.beamstatus.perspective">
          <view
                closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamGraphView"
                minimized="false"
                moveable="false"
                ratio="1.0f"

@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="uk.ac.stfc.isis.ibex.ui.banner"
-            name="ISIS"
-            parentCategory="org.eclipse.ui">
-      </category>
-      <view
-            allowMultiple="false"
-            class="uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"
-            id="uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"
-            name="Banner">
-      </view>
-   </extension>
 
 </plugin>

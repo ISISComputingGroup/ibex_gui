@@ -23,9 +23,16 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -35,9 +42,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
@@ -46,9 +55,9 @@ import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
  * The panel that holds all information about setting up the experiment. Further
  * information is held in child panels.
  */
-public class ExperimentSetup extends Composite {
+public class ExperimentSetup {
 
-	private ExperimentSetupViewModel viewModel;
+    private DaeViewModel viewModel;
 	
 	private TimeChannelsPanel timeChannels;
 	private DataAcquisitionPanel dataAcquisition;
@@ -56,29 +65,52 @@ public class ExperimentSetup extends Composite {
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
 	private final int timeToDisplayDialog = 2;
-	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
+    private SendingChangesDialog sendingChanges;
+
+    private PropertyChangeListener experimentalChangeListener;
+
+    private UpdatedValue<Boolean> modelIsRunningProperty;
+
+    private static final Display DISPLAY = Display.getCurrent();
+    private static final int FIXED_WIDTH = 700;
+    private static final int FIXED_HEIGHT = 600;
 	
     /**
-     * The constructor for the panel.
-     * 
-     * @param parent
-     *            The parent composite which this panel belongs to.
-     * @param style
-     *            The SWT style flags for this panel.
+     * Constructor.
      */
+    public ExperimentSetup() {
+        viewModel = DaeUI.getDefault().viewModel();
+    }
+
+    /**
+     * Creates the controls for the experimental setup part.
+     *
+     * @param parent the parent
+     */
+    @PostConstruct
     @SuppressWarnings("checkstyle:magicnumber")
-	public ExperimentSetup(Composite parent, int style) {
-		super(parent, SWT.NONE);
+    public void createPart(final Composite parent) {
+
+        sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        Composite content = new Composite(scrolled, SWT.NONE);
+        
 		GridLayout gridLayout = new GridLayout(1, false);
-        gridLayout.marginHeight = 0;
-        gridLayout.verticalSpacing = 5;
         gridLayout.marginWidth = 0;
+        gridLayout.marginTop = 0;
+		gridLayout.marginBottom = 10;
 		gridLayout.horizontalSpacing = 0;
-		setLayout(gridLayout);
+        content.setLayout(gridLayout);
 		
-		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
+        CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		
+        scrolled.setContent(content);
+        
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setText("Time Channels");
 		
@@ -110,27 +142,30 @@ public class ExperimentSetup extends Composite {
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
 
-        Button btnSendChanges = new Button(this, SWT.NONE);
+        Button btnSendChanges = new Button(content, SWT.NONE);
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
             	try {
-            		viewModel.updateDae();
+            		viewModel.experimentSetup().updateDae();
             		sendingChanges.open();
         		} catch (Exception err) {
         			// Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
         			IsisLog.getLogger(this.getClass()).error(err);
-        			MessageDialog.openError(getShell(), "Internal IBEX Error", 
+        			MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
         					"Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
         		}
             }
         });
-        btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btnSendChanges.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
         
         //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));
+        
+        bind(viewModel.experimentSetup());
+        setModel(viewModel);
 	}
 	
     /**
@@ -139,9 +174,7 @@ public class ExperimentSetup extends Composite {
      * @param viewModel
      *            The view model to bind the panel information to.
      */
-	public void bind(final ExperimentSetupViewModel viewModel) {
-		this.viewModel = viewModel;
-		
+    private void bind(final ExperimentSetupViewModel viewModel) {
 		timeChannels.setModel(viewModel.timeChannels());
 		dataAcquisition.setModel(viewModel.daeSettings());
 		periods.setModel(viewModel.periodSettings());
@@ -156,5 +189,33 @@ public class ExperimentSetup extends Composite {
         Utils.recursiveSetEnabled(timeChannels, enabled);
         Utils.recursiveSetEnabled(dataAcquisition, enabled);
         Utils.recursiveSetEnabled(periods, enabled);
+    }
+
+    /**
+     * Sets the model for the DAE view.
+     *
+     * @param viewModel
+     *            the new model
+     */
+    public void setModel(final DaeViewModel viewModel) {
+
+        experimentalChangeListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                configureExperimentSetupForRunState(viewModel.isRunning().getValue());
+            }
+        };
+        modelIsRunningProperty = viewModel.isRunning();
+        modelIsRunningProperty.addPropertyChangeListener(experimentalChangeListener, true);
+
+    }
+
+    private void configureExperimentSetupForRunState(final Boolean isRunning) {
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                setChildrenEnabled(isRunning != null && !isRunning);
+            }
+        });
     }
 }

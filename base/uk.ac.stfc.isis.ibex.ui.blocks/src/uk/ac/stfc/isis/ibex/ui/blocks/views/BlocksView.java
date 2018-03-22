@@ -22,16 +22,22 @@ package uk.ac.stfc.isis.ibex.ui.blocks.views;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -41,7 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
  * The overall view that holds the information on the blocks in the main ISIS
  * perspective.
  */
-public class BlocksView extends ViewPart implements ISizeProvider {
+public class BlocksView {
 
     /**
      * The default constructor.
@@ -54,8 +60,11 @@ public class BlocksView extends ViewPart implements ISizeProvider {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
 
-    private static final int FIXED_HEIGHT = 250;
-
+	/**
+	 * Helper for switching to the logplotter perspective.
+	 */
+	public static PerspectiveSwitcher switcher;
+	
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 
@@ -91,8 +100,17 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}		
 	};	
 
-	@Override
-	public void createPartControl(final Composite parent) {
+	/**
+	 * Create the controls within the blocks view.
+	 * 
+	 * @param parent parent of the blocks view
+	 * @param app The E4 application model
+	 * @param partService The E4 service responsible for showing/hiding parts
+	 * @param modelService The E4 service responsible for handling model elements
+	 */
+    @PostConstruct
+	public void createPartControl(final Composite parent, MApplication app, EPartService partService, EModelService modelService) {
+		switcher = new PerspectiveSwitcher(new PerspectivesProvider(app, partService, modelService));
 		
 		GridLayout glParent = new GridLayout(1, false);
 		glParent.verticalSpacing = 2;
@@ -111,26 +129,13 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		configSubscription = CONFIG.addObserver(configObserver);
 	}
 
-	@Override
+    /**
+     * Dispose of observers when blocks view is destroyed.
+     */
+    @PreDestroy
 	public void dispose() {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
 	}
-	
-	@Override
-	public int getSizeFlags(boolean width) {
-		return width ? SWT.NONE : SWT.MIN | SWT.MAX;
-	}
-
-	@Override
-	public int computePreferredSize(boolean width, int availableParallel,
-			int availablePerpendicular, int preferredResult) {
-		return  width ? 0 : FIXED_HEIGHT;
-	}
-
-	@Override
-	public void setFocus() {
-	}
-
 }

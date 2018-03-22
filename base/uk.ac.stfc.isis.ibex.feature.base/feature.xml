@@ -21,11 +21,130 @@
          version="0.0.0"/>
 
    <includes
-         id="uk.ac.stfc.isis.ibex.feature.pydev"
+         id="uk.ac.stfc.isis.ibex.feature.spies"
          version="0.0.0"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.product"
+         id="uk.ac.stfc.isis.ibex.e4.client"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui.beamstatus"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui.blocks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui.dae"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui.handlers"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.activemq"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.alarm"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.dae"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.dashboard"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.databases"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.epics"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.epics.switching"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.instrument"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.log"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.logger"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -39,21 +158,14 @@
          unpack="false"/>
 
    <plugin
+         id="uk.ac.stfc.isis.ibex.scriptgenerator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="uk.ac.stfc.isis.ibex.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.help"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.widgets"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -67,35 +179,245 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.blocks"
+         id="uk.ac.stfc.isis.ibex.ui.widgets"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.blocks.presentation"
+         id="com.google.gson"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.perspectives"
+         id="org.eclipse.jface"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.dae"
+         id="org.eclipse.ui.workbench"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.configserver"
+         id="org.eclipse.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.di.annotations"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.beans"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.observable"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding.property"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.workbench"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.model.workbench"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.databinding"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.ibm.icu"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.contexts"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.di"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.commands"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.emf.xpath"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecore"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.workbench.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.commands"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.core.di.extensions"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.di"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecore.change"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecore.xmi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.bindings"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.workbench3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.workbench.addons.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.workbench.renderers.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.draw2d"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.forms"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -116,20 +438,6 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.ioccontrol"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.dae"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.nebula.visualization.xygraph"
          download-size="0"
          install-size="0"
@@ -137,76 +445,7 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.log"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.log"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.opibuilder"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.alarm"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.logger"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.logger"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.motor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.nicos"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.motor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.dashboard"
+         id="uk.ac.stfc.isis.ibex.e4.product"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -220,126 +459,7 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.opis"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.logplotter"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.epics"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.instrument"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.banner"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.banner"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.help"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.pde.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.weblinks"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.experimentdetails"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.experimentdetails"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.synoptic"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.synoptic"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.synoptic.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.runcontrol"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.runcontrol"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.statusbar"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.databases"
+         id="uk.ac.stfc.isis.ibex.ui.alarm"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -353,63 +473,41 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene.core"
+         id="uk.ac.stfc.isis.ibex.runcontrol"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.commons.io"
+         id="uk.ac.stfc.isis.ibex.synoptic"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene.misc"
+         id="uk.ac.stfc.isis.ibex.opis"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.jdom"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene.queries"
+         id="org.python.jython"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.scripting"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.google.gson"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.mainmenu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.epics.switching"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.alarm"
+         id="org.apache.commons.lang"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -423,28 +521,105 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.devicescreens"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.scriptgenerator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.scriptgenerator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="uk.ac.stfc.isis.ibex.targets"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.blocks.presentation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.blocks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.configserver"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.weblinks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.dae"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.log"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.gef"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.banner"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.banner"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.managermode"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.mainmenu"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.synoptic"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.perspectives"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.devicescreens"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -458,6 +633,144 @@
          unpack="false"/>
 
    <plugin
+         id="uk.ac.stfc.isis.ibex.ui.scripting"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.python.pydev"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.ast"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.parser"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.shared_core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.shared_ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.jython"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.shared_interactive_console"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.debug"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.experimentdetails"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.experimentdetails"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.scriptgenerator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.ioccontrol"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.logger"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.runcontrol"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.motor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.motor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.synoptic.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="uk.ac.stfc.isis.ibex.nicos"
          download-size="0"
          install-size="0"
@@ -465,14 +778,21 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.activemq"
+         id="uk.ac.stfc.isis.ibex.ui.nicos"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.managermode"
+         id="org.eclipse.ui.workbench.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.logplotter"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -19,14 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.dashboard.views;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.dashboard.Dashboard;
@@ -43,11 +46,11 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
  * The dashboard view.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class DashboardView extends ViewPart implements ISizeProvider {
+public class DashboardView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
-    private static final int FIXED_WIDTH = 600;
-    private static final int FIXED_HEIGHT = 250;
+    private static final int FIXED_WIDTH = 500;
+    private static final int FIXED_HEIGHT = 225;
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
@@ -64,61 +67,53 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 
-	@Override
+	@PostConstruct
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(3, false);
-		glParent.marginHeight = 0;
-		glParent.marginWidth = 0;
-		glParent.horizontalSpacing = 1;
-		glParent.verticalSpacing = 0;
-		parent.setLayout(glParent);
-		Banner banner = new Banner(parent, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		Composite dashboardControl = new Composite(scrolledComposite, SWT.NONE);
+		scrolledComposite.setContent(dashboardControl);
+        scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
+		
+        GridLayout dashboardLayout = new GridLayout(3, false);
+		dashboardLayout.marginHeight = 0;
+		dashboardLayout.marginWidth = 0;
+		dashboardLayout.horizontalSpacing = 1;
+		dashboardLayout.verticalSpacing = 0;
+		dashboardControl.setLayout(dashboardLayout);
+		
+		Banner banner = new Banner(dashboardControl, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
         banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
-		Label separator1 = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		Label separator1 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);
         separator1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		TitlePanel title = new TitlePanel(parent, SWT.NONE, titleModel, textFont);
+		TitlePanel title = new TitlePanel(dashboardControl, SWT.NONE, titleModel, textFont);
         title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		Label separator2 = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		Label separator2 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);
         separator2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		MonitorPanel monitors = new MonitorPanel(parent, SWT.NONE, monitorsModel, textFont);
+		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
         GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        monitorsLayoutGridData.widthHint = 325;
+        monitorsLayoutGridData.widthHint = FIXED_WIDTH/2;
         monitors.setLayoutData(monitorsLayoutGridData);
 		
-		Label separator3 = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
+		Label separator3 = new Label(dashboardControl, SWT.SEPARATOR | SWT.VERTICAL);
 		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		TimePanel times = new TimePanel(parent, SWT.NONE, textFont, timesModel);
+		TimePanel times = new TimePanel(dashboardControl, SWT.NONE, textFont, timesModel);
         GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
         times.setLayoutData(timesGridData);
 	}
 	
-	@Override
+	@PreDestroy
 	public void dispose() {
-		super.dispose();
 		bannerModel.close();
 		titleModel.close();
 		monitorsModel.close();
 		timesModel.close();
-	}
-
-	@Override
-	public int getSizeFlags(boolean width) {
-		return SWT.MIN | SWT.MAX;
-	}
-
-	@Override
-	public int computePreferredSize(boolean width, int availableParallel,
-			int availablePerpendicular, int preferredResult) {
-		return  width ? FIXED_WIDTH : FIXED_HEIGHT;
-	}
-
-	@Override
-	public void setFocus() {		
 	}
 }

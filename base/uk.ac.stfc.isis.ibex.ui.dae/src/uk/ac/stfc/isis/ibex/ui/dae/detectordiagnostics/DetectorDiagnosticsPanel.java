@@ -24,11 +24,14 @@ package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -40,12 +43,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewModelBinding;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 
 /**
  * The panel containing the detector diagnostics table and controls.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class DetectorDiagnosticsPanel extends Composite {
+public class DetectorDiagnosticsPanel {
     
     private DataBindingContext bindingContext = new DataBindingContext();
     private Combo comboSpectraTypeSelector;
@@ -55,24 +59,40 @@ public class DetectorDiagnosticsPanel extends Composite {
     private Text spinnerIntegralTimeRangeFrom;
     private Text spinnerIntegralTimeRangeTo;
     private Spinner spinnerMaximumFrames;
-    
+
+    private static final int FIXED_WIDTH = 800;
+    private static final int FIXED_HEIGHT = 300;
     private static final int MAX_NUMBER_OF_SPECTRA = 256;
     private static final int MAX_SPECTRA_NUMBER = 1000000;
     private static final int MAX_SPECTRA_PERIODS = Integer.MAX_VALUE;
     private static final int MAX_FRAMES = Integer.MAX_VALUE;
     private Label errorLabel;
+    private DetectorDiagnosticsViewModel model;
     
     /**
      * Constructor.
-     * 
-     * @param parent the parent
-     * @param style the composite's style
      */
-    public DetectorDiagnosticsPanel(Composite parent, int style) {
-        super(parent, style);
-        setLayout(new GridLayout(1, true));
-        
-        Composite container = new Composite(this, SWT.NONE);
+    public DetectorDiagnosticsPanel() {
+        model = DaeUI.getDefault().viewModel().detectorDiagnostics();
+    }
+
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
+    @PostConstruct
+    public void createPart(Composite parent) {
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+
+        Composite content = new Composite(scrolled, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
+        scrolled.setContent(content);
+		
+        Composite container = new Composite(content, SWT.NONE);
         GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         container.setLayoutData(layoutData);
         container.setLayout(new GridLayout(7, true));
@@ -121,17 +141,18 @@ public class DetectorDiagnosticsPanel extends Composite {
         spinnerMaximumFrames.setMaximum(MAX_FRAMES);
         spinnerMaximumFrames.setLayoutData(centeredGridItem);
         
-        errorLabel = new Label(this, SWT.LEAD);
+        errorLabel = new Label(content, SWT.LEAD);
         GridData labelLayoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         errorLabel.setLayoutData(labelLayoutData);
         errorLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 
-        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(this, SWT.NONE, SWT.NONE);
+        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(content, SWT.NONE, SWT.NONE);
         table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         table.setLayoutData(layout);
         
+        this.setModel(model);
  
     }
     
@@ -148,7 +169,7 @@ public class DetectorDiagnosticsPanel extends Composite {
      * @param model
      *            the detector diagnostics model
      */
-    public void setModel(IDetectorDiagnosticsViewModelBinding model) {
+    private void setModel(IDetectorDiagnosticsViewModelBinding model) {
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboSpectraTypeSelector), BeanProperties.value("spectraType").observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(comboSpectraTypeSelector), BeanProperties.value("diagnosticsEnabled").observe(model));
         

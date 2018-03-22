@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -21,8 +20,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
 
 import java.util.Collection;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -46,11 +45,12 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 		super(SERVER.setCurrentConfig());
 	}
 
-    /**
-     * {@inheritDoc}
-     */
+	
+	/**
+	 * Open block selector dialogue.
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
+    public void safeExecute(Shell shell) {
         Collection<EditableBlock> availableBlocks = EDITING.currentConfig().getValue().getAllBlocks();
 		
         BlockSelectorDialog dialog = new BlockSelectorDialog(null, availableBlocks);

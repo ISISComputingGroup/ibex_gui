@@ -31,13 +31,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.lucene.analysis"
          download-size="0"
          install-size="0"
@@ -143,13 +136,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.runtime.compatibility.auth"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.variables"
          download-size="0"
          install-size="0"
@@ -224,15 +210,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.security.win32.x86_64"
-         os="win32"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
@@ -432,13 +409,6 @@
 
    <plugin
          id="org.apache.jasper.glassfish"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.mail"
          download-size="0"
          install-size="0"
          version="0.0.0"

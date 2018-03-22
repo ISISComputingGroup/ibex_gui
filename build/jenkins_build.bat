@@ -25,6 +25,7 @@ REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
+if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
 if "%EXIT%" == "YES" exit
 
 REM Copy zip to installs area
@@ -45,7 +46,16 @@ if "%RELEASE%" == "YES" (
 if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
-if not "%RELEASE%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+if not "%RELEASE%" == "YES" (
+    if "%IS_E4_DEPLOY%" == "YES" (
+        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
+        set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+    ) else (
+        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+        set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+    )
+    
+) 
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
 if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
@@ -66,7 +76,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
