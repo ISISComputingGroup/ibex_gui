@@ -1,7 +1,8 @@
-package uk.ac.stfc.isis.ibex.nicos.messages;
+package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 
 /**
  * Gets the script status from the server.
