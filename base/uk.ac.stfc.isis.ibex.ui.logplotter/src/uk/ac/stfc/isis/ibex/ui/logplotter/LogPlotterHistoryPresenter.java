@@ -23,8 +23,10 @@ import java.util.ArrayList;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
+import org.csstudio.trends.databrowser2.model.ModelItem;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
@@ -34,7 +36,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -73,14 +74,21 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	        return;
 	    }
 		Model model = editor.getModel();
+		model.setSaveChanges(false);
+		model.setArchiveRescale(ArchiveRescale.STAGGER);
+		
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
-			final PVItem item = new PVItemWithUnits(displayName, pvAddress, period);
+	    	// Create axis
+			AxisConfig axis = new AxisConfig(displayName);
+			axis.setAutoScale(true);
+			model.addAxis(axis);
+	    	
+			// Create trace
+	    	final PVItem item = new PVItem(pvAddress, period);
+	    	item.setDisplayName(displayName);
 			item.useDefaultArchiveDataSources();
-			// Add item to new axes
-			AxisConfig axis = model.addAxis(item.getDisplayName());
-			axis.setAutoScale(false);
 			item.setAxis(axis);
 			model.addItem(item);
 	    } catch (Exception ex) {
@@ -91,9 +99,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-	public void newPresenter(String pvAddress, final String displayName) {	
-		UI.getDefault().switchPerspective(Perspective.ID);
-		
+	public void newPresenter(String pvAddress, final String displayName) {		
 	    // Create new editor
 	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
 	    	@Override
@@ -106,9 +112,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 
 	@Override
-	public void addToPresenter(String pvAddress, String display, String presenterName) {
-		UI.getDefault().switchPerspective(Perspective.ID);
-		
+	public void addToPresenter(String pvAddress, String display, String presenterName) {		
 		DataBrowserEditor editor = null;
 		for (DataBrowserEditor e : getCurrentDataBrowsers()) {
 			if (e.getTitle().equals(presenterName)) {
@@ -121,6 +125,11 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			newPresenter(pvAddress, display);
 		} else {	
 			addPVToEditor(pvAddress, display, editor);
+			
+			// Recolour the axes so that they match the traces
+			for (ModelItem trace : editor.getModel().getItems()) {
+				trace.getAxis().setColor(trace.getColor());
+			}
 		}
 	}
 
