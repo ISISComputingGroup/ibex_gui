@@ -2326,7 +2326,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>4fdc1aa2:158de06471b:-6ba2</wuid>
       <pv_value />
-      <text>On/Off2</text>
+      <text>On/Off</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>22</height>
