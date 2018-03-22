@@ -26,4 +26,9 @@ public class QueuedScript {
 	 * Code of the script.
 	 */
 	public String script;
+	
+	@Override
+	public boolean equals(Object otherScript) {
+		return true;
+	}
 }

@@ -21,7 +21,11 @@ package uk.ac.stfc.isis.ibex.ui.nicos;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.BeansObservables;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,12 +43,16 @@ import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -132,7 +140,7 @@ public class NicosView extends ViewPart {
 
         final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtOutput.setEditable(false);
-        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
         
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
@@ -146,7 +154,26 @@ public class NicosView extends ViewPart {
                 txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
             }
         });
+        
+        Label lblQueuedScripts = new Label(parent, SWT.NONE);
+        lblQueuedScripts.setText("Queued scripts:");
+        
+        ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        List list = queuedScriptsViewer.getList();
+        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+        queuedScriptsViewer.setContentProvider(contentProvider);
+        queuedScriptsViewer.setLabelProvider(new LabelProvider() {
+        	public String getText(Object element) {
+        		QueuedScript code = (QueuedScript) element;
+        		return code.script;
+        	}
+        });
+        
+        IObservableList queuedScripts = BeanProperties.list("queuedScripts").observe(model);
+        queuedScriptsViewer.setInput(queuedScripts);
+        
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
