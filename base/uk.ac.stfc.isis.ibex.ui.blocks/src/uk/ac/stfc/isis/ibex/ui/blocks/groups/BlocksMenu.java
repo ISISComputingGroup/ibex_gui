@@ -91,7 +91,7 @@ public class BlocksMenu extends MenuManager {
         add(new GroupMarker(BLOCK_MENU_GROUP));
 
         final MenuManager logSubMenu = new MenuManager("Display block history...");
-        logSubMenu.add(new Action("never shown entry"){
+        logSubMenu.add(new Action("never shown entry") {
         	//needed if it's a submenu
         });
         // Allows the menu to be dynamic

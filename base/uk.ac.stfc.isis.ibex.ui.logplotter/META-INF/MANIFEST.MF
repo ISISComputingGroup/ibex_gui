@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.logger,
  org.csstudio.ui.util,
  org.csstudio.trends.databrowser2;bundle-version="4.2.4"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.logplotter
 Import-Package: com.google.common.base,

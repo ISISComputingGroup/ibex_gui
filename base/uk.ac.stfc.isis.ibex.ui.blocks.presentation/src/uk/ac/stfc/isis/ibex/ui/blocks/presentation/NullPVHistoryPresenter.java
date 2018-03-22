@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A null object for the PV history presenter, to use when a real object is unavailable.
@@ -31,7 +31,7 @@ public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	}
 
 	@Override
-	public ArrayList<String> getCurrentPresenters() {
+	public List<String> getCurrentPresenters() {
 		// TODO Auto-generated method stub
 		return null;
 	}
