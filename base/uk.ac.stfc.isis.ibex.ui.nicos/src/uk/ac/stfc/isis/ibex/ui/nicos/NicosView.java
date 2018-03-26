@@ -164,9 +164,11 @@ public class NicosView extends ViewPart {
         TableColumnLayout tableColumnLayout = new TableColumnLayout();
         tableComposite.setLayout(tableColumnLayout);
         
-        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.HIDE_SELECTION | SWT.BORDER);        
+        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.HIDE_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);        
        
         tableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        tableViewer.getTable().setToolTipText("");
         
         TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.CENTER);
         tableColumnLayout.setColumnData(tableViewerColumn.getColumn(), new ColumnWeightData(100, 0, false)); 
