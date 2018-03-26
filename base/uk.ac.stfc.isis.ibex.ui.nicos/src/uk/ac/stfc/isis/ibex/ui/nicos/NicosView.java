@@ -21,15 +21,14 @@ package uk.ac.stfc.isis.ibex.ui.nicos;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
+import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -50,9 +49,10 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.OwnerDrawLabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -157,22 +157,45 @@ public class NicosView extends ViewPart {
         
         Label lblQueuedScripts = new Label(parent, SWT.NONE);
         lblQueuedScripts.setText("Queued scripts:");
+            
+        Composite tableComposite = new Composite(parent, SWT.NONE);
+        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-        List list = queuedScriptsViewer.getList();
-        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        TableColumnLayout tableColumnLayout = new TableColumnLayout();
+        tableComposite.setLayout(tableColumnLayout);
+        
+        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.HIDE_SELECTION | SWT.BORDER);        
+       
+        tableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.CENTER);
+        tableColumnLayout.setColumnData(tableViewerColumn.getColumn(), new ColumnWeightData(100, 0, false)); 
+        tableViewerColumn.setLabelProvider(new OwnerDrawLabelProvider() {
 
-        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
-        queuedScriptsViewer.setContentProvider(contentProvider);
-        queuedScriptsViewer.setLabelProvider(new LabelProvider() {
-        	public String getText(Object element) {
-        		QueuedScript code = (QueuedScript) element;
-        		return code.script;
+        	private String getText(Object element) {
+        		QueuedScript script = (QueuedScript) element;
+        		return script.script;
         	}
-        });
+        	
+			@Override
+			protected void measure(Event event, Object element) {
+				event.width = tableViewer.getTable().getColumn(event.index).getWidth();
+				if (event.width == 0) {
+					return;
+				}
+				Point size = event.gc.textExtent(getText(element));
+				int lines = size.x / event.width + 1;
+				event.height = size.y * lines;
+			}
+
+			@Override
+			protected void paint(Event event, Object element) {
+				event.gc.drawText(getText(element), event.x, event.y, true);
+			}
+		});
         
-        IObservableList queuedScripts = BeanProperties.list("queuedScripts").observe(model);
-        queuedScriptsViewer.setInput(queuedScripts);
+        tableViewer.setContentProvider(new ObservableListContentProvider());
+        tableViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
         
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

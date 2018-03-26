@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
+import org.eclipse.swt.widgets.Event;
+
 /**
  * Holder of script information returned from server.
  * 
@@ -26,9 +28,36 @@ public class QueuedScript {
 	 * Code of the script.
 	 */
 	public String script;
-	
+
 	@Override
-	public boolean equals(Object otherScript) {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((reqid == null) ? 0 : reqid.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		QueuedScript other = (QueuedScript) obj;
+		if (reqid == null) {
+			if (other.reqid != null) {
+				return false;
+			}
+		} else if (!reqid.equals(other.reqid)) {
+			return false;
+		}
 		return true;
 	}
+	
+	
 }
