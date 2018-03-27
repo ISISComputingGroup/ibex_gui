@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
@@ -38,7 +40,8 @@ public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
     }
 
     @Override
-    public void preSetInstrument(InstrumentInfo instrument) {       
+    public void preSetInstrument(InstrumentInfo instrument) {
+        ScriptConsoleManager.getInstance().closeAll();
         scriptingPerspectiveReopener.closePerspective();
     }
 }
