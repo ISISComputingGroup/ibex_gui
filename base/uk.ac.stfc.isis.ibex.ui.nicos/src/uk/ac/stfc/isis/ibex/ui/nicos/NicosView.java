@@ -164,16 +164,17 @@ public class NicosView extends ViewPart {
         TableColumnLayout tableColumnLayout = new TableColumnLayout();
         tableComposite.setLayout(tableColumnLayout);
         
-        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.HIDE_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);        
+        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);        
        
         tableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
         tableViewer.getTable().setToolTipText("");
+        tableViewer.getTable().setLinesVisible(true);
         
         TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.CENTER);
         tableColumnLayout.setColumnData(tableViewerColumn.getColumn(), new ColumnWeightData(100, 0, false)); 
         tableViewerColumn.setLabelProvider(new OwnerDrawLabelProvider() {
-
+        	// Using our own drawer means that we can write text to cover multiple lines
+        	
         	private String getText(Object element) {
         		QueuedScript script = (QueuedScript) element;
         		return script.script;
@@ -186,8 +187,8 @@ public class NicosView extends ViewPart {
 					return;
 				}
 				Point size = event.gc.textExtent(getText(element));
-				int lines = size.x / event.width + 1;
-				event.height = size.y * lines;
+				event.width = size.x;
+				event.height = size.y;
 			}
 
 			@Override
