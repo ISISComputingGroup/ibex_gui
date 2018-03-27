@@ -861,4 +861,157 @@ my_pv.setValue("INT")]]></scriptText>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
   </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:161b8a4b322:7a12</wuid>
+    <pv_value />
+    <text>Turn InitMode On</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>40</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):FRES:AUTORANGE:SP</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>127</width>
+    <x>728</x>
+    <name>Button_2</name>
+    <y>324</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path></path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+my_pv = widget.getPV()
+
+my_pv.setValue(0)]]></scriptText>
+        <embedded>true</embedded>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:161b8a4b322:7a7a</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>false</show_units>
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):FRES:AUTORANGE</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>65</width>
+    <x>759</x>
+    <name>Text Update</name>
+    <y>294</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:161b8a4b322:7b43</wuid>
+    <pv_value />
+    <text>Turn InitMode OFF</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>40</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):FRES:AUTORANGE:SP</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>127</width>
+    <x>728</x>
+    <name>Button_3</name>
+    <y>378</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path></path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+my_pv = widget.getPV()
+
+my_pv.setValue(1)]]></scriptText>
+        <embedded>true</embedded>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
 </display>

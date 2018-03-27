@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="check_opi_format_tests.TestCheckOpiFormatMethods-20180323115303" tests="36" time="0.004">
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_grouping_container_with_a_no_capitalisation_causes_one_error" time="0.001"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_grouping_container_with_a_title_case_name_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_a_badly_capitalized_name_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_a_colon_at_the_end_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_a_properly_capitalised_name_and_a_capitalised_abbreviation_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_a_properly_capitalised_name_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_a_short_first_word_that_is_not_capitalised_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_ellipsis_at_the_end_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_a_label_with_no_colon_at_the_end_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_graph_has_different_buffer_sizes_then_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_contains_an_ignored_word_then_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_has_only_a_number_as_text_then_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_outside_a_grouping_container_is_capitalised_in_title_case_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_outside_a_grouping_container_is_not_capitalised_in_title_case_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_tag_with_a_valid_font_in_the_fontname_attribute_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_error" time="0.001"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_plot_area_with_an_invalid_background_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_push_button_is_defined_outside_a_grouping_container_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_push_button_is_defined_within_a_grouping_container_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_a_valid_background_colour_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_a_valid_border_colour_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_a_valid_foreground_colour_is_parsed_it_causes_no_errors" time="0.001"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_an_invalid_background_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_an_invalid_border_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_an_invalid_foreground_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_no_named_background_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_no_named_border_colour_is_parsed_it_causes_one_error" time="0.001"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_textbox_with_no_named_foreground_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_a_valid_led_tag_is_parsed_it_causes_no_errors" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_an_off_led_tag_with_an_incorrect_named_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_an_off_led_tag_without_a_named_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_an_on_led_tag_with_an_incorrect_named_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_an_on_led_tag_without_a_named_colour_is_parsed_it_causes_one_error" time="0.000"/>
+	<testcase classname="check_opi_format_tests.TestCheckOpiFormatMethods" name="test_that_if_there_are_two_graphs_with_different_buffer_sizes_there_is_no_error" time="0.000"/>
+	<system-out>
+<![CDATA[]]>	</system-out>
+	<system-err>
+<![CDATA[]]>	</system-err>
+</testsuite>
