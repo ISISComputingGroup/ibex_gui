@@ -76,11 +76,14 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
-			final PVItem item = new PVItemWithUnits(displayName, pvAddress, period);
-			item.useDefaultArchiveDataSources();
-			// Add item to new axes
-			AxisConfig axis = model.addAxis(item.getDisplayName());
+	    	
+	    	AxisConfig axis = model.addAxis(displayName);
 			axis.setAutoScale(false);
+			
+	    	final PVItem item = new PVItemWithUnits(displayName, pvAddress, period, axis);
+			item.useDefaultArchiveDataSources();
+			
+			// Add item to new axes
 			item.setAxis(axis);
 			model.addItem(item);
 	    } catch (Exception ex) {
