@@ -26,18 +26,18 @@ import java.util.ArrayList;
  */
 public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	@Override
-	public void newPresenter(String pvAddress, String displayName) {
+	public void newDisplay(String pvAddress, String displayName) {
 		// do nothing
 	}
 
 	@Override
-	public ArrayList<String> getCurrentPresenters() {
+	public ArrayList<String> getCurrentDisplays() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addToPresenter(String pvAddress, String display, String presenterName) {
+	public void addToDisplay(String pvAddress, String display, String presenterName) {
 		// do nothing
 	}
 

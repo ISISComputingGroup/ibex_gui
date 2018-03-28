@@ -60,7 +60,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-	public ArrayList<String> getCurrentPresenters() {
+	public ArrayList<String> getCurrentDisplays() {
 		ArrayList<String> editorNames = new ArrayList<>();
 		for (DataBrowserEditor editor : getCurrentDataBrowsers()) {
 			editorNames.add(editor.getTitle());
@@ -91,7 +91,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-	public void newPresenter(String pvAddress, final String displayName) {	
+	public void newDisplay(String pvAddress, final String displayName) {	
 		UI.getDefault().switchPerspective(Perspective.ID);
 		
 	    // Create new editor
@@ -106,7 +106,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 
 	@Override
-	public void addToPresenter(String pvAddress, String display, String presenterName) {
+	public void addToDisplay(String pvAddress, String display, String presenterName) {
 		UI.getDefault().switchPerspective(Perspective.ID);
 		
 		DataBrowserEditor editor = null;
@@ -118,7 +118,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		
 		if (editor == null) {
 			// Can't find the editor to add to, make a new one
-			newPresenter(pvAddress, display);
+			newDisplay(pvAddress, display);
 		} else {	
 			addPVToEditor(pvAddress, display, editor);
 		}

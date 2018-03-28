@@ -97,7 +97,7 @@ public class BlocksMenu extends MenuManager {
         final IAction newPresenter = new Action("New Plot") {
 			@Override
 			public void run() {
-				pvHistoryPresenter.newPresenter(block.blockServerAlias(), block.getName());
+				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
 		
@@ -105,11 +105,11 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPresenter);
-				for (final String plot : pvHistoryPresenter.getCurrentPresenters()) {
+				for (final String plot : pvHistoryPresenter.getCurrentDisplays()) {
 					logSubMenu.add(new Action("Add to " + plot + " plot"){
 						@Override
 						public void run() {
-							pvHistoryPresenter.addToPresenter(block.blockServerAlias(), block.getName(), plot);
+							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);
 						}
 					});
 				}
