@@ -24,8 +24,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.python.pydev.ui.pythonpathconf.InterpreterNewCustomEntriesAdapter;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -36,8 +34,6 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntriesAdapter {
 	
-	private static final String PREFERENCE_STORE_ID_FOR_EPICS_LIBS = "org.csstudio.platform.libs.epics";
-	final IPreferencesService prefs;
 	Instrument instrumentBundle;
 	
 	/**
@@ -48,8 +44,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 * @param iPreferencesService the iPreferences service to use
 	 * @param instrumentBundle the instrument bundle to use to get details from
 	 */
-	public PyDevAdditionalInterpreterSettings(IPreferencesService iPreferencesService, Instrument instrumentBundle) {
-		prefs = iPreferencesService;
+	public PyDevAdditionalInterpreterSettings(Instrument instrumentBundle) {
 		this.instrumentBundle = instrumentBundle;
 	}
 	
@@ -58,7 +53,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 * 
 	 */
 	public PyDevAdditionalInterpreterSettings() {
-		this(Platform.getPreferencesService(), Instrument.getInstance());
+		this(Instrument.getInstance());
 	}
 	
 	@Override
@@ -107,19 +102,9 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 */
 	private List<String> epicsEnvironment() {
 		List<String> epicsEnv = new ArrayList<String>();
-
-        // TODO: This appears to be getting null out of the preference store, so
-        // genie_python can't currently access PVs
-        final String addList = prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
-        epicsEnv.add("EPICS_CA_ADDR_LIST=" + addList);
-        
-        final String autoAddr = prefs.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
-        epicsEnv.add("EPICS_CA_AUTO_ADDR_LIST=" + autoAddr);
-        
-        final String maxArrayBytes =
-                prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
-        epicsEnv.add("EPICS_CA_MAX_ARRAY_BYTES=" + maxArrayBytes);
-        
+        epicsEnv.add("EPICS_CA_ADDR_LIST=127.255.255.255 130.246.51.255 130.246.55.255 130.246.39.255 130.246.59.255 130.246.39.152:5066");
+        epicsEnv.add("EPICS_CA_AUTO_ADDR_LIST=YES");
+        epicsEnv.add("EPICS_CA_MAX_ARRAY_BYTES=65536");
         return epicsEnv;
 	}
 	
