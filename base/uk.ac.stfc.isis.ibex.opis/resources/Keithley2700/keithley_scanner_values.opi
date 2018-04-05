@@ -430,26 +430,26 @@ $(pv_value)</tooltip>
       <column_header_visible>true</column_header_visible>
       <scripts>
         <path pathString="display_table_values.py" checkConnect="true" sfe="false" seoe="false">
-          <pv trig="true">$(PV_ROOT):CHNL:101:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:102:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:103:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:104:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:105:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:106:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:107:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:108:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:109:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:110:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:201:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:202:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:203:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:204:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:205:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:206:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:207:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:208:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:209:READING</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:210:READING</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:101:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:102:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:103:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:104:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:105:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:106:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:107:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:108:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:109:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:110:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:201:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:202:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:203:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:204:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:205:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:206:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:207:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:208:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:209:READ</pv>
+          <pv trig="true">$(PV_ROOT):CHNL:210:READ</pv>
           <pv trig="true">$(PV_ROOT):CHNL:101:TEMP</pv>
           <pv trig="true">$(PV_ROOT):CHNL:102:TEMP</pv>
           <pv trig="true">$(PV_ROOT):CHNL:103:TEMP</pv>
@@ -1012,6 +1012,57 @@ my_pv.setValue(1)]]></scriptText>
     </actions>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>6ebe0d97:161b8a4b322:7d1a</wuid>
+    <transparent>true</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>false</show_units>
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):CHNL:101:READ</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>65</width>
+    <x>731</x>
+    <name>Text Update_1</name>
+    <y>174</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
     </font>
   </widget>
 </display>
