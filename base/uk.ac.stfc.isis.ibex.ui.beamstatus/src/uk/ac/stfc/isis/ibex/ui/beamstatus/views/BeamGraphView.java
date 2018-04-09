@@ -27,7 +27,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.csstudio.swt.rtplot.RTTimePlot;
-import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
@@ -36,8 +35,6 @@ import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
 import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -47,8 +44,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
@@ -59,6 +54,8 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * (e.g. hourly, daily)
  */
 public class BeamGraphView extends ModelListenerAdapter {
+	/** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam Current";
 
     /** Title for the Y-axis. */
     private static final String Y_AXIS_TITLE = "Beam current (μA)";
@@ -85,7 +82,7 @@ public class BeamGraphView extends ModelListenerAdapter {
     private Model model;
 
     /** Controller that links model and plot. */
-    private Controller controller = null;
+    private Controller controller;
 
     /** Number of milliseconds in an hour. */
     private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
@@ -106,13 +103,7 @@ public class BeamGraphView extends ModelListenerAdapter {
     private static final RGB BLUE = new RGB(0, 0, 255);
 
     /** Default colour for undefined plot traces. */
-    private static final RGB DEFAULT = new RGB(0, 0, 0);
-    
-    /** Shell for opening error dialogs. */
-    private Shell shell;
-
-    /** Title for the plot. */
-    private static final String PLOT_TITLE = "Beam Current";
+    private static final RGB BLACK = new RGB(0, 0, 0);
 
     /**
      * Creates the Beam Graph view.
@@ -121,9 +112,6 @@ public class BeamGraphView extends ModelListenerAdapter {
      */
     @PostConstruct 
     public void createPartControl(final Composite parent) {
-    	// Remember what shell we're using
-        shell = parent.getShell();
-        
         // Create the view model
         configureModel();
 
@@ -146,7 +134,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 
         // Create and start controller
 		try {
-			controller = new Controller(shell, model, modelPlot);
+			controller = new Controller(parent.getShell(), model, modelPlot);
             controller.start();
 		} catch (Exception ex) {
             onError(ex);
@@ -159,23 +147,19 @@ public class BeamGraphView extends ModelListenerAdapter {
         Composite controlsComposite = new Composite(parent, SWT.NONE);
         controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
         controlsComposite.setLayout(new RowLayout());
-
-        Button dailyButton = new Button(controlsComposite, SWT.RADIO);
-        dailyButton.setText("Last 24 Hours");
-        dailyButton.setSelection(true);
-        dailyButton.addSelectionListener(new SelectionAdapter() {
+        
+        createButton(controlsComposite, "Last 24 Hours", MILLISECONDS_IN_DAY);
+        createButton(controlsComposite, "Last Hour", MILLISECONDS_IN_HOUR);
+    }
+    
+    private void createButton(final Composite parent, final String name, final long timeDuration) {
+    	Button button = new Button(parent, SWT.RADIO);
+        button.setText(name);
+        button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
+        button.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setTimeRange(MILLISECONDS_IN_DAY);
-            }
-        });
-
-        Button hourlyButton = new Button(controlsComposite, SWT.RADIO);
-        hourlyButton.setText("Last Hour");
-        hourlyButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                setTimeRange(MILLISECONDS_IN_HOUR);
+                setTimeRange(timeDuration);
             }
         });
     }
@@ -200,14 +184,14 @@ public class BeamGraphView extends ModelListenerAdapter {
         axisConfig.useAxisName(true);
         axisConfig.setRange(CURRENT_LOWER, CURRENT_UPPER);
         axisConfig.setAutoScale(false);
-        axisConfig.setColor(new RGB(0, 0, 0));
+        axisConfig.setColor(BLACK);
     }
 
     private void configureModel() {
     	model = new Model();
     	model.addListener(this);
         model.setArchiveRescale(ArchiveRescale.NONE);
-        AxisConfig axis = new AxisConfig("Beam current");
+        AxisConfig axis = new AxisConfig(PLOT_TITLE);
         setAxisProperties(axis);
         model.addAxis(axis);
         updateModelTimeRange();
@@ -239,7 +223,7 @@ public class BeamGraphView extends ModelListenerAdapter {
                     rgb = GREEN;
                     break;
                 default:
-                    rgb = DEFAULT;
+                    rgb = BLACK;
                     displayName = newItem.getDisplayName();
             }
             newItem.setDisplayName(displayName);
@@ -275,6 +259,7 @@ public class BeamGraphView extends ModelListenerAdapter {
     private void updateModelTimeRange() {
     	try {
             model.setTimerange(Instant.now().minusMillis(currentPlotTimespanMilliseconds), Instant.now());
+            model.enableScrolling(true);  // Ensure that the graph always scrolls to keep up with real time.
         } catch (Exception ex) {
             onError(ex);
         }
@@ -285,8 +270,7 @@ public class BeamGraphView extends ModelListenerAdapter {
      * @param err the error that was thrown
      */
     private void onError(Throwable err) {
-    	MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, err.toString()));
-    	IsisLog.getLogger(getClass()).error(err);
+    	IsisLog.getLogger(getClass()).error(err.toString(), err);
     }
     
     /**
