@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.time.Instant;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -28,15 +30,21 @@ import javax.annotation.PreDestroy;
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.Messages;
+import org.csstudio.trends.databrowser2.archive.ArchiveFetchJob;
+import org.csstudio.trends.databrowser2.model.ArchiveDataSource;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
 import org.csstudio.trends.databrowser2.model.ModelListener;
 import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.preferences.ArchiveDataSourceEditor;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
 import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -48,6 +56,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -126,6 +135,16 @@ public class BeamGraphView implements ModelListener {
     	// Remember what shell we're using
         shell = parent.getShell();
         
+        
+//        IExtensionRegistry r = RegistryFactory.getRegistry();
+//        for (IConfigurationElement t : r.getConfigurationElementsFor("org.csstudio.archive.reader.ArchiveReader")) {
+//        	final String plugin = t.getContributor().getName();
+//            final String prefix = t.getAttribute("prefix");
+//            System.out.println("HELLO THIS IS DEBUGGGING: " + plugin + ", " + prefix);
+//            
+//        }
+        
+        
         // Create the view model
         configureModel();
 
@@ -142,16 +161,15 @@ public class BeamGraphView implements ModelListener {
         plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         modelPlot = new ModelBasedPlot(plotComposite);
 
-        // TODO Disabled until connection to archive engine is fixed
-        // for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
-        //	addTrace(generatePVItem(pv));
-        // }
+         for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
+        	addTrace(generatePVItem(pv));
+         }
 
         // Create and start controller
-        try {
-            controller = new Controller(shell, model, modelPlot);
+		try {
+			controller = new Controller(shell, model, modelPlot);
             controller.start();
-        } catch (Exception ex) {
+		} catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
 
@@ -188,7 +206,7 @@ public class BeamGraphView implements ModelListener {
         RTTimePlot rtPlot = modelPlot.getPlot();
         rtPlot.setTitle(Optional.of(PLOT_TITLE));
         rtPlot.setEnabled(false);
-        rtPlot.showToolbar(false);
+        rtPlot.showToolbar(true);
         rtPlot.showLegend(true);
         rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
@@ -224,7 +242,6 @@ public class BeamGraphView implements ModelListener {
      * @param pvAddress
      *            Name of the PV to add to the plot
      */
-    @SuppressWarnings("unused")
 	private PVItem generatePVItem(final String pvAddress) {
         try {
             PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
@@ -263,18 +280,13 @@ public class BeamGraphView implements ModelListener {
      *            PV to add to the plot
      */
     protected void addTrace(final PVItem newItem) {
-        // PV unknown or plot does not exist
-        if (newItem == null || modelPlot == null) {
-            return;
-        }
-        
+        newItem.useDefaultArchiveDataSources();
         try {
-            newItem.useDefaultArchiveDataSources();
-            model.addItem(newItem);
-            model.setTimerange(getStartSpec(), getEndSpec());
-        } catch (Exception ex) {
-            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
-        }
+			model.addItem(newItem);
+		} catch (Exception e) {
+			MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, e.toString()));
+		}
+        updateModelTimeRange();
     }
 
     private void setTimeRangeDaily() {
@@ -289,7 +301,7 @@ public class BeamGraphView implements ModelListener {
 
     private void updateModelTimeRange() {
     	try {
-            model.setTimerange(getStartSpec(), getEndSpec());
+            model.setTimerange(Instant.now().minusMillis(currentPlotTimespanMilliseconds), Instant.now());
         } catch (Exception ex) {
             MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
         }
@@ -355,18 +367,30 @@ public class BeamGraphView implements ModelListener {
     // Following methods are defined as they are mandatory to fulfil
     // ModelListener interface, but they are not used at all to update
     // this sample view.
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void itemAdded(ModelItem item) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void itemRemoved(ModelItem item) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changedItemLook(ModelItem item) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changedArchiveRescale() {
     }
@@ -375,10 +399,16 @@ public class BeamGraphView implements ModelListener {
     public void changedTimerange() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changedItemVisibility(ModelItem item) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changedItemDataConfig(PVItem item) {
     }
@@ -387,10 +417,16 @@ public class BeamGraphView implements ModelListener {
     public void scrollEnabled(boolean scrollEnabled) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changedAnnotations() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void itemRefreshRequested(PVItem item) {
     }
@@ -399,32 +435,53 @@ public class BeamGraphView implements ModelListener {
 	public void changeTimeAxisConfig() {
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedAxis(Optional<AxisConfig> arg0) {		
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedColorsOrFonts() {		
 	}
-
+	
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedLayout() {		
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedSaveChangesBehavior(boolean arg0) {
 		
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedTiming() {
 		
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void changedTitle() {
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	@Override
 	public void selectedSamplesChanged() {	
 	}
