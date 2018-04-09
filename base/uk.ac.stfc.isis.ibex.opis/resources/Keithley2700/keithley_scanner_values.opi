@@ -42,7 +42,6 @@
     <wuid>6ebe0d97:160d54afb65:390</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text></text>
     <scripts />
     <height>529</height>
     <border_width>1</border_width>
@@ -103,7 +102,7 @@
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>775</width>
+    <width>625</width>
     <x>18</x>
     <name>Label</name>
     <y>6</y>
@@ -164,7 +163,6 @@
       <wuid>-63e4ea98:15e5c1ca041:-7f8c</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text></text>
       <scripts />
       <height>19</height>
       <border_width>1</border_width>
@@ -389,7 +387,6 @@ $(pv_value)</tooltip>
       <wuid>-63e4ea98:15e5c1ca041:-7f8c</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text></text>
       <scripts />
       <height>19</height>
       <border_width>1</border_width>
@@ -450,46 +447,6 @@ $(pv_value)</tooltip>
           <pv trig="true">$(PV_ROOT):CHNL:208:READ</pv>
           <pv trig="true">$(PV_ROOT):CHNL:209:READ</pv>
           <pv trig="true">$(PV_ROOT):CHNL:210:READ</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:101:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:102:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:103:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:104:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:105:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:106:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:107:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:108:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:109:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:110:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:201:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:202:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:203:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:204:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:205:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:206:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:207:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:208:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:209:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:210:TEMP</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:101:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:102:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:103:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:104:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:105:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:106:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:107:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:108:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:109:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:110:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:201:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:202:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:203:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:204:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:205:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:206:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:207:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:208:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:209:DRIFT</pv>
-          <pv trig="true">$(PV_ROOT):CHNL:210:DRIFT</pv>
         </path>
       </scripts>
       <height>429</height>
@@ -700,7 +657,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>775</width>
+    <width>625</width>
     <x>18</x>
     <name>Label_2</name>
     <y>42</y>
@@ -722,7 +679,7 @@ $(pv_value)</tooltip>
     <wuid>6ebe0d97:161b8a4b322:-2622</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Reviewer notes:&#xD;
+    <text>Reviewer Notes:
 &#xD;
 - These graphs display CHNL:XXX:TEMP and :DRIFT which have not been calculated yet. It's the work of Ticket 2994&#xD;
 &#xD;
@@ -756,313 +713,6 @@ $(pv_value)</tooltip>
     <show_scrollbar>false</show_scrollbar>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:766b</wuid>
-    <pv_value />
-    <text>Stop the clicking&#xD;
-</text>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>40</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):SCAN:STATE:SP</pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Button</widget_type>
-    <width>127</width>
-    <x>600</x>
-    <name>Button_2</name>
-    <y>525</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path></path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-my_pv = widget.getPV()
-
-my_pv.setValue("NONE")]]></scriptText>
-        <embedded>true</embedded>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:76c5</wuid>
-    <pv_value />
-    <text>Start the clicking</text>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>40</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):SCAN:STATE:SP</pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Button</widget_type>
-    <width>127</width>
-    <x>468</x>
-    <name>Button_1</name>
-    <y>525</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path></path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-my_pv = widget.getPV()
-
-my_pv.setValue("INT")]]></scriptText>
-        <embedded>true</embedded>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:7a12</wuid>
-    <pv_value />
-    <text>Turn InitMode On</text>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>40</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):FRES:AUTORANGE:SP</pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Button</widget_type>
-    <width>127</width>
-    <x>728</x>
-    <name>Button_2</name>
-    <y>324</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path></path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-my_pv = widget.getPV()
-
-my_pv.setValue(0)]]></scriptText>
-        <embedded>true</embedded>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:7a7a</wuid>
-    <transparent>true</transparent>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <text>######</text>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <show_units>false</show_units>
-    <height>20</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):FRES:AUTORANGE</pv_name>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <precision_from_pv>true</precision_from_pv>
-    <widget_type>Text Update</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <wrap_words>false</wrap_words>
-    <format_type>0</format_type>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>65</width>
-    <x>759</x>
-    <name>Text Update</name>
-    <y>294</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:7b43</wuid>
-    <pv_value />
-    <text>Turn InitMode OFF</text>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>40</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):FRES:AUTORANGE:SP</pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Button</widget_type>
-    <width>127</width>
-    <x>728</x>
-    <name>Button_3</name>
-    <y>378</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path></path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-my_pv = widget.getPV()
-
-my_pv.setValue(1)]]></scriptText>
-        <embedded>true</embedded>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>6ebe0d97:161b8a4b322:7d1a</wuid>
-    <transparent>true</transparent>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <text>######</text>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <show_units>false</show_units>
-    <height>20</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):CHNL:101:READ</pv_name>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <precision_from_pv>true</precision_from_pv>
-    <widget_type>Text Update</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <wrap_words>false</wrap_words>
-    <format_type>0</format_type>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>65</width>
-    <x>731</x>
-    <name>Text Update_1</name>
-    <y>174</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
     </font>
   </widget>
 </display>
