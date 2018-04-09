@@ -21,30 +21,22 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.Messages;
-import org.csstudio.trends.databrowser2.archive.ArchiveFetchJob;
-import org.csstudio.trends.databrowser2.model.ArchiveDataSource;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
 import org.csstudio.trends.databrowser2.model.ModelListener;
 import org.csstudio.trends.databrowser2.model.PVItem;
-import org.csstudio.trends.databrowser2.preferences.ArchiveDataSourceEditor;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
 import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -56,8 +48,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -98,11 +91,11 @@ public class BeamGraphView implements ModelListener {
     /** Controller that links model and plot. */
     private Controller controller = null;
 
-    /** Number of milliseconds in a day. */
-    private static final long MILLISECONDS_IN_DAY = 3600 * 1000 * 24;
-
     /** Number of milliseconds in an hour. */
     private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
+    
+    /** Number of milliseconds in a day. */
+    private static final long MILLISECONDS_IN_DAY = MILLISECONDS_IN_HOUR * 24;
     
     /** Current plot time span in milliseconds. */
     private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
@@ -170,7 +163,7 @@ public class BeamGraphView implements ModelListener {
 			controller = new Controller(shell, model, modelPlot);
             controller.start();
 		} catch (Exception ex) {
-            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
+            onError(ex);
         }
 
         createBeamStatusPlot();
@@ -187,7 +180,7 @@ public class BeamGraphView implements ModelListener {
         dailyButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setTimeRangeDaily();
+                setTimeRange(MILLISECONDS_IN_DAY);
             }
         });
 
@@ -196,7 +189,7 @@ public class BeamGraphView implements ModelListener {
         hourlyButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setTimeRangeHourly();
+                setTimeRange(MILLISECONDS_IN_HOUR);
             }
         });
 
@@ -206,8 +199,8 @@ public class BeamGraphView implements ModelListener {
         RTTimePlot rtPlot = modelPlot.getPlot();
         rtPlot.setTitle(Optional.of(PLOT_TITLE));
         rtPlot.setEnabled(false);
-        rtPlot.showToolbar(true);
-        rtPlot.showLegend(true);
+        rtPlot.showToolbar(false);
+        rtPlot.showLegend(false);
         rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 
@@ -268,7 +261,7 @@ public class BeamGraphView implements ModelListener {
             newItem.setColor(rgb);
             return newItem;
         } catch (Exception ex) {
-            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
+        	onError(ex);
             return null;
         }
     }
@@ -283,19 +276,14 @@ public class BeamGraphView implements ModelListener {
         newItem.useDefaultArchiveDataSources();
         try {
 			model.addItem(newItem);
-		} catch (Exception e) {
-			MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, e.toString()));
+		} catch (Exception ex) {
+			onError(ex);
 		}
         updateModelTimeRange();
     }
 
-    private void setTimeRangeDaily() {
-        currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
-        updateModelTimeRange();
-    }
-
-    private void setTimeRangeHourly() {
-        currentPlotTimespanMilliseconds = MILLISECONDS_IN_HOUR;
+    private void setTimeRange(final long timerange) {
+        currentPlotTimespanMilliseconds = timerange;
         updateModelTimeRange();
     }
 
@@ -303,55 +291,13 @@ public class BeamGraphView implements ModelListener {
     	try {
             model.setTimerange(Instant.now().minusMillis(currentPlotTimespanMilliseconds), Instant.now());
         } catch (Exception ex) {
-            MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, ex.toString()));
+            onError(ex);
         }
     }
-
-    /**
-     * Get the title for the plot.
-     * 
-     * @return Plot title
-     */
-    private long getTimeRangeInMilliseconds() {
-        return currentPlotTimespanMilliseconds;
-    }
-
-    /**
-     * Gets a calendar formatted time specification defined as the number of
-     * milliseconds from 0 internal base time.
-     * 
-     * @param milliseconds
-     *            The number of milliseconds after 0 base time for the time
-     *            specification
-     * 
-     * @return calendar formatted start time specification for the plot
-     */
-    private String getCalendarSpec(Long milliseconds) {
-        // Use absolute start/end time
-        final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(milliseconds);
-        return AbsoluteTimeParser.format(cal);
-    }
-
-    /**
-     * Gets the start time specification for the plot. The start time is set to
-     * 0 calendar time so that the duration can be easily defined via the
-     * endspec
-     * 
-     * @return calendar formatted start time specification for the plot
-     */
-    private String getStartSpec() {
-        return getCalendarSpec(0L);
-    }
-
-    /**
-     * Gets the end time specification for the plot. This is used to define a
-     * time range for the plot relative to 0 calendar time
-     * 
-     * @return calendar formatted end time specification for the plot
-     */
-    private String getEndSpec() {
-        return getCalendarSpec(getTimeRangeInMilliseconds());
+    
+    private void onError(Throwable t) {
+    	MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, t.toString()));
+    	IsisLog.getLogger(getClass()).error(t);
     }
     
     /**
