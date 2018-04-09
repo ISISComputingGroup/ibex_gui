@@ -31,8 +31,7 @@ import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
-import org.csstudio.trends.databrowser2.model.ModelItem;
-import org.csstudio.trends.databrowser2.model.ModelListener;
+import org.csstudio.trends.databrowser2.model.ModelListenerAdapter;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
@@ -59,10 +58,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamGraphView implements ModelListener {
-	
-    /** View ID registered in plugin.xml. */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
+public class BeamGraphView extends ModelListenerAdapter {
 
     /** Title for the Y-axis. */
     private static final String Y_AXIS_TITLE = "Beam current (μA)";
@@ -79,7 +75,7 @@ public class BeamGraphView implements ModelListener {
     /** TS2 beam current PV name. */
     private static final String TS2_BEAM_CURRENT_PV = "AC:TS2:BEAM:CURR";
 
-    /** Synchotron beam current PV name. */
+    /** Synchrotron beam current PV name. */
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */
@@ -127,16 +123,6 @@ public class BeamGraphView implements ModelListener {
     public void createPartControl(final Composite parent) {
     	// Remember what shell we're using
         shell = parent.getShell();
-        
-        
-//        IExtensionRegistry r = RegistryFactory.getRegistry();
-//        for (IConfigurationElement t : r.getConfigurationElementsFor("org.csstudio.archive.reader.ArchiveReader")) {
-//        	final String plugin = t.getContributor().getName();
-//            final String prefix = t.getAttribute("prefix");
-//            System.out.println("HELLO THIS IS DEBUGGGING: " + plugin + ", " + prefix);
-//            
-//        }
-        
         
         // Create the view model
         configureModel();
@@ -192,7 +178,6 @@ public class BeamGraphView implements ModelListener {
                 setTimeRange(MILLISECONDS_IN_HOUR);
             }
         });
-
     }
 
     private void createBeamStatusPlot() {
@@ -218,7 +203,7 @@ public class BeamGraphView implements ModelListener {
         axisConfig.setColor(new RGB(0, 0, 0));
     }
 
-    protected void configureModel() {
+    private void configureModel() {
     	model = new Model();
     	model.addListener(this);
         model.setArchiveRescale(ArchiveRescale.NONE);
@@ -295,9 +280,13 @@ public class BeamGraphView implements ModelListener {
         }
     }
     
-    private void onError(Throwable t) {
-    	MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, t.toString()));
-    	IsisLog.getLogger(getClass()).error(t);
+    /**
+     * Error handler for the general errors which CSStudio classes can throw.
+     * @param err the error that was thrown
+     */
+    private void onError(Throwable err) {
+    	MessageDialog.openError(shell, Messages.Error, NLS.bind(Messages.ErrorFmt, err.toString()));
+    	IsisLog.getLogger(getClass()).error(err);
     }
     
     /**
@@ -309,126 +298,4 @@ public class BeamGraphView implements ModelListener {
     		model.removeListener(this);
     	}
     }
-
-    // Following methods are defined as they are mandatory to fulfil
-    // ModelListener interface, but they are not used at all to update
-    // this sample view.
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void itemAdded(ModelItem item) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void itemRemoved(ModelItem item) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changedItemLook(ModelItem item) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changedArchiveRescale() {
-    }
-
-    @Override
-    public void changedTimerange() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changedItemVisibility(ModelItem item) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changedItemDataConfig(PVItem item) {
-    }
-
-    @Override
-    public void scrollEnabled(boolean scrollEnabled) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changedAnnotations() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void itemRefreshRequested(PVItem item) {
-    }
-
-	@Override
-	public void changeTimeAxisConfig() {
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedAxis(Optional<AxisConfig> arg0) {		
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedColorsOrFonts() {		
-	}
-	
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedLayout() {		
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedSaveChangesBehavior(boolean arg0) {
-		
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedTiming() {
-		
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void changedTitle() {
-	}
-
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	public void selectedSamplesChanged() {	
-	}
 }
