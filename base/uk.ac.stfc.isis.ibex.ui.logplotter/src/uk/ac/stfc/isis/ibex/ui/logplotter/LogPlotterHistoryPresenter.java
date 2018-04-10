@@ -19,15 +19,108 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.csstudio.trends.databrowser2.Messages;
+import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.ArchiveRescale;
+import org.csstudio.trends.databrowser2.model.AxisConfig;
+import org.csstudio.trends.databrowser2.model.Model;
+import org.csstudio.trends.databrowser2.model.ModelItem;
+import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.csstudio.ui.util.EmptyEditorInput;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.PlatformUI;
+
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
+/**
+ * The class that is responsible for displaying the log plotter.
+ */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
-
-	private final LogPlotterDisplay display = new LogPlotterDisplay();
+	
+	/**
+	 * @return A stream of all the current DataBrowserEditors.
+	 */
+	private Stream<DataBrowserEditor> getCurrentDataBrowsers() {
+		Stream<IEditorReference> editorRefs = Arrays.stream(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences());
+		
+		return editorRefs.map(e -> e.getEditor(false))
+						 .filter(e -> e instanceof DataBrowserEditor)
+						 .map(e -> (DataBrowserEditor) e);
+	}
 	
 	@Override
-	public void displayHistory(String pvAddress) {
-		display.displayPVHistory(pvAddress);
+	public List<String> getCurrentPresenters() {
+		return getCurrentDataBrowsers().map(e -> e.getTitle())
+									   .collect(Collectors.toList());
+	}
+	
+	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
+		if (editor == null) {
+	        return;
+	    }
+		Model model = editor.getModel();
+		model.setSaveChanges(false);
+		model.setArchiveRescale(ArchiveRescale.STAGGER);
+		
+		// Add received items
+	    final double period = Preferences.getScanPeriod();
+	    try {
+	    	// Create axis
+			AxisConfig axis = new AxisConfig(displayName);
+			axis.setAutoScale(true);
+			model.addAxis(axis);
+	    	
+			// Create trace
+	    	final PVItem item = new PVItem(pvAddress, period);
+	    	item.setDisplayName(displayName);
+			item.useDefaultArchiveDataSources();
+			item.setAxis(axis);
+			model.addItem(item);
+	    } catch (Exception ex) {
+	        MessageDialog.openError(editor.getSite().getShell(),
+	                Messages.Error,
+	                NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+	    }
+	}
+	
+	@Override
+	public void newPresenter(String pvAddress, final String displayName) {		
+	    // Create new editor
+	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
+	    	@Override
+	    	public String getName() {
+	    		return displayName;
+	    	}
+	    });
+	    
+	    addPVToEditor(pvAddress, displayName, editor);
+	}
+
+	@Override
+	public void addToPresenter(String pvAddress, String display, String presenterName) {		
+		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
+																  .collect(Collectors.toList());
+		
+		if (editors.size() == 0) {
+			// Can't find the editor to add to, make a new one
+			newPresenter(pvAddress, display);
+		} else {
+			DataBrowserEditor editor = editors.get(0);
+			addPVToEditor(pvAddress, display, editor);
+			
+			// Recolour the axes so that they match the traces
+			for (ModelItem trace : editor.getModel().getItems()) {
+				trace.getAxis().setColor(trace.getColor());
+			}
+		}
 	}
 
 }
