@@ -128,9 +128,9 @@ public class BeamGraphView extends ModelListenerAdapter {
         plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         modelPlot = new ModelBasedPlot(plotComposite);
 
-         for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
+        for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
         	addTrace(generatePVItem(pv));
-         }
+        }
 
         // Create and start controller
 		try {
