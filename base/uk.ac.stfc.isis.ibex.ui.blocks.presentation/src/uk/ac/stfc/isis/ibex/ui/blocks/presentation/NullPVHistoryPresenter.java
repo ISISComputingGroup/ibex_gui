@@ -19,10 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-public class DoNothingPVHistoryPresenter implements PVHistoryPresenter {
+import java.util.ArrayList;
+
+/**
+ * A null object for the PV history presenter, to use when a real object is unavailable.
+ */
+public class NullPVHistoryPresenter implements PVHistoryPresenter {
+	@Override
+	public void newDisplay(String pvAddress, String displayName) {
+		// do nothing
+	}
 
 	@Override
-	public void displayHistory(String pvAddress) {
+	public ArrayList<String> getCurrentDisplays() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addToDisplay(String pvAddress, String display, String presenterName) {
 		// do nothing
 	}
 
