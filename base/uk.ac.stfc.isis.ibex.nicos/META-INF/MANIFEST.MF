@@ -6,12 +6,14 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.nicos.Nicos
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.nicos
+Export-Package: uk.ac.stfc.isis.ibex.nicos,
+ uk.ac.stfc.isis.ibex.nicos.messages
 Import-Package: org.eclipse.ui.plugin
 Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
  org.eclipse.core.runtime;bundle-version="3.8.0",
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
- uk.ac.stfc.isis.ibex.activemq,
  uk.ac.stfc.isis.ibex.nicos,
- uk.ac.stfc.isis.ibex.epics
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.instrument
+Bundle-ClassPath: ., lib/jeromq-0.4.2.jar

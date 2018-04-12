@@ -52,6 +52,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
 	private final Font textFont = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+	private final Font simulationModeFont = SWTResourceManager.getFont("Arial", 20, SWT.BOLD);
 	
 	private final Dashboard dashboard = Dashboard.getInstance();
 	
@@ -71,7 +72,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 		glParent.horizontalSpacing = 1;
 		glParent.verticalSpacing = 0;
 		parent.setLayout(glParent);
-		Banner banner = new Banner(parent, SWT.NONE, bannerModel, bannerTitleFont, bannerFont);
+		Banner banner = new Banner(parent, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
         banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
 		Label separator1 = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);

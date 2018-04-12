@@ -91,7 +91,7 @@ public class StubWritable<T> implements Writable<T> {
     }
     
     @Override
-    public void uncheckedWrite(T value){
+    public void uncheckedWrite(T value) {
         write(value);
     }
 }

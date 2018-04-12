@@ -24,6 +24,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
+import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -73,6 +74,7 @@ public class Consoles extends AbstractUIPlugin {
 	 */
 	@Override
     public void stop(BundleContext context) throws Exception {
+		ScriptConsoleManager.getInstance().closeAll();
 		plugin = null;
 		super.stop(context);
 	}

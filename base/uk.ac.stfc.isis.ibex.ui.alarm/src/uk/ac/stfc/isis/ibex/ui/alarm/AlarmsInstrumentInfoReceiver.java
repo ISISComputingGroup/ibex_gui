@@ -20,39 +20,26 @@
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
  * The class that deals with the instrument being switched.
  * 
  */
-public class AlarmsInstrumentInfoReceiver implements InstrumentInfoReceiver {
+public class AlarmsInstrumentInfoReceiver extends InstrumentInfoReceiverAdapter {
     
     /**
      * Allow the alarm perspective to be closed and reopened.
      */
     private PerspectiveReopener alarmPerspectiveReopener;
 		
-    
     /**
      * Instantiates a new alarms; call getInstance instead in most cases.
      */
     public AlarmsInstrumentInfoReceiver() {
         alarmPerspectiveReopener = new PerspectiveReopener(AlarmPerspective.ID);
     }
-
-    /**
-     * On change of instrument there is nothing to do for this perspective. The
-     * settings for the alarm server are changed by the alarm model.
-     * 
-     * @param instrument to set
-     */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        // nothing to do on set instrument
-    }
-
 
     /**
      * Before the instrument changes close the alarm perspective so that it
@@ -65,7 +52,6 @@ public class AlarmsInstrumentInfoReceiver implements InstrumentInfoReceiver {
     public void preSetInstrument(InstrumentInfo instrument) {
         alarmPerspectiveReopener.closePerspective();
     }
-
 
     /**
      * After the instrument has switched reopen the alarm perspective if it was

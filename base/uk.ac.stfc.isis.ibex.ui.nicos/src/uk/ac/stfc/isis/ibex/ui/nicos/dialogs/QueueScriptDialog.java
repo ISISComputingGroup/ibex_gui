@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2016 Science & Technology Facilities Council.
+* Copyright (C) 2012-2018 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
@@ -41,7 +42,7 @@ public class QueueScriptDialog extends Dialog {
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	
 	private QueueScriptPanel creator;
-    private Button sendBtn;
+    private Button queueBtn;
 
     private QueueScriptViewModel model;
 
@@ -70,9 +71,10 @@ public class QueueScriptDialog extends Dialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-        sendBtn = createButton(parent, IDialogConstants.OK_ID, "Send", false);
+        queueBtn = createButton(parent, IDialogConstants.OK_ID, "Queue", false);
+        queueBtn.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
 
-        sendBtn.addSelectionListener(new SelectionAdapter() {
+        queueBtn.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {

@@ -701,7 +701,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_anti_alias>true</trace_1_anti_alias>
     <pv_value />
     <trace_0_buffer_size>1000</trace_0_buffer_size>
-    <trace_2_buffer_size>100</trace_2_buffer_size>
+    <trace_2_buffer_size>1000</trace_2_buffer_size>
     <axis_1_maximum>50.0</axis_1_maximum>
     <axis_0_scale_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
@@ -742,7 +742,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
     </trace_2_trace_color>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
-    <trace_3_buffer_size>100</trace_3_buffer_size>
+    <trace_3_buffer_size>1000</trace_3_buffer_size>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_3_line_width>1</trace_3_line_width>
     <show_toolbar>false</show_toolbar>

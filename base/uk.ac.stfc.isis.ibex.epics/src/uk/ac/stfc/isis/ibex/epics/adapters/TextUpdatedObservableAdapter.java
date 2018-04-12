@@ -39,8 +39,7 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
 		super(new ForwardingObservable<>(observable));
 	}
 	
-	public TextUpdatedObservableAdapter(
-			ForwardingObservable<String> observable) {
+	public TextUpdatedObservableAdapter(ForwardingObservable<String> observable) {
 		super(observable);
 	}
 	

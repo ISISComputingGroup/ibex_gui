@@ -179,7 +179,7 @@ public class SynopticPresenter extends ModelObject {
             try {
                 SynopticOpiTargetView.displayOpi((OpiTarget) target);
             } catch (OPIViewCreationException e) {
-                LOG.catching(e);
+                LOG.error(e);
             }
             return;
         }

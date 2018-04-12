@@ -83,5 +83,5 @@ public class SynopticValidator extends ErrorAggregator {
         }
         sb.deleteCharAt(sb.length() - 2);
         return sb.toString();
-    };
+    }
 }

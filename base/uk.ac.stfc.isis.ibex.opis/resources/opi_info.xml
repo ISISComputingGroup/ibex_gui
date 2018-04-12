@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
 	<opis>
 		<entry>
@@ -54,62 +54,62 @@
 			<key>CCD100</key>
 			<value>
 				<type>CCD100</type>
-				<path>CCD100.opi</path>
+				<path>CCD100/CCD100.opi</path>
 				<description>The OPI for a Chell CCD100</description>
 				<macros>
 					<macro>		
-                        <name>CCD_1</name>		
-                        <description>The PV prefix for the first CCD100 (e.g CCD100_01).</description>		
-                    </macro>						
-                    <macro>		
-                        <name>CCD_2</name>		
-                        <description>The PV prefix for the second CCD100 (e.g CCD100_01).</description>		
-                    </macro>		
-                    <macro>		
-                        <name>CCD_3</name>		
-                        <description>The PV prefix for the third CCD100 (e.g CCD100_01).</description>		
-                    </macro>		
-                    <macro>		
-                        <name>CCD_4</name>		
-                        <description>The PV prefix for the fourth CCD100 (e.g CCD100_01).</description>		
-                    </macro>				
+						<name>CCD_1</name>		
+						<description>The PV prefix for the first CCD100 (e.g CCD100_01).</description>		
+					</macro>						
+					<macro>		
+						<name>CCD_2</name>		
+						<description>The PV prefix for the second CCD100 (e.g CCD100_01).</description>		
+					</macro>		
+					<macro>		
+						<name>CCD_3</name>		
+						<description>The PV prefix for the third CCD100 (e.g CCD100_01).</description>		
+					</macro>		
+					<macro>		
+						<name>CCD_4</name>		
+						<description>The PV prefix for the fourth CCD100 (e.g CCD100_01).</description>		
+					</macro>				
 				</macros>
 			</value>
 		</entry>
-        <entry>
-            <key>Double Monitor</key>		
-            <value>	
+		<entry>
+			<key>Double Monitor</key>		
+			<value>	
 				<categories>
 					<category>Monitors</category>
 				</categories>
-                <type>MONITOR</type>
-                <path>double_monitor.opi</path>		
-                <description>The OPI for a double fixed monitor.</description>		
-                <macros>		
-                    <macro>		
-                        <name>M</name>		
-                        <description>The monitor number (e.g. 1).</description>		
-                    </macro>						
-                    <macro>		
-                        <name>MA</name>		
-                        <description>The internal number for the first channel (e.g. 1).</description>		
-                    </macro>		
-                    <macro>		
-                        <name>MB</name>		
-                        <description>The internal number for the second channel (e.g. 2).</description>		
-                    </macro>		
-                    <macro>		
-                        <name>MAHVCHAN</name>		
-                        <description>CAEN HV channel for A (e.g. 0).</description>		
-                    </macro>		
-                    <macro>		
-                        <name>MBHVCHAN</name>		
-                        <description>CAEN HV channel for B (e.g. 1).</description>		
-                    </macro>		
-                </macros>
-            </value>		
- 		</entry>		
- 		<entry>
+				<type>MONITOR</type>
+				<path>double_monitor.opi</path>		
+				<description>The OPI for a double fixed monitor.</description>		
+				<macros>		
+					<macro>		
+						<name>M</name>		
+						<description>The monitor number (e.g. 1).</description>		
+					</macro>						
+					<macro>		
+						<name>MA</name>		
+						<description>The internal number for the first channel (e.g. 1).</description>		
+					</macro>		
+					<macro>		
+						<name>MB</name>		
+						<description>The internal number for the second channel (e.g. 2).</description>		
+					</macro>		
+					<macro>		
+						<name>MAHVCHAN</name>		
+						<description>CAEN HV channel for A (e.g. 0).</description>		
+					</macro>		
+					<macro>		
+						<name>MBHVCHAN</name>		
+						<description>CAEN HV channel for B (e.g. 1).</description>		
+					</macro>		
+				</macros>
+			</value>		
+		</entry>		
+		<entry>
 			<key>Eurotherm</key>
 			<value>
 				<categories>
@@ -118,12 +118,12 @@
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
 				<description>The OPI for the Eurotherm crate connected to multiple Eurotherm temperature controllers.</description>
-                <macros>
+				<macros>
 					<macro>
 						<name>EURO</name>
 						<description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
 					</macro>
-                </macros>
+				</macros>
 			</value>
 		</entry>
 		<entry>
@@ -134,28 +134,36 @@
 					<category>Cryogenics</category>
 				</categories>
 				<type>MERCURY</type>
-				<path>mercuryiTC.opi</path>
+				<path>mercuryiTC\mercuryiTC.opi</path>
 				<description>The OPI for the Mercury temperature controller.</description>
 				<macros>
 					<macro>
 						<name>MERCURY</name>
 						<description>The Mercury PV prefix (e.g. MERCURY_01).</description>
 					</macro>
-                    <macro>
+					<macro>
 						<name>TEMP_NUM1</name>
-						<description>The first card number (e.g. 1, optional).</description>
+						<description>The first temperature card number (e.g. 1, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM2</name>
-						<description>The second card number (e.g. 2, optional).</description>
+						<description>The second temperature card number (e.g. 2, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM3</name>
-						<description>The third card number (e.g. 3, optional).</description>
+						<description>The third temperature card number (e.g. 3, optional).</description>
 					</macro>
 					<macro>
 						<name>TEMP_NUM4</name>
-						<description>The fourth card number (e.g. 4, optional).</description>
+						<description>The fourth temperature card number (e.g. 4, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM1</name>
+						<description>The first level card number (e.g. 1, optional).</description>
+					</macro>
+					<macro>
+						<name>LEVEL_NUM2</name>
+						<description>The second level card number (e.g. 1, optional).</description>
 					</macro>                   
 				</macros>
 			</value>
@@ -188,11 +196,11 @@
 				<categories>
 					<category>Jaws and slits</category>
 				</categories>
-				<type>UNCONFIRMED</type>
-				<path>jaws/Jaws.opi</path>
+				<type>JAWS</type>
+				<path>jaws/jaws.opi</path>
 				<description>The OPI for a Jaw set.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>     
@@ -224,7 +232,7 @@
 				<path>JulaboFP50.opi</path>
 				<description>The OPI for the Julabo FP50 temperature controller..</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>JULABO</name>
 						<description>The Julabo PV prefix (e.g. JULABO_01).</description>
 					</macro>                     
@@ -241,7 +249,7 @@
 				<path>linkam95.opi</path>
 				<description>The OPI for the Linkam 95 temperature controller.</description>
 				<macros>    
-                    <macro>
+					<macro>
 						<name>LINKAM95</name>
 						<description>The Linkam 95 PV prefix (e.g. LINKAM95_01).</description>
 					</macro>              
@@ -311,7 +319,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>  
+						<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -328,7 +336,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE336</name>
- 						<description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>  
+						<description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -356,9 +364,9 @@
 				<path>Mk2Chopper.opi</path>
 				<description>The OPI for the Mk2 chopper.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>MK2CHOPR</name>
- 						<description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>  
+						<description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -373,7 +381,7 @@
 				<path>monitor.opi</path>
 				<description>The OPI for a fixed monitor.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>M</name>
 						<description>The monitor number (e.g. 1).</description>
 					</macro>                     
@@ -428,7 +436,7 @@
 				<categories>
 					<category>Imaging cameras</category>
 				</categories>
-				<type>UNCONFIRMED</type>
+				<type>PIXELMAN</type>
 				<path>pixelman.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -553,19 +561,19 @@
 				</macros>
 			</value>
 		</entry>
-        <entry>
+		<entry>
 			<key>SKF G5 Chopper</key>
 			<value>
 				<categories>
 					<category>Choppers</category>
 				</categories>
 				<type>CHOPPER</type>
-				<path>SKFChopper.opi</path>
+				<path>SKFG5Chopper/SKFChopper.opi</path>
 				<description>The OPI for the SKF G5 chopper controllers.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>DEFAULT_ACTIVE_TAB</name>
- 						<description>The tab which is displayed when the OPI is opened (0 to 4).</description>  
+						<description>The tab which is displayed when the OPI is opened (1 to 5).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -580,7 +588,7 @@
 				<path>jaws/slit1.opi</path>
 				<description>The OPI for a 2D set of rectangular jaws controlled by 4 motors.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>                    
@@ -596,7 +604,7 @@
 						<name>M3</name>
 						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
-                    <macro>
+					<macro>
 						<name>M4</name>
 						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>
@@ -613,7 +621,7 @@
 				<path>jaws/coupled_slit.opi</path>
 				<description>The OPI for a 2D set of rectangular jaws controlled by 2 motors.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>                    
@@ -634,7 +642,7 @@
 				<categories>
 					<category>Jaws and slits</category>
 				</categories>
-				<type>UNCONFIRMED</type>
+				<type>JAWS</type>
 				<path>slit_motors.opi</path>
 				<description>The OPI displaying the motors of a slit.</description>
 				<macros>
@@ -650,7 +658,7 @@
 						<name>M3</name>
 						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
-                    <macro>
+					<macro>
 						<name>M4</name>
 						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>                
@@ -667,7 +675,7 @@
 				<path>TPG300.opi</path>
 				<description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>TPG300</name>
 						<description>The TPG300 PV prefix (e.g. TPG300_01).</description>
 					</macro>                  
@@ -684,7 +692,7 @@
 				<path>TPG26x.opi</path>
 				<description>The OPI for the PFEIFFER 26x Vacuum Gauge.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>TPG</name>
 						<description>The TPG26x PV prefix (e.g. TPG26X_01).</description>
 					</macro>                  
@@ -749,7 +757,7 @@
 				<path>pdr2000.opi</path>
 				<description>The OPI for the MKS PDR 2000 pressure transducer</description>
 				<macros>    
-                    <macro>
+					<macro>
 						<name>PDR2000</name>
 						<description>The MKS PDR 2000 PV prefix (e.g. PDR2000_01).</description>
 					</macro>               
@@ -766,7 +774,7 @@
 				<path>cryValve.opi</path>
 				<description>The OPI for the Iris cryo valve.</description>
 				<macros>    
-                    <macro>
+					<macro>
 						<name>CRYVALVE</name>
 						<description>The cryo valve PV prefix (e.g. CRYVALVE_01).</description>
 					</macro>  
@@ -911,6 +919,19 @@
 				<macros>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Gem jaw set</key>
+			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
+				<type>JAWS</type>
+				<path>jaws/gem_jaws/Jaws_gem.opi</path>
+				<description>The OPI for the Gem jaw set. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>		
 		<entry>
 			<key>Instron stress rig</key>
@@ -1047,15 +1068,15 @@
 				<path>jaws/enginx_jaws/jaw_overview.opi</path>
 				<description>The OPI for the 3rd Enginx Jawset.</description>
 				<macros>
-                    <macro>
+					<macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>            
 				</macros>
 			</value>
-		</entry>        
-        <entry>
-        	<key>Zoom FINS PLC</key>
+		</entry>
+		<entry>
+			<key>Zoom FINS PLC</key>
 			<value>
 				<type>PLC</type>
 				<path>PLCZoomVacuum.opi</path>
@@ -1069,7 +1090,7 @@
 			</value>
 		</entry>
 		<entry>
-        	<key>Engin-X collimators</key>
+			<key>Engin-X collimators</key>
 			<value>
 				<categories>
 					<category>Miscellaneous motion control</category>
@@ -1116,6 +1137,110 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Fermi chopper lifter</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>fermi_chopper_lift.opi</path>
+				<description>The OPI for the fermi chopper lifter.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Sample stack</key>
+			<value>
+				<categories>
+					<category>Sample stacks and goniometers</category>
+				</categories>
+				<type>SAMPLESTACK</type>
+				<path>sample_stack\sample_stack.opi</path>
+				<description>Generic sample stack OPI supporting up to 8 motors. PV prefixs are typically of the form MOT:STACK:Z </description>
+				<macros>
+					<macro>
+						<name>AXIS_PV_1</name>
+						<description>The axis PV for motor 1</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_2</name>
+						<description>The axis PV for motor 2</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_3</name>
+						<description>The axis PV for motor 3</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_4</name>
+						<description>The axis PV for motor 4</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_5</name>
+						<description>The axis PV for motor 5</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_6</name>
+						<description>The axis PV for motor 6</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_7</name>
+						<description>The axis PV for motor 7</description>
+					</macro>
+					<macro>
+						<name>AXIS_PV_8</name>
+						<description>The axis PV for motor 8</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Galil Engineering View</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>GALIL_ENGINEERING</type>
+				<path>galil/galil.opi</path>
+				<description>The OPI giving a detailed engineering view of a galil.</description>
+				<macros>
+					<macro>
+						<name>M</name>
+						<description>The galil number to view. E.g. the galil at MOT:MTR0304 would be 03</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>GEMOscillatingRadialCollimator</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>OSCILLATING_COLLIMATOR</type>
+				<path>gemorc.opi</path>
+				<description>The OPI for the GEM Oscillating Radial Collimator</description>
+				<macros/>
+			</value>
+		</entry>
+        <entry>
+            <key>SKF MB350 Chopper</key>
+			<value>
+			    <categories>
+					<category>Choppers</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>skf_mb350.opi</path>
+				<description>The OPI for the SKF MB350 Chopper.</description>
+				<macros>
+					<macro>
+						<name>SKFMB350</name>
+						<description>The chopper PV prefix (e.g. SKFMB350_01).</description>
+					</macro>
+				</macros>        
+        	</value>
+		</entry>
+		<entry>
 			<key>HLG</key>
 			<value>
 				<categories>
@@ -1123,7 +1248,7 @@
 				</categories>
 				<type>HE_LEVEL_GAUGE</type>
 				<path>hlg.opi</path>
-				<description>The OPI for the helium level guage.</description>
+				<description>The OPI for the helium level gauge.</description>
 				<macros>
 					<macro>
 						<name>HLG</name>
@@ -1135,6 +1260,9 @@
 		<entry>
 			<key>OscillatingCollimator</key>
 			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
 				<type>OSCILLATING_COLLIMATOR</type>
 				<path>OscillatingCollimator/OscillatingCollimator.opi</path>
 				<description>The OPI for the LET oscillating collimator.</description>
@@ -1146,5 +1274,93 @@
 				</macros>
 			</value>
 		</entry>
+	    <entry>
+	    	<key>Motion Set Point</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+					<category>Sample stacks and goniometers</category>
+					<category>Sample changers</category>
+				</categories>
+				<type>MOTION_SET_POINTS</type>
+	    		<path>stage/motion_setpoint.opi</path>
+	    		<description>The OPI for motion setpoints</description>
+	    		<macros>
+	    			<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+					</macro>	    		
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>SM300 Sample Changer</key>
+			<value>
+				<categories>
+					<category>Sample changers</category>
+				</categories>
+				<type>SM300_SAMPLE_CHANGER</type>
+				<path>sample_stack/sm300sampos.opi</path>
+				<description>The OPI for the SM300 Sample changer</description>
+				<macros>
+					<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+					</macro>				
+				</macros>
+			</value>
+		</entry>
+        <entry>
+			<key>Lakeshore 460</key>
+			<value>
+			    <categories>
+					<category>Gaussmeter</category>
+				</categories>
+				<type>LKSH460</type>
+				<path>Lakeshore460/lakeshore460.opi</path>
+				<description>The OPI for the Lakeshore 460 Gaussmeter.</description>
+				<macros>
+					<macro>
+						<name>LKSH460</name>
+						<description>The Lakeshore460 PV prefix (e.g. LKSH460_01).</description>
+					</macro>
+				</macros>
+			</value>
+	    </entry>
+    <entry>
+      <key>Triton dilution fridge</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>DILUTION_FRIDGE</type>
+        <path>triton\triton.opi</path>
+        <description>The OPI for the Triton</description>
+        <macros>
+          <macro>
+            <name>TRITON</name>
+            <description>The triton PV prefix (e.g. TRITON_01).</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>ILM200</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <type>CRYO_LEVEL_GAUGE</type>
+        <path>ilm200\ilm200.opi</path>
+        <description>The OPI for the ILM200</description>
+        <macros>
+          <macro>
+            <name>ILM200</name>
+            <description>The ILM200 PV prefix (e.g. ILM200_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>

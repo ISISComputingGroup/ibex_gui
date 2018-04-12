@@ -26,65 +26,16 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public class ReceiveLoginMessage extends ReceiveMessage {
-    private class UserLevel {
-        // this is serialised from python
-        @SuppressWarnings("checkstyle:membername")
-        Integer user_level;
-
-        /**
-         * @param userLevel
-         *            the user level
-         */
-        UserLevel(Integer userLevel) {
-            this.user_level = userLevel;
-        }
-
-    }
-
-    /** called payload to match up with message from script server */
-    private UserLevel payload = new UserLevel(null);
-
-    /**
-     * A constructor for a basic message.
-     * 
-     * @param userLevel
-     *            The user level to set.
-     * @param messageId
-     *            message id of the returned message, this can be correlated
-     *            with a sent id
-     * @param success
-     *            true if message is for a success; false otherwise
-     * 
-     */
-    public ReceiveLoginMessage(Integer userLevel, String messageId, boolean success) {
-        super(messageId, success);
-        this.payload = new UserLevel(userLevel);
-    }
+public class ReceiveLoginMessage implements ReceiveMessage {
+    // this is serialised from python
+    @SuppressWarnings("checkstyle:membername")
+    private Integer user_level;
     
     /**
      * @return The user level of the logged in user.
      */
     public Integer getUserLevel() {
-        if (this.payload == null) {
-            return null;
-        }
-        return this.payload.user_level;
-    }
-
-    /**
-     * If this is the initial connect message print that, otherwise print logged
-     * in.
-     * 
-     * @return return login recieved
-     */
-    @Override
-    public String getMessage() {
-        if (getUserLevel() != null) {
-            return "Logged in";
-        } else {
-            return "Initial connect";
-        }
+        return this.user_level;
     }
 
 }

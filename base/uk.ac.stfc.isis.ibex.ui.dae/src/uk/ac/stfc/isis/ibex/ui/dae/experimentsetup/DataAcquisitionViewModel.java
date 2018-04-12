@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.BinaryChoice;
@@ -30,6 +31,7 @@ import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -41,7 +43,9 @@ public class DataAcquisitionViewModel extends ModelObject {
 
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
-    private DAEComboContentProvider comboContentProvider;
+    private DAEComboContentProvider wiringComboContentProvider;
+    private DAEComboContentProvider detectorComboContentProvider;
+    private DAEComboContentProvider spectraComboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -82,15 +86,18 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of wiring tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the wiring tables
      */
-	public void setWiringTableList(UpdatedValue<Collection<String>> tables) {
+	public void setWiringTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		wiringTables = tables;
+		wiringComboContentProvider = new DAEComboContentProvider(dir);
 		
 		wiringTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on wiringTableList not wiringTables
 				firePropertyChange("wiringTableList", null, null);
+				firePropertyChange("newWiringTable", null, null);
 			}
 		});	
 	}
@@ -99,15 +106,18 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of detector tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the detector tables
      */
-	public void setDetectorTableList(UpdatedValue<Collection<String>> tables) {
+	public void setDetectorTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		detectorTables = tables;
+		detectorComboContentProvider = new DAEComboContentProvider(dir);
 		
 		detectorTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on detectorTableList not detectorTables
 				firePropertyChange("detectorTableList", null, null);
+				firePropertyChange("newDetectorTable", null, null);
 			}
 		});	
 	}
@@ -116,15 +126,18 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets the list of spectra tables currently available on the instrument.
      * 
      * @param tables the list of tables.
+     * @param dir the directory containing the spectra tables
      */
-	public void setSpectraTableList(UpdatedValue<Collection<String>> tables) {
+	public void setSpectraTableList(UpdatedValue<Collection<String>> tables, ForwardingObservable<String> dir) {
 		spectraTables = tables;
+		spectraComboContentProvider = new DAEComboContentProvider(dir);
 		
 		spectraTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
 				// Fire a property change event on spectraTableList not spectraTables
 				firePropertyChange("spectraTableList", null, null);
+				firePropertyChange("newSpectraTable", null, null);
 			}
 		});	
 	}
@@ -189,7 +202,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        return comboContentProvider.getContent(wiringTables, "wiring");
+        return wiringComboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -205,10 +218,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new wiring table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new wiring table.
+     * @param index the index in the list of wiring tables of the one that has been selected.
      */
-	public void setNewWiringTable(String value) {
-		settings.setNewWiringTable(value);
+	public void setNewWiringTable(int index) {
+		settings.setNewWiringTable(getWiringTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new wiring table.
+	 */
+	public int getNewWiringTable() {
+		return Arrays.asList(getWiringTableList()).indexOf(settings.getNewWiringTable());
 	}
 	
     /**
@@ -217,7 +237,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        return comboContentProvider.getContent(detectorTables, "det");
+        return detectorComboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -233,10 +253,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new detector table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new detector table.
+     * @param index the index in the list of detector tables of the one that has been selected.
      */
-	public void setNewDetectorTable(String value) {
-		settings.setNewDetectorTable(value);
+	public void setNewDetectorTable(int index) {
+		settings.setNewDetectorTable(getDetectorTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new detector table.
+	 */
+	public int getNewDetectorTable() {
+		return Arrays.asList(getDetectorTableList()).indexOf(settings.getNewDetectorTable());
 	}
 
     /**
@@ -245,7 +272,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        return comboContentProvider.getContent(spectraTables, "spec");
+        return spectraComboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -261,10 +288,17 @@ public class DataAcquisitionViewModel extends ModelObject {
      * Sets a new spectra table in the settings (does not take effect until
      * changes are applied).
      * 
-     * @param value the path to the new spectra table.
+     * @param index the index in the list of spectra tables of the one that has been selected.
      */
-	public void setNewSpectraTable(String value) {
-		settings.setNewSpectraTable(value);
+	public void setNewSpectraTable(int index) {
+		settings.setNewSpectraTable(getSpectraTableList()[index]);
+	}
+	
+	/**
+	 * Gets the index of the new spectra table.
+	 */
+	public int getNewSpectraTable() {
+		return Arrays.asList(getSpectraTableList()).indexOf(settings.getNewSpectraTable());
 	}
 	
 	/**
@@ -525,14 +559,4 @@ public class DataAcquisitionViewModel extends ModelObject {
 	private static BinaryChoice vetoIsActive(Boolean selected) {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
-
-    /**
-     * Sets the object responsible for filling the file selection combo boxes
-     * with appropriate options.
-     * 
-     * @param provider The content provider.
-     */
-    public void setComboContentProvider(DAEComboContentProvider provider) {
-        this.comboContentProvider = provider;
-    }
 }

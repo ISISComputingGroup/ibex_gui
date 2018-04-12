@@ -56,13 +56,23 @@ public class SynopticSelection extends Composite {
 
 		setLayout(gridLayout);
 		
-		GridData gdGotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gdGotoLabel.verticalAlignment = SWT.CENTER;
-		
 		GridData gdSynopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gdSynopticCombo.widthHint = 120;
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gdSynopticCombo);
+		
+		Button loadDefaultButton = new Button(this, SWT.NONE);
+		loadDefaultButton.setText("Load Default");
+		loadDefaultButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		loadDefaultButton.setBackground(BACKGROUND);
+		
+		loadDefaultButton.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				model.setLastDefault();
+			}
+		});
 		
         refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
