@@ -27,6 +27,7 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 /**
  * View Model for queueing a script.
@@ -124,6 +125,17 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
         firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
+    }
+    
+    /**
+     * Dequeue the selected script on the script server.
+     * 
+     * @param selected
+     * 			the script to be dequeued
+     */
+    public void dequeueScript(QueuedScript selected) {
+        // dequeue command only requires ID (reqid) of script
+    	model.dequeueScript(selected.reqid);
     }
 
 }

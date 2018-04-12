@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OwnerDrawLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -201,7 +202,7 @@ public class NicosView extends ViewPart {
         
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout ssgLayout = new GridLayout(3, false);
+        GridLayout ssgLayout = new GridLayout(6, false);
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
         scriptSendGrp.setLayout(ssgLayout);
@@ -210,16 +211,21 @@ public class NicosView extends ViewPart {
         btnCreateScript.setText("Create Script");
         btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         
+        Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
+        btnDequeueScript.setText("Dequeue Selected Script");
+        btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+        
         Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         layoutData.widthHint = 80;
         lblQueueScriptStatus.setLayoutData(layoutData);
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
                 BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
 
-
         Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        GridData gd_lblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+        gd_lblQueueScriptError.widthHint = 80;
+        lblQueueScriptError.setLayoutData(gd_lblQueueScriptError);
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
                 BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
 
@@ -229,7 +235,22 @@ public class NicosView extends ViewPart {
                 QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
                 dialog.open();
             }
-        });
+        }
+        );
+        
+        btnDequeueScript.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+                // TODO: disable dequeue button if no script selected in table
+            	if (selection.size() > 0) {
+                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
+                	queueScriptViewModel.dequeueScript(selected);
+                // TODO: select more than one script in table and pass list to dequeue function
+            	}
+            }
+        }
+        );
         
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);

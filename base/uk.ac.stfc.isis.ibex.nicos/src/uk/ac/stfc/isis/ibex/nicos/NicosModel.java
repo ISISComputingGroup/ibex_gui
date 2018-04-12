@@ -41,9 +41,10 @@ import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.DequeueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
@@ -176,7 +177,7 @@ public class NicosModel extends ModelObject {
         }
 
         GetBanner getBanner = new GetBanner();
-        SendMessageDetails response = sendMessageToNicos(getBanner);
+        SentMessageDetails response = sendMessageToNicos(getBanner);
         if (!response.isSent()) {
             failConnection(response.getFailureReason());
             return;
@@ -191,7 +192,7 @@ public class NicosModel extends ModelObject {
             }
         }
 
-        SendMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());
+        SentMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());
         if (!loginSendMessageDetails.isSent()) {
             failConnection(FAILED_LOGIN_MESSAGE + loginSendMessageDetails.getFailureReason());
             return;
@@ -249,8 +250,8 @@ public class NicosModel extends ModelObject {
     public void sendScript(String script) {
         setScriptSendStatus(ScriptSendStatus.SENDING);
         QueueScript nicosMessage = new QueueScript("ScriptFromGUI", script);
-        SendMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
-        if (!scriptSendMessageDetails.isSent()) {
+        SentMessageDetails scriptSentMessageDetails = sendMessageToNicos(nicosMessage);
+        if (!scriptSentMessageDetails.isSent()) {
             setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
             setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
         } else {
@@ -265,7 +266,7 @@ public class NicosModel extends ModelObject {
      *            The execution instruction to send to the server.
      */
     public void sendExecutionInstruction(ExecutionInstruction instruction) {
-        SendMessageDetails response = sendMessageToNicos(instruction);
+        SentMessageDetails response = sendMessageToNicos(instruction);
         if (!response.isSent()) {
             updateLogEntries();
             NicosLogEntry error = new NicosLogEntry(new Date(),
@@ -282,7 +283,7 @@ public class NicosModel extends ModelObject {
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
+    private SentMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
         return session.sendMessage(nicosMessage);
     }
 
@@ -457,4 +458,23 @@ public class NicosModel extends ModelObject {
 	public String getCurrentlyExecutingScript() {
 		return currentlyExecutingScript;
 	}
+	
+    /**
+     * Dequeue script.
+     * 
+     * @param reqid
+     *            ID of script to dequeue
+     */
+    public void dequeueScript(String reqid) {
+        setScriptSendStatus(ScriptSendStatus.NONE);
+        // TODO: need to read NICOS reply in case of error
+        DequeueScript nicosMessage = new DequeueScript(reqid);
+        SentMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+//        if (!scriptSendMessageDetails.isSent()) {
+//            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
+//            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+//        } else {
+//            setScriptSendStatus(ScriptSendStatus.SENT);
+//        }
+     }
 }
