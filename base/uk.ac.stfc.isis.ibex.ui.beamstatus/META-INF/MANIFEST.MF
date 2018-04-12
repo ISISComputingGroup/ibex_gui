@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.csstudio.swt.rtplot;bundle-version="1.6.0",
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.ui.model.workbench,
- org.csstudio.trends.databrowser2;bundle-version="4.2.4"
+ org.csstudio.trends.databrowser2;bundle-version="4.2.4",
+ uk.ac.stfc.isis.ibex.logger
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views

@@ -20,6 +20,14 @@
          id="org.csstudio.trends.databrowser2.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.csstudio.core.platform.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.core.platform.feature.source"
+         version="0.0.0"/>
+
    <plugin
          id="org.csstudio.logging"
          download-size="0"
@@ -252,13 +260,6 @@
 
    <plugin
          id="org.eclipse.fx.javafx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.platform.libs.jdbc"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1067,6 +1068,55 @@
 
    <plugin
          id="org.csstudio.trends.databrowser2"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.archive.reader.channelarchiver"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.platform.utility.rdb.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.archive.reader.rdb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.archive.rdb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.platform.libs.hibernate"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.singlesource.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.platform.libs.jdbc"
          download-size="0"
          install-size="0"
          version="0.0.0"
