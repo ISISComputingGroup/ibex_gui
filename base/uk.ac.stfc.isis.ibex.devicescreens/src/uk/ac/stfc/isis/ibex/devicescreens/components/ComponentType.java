@@ -128,6 +128,8 @@ public enum ComponentType {
     SM300_SAMPLE_CHANGER,
     /** Dilution fridge.*/
     DILUTION_FRIDGE,
+    /** Couette cell.*/
+    COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS;
 

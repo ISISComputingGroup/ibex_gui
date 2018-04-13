@@ -147,6 +147,8 @@ public final class ComponentIcons {
             	return "motion_set_points";
             case DILUTION_FRIDGE:
             	return "dilution_fridge";
+            case COUETTE:
+            	return "couette";
             default:
                 return "cog";
         }
