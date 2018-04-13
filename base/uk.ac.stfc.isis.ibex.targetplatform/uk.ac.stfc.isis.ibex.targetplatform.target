@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="238">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="239">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
@@ -41,6 +41,10 @@
 <unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201804041854"/>
 <unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201804041854"/>
 <repository location="http://download.controlsystemstudio.org/updates/4.5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.csstudio.display.builder.feature.feature.group" version="0.1.0.201804121611"/>
+<repository location="http://ics-web.sns.ornl.gov/css/display.builder"/>
 </location>
 </locations>
 <environment>
