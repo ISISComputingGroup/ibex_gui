@@ -28,6 +28,10 @@
          id="org.csstudio.core.platform.feature.source"
          version="0.0.0"/>
 
+   <includes
+         id="org.csstudio.display.builder.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.csstudio.logging"
          download-size="0"
