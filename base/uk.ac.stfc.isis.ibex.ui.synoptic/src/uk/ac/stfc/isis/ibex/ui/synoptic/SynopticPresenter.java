@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
+import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
@@ -74,43 +75,46 @@ public class SynopticPresenter extends ModelObject {
 		}
 	};
 
-    private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
-        @Override
-        public void onValue(SynopticDescription value) {
-            updateModel();
-        }
-
-        @Override
-        public void onError(Exception e) {
-            e.printStackTrace();
-            clearComponents();
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                clearComponents();
-            }
-        }
-    };
-
+    private final Observer<SynopticDescription> descriptionObserver;
     /**
      * Presents synoptics.
      */
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
-        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
-        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
-		updateModel();
+		updateModel(); 
+		
+		descriptionObserver = new BaseObserver<SynopticDescription>() {
+	        @Override
+	        public void onValue(SynopticDescription value) {
+	            updateModel();
+	        }
+
+	        @Override
+	        public void onError(Exception e) {
+	            e.printStackTrace();
+	            clearComponents();
+	        }
+
+	        @Override
+	        public void onConnectionStatus(boolean isConnected) {
+	            if (!isConnected) {
+	                clearComponents();
+	            }
+	        }
+	    };
+        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
+        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 	}
 
     private void updateModel() {
         setTargets(model.instrumentGraph().targets());
-		navigator.setCurrentTarget(model.instrumentGraph().head());
+        InstrumentNavigationGraph instrumentGraph = model.instrumentGraph();
+        TargetNode headNode = instrumentGraph.head();
+		navigator.setCurrentTarget(headNode);
 	}
 
     /**
