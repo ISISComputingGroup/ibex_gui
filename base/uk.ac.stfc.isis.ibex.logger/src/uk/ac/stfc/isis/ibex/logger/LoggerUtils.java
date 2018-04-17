@@ -59,7 +59,7 @@ public final class LoggerUtils {
      * @param message the message to log
      */
     public static void logIfExtraDebug(Logger logger, String message) {
-    	if (EXTRA_DEBUG) {
+    	if (logger != null && EXTRA_DEBUG) {
 			logger.info(message);
 		}
     }

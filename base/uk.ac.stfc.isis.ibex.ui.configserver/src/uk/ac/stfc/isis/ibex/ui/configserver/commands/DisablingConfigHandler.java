@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.apache.logging.log4j.Logger;
-
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -13,8 +11,6 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * @param <T> The type of data expected from the underlying PV
  */
 public abstract class DisablingConfigHandler<T> extends ConfigHandler<T> {
-	
-	private final Logger LOG = IsisLog.getLogger(getClass());
 
 	/**
 	 * The default constructor.
@@ -27,7 +23,7 @@ public abstract class DisablingConfigHandler<T> extends ConfigHandler<T> {
 
 	@Override
 	public void canWriteChanged(boolean canWrite) {
-		LoggerUtils.logIfExtraDebug(LOG, "(Ticket 3001) canWrite set to " + canWrite);
+		LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()), "(Ticket 3001) canWrite set to " + canWrite);
 		setBaseEnabled(canWrite);		
 	}
 }
