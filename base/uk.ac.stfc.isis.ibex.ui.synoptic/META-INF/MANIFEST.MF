@@ -25,3 +25,4 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
  uk.ac.stfc.isis.ibex.ui.synoptic.component,
  uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.synoptic.widgets
+Bundle-ActivationPolicy: lazy
