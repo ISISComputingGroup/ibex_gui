@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="246">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="247">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
@@ -49,6 +49,7 @@
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.fx.core.feature.feature.group" version="2.0.0.201506240602"/>
 <unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="2.0.0.201506111452"/>
+<unit id="org.eclipse.fx.target.rcp4.feature.feature.group" version="2.0.0.201506240602"/>
 <repository location="http://download.eclipse.org/efxclipse/runtime-released/2.0.0/site"/>
 </location>
 </locations>
