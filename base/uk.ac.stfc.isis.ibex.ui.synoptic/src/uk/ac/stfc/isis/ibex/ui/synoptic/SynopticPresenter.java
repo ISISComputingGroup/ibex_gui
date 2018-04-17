@@ -74,38 +74,40 @@ public class SynopticPresenter extends ModelObject {
 		}
 	};
 
-    private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
-        @Override
-        public void onValue(SynopticDescription value) {
-            updateModel();
-        }
-
-        @Override
-        public void onError(Exception e) {
-            e.printStackTrace();
-            clearComponents();
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                clearComponents();
-            }
-        }
-    };
+    private final Observer<SynopticDescription> descriptionObserver;
 
     /**
      * Presents synoptics.
      */
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
-        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
-        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
 		updateModel();
+
+		descriptionObserver = new BaseObserver<SynopticDescription>() {
+	        @Override
+	        public void onValue(SynopticDescription value) {
+	            updateModel();
+	        }
+
+	        @Override
+	        public void onError(Exception e) {
+	            e.printStackTrace();
+	            clearComponents();
+	        }
+
+	        @Override
+	        public void onConnectionStatus(boolean isConnected) {
+	            if (!isConnected) {
+	                clearComponents();
+	            }
+	        }
+	    };
+        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
+        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 	}
 
     private void updateModel() {
