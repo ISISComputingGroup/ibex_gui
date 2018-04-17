@@ -25,8 +25,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.opibuilder.util.MacrosInput;
-import org.eclipse.core.runtime.Path;
+import org.csstudio.display.builder.model.macros.Macros;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
@@ -36,9 +35,9 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.opis.DisplayBuilderView;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.OpiView;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
@@ -46,7 +45,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * multiple perspectives, and views are singletons, the class is abstract so
  * that each perspective that wants to use it can own its own version.
  */
-public abstract class OpiTargetView extends OpiView {
+public abstract class OpiTargetView extends DisplayBuilderView {
 
     /**
      * Class ID.
@@ -81,8 +80,8 @@ public abstract class OpiTargetView extends OpiView {
 	}
 		
 	@Override
-    protected Path opi() throws OPIViewCreationException {
-		Path path = Opi.getDefault().descriptionsProvider().pathFromName(opiName);
+    protected String opi() throws OPIViewCreationException {
+		String path = Opi.getDefault().descriptionsProvider().pathFromName(opiName).toOSString();
 		
 		if (path != null) {
 			return path;
@@ -91,7 +90,7 @@ public abstract class OpiTargetView extends OpiView {
 		// This is for back-compatibility; previously the opi name in the synoptic was the path
 		// At some point this can be removed.
         try {
-            return Opi.getDefault().opiProvider().pathFromName(opiName);
+            return Opi.getDefault().opiProvider().pathFromName(opiName).toOSString();
         } catch (NullPointerException ex) {
             throw new OPIViewCreationException("OPI key or path can not be found for '" + opiName + "'");
         }
@@ -103,13 +102,13 @@ public abstract class OpiTargetView extends OpiView {
      * @param target target of the OPI
      */
     private void addMacros(OpiTarget target) {
-		MacrosInput input = macros();
+		Macros input = macros();
 
-        input.put("NAME", target.name());
-        input.put("OPINAME", this.opiName);
-		input.put("P", pvPrefix);
+        input.add("NAME", target.name());
+        input.add("OPINAME", this.opiName);
+		input.add("P", pvPrefix);
         for (Map.Entry<String, String> macro : target.properties().entrySet()) {
-			input.put(macro.getKey(), macro.getValue());
+			input.add(macro.getKey(), macro.getValue());
 		}
 	}
 

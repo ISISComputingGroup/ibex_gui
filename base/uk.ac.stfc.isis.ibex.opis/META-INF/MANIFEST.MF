@@ -5,21 +5,13 @@ Bundle-Name: Opis
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.opis
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.opis.Opi
-Require-Bundle: org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.logger,
+Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  org.apache.commons.io,
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  org.csstudio.opibuilder;bundle-version="5.1.0";visibility:=reexport,
- org.csstudio.display.builder.editor;bundle-version="1.0.0",
- org.csstudio.display.builder.editor.rcp;bundle-version="1.0.0",
- org.csstudio.display.builder.examples;bundle-version="1.0.0",
- org.csstudio.display.builder.model;bundle-version="1.0.0",
  org.csstudio.display.builder.rcp;bundle-version="1.0.0",
- org.csstudio.display.builder.representation;bundle-version="1.0.0",
  org.csstudio.display.builder.representation.javafx;bundle-version="1.0.0",
- org.csstudio.display.builder.runtime;bundle-version="1.0.0",
- org.csstudio.display.builder.util;bundle-version="1.0.0",
  org.eclipse.fx.ui.workbench3;bundle-version="2.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

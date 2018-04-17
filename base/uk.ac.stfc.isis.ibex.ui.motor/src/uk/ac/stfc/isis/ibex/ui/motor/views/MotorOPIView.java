@@ -57,13 +57,13 @@ public class MotorOPIView extends OpiTargetView {
      * @param motorName the new motor name
      */
 	private void setMotorName(String motorName) {
-		macros().put("P", Instrument.getInstance().currentInstrument().pvPrefix());
-		macros().put("MM", motorName);		
+		macros().add("P", Instrument.getInstance().currentInstrument().pvPrefix());
+		macros().add("MM", motorName);		
 	}
 
 	@Override
-	protected Path opi() {
-		return Opi.getDefault().opiProvider().pathFromName(MOTOR_OPI);
+	protected String opi() {
+		return Opi.getDefault().opiProvider().pathFromName(MOTOR_OPI).toOSString();
 	}
 	
 	/**

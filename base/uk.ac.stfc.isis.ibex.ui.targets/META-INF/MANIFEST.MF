@@ -5,12 +5,13 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.targets
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.targets.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0";visibility:=reexport,
  uk.ac.stfc.isis.ibex.targets,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.instrument,
- org.csstudio.opibuilder;bundle-version="5.1.0"
+ org.csstudio.display.builder.representation.javafx;bundle-version="1.0.0",
+ org.eclipse.fx.ui.workbench3;bundle-version="2.4.0",
+ org.csstudio.display.builder.rcp;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.targets
