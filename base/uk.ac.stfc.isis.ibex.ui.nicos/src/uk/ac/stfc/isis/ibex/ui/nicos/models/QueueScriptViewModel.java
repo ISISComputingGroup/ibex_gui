@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 
@@ -39,11 +42,12 @@ public class QueueScriptViewModel extends ModelObject {
     private ScriptSendStatus scriptSendStatus;
     private String scriptSendErrorMessage;
     private DataBindingContext bindingContext = new DataBindingContext();
+    private Boolean directionUp;
     /**
      * Constructor.
      * 
      * @param model
-     *            the nicos model
+     *            the NICOS model
      * @param initialScript
      *            an initial script to use
      */
@@ -121,7 +125,7 @@ public class QueueScriptViewModel extends ModelObject {
      * Sets the script send status; the status of the last script that was sent.
      *
      * @param scriptSendStatus
-     *            the new script send status
+     *			the new script send status
      */
     public void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
         firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
@@ -138,4 +142,64 @@ public class QueueScriptViewModel extends ModelObject {
     	model.dequeueScript(selected.reqid);
     }
 
+    	/** TODO:
+    	 *  - get queue from NICOS (or current viewtable contents?)
+    	 *  - get selected script's index in table
+    	 *  - get index of script above selected (selected script's index - 1) IF >= 0
+    	 *  - swap indices of both scripts
+    	 *  - send reordered queue/list to NICOS
+    	 */
+
+    /**
+     * Move selected script position in queue according to supplied direction. 
+     *
+     * @param selectedScript
+     * 			the selected script in the viewtable
+     * @param directionUp
+     * 			true if direction of desired movement is UP, false if DOWN
+     * @return queue
+     * 			the reordered queue
+     */
+    public List<QueuedScript> moveScript(QueuedScript selectedScript, Boolean directionUp) {
+
+    	List<QueuedScript> queue = model.getQueuedScripts();
+    	int sourceIndex = queue.indexOf(selectedScript);
+    	int targetIndex = 0;
+
+    	// only move scripts:
+    	// IF selected script is NOT first AND move direction is up
+    	// OR 
+    	// IF selected script is NOT last AND move direction is down
+    	
+    	// TODO: test fails because there are more elements than scripts in list (10?). extras contain null. 
+    	
+    	if ((sourceIndex != 0 && directionUp) || (sourceIndex != queue.size() && !directionUp)) {
+	    	
+	    	// subtract 1 if direction UP, add 1 if DOWN
+	    	// TODO: make this more efficient
+	    	if (directionUp) {
+	    		targetIndex = sourceIndex - 1;
+	    	}
+	    	else {
+	        	targetIndex = sourceIndex + 1;
+	    	}
+	    	
+	    	Collections.swap(queue, sourceIndex, targetIndex);
+    	}
+    return queue;
+    }
+
+    /**
+     *  Create list of reqids in reordered queue and send to NicosModel.
+     *  
+     *  @param reorderedQueue
+     *  		queue containing the reordered scripts
+     */
+    public void extractReqids(QueuedScript reorderedQueue) {
+    
+    // TODO:
+    // read reqid of each script in list and add to new list
+    // pass to NICOS model to send to server
+
+    }
 }

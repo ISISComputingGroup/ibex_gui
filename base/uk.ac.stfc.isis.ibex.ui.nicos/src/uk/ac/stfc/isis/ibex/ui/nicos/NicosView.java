@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
@@ -54,12 +55,23 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OwnerDrawLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The main view for the NICOS scripting perspective.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosView extends ViewPart {
+	private class TableLabelProvider extends LabelProvider implements ITableLabelProvider {
+		public Image getColumnImage(Object element, int columnIndex) {
+			return null;
+		}
+		public String getColumnText(Object element, int columnIndex) {
+			return element.toString();
+		}
+	}
     
     /**
      * The public ID of this class.
@@ -93,7 +105,7 @@ public class NicosView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(2, true);
+        GridLayout glParent = new GridLayout(3, false);
         glParent.marginRight = 10;
         glParent.marginHeight = 10;
         glParent.marginWidth = 10;
@@ -101,7 +113,7 @@ public class NicosView extends ViewPart {
 
         // Connection info
         Composite connectionGrp = new Composite(parent, SWT.NONE);
-        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 3, 1));
         GridLayout connLayout = new GridLayout(2, false);
         connLayout.marginRight = 10;
         connLayout.marginHeight = 10;
@@ -131,6 +143,7 @@ public class NicosView extends ViewPart {
         lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
                 BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
+        new Label(parent, SWT.NONE);
         
         Label lblOutput = new Label(parent, SWT.NONE);
         lblOutput.setText("Output");
@@ -138,6 +151,7 @@ public class NicosView extends ViewPart {
         StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        new Label(parent, SWT.NONE);
 
         final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtOutput.setEditable(false);
@@ -158,6 +172,7 @@ public class NicosView extends ViewPart {
         
         Label lblQueuedScripts = new Label(parent, SWT.NONE);
         lblQueuedScripts.setText("Queued scripts:");
+        new Label(parent, SWT.NONE);
             
         Composite tableComposite = new Composite(parent, SWT.NONE);
         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -196,10 +211,27 @@ public class NicosView extends ViewPart {
 				event.gc.drawText(getText(element), event.x, event.y, true);
 			}
 		});
+        tableViewer.setLabelProvider(new TableLabelProvider());
         
         tableViewer.setContentProvider(new ObservableListContentProvider());
         tableViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
-        
+
+        Button btnScriptUp =  new Button(parent, SWT.NONE);
+		GridData gd_btnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		gd_btnScriptUp.widthHint = 25;
+		btnScriptUp.setLayoutData(gd_btnScriptUp);
+		btnScriptUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
+        btnScriptUp.setToolTipText("Move selected script UP");
+		new Label(parent, SWT.NONE);
+
+		Button btnScriptDown =  new Button(parent, SWT.NONE);
+		GridData gd_btnScriptDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_btnScriptDown.widthHint = 25;
+		btnScriptDown.setLayoutData(gd_btnScriptDown);
+		btnScriptDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+		btnScriptDown.setToolTipText("Move selected script DOWN");
+		new Label(parent, SWT.NONE);
+
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(6, false);
@@ -251,6 +283,34 @@ public class NicosView extends ViewPart {
             }
         }
         );
+        
+        btnScriptUp.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+                // TODO: disable move buttons if no script selected in table
+            	if (selection.size() > 0) {
+                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
+                	queueScriptViewModel.moveScript(selected, true);
+            	}
+            }
+        }
+        );
+
+        btnScriptDown.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+                // TODO: disable move buttons if no script selected in table
+            	if (selection.size() > 0) {
+                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
+                	queueScriptViewModel.moveScript(selected, false);
+            	}
+            }
+        }
+        );
+        
+        new Label(parent, SWT.NONE);
         
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
