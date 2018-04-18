@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class QueueScriptViewModel extends ModelObject {
     private ScriptSendStatus scriptSendStatus;
     private String scriptSendErrorMessage;
     private DataBindingContext bindingContext = new DataBindingContext();
-    private Boolean directionUp;
     /**
      * Constructor.
      * 
@@ -157,10 +157,8 @@ public class QueueScriptViewModel extends ModelObject {
      * 			the selected script in the viewtable
      * @param directionUp
      * 			true if direction of desired movement is UP, false if DOWN
-     * @return queue
-     * 			the reordered queue
      */
-    public List<QueuedScript> moveScript(QueuedScript selectedScript, Boolean directionUp) {
+    public void moveScript(QueuedScript selectedScript, Boolean directionUp) {
 
     	List<QueuedScript> queue = model.getQueuedScripts();
     	int sourceIndex = queue.indexOf(selectedScript);
@@ -171,12 +169,12 @@ public class QueueScriptViewModel extends ModelObject {
     	// OR 
     	// IF selected script is NOT last AND move direction is down
     	
-    	// TODO: test fails because there are more elements than scripts in list (10?). extras contain null. 
+    	// TODO: test fails because there are more elements in list than scripts (10?). extras contain null. 
     	
     	if ((sourceIndex != 0 && directionUp) || (sourceIndex != queue.size() && !directionUp)) {
 	    	
 	    	// subtract 1 if direction UP, add 1 if DOWN
-	    	// TODO: make this more efficient
+	    	// TODO: make this more efficient!
 	    	if (directionUp) {
 	    		targetIndex = sourceIndex - 1;
 	    	}
@@ -184,9 +182,10 @@ public class QueueScriptViewModel extends ModelObject {
 	        	targetIndex = sourceIndex + 1;
 	    	}
 	    	
-	    	Collections.swap(queue, sourceIndex, targetIndex);
+	    	/*List<QueuedScript> reorderedQueue = */Collections.swap(queue, sourceIndex, targetIndex);
+	    	
+	    	this.extractReqids(queue);
     	}
-    return queue;
     }
 
     /**
@@ -195,11 +194,18 @@ public class QueueScriptViewModel extends ModelObject {
      *  @param reorderedQueue
      *  		queue containing the reordered scripts
      */
-    public void extractReqids(QueuedScript reorderedQueue) {
+    public void extractReqids(List<QueuedScript> reorderedQueue) {
     
     // TODO:
     // read reqid of each script in list and add to new list
     // pass to NICOS model to send to server
-
+    	
+    	List<String> listOfScriptIDs = new ArrayList<>(); 
+    	
+    	for (QueuedScript item : reorderedQueue) {
+    		listOfScriptIDs.add(item.reqid);
+    	}
+    	
+    	model.sendReorderedQueue(listOfScriptIDs);
     }
 }

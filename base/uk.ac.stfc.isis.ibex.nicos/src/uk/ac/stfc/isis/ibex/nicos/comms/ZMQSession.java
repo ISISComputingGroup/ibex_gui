@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQException;
@@ -31,7 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 
 /**
  * Used to send and receive messages to NICOS via ZMQ.
@@ -95,7 +96,7 @@ public class ZMQSession {
         return sb.toString();
     }
 
-    private void sendMultipleMessages(List<String> messages) throws ZMQException {
+    private synchronized void sendMultipleMessages(List<String> messages) throws ZMQException {
         if (messages.size() > 0) {
             int i;
             for (i = 0; i < messages.size() - 1; i++) {
@@ -112,20 +113,22 @@ public class ZMQSession {
      *            The message to send.
      * @return The response.
      */
-    public SendMessageDetails sendMessage(NICOSMessage<?> message) {
+    public SentMessageDetails sendMessage(NICOSMessage<?> message) {
         try {
-            sendMultipleMessages(message.getMulti());
+        	List<String> m = message.getMulti();
+        	LOG.info(m);
+            sendMultipleMessages(m);
         } catch (ZMQException e) {
-            LOG.warn("Failed to send message " + message.toString());
-            return SendMessageDetails.createSendFail(e.getMessage());
+            LOG.warn("Failed to send message " + message.toString() + ". Exception was: " + e.getMessage());
+            return SentMessageDetails.createSendFail(e.getMessage());
         } catch (ConversionException e) {
             LOG.warn("Failed to convert message " + message.toString());
-            return SendMessageDetails.createSendFail(FAILED_TO_CONVERT);
+            return SentMessageDetails.createSendFail(FAILED_TO_CONVERT);
         }
         return getServerResponse(message);
     }
 
-    private SendMessageDetails getServerResponse(NICOSMessage<?> sentMessage) {
+    private SentMessageDetails getServerResponse(NICOSMessage<?> sentMessage) {
         String status = zmq.receiveString();
 
         // NICOS protocol leaves the second package empty for future expansion
@@ -133,23 +136,26 @@ public class ZMQSession {
         zmq.receiveString();
 
         String resp = zmq.receiveString();
-
-        if (status == null | resp == null | status == "") {
+        
+        if (status == null | resp == null | Objects.equals(status, "")) {
             LOG.warn("No response from server after sending " + sentMessage.toString());
-            return SendMessageDetails.createSendFail(NO_DATA_RECEIVED);
+            return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
+        
+        LOG.info("RESPONSE: " + resp + " - Length " + resp.length());
+        LOG.info("STATUS: " + status + " - Length " + status.length());
 
         if (status.equals("ok")) {
             try {
                 ReceiveMessage received = sentMessage.parseResponse(resp);
-                return SendMessageDetails.createSendSuccess(received);
+                return SentMessageDetails.createSendSuccess(received);
             } catch (ConversionException e) {
                 LOG.warn("Unexpected response from server: " + resp);
-                return SendMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
+                return SentMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
             }
         } else {
             LOG.warn("Error received from server " + resp);
-            return SendMessageDetails.createSendFail(resp);
+            return SentMessageDetails.createSendFail(resp);
         }
     }
 

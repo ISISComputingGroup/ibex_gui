@@ -192,7 +192,7 @@ public class NicosView extends ViewPart {
 
         	private String getText(Object element) {
         		QueuedScript script = (QueuedScript) element;
-        		return script.script;
+        		return script.reqid;
         	}
         	
 			@Override

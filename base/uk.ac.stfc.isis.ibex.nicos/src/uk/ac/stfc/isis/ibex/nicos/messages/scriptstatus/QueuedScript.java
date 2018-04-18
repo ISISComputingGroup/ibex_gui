@@ -59,5 +59,9 @@ public class QueuedScript {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return reqid;
+	}
 	
 }

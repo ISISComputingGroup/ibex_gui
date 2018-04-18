@@ -20,6 +20,7 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.DequeueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendReorderedQueue;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
@@ -361,6 +363,10 @@ public class NicosModel extends ModelObject {
             setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
             setLineNumber(response.status.get(1));
 			setCurrentlyExecutingScript(response.script);
+			IsisLog.getLogger(this.getClass()).info("QUEUED scripts are: ");
+			for (QueuedScript a : response.requests) {
+				IsisLog.getLogger(this.getClass()).info(a.reqid);
+			}
 			setQueuedScripts(response.requests);
 		}
 	}
@@ -422,7 +428,7 @@ public class NicosModel extends ModelObject {
 		return lineNumber;
 	}
 	
-	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {		
+	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {
 		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
 	}
 	
@@ -431,7 +437,11 @@ public class NicosModel extends ModelObject {
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
-		return queuedScripts;
+        try {
+        	return new ArrayList<>(queuedScripts);
+        } catch (NullPointerException e) {
+        	return new ArrayList<>();
+        }
 	}
 	
     private void setScriptStatus(ScriptStatus scriptStatus) {
@@ -476,5 +486,18 @@ public class NicosModel extends ModelObject {
 //        } else {
 //            setScriptSendStatus(ScriptSendStatus.SENT);
 //        }
-     }
+    }
+
+    /**
+     * Send reordered list of reqids to NICOS
+     * 
+     * @param listOfScriptIDs
+     *            list of IDs of scripts
+     */
+	public void sendReorderedQueue(List listOfScriptIDs) {
+        setScriptSendStatus(ScriptSendStatus.NONE);
+        // TODO: need to read NICOS reply in case of error
+        SendReorderedQueue nicosMessage = new SendReorderedQueue(listOfScriptIDs);
+        SentMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+	}
 }
