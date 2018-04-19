@@ -280,7 +280,7 @@
 					<category>Multimeters</category>
 				</categories>
 				<type>KHLY2700</type>
-				<path>Keithley/Keithley2700.opi</path>
+				<path>Keithley2700/keithley_scanner_values.opi</path>
 				<description>The OPI for the Keithley 2700 Source Meter.</description>
 				<macros>
 					<macro>
