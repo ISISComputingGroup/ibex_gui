@@ -22,7 +22,7 @@ for i in range(20):
             table.setCellBackground(row, col, color)
 
     if not pvs[i].isConnected():
-    table.setCellText(row, 1, "Disconnected")
+        table.setCellText(row, 1, "Disconnected")
 
     row+=1
 
