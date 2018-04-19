@@ -53,7 +53,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
@@ -110,7 +110,7 @@ public class NicosModelTest {
         when(bannerResponse.serializerValid()).thenReturn(true);
 
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
     }
 
     /**
@@ -119,7 +119,7 @@ public class NicosModelTest {
     private void connectSuccessfully() {
         createBannerResponse();
         when(zmqSession.sendMessage(isA(Login.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
     }
@@ -198,7 +198,7 @@ public class NicosModelTest {
 
     @Test
     public void GIVEN_failing_banner_message_WHEN_connect_called_THEN_final_status_is_failed() {
-        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
@@ -211,7 +211,7 @@ public class NicosModelTest {
     public void GIVEN_failing_banner_message_WHEN_connect_called_THEN_final_error_message_is_failure() {
         String failureMessage = "FAILED";
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendFail(failureMessage));
+                .thenReturn(SentMessageDetails.createSendFail(failureMessage));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -226,7 +226,7 @@ public class NicosModelTest {
         when(bannerResponse.protocolValid()).thenReturn(false);
         when(bannerResponse.serializerValid()).thenReturn(true);
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -241,7 +241,7 @@ public class NicosModelTest {
         when(bannerResponse.protocolValid()).thenReturn(true);
         when(bannerResponse.serializerValid()).thenReturn(false);
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -254,7 +254,7 @@ public class NicosModelTest {
     @Test
     public void GIVEN_failing_login_connection_WHEN_connect_called_THEN_final_status_is_failed() {
         createBannerResponse();
-        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
@@ -267,7 +267,7 @@ public class NicosModelTest {
     public void GIVEN_failing_login_connection_WHEN_connect_called_THEN_final_error_message_is_login_failure_message() {
         createBannerResponse();
         String failureMessage = "FAILED";
-        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SendMessageDetails.createSendFail(failureMessage));
+        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SentMessageDetails.createSendFail(failureMessage));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -327,7 +327,7 @@ public class NicosModelTest {
 
     @Test
     public void GIVEN_banner_failed_WHEN_connect_called_THEN_login_not_called() {
-        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
@@ -407,7 +407,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_sent_THEN_first_status_is_sending() {
         connectSuccessfully();
         when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
 
         model.sendScript("TEST");
 
@@ -421,7 +421,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_successfully_sent_THEN_final_status_is_sent() {
         connectSuccessfully();
         when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
 
         model.sendScript("TEST");
 
@@ -435,7 +435,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_unsuccessfully_sent_THEN_final_status_is_failed() {
         connectSuccessfully();
 
-        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
         model.sendScript("TEST");
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
@@ -448,7 +448,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_unsuccessfully_sent_THEN_final_error_status_is_script_failed() {
         connectSuccessfully();
 
-        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
         model.sendScript("TEST");
 
         verify(scriptErrorListener).propertyChange(propertyChangeArgument.capture());
@@ -461,7 +461,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_sent_THEN_queue_script_message_sent() {
         connectSuccessfully();
         when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
 
         model.sendScript("TEST");
 
@@ -474,7 +474,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_but_no_reply_WHEN_get_script_status_THEN_connection_fail() {
         connectSuccessfully();
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(null));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(null));
 
         model.updateScriptStatus();
         
@@ -492,7 +492,7 @@ public class NicosModelTest {
         
         response.status = Arrays.asList(0, linenum);
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -510,7 +510,7 @@ public class NicosModelTest {
         response.status = Arrays.asList(0, 0);
         response.script = script;
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -533,7 +533,7 @@ public class NicosModelTest {
         response.script = "";
         response.requests = Arrays.asList(queuedScript);
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -546,7 +546,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         when(response.getEntries()).thenReturn(createNEntries(1, 1));
         List<NicosLogEntry> expected = createNEntries(1, 1);
@@ -565,7 +565,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         when(response.getEntries()).thenReturn(createNEntries(1, 1));
         model.updateLogEntries();
@@ -589,7 +589,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         // Receive an initial message with timestamp to compare against
         Date initialDate = new Date(1000);
@@ -622,7 +622,7 @@ public class NicosModelTest {
         int threshold = 100;
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
 
         // Act
