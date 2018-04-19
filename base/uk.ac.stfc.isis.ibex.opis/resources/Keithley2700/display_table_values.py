@@ -14,13 +14,8 @@ row = 1
 color = ColorFontUtil.getColorFromRGB(240,245,245)
 i = 0
 for i in range(20):
-    reading = PVUtil.getString(pvs[i])
-    #temp = PVUtil.getString(pvs[i+40])
-    #drift = PVUtil.getString(pvs[i+20])
-    
+    reading = PVUtil.getString(pvs[i]) 
     table.setCellText(row, 3, reading)
-    #table.setCellText(row, 2, temp)
-    #table.setCellText(row, 1, drift)
     
     if row%2 != 0:
 		for col in range(0,4):
