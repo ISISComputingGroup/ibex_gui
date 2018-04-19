@@ -115,9 +115,7 @@ public class ZMQSession {
      */
     public SentMessageDetails sendMessage(NICOSMessage<?> message) {
         try {
-        	List<String> m = message.getMulti();
-        	LOG.info(m);
-            sendMultipleMessages(m);
+        	sendMultipleMessages(message.getMulti());
         } catch (ZMQException e) {
             LOG.warn("Failed to send message " + message.toString() + ". Exception was: " + e.getMessage());
             return SentMessageDetails.createSendFail(e.getMessage());
@@ -142,9 +140,6 @@ public class ZMQSession {
             return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
         
-        LOG.info("RESPONSE: " + resp + " - Length " + resp.length());
-        LOG.info("STATUS: " + status + " - Length " + status.length());
-
         if (status.equals("ok")) {
             try {
                 ReceiveMessage received = sentMessage.parseResponse(resp);

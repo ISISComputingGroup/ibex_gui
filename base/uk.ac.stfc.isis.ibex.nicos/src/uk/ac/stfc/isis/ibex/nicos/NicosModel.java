@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -98,9 +97,9 @@ public class NicosModel extends ModelObject {
     private ScriptStatus scriptStatus;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
-    private List<NicosLogEntry> newLogEntries;
+    private List<NicosLogEntry> newLogEntries = new ArrayList<>();
     private long lastEntryTime;
-    private List<QueuedScript> queuedScripts;
+    private List<QueuedScript> queuedScripts = new ArrayList<>();
 
     private static final int MESSAGES_SCALE_FACTOR = 10;
     private static final int MESSAGES_THRESHOLD = 100;
@@ -358,15 +357,10 @@ public class NicosModel extends ModelObject {
 		if (response == null) {
 			failConnection(NO_RESPONSE);
 		} else {
-            // Status is a tuple (list) of 2 items - execution status and line
-            // number.
+            // Status is a tuple (list) of 2 items - execution status and line number.
             setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
             setLineNumber(response.status.get(1));
 			setCurrentlyExecutingScript(response.script);
-			IsisLog.getLogger(this.getClass()).info("QUEUED scripts are: ");
-			for (QueuedScript a : response.requests) {
-				IsisLog.getLogger(this.getClass()).info(a.reqid);
-			}
 			setQueuedScripts(response.requests);
 		}
 	}
@@ -437,12 +431,8 @@ public class NicosModel extends ModelObject {
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
-        try {
-        	return new ArrayList<>(queuedScripts);
-        } catch (NullPointerException e) {
-        	return new ArrayList<>();
-        }
-	}
+        return new ArrayList<>(queuedScripts);
+    }
 	
     private void setScriptStatus(ScriptStatus scriptStatus) {
         firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
@@ -489,12 +479,12 @@ public class NicosModel extends ModelObject {
     }
 
     /**
-     * Send reordered list of reqids to NICOS
+     * Send reordered list of reqids to NICOS.
      * 
      * @param listOfScriptIDs
      *            list of IDs of scripts
      */
-	public void sendReorderedQueue(List listOfScriptIDs) {
+	public void sendReorderedQueue(List<String> listOfScriptIDs) {
         setScriptSendStatus(ScriptSendStatus.NONE);
         // TODO: need to read NICOS reply in case of error
         SendReorderedQueue nicosMessage = new SendReorderedQueue(listOfScriptIDs);

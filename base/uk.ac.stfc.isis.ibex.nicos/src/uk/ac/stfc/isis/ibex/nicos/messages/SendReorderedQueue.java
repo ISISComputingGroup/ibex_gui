@@ -28,14 +28,14 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 
 /**
- * Serialisable class to dequeue a script in NICOS.
+ * Serialisable class to send a list of rearranged script IDs to NICOS.
  */
 public class SendReorderedQueue extends NICOSMessage<List<String>> {
     
     /**
      * Constructor.
      * 
-     * @param reorderedqueue
+     * @param reqids
      *            list of IDs (reqid) for scripts in reordered queue 
      */
     public SendReorderedQueue(List<String> reqids) {

@@ -40,7 +40,7 @@ public class Nicos extends Plugin {
 
     private final NicosModel model;
 
-    private static final int CONNECT_POLL_TIME = 100;
+    private static final int CONNECT_POLL_TIME = 10000;
 
     /**
      * @return The instance of this singleton.

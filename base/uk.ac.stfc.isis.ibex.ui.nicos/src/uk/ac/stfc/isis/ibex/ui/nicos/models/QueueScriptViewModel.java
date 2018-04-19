@@ -142,14 +142,6 @@ public class QueueScriptViewModel extends ModelObject {
     	model.dequeueScript(selected.reqid);
     }
 
-    	/** TODO:
-    	 *  - get queue from NICOS (or current viewtable contents?)
-    	 *  - get selected script's index in table
-    	 *  - get index of script above selected (selected script's index - 1) IF >= 0
-    	 *  - swap indices of both scripts
-    	 *  - send reordered queue/list to NICOS
-    	 */
-
     /**
      * Move selected script position in queue according to supplied direction. 
      *
@@ -174,13 +166,11 @@ public class QueueScriptViewModel extends ModelObject {
     	if ((sourceIndex != 0 && directionUp) || (sourceIndex != queue.size() && !directionUp)) {
 	    	
 	    	// subtract 1 if direction UP, add 1 if DOWN
-	    	// TODO: make this more efficient!
-	    	if (directionUp) {
-	    		targetIndex = sourceIndex - 1;
-	    	}
-	    	else {
-	        	targetIndex = sourceIndex + 1;
-	    	}
+	    	
+    		targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
+
+    		// TODO: Probably want to create a new queue and swap items in that, rather than modifying the queue passed in.
+	    	// i.e. use an unmodifiable list
 	    	
 	    	/*List<QueuedScript> reorderedQueue = */Collections.swap(queue, sourceIndex, targetIndex);
 	    	
@@ -195,11 +185,7 @@ public class QueueScriptViewModel extends ModelObject {
      *  		queue containing the reordered scripts
      */
     public void extractReqids(List<QueuedScript> reorderedQueue) {
-    
-    // TODO:
-    // read reqid of each script in list and add to new list
-    // pass to NICOS model to send to server
-    	
+ 
     	List<String> listOfScriptIDs = new ArrayList<>(); 
     	
     	for (QueuedScript item : reorderedQueue) {

@@ -29,6 +29,7 @@ public class QueuedScript {
 	 */
 	public String script;
 
+	// TODO: documentation - do we need this method to be so complicated?
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -37,6 +38,7 @@ public class QueuedScript {
 		return result;
 	}
 
+	// TODO: documentation - do we need this method to be so complicated?
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
