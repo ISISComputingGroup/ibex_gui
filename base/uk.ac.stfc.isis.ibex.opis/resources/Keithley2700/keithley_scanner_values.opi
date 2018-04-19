@@ -42,6 +42,7 @@
     <wuid>6ebe0d97:160d54afb65:390</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
+    <text>double click to enter text</text>
     <scripts />
     <height>529</height>
     <border_width>1</border_width>
@@ -163,6 +164,7 @@
       <wuid>-63e4ea98:15e5c1ca041:-7f8c</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
+      <text>double click to enter text</text>
       <scripts />
       <height>19</height>
       <border_width>1</border_width>
@@ -330,7 +332,7 @@ $(pv_value)</tooltip>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
-          <replace>2</replace>
+          <replace>0</replace>
           <description></description>
         </action>
       </actions>
@@ -387,6 +389,7 @@ $(pv_value)</tooltip>
       <wuid>-63e4ea98:15e5c1ca041:-7f8c</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
+      <text>double click to enter text</text>
       <scripts />
       <height>19</height>
       <border_width>1</border_width>

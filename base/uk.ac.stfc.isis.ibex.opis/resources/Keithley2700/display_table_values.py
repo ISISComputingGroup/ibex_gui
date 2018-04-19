@@ -18,18 +18,13 @@ for i in range(20):
     table.setCellText(row, 3, reading)
     
     if row%2 != 0:
-		for col in range(0,4):
-			table.setCellBackground(row, col, color)
-    
+        for col in range(0,4):
+            table.setCellBackground(row, col, color)
+
     if not pvs[i].isConnected():
-        table.setCellText(row, 1, "Disconnected")
-	
+    table.setCellText(row, 1, "Disconnected")
+
     row+=1
-
-
-
-
-
 
 	
 	
