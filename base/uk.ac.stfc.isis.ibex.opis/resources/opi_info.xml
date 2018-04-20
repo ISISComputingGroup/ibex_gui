@@ -274,6 +274,23 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Keithley 2700</key>
+			<value>
+				<categories>
+					<category>Multimeters</category>
+				</categories>
+				<type>KHLY2700</type>
+				<path>Keithley2700/keithley_scanner_values.opi</path>
+				<description>The OPI for the Keithley 2700 Source Meter.</description>
+				<macros>
+					<macro>
+						<name>KHLY2700</name>
+						<description>The Keithley 2700 PV name (e.g. KHLY2700_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Kepco</key>
 			<value>
 				<categories>
