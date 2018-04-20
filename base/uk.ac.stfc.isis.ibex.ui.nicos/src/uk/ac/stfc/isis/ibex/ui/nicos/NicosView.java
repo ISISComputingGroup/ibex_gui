@@ -23,19 +23,19 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -49,10 +49,12 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.OwnerDrawLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -156,49 +158,31 @@ public class NicosView extends ViewPart {
         });
         
         Label lblQueuedScripts = new Label(parent, SWT.NONE);
-        lblQueuedScripts.setText("Queued scripts:");
-            
-        Composite tableComposite = new Composite(parent, SWT.NONE);
-        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        lblQueuedScripts.setText("Queued scripts (double click to see contents):");
         
-        TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableComposite.setLayout(tableColumnLayout);
-        
-        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);        
-       
-        tableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        tableViewer.getTable().setToolTipText("");
-        tableViewer.getTable().setLinesVisible(true);
-        
-        TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.CENTER);
-        tableColumnLayout.setColumnData(tableViewerColumn.getColumn(), new ColumnWeightData(100, 0, false)); 
-        tableViewerColumn.setLabelProvider(new OwnerDrawLabelProvider() {
-        	// Using our own drawer means that we can write text to cover multiple lines
-        	
-        	private String getText(Object element) {
-        		QueuedScript script = (QueuedScript) element;
-        		return script.script;
-        	}
-        	
-			@Override
-			protected void measure(Event event, Object element) {
-				event.width = tableViewer.getTable().getColumn(event.index).getWidth();
-				if (event.width == 0) {
-					return;
-				}
-				Point size = event.gc.textExtent(getText(element));
-				event.width = size.x;
-				event.height = size.y;
-			}
+        ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        List list = queuedScriptsViewer.getList();
+        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+        queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
+        queuedScriptsViewer.setLabelProvider(new LabelProvider() {
+        	public String getText(Object element) {
+        		QueuedScript code = (QueuedScript) element;
+        		return code.name;
+        	}
+        });
+        
+        queuedScriptsViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
+        
+        queuedScriptsViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
-			protected void paint(Event event, Object element) {
-				event.gc.drawText(getText(element), event.x, event.y, true);
+			public void doubleClick(DoubleClickEvent event) {
+				QueuedScript selection = (QueuedScript) ((IStructuredSelection) event.getSelection()).getFirstElement();
+				MessageBox box = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+				box.setMessage(selection.script);
+				box.open();
 			}
 		});
-        
-        tableViewer.setContentProvider(new ObservableListContentProvider());
-        tableViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
         
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
