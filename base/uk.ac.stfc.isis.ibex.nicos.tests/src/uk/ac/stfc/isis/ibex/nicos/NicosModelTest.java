@@ -409,7 +409,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -423,7 +423,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -436,7 +436,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -449,7 +449,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptErrorListener).propertyChange(propertyChangeArgument.capture());
 
@@ -463,7 +463,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
         verify(zmqSession, atLeast(0)).sendMessage(message.capture());
@@ -524,10 +524,10 @@ public class NicosModelTest {
         ReceiveScriptStatus response = new ReceiveScriptStatus();
         
         QueuedScript queuedScript = new QueuedScript(); 
-        queuedScript.name = "instrument_script";
+        queuedScript.setCode("This is a really nice script \n with a newline in it.");
+        queuedScript.setName("instrument_script");
         queuedScript.reqid = "weifj9032l90djk239";
         queuedScript.user = "IBEX";
-        queuedScript.script = "This is a really nice script \n with a newline in it.";
         
         response.status = Arrays.asList(0, 0);
         response.script = "";

@@ -246,9 +246,9 @@ public class NicosModel extends ModelObject {
      * @param script
      *            to queue
      */
-    public void sendScript(String script) {
+    public void sendScript(QueuedScript script) {
         setScriptSendStatus(ScriptSendStatus.SENDING);
-        QueueScript nicosMessage = new QueueScript("ScriptFromGUI", script);
+        QueueScript nicosMessage = new QueueScript(script);
         SendMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
         if (!scriptSendMessageDetails.isSent()) {
             setScriptSendStatus(ScriptSendStatus.SEND_ERROR);

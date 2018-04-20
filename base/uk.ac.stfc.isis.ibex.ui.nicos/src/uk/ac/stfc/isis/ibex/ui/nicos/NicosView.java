@@ -43,6 +43,7 @@ import org.eclipse.ui.part.ViewPart;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
@@ -66,8 +67,6 @@ public class NicosView extends ViewPart {
      * The public ID of this class.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
-
-    private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
     
     private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
@@ -85,7 +84,7 @@ public class NicosView extends ViewPart {
      */
     public NicosView() {
         model = Nicos.getDefault().getModel();
-        queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+        queueScriptViewModel = new QueueScriptViewModel(model);
         scriptStatusViewModel = new ScriptStatusViewModel(model);
         outputLogViewModel = new OutputLogViewModel(model);
 
@@ -168,7 +167,7 @@ public class NicosView extends ViewPart {
         queuedScriptsViewer.setLabelProvider(new LabelProvider() {
         	public String getText(Object element) {
         		QueuedScript code = (QueuedScript) element;
-        		return code.name;
+        		return code.getName();
         	}
         });
         
@@ -178,9 +177,8 @@ public class NicosView extends ViewPart {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				QueuedScript selection = (QueuedScript) ((IStructuredSelection) event.getSelection()).getFirstElement();
-				MessageBox box = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
-				box.setMessage(selection.script);
-				box.open();
+				ExistingScriptDialog dialog = new ExistingScriptDialog(shell, selection);
+				dialog.open();
 			}
 		});
         
