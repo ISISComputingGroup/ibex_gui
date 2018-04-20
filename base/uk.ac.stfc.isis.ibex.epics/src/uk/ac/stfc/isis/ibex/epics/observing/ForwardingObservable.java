@@ -35,7 +35,7 @@ public class ForwardingObservable<T> extends TransformingObservable<T, T> {
      *            the source observable
      */
     public ForwardingObservable(ClosableObservable<T> source) {
-    	setSource(source);
+    	super(source);
     }
 
 	@Override

@@ -57,9 +57,9 @@ public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, 
      */
     public ObservableDecimalRatio(ClosableObservable<Pair<Number, Number>> source, int maxIntegerDigits,
             int maxFractionDigits) {
+    	super(source);
         format.setMaximumIntegerDigits(maxIntegerDigits);
         format.setMaximumFractionDigits(maxFractionDigits);
-        setSource(source);
 
     }
 

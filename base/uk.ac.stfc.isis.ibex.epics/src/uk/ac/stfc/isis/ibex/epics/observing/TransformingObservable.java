@@ -50,25 +50,29 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 
 	};
 
-    protected synchronized void setSource(ClosableObservable<T1> newSource) {
+    public TransformingObservable(ClosableObservable<T1> source) {
+    	setSource(source);
+	}
+    
+    protected void setSource(ClosableObservable<T1> source) {
 		cancelSubscription();
 		closeSource();
-		this.source = newSource;     
+		this.source = source;     
 
         sourceObserver.onConnectionStatus(false);
-        sourceObserver.onConnectionStatus(newSource.isConnected());
+        sourceObserver.onConnectionStatus(source.isConnected());
 
-        T1 value = newSource.getValue();
+        T1 value = source.getValue();
         if (value != null) {
             sourceObserver.onValue(value);
         }
 
-        Exception error = newSource.currentError();
+        Exception error = source.currentError();
         if (error != null) {
             sourceObserver.onError(error);
         }
 		sourceSubscription = source.addObserver(sourceObserver);
-	}
+    }
 	
 	protected abstract T2 transform(T1 value);
 
@@ -88,11 +92,5 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	        sourceObserver.onConnectionStatus(false);
 			source.close();
 		}
-	}		
-
-    @Override
-    public Subscription addObserver(Observer<T2> observer) {
-        observer.update(getValue(), currentError(), isConnected());
-        return super.addObserver(observer);
-    }
+	}
 }

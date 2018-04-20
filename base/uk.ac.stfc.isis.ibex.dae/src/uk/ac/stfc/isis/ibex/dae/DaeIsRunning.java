@@ -34,7 +34,7 @@ public class DaeIsRunning extends TransformingObservable<DaeRunState, Boolean> {
      *            The run state observable.
      */
 	public DaeIsRunning(ClosableObservable<DaeRunState> source) {
-		setSource(source);
+		super(source);
 	}
 
 	@Override

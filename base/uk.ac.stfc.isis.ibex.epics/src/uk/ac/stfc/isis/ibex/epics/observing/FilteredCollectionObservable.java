@@ -49,7 +49,7 @@ public class FilteredCollectionObservable<T extends INamed> extends
      */
     public FilteredCollectionObservable(ForwardingObservable<Collection<T>> iocs,
 			ForwardingObservable<Collection<String>> iocsToFilter) {
-		setSource(new ObservablePair<>(iocs, iocsToFilter));
+    	super(new ObservablePair<>(iocs, iocsToFilter));
 	}
 
 	@Override

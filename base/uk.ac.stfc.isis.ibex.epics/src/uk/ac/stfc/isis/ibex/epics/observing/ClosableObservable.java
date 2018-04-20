@@ -39,10 +39,8 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
 
     @Override
     public Subscription addObserver(Observer<T> observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
-        }
-
+        if (!observers.contains(observer)) observers.add(observer);
+        observer.update(getValue(), currentError(), isConnected());
         return new Unsubscriber<Observer<T>>(observers, observer);
     }
 

@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 public class ObservableSimpleRatio<T1, T2> extends TransformingObservable<Pair<T1, T2>, String> {
 
 	public ObservableSimpleRatio(ClosableObservable<Pair<T1, T2>> source) {
-		setSource(source);
+		super(source);
 	}
 	
 	@Override
