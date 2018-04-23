@@ -28,7 +28,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public abstract class TransformingObservable<T1, T2> extends ClosableObservable<T2> {
 
-    private ClosableObservable<T1> source;
+    protected ClosableObservable<T1> source;
 	private Subscription sourceSubscription;
 
 	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {

@@ -43,11 +43,13 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 	@Override
 	protected T transform(R value) {
 		T newValue = null;
-		if (formatter != null && value != null) {
-			try {
-				newValue = formatter.convert(value);
-			} catch (ConversionException e) {
-				setError(e);
+		synchronized(this.source) {
+			if (formatter != null && value != null) {
+				try {
+					newValue = formatter.convert(value);
+				} catch (ConversionException e) {
+					setError(e);
+				}
 			}
 		}
 		return newValue;
