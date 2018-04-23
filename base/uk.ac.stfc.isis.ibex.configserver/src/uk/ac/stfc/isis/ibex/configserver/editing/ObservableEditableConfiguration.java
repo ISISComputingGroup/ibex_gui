@@ -49,8 +49,8 @@ public class ObservableEditableConfiguration
 	public ObservableEditableConfiguration(
 			ClosableObservable<Configuration> config,
 			ConfigServer configServer) {
-		setSource(config);
 		this.configServer = configServer;
+		setSource(config);
 	}
 	
 	@Override
