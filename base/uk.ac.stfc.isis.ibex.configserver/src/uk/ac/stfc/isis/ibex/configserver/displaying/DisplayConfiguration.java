@@ -48,7 +48,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 
 	public DisplayConfiguration(ClosableObservable<Configuration> config, ConfigServer configServer,
 			RunControlServer runControlServer) {
-		super(config);
+		setSource(config);
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
 	}

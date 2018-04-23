@@ -34,7 +34,7 @@ public class FileList extends TransformingObservable<String, Collection<String>>
 	private final Gson gson = new Gson();
 	
 	public FileList(ForwardingObservable<String> files) {
-		super(files);
+		setSource(files);
 	}
 
 	@Override

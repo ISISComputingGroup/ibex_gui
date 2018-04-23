@@ -71,14 +71,10 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      */
     protected void setValue(T value) {
         currentError = null;
-        if (value == null) {
-            return;
-        }
-
-        this.value = value;
-
-        for (Observer<T> observer : observers) {
-            observer.onValue(value);
+        if (value != null) {
+        	this.value = value;
+        	for (Observer<T> observer : observers)
+        		observer.onValue(value);
         }
     }
 

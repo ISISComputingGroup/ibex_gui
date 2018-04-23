@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 public class InstrumentState extends TransformingObservable<DaeRunState, String> {
 	
 	public InstrumentState(ForwardingObservable<DaeRunState> runStatus) {
-		super(runStatus);
+		setSource(runStatus);
 	}
 
 	@Override

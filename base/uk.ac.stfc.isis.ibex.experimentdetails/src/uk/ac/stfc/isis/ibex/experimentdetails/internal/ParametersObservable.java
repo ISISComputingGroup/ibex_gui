@@ -34,7 +34,7 @@ public class ParametersObservable extends TransformingObservable<Collection<Stri
 	public ParametersObservable(
 			ExperimentDetailsVariables variables, 
 			ClosableObservable<Collection<String>> availableParameters) {
-		super(availableParameters);
+		setSource(availableParameters);
 		this.variables = variables;
 	}
 	

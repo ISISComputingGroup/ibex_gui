@@ -33,8 +33,8 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 	private final Converter<R, T> formatter;
 	
 	public ConvertingObservable(ClosableObservable<R> source, Converter<R, T> formatter) {
-		super(source);
 		this.formatter = formatter;
+		setSource(source);
 	}
 	
 	/**
@@ -42,12 +42,14 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
      */
 	@Override
 	protected T transform(R value) {
-		try {
-			return formatter.convert(value);
-		} catch (ConversionException e) {
-			setError(e);
+		T newValue = null;
+		if (formatter != null && value != null) {
+			try {
+				newValue = formatter.convert(value);
+			} catch (ConversionException e) {
+				setError(e);
+			}
 		}
-		
-		return null;
+		return newValue;
 	}
 }

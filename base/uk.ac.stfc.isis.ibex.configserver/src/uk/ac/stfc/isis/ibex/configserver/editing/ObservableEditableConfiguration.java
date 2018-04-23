@@ -49,7 +49,7 @@ public class ObservableEditableConfiguration
 	public ObservableEditableConfiguration(
 			ClosableObservable<Configuration> config,
 			ConfigServer configServer) {
-		super(config);
+		setSource(config);
 		this.configServer = configServer;
 	}
 	
