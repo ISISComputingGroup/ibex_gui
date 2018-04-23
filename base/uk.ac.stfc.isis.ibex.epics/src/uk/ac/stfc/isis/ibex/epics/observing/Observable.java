@@ -57,10 +57,4 @@ public interface Observable<T> {
      * @return the exception last thrown; null no error
      */
     Exception currentError();
-	
-    /**
-     * All observables should be closable so that they can be effectively
-     * cleaned up once no longer needed
-     */
-    void close();
 }

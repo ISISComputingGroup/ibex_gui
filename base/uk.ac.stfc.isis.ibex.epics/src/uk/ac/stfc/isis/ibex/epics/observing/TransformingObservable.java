@@ -34,7 +34,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
 		@Override
 		public void onValue(T1 value) {
-			transformAndSetValue(value);
+			setValue(transform(value));
 		}
 
 		@Override
@@ -48,10 +48,6 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 		}
 
 	};
-	
-	protected void transformAndSetValue(T1 value) {
-		if (value!=null) setValue(transform(value));
-	}
     
     protected void setSource(ClosableObservable<T1> source) {
 		cancelSubscription();

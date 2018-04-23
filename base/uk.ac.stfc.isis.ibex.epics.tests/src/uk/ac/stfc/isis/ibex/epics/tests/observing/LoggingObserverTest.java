@@ -87,12 +87,12 @@ public class LoggingObserverTest {
 		verify(mockLogger, times(2)).info(ID + ON_VALUE_MESSAGE + TestHelpers.STRING_VALUE);
 	}
 	
-	//@Test
-	//public void changing_to_null_value_does_not_create_log_message() {
-	//	// Act
-	//	testableObservable.setValue(null);
-	//	
-	//	// Assert - The log message is as expected
-	//	verify(mockLogger, times(0)).info(anyString());
-	//}	
+	@Test
+	public void changing_to_null_value_does_not_create_log_message() {
+		// Act
+		testableObservable.setValue(null);
+		
+		// Assert - The log message is as expected
+		verify(mockLogger, times(0)).info(anyString());
+	}	
 }
