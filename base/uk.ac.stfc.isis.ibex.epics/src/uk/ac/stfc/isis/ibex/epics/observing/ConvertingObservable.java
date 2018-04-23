@@ -43,6 +43,9 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 	@Override
 	protected T transform(R value) {
 		T newValue = null;
+		// Synchronize with the observable source so that further updates are held whilst
+		// the data is being processed. Particularly important for large transforms
+		// like synoptics and configs.
 		synchronized(this.source) {
 			if (formatter != null && value != null) {
 				try {
