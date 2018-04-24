@@ -112,9 +112,7 @@ public class SynopticPresenter extends ModelObject {
 
     private void updateModel() {
         setTargets(model.instrumentGraph().targets());
-        InstrumentNavigationGraph instrumentGraph = model.instrumentGraph();
-        TargetNode headNode = instrumentGraph.head();
-		navigator.setCurrentTarget(headNode);
+		navigator.setCurrentTarget(model.instrumentGraph().head());
 	}
 
     /**
