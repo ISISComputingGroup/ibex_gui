@@ -1362,5 +1362,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Couette Cell</key>
+      <value>
+        <categories>
+          <category>Rheometers</category>
+        </categories>
+        <type>COUETTE</type>
+        <path>couette_cell.opi</path>
+        <description>The OPI for the Couette cell</description>
+        <macros>
+          <macro>
+            <name>COUETTE</name>
+            <description>The COUETTE PV prefix (e.g. COUETTE_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
