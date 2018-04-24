@@ -20,342 +20,342 @@
          id="org.csstudio.logging"
          download-size="0"
          install-size="0"
-         version="3.2.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.epics.jca"
          download-size="0"
          install-size="0"
-         version="2.4.1"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.security"
          download-size="0"
          install-size="0"
-         version="1.1.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.datasource"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.support.diirt-ca"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.util"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.vtype"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="3.108.1.v20160929-1045"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.apputil"
          download-size="0"
          install-size="0"
-         version="3.0.2.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.csdata"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.utility.jms"
          download-size="0"
          install-size="0"
-         version="1.1.3.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.utility.rdb"
          download-size="0"
          install-size="0"
-         version="1.6.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.junit"
          download-size="0"
          install-size="0"
-         version="4.12.0.v201504281640"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.help"
          download-size="0"
          install-size="0"
-         version="3.7.0.v20160602-1307"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.libs.jms"
          download-size="0"
          install-size="0"
-         version="5.4.2.201709191044"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.ui.util"
          download-size="0"
          install-size="0"
-         version="4.0.2.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.java"
          download-size="0"
          install-size="0"
-         version="3.3.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.views"
          download-size="0"
          install-size="0"
-         version="3.9.0.v20170226-1833"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.console"
          download-size="0"
          install-size="0"
-         version="3.7.1.v20170728-0806"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.resources"
          download-size="0"
          install-size="0"
-         version="3.12.0.v20170417-1558"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.antlr.runtime"
          download-size="0"
          install-size="0"
-         version="3.5.2"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.workspace"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.ui.menu.app"
          download-size="0"
          install-size="0"
-         version="3.0.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.ui.menu"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="com.google.guava"
          download-size="0"
          install-size="0"
-         version="21.0.0.v20170206-1425"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.autocomplete.ui"
          download-size="0"
          install-size="0"
-         version="3.2.13.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.autocomplete"
          download-size="0"
          install-size="0"
-         version="3.2.13.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.hamcrest.core"
          download-size="0"
          install-size="0"
-         version="1.3.0.v201303031735"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.p2.engine"
          download-size="0"
          install-size="0"
-         version="2.5.0.v20170319-2002"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.p2.metadata"
          download-size="0"
          install-size="0"
-         version="2.3.200.v20170511-1106"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.p2.core"
          download-size="0"
          install-size="0"
-         version="2.4.101.v20170906-1259"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.fx.ui.workbench3"
          download-size="0"
          install-size="0"
-         version="3.0.0.201705220748"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.fx.javafx"
          download-size="0"
          install-size="0"
-         version="2.2.0.201605100504"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.annotation"
          download-size="0"
          install-size="0"
-         version="1.2.0.v201602091430"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.inject"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20091030"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.xml"
          download-size="0"
          install-size="0"
-         version="1.3.4.v201005080400"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.p2.repository"
          download-size="0"
          install-size="0"
-         version="2.3.301.v20170906-1259"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.p2.metadata.repository"
          download-size="0"
          install-size="0"
-         version="1.2.401.v20170906-1259"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.tukaani.xz"
          download-size="0"
          install-size="0"
-         version="1.5.0.v20170111-1717"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.css"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.util.gui"
          download-size="0"
          install-size="0"
-         version="1.7.0.v200903091627"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.commons.jxpath"
          download-size="0"
          install-size="0"
-         version="1.3.0.v200911051830"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.alarm.beast"
          download-size="0"
          install-size="0"
-         version="4.5.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.logging.ui"
          download-size="0"
          install-size="0"
-         version="3.2.2.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.startup"
          download-size="0"
          install-size="0"
-         version="3.2.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.startup.helper"
          download-size="0"
          install-size="0"
-         version="3.1.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.product"
          download-size="0"
          install-size="0"
-         version="1.3.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.product.default"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041845"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -363,21 +363,21 @@
          id="org.eclipse.core.filesystem"
          download-size="0"
          install-size="0"
-         version="1.7.0.v20170406-1337"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.osgi"
          download-size="0"
          install-size="0"
-         version="3.11.3.v20170209-1843"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.osgi.compatibility.state"
          download-size="0"
          install-size="0"
-         version="1.0.200.v20160504-1419"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -385,378 +385,378 @@
          id="org.eclipse.osgi.services"
          download-size="0"
          install-size="0"
-         version="3.5.100.v20160504-1419"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.runtime"
          download-size="0"
          install-size="0"
-         version="3.12.0.v20160606-1342"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.ds"
          download-size="0"
          install-size="0"
-         version="1.4.400.v20160226-2036"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.security"
          download-size="0"
          install-size="0"
-         version="1.2.300.v20170505-1235"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.util"
          download-size="0"
          install-size="0"
-         version="1.0.500.v20130404-1337"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.openfile"
          download-size="0"
          install-size="0"
-         version="4.5.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.ide"
          download-size="0"
          install-size="0"
-         version="3.12.3.v20170119-0935"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.datasource-vtype"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.w3c.css.sac"
          download-size="0"
          install-size="0"
-         version="1.3.1.v200903091627"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.w3c.dom.events"
          download-size="0"
          install-size="0"
-         version="3.0.0.draft20060413_v201105210656"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.w3c.dom.smil"
          download-size="0"
          install-size="0"
-         version="1.0.1.v200903091627"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.w3c.dom.svg"
          download-size="0"
          install-size="0"
-         version="1.1.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.registry"
          download-size="0"
          install-size="0"
-         version="3.6.100.v20160223-2218"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.contenttype"
          download-size="0"
          install-size="0"
-         version="3.5.100.v20160418-1621"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.jobs"
          download-size="0"
          install-size="0"
-         version="3.8.0.v20160509-0411"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.expressions"
          download-size="0"
          install-size="0"
-         version="3.5.100.v20160418-1621"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.preferences"
          download-size="0"
          install-size="0"
-         version="3.6.1.v20160815-1406"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.app"
          download-size="0"
          install-size="0"
-         version="1.3.400.v20150715-1528"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.core.variables"
          download-size="0"
          install-size="0"
-         version="3.4.0.v20170113-2056"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jface.text"
          download-size="0"
          install-size="0"
-         version="3.12.2.v20180112-1341"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.workbench.texteditor"
          download-size="0"
          install-size="0"
-         version="3.10.100.v20170426-2021"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.text"
          download-size="0"
          install-size="0"
-         version="3.6.100.v20170203-0814"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.bidi"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20160307-1318"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.compare.core"
          download-size="0"
          install-size="0"
-         version="3.6.100.v20170516-0820"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.datasource-formula"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.service"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ant.core"
          download-size="0"
          install-size="0"
-         version="3.5.0.v20170509-2149"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.servlet"
          download-size="0"
          install-size="0"
-         version="3.1.0.v201410161800"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.commons.io"
          download-size="0"
          install-size="0"
-         version="2.5.0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.commons.lang3"
          download-size="0"
          install-size="0"
-         version="3.5.0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.diirt.util"
          download-size="0"
          install-size="0"
-         version="1.0.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.diirt.util.core.preferences"
          download-size="0"
          install-size="0"
-         version="1.0.2.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.equinox.event"
          download-size="0"
          install-size="0"
-         version="1.3.200.v20160324-1850"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.diirt.util.preferences"
          download-size="0"
          install-size="0"
-         version="1.0.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.osgi.util"
          download-size="0"
          install-size="0"
-         version="3.4.0.v20170111-1608"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.apputil.ui"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.archive.reader"
          download-size="0"
          install-size="0"
-         version="4.2.1.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.archive.vtype"
          download-size="0"
          install-size="0"
-         version="2.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.email"
          download-size="0"
          install-size="0"
-         version="1.2.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.email.ui"
          download-size="0"
          install-size="0"
-         version="1.0.3.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.logbook"
          download-size="0"
          install-size="0"
-         version="3.1.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.singlesource"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.diirt.datasource-extra"
          download-size="0"
          install-size="0"
-         version="3.1.7"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.mail.glassfish"
          download-size="0"
          install-size="0"
-         version="1.4.1.v201108011116"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="javax.activation"
          download-size="0"
          install-size="0"
-         version="1.1.0.v201211130549"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.swt.rtplot"
          download-size="0"
          install-size="0"
-         version="1.6.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.alarm.beast.ui"
          download-size="0"
          install-size="0"
-         version="4.0.1.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.alarm.beast.ui.alarmtree"
          download-size="0"
          install-size="0"
-         version="3.0.2.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.security.ui"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.alarm.beast.notifier"
          download-size="0"
          install-size="0"
-         version="4.0.3.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder"
          download-size="0"
          install-size="0"
-         version="5.1.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.editor"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.imagelib"
          download-size="0"
          install-size="0"
-         version="4.3.1.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.rcp"
          download-size="0"
          install-size="0"
-         version="5.0.0.201804041854"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -764,28 +764,28 @@
          id="org.csstudio.opibuilder.validation"
          download-size="0"
          install-size="0"
-         version="2.1.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets.extra"
          download-size="0"
          install-size="0"
-         version="2.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets.rcp"
          download-size="0"
          install-size="0"
-         version="3.1.3.201804041854"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -793,189 +793,189 @@
          id="org.csstudio.utility.file"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.validation"
          download-size="0"
          install-size="0"
-         version="1.2.701.v201707142105"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.pvmanager.ui.toolbox"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.pvmanager.widgets"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.ui.browser"
          download-size="0"
          install-size="0"
-         version="3.6.100.v20170418-1342"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.pvmanager.ui"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.frameworks"
          download-size="0"
          install-size="0"
-         version="1.2.201.v201707201954"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.project.facet.core"
          download-size="0"
          install-size="0"
-         version="1.4.300.v201111030423"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.core"
          download-size="0"
          install-size="0"
-         version="1.2.0.v200908251833"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.environment"
          download-size="0"
          install-size="0"
-         version="1.0.400.v200912181831"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.e4.ui.css.core"
          download-size="0"
          install-size="0"
-         version="0.12.1.v20161114-0210"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.e4.ui.css.swt"
          download-size="0"
          install-size="0"
-         version="0.12.100.v20160517-1505"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.e4.ui.css.swt.theme"
          download-size="0"
          install-size="0"
-         version="0.10.100.v20160523-0836"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.e4.ui.widgets"
          download-size="0"
          install-size="0"
-         version="1.1.100.v20160506-0759"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder"
          download-size="0"
          install-size="0"
-         version="5.1.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.simplepv"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.batik"
          download-size="0"
          install-size="0"
-         version="1.1.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.bridge"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.dom"
          download-size="0"
          install-size="0"
-         version="1.7.1.v201505191845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.xml"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.dom.svg"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.parser"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.ext.awt"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.transcoder"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.svggen"
          download-size="0"
          install-size="0"
-         version="1.7.0.v201011041433"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.swt.xygraph"
          download-size="0"
          install-size="0"
-         version="2.0.5.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.swt.xygraph.rcp"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041854"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -983,42 +983,42 @@
          id="org.csstudio.simplepv.pvmanager"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets.extra"
          download-size="0"
          install-size="0"
-         version="2.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.opibuilder.widgets.symbol"
          download-size="0"
          install-size="0"
-         version="5.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.swt.widgets"
          download-size="0"
          install-size="0"
-         version="2.1.4.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.trends.databrowser2.rcp"
          download-size="0"
          install-size="0"
-         version="1.0.0.201804041854"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -1026,7 +1026,7 @@
          id="org.csstudio.data"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
@@ -1044,63 +1044,63 @@
          id="org.csstudio.trends.databrowser2"
          download-size="0"
          install-size="0"
-         version="4.2.4.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.archive.reader.channelarchiver"
          download-size="0"
          install-size="0"
-         version="3.2.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.utility.rdb.source"
          download-size="0"
          install-size="0"
-         version="1.6.0.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.archive.reader.rdb"
          download-size="0"
          install-size="0"
-         version="4.2.1.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.archive.rdb"
          download-size="0"
          install-size="0"
-         version="4.0.0.201804041854"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.libs.hibernate"
          download-size="0"
          install-size="0"
-         version="1.0.0.201704101144"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.utility.singlesource.rcp"
          download-size="0"
          install-size="0"
-         version="4.0.1.201804041845"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.csstudio.platform.libs.jdbc"
          download-size="0"
          install-size="0"
-         version="1.4.0.201711060726"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.slf4j.api"
          download-size="0"
          install-size="0"
-         version="1.7.10.v20170428-1633"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin

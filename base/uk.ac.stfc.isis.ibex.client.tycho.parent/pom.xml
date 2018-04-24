@@ -167,8 +167,6 @@
 		<module>../uk.ac.stfc.isis.ibex.feature.css</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.spies</module>
-		<module>../uk.ac.stfc.isis.ibex.opi.feature.core</module>
-		<module>../uk.ac.stfc.isis.ibex.opi.feature.eclipse</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.product</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
