@@ -33,7 +33,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 
 /**
  * Provides a table to display blocks. Can be shown with or without block
@@ -69,6 +71,13 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		}
 	};
 	
+	/**
+	 * Constructor for the blocks table.
+	 * @param parent The parent composite that this table lives in.
+	 * @param style The style of the viewer.
+	 * @param tableStyle The style of the table.
+	 * @param isBlockVisibilityShown Whether the block visibility column should be shown.
+	 */
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
 		super(parent, style, EditableBlock.class, tableStyle | SWT.BORDER);
 		
@@ -130,8 +139,17 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		enabled.setLabelProvider(visibilityLabelProvider);		
 	}
 	
+	/**
+	 * Sets the PV string to search by.
+	 * @param searchText The string to search by.
+	 */
 	public void setSearch(String searchText) {
 		search.setSearchText(searchText);
 		this.viewer().refresh();
+	}
+	
+	@Override
+	protected ColumnComparator comparator() {
+		return new BlocksComparator();
 	}
 }
