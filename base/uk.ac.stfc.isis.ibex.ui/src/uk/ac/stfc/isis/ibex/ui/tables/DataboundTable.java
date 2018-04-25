@@ -35,12 +35,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
@@ -97,7 +100,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tableComposite.setLayout(tableColumnLayout);
 		
-		viewer = createViewer();		
+		viewer = createViewer();
+
 		table = viewer.getTable();
 	}
 	
@@ -274,6 +278,8 @@ public abstract class DataboundTable<TRow> extends Composite {
      * Completes the setup of the table.
      */
 	public void initialise() {
+		viewer.setComparator(comparator());
+		
 		addColumns();
 		
 		viewer.setContentProvider(contentProvider);	
@@ -382,9 +388,24 @@ public abstract class DataboundTable<TRow> extends Composite {
 		TableColumn col = viewCol.getColumn();
 		col.setText(title);
 		col.setResizable(true);
-		
+		col.addSelectionListener(getSelectionAdapter(col, table.getColumnCount()-1));
 		return viewCol;
 	}
+	
+	private SelectionAdapter getSelectionAdapter(final TableColumn column, final int index) {
+        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	ColumnComparator comparator = (ColumnComparator) viewer.getComparator();
+                comparator.setColumn(index);
+                int dir = comparator.getDirection();
+                viewer.getTable().setSortDirection(dir);
+                viewer.getTable().setSortColumn(column);
+                viewer.refresh();
+            }
+        };
+        return selectionAdapter;
+    }
 	
     /**
      * Creates a new resizeable column in the table at the end of the column
@@ -444,5 +465,13 @@ public abstract class DataboundTable<TRow> extends Composite {
         }
         return firstSelectedRow();
     }
+    
+    /**
+     * Get the comparator for the columns. Tables can override to provide their own.
+     * @return The comparator for the table.
+     */
+	protected ColumnComparator comparator() {
+		return new NullComparator();
+	}
 }
 

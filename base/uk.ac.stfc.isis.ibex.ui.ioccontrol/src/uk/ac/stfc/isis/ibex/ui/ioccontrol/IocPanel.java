@@ -26,7 +26,6 @@ import java.util.Collection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -36,6 +35,9 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
 
+/**
+ * A panel that lists the available IOCs and allows you to control them.
+ */
 public class IocPanel extends Composite {
 	
 	private final Display display = Display.getDefault();
@@ -56,18 +58,18 @@ public class IocPanel extends Composite {
 		}
 	};
 	
+	/**
+	 * The constructor for the panel.
+	 * @param parent The parent composite that this panel belongs to.
+	 * @param control The model that this panel uses to control IOCs
+	 * @param style The SWT style for the panel.
+	 */
 	public IocPanel(Composite parent, final IocControl control, int style) {
 		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-				
-		Composite container = new Composite(this, SWT.NONE);
-		GridLayout glContainer = new GridLayout(1, false);
-		glContainer.marginHeight = 0;
-		glContainer.horizontalSpacing = 0;
-		glContainer.marginWidth = 0;
-		container.setLayout(glContainer);
 		
-		table = new IocTable(container, SWT.BORDER, SWT.FULL_SELECTION);
+		setLayout(new GridLayout(1, false));
+		
+		table = new IocTable(this, SWT.NONE, SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		this.control = control;
@@ -80,7 +82,7 @@ public class IocPanel extends Composite {
 			}
 		});
 
-        buttons = new IocButtonPanel(container, SWT.NONE, control);
+        buttons = new IocButtonPanel(this, SWT.NONE, control);
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
 	

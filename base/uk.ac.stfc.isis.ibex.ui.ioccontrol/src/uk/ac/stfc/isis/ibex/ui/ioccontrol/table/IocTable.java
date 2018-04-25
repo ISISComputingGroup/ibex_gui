@@ -26,11 +26,16 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -46,12 +51,19 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<IocState> {
 
+	//private IocComparator comparator = new IocComparator();
+	
+	/**
+	 * A table that shows the status of all IOCs on the instrument.
+	 * @param parent the parent composite for the table.
+	 * @param style The style of the viewer.
+	 * @param tableStyle The style of the table.
+	 */
 	public IocTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, IocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
-		
+        super(parent, style, IocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);	
 		initialise();
 	}
-
+	
 	@Override
     public void setRows(Collection<IocState> rows) {
         List<IocState> states = new ArrayList<>(rows);
@@ -74,22 +86,27 @@ public class IocTable extends DataboundTable<IocState> {
             protected String valueFromRow(IocState row) {
 				return row.getName();
 			}
-		});		
+		});
 	}
 	
 	private void description() {
-		TableViewerColumn name = createColumn("Description", 4, false);
-        name.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
+		TableViewerColumn description = createColumn("Description", 4, false);
+        description.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
 			@Override
             protected String valueFromRow(IocState row) {
 				return row.getDescription();
 			}
-		});		
+		});	
 	}
 	
 	private void state() {
-		TableViewerColumn name = createColumn("Status", 2, false);
+		TableViewerColumn status = createColumn("Status", 2, false);
 		IObservableMap[] stateProperties = {observeProperty("isRunning")};
-		name.setLabelProvider(new StateLabelProvider(stateProperties));		
+		status.setLabelProvider(new StateLabelProvider(stateProperties));
+	}
+	
+	@Override
+	protected ColumnComparator comparator() {
+		return new IocComparator();
 	}
 }
