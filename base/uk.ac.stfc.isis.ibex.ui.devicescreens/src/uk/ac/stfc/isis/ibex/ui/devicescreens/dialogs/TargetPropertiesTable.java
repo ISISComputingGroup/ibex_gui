@@ -58,7 +58,7 @@ public class TargetPropertiesTable extends DataboundTable<PropertyDescription> {
     private void name() {
         createColumn("Name", 2, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("key")) {
             @Override
-			public String stringFromRow(PropertyDescription row) {
+			protected String stringFromRow(PropertyDescription row) {
                 return row.getKey();
             }
         });
@@ -67,7 +67,7 @@ public class TargetPropertiesTable extends DataboundTable<PropertyDescription> {
     private void value() {
         createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
             @Override
-			public String stringFromRow(PropertyDescription row) {
+			protected String stringFromRow(PropertyDescription row) {
                 return row.getValue();
             }
         });

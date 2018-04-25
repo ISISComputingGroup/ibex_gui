@@ -85,7 +85,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn position = createColumn("POSITION", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("position")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getPosition();
 			}
 		});
@@ -110,7 +110,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn trans = createColumn("TRANS", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("transWaitValue")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getTransWaitValue() == null ? "" : String.valueOf(row.getTransWaitValue());
 			}
 		});
@@ -133,7 +133,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn transWait = createColumn("TRANS_WAIT", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("transWaitUnit")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getTransWaitUnit() == null ? "" : String.valueOf(row.getTransWaitUnit());
 			}
 		});
@@ -156,7 +156,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn sans = createColumn("SANS", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("sansWaitValue")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getSansWaitValue() == null ? "" : String.valueOf(row.getSansWaitValue());
 			}
 		});
@@ -180,7 +180,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn sansWait = createColumn("SANS_WAIT", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("sansWaitUnit")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getSansWaitUnit() == null ? "" : String.valueOf(row.getSansWaitUnit());
 			}
 		});
@@ -203,7 +203,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn period = createColumn("PERIOD", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("period")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
@@ -226,7 +226,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn sampleName = createColumn("SAMPLE_NAME", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("sampleName")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getSampleName();
 			}
 		});
@@ -249,7 +249,7 @@ public class Table extends DataboundTable<Row> {
         TableViewerColumn thickness = createColumn("THICKNESS", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("thickness")) {
 			@Override
-			public String stringFromRow(Row row) {
+			protected String stringFromRow(Row row) {
 				return row.getThickness() == null ? "" : String.valueOf(row.getThickness());
 			}
 		});

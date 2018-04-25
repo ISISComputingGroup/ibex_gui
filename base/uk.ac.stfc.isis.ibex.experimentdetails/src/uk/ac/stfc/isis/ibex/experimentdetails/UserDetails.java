@@ -25,6 +25,10 @@ import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The details for one user.
+ *
+ */
 public class UserDetails extends ModelObject {
 	
 	private String name;
@@ -35,6 +39,14 @@ public class UserDetails extends ModelObject {
 	
 	private static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy");
 	
+	/**
+	 * Constructor for the user's details.
+	 * @param name The full name of the user.
+	 * @param institute The institute the user works for.
+	 * @param role The role of the user.
+	 * @param associatedExperimentID The experiment ID that the user is working on.
+	 * @param associatedExperimentStartDate The start date of the user's experiment.
+	 */
     public UserDetails(String name, String institute, Role role, String associatedExperimentID,
             Date associatedExperimentStartDate) {
 		this.name = name;
@@ -44,44 +56,86 @@ public class UserDetails extends ModelObject {
 		this.associatedExperimentStartDate = associatedExperimentStartDate;
 	}
 	
+    /**
+     * Constructor for a default user that is not associated with an experiment.
+     * @param name The full name of the user.
+	 * @param institute The institute the user works for.
+	 * @param role The role of the user.
+     */
     public UserDetails(String name, String institute, Role role) {
 		this.name = name;
 		this.institute = institute;
         this.role = role;
 	}
 
+    /**
+     * Get the user's full name.
+     * @return The user's full name.
+     */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Set the user's name.
+	 * @param name The new name to give the user.
+	 */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 
+	/**
+	 * Get the institute that the user works for.
+	 * @return The institute the user works for.
+	 */
 	public String getInstitute() {
 		return institute;
 	}
 
+	/**
+	 * Set the institute that the user works for.
+	 * @param institute The institute to assign the user.
+	 */
 	public void setInstitute(String institute) {
 		firePropertyChange("institute", this.institute, this.institute = institute);
 	}
 
+	/**
+	 * Get the user's role in the experiment.
+	 * @return The user's role in the experiment.
+	 */
     public Role getRole() {
         return role;
 	}
 
+    /**
+     * Set the user's role in the experiment.
+     * @param role The new role of the user.
+     */
     public void setRole(Role role) {
         firePropertyChange("role", this.role, this.role = role);
 	}
 	
+    /**
+     * Get the experiment id that the user is working on.
+     * @return The experiment ID.
+     */
 	public String getAssociatedExperimentID() {
 		return associatedExperimentID;
 	}
 	
+	/**
+	 * Get the start date for the experiment.
+	 * @return the start date for the experiment.
+	 */
 	public Date getAssociatedExperimentStartDate() {
 		return associatedExperimentStartDate;
 	}
 	
+	/**
+	 * Get the string representation of the start date for the experiment.
+	 * @return The string representation.
+	 */
 	public String getAssociatedExperimentStartDateString() {
 		return DF.format(associatedExperimentStartDate);
 	}

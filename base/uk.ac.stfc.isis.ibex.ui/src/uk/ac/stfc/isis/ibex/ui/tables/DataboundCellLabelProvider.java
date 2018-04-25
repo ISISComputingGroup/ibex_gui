@@ -71,7 +71,7 @@ public abstract class DataboundCellLabelProvider<TRow> extends SortableObservabl
      * @param row the row
      * @return the string to set in the cell
      */
-	public abstract String stringFromRow(TRow row);
+	protected abstract String stringFromRow(TRow row);
 	
     /**
      * Image from row for the cell; default to null.

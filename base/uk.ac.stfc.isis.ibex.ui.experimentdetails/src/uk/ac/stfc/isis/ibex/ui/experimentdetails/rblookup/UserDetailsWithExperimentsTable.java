@@ -24,7 +24,7 @@ public class UserDetailsWithExperimentsTable extends UserDetailsTable {
 		createColumn("Experiment ID", 3, new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperimentID")) {
 
 			@Override
-			public String stringFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getAssociatedExperimentID();
 			}
 		});	
@@ -33,7 +33,7 @@ public class UserDetailsWithExperimentsTable extends UserDetailsTable {
 	private void startDate() {
 		createColumn("Start Date", 3, new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperimentStartDate")) {
 			@Override
-			public String stringFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getAssociatedExperimentStartDateString();
 			}
 			

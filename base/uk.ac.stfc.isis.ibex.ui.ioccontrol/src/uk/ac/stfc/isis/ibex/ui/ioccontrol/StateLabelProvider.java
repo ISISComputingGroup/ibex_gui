@@ -51,7 +51,7 @@ public class StateLabelProvider extends SortableObservableMapCellLabelProvider<I
 	}
 
 	@Override
-	public String stringFromRow(IocState row) {
+	protected String stringFromRow(IocState row) {
 		boolean isRunning = row != null && row.getIsRunning();
 		return isRunning ? TEXT_RUNNING : TEXT_NOT_RUNNING;
 	}

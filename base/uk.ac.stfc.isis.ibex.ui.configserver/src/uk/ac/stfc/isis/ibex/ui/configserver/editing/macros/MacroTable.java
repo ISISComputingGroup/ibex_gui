@@ -66,7 +66,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	private void name() {
 		createColumn("Macro name", 6, new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getName();
 			}
 		});
@@ -75,7 +75,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	private void value() {
 		createColumn("Value", 5, new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
 			@Override
-			public String stringFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getValue();
 			}
 		});
@@ -84,7 +84,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	private void description() {
 		createColumn("Description", 8, new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
 			@Override
-			public String stringFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getDescription();
 			}
 		});	
@@ -93,7 +93,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	private void pattern() {
 		createColumn("Pattern", 8, new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
 			@Override
-			public String stringFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getPattern();
 			}
 		});	

@@ -55,7 +55,7 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	private void name() {
 		createColumn("Name", 8, new DataboundCellLabelProvider<AvailablePV>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(AvailablePV row) {
+			protected String stringFromRow(AvailablePV row) {
 				return row.getName();
 			}
 		});	
@@ -64,7 +64,7 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	private void description() {
 		createColumn("Description", 6, new DataboundCellLabelProvider<AvailablePV>(observeProperty("description")) {
 			@Override
-			public String stringFromRow(AvailablePV row) {
+			protected String stringFromRow(AvailablePV row) {
 				return row.getDescription();
 			}
 		});	

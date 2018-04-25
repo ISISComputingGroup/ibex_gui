@@ -43,9 +43,6 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<IocState> {
-
-	//private IocComparator comparator = new IocComparator();
-	
 	/**
 	 * A table that shows the status of all IOCs on the instrument.
 	 * @param parent the parent composite for the table.
@@ -75,7 +72,7 @@ public class IocTable extends DataboundTable<IocState> {
 	private void name() {
 		createColumn("Name", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(IocState row) {
+			protected String stringFromRow(IocState row) {
 				return row.getName();
 			}
 		});
@@ -84,7 +81,7 @@ public class IocTable extends DataboundTable<IocState> {
 	private void description() {
 		createColumn("Description", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
 			@Override
-			public String stringFromRow(IocState row) {
+			protected String stringFromRow(IocState row) {
 				return row.getDescription();
 			}
 		});	

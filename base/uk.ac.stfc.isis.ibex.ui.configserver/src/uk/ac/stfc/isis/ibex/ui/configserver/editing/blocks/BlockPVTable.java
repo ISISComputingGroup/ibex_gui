@@ -74,7 +74,7 @@ public class BlockPVTable extends DataboundTable<PV> {
 	private void address() {
 		createColumn("PV address", 8, new DataboundCellLabelProvider<PV>(observeProperty("address")) {
 			@Override
-			public String stringFromRow(PV row) {
+			protected String stringFromRow(PV row) {
 				return row.getAddress();
 			}
 		});	
@@ -83,7 +83,7 @@ public class BlockPVTable extends DataboundTable<PV> {
 	private void description() {
 		createColumn("Description", 6, new DataboundCellLabelProvider<PV>(observeProperty("description")) {
 			@Override
-			public String stringFromRow(PV row) {
+			protected String stringFromRow(PV row) {
 				return row.getDescription();
 			}
 		});	

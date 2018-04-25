@@ -67,7 +67,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	}
 	
 	@Override
-	public String stringFromRow(T model) {
+	protected String stringFromRow(T model) {
 		return checked(model) ? "Yes" : "No";
 	}
 	

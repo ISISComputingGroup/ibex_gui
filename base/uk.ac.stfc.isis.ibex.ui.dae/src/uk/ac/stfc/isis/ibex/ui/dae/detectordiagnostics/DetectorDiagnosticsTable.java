@@ -81,7 +81,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     private void createSpectrumNumberColumn() {
         createColumn("Spectrum number", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
             @Override
-			public String stringFromRow(SpectrumInformation row) {
+			protected String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getSpectrumNumber().toString();
                 } catch (NullPointerException e) {
@@ -94,7 +94,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     private void createCountRateColumn() {
         createColumn("Count rate", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
             @Override
-			public String stringFromRow(SpectrumInformation row) {
+			protected String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getCountRate().toString();
                 } catch (NullPointerException e) {
@@ -107,7 +107,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     private void createMaxSpecBinCountColumn() {
         createColumn("Maximum", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
             @Override
-			public String stringFromRow(SpectrumInformation row) {
+			protected String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getMaxSpecBinCount().toString();
                 } catch (NullPointerException e) {
@@ -120,7 +120,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     private void createIntegralColumn() {
         createColumn("Integral", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("integral")) {
             @Override
-			public String stringFromRow(SpectrumInformation row) {
+			protected String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getIntegral().toString();
                 } catch (NullPointerException e) {

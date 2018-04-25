@@ -67,7 +67,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	private void name() {
 		createColumn("Name", 4, false, new DataboundCellLabelProvider<Parameter>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(Parameter row) {
+			protected String stringFromRow(Parameter row) {
 				return row.getName();
 			}
 		});		
@@ -76,7 +76,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	private void units() {
 		createColumn("Units", 1, false, new DataboundCellLabelProvider<Parameter>(observeProperty("units")) {
 			@Override
-			public String stringFromRow(Parameter row) {
+			protected String stringFromRow(Parameter row) {
 				return row.getUnits();
 			}
 		});		
@@ -89,7 +89,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	private void value() {
 		TableViewerColumn valueColumn = createColumn("Value", 2, false, new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
 			@Override
-			public String stringFromRow(Parameter row) {
+			protected String stringFromRow(Parameter row) {
 				return row.getValue();
 			}
 		});	

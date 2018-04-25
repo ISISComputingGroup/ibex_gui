@@ -8,6 +8,10 @@ import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
  * @param <TRow> The type of the row that this cell provider gives sorting data for.
  */
 public abstract class SortableObservableMapCellLabelProvider<TRow> extends ObservableMapCellLabelProvider {
+	/**
+	 * Constructor for the observable label provider.
+	 * @param attributeMap A map of the attributes that this cell will observe.
+	 */
 	protected SortableObservableMapCellLabelProvider(IObservableMap attributeMap) {
 		super(attributeMap);
 	}
@@ -18,7 +22,7 @@ public abstract class SortableObservableMapCellLabelProvider<TRow> extends Obser
      * @param row the row
      * @return the string to set in the cell
      */
-	public abstract String stringFromRow(TRow row);
+	protected abstract String stringFromRow(TRow row);
 	
     /**
      * Get the comparable for the cell compared to others in it's column.

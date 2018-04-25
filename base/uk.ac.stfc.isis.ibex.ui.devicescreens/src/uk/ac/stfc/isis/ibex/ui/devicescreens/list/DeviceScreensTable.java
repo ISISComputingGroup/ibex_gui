@@ -73,7 +73,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 	private void name() {
         createColumn("Name", 20, new DataboundCellLabelProvider<DeviceDescription>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(DeviceDescription row) {
+			protected String stringFromRow(DeviceDescription row) {
 				return row.getName();
 			}
         });
@@ -87,7 +87,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
             }
 
             @Override
-			public String stringFromRow(DeviceDescription row) {
+			protected String stringFromRow(DeviceDescription row) {
                 return null;
             }
         });
@@ -96,7 +96,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     private void type() {
         createColumn("Type", 1, new DataboundCellLabelProvider<DeviceDescription>(observeProperty("key")) {
             @Override
-			public String stringFromRow(DeviceDescription row) {
+			protected String stringFromRow(DeviceDescription row) {
                 return null;
             }
 

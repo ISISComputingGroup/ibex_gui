@@ -159,7 +159,7 @@ public class JournalViewerView extends ViewPart {
 			if (model.getFieldSelected(field)) {
 				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true, new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
 					@Override
-					public String stringFromRow(JournalRow row) {
+					protected String stringFromRow(JournalRow row) {
 						return row.get(field);
 					}
 				});

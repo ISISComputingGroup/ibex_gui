@@ -59,7 +59,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	private void name() {
 		name = createColumn("Name", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getName();
 			}
 		});		
@@ -68,7 +68,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	private void institute() {
 		institute = createColumn("Institute", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("institute")) {
 			@Override
-			public String stringFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getInstitute();
 			}
 		});		
@@ -77,7 +77,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	private void role() {
 		role = createColumn("Role", 2, new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
 			@Override
-			public String stringFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
                 Role role = row.getRole();
 				return role == null ? "" : role.toString();
 			}

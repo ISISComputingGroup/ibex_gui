@@ -63,7 +63,7 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 	private void name() {
 		createColumn("Name", 3, new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(PVDefaultValue row) {
+			protected String stringFromRow(PVDefaultValue row) {
 				return row.getName();
 			}
 		});	
@@ -72,7 +72,7 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 	private void value() {
 		createColumn("Value", 3, new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("value")) {
 			@Override
-			public String stringFromRow(PVDefaultValue row) {
+			protected String stringFromRow(PVDefaultValue row) {
 				return row.getValue();
 			}
 		});	

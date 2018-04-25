@@ -48,7 +48,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private void name() {
 		createColumn("Name", 8, new DataboundCellLabelProvider<EditablePVSet>(observeProperty("name")) {
 			@Override
-			public String stringFromRow(EditablePVSet row) {
+			protected String stringFromRow(EditablePVSet row) {
 				return row.getName();
 			}
 		});	
@@ -57,7 +57,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private void description() {
 		createColumn("Description", 6, new DataboundCellLabelProvider<EditablePVSet>(observeProperty("description")) {
 			@Override
-			public String stringFromRow(EditablePVSet row) {
+			protected String stringFromRow(EditablePVSet row) {
 				return row.getDescription();
 			}
 		});	
