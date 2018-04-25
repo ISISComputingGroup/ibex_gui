@@ -6,8 +6,10 @@ import org.eclipse.swt.SWT;
 
 /**
  * Compares columns in a table to be sorted.
+ * 
+ * @param <T> The type of object stored in the table.
  */
-public abstract class ColumnComparator extends ViewerComparator {
+public abstract class ColumnComparator<T> extends ViewerComparator {
 	protected int propertyIndex;
     protected int direction = DESCENDING;
     protected static final int DESCENDING = 1;
@@ -43,6 +45,17 @@ public abstract class ColumnComparator extends ViewerComparator {
         }
     }
 
-    @Override
-    public abstract int compare(Viewer viewer, Object e1, Object e2);
+    @SuppressWarnings("unchecked")
+	@Override
+    public int compare(Viewer viewer, Object e1, Object e2) {    	
+    	int rc = compare((T) e1, (T) e2);
+    	
+        // If descending order, flip the direction
+        if (direction == DESCENDING) {
+            rc = -rc;
+        }
+        return rc;
+    }
+    
+    public abstract int compare(T e1, T e2);
 }

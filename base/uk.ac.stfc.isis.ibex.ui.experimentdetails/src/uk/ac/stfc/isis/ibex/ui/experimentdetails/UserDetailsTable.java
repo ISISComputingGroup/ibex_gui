@@ -90,7 +90,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	}
 	
 	@Override
-	protected ColumnComparator comparator() {
+	protected ColumnComparator<UserDetails> comparator() {
 		return new UserDetailsComparator();
 	}
 	

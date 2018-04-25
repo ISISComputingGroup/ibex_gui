@@ -470,8 +470,8 @@ public abstract class DataboundTable<TRow> extends Composite {
      * Get the comparator for the columns. Tables can override to provide their own.
      * @return The comparator for the table.
      */
-	protected ColumnComparator comparator() {
-		return new NullComparator();
+	protected ColumnComparator<TRow> comparator() {
+		return new NullComparator<TRow>();
 	}
 }
 

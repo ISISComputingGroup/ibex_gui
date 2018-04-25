@@ -26,12 +26,8 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
@@ -106,7 +102,7 @@ public class IocTable extends DataboundTable<IocState> {
 	}
 	
 	@Override
-	protected ColumnComparator comparator() {
+	protected ColumnComparator<IocState> comparator() {
 		return new IocComparator();
 	}
 }

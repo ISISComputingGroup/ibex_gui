@@ -149,7 +149,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	}
 	
 	@Override
-	protected ColumnComparator comparator() {
+	protected ColumnComparator<EditableBlock> comparator() {
 		return new BlocksComparator();
 	}
 }

@@ -1,18 +1,14 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import org.eclipse.jface.viewers.Viewer;
-
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 
 /**
  * A comparator for user details.
  */
-public class UserDetailsComparator extends ColumnComparator {
-    @Override
-    public int compare(Viewer viewer, Object e1, Object e2) {
-    	UserDetails user1 = (UserDetails) e1;
-    	UserDetails user2 = (UserDetails) e2;
+public class UserDetailsComparator extends ColumnComparator<UserDetails> {
+	@Override
+	public int compare(UserDetails user1, UserDetails user2) {
         int rc = 0;
         switch (propertyIndex) {
         case 0:
@@ -27,10 +23,6 @@ public class UserDetailsComparator extends ColumnComparator {
         default:
             rc = 0;
         }
-        // If descending order, flip the direction
-        if (direction == DESCENDING) {
-            rc = -rc;
-        }
         return rc;
-    }
+	}
 }

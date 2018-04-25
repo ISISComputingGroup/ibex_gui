@@ -1,18 +1,14 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import org.eclipse.jface.viewers.Viewer;
-
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 
 /**
  * A comparator for blocks.
  */
-public class BlocksComparator extends ColumnComparator {
-    @Override
-    public int compare(Viewer viewer, Object e1, Object e2) {
-    	EditableBlock block1 = (EditableBlock) e1;
-    	EditableBlock block2 = (EditableBlock) e2;
+public class BlocksComparator extends ColumnComparator<EditableBlock> {
+ 	@Override
+	public int compare(EditableBlock block1, EditableBlock block2) {
         int rc = 0;
         switch (propertyIndex) {
         case 0:
@@ -31,10 +27,6 @@ public class BlocksComparator extends ColumnComparator {
         default:
             rc = 0;
         }
-        // If descending order, flip the direction
-        if (direction == DESCENDING) {
-            rc = -rc;
-        }
         return rc;
-    }
+	}
 }
