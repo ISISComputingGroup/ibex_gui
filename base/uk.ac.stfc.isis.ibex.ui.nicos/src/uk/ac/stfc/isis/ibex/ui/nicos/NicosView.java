@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
@@ -42,11 +43,16 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
+import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -64,25 +70,26 @@ public class NicosView {
 	 * The public ID of this class.
 	 */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
-
-    private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
-    
-    private static final int FIXED_WIDTH = 750;
-    private static final int FIXED_HEIGHT = 225;
 	
 	private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
-    StyledText txtCurrentScript;
+    StyledText txtCurrentScript;    
+    
+    private static final int FIXED_WIDTH = 750;
+    private static final int FIXED_HEIGHT = 225;
     
     private NicosModel model;
-    private QueueScriptViewModel queueScriptViewModel;
+    private QueueScriptViewModel queueScriptViewModel;    
+    private Label lblCurrentScriptStatus;
+	private ScriptStatusViewModel scriptStatusViewModel;
+    private OutputLogViewModel outputLogViewModel;
 
     /**
      * The default constructor for the view.
      */
     public NicosView() {
         model = Nicos.getDefault().getModel();
-        queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+        queueScriptViewModel = new QueueScriptViewModel(model);
         scriptStatusViewModel = new ScriptStatusViewModel(model);
         outputLogViewModel = new OutputLogViewModel(model);
 

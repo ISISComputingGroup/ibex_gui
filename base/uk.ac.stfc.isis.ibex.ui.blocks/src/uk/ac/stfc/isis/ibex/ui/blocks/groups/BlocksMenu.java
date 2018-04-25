@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
  * The right-click menu for blocks in the dashboard.
