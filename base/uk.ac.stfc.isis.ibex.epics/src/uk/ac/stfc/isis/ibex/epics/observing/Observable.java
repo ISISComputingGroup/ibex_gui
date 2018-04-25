@@ -57,5 +57,4 @@ public interface Observable<T> {
      * @return the exception last thrown; null no error
      */
     Exception currentError();
-	
 }
