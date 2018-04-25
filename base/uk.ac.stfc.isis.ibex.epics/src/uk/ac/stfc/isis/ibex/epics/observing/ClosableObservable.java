@@ -36,10 +36,13 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     private T value;
     private boolean isConnected;
     private Exception currentError;
-
+    
     @Override
     public Subscription addObserver(Observer<T> observer) {
-        if (!observers.contains(observer)) observers.add(observer);
+        if (!observers.contains(observer)) {
+        	observers.add(observer);
+        }
+        // When a new observer is added, update it with the existing observable data
         observer.update(getValue(), currentError(), isConnected());
         return new Unsubscriber<Observer<T>>(observers, observer);
     }
@@ -73,8 +76,9 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         currentError = null;
         if (value != null) {
         	this.value = value;
-        	for (Observer<T> observer : observers)
+        	for (Observer<T> observer : observers) {
         		observer.onValue(value);
+        	}
         }
     }
 

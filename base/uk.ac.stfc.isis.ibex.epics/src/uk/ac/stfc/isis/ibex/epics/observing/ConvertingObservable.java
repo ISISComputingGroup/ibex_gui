@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+import java.util.logging.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
@@ -29,23 +31,32 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <T> The required type to transform to.
  */
 public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
+	
+	private static final Logger LOG = Logger.getLogger(ConvertingObservable.class.getName());
 
+	/**
+	 * Contains the transformation function to convert the raw source value to the new observable value.
+	 */
 	private final Converter<R, T> formatter;
 	
+	/**
+	 * @param source The source of raw data
+	 * @param formatter Converts raw data from the source to the value supplied by this observable
+	 */
 	public ConvertingObservable(ClosableObservable<R> source, Converter<R, T> formatter) {
 		this.formatter = formatter;
+		// setValue can be set any time from this call so the formatter must be set first.
 		setSource(source);
 	}
 	
-	/**
-     * value here is guaranteed not to be null by checks higher up.
-     */
 	@Override
 	protected T transform(R value) {
 		T newValue = null;
+		
 		// Synchronize with the observable source so that further updates are held whilst
 		// the data is being processed. Particularly important for large transforms
 		// like synoptics and configs.
+		
 		synchronized(this.source) {
 			if (formatter != null && value != null) {
 				try {
@@ -53,6 +64,8 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 				} catch (ConversionException e) {
 					setError(e);
 				}
+			} else if (value==null) {
+				LOG.warning("Null Value discarded in converting observable: " + toString());
 			}
 		}
 		return newValue;

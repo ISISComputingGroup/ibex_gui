@@ -20,7 +20,9 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * The abstract base class for classes that transform the observed value into something else.
+ * An object that observes a base observable of a particular type and supplies a
+ * transformed version of the base observable's value on to other objects
+ * 
  * For example: changing an enum into a string
  *
  * @param <T1> The type of the first value being observed.
@@ -28,9 +30,21 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public abstract class TransformingObservable<T1, T2> extends ClosableObservable<T2> {
 
+	/**
+	 * The observable that provides the raw value to be converted.
+	 */
     protected ClosableObservable<T1> source;
+    
+    /**
+     * Keeps track of the connection between the source observer and the source so it
+     * can be cancelled later on if desired.
+     */
 	private Subscription sourceSubscription;
 
+	/**
+	 * Observes the source and triggers the properties of this object to be updated when
+	 * they change.
+	 */
 	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
 		@Override
 		public void onValue(T1 value) {
@@ -49,7 +63,12 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 
 	};
     
-    protected void setSource(ClosableObservable<T1> source) {
+	/**
+	 * Set the data source for this observable to get its data from.
+	 * 
+	 * @param source The source that supplies the raw data that this object transforms
+	 */
+    protected synchronized void setSource(ClosableObservable<T1> source) {
 		cancelSubscription();
 		
 		closeSource();
@@ -69,6 +88,13 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 		sourceSubscription = source.addObserver(sourceObserver);
     }
 	
+    /**
+     * Transforms the value from the input value from the source observable to the new
+     * value supplied by this object.
+     * 
+     * @param value The new value of the source
+     * @return The transformed value supplied by this object
+     */
 	protected abstract T2 transform(T1 value);
 
 	@Override
@@ -78,14 +104,30 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
         super.close();
 	}
 	
+	/**
+	 * Break the connection between this objects source observer and the source
+	 * it is currently pointing at.
+	 */
 	private void cancelSubscription() {
 		if (sourceSubscription != null) sourceSubscription.removeObserver();
 	}
 	
+	/**
+	 * Close the attached data source. Useful for triggering a whole stack of observables to close
+	 * from the top down.
+	 */
 	private void closeSource() {
 		if (source != null) {
 	        sourceObserver.onConnectionStatus(false);
 			source.close();
 		}
+	}
+	
+	/**
+	 * Return a human readable value to assist with identifying issues in the observable stack.
+	 */
+	@Override
+	public String toString() {
+		return this.getClass().getName() + " observing source: " + source.toString();
 	}
 }
