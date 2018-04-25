@@ -18,11 +18,7 @@ public class IocComparator extends ColumnComparator<IocState> {
             rc = ioc1.getDescription().compareTo(ioc2.getDescription());
             break;
         case 2:
-            if (ioc1.getIsRunning() == ioc2.getIsRunning()) {
-                rc = 0;
-            } else {
-                rc = (ioc1.getIsRunning() ? 1 : -1);
-            }
+        	rc = compareBoolean(ioc1.getIsRunning(), ioc2.getIsRunning());
             break;
         default:
             rc = 0;

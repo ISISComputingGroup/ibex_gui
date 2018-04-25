@@ -18,11 +18,7 @@ public class BlocksComparator extends ColumnComparator<EditableBlock> {
             rc = block1.getPV().compareTo(block2.getPV());
             break;
         case 2:
-            if (block1.getIsVisible() == block2.getIsVisible()) {
-                rc = 0;
-            } else {
-                rc = (block2.getIsVisible() ? 1 : -1);
-            }
+        	rc = compareBoolean(block1.getIsVisible(), block2.getIsVisible());
             break;
         default:
             rc = 0;
