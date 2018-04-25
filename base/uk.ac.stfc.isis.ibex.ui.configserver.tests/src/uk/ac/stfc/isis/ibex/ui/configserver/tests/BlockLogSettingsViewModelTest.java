@@ -52,9 +52,9 @@ public class BlockLogSettingsViewModelTest {
         assertEquals(textBox, vm.getTextBoxText());
         assertEquals(enabled, vm.getEnabled());
         if (periodic) {
-            assertEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
+            assertArrayEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
         } else {
-            assertEquals(BlockLogSettingsViewModel.MONITOR_STRING, vm.getComboText());
+            assertArrayEquals(BlockLogSettingsViewModel.MONITOR_STRING, vm.getComboText());
         }
     }
 

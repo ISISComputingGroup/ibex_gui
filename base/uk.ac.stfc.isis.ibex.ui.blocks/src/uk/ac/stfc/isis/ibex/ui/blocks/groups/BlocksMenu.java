@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
  * The right-click menu for blocks in the dashboard.
@@ -100,13 +99,9 @@ public class BlocksMenu extends MenuManager {
         final IAction newPresenter = new Action("New Plot") {
 			@Override
 			public void run() {
-<<<<<<< HEAD
 				switcher.switchPerspective(LOGPLOTTER_ID);
-				pvHistoryPresenter.newPresenter(block.blockServerAlias(), block.getName());			}
-=======
 				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
 			}
->>>>>>> master
 		};
 		
         logSubMenu.addMenuListener(new IMenuListener() {

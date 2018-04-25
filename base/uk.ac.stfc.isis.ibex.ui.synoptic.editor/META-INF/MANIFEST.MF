@@ -8,21 +8,15 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui.synoptic,
- org.eclipse.core.databinding,
- org.eclipse.jface.databinding,
- org.eclipse.core.databinding.property;bundle-version="1.4.100",
- org.eclipse.core.databinding.beans,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.configserver,
  uk.ac.stfc.isis.ibex.configserver,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0",
- org.eclipse.swt,
- uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0",
- com.google.guava
+ com.google.guava,
+ uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
@@ -31,7 +25,5 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.writing,
- uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.targets,
- uk.ac.stfc.isis.ibex.ui.perspectives
+ uk.ac.stfc.isis.ibex.ui.configserver.commands
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands

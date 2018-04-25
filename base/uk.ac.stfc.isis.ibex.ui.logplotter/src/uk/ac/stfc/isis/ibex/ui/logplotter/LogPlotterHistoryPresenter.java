@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +39,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -57,18 +59,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public List<String> getCurrentPresenters() {
-		return getCurrentDataBrowsers().map(e -> e.getTitle())
-									   .collect(Collectors.toList());
-=======
 	public ArrayList<String> getCurrentDisplays() {
-		ArrayList<String> editorNames = new ArrayList<>();
-		for (DataBrowserEditor editor : getCurrentDataBrowsers()) {
-			editorNames.add(editor.getTitle());
-		}
-		return editorNames;
->>>>>>> master
+		return getCurrentDataBrowsers().map(e -> e.getTitle())
+									   .collect(Collectors.toCollection(ArrayList::new));
 	}
 	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
@@ -82,7 +75,6 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
-<<<<<<< HEAD
 	    	// Create axis
 			AxisConfig axis = new AxisConfig(displayName);
 			axis.setAutoScale(true);
@@ -92,16 +84,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    	final PVItem item = new PVItem(pvAddress, period);
 	    	item.setDisplayName(displayName);
 			item.useDefaultArchiveDataSources();
-=======
-	    	
-	    	AxisConfig axis = model.addAxis(displayName);
-			axis.setAutoScale(false);
-			
-	    	final PVItem item = new PVItemWithUnits(displayName, pvAddress, period, axis);
-			item.useDefaultArchiveDataSources();
-			
+
 			// Add item to new axes
->>>>>>> master
 			item.setAxis(axis);
 			model.addItem(item);
 	    } catch (Exception ex) {
@@ -112,13 +96,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public void newPresenter(String pvAddress, final String displayName) {		
-=======
 	public void newDisplay(String pvAddress, final String displayName) {	
 		UI.getDefault().switchPerspective(Perspective.ID);
 		
->>>>>>> master
 	    // Create new editor
 	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
 	    	@Override
@@ -131,25 +111,16 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void addToPresenter(String pvAddress, String display, String presenterName) {		
-		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
-																  .collect(Collectors.toList());
-=======
 	public void addToDisplay(String pvAddress, String display, String presenterName) {
 		UI.getDefault().switchPerspective(Perspective.ID);
->>>>>>> master
+		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
+				  .collect(Collectors.toList());
 		
 		if (editors.size() == 0) {
 			// Can't find the editor to add to, make a new one
-<<<<<<< HEAD
-			newPresenter(pvAddress, display);
+			newDisplay(pvAddress, display);
 		} else {
 			DataBrowserEditor editor = editors.get(0);
-=======
-			newDisplay(pvAddress, display);
-		} else {	
->>>>>>> master
 			addPVToEditor(pvAddress, display, editor);
 			
 			// Recolour the axes so that they match the traces

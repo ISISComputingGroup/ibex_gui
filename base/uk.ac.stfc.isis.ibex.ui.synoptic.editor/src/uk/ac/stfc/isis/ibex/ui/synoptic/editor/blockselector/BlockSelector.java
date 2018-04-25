@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.DisablingConfigHandler;
 
 /**
  * Provides access to the current configuration and displays the block selection dialog.
