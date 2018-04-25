@@ -23,17 +23,23 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * The view for the dialog that queues a new script to send to the script
  * server.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class QueueScriptPanel extends Composite {
 
+    private DataBindingContext bindingContext = new DataBindingContext();
+	
     /**
      * The constructor for this class.
      * 
@@ -46,13 +52,25 @@ public class QueueScriptPanel extends Composite {
      */
     public QueueScriptPanel(Composite parent, int style, QueueScriptViewModel model) {
 		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+        GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.horizontalSpacing = 1;
+        setLayout(gridLayout);
+        
         StyledText styledText = new StyledText(this, SWT.BORDER);
-
+        styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+        
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(styledText),
-                BeanProperties.value("script").observe(model));
+                BeanProperties.value("code").observe(model.getScript()));
+        
+        Label lblScriptName = new Label(this, SWT.NONE);
+        lblScriptName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblScriptName.setText("Script Name:");
+        
+        Text scriptName = new Text(this, SWT.BORDER);
+        GridData textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        textGridData.horizontalIndent = 5;
+        scriptName.setLayoutData(textGridData);
+                bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(scriptName),
+        		BeanProperties.value("name").observe(model.getScript()));
 	}
-    
-    private DataBindingContext bindingContext = new DataBindingContext();
 }

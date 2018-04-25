@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 /**
  * Serialisable class to queue a script in Nicos.
@@ -34,14 +35,11 @@ public class QueueScript extends NICOSMessage<String> {
     /**
      * Constructor.
      * 
-     * @param name
-     *            name of script
-     * @param code
-     *            code in script
+     * @param script The script to queue.
      */
-    public QueueScript(String name, String code) {
+    public QueueScript(QueuedScript script) {
         this.command = "queue";
-        this.parameters = Arrays.asList(name, code);
+        this.parameters = Arrays.asList(script.getName(), script.getCode());
     }
 
     @Override
