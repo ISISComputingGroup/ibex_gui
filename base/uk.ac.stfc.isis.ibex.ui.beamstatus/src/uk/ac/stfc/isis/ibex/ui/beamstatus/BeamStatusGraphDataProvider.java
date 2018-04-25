@@ -71,4 +71,14 @@ public class BeamStatusGraphDataProvider implements IDataProvider {
     public boolean removeDataProviderListener(IDataProviderListener listener) {
         return listeners.remove(listener);
     }
+
+	@Override
+	public Range getXDataMinMax(boolean positiveOnly) {
+		return null;
+	}
+
+	@Override
+	public Range getYDataMinMax(boolean positiveOnly) {
+		return null;
+	}
 }

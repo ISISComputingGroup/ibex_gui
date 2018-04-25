@@ -9,16 +9,16 @@
 	<properties>
 		<tycho.version>0.21.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<kepler-repo.url>http://download.eclipse.org/releases/kepler</kepler-repo.url>
-		<kepler-updates-repo.url>http://download.eclipse.org/eclipse/updates/3.8</kepler-updates-repo.url>
+		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen</oxygen-repo.url>
+		<oxygen-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.6</oxygen-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>kepler-updates</id>
+			<id>oxygen-updates</id>
 			<layout>p2</layout>
-			<url>${kepler-updates-repo.url}</url>
+			<url>${oxygen-updates-repo.url}</url>
 		</repository>
 	</repositories>
 
@@ -167,8 +167,6 @@
 		<module>../uk.ac.stfc.isis.ibex.feature.css</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.spies</module>
-		<module>../uk.ac.stfc.isis.ibex.opi.feature.core</module>
-		<module>../uk.ac.stfc.isis.ibex.opi.feature.eclipse</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.product</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>

@@ -20,9 +20,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.core.di.annotations,
  uk.ac.stfc.isis.ibex.e4.ui,
  uk.ac.stfc.isis.ibex.ui
-Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
  uk.ac.stfc.isis.ibex.ui.synoptic.component,
  uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.synoptic.widgets
+Bundle-ActivationPolicy: lazy
