@@ -114,6 +114,8 @@ public enum ComponentType {
     NEOCERA,
     /** Keithley 2400 Source Meter. */
     KHLY2400,
+    /** Keithley 2700 source meter. */
+    KHLY2700,
     /** Omron PLC. */
     PLC,
     /** Zoom sample stack. */
@@ -128,6 +130,8 @@ public enum ComponentType {
     SM300_SAMPLE_CHANGER,
     /** Dilution fridge.*/
     DILUTION_FRIDGE,
+    /** Couette cell.*/
+    COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS;
 

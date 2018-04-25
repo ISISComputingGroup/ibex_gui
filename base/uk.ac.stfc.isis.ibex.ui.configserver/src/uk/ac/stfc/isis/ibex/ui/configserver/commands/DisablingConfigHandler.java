@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class is a specific type of ConfigHandler that will disable the command
@@ -21,7 +23,7 @@ public abstract class DisablingConfigHandler<T> extends ConfigHandler<T> {
 
 	@Override
 	public void canWriteChanged(boolean canWrite) {
-		setCanExecute(canWrite);		
+		LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()), "(Ticket 3001) canWrite set to " + canWrite);
+		setCanExecute(canWrite);
 	}
-
 }

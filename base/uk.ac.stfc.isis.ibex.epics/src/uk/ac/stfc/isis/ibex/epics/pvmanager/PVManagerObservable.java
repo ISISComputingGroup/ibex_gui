@@ -78,5 +78,9 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
         pv.close();
         super.close();
 	}
-
+	
+	@Override
+	public String toString() {
+		return "PVManagerObservable observing PV " + pv.getName() + " with current value: " + pv.getValue();
+	}
 }

@@ -19,30 +19,30 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The interface for a class that displays the history of a PV in some way.
  */
 public interface PVHistoryPresenter {
 	/**
-	 * Get all the presenters that the PV History could be added to.
+	 * Get all the displays that the PV History could be added to.
 	 * @return A list of the names of the presenters.
 	 */
-	List<String> getCurrentPresenters();
+	ArrayList<String> getCurrentDisplays();
 	
 	/**
-	 * Creates a new presenter and plots the PV history on it.
+	 * Creates a new display and plots the PV history on it.
 	 * @param pvAddress The PV to plot the history of.
 	 * @param display The user-friendly name for the plot and the axis
 	 */
-	void newPresenter(String pvAddress, String display);
+	void newDisplay(String pvAddress, String display);
 	
 	/**
-	 * Adds a PV to a pre-existing plot.
+	 * Adds a PV to a pre-existing display.
 	 * @param pvAddress The PV to plot the history of.
 	 * @param display The user-friendly name for the plot and the axis
 	 * @param presenterName The name of the presenter to add the PV to.
 	 */
-	void addToPresenter(String pvAddress, String display, String presenterName);
+	void addToDisplay(String pvAddress, String display, String displayName);
 }

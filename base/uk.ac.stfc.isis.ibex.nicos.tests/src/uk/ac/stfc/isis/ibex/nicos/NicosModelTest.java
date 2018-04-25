@@ -46,7 +46,6 @@ import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
-import uk.ac.stfc.isis.ibex.nicos.messages.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
@@ -54,8 +53,10 @@ import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
 
 public class NicosModelTest {
     private ZMQSession zmqSession = mock(ZMQSession.class);
@@ -408,7 +409,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -422,7 +423,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -435,7 +436,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
@@ -448,7 +449,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         verify(scriptErrorListener).propertyChange(propertyChangeArgument.capture());
 
@@ -462,7 +463,7 @@ public class NicosModelTest {
         when(zmqSession.sendMessage(isA(QueueScript.class)))
                 .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
 
-        model.sendScript("TEST");
+        model.sendScript(new QueuedScript());
 
         ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
         verify(zmqSession, atLeast(0)).sendMessage(message.capture());
@@ -514,6 +515,29 @@ public class NicosModelTest {
         model.updateScriptStatus();
         
         assertEquals(script, model.getCurrentlyExecutingScript());
+    }
+    
+    @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_queued_scripts_extracted() {
+        connectSuccessfully();
+        
+        ReceiveScriptStatus response = new ReceiveScriptStatus();
+        
+        QueuedScript queuedScript = new QueuedScript(); 
+        queuedScript.setCode("This is a really nice script \n with a newline in it.");
+        queuedScript.setName("instrument_script");
+        queuedScript.reqid = "weifj9032l90djk239";
+        queuedScript.user = "IBEX";
+        
+        response.status = Arrays.asList(0, 0);
+        response.script = "";
+        response.requests = Arrays.asList(queuedScript);
+        
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals(queuedScript, model.getQueuedScripts().get(0));
     }
 
     @Test

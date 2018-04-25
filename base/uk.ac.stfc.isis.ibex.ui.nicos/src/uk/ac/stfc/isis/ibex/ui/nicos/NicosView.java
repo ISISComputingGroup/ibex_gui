@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
@@ -35,20 +36,35 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+<<<<<<< HEAD
+=======
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
+>>>>>>> master
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+
 /**
  * The main view for the NICOS current Script view.
  */
 @SuppressWarnings("checkstyle:magicnumber")
+<<<<<<< HEAD
 public class NicosView {
 	
 	/**
@@ -57,6 +73,14 @@ public class NicosView {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.NicosView";
 
     private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
+=======
+public class NicosView extends ViewPart {
+    
+    /**
+     * The public ID of this class.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
+>>>>>>> master
     
     private static final int FIXED_WIDTH = 750;
     private static final int FIXED_HEIGHT = 225;
@@ -73,7 +97,13 @@ public class NicosView {
      */
     public NicosView() {
         model = Nicos.getDefault().getModel();
+<<<<<<< HEAD
         queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+=======
+        queueScriptViewModel = new QueueScriptViewModel(model);
+        scriptStatusViewModel = new ScriptStatusViewModel(model);
+        outputLogViewModel = new OutputLogViewModel(model);
+>>>>>>> master
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
@@ -116,10 +146,54 @@ public class NicosView {
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+<<<<<<< HEAD
+=======
+        final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
+        txtOutput.setEditable(false);
+        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+        
+>>>>>>> master
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
         
+<<<<<<< HEAD
         Composite scriptSendGrp = new Composite(nicosComposite, SWT.NONE);
+=======
+        txtOutput.addListener(SWT.Modify, new Listener() {
+            @Override
+            public void handleEvent(Event e) {
+                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
+            }
+        });
+        
+        Label lblQueuedScripts = new Label(parent, SWT.NONE);
+        lblQueuedScripts.setText("Queued scripts (double click to see contents):");
+        
+        ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        List list = queuedScriptsViewer.getList();
+        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
+        queuedScriptsViewer.setLabelProvider(new LabelProvider() {
+        	public String getText(Object element) {
+        		QueuedScript code = (QueuedScript) element;
+        		return code.getName();
+        	}
+        });
+        
+        queuedScriptsViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
+        
+        queuedScriptsViewer.addDoubleClickListener(new IDoubleClickListener() {
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				QueuedScript selection = (QueuedScript) ((IStructuredSelection) event.getSelection()).getFirstElement();
+				ExistingScriptDialog dialog = new ExistingScriptDialog(shell, selection);
+				dialog.open();
+			}
+		});
+        
+        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
+>>>>>>> master
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
         ssgLayout.marginHeight = 10;

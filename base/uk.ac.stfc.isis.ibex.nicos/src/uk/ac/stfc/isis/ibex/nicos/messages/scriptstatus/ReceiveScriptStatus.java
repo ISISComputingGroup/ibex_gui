@@ -16,15 +16,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.nicos.messages;
+package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
+
 /**
- * A Banner Message that has been received from NICOS. This message should be
- * the first sent and details various things about the instance of NICOS that we
- * are trying to connect to.
- * 
+ * The status of the NICOS server.
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
@@ -40,4 +39,8 @@ public class ReceiveScriptStatus implements ReceiveMessage {
      */
     public String script;
 
+    /**
+     * The scripts on the queue.
+     */
+    public List<QueuedScript> requests;
 }

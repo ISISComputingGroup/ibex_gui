@@ -26,10 +26,11 @@ import org.diirt.datasource.PVWriter;
 import org.diirt.datasource.PVWriterEvent;
 import org.diirt.datasource.PVWriterListener;
 import org.diirt.datasource.expression.WriteExpressionImpl;
-
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.epics.pv.WritablePV;
 import uk.ac.stfc.isis.ibex.epics.writing.WriteException;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * A class for writing to a PV via PVManager.
@@ -49,6 +50,8 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 			}
 			
 			if (evt.isConnectionChanged()) {
+				LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()),
+						"(Ticket 3001) PV canWrite changed to " + pv.isWriteConnected() + ". This PV is " + details().address());
 				canWriteChanged(pv.isWriteConnected());
 			}
 			
