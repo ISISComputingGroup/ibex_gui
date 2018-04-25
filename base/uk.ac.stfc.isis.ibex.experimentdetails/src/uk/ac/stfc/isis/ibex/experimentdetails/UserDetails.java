@@ -78,7 +78,11 @@ public class UserDetails extends ModelObject {
 		return associatedExperimentID;
 	}
 	
-	public String getAssociatedExperimentStartDate() {
+	public Date getAssociatedExperimentStartDate() {
+		return associatedExperimentStartDate;
+	}
+	
+	public String getAssociatedExperimentStartDateString() {
 		return DF.format(associatedExperimentStartDate);
 	}
 

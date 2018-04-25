@@ -23,75 +23,35 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.list;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.swt.SWT;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 
 /**
  * The Class DeviceScreensComparitor which compares device descriptions in the
  * device screen list.
  * 
  */
-public class DeviceScreensComparator extends ViewerComparator {
-
-    /**
-     * The Enum SortedOnType which is what the list is sorted on.
-     */
-    enum SortedOnType {
-        TYPE,
-        NAME,
-        PERSISTENCE
-    }
-
-    private SortedOnType sortedOn = SortedOnType.NAME;
-    private boolean isDescending = true;
-
-    /**
-     * Gets the direction that the list is sorted in.
-     *
-     * @return the direction
-     */
-    public int getDirection() {
-        return isDescending ? SWT.DOWN : SWT.UP;
-    }
-
-    /**
-     * Sets the column which is sorted over.
-     *
-     * @param sortedOn the column sorted on
-     */
-    public void setColumn(SortedOnType sortedOn) {
-
-        if (this.sortedOn.equals(sortedOn)) {
-            // Same column as last sort; toggle the direction
-            this.isDescending = !this.isDescending;
-        } else {
-            // New column; do an ascending sort
-            this.sortedOn = sortedOn;
-            this.isDescending = true;
-        }
-    }
-
+public class DeviceScreensComparator extends ColumnComparator<DeviceDescription> {
     @Override
     public int compare(Viewer viewer, Object e1, Object e2) {
         DeviceDescription p1 = (DeviceDescription) e1;
         DeviceDescription p2 = (DeviceDescription) e2;
         int rc = 0;
-        switch (this.sortedOn) {
-            case NAME:
+        switch (this.propertyIndex) {
+            case 0:
                 rc = p1.getName().compareToIgnoreCase(p2.getName());
                 if (rc == 0) {
                     rc = p1.getKey().compareToIgnoreCase(p2.getKey());
                 }
                 break;
-            case TYPE:
+            case 1:
                 rc = p1.getKey().compareToIgnoreCase(p2.getKey());
                 if (rc == 0) {
                     rc = p1.getName().compareToIgnoreCase(p2.getName());
                 }
                 break;
-            case PERSISTENCE:
+            case 2:
                 rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
                 if (rc == 0) {
                     rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
@@ -101,9 +61,9 @@ public class DeviceScreensComparator extends ViewerComparator {
                 break;
         }
         // If ascending order, flip the direction
-        if (!isDescending) {
-        rc = -rc;
-      }
+        if (direction == DESCENDING) {
+        	rc = -rc;
+        }
       return rc;
     }
 

@@ -82,11 +82,10 @@ public class Table extends DataboundTable<Row> {
 	}
 
 	private void position() {
-        TableViewerColumn position = createColumn("POSITION", 3);
-		position.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn position = createColumn("POSITION", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("position")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getPosition();
 			}
 		});
@@ -94,49 +93,47 @@ public class Table extends DataboundTable<Row> {
 		
 		position.setEditingSupport(new StringEditingSupport<Row>(viewer(), Row.class) {
 			@Override
-			protected String valueFromRow(Row row) {
-				return row.getPosition();
-			}
-
-			@Override
 			protected void setValueForRow(Row row, String position) {
 				addRowIfNull(row);
 				
 				row.setPosition(position);
 			}
+
+			@Override
+			protected String valueFromRow(Row row) {
+				return row.getPosition();
+			}
 		});
 	}
 	
 	private void trans() {
-        TableViewerColumn trans = createColumn("TRANS", 3);
-		trans.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn trans = createColumn("TRANS", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("transWaitValue")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getTransWaitValue() == null ? "" : String.valueOf(row.getTransWaitValue());
 			}
 		});
 		trans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
-			@Override
-			protected Double valueFromRow(Row row) {
-				return row.getTransWaitValue();
-			}
-
 			@Override
 			protected void setValueForRow(Row row, Double trans) {
 				addRowIfNull(row);
 				
 				row.setTransWaitValue(trans);
 			}
+
+			@Override
+			protected Double valueFromRow(Row row) {
+				return row.getTransWaitValue();
+			}
 		});
 	}
 	
 	private void transWait() {
-        TableViewerColumn transWait = createColumn("TRANS_WAIT", 3);
-		transWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn transWait = createColumn("TRANS_WAIT", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("transWaitUnit")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getTransWaitUnit() == null ? "" : String.valueOf(row.getTransWaitUnit());
 			}
 		});
@@ -156,19 +153,14 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void sans() {
-        TableViewerColumn sans = createColumn("SANS", 3);
-		sans.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn sans = createColumn("SANS", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("sansWaitValue")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getSansWaitValue() == null ? "" : String.valueOf(row.getSansWaitValue());
 			}
 		});
 		sans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
-			@Override
-			protected Double valueFromRow(Row row) {
-				return row.getSansWaitValue();
-			}
 
 			@Override
 			protected void setValueForRow(Row row, Double sans) {
@@ -176,15 +168,19 @@ public class Table extends DataboundTable<Row> {
 				
 				row.setSansWaitValue(sans);
 			}
+
+			@Override
+			protected Double valueFromRow(Row row) {
+				return row.getSansWaitValue();
+			}
 		});
 	}
 	
 	private void sansWait() {
-        TableViewerColumn sansWait = createColumn("SANS_WAIT", 3);
-		sansWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn sansWait = createColumn("SANS_WAIT", 3, new DataboundCellLabelProvider<Row>(
                 observeProperty("sansWaitUnit")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getSansWaitUnit() == null ? "" : String.valueOf(row.getSansWaitUnit());
 			}
 		});
@@ -204,73 +200,70 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void period() {
-        TableViewerColumn period = createColumn("PERIOD", 3);
-		period.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn period = createColumn("PERIOD", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("period")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
 		period.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
-			@Override
-			protected Double valueFromRow(Row row) {
-				return row.getPeriod();
-			}
-
 			@Override
 			protected void setValueForRow(Row row, Double period) {
 				addRowIfNull(row);
 				
 				row.setPeriod(period);
 			}
+
+			@Override
+			protected Double valueFromRow(Row row) {
+				return row.getPeriod();
+			}
 		});
 	}
 	
 	private void sampleName() {
-        TableViewerColumn sampleName = createColumn("SAMPLE_NAME", 3);
-		sampleName.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn sampleName = createColumn("SAMPLE_NAME", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("sampleName")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getSampleName();
 			}
 		});
 		sampleName.setEditingSupport(new StringEditingSupport<Row>(viewer(), Row.class) {
-			@Override
-			protected String valueFromRow(Row row) {
-				return row.getSampleName();
-			}
-
 			@Override
 			protected void setValueForRow(Row row, String sampleName) {
 				addRowIfNull(row);
 				
 				row.setSampleName(sampleName);
 			}
+
+			@Override
+			protected String valueFromRow(Row row) {
+				return row.getSampleName();
+			}
 		});
 	}
 	
 	private void thickness() {
-        TableViewerColumn thickness = createColumn("THICKNESS", 3);
-		thickness.setLabelProvider(new DataboundCellLabelProvider<Row>(
+        TableViewerColumn thickness = createColumn("THICKNESS", 3, new DataboundCellLabelProvider<Row>(
 				observeProperty("thickness")) {
 			@Override
-			protected String valueFromRow(Row row) {
+			public String stringFromRow(Row row) {
 				return row.getThickness() == null ? "" : String.valueOf(row.getThickness());
 			}
 		});
 		thickness.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
-			protected Double valueFromRow(Row row) {
-				return row.getThickness();
-			}
-
-			@Override
 			protected void setValueForRow(Row row, Double thickness) {
 				addRowIfNull(row);
 				
 				row.setThickness(thickness);
+			}
+
+			@Override
+			protected Double valueFromRow(Row row) {
+				return row.getThickness();
 			}
 		});
 	}

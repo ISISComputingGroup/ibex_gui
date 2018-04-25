@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
@@ -80,10 +79,9 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     } 
 
     private void createSpectrumNumberColumn() {
-        TableViewerColumn number = createColumn("Spectrum number", 20);
-        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
+        createColumn("Spectrum number", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
             @Override
-            protected String valueFromRow(SpectrumInformation row) {
+			public String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getSpectrumNumber().toString();
                 } catch (NullPointerException e) {
@@ -94,10 +92,9 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     }
     
     private void createCountRateColumn() {
-        TableViewerColumn countRate = createColumn("Count rate", 20);
-        countRate.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
+        createColumn("Count rate", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
             @Override
-            protected String valueFromRow(SpectrumInformation row) {
+			public String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getCountRate().toString();
                 } catch (NullPointerException e) {
@@ -108,10 +105,9 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     }
     
     private void createMaxSpecBinCountColumn() {
-        TableViewerColumn maximum = createColumn("Maximum", 20);
-        maximum.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
+        createColumn("Maximum", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
             @Override
-            protected String valueFromRow(SpectrumInformation row) {
+			public String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getMaxSpecBinCount().toString();
                 } catch (NullPointerException e) {
@@ -122,10 +118,9 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     }
     
     private void createIntegralColumn() {
-        TableViewerColumn integral = createColumn("Integral", 20);
-        integral.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("integral")) {
+        createColumn("Integral", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("integral")) {
             @Override
-            protected String valueFromRow(SpectrumInformation row) {
+			public String stringFromRow(SpectrumInformation row) {
                 try {
                     return row.getIntegral().toString();
                 } catch (NullPointerException e) {

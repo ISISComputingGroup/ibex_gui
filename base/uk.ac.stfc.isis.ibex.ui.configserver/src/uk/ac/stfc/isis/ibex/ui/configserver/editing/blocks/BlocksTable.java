@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -33,9 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
-import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
-import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 
 /**
  * Provides a table to display blocks. Can be shown with or without block
@@ -46,15 +42,14 @@ import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private TableViewerColumn enabled;
-	private IObservableMap[] stateProperties = {observeProperty("isVisible")};
 	private boolean isBlockVisibilityShown;
 	
 	private BlockNameSearch search;
 	
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
 	
-	private CellLabelProvider visibilityLabelProvider = 
-			new CheckboxLabelProvider<EditableBlock>(stateProperties) {
+	private CheckboxLabelProvider<EditableBlock> visibilityLabelProvider = 
+			new CheckboxLabelProvider<EditableBlock>(observeProperty("isVisible")) {
 		@Override
 		protected boolean checked(EditableBlock block) {
 			return block.getIsVisible();
@@ -111,32 +106,29 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	}
 	
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 3);
-		name.setLabelProvider(new DecoratedCellLabelProvider<EditableBlock>(
+		createColumn("Name", 3, new DecoratedCellLabelProvider<EditableBlock>(
 				observeProperty("name"), 
 				Arrays.asList(rowDecorator)) {
 			@Override
-			protected String valueFromRow(EditableBlock row) {
+			public String stringFromRow(EditableBlock row) {
 				return row.getName();
 			}
 		});	
 	}
 	
 	private void pv() {
-		TableViewerColumn desc = createColumn("PV address", 6);
-		desc.setLabelProvider(new DecoratedCellLabelProvider<EditableBlock>(
+		createColumn("PV address", 6, new DecoratedCellLabelProvider<EditableBlock>(
 				observeProperty("PV"), 
 				Arrays.asList(rowDecorator)) {
 			@Override
-			protected String valueFromRow(EditableBlock row) {
+			public String stringFromRow(EditableBlock row) {
 				return row.getPV();
 			}
 		});	
 	}
 	
 	private void blockIsVisible() {
-		enabled = createColumn("Visible?", 2);
-		enabled.setLabelProvider(visibilityLabelProvider);		
+		enabled = createColumn("Visible?", 2, visibilityLabelProvider);
 	}
 	
 	/**
@@ -146,10 +138,5 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	public void setSearch(String searchText) {
 		search.setSearchText(searchText);
 		this.viewer().refresh();
-	}
-	
-	@Override
-	protected ColumnComparator<EditableBlock> comparator() {
-		return new BlocksComparator();
 	}
 }

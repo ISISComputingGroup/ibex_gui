@@ -64,20 +64,18 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     private void name() {
-        TableViewerColumn desc = createColumn("Name", 1);
-        desc.setLabelProvider(new DataboundCellLabelProvider<Ioc>(observeProperty("name")) {
+        createColumn("Name", 1, new DataboundCellLabelProvider<EditableIoc>(observeProperty("name")) {
             @Override
-            protected String valueFromRow(Ioc row) {
+			public String stringFromRow(EditableIoc row) {
                 return row.getName();
             }
         });
     }
 
     private void description() {
-        TableViewerColumn desc = createColumn("Description", 2);
-        desc.setLabelProvider(new DataboundCellLabelProvider<EditableIoc>(observeProperty("description")) {
+        createColumn("Description", 2, new DataboundCellLabelProvider<EditableIoc>(observeProperty("description")) {
             @Override
-            protected String valueFromRow(EditableIoc row) {
+			public String stringFromRow(EditableIoc row) {
                 return row.getDescription();
             }
         });

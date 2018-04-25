@@ -31,17 +31,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableItem;
 
+import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
+
 /**
  * A cell provider that puts any type of control into a table's cell.
  *
  * @param <T> the type of control to put in the cell
  */
-public abstract class ControlCellLabelProvider<T extends Control> extends ObservableMapCellLabelProvider {
+public abstract class ControlCellLabelProvider<T extends Control, S> extends SortableObservableMapCellLabelProvider<S> {
 	
 	private final Map<ViewerCell, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
-	protected ControlCellLabelProvider(IObservableMap[] attributeMaps) {
+	protected ControlCellLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}
 	

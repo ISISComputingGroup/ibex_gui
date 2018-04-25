@@ -24,10 +24,8 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
-import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 
 /**
  * A table that gives details of users.
@@ -59,39 +57,30 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	}
 
 	private void name() {
-		name = createColumn("Name", 4);
-		name.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("name")) {
+		name = createColumn("Name", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			public String stringFromRow(UserDetails row) {
 				return row.getName();
 			}
 		});		
 	}
 	
 	private void institute() {
-		institute = createColumn("Institute", 4);
-		institute.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("institute")) {
+		institute = createColumn("Institute", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("institute")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			public String stringFromRow(UserDetails row) {
 				return row.getInstitute();
 			}
 		});		
 	}
 	
 	private void role() {
-		role = createColumn("Role", 2);	
-		role.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
+		role = createColumn("Role", 2, new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			public String stringFromRow(UserDetails row) {
                 Role role = row.getRole();
 				return role == null ? "" : role.toString();
 			}
 		});	
 	}
-	
-	@Override
-	protected ColumnComparator<UserDetails> comparator() {
-		return new UserDetailsComparator();
-	}
-	
 }

@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.tables;
 
+
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
@@ -7,21 +9,23 @@ import org.eclipse.swt.SWT;
 /**
  * Compares columns in a table to be sorted.
  * 
+ * This class sorts based on the string representation of the cell. To sort based on something else, subclass this and override the method compare.
+ * 
  * @param <T> The type of object stored in the table.
  */
-public abstract class ColumnComparator<T> extends ViewerComparator {
+public class ColumnComparator<T> extends ViewerComparator {
 	protected int propertyIndex;
-    protected int direction = DESCENDING;
+    protected int direction = 0;
     protected static final int DESCENDING = 1;
-
+    
     /**
      * The constructor for the comparator.
      */
     public ColumnComparator() {
         this.propertyIndex = 0;
-        direction = DESCENDING;
+        direction = 0;
     }
-
+    
     /**
      * Get the direction that the column is ordered in.
      * @return The direction.
@@ -48,7 +52,12 @@ public abstract class ColumnComparator<T> extends ViewerComparator {
     @SuppressWarnings("unchecked")
 	@Override
     public int compare(Viewer viewer, Object e1, Object e2) {    	
-    	int rc = compare((T) e1, (T) e2);
+    	int rc = 0;
+    	
+    	TableViewer view = (TableViewer) viewer;
+    	SortableObservableMapCellLabelProvider<T> provider = (SortableObservableMapCellLabelProvider<T>) view.getLabelProvider(this.propertyIndex);
+    	
+    	rc = provider.comparableForRow((T) e1).compareTo((T) e2);
     	
         // If descending order, flip the direction
         if (direction == DESCENDING) {
@@ -56,26 +65,4 @@ public abstract class ColumnComparator<T> extends ViewerComparator {
         }
         return rc;
     }
-    
-    /**
-     * A helper method that compares two booleans.
-     * @param b1 The first boolean.
-     * @param b2 The second boolean.
-     * @return Same as {@link #compare(Viewer, Object, Object) compare} function.
-     */
-    protected int compareBoolean(boolean b1, boolean b2) {
-        if (b1 == b2) {
-            return 0;
-        } else {
-            return (b2 ? 1 : -1);
-        }
-    }
-    
-    /**
-     * Compares two specific objects of type T.
-     * @param e1 The first object.
-     * @param e2 The second object.
-     * @return Same as {@link #compare(Viewer, Object, Object) compare} function.
-     */
-    public abstract int compare(T e1, T e2);
 }

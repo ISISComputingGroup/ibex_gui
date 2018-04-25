@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -62,20 +61,18 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 	}
 	
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 3);
-		name.setLabelProvider(new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("name")) {
+		createColumn("Name", 3, new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(PVDefaultValue row) {
+			public String stringFromRow(PVDefaultValue row) {
 				return row.getName();
 			}
 		});	
 	}
 	
 	private void value() {
-		TableViewerColumn name = createColumn("Value", 3);
-		name.setLabelProvider(new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("value")) {
+		createColumn("Value", 3, new DataboundCellLabelProvider<PVDefaultValue>(observeProperty("value")) {
 			@Override
-			protected String valueFromRow(PVDefaultValue row) {
+			public String stringFromRow(PVDefaultValue row) {
 				return row.getValue();
 			}
 		});	

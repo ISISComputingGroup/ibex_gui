@@ -21,7 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -57,20 +56,18 @@ public class TargetPropertiesTable extends DataboundTable<PropertyDescription> {
     }
 
     private void name() {
-        TableViewerColumn name = createColumn("Name", 2);
-        name.setLabelProvider(new DataboundCellLabelProvider<PropertyDescription>(observeProperty("key")) {
+        createColumn("Name", 2, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("key")) {
             @Override
-            protected String valueFromRow(PropertyDescription row) {
+			public String stringFromRow(PropertyDescription row) {
                 return row.getKey();
             }
         });
     }
 
     private void value() {
-        TableViewerColumn name = createColumn("Value", 4);
-        name.setLabelProvider(new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
+        createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
             @Override
-            protected String valueFromRow(PropertyDescription row) {
+			public String stringFromRow(PropertyDescription row) {
                 return row.getValue();
             }
         });

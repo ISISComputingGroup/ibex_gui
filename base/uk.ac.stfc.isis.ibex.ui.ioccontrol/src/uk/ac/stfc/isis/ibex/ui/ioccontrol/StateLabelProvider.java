@@ -26,8 +26,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 
-public class StateLabelProvider extends ObservableMapCellLabelProvider {
+public class StateLabelProvider extends SortableObservableMapCellLabelProvider<IocState> {
 
 	public static final String TEXT_RUNNING = "Running";
 	public static final String TEXT_NOT_RUNNING = "Stopped";
@@ -35,7 +36,7 @@ public class StateLabelProvider extends ObservableMapCellLabelProvider {
 	public static final Color COLOR_RUNNING = SWTResourceManager.getColor(19, 145, 44); // Green
 	public static final Color COLOR_STOPPED = SWTResourceManager.getColor(173, 66, 66); // RED
 
-	public StateLabelProvider(IObservableMap[] attributeMaps) {
+	public StateLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}
 
@@ -44,8 +45,14 @@ public class StateLabelProvider extends ObservableMapCellLabelProvider {
 		super.update(cell);
 
         IocState state = (IocState) cell.getElement();
-		boolean isRunning = state != null && state.getIsRunning();
-		cell.setText(isRunning ? TEXT_RUNNING : TEXT_NOT_RUNNING);
+        boolean isRunning = state != null && state.getIsRunning();
+        cell.setText(stringFromRow(state));
 		cell.setForeground(isRunning ? COLOR_RUNNING : COLOR_STOPPED);
+	}
+
+	@Override
+	public String stringFromRow(IocState row) {
+		boolean isRunning = row != null && row.getIsRunning();
+		return isRunning ? TEXT_RUNNING : TEXT_NOT_RUNNING;
 	}
 }

@@ -28,9 +28,9 @@ import org.eclipse.swt.widgets.Button;
 /**
  * A cell provider that puts a button within a table cell.
  */
-public class ButtonCellLabelProvider extends ControlCellLabelProvider<Button> {
+public abstract class ButtonCellLabelProvider<T> extends ControlCellLabelProvider<Button, T> {
 	
-	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
+	protected ButtonCellLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}
 

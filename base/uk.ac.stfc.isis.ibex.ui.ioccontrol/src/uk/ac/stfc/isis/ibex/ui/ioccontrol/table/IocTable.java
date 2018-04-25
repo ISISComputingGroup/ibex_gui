@@ -24,14 +24,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -76,33 +73,24 @@ public class IocTable extends DataboundTable<IocState> {
 	}
 
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 4, false);
-        name.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
+		createColumn("Name", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
 			@Override
-            protected String valueFromRow(IocState row) {
+			public String stringFromRow(IocState row) {
 				return row.getName();
 			}
 		});
 	}
 	
 	private void description() {
-		TableViewerColumn description = createColumn("Description", 4, false);
-        description.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
+		createColumn("Description", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
 			@Override
-            protected String valueFromRow(IocState row) {
+			public String stringFromRow(IocState row) {
 				return row.getDescription();
 			}
 		});	
 	}
 	
 	private void state() {
-		TableViewerColumn status = createColumn("Status", 2, false);
-		IObservableMap[] stateProperties = {observeProperty("isRunning")};
-		status.setLabelProvider(new StateLabelProvider(stateProperties));
-	}
-	
-	@Override
-	protected ColumnComparator<IocState> comparator() {
-		return new IocComparator();
+		createColumn("Status", 2, false, new StateLabelProvider(observeProperty("isRunning")));
 	}
 }

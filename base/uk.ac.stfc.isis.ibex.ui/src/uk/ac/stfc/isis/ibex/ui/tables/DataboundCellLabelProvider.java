@@ -35,7 +35,7 @@ import org.eclipse.swt.graphics.Image;
  *
  * @param <TRow> the type of the row data
  */
-public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCellLabelProvider {
+public abstract class DataboundCellLabelProvider<TRow> extends SortableObservableMapCellLabelProvider<TRow> {
 
     /**
      * Instantiates a new databound cell label provider that tracks changes to
@@ -50,7 +50,7 @@ public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCell
 	@Override
 	public void update(ViewerCell cell) {
 		TRow row = getRow(cell);
-		cell.setText(valueFromRow(row));
+		cell.setText(stringFromRow(row));
         cell.setImage(imageFromRow(row));
 	}
 
@@ -71,7 +71,7 @@ public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCell
      * @param row the row
      * @return the string to set in the cell
      */
-	protected abstract String valueFromRow(TRow row);
+	public abstract String stringFromRow(TRow row);
 	
     /**
      * Image from row for the cell; default to null.

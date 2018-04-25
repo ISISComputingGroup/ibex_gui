@@ -42,13 +42,13 @@ public class ParametersTable extends DataboundTable<Parameter> {
 
 	private final StringEditingSupport<Parameter> valueEditingSupport = new StringEditingSupport<Parameter>(viewer(), Parameter.class) {
 		@Override
-		protected String valueFromRow(Parameter row) {
-			return row.getValue();
+		protected void setValueForRow(Parameter row, String value) {
+			row.setValue(value);
 		}
 
 		@Override
-		protected void setValueForRow(Parameter row, String value) {
-			row.setValue(value);
+		protected String valueFromRow(Parameter row) {
+			return row.getValue();
 		}
 	};
 	
@@ -65,20 +65,18 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	}
 
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 4, false);
-		name.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("name")) {
+		createColumn("Name", 4, false, new DataboundCellLabelProvider<Parameter>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(Parameter row) {
+			public String stringFromRow(Parameter row) {
 				return row.getName();
 			}
 		});		
 	}
 	
 	private void units() {
-		TableViewerColumn name = createColumn("Units", 1, false);
-		name.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("units")) {
+		createColumn("Units", 1, false, new DataboundCellLabelProvider<Parameter>(observeProperty("units")) {
 			@Override
-			protected String valueFromRow(Parameter row) {
+			public String stringFromRow(Parameter row) {
 				return row.getUnits();
 			}
 		});		
@@ -89,10 +87,9 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	}
 	
 	private void value() {
-		TableViewerColumn valueColumn = createColumn("Value", 2, false);
-		valueColumn.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
+		TableViewerColumn valueColumn = createColumn("Value", 2, false, new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
 			@Override
-			protected String valueFromRow(Parameter row) {
+			public String stringFromRow(Parameter row) {
 				return row.getValue();
 			}
 		});	

@@ -21,12 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.list;
 
 import java.util.Map;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
@@ -34,7 +30,7 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.CheckboxIcons;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensComparator.SortedOnType;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -56,7 +52,8 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
      */
     public DeviceScreensTable(Composite parent, int style, int tableStyle) {
         super(parent, style, DeviceDescription.class, tableStyle);
-		
+        comparator = new DeviceScreensComparator();
+        
 		initialise();
 	}
 
@@ -64,8 +61,6 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     protected void configureTable() {
         super.configureTable();
         table().setLinesVisible(false);
-        comparator = new DeviceScreensComparator();
-        viewer().setComparator(comparator);
     }
 	
 	@Override
@@ -76,37 +71,32 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 	}
 
 	private void name() {
-        TableViewerColumn name = createColumn("Name", 20);
-        name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("name")) {
+        createColumn("Name", 20, new DataboundCellLabelProvider<DeviceDescription>(observeProperty("name")) {
 			@Override
-            protected String valueFromRow(DeviceDescription row) {
+			public String stringFromRow(DeviceDescription row) {
 				return row.getName();
 			}
         });
-        setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
     }
 
     private void persist() {
-        TableViewerColumn persist = createColumn("Saved on server", 4);
-        persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
+        createColumn("Saved on server", 4, new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected Image imageFromRow(DeviceDescription row) {
                 return CheckboxIcons.getCheckboxImage(row.getPersist());
             }
 
             @Override
-            protected String valueFromRow(DeviceDescription row) {
+			public String stringFromRow(DeviceDescription row) {
                 return null;
             }
         });
-        setSortListener(persist.getColumn(), DeviceScreensComparator.SortedOnType.PERSISTENCE);
     }
 
     private void type() {
-        TableViewerColumn typeColumn = createColumn("Type", 1);
-        typeColumn.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("key")) {
+        createColumn("Type", 1, new DataboundCellLabelProvider<DeviceDescription>(observeProperty("key")) {
             @Override
-            protected String valueFromRow(DeviceDescription row) {
+			public String stringFromRow(DeviceDescription row) {
                 return null;
             }
 
@@ -125,29 +115,10 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
                 return ComponentIcons.thumbnailForType(component);
             }
         });
-
-        setSortListener(typeColumn.getColumn(), DeviceScreensComparator.SortedOnType.TYPE);
     }
-
-    /**
-     * Listener for volumn headers to make it sort the data.
-     * 
-     * @param column to sort on
-     * @param columnContents contents to sort on
-     */
-    private void setSortListener(final TableColumn column, final SortedOnType columnContents) {
-        column.addSelectionListener(new SelectionAdapter() {
-            /**
-             * @param e
-             */
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                comparator.setColumn(columnContents);
-                int dir = comparator.getDirection();
-                table().setSortDirection(dir);
-                table().setSortColumn(column);
-                refresh();
-            }
-        });
-    }
+    
+    @Override
+	protected ColumnComparator<DeviceDescription> comparator() {
+		return comparator;
+	}
 }

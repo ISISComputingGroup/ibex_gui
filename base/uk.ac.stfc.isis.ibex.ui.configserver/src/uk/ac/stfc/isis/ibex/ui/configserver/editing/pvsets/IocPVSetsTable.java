@@ -20,8 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets;
 
 
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -48,29 +46,25 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	}
 	
 	private void name() {
-		TableViewerColumn desc = createColumn("Name", 8);
-		desc.setLabelProvider(new DataboundCellLabelProvider<EditablePVSet>(observeProperty("name")) {
+		createColumn("Name", 8, new DataboundCellLabelProvider<EditablePVSet>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(EditablePVSet row) {
+			public String stringFromRow(EditablePVSet row) {
 				return row.getName();
 			}
 		});	
 	}
 	
 	private void description() {
-		TableViewerColumn desc = createColumn("Description", 6);
-		desc.setLabelProvider(new DataboundCellLabelProvider<EditablePVSet>(observeProperty("description")) {
+		createColumn("Description", 6, new DataboundCellLabelProvider<EditablePVSet>(observeProperty("description")) {
 			@Override
-			protected String valueFromRow(EditablePVSet row) {
+			public String stringFromRow(EditablePVSet row) {
 				return row.getDescription();
 			}
 		});	
 	}
 	
 	private void enable() {
-		TableViewerColumn enabled = createColumn("Enabled?", 2);
-		IObservableMap[] stateProperties = {observeProperty("enabled")};
-		enabled.setLabelProvider(new CheckboxLabelProvider<EditablePVSet>(stateProperties) {	
+		createColumn("Enabled?", 2, new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled")) {	
 			@Override
 			protected boolean checked(EditablePVSet pvset) {
 				return pvset.getEnabled();

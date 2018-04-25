@@ -35,7 +35,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -62,6 +61,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public abstract class DataboundTable<TRow> extends Composite {
 
+	private ColumnComparator<TRow> comparator = new ColumnComparator<TRow>();
+	
     private static final int DEFAULT_FONT_HEIGHT = 10;
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
 
@@ -388,7 +389,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 		TableColumn col = viewCol.getColumn();
 		col.setText(title);
 		col.setResizable(true);
-		col.addSelectionListener(getSelectionAdapter(col, table.getColumnCount()-1));
+		col.addSelectionListener(getSelectionAdapter(col, table.getColumnCount() - 1));
 		return viewCol;
 	}
 	
@@ -396,7 +397,7 @@ public abstract class DataboundTable<TRow> extends Composite {
         SelectionAdapter selectionAdapter = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	ColumnComparator comparator = (ColumnComparator) viewer.getComparator();
+            	ColumnComparator<TRow> comparator = comparator();
                 comparator.setColumn(index);
                 int dir = comparator.getDirection();
                 viewer.getTable().setSortDirection(dir);
@@ -413,10 +414,11 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @param title the title of the column
      * @param widthWeighting the width weighting
+     * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-	protected TableViewerColumn createColumn(String title, int widthWeighting) {
-		return createColumn(title, widthWeighting, true);
+	protected TableViewerColumn createColumn(String title, int widthWeighting, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
+		return createColumn(title, widthWeighting, true, cellProvider);
 	}
 	
     /**
@@ -426,14 +428,16 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param title the title of the column
      * @param widthWeighting the width weighting
      * @param resizable whether the column is resizable
+     * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
+	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
 		TableViewerColumn tableColumn = createColumn(title);
         TableColumn col = tableColumn.getColumn();
 		tableColumnLayout().setColumnData(col,
                 new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
         col.setResizable(resizable);
+        tableColumn.setLabelProvider(cellProvider);
 		return tableColumn;
 	}
 	
@@ -471,7 +475,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @return The comparator for the table.
      */
 	protected ColumnComparator<TRow> comparator() {
-		return new NullComparator<TRow>();
+		return comparator;
 	}
 }
 

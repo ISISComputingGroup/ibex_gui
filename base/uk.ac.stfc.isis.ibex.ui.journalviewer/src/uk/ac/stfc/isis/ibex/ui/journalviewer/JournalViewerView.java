@@ -47,6 +47,7 @@ import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.PartAdapter;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -156,15 +157,13 @@ public class JournalViewerView extends ViewPart {
 		
 		for (final JournalField field : JournalField.values()) {
 			if (model.getFieldSelected(field)) {
-				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
-				col.getColumn().setText(field.getFriendlyName());
-				
-				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true, new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
 					@Override
-		            protected String valueFromRow(JournalRow row) {
+					public String stringFromRow(JournalRow row) {
 						return row.get(field);
 					}
 				});
+				col.getColumn().setText(field.getFriendlyName());
 				
 			}
 		}
