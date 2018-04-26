@@ -21,11 +21,11 @@ package uk.ac.stfc.isis.ibex.epics.pvmanager;
 
 import java.io.IOException;
 
-import org.epics.pvmanager.PVManager;
-import org.epics.pvmanager.PVWriter;
-import org.epics.pvmanager.PVWriterEvent;
-import org.epics.pvmanager.PVWriterListener;
-import org.epics.pvmanager.expression.WriteExpressionImpl;
+import org.diirt.datasource.PVManager;
+import org.diirt.datasource.PVWriter;
+import org.diirt.datasource.PVWriterEvent;
+import org.diirt.datasource.PVWriterListener;
+import org.diirt.datasource.expression.WriteExpressionImpl;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.epics.pv.WritablePV;
 import uk.ac.stfc.isis.ibex.epics.writing.WriteException;

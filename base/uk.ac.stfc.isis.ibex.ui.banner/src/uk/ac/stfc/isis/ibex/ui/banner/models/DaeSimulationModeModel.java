@@ -34,13 +34,13 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
  */
 public class DaeSimulationModeModel extends Closer implements IndicatorModel {
 
-    private DaeSimulationModeObserver observer;
+    private IndicatorObserver<Boolean> observer;
 
     /**
      * Constructor for the dae simulation mode banner model.
      */
     public DaeSimulationModeModel() {
-        observer = registerForClose(new DaeSimulationModeObserver(Dae.getInstance().model().simulationMode()) {
+        observer = registerForClose(new IndicatorObserver<Boolean>(Dae.getInstance().model().simulationMode()) {
 			
 			@Override
 			protected void setUnknown() {

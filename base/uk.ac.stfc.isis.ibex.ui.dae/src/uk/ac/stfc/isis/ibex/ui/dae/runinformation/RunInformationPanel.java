@@ -19,21 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.runinformation;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class RunInformationPanel extends Composite {
+public class RunInformationPanel {
 
 	private Label instrument;
 	private Label runStatus;
@@ -73,12 +77,36 @@ public class RunInformationPanel extends Composite {
 	private Label daeSimMode;
 
 	private DataBindingContext bindingContext;
+    private DaeViewModel viewModel;
+    
+    private static final int FIXED_WIDTH = 725;
+    private static final int FIXED_HEIGHT = 375;
 
-	public RunInformationPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+    /**
+     * The constructor.
+     */
+    public RunInformationPanel() {
+        this.viewModel = DaeUI.getDefault().viewModel();
+    }
+
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
+    @PostConstruct
+    public void createPart(Composite parent) {
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        Composite content = new Composite(scrolled, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
+        scrolled.setContent(content);
 		
-		Group grpSetup = new Group(this, SWT.NONE);
+        Group grpSetup = new Group(content, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSetup.setText("Setup");
 		GridLayout glGrpSetup = new GridLayout(6, false);
@@ -304,7 +332,7 @@ public class RunInformationPanel extends Composite {
 		Label lblDaeSimMode = new Label(grpSetup, SWT.RIGHT);
 		GridData gdLblDaeSimMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdLblDaeSimMode.widthHint = 110;
-		lblDaeSimMode.setLayoutData(gdLblIsisCycle);
+		lblDaeSimMode.setLayoutData(gdLblDaeSimMode);
 		lblDaeSimMode.setText("Simulated DAE:");
 		
 		daeSimMode = new Label(grpSetup, SWT.NONE);
@@ -313,8 +341,7 @@ public class RunInformationPanel extends Composite {
 		daeSimMode.setLayoutData(gdDaeSimMode);
 		daeSimMode.setText("UNKNOWN");
 		
-		
-		Group titleGroup = new Group(this, SWT.NONE);
+        Group titleGroup = new Group(content, SWT.NONE);
 		titleGroup.setLayout(new GridLayout(2, false));
 		titleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
@@ -338,7 +365,7 @@ public class RunInformationPanel extends Composite {
 		users.setLayoutData(gdUsers);
 		users.setText("UNKNOWN");
 		
-		Group grpPeriods = new Group(this, SWT.NONE);
+        Group grpPeriods = new Group(content, SWT.NONE);
 		GridLayout glGrpPeriods = new GridLayout(6, false);
 		glGrpPeriods.horizontalSpacing = 20;
 		grpPeriods.setLayout(glGrpPeriods);
@@ -431,7 +458,7 @@ public class RunInformationPanel extends Composite {
 		new Label(grpPeriods, SWT.NONE);
 		new Label(grpPeriods, SWT.NONE);
 		
-		Group grpMonitor = new Group(this, SWT.NONE);
+        Group grpMonitor = new Group(content, SWT.NONE);
 		GridLayout glGrpMonitor = new GridLayout(6, false);
 		glGrpMonitor.horizontalSpacing = 20;
 		grpMonitor.setLayout(glGrpMonitor);
@@ -499,6 +526,8 @@ public class RunInformationPanel extends Composite {
 		monitorTo.setText("UNKNOWN");
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
+
+        setModel(viewModel);
 	}
 	
 	public void setModel(DaeViewModel viewModel) {

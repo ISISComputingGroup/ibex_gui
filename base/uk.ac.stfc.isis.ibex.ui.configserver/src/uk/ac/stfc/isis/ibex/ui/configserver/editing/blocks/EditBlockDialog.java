@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
@@ -30,7 +29,6 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	EditableConfiguration config;
 	EditableBlock block;
-    RunControlServer runControl;
     
 	BlockDetailsPanel blockDetailsPanel;
 	BlockDetailsViewModel blockDetailsViewModel;

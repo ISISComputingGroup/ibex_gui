@@ -23,3 +23,8 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,
  uk.ac.stfc.isis.ibex.ui.blocks.groups,
  uk.ac.stfc.isis.ibex.ui.blocks.views
 Bundle-ClassPath: .
+Import-Package: org.eclipse.e4.ui.model.application,
+ org.eclipse.e4.ui.model.application.ui.advanced,
+ org.eclipse.e4.ui.workbench.modeling,
+ uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher,
+ uk.ac.stfc.isis.ibex.ui.configserver.commands

@@ -4,18 +4,25 @@ Bundle-Name: Synoptic
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.synoptic;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.synoptic.Activator
-Require-Bundle: uk.ac.stfc.isis.ibex.ui.perspectives,
- uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+Import-Package: org.apache.logging.log4j
+Require-Bundle: org.eclipse.ui,
+ uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.targets;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
-Bundle-ActivationPolicy: lazy
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ org.eclipse.osgi,
+ org.eclipse.jface,
+ org.eclipse.core.runtime;bundle-version="3.11.1",
+ org.eclipse.e4.core.di.annotations,
+ uk.ac.stfc.isis.ibex.e4.ui,
+ uk.ac.stfc.isis.ibex.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
  uk.ac.stfc.isis.ibex.ui.synoptic.component,
  uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.synoptic.widgets
+Bundle-ActivationPolicy: lazy

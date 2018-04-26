@@ -46,13 +46,11 @@ public class ChildlessComponent implements Component {
 
 	@Override
 	public ComponentType type() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Set<ComponentProperty> properties() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -68,12 +66,10 @@ public class ChildlessComponent implements Component {
 
 	@Override
 	public void setTarget(Target target) {
-		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public Component copy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

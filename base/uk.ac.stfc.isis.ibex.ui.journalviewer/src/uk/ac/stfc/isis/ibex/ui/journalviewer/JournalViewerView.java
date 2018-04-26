@@ -24,6 +24,8 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import javax.annotation.PostConstruct;
+
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,8 +41,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
@@ -54,7 +56,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * Journal viewer main view.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class JournalViewerView extends ViewPart {
+public class JournalViewerView {
 
     /**
      * The view ID.
@@ -73,23 +75,25 @@ public class JournalViewerView extends ViewPart {
     private Spinner spinnerPageNumber;
 
 	private DataboundTable<JournalRow> table;
+	
+	private EPartService partService;
 
 	/**
 	 * Create contents of the view part.
-	 * 
-	 * @param parent - Parent UI element
+	 * @param parent The parent view part.
 	 */
-	@Override
-	public void createPartControl(Composite parent) {
+	@PostConstruct
+	public void createPartControl(final Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
 		parent.setLayoutData(gd);
 
 		Label lblTitle = new Label(parent, SWT.NONE);
-		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", HEADER_FONT_SIZE, SWT.BOLD));
+		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
 		
-
+		this.partService = partService;
+		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		RowLayout rl = new RowLayout();
 		rl.justify = false;
@@ -216,29 +220,22 @@ public class JournalViewerView extends ViewPart {
 			}
 		});
         
-        // Add a listener to refresh the page whenever it becomes visible
-        try {
-	        getSite().getPage().addPartListener(new PartAdapter() {
-	        	/**
-	    		 * {@inheritDoc}
-	    		 */
-	    		@Override
-	    		public void partVisible(IWorkbenchPartReference partRef) {
-	    			super.partVisible(partRef);
-	    			model.refresh();
-	    		}
-	        });
-        } catch (NullPointerException e) {
-        	// If getSite or getPage return null then log the error but carry on.
-        	IsisLog.getLogger(getClass()).info("Couldn't add visibility listener to Journal view");
-        }
+        // TODO do this the E4 way
+//        // Add a listener to refresh the page whenever it becomes visible
+//        try {
+//	        partService.addPartListener(new PartAdapter() {
+//	        	/**
+//	    		 * {@inheritDoc}
+//	    		 */
+//	    		@Override
+//	    		public void partVisible(IWorkbenchPartReference partRef) {
+//	    			super.partVisible(partRef);
+//	    			model.refresh();
+//	    		}
+//	        });
+//        } catch (NullPointerException e) {
+//        	// If getSite or getPage return null then log the error but carry on.
+//        	IsisLog.getLogger(getClass()).info("Couldn't add visibility listener to Journal view");
+//        }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-	@Override
-	public void setFocus() {
-	}
-	
 }

@@ -43,6 +43,7 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
@@ -65,6 +66,17 @@ public class MinimalMotorViewModel extends ModelObject {
     private Font font;
     private Color color;
 	
+    public MinimalMotorViewModel() {
+    	DisplayPreferences displayPrefsModel = DisplayPreferences.getInstance();
+    	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				setPalette((MotorBackgroundPalette)evt.getNewValue());
+			}
+		});
+        setPalette(displayPrefsModel.getMotorBackgroundPalette());
+    }
+    
     private Font chooseFont() {
         if (enabled == null) {
             return DISABLEDFONT;

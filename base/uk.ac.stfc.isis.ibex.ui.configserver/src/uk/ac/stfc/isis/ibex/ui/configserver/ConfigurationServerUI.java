@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 /**
  * Controls the life cycle of the configuration server UI plug-in.
  */
-public class ConfigurationServerUI extends AbstractUIPlugin {
+public class ConfigurationServerUI implements BundleActivator {
 
     /** The plug-in ID. */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.configserver"; //$NON-NLS-1$
@@ -64,7 +64,6 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	 */
 	@Override
     public void start(BundleContext context) throws Exception {
-		super.start(context);
 		plugin = this;
 	}
 
@@ -75,7 +74,6 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	@Override
     public void stop(BundleContext context) throws Exception {
 		plugin = null;
-		super.stop(context);
 	}
 
 	/**

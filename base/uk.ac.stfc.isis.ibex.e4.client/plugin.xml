@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension id="IBEX_E4" point="org.eclipse.core.runtime.products">
+   	<product application="uk.ac.stfc.isis.ibex.e4.product.application" name="IBEX">
+    <property name="appName" value="IBEX"> </property>
+    <property name="applicationXMI" value="uk.ac.stfc.isis.ibex.e4.client/Application.e4xmi"> </property>
+    <property
+          name="aboutImage"
+          value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+    </property>
+    <property
+          name="windowImages"
+          value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+    </property>
+  </product>
+</extension>
+</plugin>

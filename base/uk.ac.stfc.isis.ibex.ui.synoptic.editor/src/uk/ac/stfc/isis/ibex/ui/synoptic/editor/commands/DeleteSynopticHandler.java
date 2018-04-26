@@ -20,56 +20,28 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
-import java.util.Collection;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
 /**
  * Handler class for deleting synoptics.
  */
-public class DeleteSynopticHandler extends AbstractHandler {
+public class DeleteSynopticHandler extends SynopticEditorHandler {
 
     private static final String TITLE = "Delete Synoptics";
-    private static final Synoptic SYNOPTIC = Synoptic.getInstance();
-    private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-
-    /**
-     * This is an inner anonymous class inherited from SameTypeWriter with added
-     * functionality for disabling the command if the underlying PV cannot be
-     * written to.
-     */
-    protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
-        @Override
-        public void onCanWriteChanged(boolean canWrite) {
-            setBaseEnabled(canWrite);
-        }
-    };
-
-    /**
-     * Constructor that adds a listener to disable the handler if the
-     * destination is disabled.
-     */
-	public DeleteSynopticHandler() {
-        synopticService.writeTo(SYNOPTIC.delete());
-        SYNOPTIC.delete().subscribe(synopticService);
-	}	
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+	@Execute
+	public Object execute(Shell shell) throws ExecutionException {		
         MultipleSynopticsSelectionDialog dialog =
-                new MultipleSynopticsSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
+                new MultipleSynopticsSelectionDialog(shell, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 			try {
-                synopticService.write(dialog.selectedSynoptics());
+                SYNOPTIC.delete().write(dialog.selectedSynoptics());
             } catch (IOException e) {
                 throw new ExecutionException("Failed to write to PV", e);
             }
