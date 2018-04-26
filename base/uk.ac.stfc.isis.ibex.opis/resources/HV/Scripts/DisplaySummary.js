@@ -25,8 +25,8 @@ for (i = 0; i < chanlist.length; i++){
 	if ((chan != '')&&(chan != ',')){
 		target = WidgetUtil.createWidgetModel("org.csstudio.opibuilder.widgets.linkingContainer")
 		target.setPropertyValue('opi_file', "HVChannelMonitorSummary.opi")
-		target.setPropertyValue('auto_size','true')
-		target.setPropertyValue('zoom_to_fit','false')
+		target.setPropertyValue('auto_size', true)
+		target.setPropertyValue('zoom_to_fit', false)
 		target.setPropertyValue('border_style',0)
 		target.addMacro('SEL',chan)
 		group.addChildToBottom(target)
