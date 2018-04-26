@@ -57,14 +57,14 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 		// the data is being processed. Particularly important for large transforms
 		// like synoptics and configs.
 		
-		synchronized(this.source) {
+		synchronized (this.source) {
 			if (formatter != null && value != null) {
 				try {
 					newValue = formatter.convert(value);
 				} catch (ConversionException e) {
 					setError(e);
 				}
-			} else if (value==null) {
+			} else if (value == null) {
 				LOG.warning("Null Value discarded in converting observable: " + toString());
 			}
 		}

@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
  * An object that observes a base observable of a particular type and supplies a
- * transformed version of the base observable's value on to other objects
+ * transformed version of the base observable's value on to other objects.
  * 
  * For example: changing an enum into a string
  *
@@ -78,12 +78,14 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
         sourceObserver.onConnectionStatus(source.isConnected());
 
         T1 value = source.getValue();
-        if (value != null)
+        if (value != null) {
         	sourceObserver.onValue(value);
+        }
 
         Exception error = source.currentError();
-        if (error != null)
+        if (error != null) {
         	sourceObserver.onError(error);
+        }
         
 		sourceSubscription = source.addObserver(sourceObserver);
     }
@@ -109,7 +111,9 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	 * it is currently pointing at.
 	 */
 	private void cancelSubscription() {
-		if (sourceSubscription != null) sourceSubscription.removeObserver();
+		if (sourceSubscription != null) {
+			sourceSubscription.removeObserver();
+		}
 	}
 	
 	/**
@@ -125,6 +129,8 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	
 	/**
 	 * Return a human readable value to assist with identifying issues in the observable stack.
+	 * 
+	 * @return The string representation of the object.
 	 */
 	@Override
 	public String toString() {
