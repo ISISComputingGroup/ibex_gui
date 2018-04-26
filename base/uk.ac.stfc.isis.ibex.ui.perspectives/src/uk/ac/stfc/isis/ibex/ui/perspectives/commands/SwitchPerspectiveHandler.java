@@ -23,18 +23,22 @@ package uk.ac.stfc.isis.ibex.ui.perspectives.commands;
 
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
-import uk.ac.stfc.isis.ibex.ui.UI;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.ui.perspectives.Activator;
 import uk.ac.stfc.isis.ibex.ui.perspectives.IsisPerspective;
 
 /**
  * Class for switching perspectives based on a key press.
  */
-public class SwitchPerspectiveHandler extends AbstractHandler {
+public class SwitchPerspectiveHandler {
 
     /**
      * The method that is executed when a key is pressed. Switches to an isis
@@ -43,22 +47,22 @@ public class SwitchPerspectiveHandler extends AbstractHandler {
      * @param event
      *            The execution event, should contain info on which perspective
      *            to switch to.
-     * @return null
+     * @return true if success, false otherwise
      * @throws ExecutionException
      */
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Execute
+    public boolean execute(ExecutionEvent event, MApplication app, EPartService partService, EModelService modelService) throws ExecutionException {
         String id = event.getParameter("uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID");
 
         List<IsisPerspective> visiblePerspectives = Activator.getDefault().perspectives().getVisible();
 
         for (IsisPerspective perspective : visiblePerspectives) {
             if (perspective.id().equals(id)) {
-                UI.getDefault().switchPerspective(id);
-                return null;
+                new PerspectiveSwitcher(new PerspectivesProvider(app, partService, modelService));
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
 }

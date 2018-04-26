@@ -3,6 +3,9 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.annotation.PostConstruct;
+
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -10,12 +13,14 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * Class for accessing the perspectives in the application model.
  */
 public class PerspectivesProvider {
 		
-	private final EPartService partService;
+	private EPartService partService;
 	private List<MPerspective> perspectives = new ArrayList<MPerspective>();
 	private MPerspectiveStack perspectivesStack;
 	private MApplication app;
@@ -32,6 +37,12 @@ public class PerspectivesProvider {
 	 * @param modelService The E4 service responsible for handling model elements
 	 */
 	public PerspectivesProvider(MApplication app, EPartService partService, EModelService modelService) {
+		
+		IsisLog.getLogger(getClass()).info("In postconstruct call for Perspective switcher.");
+		IsisLog.getLogger(getClass()).info(app);
+		IsisLog.getLogger(getClass()).info(partService);
+		IsisLog.getLogger(getClass()).info(modelService);
+		
 		this.partService = partService;
 		this.app = app;
 		this.modelService = modelService;

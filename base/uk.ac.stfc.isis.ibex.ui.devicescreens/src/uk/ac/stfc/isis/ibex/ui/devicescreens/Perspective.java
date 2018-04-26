@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IPageLayout;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
@@ -37,12 +36,6 @@ public class Perspective extends BasePerspective {
      * The public ID of this class.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.perspective"; //$NON-NLS-1$
-
-	@Override
-	public void createInitialLayout(IPageLayout layout) {
-		super.createInitialLayout(layout);
-		
-	}
 	
 	@Override
 	public String id() {

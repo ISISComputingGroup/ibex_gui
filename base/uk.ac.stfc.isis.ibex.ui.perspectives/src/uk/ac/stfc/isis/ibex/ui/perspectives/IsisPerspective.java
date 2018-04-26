@@ -20,8 +20,9 @@
 package uk.ac.stfc.isis.ibex.ui.perspectives;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IPerspectiveFactory;
 
-public interface IsisPerspective extends Comparable<IsisPerspective> {
+public interface IsisPerspective extends Comparable<IsisPerspective>, IPerspectiveFactory {
 	/**
 	 * @return The id of the perspective.
 	 */
