@@ -1092,13 +1092,6 @@
          version="0.0.0"
          unpack="false"/>
 
-   <!-- 
-   These two plugins have their versions pinned because the current P2
-   repository can't resolve the dependency on the Maven build when left
-   to its own devices. I think that is because version 3.106.* is available
-   for the win32 plugin, but not the base version. It's possible this will
-   be resolved in the future but is out of our control.
-   -->
    <plugin
          id="org.eclipse.swt"
          download-size="0"
@@ -1115,6 +1108,13 @@
          install-size="0"
          version="3.105.3.v20170228-0512"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-loc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
