@@ -20,17 +20,35 @@
 package uk.ac.stfc.isis.ibex.ui.perspectives;
 
 import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.IViewLayout;
+
+import uk.ac.stfc.isis.ibex.ui.banner.views.BannerView;
+import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
+import uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView;
+import uk.ac.stfc.isis.ibex.ui.perspectives.switcher.PerspectiveSwitcherView;
 
 /**
  * The base perspective that all IBEX perspectives should inherit from.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public abstract class BasePerspective implements IsisPerspective {
+public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspective {
 	
     /**
      * The ID for this perspective.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.base";
+	
+	@Override
+    public void createInitialLayout(IPageLayout layout) {					
+		layout.setEditorAreaVisible(false);
+		layout.setFixed(true);
+		
+		layout.addStandaloneView(DashboardView.ID, false, IPageLayout.TOP, 0.4f, IPageLayout.ID_EDITOR_AREA);
+		layout.addStandaloneView(BannerView.ID, false, IPageLayout.BOTTOM, 0.15f, DashboardView.ID);
+		layout.addStandaloneView(BlocksView.ID, false, IPageLayout.RIGHT, 0.3f, DashboardView.ID);
+		layout.addStandaloneView(PerspectiveSwitcherView.ID, false, IPageLayout.LEFT, 0.15f, IPageLayout.ID_EDITOR_AREA);
+	}
 	
     private String removeAmp(String in) {
         return in.replaceAll("&", "");
@@ -41,12 +59,16 @@ public abstract class BasePerspective implements IsisPerspective {
         return removeAmp(name()).compareTo(removeAmp(other.name()));
 	}
 	
-	@Override
-	public boolean isVisibleDefault() {
-		return true;
+	protected void lockView(IPageLayout layout, String viewID) {
+		IViewLayout view = layout.getViewLayout(viewID);
+		if (view != null) {
+			view.setMoveable(false);
+			view.setCloseable(true);
+		}
 	}
 	
 	@Override
-	public void createInitialLayout(IPageLayout layout) {
+	public boolean isVisibleDefault() {
+		return true;
 	}
 }

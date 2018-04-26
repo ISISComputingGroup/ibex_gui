@@ -20,8 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.motor;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IPageLayout;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
@@ -33,6 +35,13 @@ public class Perspective extends BasePerspective {
      * The ID for this perspective.
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.motor.perspective"; //$NON-NLS-1$
+	
+	@Override
+	public void createInitialLayout(IPageLayout layout) {
+		super.createInitialLayout(layout);
+		
+		lockView(layout, MotorOPIView.ID);
+	}
 	
 	@Override
 	public String id() {

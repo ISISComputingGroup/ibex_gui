@@ -19,9 +19,11 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IPageLayout;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * The perspective that shows the synoptic of the instrument.
@@ -35,6 +37,14 @@ public class SynopticPerspective extends BasePerspective {
      * The ID of this perspective.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.perspective";
+
+	@Override
+	public void createInitialLayout(IPageLayout layout) {
+		super.createInitialLayout(layout);
+		
+		lockView(layout, OpiTargetView.ID);
+		lockView(layout, IPageLayout.ID_PROP_SHEET);
+	}
 	
 	@Override
 	public String id() {
