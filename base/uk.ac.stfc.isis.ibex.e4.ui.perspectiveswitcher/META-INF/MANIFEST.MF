@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.104.2",
  org.eclipse.e4.core.contexts,
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.core.di.annotations,
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.core.services;bundle-version="2.0.100",
+ org.eclipse.osgi.services;bundle-version="3.5.100"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher

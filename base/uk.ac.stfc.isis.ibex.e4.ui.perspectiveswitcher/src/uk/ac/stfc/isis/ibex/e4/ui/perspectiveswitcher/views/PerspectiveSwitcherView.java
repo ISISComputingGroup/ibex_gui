@@ -3,12 +3,13 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.IPartListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,6 +20,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
@@ -41,6 +44,9 @@ public class PerspectiveSwitcherView {
 	
 	@Inject 
 	private EPartService partService;
+	
+	@Inject
+	private IEventBroker broker; 
 	
 	/**
 	 * Create and initialise the controls within the view.
@@ -76,32 +82,21 @@ public class PerspectiveSwitcherView {
 					perspectivesProvider.getPartService().switchPerspective(perspective);
 				}
 			});
-			partService.addPartListener(new IPartListener() {
-				
+			
+			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
 				@Override
-				public void partActivated(MPart part) {
-					//This is a hack to tell when a perspective changes. A perspective change forces a part to activate.
-					shortcut.setSelection(perspectivesProvider.isSelected(perspective));
-				}
+				public void handleEvent(Event event) {
+				    Object newValue = event.getProperty(EventTags.NEW_VALUE);
 
-				@Override
-				public void partBroughtToTop(MPart part) {
-				}
-
-				@Override
-				public void partDeactivated(MPart part) {
-				}
-
-				@Override
-				public void partHidden(MPart part) {
-				}
-
-				@Override
-				public void partVisible(MPart part) {
+				    // only run this, if the NEW_VALUE is a MPerspective
+				    if (!(newValue instanceof MPerspective)) {
+				      return;
+				    }
+				    shortcut.setSelection(perspective.equals((MPerspective) newValue));
 				}
 			});
 		}
-	}
+	}	
 	
 	private void addSeparator() {
 		new ToolItem(toolBar, SWT.SEPARATOR);
