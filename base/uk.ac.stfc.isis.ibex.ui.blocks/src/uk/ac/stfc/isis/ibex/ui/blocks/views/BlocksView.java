@@ -24,6 +24,7 @@ import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -36,8 +37,6 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -60,10 +59,8 @@ public class BlocksView {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
 
-	/**
-	 * Helper for switching to the logplotter perspective.
-	 */
-	public static PerspectiveSwitcher switcher;
+	@Inject
+	public static EPartService partService;
 	
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
@@ -105,13 +102,10 @@ public class BlocksView {
 	 * 
 	 * @param parent parent of the blocks view
 	 * @param app The E4 application model
-	 * @param partService The E4 service responsible for showing/hiding parts
 	 * @param modelService The E4 service responsible for handling model elements
 	 */
     @PostConstruct
-	public void createPartControl(final Composite parent, MApplication app, EPartService partService, EModelService modelService) {
-		switcher = new PerspectiveSwitcher(new PerspectivesProvider(app, partService, modelService));
-		
+	public void createPartControl(final Composite parent, MApplication app, EModelService modelService) {
 		GridLayout glParent = new GridLayout(1, false);
 		glParent.verticalSpacing = 2;
 		glParent.marginWidth = 0;

@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
@@ -52,8 +51,7 @@ public class BlocksMenu extends MenuManager {
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private final IAction editBlockAction;
-	
-	private final PerspectiveSwitcher switcher = BlocksView.switcher;
+
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
@@ -100,7 +98,7 @@ public class BlocksMenu extends MenuManager {
         final IAction newPresenter = new Action("New Plot") {
 			@Override
 			public void run() {
-				switcher.switchPerspective(LOGPLOTTER_ID);
+				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
 				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
@@ -110,9 +108,10 @@ public class BlocksMenu extends MenuManager {
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPresenter);
 				for (final String plot : pvHistoryPresenter.getCurrentDisplays()) {
-					logSubMenu.add(new Action("Add to " + plot + " plot"){
+					logSubMenu.add(new Action("Add to " + plot + " plot") {
 						@Override
 						public void run() {
+							BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
 							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);
 						}
 					});
