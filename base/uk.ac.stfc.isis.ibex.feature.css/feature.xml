@@ -1092,6 +1092,14 @@
          version="0.0.0"
          unpack="false"/>
 
+	<!-- 
+	These two plugins have their versions pinned because the current P2
+	repository can't resolve the dependency on the Maven build when left
+	to its own devices. I think that is because version 3.106.* is available
+	for the win32 plugin, but not the base version. It's possible this will
+	be resolved in the future but is out of our control.
+	-->
+
    <plugin
          id="org.eclipse.swt"
          download-size="0"
