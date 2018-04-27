@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -95,7 +96,7 @@ public class PerspectivesProvider {
 	public boolean isSelected(MPerspective perspective) {
 		return perspectivesStack.getSelectedElement().equals(perspective);		
 	}
-
+	
 	/**
 	 * Returns the perspective stack top level object.
 	 * 

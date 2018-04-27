@@ -1,15 +1,18 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -17,9 +20,10 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveSwitcher;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
 /**
@@ -31,17 +35,27 @@ public class PerspectiveSwitcherView {
 	private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 	private ToolBar toolBar;
 	private PerspectivesProvider perspectivesProvider; 
-
+	
+	@Inject
+	private EModelService modelService;
+	
+	@Inject 
+	private MApplication app;
+	
+	@Inject 
+	private EPartService partService;
+	
+	@Inject
+	private IEventBroker broker; 
+	
 	/**
 	 * Create and initialise the controls within the view.
 	 * 
 	 * @param parent The parent container
-	 * @param app The E4 application model
-	 * @param partService The E4 service responsible for showing/hiding parts
-	 * @param modelService The E4 service responsible for handling model elements
+
 	 */
 	@PostConstruct
-	public void draw(Composite parent, MApplication app, EPartService partService, EModelService modelService) {
+	public void draw(Composite parent) {
 		Composite composite = new Composite(parent, SWT.None);
 		composite.setLayout(new GridLayout());
 		
@@ -49,32 +63,40 @@ public class PerspectiveSwitcherView {
 		toolBar.setFont(LABEL_FONT);
 		
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
+		
 		addPerspectiveShortcuts();
 		addSeparator();
 		addResetCurrentPerspectiveShortcut();
 	}
 
 	private void addPerspectiveShortcuts() {		
-		final PerspectiveSwitcher switcher = new PerspectiveSwitcher(perspectivesProvider);
-		final String keyID = "TARGET_ID";
-		
-		for (MPerspective perspective : perspectivesProvider.getPerspectives()) {
-			ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
-			// TODO: E4 creates an orphan of some perspectives where the label is surrounded by <>. I haven't found a way to stop it.
-			shortcut.setText(perspective.getLabel().replace("<", "").replace(">", ""));
+		for (final MPerspective perspective : perspectivesProvider.getPerspectives()) {
+			final ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
+			shortcut.setText(perspective.getLabel());
 			shortcut.setToolTipText(perspective.getTooltip());
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
 			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
-			shortcut.setData(keyID, perspective.getElementId());
 			shortcut.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent event) {
-					String targetElementId = (String) ((ToolItem) event.getSource()).getData(keyID);
-					switcher.switchPerspective(targetElementId);
+					perspectivesProvider.getPartService().switchPerspective(perspective);
+				}
+			});
+			
+			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
+				@Override
+				public void handleEvent(Event event) {
+				    Object newValue = event.getProperty(EventTags.NEW_VALUE);
+
+				    // only run this, if the NEW_VALUE is a MPerspective
+				    if (!(newValue instanceof MPerspective)) {
+				      return;
+				    }
+				    shortcut.setSelection(perspective.equals((MPerspective) newValue));
 				}
 			});
 		}
-	}
+	}	
 	
 	private void addSeparator() {
 		new ToolItem(toolBar, SWT.SEPARATOR);

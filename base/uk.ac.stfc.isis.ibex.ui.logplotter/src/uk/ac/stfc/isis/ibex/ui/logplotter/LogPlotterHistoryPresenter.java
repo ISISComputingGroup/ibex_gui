@@ -96,9 +96,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	@Override
-	public void newDisplay(String pvAddress, final String displayName) {	
-		UI.getDefault().switchPerspective(Perspective.ID);
-		
+	public void newDisplay(String pvAddress, final String displayName) {		
 	    // Create new editor
 	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
 	    	@Override
@@ -112,7 +110,6 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 
 	@Override
 	public void addToDisplay(String pvAddress, String display, String presenterName) {
-		UI.getDefault().switchPerspective(Perspective.ID);
 		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
 				  .collect(Collectors.toList());
 		
