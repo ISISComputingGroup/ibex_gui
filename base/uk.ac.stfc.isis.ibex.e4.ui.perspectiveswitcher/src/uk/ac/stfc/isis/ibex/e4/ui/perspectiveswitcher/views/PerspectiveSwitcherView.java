@@ -70,7 +70,7 @@ public class PerspectiveSwitcherView {
 	}
 
 	private void addPerspectiveShortcuts() {		
-		for (MPerspective perspective : perspectivesProvider.getPerspectives()) {
+		for (final MPerspective perspective : perspectivesProvider.getPerspectives()) {
 			ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
 			shortcut.setText(perspective.getLabel());
 			shortcut.setToolTipText(perspective.getTooltip());
