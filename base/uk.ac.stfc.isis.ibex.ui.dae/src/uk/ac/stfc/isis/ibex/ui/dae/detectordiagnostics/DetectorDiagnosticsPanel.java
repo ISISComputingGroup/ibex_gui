@@ -174,35 +174,35 @@ public class DetectorDiagnosticsPanel {
 			@Override
 			public void partBroughtToTop(MPart part) {
 				if (part == thisPart) {
-					model.setDiagnosticsEnabled1(true);
+					model.setDiagnosticsEnabledOnServer(true);
 				}
 			}
 
 			@Override
 			public void partActivated(MPart part) {
 				if (part == thisPart) {
-					model.setDiagnosticsEnabled1(true);
+					model.setDiagnosticsEnabledOnServer(true);
 				}
 			}
 
 			@Override
 			public void partDeactivated(MPart part) {
 				if (part == thisPart) {
-					model.setDiagnosticsEnabled1(false);
+					model.setDiagnosticsEnabledOnServer(false);
 				}
 			}
 
 			@Override
 			public void partHidden(MPart part) {
 				if (part == thisPart) {
-					model.setDiagnosticsEnabled1(false);
+					model.setDiagnosticsEnabledOnServer(false);
 				}
 			}
 
 			@Override
 			public void partVisible(MPart part) {
 				if (part == thisPart) {
-					model.setDiagnosticsEnabled1(true);
+					model.setDiagnosticsEnabledOnServer(true);
 				}
 			}
 		});
