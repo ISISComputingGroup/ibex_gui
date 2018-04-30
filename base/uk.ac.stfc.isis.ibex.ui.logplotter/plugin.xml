@@ -31,7 +31,7 @@
             locationURI="popup:uk.ac.stfc.isis.ibex.ui.logplotter.popup.processvariable">
          <command
                commandId="uk.ac.stfc.isis.ibex.ui.logplotter.OpenLogPlotterPopup"
-               icon="icons/new_logplotter.png"
+               icon="icons/stocks2_24x24.png"
                label="Log Plotter"
                style="push"
                tooltip="%PopmenuTooltip">
