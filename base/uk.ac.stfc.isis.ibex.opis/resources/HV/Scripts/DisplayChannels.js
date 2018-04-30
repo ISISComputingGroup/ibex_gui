@@ -60,10 +60,10 @@ for (z=0; z < maxcrate; z++){
 				var avail = crate + ':' + x + ':' + y;
 				var target = WidgetUtil.createWidgetModel("org.csstudio.opibuilder.widgets.linkingContainer");
 				target.setPropertyValue('opi_file', "HVChannelSummaryMaintenance.opi");
-				target.setPropertyValue('auto_size','true');
-				target.setPropertyValue('zoom_to_fit','false');
+				target.setPropertyValue('auto_size', true);
+				target.setPropertyValue('zoom_to_fit', false);
 				target.setPropertyValue('border_style',0);
-				target.setPropertyValue('name',avail);
+				target.setPropertyValue('name', avail);
 				target.addMacro('SEL',avail);
 				group.addChildToBottom(target);
 				container = display.getWidget(avail);
