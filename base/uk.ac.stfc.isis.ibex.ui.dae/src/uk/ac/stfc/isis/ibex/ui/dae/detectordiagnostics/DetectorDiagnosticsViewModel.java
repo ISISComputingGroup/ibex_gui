@@ -392,7 +392,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
      * @param isEnabled the new diagnostics enabled
      */
     @Override
-    public void setDiagnosticsEnabled(boolean isEnabled) {
+    public void setDiagnosticsViewEnabled(boolean isEnabled) {
         firePropertyChangeOnGuiThread("diagnosticsEnabled", this.diagnosticsEnabled, this.diagnosticsEnabled = isEnabled);
     }
     

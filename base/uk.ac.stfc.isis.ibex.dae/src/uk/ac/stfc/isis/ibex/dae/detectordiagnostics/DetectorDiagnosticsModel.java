@@ -291,13 +291,13 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         diagnosticsEnabledObservable.addObserver(new SpectrumObserver<Boolean>() {
             @Override
             public void onNonNullValue(Boolean value) {
-                viewModel.setDiagnosticsEnabled(value);
+                viewModel.setDiagnosticsViewEnabled(value);
             }  
             
             @Override
             public void onConnectionStatus(boolean isConnected) {
                 if (!isConnected) {
-                    viewModel.setDiagnosticsEnabled(false);
+                    viewModel.setDiagnosticsViewEnabled(false);
                 }
             }
         });
