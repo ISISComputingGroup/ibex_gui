@@ -25,9 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
@@ -45,11 +47,23 @@ import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewMode
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 
+import org.eclipse.e4.core.contexts.Active;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.IPartListener;
+ 
+
 /**
  * The panel containing the detector diagnostics table and controls.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DetectorDiagnosticsPanel {
+	
+	@Inject
+	EPartService ePartService;
+	
+	@Inject
+	@Active
+	MPart thisPart;
     
     private DataBindingContext bindingContext = new DataBindingContext();
     private Combo comboSpectraTypeSelector;
@@ -153,7 +167,45 @@ public class DetectorDiagnosticsPanel {
         table.setLayoutData(layout);
         
         this.setModel(model);
- 
+        // In E4 we can start as soon as the part is created because it is  only created when clicked
+        model.startObserving();
+        
+        ePartService.addPartListener(new IPartListener() {
+			@Override
+			public void partBroughtToTop(MPart part) {
+				if (part == thisPart) {
+					model.setDiagnosticsEnabledOnServer(true);
+				}
+			}
+
+			@Override
+			public void partActivated(MPart part) {
+				if (part == thisPart) {
+					model.setDiagnosticsEnabledOnServer(true);
+				}
+			}
+
+			@Override
+			public void partDeactivated(MPart part) {
+				if (part == thisPart) {
+					model.setDiagnosticsEnabledOnServer(false);
+				}
+			}
+
+			@Override
+			public void partHidden(MPart part) {
+				if (part == thisPart) {
+					model.setDiagnosticsEnabledOnServer(false);
+				}
+			}
+
+			@Override
+			public void partVisible(MPart part) {
+				if (part == thisPart) {
+					model.setDiagnosticsEnabledOnServer(true);
+				}
+			}
+		});
     }
     
     private void createLabel(Composite parent, String text, GridData layout) {
