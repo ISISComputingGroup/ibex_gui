@@ -96,7 +96,7 @@ public class DetectorDiagnosticsPanel {
      * @param parent The parent composite obtained from the eclipse context
      */
     @PostConstruct
-    public synchronized void createPart(Composite parent) {
+    public void createPart(Composite parent) {
         ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         scrolled.setExpandHorizontal(true);
         scrolled.setExpandVertical(true);
