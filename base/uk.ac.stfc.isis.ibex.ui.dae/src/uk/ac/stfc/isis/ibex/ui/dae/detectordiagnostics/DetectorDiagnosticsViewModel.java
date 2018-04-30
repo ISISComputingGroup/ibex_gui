@@ -452,7 +452,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
      * 
      * @param enabled true to enable; false otherwise
      */
-    public void setDiagnosticsEnabledOnServer(boolean enabled) {
+    public synchronized void setDiagnosticsEnabledOnServer(boolean enabled) {
     	// The model might be null if the method is triggered before initialisation has finished.
     	if (detectorDiagnosticsModel != null) {
     		detectorDiagnosticsModel.setDetectorDiagnosticsEnabled(enabled);
