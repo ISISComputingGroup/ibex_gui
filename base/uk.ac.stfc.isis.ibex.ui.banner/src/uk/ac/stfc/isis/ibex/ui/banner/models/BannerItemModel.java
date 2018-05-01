@@ -24,11 +24,12 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.graphics.Color;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItemState;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
 /**
@@ -37,57 +38,47 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
  */
 public class BannerItemModel extends ModelObject implements IndicatorModel {
 
-    private SettableUpdatedValue<String> text;
-    private SettableUpdatedValue<Color> color;
-    private SettableUpdatedValue<Boolean> availability;
-    private BannerItemViewState converter;
+    private final SettableUpdatedValue<String> text = new SettableUpdatedValue<>();
+    private final SettableUpdatedValue<Boolean> availability = new SettableUpdatedValue<>(true);
+    private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
 
     /**
      * Instantiates model and converter.
      * 
      * @param item the banner item being observed
      */
-    public BannerItemModel(BannerItem item) {
-        converter = new BannerItemViewState(item);
-        text = new SettableUpdatedValue<>();
-        color = new SettableUpdatedValue<>();
-        availability = new SettableUpdatedValue<>(true);
+    public BannerItemModel(final BannerItem item) {
         item.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("currentState")) {
-                    BannerItemState newstate = (BannerItemState) evt.getNewValue();
-                    converter.setState(newstate);
-                    update();
+                if (evt.getPropertyName().equals("value")) {
+                    text.setValue(item.name() + ": " + item.value());
+                }
+                if (evt.getPropertyName().equals("alarm")) {
+                	if (item.alarm() == AlarmState.NO_ALARM) {
+                	    colour.setValue(IndicatorColours.BLACK);
+                	} else {
+                	    colour.setValue(IndicatorColours.RED);
+                	}
                 }
             }
         });
 
-        update();
     }
 
-    /**
-     * Updates the display parameters of the status message in the GUI upon
-     * state change of the banner item.
-     */
-    public void update() {
-        text.setValue(converter.getMessage());
-        color.setValue(converter.color());
-    }
+	@Override
+	public UpdatedValue<String> text() {
+		return text;
+	}
 
-    @Override
-    public UpdatedValue<String> text() {
-        return text;
-    }
+	@Override
+	public UpdatedValue<Color> color() {
+		return colour;
+	}
 
-    @Override
-    public UpdatedValue<Color> color() {
-        return color;
-    }
+	@Override
+	public UpdatedValue<Boolean> availability() {
+		return availability;
+	}
 
-    @Override
-    public UpdatedValue<Boolean> availability() {
-        return availability;
-    }
 }
