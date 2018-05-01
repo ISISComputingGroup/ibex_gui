@@ -7,6 +7,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -50,6 +51,7 @@ public class BannerItem extends ModelObject {
         @Override
         public void onError(Exception e) {
             setCurrentState(null);
+            IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
         }
 
         @Override
@@ -81,6 +83,10 @@ public class BannerItem extends ModelObject {
      * @param value the state value of the property.
      */
     public void setCurrentState(Boolean value) {
+    	System.out.println("New value is " + value + " pv is " + pv + " (" + InstrumentUtils.addPrefix(this.pv) + ")");
+    	System.out.println("False state: " + false_state.message() + " " + false_state.colour());
+    	System.out.println("True state: " + true_state.message() + " " + true_state.colour());
+    	System.out.println("Unknown state: " + unknown_state.message() + " " + unknown_state.colour());
         BannerItemState newState;
         if (value == null) {
             newState = this.unknown_state;
@@ -91,7 +97,7 @@ public class BannerItem extends ModelObject {
                 newState = this.false_state;
             }
         }
-        firePropertyChange("currentState", this.currentState, this.currentState = newState);
+        firePropertyChange("currentState", null, this.currentState = newState);
 	}
 
 }

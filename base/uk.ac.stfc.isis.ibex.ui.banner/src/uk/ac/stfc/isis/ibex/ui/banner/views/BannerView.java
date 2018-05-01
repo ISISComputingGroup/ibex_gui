@@ -28,7 +28,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -59,7 +58,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
     private static final int FIXED_HEIGHT = 35;
-    private static final int ITEM_WIDTH = 250;
+    private static final int ITEM_WIDTH = 200;
 
     private final Banner banner = Banner.getInstance();
 
@@ -172,9 +171,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
                 gdBannerItem.widthHint = ITEM_WIDTH;
 
                 for (IndicatorModel model : models) {
-                    glBannerItemPanel.numColumns = 2 * models.size();
-
-                    addSeparator(bannerItemPanel);
+                    glBannerItemPanel.numColumns = models.size();
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
                     bannerItem.setLayoutData(gdBannerItem);
@@ -184,19 +181,13 @@ public class BannerView extends ViewPart implements ISizeProvider {
         });
     }
 
-    private void addSeparator(Composite parent) {
-        Label sep = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
-        GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
-        gdSep.heightHint = 20;
-        sep.setLayoutData(gdSep);
-    }
-
     /**
      * Removes all indicators for instrument-specific properties from the
      * spangle banner.
      */
     private void disposeBanner() {
-        Display.getDefault().asyncExec(new Runnable() {
+    	// As this involves disposing items, do it using a sync exec to avoid "widget is disposed" issues.
+        Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {
                 for (org.eclipse.swt.widgets.Control item : bannerItemPanel.getChildren()) {

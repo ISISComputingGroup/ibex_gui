@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
+import java.util.Objects;
+
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
@@ -33,7 +35,7 @@ public class BannerItemViewState {
     private BannerItemState state;
 
     public BannerItemViewState(BannerItem item) {
-        this.item = item;
+        this.item = Objects.requireNonNull(item);
         setState(item.getCurrentState());
     }
 
@@ -44,7 +46,9 @@ public class BannerItemViewState {
      *            The state to set the banner item to.
      */
     public void setState(BannerItemState state) {
-        this.state = state;
+    	System.out.println("Setting state");
+        this.state = Objects.requireNonNull(state);
+        System.out.println(state.colour() + " " + state.message());
     }
 
     /**
@@ -54,7 +58,7 @@ public class BannerItemViewState {
      * @return the message
      */
     public String getMessage() {
-        return item.name().toUpperCase() + " is " + state.message().toUpperCase();
+        return item.name() + ": " + state.message();
     }
 
     /**
