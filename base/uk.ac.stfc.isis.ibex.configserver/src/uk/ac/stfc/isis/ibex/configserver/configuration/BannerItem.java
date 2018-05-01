@@ -23,8 +23,8 @@ public class BannerItem extends ModelObject {
     private String name;
     private String pv;
     
-    private String currentValue;
-    private AlarmState currentAlarmState;
+    private String currentValue = null;
+    private AlarmState currentAlarmState = AlarmState.UNDEFINED;
 
     private static final ObservableFactory OBSERVABLE_FACTORY = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private ForwardingObservable<String> pvObservable;
@@ -104,7 +104,7 @@ public class BannerItem extends ModelObject {
      * @return the alarm status of this banner item.
      */
     public AlarmState alarm() {
-    	return alarmObservable.getValue();
+    	return currentAlarmState;
     }
 
     /**

@@ -41,41 +41,52 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     private final SettableUpdatedValue<String> text = new SettableUpdatedValue<>();
     private final SettableUpdatedValue<Boolean> availability = new SettableUpdatedValue<>(true);
     private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
-
+    
+    private final BannerItem item;
+    
     /**
      * Instantiates model and converter.
      * 
      * @param item the banner item being observed
      */
     public BannerItemModel(final BannerItem item) {
+    	this.item = item;
+                
         item.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("value")) {
-                    text.setValue(item.name() + ": " + item.value());
-                }
-                if (evt.getPropertyName().equals("alarm")) {
-                	if (item.alarm() == AlarmState.NO_ALARM) {
-                	    colour.setValue(IndicatorColours.BLACK);
-                	} else {
-                	    colour.setValue(IndicatorColours.RED);
-                	}
-                }
+            public void propertyChange(final PropertyChangeEvent evt) {
+            	update();
             }
         });
-
+        
+        update();
+    }
+    
+    private synchronized void update() {
+    	text.setValue(item.name() + ": " + item.value());
+    	availability.setValue(item.value() != null);
+    	colour.setValue(item.alarm() == AlarmState.NO_ALARM ? IndicatorColours.BLACK : IndicatorColours.RED);
     }
 
+    /**
+     * @return the text of this banner item.
+     */
 	@Override
 	public UpdatedValue<String> text() {
 		return text;
 	}
 
+	/**
+	 * @return the colour of this banner item.
+	 */
 	@Override
 	public UpdatedValue<Color> color() {
 		return colour;
 	}
 
+	/**
+	 * @return the availability of this banner item.
+	 */
 	@Override
 	public UpdatedValue<Boolean> availability() {
 		return availability;
