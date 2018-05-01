@@ -58,7 +58,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
     private static final int FIXED_HEIGHT = 35;
-    private static final int ITEM_WIDTH = 200;
+    private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
 

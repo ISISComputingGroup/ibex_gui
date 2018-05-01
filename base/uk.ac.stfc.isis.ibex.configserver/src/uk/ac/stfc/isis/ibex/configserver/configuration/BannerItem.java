@@ -82,11 +82,7 @@ public class BannerItem extends ModelObject {
      * 
      * @param value the state value of the property.
      */
-    public void setCurrentState(Boolean value) {
-    	System.out.println("New value is " + value + " pv is " + pv + " (" + InstrumentUtils.addPrefix(this.pv) + ")");
-    	System.out.println("False state: " + false_state.message() + " " + false_state.colour());
-    	System.out.println("True state: " + true_state.message() + " " + true_state.colour());
-    	System.out.println("Unknown state: " + unknown_state.message() + " " + unknown_state.colour());
+    public synchronized void setCurrentState(Boolean value) {
         BannerItemState newState;
         if (value == null) {
             newState = this.unknown_state;

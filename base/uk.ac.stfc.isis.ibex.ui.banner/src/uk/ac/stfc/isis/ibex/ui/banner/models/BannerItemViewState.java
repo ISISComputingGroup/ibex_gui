@@ -45,10 +45,8 @@ public class BannerItemViewState {
      * @param state
      *            The state to set the banner item to.
      */
-    public void setState(BannerItemState state) {
-    	System.out.println("Setting state");
+    public synchronized void setState(BannerItemState state) {
         this.state = Objects.requireNonNull(state);
-        System.out.println(state.colour() + " " + state.message());
     }
 
     /**
@@ -57,7 +55,7 @@ public class BannerItemViewState {
      * 
      * @return the message
      */
-    public String getMessage() {
+    public synchronized String getMessage() {
         return item.name() + ": " + state.message();
     }
 
@@ -66,7 +64,7 @@ public class BannerItemViewState {
      * 
      * @return the colour
      */
-    public Color color() {
+    public synchronized Color color() {
         switch (state.colour()) {
             case "BLACK":
                 return IndicatorColours.BLACK;
