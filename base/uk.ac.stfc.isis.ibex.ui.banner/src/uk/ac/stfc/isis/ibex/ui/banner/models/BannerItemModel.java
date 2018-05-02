@@ -44,6 +44,9 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     
     private final BannerItem item;
     
+    private static final int MAX_TEXT_LENGTH = 30;
+    private static final String ELIPSES = "...";
+    
     /**
      * Instantiates model and converter.
      * 
@@ -63,7 +66,14 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     }
     
     private synchronized void update() {
-    	text.setValue(item.name() + ": " + item.value());
+    	
+    	String setText = item.name() + ": " + item.value();
+    	
+    	if (setText.length() > MAX_TEXT_LENGTH) {
+    		setText = setText.substring(0, MAX_TEXT_LENGTH - ELIPSES.length()) + ELIPSES;
+    	}
+    	
+    	text.setValue(setText);
     	availability.setValue(item.value() != null);
     	colour.setValue(item.alarm() == AlarmState.NO_ALARM ? IndicatorColours.BLACK : IndicatorColours.RED);
     }
