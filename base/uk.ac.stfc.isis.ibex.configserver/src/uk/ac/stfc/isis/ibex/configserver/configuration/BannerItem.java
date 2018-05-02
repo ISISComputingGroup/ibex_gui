@@ -22,7 +22,7 @@ public class BannerItem extends ModelObject {
 
     private String name;
     private String pv;
-    private Boolean local;
+    private Boolean local = true;
     
     private String currentValue = null;
     private AlarmState currentAlarmState = AlarmState.UNDEFINED;
