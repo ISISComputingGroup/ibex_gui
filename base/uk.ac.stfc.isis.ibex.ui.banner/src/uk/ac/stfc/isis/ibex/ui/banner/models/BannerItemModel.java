@@ -66,16 +66,40 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     }
     
     private synchronized void update() {
+    	updateText();
+    	updateColour();
+    }
+    
+    private synchronized void updateText() {
+    	String setText;
     	
-    	String setText = item.name() + ": " + item.value();
+    	if (item.value() == null) {
+    		setText = item.name() + " (disconnected)";
+    	} else {
+    		setText = item.name() + ": " + item.value();
+    	}
     	
     	if (setText.length() > MAX_TEXT_LENGTH) {
     		setText = setText.substring(0, MAX_TEXT_LENGTH - ELIPSES.length()) + ELIPSES;
     	}
-    	
     	text.setValue(setText);
-    	availability.setValue(item.value() != null);
-    	colour.setValue(item.alarm() == AlarmState.NO_ALARM ? IndicatorColours.BLACK : IndicatorColours.RED);
+    }
+    
+    private synchronized void updateColour() {
+    	Color colour;
+    	AlarmState alarm = item.alarm();
+    	
+    	if (alarm == AlarmState.MAJOR) {
+    		colour = IndicatorColours.RED;
+    	} else if (alarm == AlarmState.MINOR) {
+    		colour = IndicatorColours.ORANGE;
+    	} else if (alarm == AlarmState.UNDEFINED || alarm == AlarmState.INVALID) {
+    		colour = IndicatorColours.PURPLE;
+    	} else {
+    		colour = IndicatorColours.BLACK;
+    	}
+    	
+    	this.colour.setValue(colour);
     }
 
     /**

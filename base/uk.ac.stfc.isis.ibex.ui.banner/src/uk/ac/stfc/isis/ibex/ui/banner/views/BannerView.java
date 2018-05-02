@@ -66,8 +66,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
 
-    private Indicator managerMode;
-    private Indicator daeSimulationMode;
     private Indicator inMotion;
     private Control motionControl;
 

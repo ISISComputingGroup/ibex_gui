@@ -22,6 +22,7 @@ public class BannerItem extends ModelObject {
 
     private String name;
     private String pv;
+    private Boolean local;
     
     private String currentValue = null;
     private AlarmState currentAlarmState = AlarmState.UNDEFINED;
@@ -35,8 +36,13 @@ public class BannerItem extends ModelObject {
      * item.
      */
 	public void createPVObservable() {
-        pvObservable = OBSERVABLE_FACTORY.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(pv));
-        alarmObservable = OBSERVABLE_FACTORY.getSwitchableObservable(new EnumChannel<>(AlarmState.class), InstrumentUtils.addPrefix(pv) + ".SEVR");
+		String pv = this.pv;
+		if (local) {
+			pv = InstrumentUtils.addPrefix(pv);
+		}
+		
+        pvObservable = OBSERVABLE_FACTORY.getSwitchableObservable(new DefaultChannel(), pv);
+        alarmObservable = OBSERVABLE_FACTORY.getSwitchableObservable(new EnumChannel<>(AlarmState.class), pv + ".SEVR");
         pvObservable.addObserver(valueAdapter);
         alarmObservable.addObserver(alarmAdapter);
 	}
