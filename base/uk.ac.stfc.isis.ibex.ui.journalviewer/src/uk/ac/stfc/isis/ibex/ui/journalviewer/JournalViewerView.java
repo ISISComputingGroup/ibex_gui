@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 
 /**
  * Journal viewer main view.
@@ -99,7 +100,6 @@ public class JournalViewerView extends ViewPart {
 		selectedContainer.setLayout(rl);
 		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		
 		Composite controls = new Composite(parent, SWT.FILL);
 		controls.setLayout(new GridLayout(3, false));
 		
@@ -131,6 +131,11 @@ public class JournalViewerView extends ViewPart {
 			@Override
 			protected void addColumns() {
 				changeTableColumns();
+			}
+			
+			@Override
+			protected ColumnComparator<JournalRow> comparator() {
+				return new NullComparator<>();
 			}
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
