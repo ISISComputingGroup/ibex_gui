@@ -15,15 +15,13 @@ import org.eclipse.swt.SWT;
  */
 public class ColumnComparator<T> extends ViewerComparator {
 	protected int propertyIndex;
-    protected int direction = 0;
-    protected static final int DESCENDING = 1;
+    protected boolean isDescending = false;
     
     /**
      * The constructor for the comparator.
      */
     public ColumnComparator() {
         this.propertyIndex = 0;
-        direction = 0;
     }
     
     /**
@@ -31,7 +29,7 @@ public class ColumnComparator<T> extends ViewerComparator {
      * @return The direction.
      */
     public int getDirection() {
-        return direction == 1 ? SWT.DOWN : SWT.UP;
+        return isDescending ? SWT.DOWN : SWT.UP;
     }
 
     /**
@@ -41,11 +39,11 @@ public class ColumnComparator<T> extends ViewerComparator {
     public void setColumn(int column) {
         if (column == this.propertyIndex) {
             // Same column as last sort; toggle the direction
-            direction = 1 - direction;
+            isDescending = !isDescending;
         } else {
-            // New column; do an ascending sort
+            // New column; do an descending sort
             this.propertyIndex = column;
-            direction = DESCENDING;
+            isDescending = true;
         }
     }
 
@@ -60,7 +58,7 @@ public class ColumnComparator<T> extends ViewerComparator {
     	rc = provider.comparableForRow((T) e1).compareTo((T) e2);
     	
         // If descending order, flip the direction
-        if (direction == DESCENDING) {
+        if (isDescending) {
             rc = -rc;
         }
         return rc;

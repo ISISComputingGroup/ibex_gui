@@ -61,7 +61,7 @@ public class DeviceScreensComparator extends ColumnComparator<DeviceDescription>
                 break;
         }
         // If ascending order, flip the direction
-        if (direction == DESCENDING) {
+        if (isDescending) {
         	rc = -rc;
         }
       return rc;
