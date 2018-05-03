@@ -30,8 +30,10 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -389,11 +391,11 @@ public abstract class DataboundTable<TRow> extends Composite {
 		TableColumn col = viewCol.getColumn();
 		col.setText(title);
 		col.setResizable(true);
-		col.addSelectionListener(getSelectionAdapter(col, table.getColumnCount() - 1));
+		col.addSelectionListener(getColumnSelectionAdapter(col, table.getColumnCount() - 1));
 		return viewCol;
 	}
 	
-	private SelectionAdapter getSelectionAdapter(final TableColumn column, final int index) {
+	private SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
         SelectionAdapter selectionAdapter = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -438,6 +440,14 @@ public abstract class DataboundTable<TRow> extends Composite {
                 new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
         col.setResizable(resizable);
         tableColumn.setLabelProvider(cellProvider);
+        cellProvider.addListener(new ILabelProviderListener() {
+			
+			@Override
+			public void labelProviderChanged(LabelProviderChangedEvent event) {
+				// Refreshes the table so that it is resorted
+				viewer.refresh(false);
+			}
+		});
 		return tableColumn;
 	}
 	
