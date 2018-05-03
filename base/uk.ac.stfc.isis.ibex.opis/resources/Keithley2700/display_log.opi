@@ -5759,12 +5759,6 @@ $(trace_0_y_pv_value)</tooltip>
     <auto_size>false</auto_size>
     <text>Reviewer notes:&#xD;
 &#xD;
-- These graphs display CHNL:XXX:TEMP which has not been calculated yet. It's the work of another ticket.&#xD;
-&#xD;
-Trace values can be substituted with CHNL:101:READING to simulate and test the on/off toggles. &#xD;
-&#xD;
-- There are two graphs (the VI has a single graph for all values) as CSS graphs are limited to 20 trace lines. &#xD;
-&#xD;
 - The Magnetic Field graph value is returned from another component of HIFI which has not been completed.&#xD;
 &#xD;
 </text>
