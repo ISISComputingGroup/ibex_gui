@@ -47,8 +47,10 @@ import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.PartAdapter;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 
 /**
  * Journal viewer main view.
@@ -98,7 +100,6 @@ public class JournalViewerView extends ViewPart {
 		selectedContainer.setLayout(rl);
 		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		
 		Composite controls = new Composite(parent, SWT.FILL);
 		controls.setLayout(new GridLayout(3, false));
 		
@@ -131,6 +132,11 @@ public class JournalViewerView extends ViewPart {
 			protected void addColumns() {
 				changeTableColumns();
 			}
+			
+			@Override
+			protected ColumnComparator<JournalRow> comparator() {
+				return new NullComparator<>();
+			}
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
@@ -156,15 +162,13 @@ public class JournalViewerView extends ViewPart {
 		
 		for (final JournalField field : JournalField.values()) {
 			if (model.getFieldSelected(field)) {
-				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true);
-				col.getColumn().setText(field.getFriendlyName());
-				
-				col.setLabelProvider(new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true, new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
 					@Override
-		            protected String valueFromRow(JournalRow row) {
+					protected String stringFromRow(JournalRow row) {
 						return row.get(field);
 					}
 				});
+				col.getColumn().setText(field.getFriendlyName());
 				
 			}
 		}

@@ -27,6 +27,10 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * A table that gives details of users.
+ *
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 
@@ -34,6 +38,12 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	protected TableViewerColumn institute;
 	protected TableViewerColumn role;
 	
+	/**
+	 * Constructor for the table.
+	 * @param parent The parent composite that contains the table
+	 * @param style The style of the table viewer.
+	 * @param tableStyle The style of the underlying table.
+	 */
 	public UserDetailsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, UserDetails.class, tableStyle);
 		initialise();
@@ -47,30 +57,27 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	}
 
 	private void name() {
-		name = createColumn("Name", 4);
-		name.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("name")) {
+		name = createColumn("Name", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getName();
 			}
 		});		
 	}
 	
 	private void institute() {
-		institute = createColumn("Institute", 4);
-		institute.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("institute")) {
+		institute = createColumn("Institute", 4, new DataboundCellLabelProvider<UserDetails>(observeProperty("institute")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
 				return row.getInstitute();
 			}
 		});		
 	}
 	
 	private void role() {
-		role = createColumn("Role", 2);	
-		role.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
+		role = createColumn("Role", 2, new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
 			@Override
-			protected String valueFromRow(UserDetails row) {
+			protected String stringFromRow(UserDetails row) {
                 Role role = row.getRole();
 				return role == null ? "" : role.toString();
 			}

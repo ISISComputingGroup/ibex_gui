@@ -22,13 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
@@ -50,27 +47,24 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     TableViewerColumn autoStart;
     TableViewerColumn autoRestart;
 
-    IObservableMap[] autoStartProperties = {observeProperty("autostart")};
-    IObservableMap[] autoRestartProperties = {observeProperty("restart")};
-
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
 
     /**
      * Checkbox Label provider for the auto-start column.
      */
-    private CellLabelProvider autoStartLabelProvider = new CheckboxLabelProvider<Ioc>(autoStartProperties) {
+    private CheckboxLabelProvider<EditableIoc> autoStartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("autostart")) {
 
     @Override
-    protected boolean checked(Ioc ioc) {
+    protected boolean checked(EditableIoc ioc) {
         return ioc.getAutostart();
     }
     @Override
-    protected void setChecked(Ioc ioc, boolean checked) {
+    protected void setChecked(EditableIoc ioc, boolean checked) {
         ioc.setAutostart(checked);
     }
     @Override
-        protected boolean isEditable(Ioc ioc) {
+        protected boolean isEditable(EditableIoc ioc) {
             return !ioc.hasComponent();
         }
     };
@@ -78,17 +72,17 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     /**
      * Checkbox Label provider for the auto-restart column.
      */
-    private CellLabelProvider autoRestartLabelProvider = new CheckboxLabelProvider<Ioc>(autoRestartProperties) {
+    private CheckboxLabelProvider<EditableIoc> autoRestartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("restart")) {
         @Override
-        protected boolean checked(Ioc ioc) {
+        protected boolean checked(EditableIoc ioc) {
             return ioc.getRestart();
         }
         @Override
-        protected void setChecked(Ioc ioc, boolean checked) {
+        protected void setChecked(EditableIoc ioc, boolean checked) {
             ioc.setRestart(checked);
         }
         @Override
-        protected boolean isEditable(Ioc ioc) {
+        protected boolean isEditable(EditableIoc ioc) {
             return !ioc.hasComponent();
         }
     };
@@ -125,12 +119,11 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Name column.
      */
 	private void name() {
-        TableViewerColumn name = createColumn("Name", 1, false);
-		name.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
+        TableViewerColumn name = createColumn("Name", 1, false, new DecoratedCellLabelProvider<EditableIoc>(
 				observeProperty("name"), 
 				Arrays.asList(rowDecorator, simulationDecorator)) {
 			@Override
-			protected String valueFromRow(EditableIoc row) {
+			public String stringFromRow(EditableIoc row) {
 				return row.getName();
 			}
 		});
@@ -140,12 +133,11 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Description column.
      */
 	private void description() {
-        TableViewerColumn desc = createColumn("Description", 2, false);
-		desc.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
+        TableViewerColumn desc = createColumn("Description", 2, false, new DecoratedCellLabelProvider<EditableIoc>(
                 observeProperty("name"), 
 				Arrays.asList(rowDecorator)) {
 			@Override
-			protected String valueFromRow(EditableIoc row) {
+			public String stringFromRow(EditableIoc row) {
 				return row.getDescription();
 			}
 		});	
@@ -155,11 +147,9 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Simulation Level column.
      */
     private void simLevel() {
-        TableViewerColumn simLevel = createColumn("Sim. level", 1, false);
-        simLevel.setLabelProvider(
-                new DecoratedCellLabelProvider<EditableIoc>(observeProperty("simLevel"), Arrays.asList(rowDecorator)) {
+        TableViewerColumn simLevel = createColumn("Sim. level", 1, false, new DecoratedCellLabelProvider<EditableIoc>(observeProperty("simLevel"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(EditableIoc row) {
+					public String stringFromRow(EditableIoc row) {
                         return row.getSimLevel().toString();
                     }
                 });
@@ -170,16 +160,14 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Auto-Start column.
      */
 	private void autostart() {
-        autoStart = createColumn("Auto-start?", 1, false);
-        autoStart.setLabelProvider(autoStartLabelProvider);
+        autoStart = createColumn("Auto-start?", 1, false, autoStartLabelProvider);
 	}
 
     /**
      * Creates the Auto-Restart column.
      */
 	private void restart() {
-        autoRestart = createColumn("Auto-restart?", 1, false);
-        autoRestart.setLabelProvider(autoRestartLabelProvider);
+        autoRestart = createColumn("Auto-restart?", 1, false, autoRestartLabelProvider);
 	}
 
     /**
