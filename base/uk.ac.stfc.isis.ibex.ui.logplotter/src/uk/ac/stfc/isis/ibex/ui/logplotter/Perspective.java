@@ -42,7 +42,7 @@ public class Perspective extends BasePerspective {
     /**
      * The ID of the perspective.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.perspective";
+    public static final String ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 	
 	@Override
 	public String id() {
