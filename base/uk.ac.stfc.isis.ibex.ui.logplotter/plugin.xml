@@ -34,7 +34,7 @@
                icon="icons/stocks2_24x24.png"
                label="Log Plotter"
                style="push"
-               tooltip="%PopmenuTooltip">
+               tooltip="Show this PV in a log plotter window">
          </command>
       </menuContribution>
    </extension>
