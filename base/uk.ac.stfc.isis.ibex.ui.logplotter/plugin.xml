@@ -28,7 +28,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:uk.ac.stfc.isis.ibex.ui.logplotter.popup.processvariable">
+            locationURI="popup:org.csstudio.ui.menu.popup.processvariable">
          <command
                commandId="uk.ac.stfc.isis.ibex.ui.logplotter.OpenLogPlotterPopup"
                icon="icons/stocks2_24x24.png"
