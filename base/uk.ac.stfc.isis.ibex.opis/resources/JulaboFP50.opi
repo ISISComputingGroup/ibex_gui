@@ -120,7 +120,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_scale_font>
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </axis_0_scale_font>
-      <trigger_pv>$(PV_ROOT):TEMP</trigger_pv>
+      <trigger_pv>$(P)CS:IOC:$(JULABO):DEVIOS:HEARTBEAT</trigger_pv>
       <widget_type>XY Graph</widget_type>
       <trace_2_line_width>1</trace_2_line_width>
       <axis_1_axis_color>
