@@ -41,7 +41,7 @@ for z in range(maxcrate):
         crate = PVUtil.getString(cratename)
         for x in range(maxslot):
             for y in range(maxchan):
-                avail = crate + ':' + x + ':' + y
+                avail = crate + ':' + str(x) + ':' + str(y)
                 target = WidgetUtil.createWidgetModel("org.csstudio.opibuilder.widgets.linkingContainer")
                 target.setPropertyValue('opi_file', "HVChannelSummaryMaintenance.opi")
                 target.setPropertyValue('auto_size','true')

@@ -1,4 +1,5 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import WidgetUtil
 
 # PVs
 # pv[] = $(P)CAEN:CHANLIST

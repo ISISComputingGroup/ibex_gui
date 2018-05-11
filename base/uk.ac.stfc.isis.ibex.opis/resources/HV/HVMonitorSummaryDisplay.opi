@@ -504,7 +504,7 @@ On/Off</text>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
     <scripts>
-      <path pathString="Scripts/DisplaySummary.js" checkConnect="true" sfe="false" seoe="false">
+      <path pathString="Scripts/DisplaySummary.py" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">$(P)CAEN:CHANLIST</pv>
       </path>
     </scripts>

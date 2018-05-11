@@ -29,7 +29,7 @@ if actioned == 1:
             crate = PVUtil.getString(cratename)
             for x in range(maxslot):
                 for y in range(maxchan):
-                    avail = crate + ':' + x + ':' + y
+                    avail = crate + ':' + str(x) + ':' + str(y)
                     container = display.getWidget(avail)
                     inlistwidget = container.getChild('Include')
                     include = inlistwidget.getValue()
