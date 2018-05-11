@@ -14,7 +14,7 @@ def get_cleared_group_widget(this_display):
     return group_widget
 
 
-def get_channels(channel_list_pv, get_string_from_pv, log):
+def get_summary_channels(channel_list_pv, get_string_from_pv, log):
     """
     Gets the list of channels from the HVCaen.
 

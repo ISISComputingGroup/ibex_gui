@@ -1,7 +1,7 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import WidgetUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-from Utilities import get_cleared_group_widget, get_channels
+from Utilities import get_cleared_group_widget, get_summary_channels
 from time import sleep
 
 # PVs
@@ -9,7 +9,6 @@ from time import sleep
 # pv[1] = $(P)CAEN:CHANLIST, triggered
 # pv[2-17] = $(P)CAEN:crates.[XX]ST
 
-# Values to control the search length for all channels (must match the values in UpdateChannels)
 
 def get_channel_pv_name(crate, slot, channel):
     """
@@ -25,7 +24,8 @@ def get_channel_pv_name(crate, slot, channel):
     """
     return crate + ":" + str(slot) + ":" + str(channel)
 
-def create_channel_target(crate, slot, channel):
+
+def create_channel_model(crate, slot, channel):
     """
     Creates a widget to allow selection of which channels are included in the summary list.
 
@@ -37,18 +37,18 @@ def create_channel_target(crate, slot, channel):
     Returns:
         The target widget
     """
-    target = WidgetUtil.createWidgetModel("org.csstudio.opibuilder.widgets.linkingContainer")
-    target.setPropertyValue("opi_file", "HVChannelSummaryMaintenance.opi")
-    target.setPropertyValue("auto_size", "true")
-    target.setPropertyValue("zoom_to_fit", "false")
-    target.setPropertyValue("border_style", 0)
+    model = WidgetUtil.createWidgetModel("org.csstudio.opibuilder.widgets.linkingContainer")
+    model.setPropertyValue("opi_file", "HVChannelSummaryMaintenance.opi")
+    model.setPropertyValue("auto_size", "true")
+    model.setPropertyValue("zoom_to_fit", "false")
+    model.setPropertyValue("border_style", 0)
     avail = get_channel_pv_name(crate, slot, channel)
-    target.setPropertyValue("name", avail)
-    target.addMacro("SEL", avail)
-    return target
+    model.setPropertyValue("name", avail)
+    model.addMacro("SEL", avail)
+    return model
 
 
-def get_available_crates():
+def get_available_channels():
     max_crate = 2
     max_slot = 5
     max_chan = 10
@@ -67,19 +67,18 @@ def get_available_crates():
             for channel in range(max_chan):
                 yield crate, slot, channel
 
+
 def add_channel_widgets():
     channel_selector_widget = get_cleared_group_widget(display)
-    current_included_channels = get_channels(pvs[1], PVUtil.getString, ConsoleUtil.writeError)
+    current_included_channels = get_summary_channels(pvs[1], PVUtil.getString, ConsoleUtil.writeError)
 
-    for crate, slot, channel in get_available_crates():
-        channel_widget = create_channel_target(crate, slot, channel)
-        channel_selector_widget.addChildToBottom(channel_widget)
-        container = display.getWidget(channel_widget.getPropertyValue("name"))
+    for crate, slot, channel in get_available_channels():
+        channel_model = create_channel_model(crate, slot, channel)
+        channel_selector_widget.addChildToBottom(channel_model)
 
-        # Check if the channel is in in the list, and check the box if it is. This assumes the naming convention of
-        # channel widgets remains name=widget_name
+        # Check if the channel is in in the list, and check the box if it is
         if get_channel_pv_name(crate, slot, channel) in current_included_channels:
-            container.getChild("Include").setValue(1)
+            channel_selector_widget.getChildren()[-1].getChild("Include").setValue(1)
 
 
 if __name__ == "__main__":
