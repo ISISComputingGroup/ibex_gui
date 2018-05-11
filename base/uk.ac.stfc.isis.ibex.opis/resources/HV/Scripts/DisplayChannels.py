@@ -1,40 +1,23 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import WidgetUtil
-# from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
+from Utilities import get_cleared_group_widget, get_channels
 
 # PVs
 # pv[0] = $(P)CAEN:crates, triggered
 # pv[1] = $(P)CAEN:CHANLIST, triggered
 # pv[2-17] = $(P)CAEN:crates.[XX]ST
 
-# Get and clear the group container prior to display
-group = display.getWidget('group')
-group.removeAllChildren()
-
-# Get the list of entries in the channel list
-try:
-    fullchanlist_string = PVUtil.getString(pvs[1])
-except Exception:
-    fullchanlist_string = ""
-
-# Split the chanlist into an array
-fullchanlist = fullchanlist_string.split(' ')
-chanlist = list()
-testval = ''
-
-# format the chanlist array for searching
-for chan in fullchanlist:
-    chan = chan.replace(" ", "")
-    if chan.endswith(','):
-        chan = chan.replace(",","")
-    chanlist.append(chan)
-
 # Values to control the search length for all channels (must match the values in UpdateChannels)
 maxcrate = 2
 maxslot = 5
 maxchan = 10
 
+group = get_cleared_group_widget(display)
+chanlist = get_channels(pvs[1], PVUtil.getString, ConsoleUtil.writeError)
+
 # Loop through and generate an OPI linked to each channel displaying the name for inclusion in the chan list
+
 for z in range(maxcrate):
     cratename = pvs[2+z]
     if cratename != "":
