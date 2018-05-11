@@ -6,7 +6,6 @@ from org.csstudio.opibuilder.scriptUtil import PVUtil
 # pv[2-17] = $(P)CAEN:crates.[XX]ST
 
 # Get the display objects and PVs for interaction
-group = display.getWidget('group')
 test = display.getWidget('test')
 chanlistwidget = display.getWidget('update')
 chanlistpv = chanlistwidget.getPV()
