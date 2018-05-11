@@ -27,6 +27,7 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 /**
  * View Model for queueing a script.
@@ -34,7 +35,7 @@ import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
 public class QueueScriptViewModel extends ModelObject {
 
     private NicosModel model;
-    private String script = "";
+    private QueuedScript script;
     private ScriptSendStatus scriptSendStatus;
     private String scriptSendErrorMessage;
     private DataBindingContext bindingContext = new DataBindingContext();
@@ -43,12 +44,11 @@ public class QueueScriptViewModel extends ModelObject {
      * 
      * @param model
      *            the nicos model
-     * @param initialScript
-     *            an initial script to use
      */
-    public QueueScriptViewModel(NicosModel model, String initialScript) {
+    public QueueScriptViewModel(NicosModel model) {
         this.model = model;
-        setScript(initialScript);
+        
+        this.script = new QueuedScript();
         
         bindingContext.bindValue(BeanProperties.value("scriptSendErrorMessage").observe(this),
                 BeanProperties.value("scriptSendErrorMessage").observe(model));
@@ -62,20 +62,9 @@ public class QueueScriptViewModel extends ModelObject {
      *
      * @return the script
      */
-    public String getScript() {
+    public QueuedScript getScript() {
         return script;
     }
-
-    /**
-     * Sets the script.
-     *
-     * @param script
-     *            the new script
-     */
-    public void setScript(String script) {
-        firePropertyChange("script", this.script, this.script = script);
-    }
-
 
     /**
      * Queue the current script on the script server.

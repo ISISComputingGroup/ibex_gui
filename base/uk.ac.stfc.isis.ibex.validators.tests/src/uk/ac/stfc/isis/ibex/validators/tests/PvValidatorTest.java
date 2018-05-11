@@ -134,6 +134,21 @@ public class PvValidatorTest {
      * .
      */
     @Test
+    public void GIVEN_pv_address_with_double_colon_WHEN_validate_THEN_error() {
+        // Arrange
+        String testAddress = "IN::SOMETHING:";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.validatePvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}
+     * .
+     */
+    @Test
     public void invalid_pv_address() {
         // Arrange
         String testAddress = "invalid@";

@@ -24,14 +24,14 @@ import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 
 /**
  * This class is responsible for changing the settings for the DataBrowser when
  * the instrument is changed, or first set. The archives and URL settings get
  * changed.
  */
-public class LogPlotterSettings implements InstrumentInfoReceiver {
+public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
 
     /**
      * Current log plotter settings preference store.
@@ -64,16 +64,6 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
         setURLs(instrument.hostName());
         setArchives(instrument.hostName());
 	}
-
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        // nothing extra to do
-    }
-
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // nothing extra to do
-    }
 
     /**
      * Update the URL preferences. Finds instances of oldHostName and replaces
@@ -110,5 +100,4 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
     private static String buildArchivesUrl(String hostName) {
         return "RDB|1|jdbc:mysql://" + hostName + "/archive*RDB|2|jdbc:mysql://130.246.39.152/archive";
     }
-
 }

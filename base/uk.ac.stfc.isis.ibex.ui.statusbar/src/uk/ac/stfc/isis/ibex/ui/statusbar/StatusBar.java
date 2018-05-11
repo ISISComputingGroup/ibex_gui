@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.PartSite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -86,14 +87,15 @@ public class StatusBar extends AbstractUIPlugin {
 			configSubscription.removeObserver();
 		}
 		super.stop(context);
-	};
+	}
 	
 	private void setTitle(final String title, final String description) {
 		display.asyncExec(new Runnable() {
+			@SuppressWarnings("restriction")
 			@Override
 			public void run() {
 				IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
-				IViewSite vSite = (IViewSite) site;
+				PartSite vSite = (PartSite) site;
 				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
 				
 		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel) statusLineManager.find("CurrentConfigTitle");

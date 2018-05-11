@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.Deflater;;
+import java.util.zip.Deflater;
 
 public class Compressor extends Converter<byte[], byte[]> {
 		

@@ -137,16 +137,6 @@ public class ConfigEditorPanel extends Composite {
 	}
 
     /**
-     * Opens the dialog box for editing a specific block.
-     * 
-     * @param blockName
-     *            The name of the block to edit.
-     */
-    public void openEditBlockDialog(String blockName) {
-        blocks.openEditBlockDialog(blockName);
-    }
-
-    /**
      * Selects the block tab within the configuration editor panel.
      */
     public void selectBlocksTab() {

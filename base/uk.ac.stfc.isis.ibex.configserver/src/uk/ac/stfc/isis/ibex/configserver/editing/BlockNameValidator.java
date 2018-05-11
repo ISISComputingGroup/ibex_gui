@@ -23,7 +23,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
 /**
  * This provides validation for block names. The validation checks for an empty block name, a name that starts with
@@ -124,27 +123,9 @@ public class BlockNameValidator {
     }
 
     private boolean nameIsDuplicated(String name) {
-        return nameInBase(name) || nameInComps(name);
-    }
-
-    private boolean nameInBase(String name) {
-        for (EditableBlock block : config.getAvailableBlocks()) {
+        for (EditableBlock block : config.getAllBlocks()) {
             if (isNotSelectedBlock(block) && block.getName().equalsIgnoreCase(name)) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean nameInComps(String name) {
-        if (config.getEditableComponents() == null) {
-            return false;
-        }
-        for (Configuration comp : config.getEditableComponents().getSelected()) {
-            for (Block block : comp.getBlocks()) {
-                if (block.getName().equalsIgnoreCase(name)) {
-                    return true;
-                }
             }
         }
         return false;

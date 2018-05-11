@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -41,18 +42,15 @@ import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 public class EditableGroup extends Group {
 
 	private final List<EditableBlock> blocksInGroup;
-	private List<EditableBlock> availableBlocks;
 	private final EditableConfiguration config;
 
 	public EditableGroup(final EditableConfiguration configuration, Group group) {
 		super(group);
 
 		config = configuration;
-		List<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
-		blocksInGroup = selectedBlocks;
-		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
-		for (EditableBlock block : selectedBlocks) {
-			availableBlocks.remove(block);
+		blocksInGroup = lookupBlocksByName(config.getAllBlocks(), group.getBlocks());
+
+		for (EditableBlock block : blocksInGroup) {
 			if (!group.getName().equals("NONE")) {
 				config.makeBlockUnavailable(block);
 			}
@@ -81,7 +79,7 @@ public class EditableGroup extends Group {
 	}
 
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(config.getAvailableBlocks());
+		return new ArrayList<>(config.getOtherBlocks());
 	}
 
 	public Collection<EditableBlock> getSelectedBlocks() {
@@ -142,7 +140,6 @@ public class EditableGroup extends Group {
 		Collection<String> blocksBefore = getBlocks();
 
 		removeDeletedBlocks(config);
-		addNewBlocks(config);
 
 		firePropertyChange("selectedBlocks", selectedBefore, getSelectedBlocks());
 		// Force the unselected blocks property change to trigger
@@ -151,17 +148,13 @@ public class EditableGroup extends Group {
 	}
 
 	private void removeDeletedBlocks(EditableConfiguration config) {
-		Collection<EditableBlock> configBlocks = config.getEditableBlocks();
+		Collection<EditableBlock> configBlocks = config.getAllBlocks();
 		for (Iterator<EditableBlock> iterator = blocksInGroup.iterator(); iterator.hasNext();) {
 			EditableBlock block = iterator.next();
 			if (!configBlocks.contains(block)) {
 				iterator.remove();
 			}
 		}
-	}
-
-	private void addNewBlocks(EditableConfiguration config) {
-		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
 	}
 
 	private List<String> blockNames(Collection<? extends Block> blocks) {
@@ -187,13 +180,7 @@ public class EditableGroup extends Group {
 	}
 
 	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true));
-		List<String> allBlockNames = blockNames(blocks);
-		int blockIndex = allBlockNames.indexOf(name);
-		if (blockIndex >= 0) {
-			block = Iterables.get(blocks, blockIndex);
-		}
-		return block;
+		return lookupBlocksByName(blocks, Arrays.asList(name)).get(0);
 	}
 
 }

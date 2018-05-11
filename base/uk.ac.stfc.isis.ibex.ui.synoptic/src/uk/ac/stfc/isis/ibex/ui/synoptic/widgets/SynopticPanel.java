@@ -100,7 +100,7 @@ public class SynopticPanel extends Composite {
 			ComponentView.create(instrumentComposite, component);
 		}
 		
-		if (components.size() > 1 && showBeam) {
+		if (showBeam) {
 			addBeamline();				
 		}
 	}

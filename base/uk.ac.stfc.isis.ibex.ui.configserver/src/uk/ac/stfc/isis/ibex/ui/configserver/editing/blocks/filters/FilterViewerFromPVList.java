@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -26,32 +27,27 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
+/**
+ * A PV filter that only allows PVs that are in the specified list of names.
+ */
 public class FilterViewerFromPVList extends ViewerFilter {
 	
-	private Collection<String> allowedPVAddresses;
+	private Collection<String> allowedPVAddresses = new ArrayList<String>();
 	
+	/**
+	 * Set the list of PV names to check against. 
+	 * @param pvNames the PV names to check against.
+	 */
 	public void setAllowedPVs(Collection<String> pvNames) {
 		this.allowedPVAddresses = pvNames;
 	}
 	
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (allowedPVAddresses == null) {
-			return true;
-		}
-		
-		if (allowedPVAddresses.isEmpty()) {
-			return false;
-		}
-		
 		PV p = (PV) element;
 		String pvName = p.getAddress();
 		
-		if (allowedPVAddresses.contains(pvName)) {
-			return true;
-		}
-		
-		return false;
+		return allowedPVAddresses.contains(pvName);
 	}
 
 }

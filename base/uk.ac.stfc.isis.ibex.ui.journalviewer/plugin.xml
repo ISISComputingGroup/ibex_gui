@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"
+            id="uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"
+            name="Journal viewer">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective"
+            name="DAE Control Program">
+      </perspective>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"
+               minimized="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
+            schemeId="IBEX_key_scheme"
+            sequence="Alt+Shift+J">
+         <parameter
+               id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
+               value="uk.ac.stfc.isis.ibex.ui.journalviewer.Perspective">
+         </parameter>
+      </key>
+   </extension>
+
+</plugin>

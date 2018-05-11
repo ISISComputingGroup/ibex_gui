@@ -286,7 +286,7 @@ public class DoubleListEditor extends Composite {
 		super.setEnabled(enabled);
 		selectedList.setEnabled(enabled);
 		unselectedList.setEnabled(enabled);
-	};
+	}
 	
 	private void configureViewer(ListViewer viewer, String observedProperty) {
 		ObservableListContentProvider contentProvider = new ObservableListContentProvider();

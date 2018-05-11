@@ -20,18 +20,12 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class SynopticSettings implements InstrumentInfoReceiver {
-
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        // nothing to do on set instrument
-    }
-
+public class SynopticSettings extends InstrumentInfoReceiverAdapter {
     /**
      * Close the open OPIs they will refer to the old instrument.
      * 
@@ -40,10 +34,5 @@ public class SynopticSettings implements InstrumentInfoReceiver {
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
         Activator.getDefault().presenter().closeAllOPIs();
-    }
-
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // nothing to do on post set instrument
     }
 }

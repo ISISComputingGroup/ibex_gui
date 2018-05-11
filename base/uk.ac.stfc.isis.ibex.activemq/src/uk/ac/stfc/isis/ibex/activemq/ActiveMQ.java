@@ -122,34 +122,4 @@ public class ActiveMQ extends AbstractUIPlugin {
         queue.connect();
         return queue;
     }
-
-    /**
-     * Get an ActiveMQ Queue that sends information to a specific queue and
-     * receives information back on a temporary queue.
-     * 
-     * @param sendTopic
-     *            The name of the queue to send the data to.
-     * @param username
-     *            The username to connect with.
-     * @param password
-     *            The password to connect with.
-     * @return A queue for sending and receiving data.
-     */
-    public SendReceiveSession openSendReceiveQueue(String sendTopic, String username, String password) {
-        SendReceiveSession queue = new SendReceiveSession(getConnection(username, password), sendTopic);
-        queue.connect();
-        return queue;
-    }
-
-    /**
-     * Close a send receive queue. If sent null nothing happens.
-     * 
-     * @param sendReceiveQueue
-     *            the send receive queue to close
-     */
-    public void closeSendReceiveQueue(SendReceiveSession sendReceiveQueue) {
-        if (sendReceiveQueue != null) {
-            sendReceiveQueue.disconnect();
-        }
-    }
 }

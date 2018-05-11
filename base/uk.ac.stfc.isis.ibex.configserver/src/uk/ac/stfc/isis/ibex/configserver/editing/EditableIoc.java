@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;

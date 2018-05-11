@@ -51,7 +51,7 @@ public class DeleteSynopticHandler extends AbstractHandler {
         @Override
         public void onCanWriteChanged(boolean canWrite) {
             setBaseEnabled(canWrite);
-        };
+        }
     };
 
     /**

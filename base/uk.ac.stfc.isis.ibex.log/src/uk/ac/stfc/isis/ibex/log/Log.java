@@ -79,7 +79,7 @@ public class Log extends AbstractUIPlugin {
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-	Log.context = bundleContext;
+        Log.context = bundleContext;
     }
 
     @Override

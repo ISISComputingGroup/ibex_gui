@@ -19,39 +19,26 @@
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
- * A Message that has been received from NICOS.
- * 
- * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
+ * A string that has been received from NICOS.
  */
-public class ReceiveStringMessage extends ReceiveMessage {
-    private String payload;
+public class ReceiveStringMessage implements ReceiveMessage {
+    private String response;
 
     /**
      * A constructor for a basic message.
      * 
-     * @param payload
-     *            The payload from the message.
-     * @param messageId
-     *            message id of the returned message, this can be correlated
-     *            with a sent id
-     * @param success
-     *            true if message is for a success; false otherwise
+     * @param response
+     *            The response from the message.
      * 
      */
-    public ReceiveStringMessage(String payload, String messageId, boolean success) {
-        super(messageId, success);
-        this.payload = payload;
+    public ReceiveStringMessage(String response) {
+        this.response = response;
     }
 
     /**
-     * @return The payload that the NICOS message contained.
+     * @return The response from NICOS.
      */
-    public String getPayload() {
-        return payload;
-    }
-
-    @Override
-    public String getMessage() {
-        return getPayload();
+    public String getResponse() {
+        return response;
     }
 }

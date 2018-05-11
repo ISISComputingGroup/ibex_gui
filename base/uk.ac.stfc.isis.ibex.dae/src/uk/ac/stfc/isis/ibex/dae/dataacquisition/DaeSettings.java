@@ -129,12 +129,12 @@ public class DaeSettings extends ModelObject {
     /**
      * The Yes/No value of the target station 2 pulse veto.
      */
-	private BinaryChoice ts2PulseVeto = BinaryChoice.NO;;
+	private BinaryChoice ts2PulseVeto = BinaryChoice.NO;
 
     /**
      * The Yes/No value of the ISIS 50Hz veto.
      */
-	private BinaryChoice isis50HzVeto = BinaryChoice.NO;;
+	private BinaryChoice isis50HzVeto = BinaryChoice.NO;
 	
     /**
      * @return The current monitor spectrum number

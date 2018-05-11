@@ -58,7 +58,7 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
 			canWriteChanged(canWrite);
-		};	
+		}	
 	};
 	
 	/**

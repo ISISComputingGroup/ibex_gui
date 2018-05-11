@@ -57,11 +57,6 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		}
 
 		@Override
-        public void onValue(Configuration value) {
-
-        }
-
-		@Override
 		public void onError(Exception e) {
 			updateDisabled(false);
 		}

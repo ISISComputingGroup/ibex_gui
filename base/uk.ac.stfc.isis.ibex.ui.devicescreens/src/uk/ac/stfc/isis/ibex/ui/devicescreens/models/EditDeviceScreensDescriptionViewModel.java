@@ -447,6 +447,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         }
 
         deviceScreensModel.setDeviceScreensDescription(desc);
+        deviceScreensModel.writeToPv();
     }
 
     /**

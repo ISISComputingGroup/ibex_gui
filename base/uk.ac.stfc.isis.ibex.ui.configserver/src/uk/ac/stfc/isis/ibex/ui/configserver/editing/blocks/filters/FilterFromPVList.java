@@ -29,6 +29,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
+/**
+ * PV filter that creates a viewer filter that will only give PVs that are in the specified list.
+ */
 public class FilterFromPVList extends PVFilter {
 	private FilterViewerFromPVList filter = new FilterViewerFromPVList();
 	
@@ -42,6 +45,10 @@ public class FilterFromPVList extends PVFilter {
 		}
 	};	
 	
+	/**
+	 * Creates the filter and adds an observer to the PV list.
+	 * @param pvList The list of PVs to allow through the filter.
+	 */
 	public FilterFromPVList(ForwardingObservable<Collection<PV>> pvList) {
 		pvList.addObserver(observer);
 	}

@@ -1,5 +1,5 @@
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2018
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the preferences for dealing with the lg messages.
+ * Provides the preferences for dealing with the log messages.
  */
 package uk.ac.stfc.isis.ibex.log.preferences;

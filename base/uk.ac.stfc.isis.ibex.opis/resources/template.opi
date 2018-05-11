@@ -314,7 +314,7 @@ $(trace_0_y_pv_value)</tooltip>
           <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
         </axis_2_grid_color>
         <trace_0_buffer_size>1000</trace_0_buffer_size>
-        <trace_2_buffer_size>100</trace_2_buffer_size>
+        <trace_2_buffer_size>1000</trace_2_buffer_size>
         <axis_1_maximum>50.0</axis_1_maximum>
         <axis_0_scale_font>
           <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>

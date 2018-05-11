@@ -48,6 +48,7 @@ public class InstrumentTreeControls extends Composite {
 	private Button btnShowBeam;
 	private Button btnCopyComponent;
 	
+	@SuppressWarnings("checkstyle:magicnumber")
 	public InstrumentTreeControls(Composite parent,
 			SynopticViewModel instrument) {
 		super(parent, SWT.NONE);

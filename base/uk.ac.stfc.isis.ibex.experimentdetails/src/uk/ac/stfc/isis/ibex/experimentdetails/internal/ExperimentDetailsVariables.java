@@ -38,15 +38,17 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  * Holds the Observables and Writables relating to experiment details.
  */
 public class ExperimentDetailsVariables {
-
-    private static final int INITIAL_STRING_CAPACITY = 50;
-
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
+    /** The observable for the available sample parameters. */
     public final ForwardingObservable<Collection<String>> availableSampleParameters;
+    /** The observable for the available beam parameters. */
     public final ForwardingObservable<Collection<String>> availableBeamParameters;
+    
+    /** The observable for the current settings of the sample parameters.*/
     public final ForwardingObservable<Collection<Parameter>> sampleParameters;
+    /** The observable for the current settings of the beam parameters.*/
     public final ForwardingObservable<Collection<Parameter>> beamParameters;
 
     public final ForwardingObservable<String> rbNumber;

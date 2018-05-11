@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.instrument;
 
 /**
- * The Interface InstrumentInfoReceiver which allows plugins to respond to
- * switches of instrument. It is broken into three parts the preSet - called on
+ * This interface allows plugins to respond to switches of instrument. 
+ * It is broken into three parts the preSet - called on
  * all instruments first, Set - called on all instruments and postSet - called
  * on all instruments last. This is the interface for the instrument switching
  * extension point.

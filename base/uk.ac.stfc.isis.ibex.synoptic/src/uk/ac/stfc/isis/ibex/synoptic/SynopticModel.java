@@ -21,7 +21,10 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableSynoptic;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
@@ -29,34 +32,59 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
+/**
+ * Model for the IBEX synoptic perspective.
+ */
 public class SynopticModel extends ModelObject {
 	
+	private static final Logger LOG = IsisLog.getLogger(SynopticModel.class);
+			
 	private final Variables variables;
 
 	private ObservableSynoptic instrument; 
 	private SynopticWriter setCurrentSynoptic;
 	
+	/**
+	 * @param variables Data associated with viewing and editing synoptics (e.g. PV, schemas).
+	 */
 	public SynopticModel(Variables variables) {
 		this.variables = variables;
 		instrument = getInstrument(new SynopticDescription());
 		
         setCurrentSynoptic = new SynopticWriter(variables.synopticSetter, variables.synopticSchema);
 	}
-
+	
 	public Synoptic instrument() {
 		return instrument;
 	}
 	
+	/**
+	 * @return An object that will accept synoptic names and request their deletion.
+	 */
 	public Writable<Collection<String>> deleteSynoptics() {
 		return variables.synopticsDeleter;
 	}
-	
+
+	/**
+	 * @return An object that will request the current synoptic is saved.
+	 */
 	public SynopticWriter saveSynoptic() {
 		return setCurrentSynoptic;
 	}
 	
+	/**
+	 * Set the current synoptic to one that matches a given description.
+	 * 
+	 * @param description The description of the synoptic to be set.
+	 */
 	public void setSynopticFromDescription(SynopticDescription description) {
-        instrument = getInstrument(description);
+		try {
+			instrument = getInstrument(description);
+		} catch (Exception ex) {
+			LOG.error("Creating synoptic support object from xml: " + ex.getLocalizedMessage(), ex);
+			instrument = getInstrument(SynopticDescription.getEmptySynopticDescription());
+			throw ex;
+		}
 	}
 	
 	public InstrumentNavigationGraph instrumentGraph() {

@@ -19,9 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 
 @SuppressWarnings("checkstyle:methodname")
 public class ConfigurationTest extends EditableConfigurationTest {
@@ -37,5 +41,18 @@ public class ConfigurationTest extends EditableConfigurationTest {
 		populateConfig();
 		EditableConfiguration edited = edit(config());		
 		assertAreEqual(config(), edited.asConfiguration());
+	}
+	
+	@Test
+	public void GIVEN_blank_default_synoptic_WHEN_creating_configuration_THEN_default_synoptic_name_is_NONE() {
+		// Arrange
+		String defaultSynoptic = "";
+		
+		// Act
+		Configuration config = new Configuration("name", "description", defaultSynoptic, iocs, blocks, groups, components, history);
+		
+		// Assert
+		assertEquals(ConfigEditing.NONE_SYNOPTIC_NAME, config.synoptic());
+		
 	}
 }

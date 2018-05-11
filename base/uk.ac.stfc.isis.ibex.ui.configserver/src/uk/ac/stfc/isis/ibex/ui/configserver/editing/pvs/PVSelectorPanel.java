@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -166,7 +165,7 @@ public class PVSelectorPanel extends Composite {
      * @param pv - a pv associated with the config
      */
 	public void setConfig(EditableConfiguration config, PV pv) {
-		setPVs(config.pvs());
+		blockPVTable.setRows(config.pvs());
 		
 		filterFactory = new PVFilterFactory(config.getAddedIocs());
 		
@@ -230,21 +229,11 @@ public class PVSelectorPanel extends Composite {
      * @param filter - the filter to apply
      */
 	private void addFilterListener(PVFilter filter) {
-		sourceFilter.addPropertyChangeListener("refresh", new PropertyChangeListener() {
+		filter.addPropertyChangeListener("refresh", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				blockPVTable.refresh();
 			}
 		});		
 	}
-	
-    /**
-     * Display the appropriate pvs.
-     * 
-     * @param allPVs - the pvs to display
-     */
-	private void setPVs(Collection<PV> allPVs) {    
-	   	blockPVTable.setRows(allPVs);
-	}
-
 }

@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -53,8 +54,9 @@ public class EditableConfigurationTest {
 	protected static final EditableIoc GALIL01 = new EditableIoc("GALIL_01");
     protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true);
     protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true);
-	protected static final Group JAWS = new Group("JAWS");
-	protected static final Group TEMPERATURE = new Group("TEMPERATURE");
+	protected static final Group JAWS = new Group("JAWS", Arrays.asList("GAPX"), null);
+	protected static final Group EMPTY_GROUP_01 = new Group("EMPTY_GROUP_01");
+	protected static final Group EMPTY_GROUP_02 = new Group("EMPTY_GROUP_02");
     protected static final Configuration MOTOR_DETAILS = new Configuration("MOTOR", "DESCRIPTION");
     protected static final ComponentInfo MOTOR = new ComponentInfo(MOTOR_DETAILS);
 
@@ -95,11 +97,11 @@ public class EditableConfigurationTest {
 		assertEquals("Components", expected.getComponents(), actual.getComponents());
 	}
 	
-	public static void assertBlocksAreEqual(Collection<Block> expected, Collection<Block> actual) {
+	public static void assertBlocksAreEqual(Collection<Block> expected, Collection<? extends Block> actual) {
 		assertEquals(expected.size(), actual.size());
 		
 		Iterator<Block> itrExp = expected.iterator();
-		Iterator<Block> itrAct = actual.iterator();
+		Iterator<? extends Block> itrAct = actual.iterator();
 		
 	    while (itrExp.hasNext()) {
 	    	Block exp = itrExp.next();
@@ -186,5 +188,15 @@ public class EditableConfigurationTest {
 
         // Assert
         assertNull(config.getBlockByName(GAPX.getName()));
+    }
+    
+    @Test
+    public void GIVEN_two_editable_configurations_created_from_same_list_of_iocs_with_macros_THEN_editable_configurations_do_not_share_state() {
+    	EditableConfiguration config1 = edit(config());    	
+    	allIocs.add(new EditableIoc(GALIL01));	
+    	EditableConfiguration config2 = edit(config());
+    	
+    	assertFalse(config1.getAvailableIocs().equals(allIocs));
+    	assertTrue(config2.getAvailableIocs().equals(allIocs));
     }
 }

@@ -19,28 +19,18 @@
 package uk.ac.stfc.isis.ibex.log;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 
 /**
  * The Class OnInstrumentSwitch allows the log framework to be set when the instrument
  * is changed.
  */
-public class OnInstrumentSwitch implements InstrumentInfoReceiver {
+public class OnInstrumentSwitch extends InstrumentInfoReceiverAdapter {
 
     private static final Log LOG = Log.getDefault();
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
 		LOG.clearMessages();
-    }
-
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        // nothing extra to do
-    }
-
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // nothing extra to do
     }
 }

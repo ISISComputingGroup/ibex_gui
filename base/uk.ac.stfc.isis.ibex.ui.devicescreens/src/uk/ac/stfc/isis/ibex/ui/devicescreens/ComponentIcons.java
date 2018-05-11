@@ -115,6 +115,8 @@ public final class ComponentIcons {
                 return "muon_front_end";
             case LAKESHORE:
                 return "lakeshore";
+			case LKSH460:
+                return "magnet_gaussmeter";
             case CCD100:
             case PRESSURE_GAUGE:
                 return "pressure_gauge";
@@ -130,16 +132,26 @@ public final class ComponentIcons {
                 return "neocera";
             case KHLY2400:
                 return "keithley2400";
+            case KHLY2700:
+                return "multimeter";
             case ROT_SAMPLE_CHANGER:
                 return "rotating_sample_changer";
             case STRESS_RIG:
                 return "stress_rig";
             case GAS_EXCHANGE:
                 return "gas_exchange";
-            case HE_LEVEL_GAUGE:
-                return "he_level_gauge";
+            case CRYO_LEVEL_GAUGE:
+                return "cryo_level_gauge";
             case OSCILLATING_COLLIMATOR:
                 return "oscillating_collimator";
+            case SM300_SAMPLE_CHANGER:
+            	return "sm300_sample_changer";
+            case MOTION_SET_POINTS:
+            	return "motion_set_points";
+            case DILUTION_FRIDGE:
+            	return "dilution_fridge";
+            case COUETTE:
+            	return "couette";
             default:
                 return "cog";
         }

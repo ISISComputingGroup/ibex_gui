@@ -23,7 +23,6 @@ import static org.junit.Assert.*;
 
 import java.security.InvalidParameterException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.internal.CRC8;
@@ -34,11 +33,6 @@ public class CRC8Test {
     private void calc_and_test(String value, String expected) {
         CRC8 actual = CRC8.fromString(value);
         assertEquals(expected, actual.toString());
-    }
-
-    @Before
-    public void setUp() {
-        
     }
 
     @Test

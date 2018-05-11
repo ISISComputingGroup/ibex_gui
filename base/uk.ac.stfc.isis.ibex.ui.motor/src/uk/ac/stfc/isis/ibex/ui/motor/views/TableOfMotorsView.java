@@ -132,10 +132,7 @@ public class TableOfMotorsView extends ViewPart {
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
 			
-			MotorOPIView motorView = (MotorOPIView) view;
-			motorView.setOPITitle(secondaryID);
-			motorView.setMotorName(motor.motorAddress());
-			motorView.initialiseOPI();		
+			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
 			
 		} catch (PartInitException e) {
 			e.printStackTrace();

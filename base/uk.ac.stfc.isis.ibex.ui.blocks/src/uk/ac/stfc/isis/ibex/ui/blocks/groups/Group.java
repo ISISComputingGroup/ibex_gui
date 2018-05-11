@@ -116,7 +116,7 @@ public class Group extends Composite {
                 DisplayBlock currentBlock = blocksList.get(position);
 
                 GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
-
+                
                 Label blockName =
                         labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
                 blockName.setMenu(fullMenu.get());

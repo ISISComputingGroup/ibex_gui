@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -58,8 +57,7 @@ public class ConfigServerVariables extends Closer {
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
-    private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
-    private final WritableFactory closingWriteFactory = new WritableFactory(OnInstrumentSwitch.CLOSE);    
+    private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);  
 	
     /** Provides the status of the block server. */
 	public final ForwardingObservable<ServerStatus> serverStatus;
@@ -279,16 +277,6 @@ public class ConfigServerVariables extends Closer {
      */
 	public String blockServerAlias(String name) {
 		return blockServerAddresses.blockAlias(name);
-	}
-	
-    /**
-     * Gets the PV name for an IOC's description.
-     * 
-     * @param iocName the IOC name
-     * @return the PV name
-     */
-	private static String iocDescriptionAddress(String iocName) {
-        return PVAddress.startWith("CS").append("BS").append(iocName).endWith("IOCDESC");
 	}
 
     /**

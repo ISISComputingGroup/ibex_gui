@@ -29,8 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
@@ -39,7 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 /**
  * Provides labels for components within the synoptic editor.
  */
-public class ComponentLabelProvider implements ILabelProvider {
+public class ComponentLabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ComponentDescription) {
@@ -57,18 +56,6 @@ public class ComponentLabelProvider implements ILabelProvider {
 		} else {
 			return null;
 		}
-	}
-
-	@Override
-	public void addListener(ILabelProviderListener listener) {
-	}
-
-	@Override
-	public void removeListener(ILabelProviderListener listener) {
-	}
-
-	@Override
-	public void dispose() {
 	}
 
 	@Override

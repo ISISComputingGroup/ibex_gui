@@ -22,8 +22,11 @@ package uk.ac.stfc.isis.ibex.ui.dae;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -149,14 +152,17 @@ public class DaeView extends ViewPart implements TabIsShownAction {
 		container.setLayout(glContainer);
 		
 		Composite titleComposite = new Composite(container, SWT.NONE);
-		titleComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		titleComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		titleComposite.setLayout(new GridLayout(1, false));
 		
 		Label lblTitle = new Label(titleComposite, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblTitle.setAlignment(SWT.CENTER);
+		lblTitle.setAlignment(SWT.LEFT);
 		lblTitle.setFont(SWTResourceManager.getFont("Arial", 16, SWT.NORMAL));
-		lblTitle.setText("DAE Control Program");
+		lblTitle.setText(""); // Bound below.
+		
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(lblTitle), BeanProperties.value("value").observe(model.title()));
 		
 		CTabFolder tabFolder = new CTabFolder(container, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));

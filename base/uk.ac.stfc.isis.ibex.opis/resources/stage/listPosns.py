@@ -5,11 +5,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
 targetPV = display.getWidget('SetPointText').getPV()
 sourceBtn = display.getWidget('sourceBtn') 
-sourcePV = sourceBtn.getPV()
 
 menu = display.getWidget('SetPosnBtn')
-
-values = sourcePV.getValue().getData()
+value = pvs[0].getValue()    
+    
+if value is None:
+    values = ["No positions", "END"]
+else:
+    values = value.getData()
 #ConsoleUtil.writeInfo('count: ' + str(len(values)))
 
 actionList = menu.getPropertyValue('actions').getActionsList()

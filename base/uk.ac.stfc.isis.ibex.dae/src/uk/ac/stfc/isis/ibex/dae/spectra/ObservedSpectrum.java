@@ -30,7 +30,11 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import org.osgi.service.prefs.Preferences;
 
+/**
+ * An observed spectrum.
+ */
 public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		
 	private final DaeObservables observables;
@@ -70,20 +74,19 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
     private ForwardingObservable<float[]> xValObservable;
     private ForwardingObservable<float[]> yValObservable;
 
-    public ObservedSpectrum(DaeObservables observables) {
+    /**
+     * Constructor.
+     * @param preferenceStore the preference store to use
+     * @param observables the dae observables to use
+     */
+    public ObservedSpectrum(Preferences preferenceStore, DaeObservables observables) {
+    	super(preferenceStore);
 		this.observables = observables;
 	}
 	
-	@Override
-	public void setNumber(int value) {
-		super.setNumber(value);
-	}
-
-	@Override
-	public void setPeriod(int value) {
-		super.setPeriod(value);
-	}
-	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void update() {
 		updateSubscriptions();
@@ -107,6 +110,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
         ySubscription = yData.addObserver(yDataObserver);
     }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         closeObservables();

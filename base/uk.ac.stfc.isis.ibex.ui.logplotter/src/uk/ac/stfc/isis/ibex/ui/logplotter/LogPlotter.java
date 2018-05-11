@@ -34,7 +34,10 @@ public class LogPlotter extends AbstractUIPlugin {
 	
 	// The shared instance
 	private static LogPlotter plugin;
-		
+	
+	/**
+	 * The constructor for the logplotter plugin.
+	 */
 	public LogPlotter() {
 		plugin = this;
 	}

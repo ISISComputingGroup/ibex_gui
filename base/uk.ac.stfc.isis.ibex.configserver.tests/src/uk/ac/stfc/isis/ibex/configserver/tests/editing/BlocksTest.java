@@ -102,7 +102,7 @@ public class BlocksTest extends EditableConfigurationTest {
         block2.setName(block1.getName());
 
         // Assert
-        assertTrue(!edited.getEditableBlocks().contains(block2));
+        assertTrue(!edited.getAllBlocks().contains(block2));
         
     }
 	@Test
@@ -112,7 +112,7 @@ public class BlocksTest extends EditableConfigurationTest {
 		EditableConfiguration edited = edit(config());
 		
 		// Act
-		EditableBlock gapx = getFirst(edited.getEditableBlocks());
+		EditableBlock gapx = getFirst(edited.getAllBlocks());
 		edited.removeBlock(gapx);
 		
 		// Assert
@@ -127,7 +127,7 @@ public class BlocksTest extends EditableConfigurationTest {
 		EditableConfiguration edited = edit(config());
 		
 		// Act
-		Collection<EditableBlock> returnedBlocks = edited.getEditableBlocks();
+		Collection<EditableBlock> returnedBlocks = edited.getAllBlocks();
 		edited.removeBlocks(new ArrayList<EditableBlock>(returnedBlocks));
 		
 		// Assert
