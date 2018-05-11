@@ -9,9 +9,9 @@ def get_cleared_group_widget(this_display):
         The group widget having had its children removed
 
     """
-    widget = this_display.getWidget('group')
-    widget.removeAllChildren()
-    return widget
+    group_widget = this_display.getWidget('group')
+    group_widget.removeAllChildren()
+    return group_widget
 
 
 def get_channels(channel_list_pv, get_string_from_pv, log):
@@ -34,7 +34,7 @@ def get_channels(channel_list_pv, get_string_from_pv, log):
         return formatted_channel
 
     try:
-        return (channel_formatter(chan) for chan in get_string_from_pv(channel_list_pv).split(' '))
+        return [channel_formatter(chan) for chan in get_string_from_pv(channel_list_pv).split(' ')]
     except Exception, e:  # Jython slightly different to standard Python
         log("Unable to get channel list for HVCaen: " + str(e))  # Jython str has no 'format'
         return list()
