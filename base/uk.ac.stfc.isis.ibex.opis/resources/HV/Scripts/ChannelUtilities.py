@@ -18,9 +18,9 @@ def get_available_channels(crate_name_pvs, this_display,
     """
     for crate_name_pv in crate_name_pvs:
         try:
-            crate = PVUtil.getString(crate_name_pv)
+            crate = get_string_from_pv(crate_name_pv)
         except Exception, e:
-            ConsoleUtil.writeError("Unable to get crate name for PV: " + crate_name_pv + " , error: " + str(e))
+            log("Unable to get crate name for PV: " + crate_name_pv + " , error: " + str(e))
             continue
 
         if len(crate) == 0:
@@ -57,38 +57,59 @@ def get_summary_channels(channel_list_pv, get_string_from_pv=PVUtil.getString, l
         return list()
 
 
+def _get_max(this_display, macro, default_value, upper_limit=None):
+    """
+
+    Args:
+        this_display: The display. The returned value should be available via a macro.
+        macro: The macro containing the value
+        default_value: The value to use if the macro isn't specified
+        upper_limit: The absolute maximum value the property can take
+        log: Where to send messages
+
+    Returns:
+        The value of the macro
+    """
+    max_value = this_display.getPropertyValue("macros").getMacrosMap().get(macro)
+    if max_value is None:
+        max_value = default_value
+
+    if upper_limit is not None:
+        max_value = min(max_value, upper_limit)
+
+    return max_value
+
+
 def get_max_crates(this_display):
     """
     The absolute maximum value is 15, determined by the limitations of EPICS MMBO records.
 
     Args:
-        The display. The value should be available via a macro.
+        this_display: The display. The returned value should be available via a macro.
 
     Returns:
         The maximum number of crates supported by the OPI
     """
-    absolute_maximum = 15  # The crates are controlled by an MBBO which can only address up to 15 crates
-    return min(2, absolute_maximum)
+    return _get_max(this_display, "MAX_CRATES", 2, 15)
 
 
 def get_max_slots(this_display):
     """
     Args:
-        The display. The value should be available via a macro.
+        this_display: The display. The returned value should be available via a macro.
 
     Returns:
         The maximum number of slots supported by the OPI
     """
-    return 5
+    return _get_max(this_display, "MAX_SLOTS", 5)
 
 
 def get_max_channels(this_display):
     """
     Args:
-        The display. The value should be available via a macro.
+        this_display: The display. The returned value should be available via a macro.
 
     Returns:
         The maximum number of channels supported by the OPI
     """
-    return 10
-
+    return _get_max(this_display, "MAX_CHANNELS", 10)

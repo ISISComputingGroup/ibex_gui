@@ -1,5 +1,6 @@
 from org.csstudio.opibuilder.scriptUtil import WidgetUtil
 
+
 def get_cleared_group_widget(this_display):
     """
     Gets the widget called 'group' and clears its children.
