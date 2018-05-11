@@ -148,7 +148,7 @@ $(pv_value)</tooltip>
     <wuid>-1be97a08:160734ec8eb:-7f18</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Flow set point $(N):</text>
+    <text>Set point $(N):</text>
     <scripts />
     <height>20</height>
     <border_width>1</border_width>
@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
     <wuid>-1be97a08:160734ec8eb:-7f16</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Flow reading $(N):</text>
+    <text>Reading $(N):</text>
     <scripts />
     <height>20</height>
     <border_width>1</border_width>
