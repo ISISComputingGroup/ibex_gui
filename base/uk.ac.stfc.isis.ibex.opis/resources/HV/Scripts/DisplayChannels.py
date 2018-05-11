@@ -49,6 +49,12 @@ def create_channel_model(crate, slot, channel):
 
 
 def get_available_channels():
+    """
+    Generator for the available Caen channels
+
+    Yields:
+        A tuple of crate (string), slot (int), channel (int)
+    """
     max_crate = 2
     max_slot = 5
     max_chan = 10
@@ -69,6 +75,13 @@ def get_available_channels():
 
 
 def add_channel_widgets():
+    """
+    Clears the current group box displaying the available channels and repopulates it with the latest
+    available channels.
+
+    Returns:
+        None
+    """
     channel_selector_widget = get_cleared_group_widget(display)
     current_included_channels = get_summary_channels(pvs[1], PVUtil.getString, ConsoleUtil.writeError)
 
