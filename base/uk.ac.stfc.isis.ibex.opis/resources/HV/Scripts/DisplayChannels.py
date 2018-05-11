@@ -1,20 +1,5 @@
-from ChannelUtilities import get_summary_channels, get_available_channels, get_max_crates
+from ChannelUtilities import get_summary_channels, get_available_channels, get_max_crates, get_channel_pv_name
 from OPIUtilities import get_cleared_group_widget, create_channel_widget_model
-
-
-def get_channel_pv_name(crate, slot, channel):
-    """
-    Gets the PV name for a given channel
-
-    Args:
-        crate: The name of the crate
-        slot: The slot number
-        channel: The channel number
-
-    Returns:
-        The PV name for accessing the given channel
-    """
-    return crate + ":" + str(slot) + ":" + str(channel)
 
 
 def add_channel_widgets(this_display, this_pvs):

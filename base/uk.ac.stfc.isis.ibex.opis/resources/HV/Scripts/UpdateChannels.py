@@ -1,41 +1,39 @@
+from ChannelUtilities import get_available_channels, get_max_crates, get_channel_pv_name
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-# PVs
-# pv[0] = $(P)CAEN:crates, triggered
-# pv[1] = $(P)CAEN:CHANLIST, triggered
-# pv[2-17] = $(P)CAEN:crates.[XX]ST
 
-# Get the display objects and PVs for interaction
-test = display.getWidget('test')
-chanlistwidget = display.getWidget('update')
-chanlistpv = chanlistwidget.getPV()
+def update_channels(this_display, this_pvs):
+    """
+    Updates the channels available on the summary maintenance page
 
-# Clear the list
-newlist = ''
+    Args:
+        this_display: The display that has called this script. Used to control modification of global CSS variables
+        this_pvs: PVs passed to the script by CSS. Used to control modification of global CSS variables
 
-# Values to control the search length for all channels (must match the values in DisplayChannels)
-maxcrate = 2
-maxslot = 5
-maxchan = 10
+    Returns:
+        None
+    """
+    # Loop through the channels, and if selected add them to the list
+    actioned = PVUtil.getDouble(this_pvs[0]) == 1
+    if actioned:
 
-actioned = PVUtil.getDouble(pvs[0])
+        # Generate the list of included channel names
+        channel_names = list()
+        for crate, slot, channel in get_available_channels(this_pvs[1:1 + get_max_crates(this_display)], this_display):
+            channel_name = get_channel_pv_name(crate, slot, channel)
+            if this_display.getWidget(channel_name).getChild('Include').getValue() == 1:
+                channel_names.append(channel_name)
 
-# Loop through the channels, and if selected add them to the list
-if actioned == 1:
-    for z in range(maxcrate):
-        cratename = pvs[1+z]
-        if cratename != "":
-            crate = PVUtil.getString(cratename)
-            for x in range(maxslot):
-                for y in range(maxchan):
-                    avail = crate + ':' + str(x) + ':' + str(y)
-                    container = display.getWidget(avail)
-                    inlistwidget = container.getChild('Include')
-                    include = inlistwidget.getValue()
-                    if include == 1:
-                        newlist = newlist + ' ' + avail
-else:
-    newlist = 'Not looping'
+        # Create a PV value based on the channel names
+        new_pv_value = " ".join(channel_names)
+    else:
+        new_pv_value = "Not looping"
 
-# Update the PV value
-chanlistpv.setValue(newlist)
+    this_display.getWidget('update').getPV().setValue(new_pv_value)
+
+
+if __name__ == "__main__":
+    # PVs
+    # pv[0] = $(P)CAEN:CHANLIST:UPDATE, triggered
+    # pv[1-16] = $(P)CAEN:crates.[XX]ST
+    update_channels(display, pvs)

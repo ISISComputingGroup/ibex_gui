@@ -113,3 +113,18 @@ def get_max_channels(this_display):
         The maximum number of channels supported by the OPI
     """
     return _get_max(this_display, "MAX_CHANNELS", 10)
+
+
+def get_channel_pv_name(crate, slot, channel):
+    """
+    Gets the PV name for a given channel
+
+    Args:
+        crate: The name of the crate
+        slot: The slot number
+        channel: The channel number
+
+    Returns:
+        The PV name for accessing the given channel
+    """
+    return crate + ":" + str(slot) + ":" + str(channel)
