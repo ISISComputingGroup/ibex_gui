@@ -1,26 +1,17 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-from Utilities import get_cleared_group_widget, get_summary_channels, get_max_channels, get_max_crates, get_max_slots
-
-def get_cleared_group_widget(this_display):
-    """
-    Gets the widget called 'group' and clears its children.
-
-    Args:
-        this_display: The CSS display component
-
-    Returns:
-        The group widget having had its children removed
-
-    """
-    group_widget = this_display.getWidget('group')
-    group_widget.removeAllChildren()
-    return group_widget
 
 
-def get_available_channels(crate_name_pvs, get_string_from_pv=PVUtil.getString, log=ConsoleUtil.writeError):
+def get_available_channels(crate_name_pvs, this_display,
+                           get_string_from_pv=PVUtil.getString, log=ConsoleUtil.writeError):
     """
     Generator for the available Caen channels
+
+    Args:
+        crate_name_pvs: The PVs containing the names of the crates
+        this_display: The display that contains the macros for the maximum number of crates, slots and channels
+        get_string_from_pv: Method used to get strings from PVs
+        log: Method to send strings to the logs
 
     Yields:
         A tuple of crate (string), slot (int), channel (int)
@@ -35,8 +26,8 @@ def get_available_channels(crate_name_pvs, get_string_from_pv=PVUtil.getString, 
         if len(crate) == 0:
             continue
 
-        for slot in range(get_max_slots()):
-            for channel in range(get_max_channels()):
+        for slot in range(get_max_slots(this_display)):
+            for channel in range(get_max_channels(this_display)):
                 yield crate, slot, channel
 
 
@@ -68,49 +59,36 @@ def get_summary_channels(channel_list_pv, get_string_from_pv=PVUtil.getString, l
 
 def get_max_crates(this_display):
     """
-    Gets the maximum number of crates. Implemented as a generator so we can call it multiple times without a performance
-    hit assuming the value never changes. The maximum value is 15, determined by the limitations of EPICS MMBO records.
+    The absolute maximum value is 15, determined by the limitations of EPICS MMBO records.
 
     Args:
         The display. The value should be available via a macro.
 
-    Yields:
+    Returns:
         The maximum number of crates supported by the OPI
     """
     absolute_maximum = 15  # The crates are controlled by an MBBO which can only address up to 15 crates
-    value = min(2, absolute_maximum)
-    while True:
-        yield value
+    return min(2, absolute_maximum)
 
 
 def get_max_slots(this_display):
     """
-    Gets the maximum number of slots. Implemented as a generator so we can call it multiple times without a performance
-    hit assuming the value never changes.
-
     Args:
         The display. The value should be available via a macro.
 
     Returns:
         The maximum number of slots supported by the OPI
     """
-    value = 5
-    while True:
-        yield value
+    return 5
 
 
 def get_max_channels(this_display):
     """
-    Gets the maximum number of channels. Implemented as a generator so we can call it multiple times without a
-    performance hit assuming the value never changes.
-
     Args:
         The display. The value should be available via a macro.
 
     Returns:
         The maximum number of channels supported by the OPI
     """
-    value = 10
-    while True:
-        yield value
+    return 10
 
