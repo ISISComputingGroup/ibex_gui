@@ -1,8 +1,5 @@
-from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import WidgetUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-from Utilities import get_cleared_group_widget, get_summary_channels
-from time import sleep
+from Utilities import get_cleared_group_widget, get_summary_channels, get_available_channels, get_max_crates
 
 # PVs
 # pv[0] = $(P)CAEN:crates, triggered
@@ -48,32 +45,6 @@ def create_channel_model(crate, slot, channel):
     return model
 
 
-def get_available_channels():
-    """
-    Generator for the available Caen channels
-
-    Yields:
-        A tuple of crate (string), slot (int), channel (int)
-    """
-    max_crate = 2
-    max_slot = 5
-    max_chan = 10
-
-    for crate_name_pv in pvs[2:2+max_crate]:
-        try:
-            crate = PVUtil.getString(crate_name_pv)
-        except Exception, e:
-            ConsoleUtil.writeError("Unable to get crate name for PV: " + crate_name_pv + " , error: " + str(e))
-            continue
-
-        if len(crate) == 0:
-            continue
-
-        for slot in range(max_slot):
-            for channel in range(max_chan):
-                yield crate, slot, channel
-
-
 def add_channel_widgets():
     """
     Clears the current group box displaying the available channels and repopulates it with the latest
@@ -83,9 +54,9 @@ def add_channel_widgets():
         None
     """
     channel_selector_widget = get_cleared_group_widget(display)
-    current_included_channels = get_summary_channels(pvs[1], PVUtil.getString, ConsoleUtil.writeError)
+    current_included_channels = get_summary_channels(pvs[1])
 
-    for crate, slot, channel in get_available_channels():
+    for crate, slot, channel in get_available_channels(pvs[2:2+get_max_crates()]):
         channel_model = create_channel_model(crate, slot, channel)
         channel_selector_widget.addChildToBottom(channel_model)
 
