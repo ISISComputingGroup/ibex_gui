@@ -88,7 +88,7 @@ $(pv_value)</tooltip>
     <text>Update list of channels to summarise</text>
     <scripts>
       <path pathString="Scripts/UpdateChannels.py" checkConnect="true" sfe="true" seoe="false">
-        <pv trig="true">loc://CAEN:CHANLIST:UPDATE</pv>
+        <pv trig="true">loc://CAEN:CHANLIST:UPDATE(0)</pv>
         <pv trig="false">$(P)CAEN:crates.ZRST</pv>
         <pv trig="false">$(P)CAEN:crates.ONST</pv>
         <pv trig="false">$(P)CAEN:crates.TWST</pv>

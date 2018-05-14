@@ -26,14 +26,11 @@ def update_channels(this_display, this_pvs):
 
         # Create a PV value based on the channel names
         new_pv_value = " ".join(channel_names)
-    else:
-        new_pv_value = "Not looping"
-
-    this_display.getWidget('update').getPV().setValue(new_pv_value)
+        this_display.getWidget('update').getPV().setValue(new_pv_value)
 
 
 if __name__ == "__main__":
     # PVs
-    # pv[0] = $(P)CAEN:CHANLIST:UPDATE, triggered
+    # pv[0] = loc://CAEN:CHANLIST:UPDATE, triggered
     # pv[1-16] = $(P)CAEN:crates.[XX]ST
     update_channels(display, pvs)
