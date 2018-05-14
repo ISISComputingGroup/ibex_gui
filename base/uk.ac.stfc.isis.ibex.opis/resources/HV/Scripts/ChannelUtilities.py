@@ -50,12 +50,13 @@ def get_summary_channels(channel_list_pv, get_string_from_pv=PVUtil.getString, l
             formatted_channel = formatted_channel[:-1]
         return formatted_channel
 
+    channels = list()
     try:
-        return [channel_formatter(chan) for chan in get_string_from_pv(channel_list_pv).split(' ')]
+        if channel_list_pv.getValue().getData().size() > 0:  # default method throws uncaught java exception if empty
+    	    channels = [channel_formatter(chan) for chan in get_string_from_pv(channel_list_pv).split(' ')]
     except Exception, e:  # Jython slightly different to standard Python
         log("Unable to get channel list for HVCaen: " + str(e))  # Jython str has no 'format'
-        return list()
-
+    return channels
 
 def _get_max(this_display, macro, default_value, upper_limit=None):
     """
@@ -71,6 +72,12 @@ def _get_max(this_display, macro, default_value, upper_limit=None):
         The value of the macro
     """
     max_value = this_display.getPropertyValue("macros").getMacrosMap().get(macro)
+    
+    try:
+        max_value = int(max_value)
+    except TypeError:
+        max_value = default_value   
+    
     if max_value is None:
         max_value = default_value
 
