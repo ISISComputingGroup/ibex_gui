@@ -57,7 +57,7 @@
 					</macro>
 					<macro>
 						<name>MAX_CHANNELS</name>
-						<description>The maximum number of channels per slot per crate to display (default: 10)</description>
+						<description>The maximum number of channels per slot per crate to display (default: 25)</description>
 					</macro>
 				</macros>
 			</value>
