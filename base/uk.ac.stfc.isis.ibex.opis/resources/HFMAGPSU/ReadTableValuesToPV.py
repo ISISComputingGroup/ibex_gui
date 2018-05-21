@@ -1,5 +1,9 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
+'''
+Saves user-created ramp rate table values to IOC PVs.
+'''
+
 rates = display.getWidget("ramp_table_rates").getPV()
 targets = display.getWidget("ramp_table_targets").getPV()
 
@@ -20,10 +24,6 @@ for index in range(0, rows):
 		targets_values[index] = float(table.getCellText(index, 1))
 		rates_values[index] = float(table.getCellText(index, 3))	
 
-
 # Set new Values to PV
-
-
 targets.setValue(targets_values)
 rates.setValue(rates_values)
-
