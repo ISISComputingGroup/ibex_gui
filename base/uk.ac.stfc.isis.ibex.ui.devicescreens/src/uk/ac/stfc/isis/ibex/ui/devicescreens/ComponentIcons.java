@@ -77,6 +77,7 @@ public final class ComponentIcons {
             case KEPCO:
             case TDK_LAMBDA_GENESYS:
 			case HFMAGPSU:
+				return "powersupply";
             case CAEN:
                 return "powersupply";
             case BEAMSTOP:

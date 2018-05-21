@@ -1016,7 +1016,7 @@
 			<key>HIFI Cryomagnet PSU</key>
 			<value>
 				<type>HFMAGPSU</type>
-				<path>HFMAGPSU/hifiCryomagPSU.opi</path>
+				<path>HFMAGPSU/cryomagnet_psu.opi</path>
 				<description>OPI for the HIFI Cryomagnet Power Supply</description>
 				<macros>
 					<macro>
