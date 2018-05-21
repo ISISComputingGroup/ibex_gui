@@ -1061,6 +1061,23 @@
 					</macro>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Digital Drive Fermi chopper</key>
+			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>FZJ_DD_Fermi_Chopper.opi</path>
+				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
+				<macros>
+					<macro>
+						<name>FZJDDFCH</name>
+						<description>The fermi chopper PV prefix (e.g. FZJDDFCH_01).</description>
+					</macro>
+				</macros>
+			</value>
 		</entry>  
 		<entry>
 			<key>EnginX 3rd Jaw</key>
