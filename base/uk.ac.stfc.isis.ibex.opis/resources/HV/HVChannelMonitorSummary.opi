@@ -21,7 +21,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <width>512</width>
+  <width>500</width>
   <x>-1</x>
   <name></name>
   <grid_space>6</grid_space>
@@ -57,13 +57,13 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(P)CAEN:$(SEL):pwonoff</pv_name>
+    <pv_name>$(P)CAEN:$(SEL):pwonoff:fbk</pv_name>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <widget_type>LED</widget_type>
     <off_color>
-      <color red="0" green="100" blue="0" />
+      <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
     </off_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
@@ -71,30 +71,14 @@ $(pv_value)</tooltip>
     </background_color>
     <square_led>false</square_led>
     <width>20</width>
-    <x>400</x>
+    <x>475</x>
     <name>Power On-Off</name>
     <data_type>0</data_type>
     <y>5</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <actions hook="true" hook_all="false">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path></path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-toggle = widget.getValue()
-pv = widget.getPV()
-
-if (toggle == 0): 
-	pv.setValue(1)
-else: 
-	pv.setValue(0)
-]]></scriptText>
-        <embedded>true</embedded>
-        <description>Toggle the value of the PV</description>
-      </action>
-    </actions>
+    <actions hook="true" hook_all="false" />
     <show_boolean_label>false</show_boolean_label>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
@@ -140,8 +124,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>70</width>
-    <x>125</x>
+    <width>95</width>
+    <x>105</x>
     <name>Status</name>
     <y>5</y>
     <foreground_color>
@@ -191,7 +175,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>120</width>
+    <width>100</width>
     <x>5</x>
     <name>Channel Name</name>
     <y>5</y>
@@ -243,7 +227,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>95</width>
-    <x>200</x>
+    <x>205</x>
     <name>Meas Volt</name>
     <y>5</y>
     <foreground_color>
@@ -294,7 +278,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>95</width>
-    <x>300</x>
+    <x>305</x>
     <name>Meas Curr</name>
     <y>5</y>
     <foreground_color>
@@ -303,6 +287,54 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-35af6de1:16382e97ace:-7fa8</wuid>
+    <pv_value />
+    <text>On/Off</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name>$(P)CAEN:$(SEL):pwonoff</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>60</width>
+    <x>405</x>
+    <name>OnOffButton</name>
+    <y>5</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path>../Common Scripts/onOff.py</path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+        <embedded>false</embedded>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
   </widget>
 </display>

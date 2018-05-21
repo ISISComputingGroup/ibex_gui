@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>493</width>
+    <width>540</width>
     <x>6</x>
     <name>Status</name>
     <y>78</y>
@@ -397,8 +397,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>80</width>
-      <x>378</x>
+      <width>116</width>
+      <x>390</x>
       <name>Open Maintenance Screen</name>
       <y>3</y>
       <foreground_color>
@@ -446,7 +446,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>493</width>
+    <width>540</width>
     <x>6</x>
     <name>Summary</name>
     <y>138</y>
@@ -485,7 +485,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>452</width>
+      <width>500</width>
       <x>5</x>
       <name>group</name>
       <y>30</y>
@@ -527,7 +527,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>100</width>
-      <x>300</x>
+      <x>305</x>
       <name>Measured Current Label Tab 0</name>
       <y>6</y>
       <foreground_color>
@@ -568,7 +568,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>50</width>
-      <x>400</x>
+      <x>405</x>
       <name>Power Label Tab 0</name>
       <y>6</y>
       <foreground_color>
@@ -608,8 +608,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>75</width>
-      <x>125</x>
+      <width>100</width>
+      <x>105</x>
       <name>Status Label Tab 0</name>
       <y>6</y>
       <foreground_color>
@@ -649,7 +649,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>120</width>
+      <width>100</width>
       <x>5</x>
       <name>Name Label Tab 0</name>
       <y>6</y>
@@ -691,7 +691,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>100</width>
-      <x>200</x>
+      <x>205</x>
       <name>Measured Voltage Label Tab 0</name>
       <y>6</y>
       <foreground_color>
@@ -731,8 +731,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>295</width>
-    <x>498</x>
+    <width>254</width>
+    <x>545</x>
     <name>Background tasks</name>
     <y>78</y>
     <foreground_color>
