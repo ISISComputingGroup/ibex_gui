@@ -244,7 +244,7 @@ public class NicosView extends ViewPart {
         btnCreateScript.setText("Create Script");
         btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         
-        Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
+        final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
         btnDequeueScript.setText("Dequeue Selected Script");
         btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         
@@ -275,12 +275,16 @@ public class NicosView extends ViewPart {
             @Override
             public void widgetSelected(SelectionEvent e) {
             	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
-                // TODO: disable dequeue button if no script selected in table
+                // TODO: disable dequeue button if no script selected in table - MOVE logic to ViewModel!
             	if (selection.size() > 0) {
+            		btnDequeueScript.setEnabled(true);
                 	QueuedScript selected = (QueuedScript) selection.getFirstElement();
                 	queueScriptViewModel.dequeueScript(selected);
-                // TODO: select more than one script in table and pass list to dequeue function
             	}
+                else {
+                	btnDequeueScript.setEnabled(false);
+                }
+                // TODO: select more than one script in table and pass list to dequeue function
             }
         }
         );

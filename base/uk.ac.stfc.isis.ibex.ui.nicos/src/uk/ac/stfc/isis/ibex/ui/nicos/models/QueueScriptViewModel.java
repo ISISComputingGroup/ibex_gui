@@ -161,7 +161,7 @@ public class QueueScriptViewModel extends ModelObject {
     	// OR 
     	// IF selected script is NOT last AND move direction is down
     	
-    	// TODO: test fails because there are more elements in list than scripts (10?). extras contain null. 
+    	// TODO: test fails because there are more elements in list than scripts (10?) I think! extras contain null. 
     	
     	if ((sourceIndex != 0 && directionUp) || (sourceIndex != queue.size() && !directionUp)) {
 	    	
@@ -170,7 +170,7 @@ public class QueueScriptViewModel extends ModelObject {
     		targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
 
     		// TODO: Probably want to create a new queue and swap items in that, rather than modifying the queue passed in.
-	    	// i.e. use an unmodifiable list
+	    	// i.e. use an unmodifiable list as the 'master' copy.
 	    	
 	    	/*List<QueuedScript> reorderedQueue = */Collections.swap(queue, sourceIndex, targetIndex);
 	    	
