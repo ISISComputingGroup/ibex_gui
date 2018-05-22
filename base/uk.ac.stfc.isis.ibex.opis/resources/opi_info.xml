@@ -1390,7 +1390,7 @@
           <category>Temperature controllers</category>
         </categories>
         <type>EUROTHERM</type>
-        <path>itc503.opi</path>
+        <path>itc503\itc503.opi</path>
         <description>The OPI for the OI ITC503 temperature controller</description>
         <macros>
           <macro>
