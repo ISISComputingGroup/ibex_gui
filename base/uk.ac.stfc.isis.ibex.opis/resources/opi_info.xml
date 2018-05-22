@@ -1383,5 +1383,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>IPS</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>UNKNOWN</type>
+        <path>ips.opi</path>
+        <description>The OPI for the Oxford Instruments IPS</description>
+        <macros>
+          <macro>
+            <name>IPS</name>
+            <description>The IPS PV prefix (e.g. IPS_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
