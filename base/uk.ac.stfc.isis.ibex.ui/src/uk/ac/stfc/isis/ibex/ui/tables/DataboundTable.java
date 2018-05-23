@@ -440,14 +440,6 @@ public abstract class DataboundTable<TRow> extends Composite {
                 new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
         col.setResizable(resizable);
         tableColumn.setLabelProvider(cellProvider);
-        cellProvider.addListener(new ILabelProviderListener() {
-			
-			@Override
-			public void labelProviderChanged(LabelProviderChangedEvent event) {
-				// Refreshes the table so that it is resorted
-				viewer.refresh(false);
-			}
-		});
 		return tableColumn;
 	}
 	
