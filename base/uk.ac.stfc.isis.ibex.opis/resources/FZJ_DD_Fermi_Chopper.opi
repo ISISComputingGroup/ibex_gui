@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(FZJDDFCH)</PV_ROOT>
+    <PV_ROOT>$(P)FZJDDFCH_01</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -175,7 +175,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
     <active_tab>0</active_tab>
     <tooltip></tooltip>
-    <height>517</height>
+    <height>367</height>
     <border_width>1</border_width>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -198,7 +198,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>700</width>
+    <width>553</width>
     <x>0</x>
     <horizontal_tabs>true</horizontal_tabs>
     <y>78</y>
@@ -242,7 +242,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>488</height>
+      <height>338</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -260,7 +260,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>698</width>
+      <width>551</width>
       <x>1</x>
       <name>User</name>
       <y>1</y>
@@ -281,7 +281,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <transparent>false</transparent>
         <lock_children>false</lock_children>
         <scripts />
-        <height>163</height>
+        <height>97</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -299,8 +299,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>385</width>
-        <x>282</x>
+        <width>319</width>
+        <x>228</x>
         <name>Setpoints</name>
         <y>6</y>
         <foreground_color>
@@ -339,8 +339,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>157</width>
-          <x>0</x>
+          <width>73</width>
+          <x>24</x>
           <name>Label</name>
           <y>6</y>
           <foreground_color>
@@ -391,8 +391,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>85</width>
-          <x>168</x>
+          <width>61</width>
+          <x>108</x>
           <name>Text Update</name>
           <y>6</y>
           <foreground_color>
@@ -431,10 +431,10 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>157</width>
-          <x>0</x>
+          <width>73</width>
+          <x>24</x>
           <name>Label_1</name>
-          <y>30</y>
+          <y>42</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -483,10 +483,10 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>85</width>
-          <x>168</x>
+          <width>61</width>
+          <x>108</x>
           <name>Text Update_1</name>
-          <y>30</y>
+          <y>42</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -540,8 +540,8 @@ $(pv_value)</tooltip>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
           <width>90</width>
-          <x>264</x>
-          <y>30</y>
+          <x>180</x>
+          <y>42</y>
           <maximum>1.7976931348623157E308</maximum>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -581,9 +581,9 @@ $(pv_value)</tooltip>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
           <width>90</width>
-          <x>264</x>
+          <x>180</x>
           <name>Combo</name>
-          <y>2</y>
+          <y>6</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -620,7 +620,7 @@ $(pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>277</width>
+        <width>223</width>
         <x>6</x>
         <name>State</name>
         <y>6</y>
@@ -640,11 +640,10 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>2f70796b:15b334751c5:-6eb8</wuid>
           <transparent>false</transparent>
-          <auto_size>false</auto_size>
-          <text>Phase Stable&#xD;
-(within 0.1° of setpoint):</text>
+          <auto_size>true</auto_size>
+          <text>Phase Stable</text>
           <scripts />
-          <height>30</height>
+          <height>15</height>
           <border_width>1</border_width>
           <scale_options>
             <width_scalable>true</width_scalable>
@@ -661,10 +660,10 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>135</width>
-          <x>16</x>
+          <width>70</width>
+          <x>51</x>
           <name>Label_2</name>
-          <y>94</y>
+          <y>101</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -714,7 +713,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>162</x>
+          <x>132</x>
           <name>chopper_on_rbv</name>
           <data_type>1</data_type>
           <y>96</y>
@@ -756,7 +755,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>151</width>
+          <width>121</width>
           <x>0</x>
           <name>Label</name>
           <y>6</y>
@@ -808,8 +807,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>85</width>
-          <x>162</x>
+          <width>55</width>
+          <x>132</x>
           <name>Text Update</name>
           <y>6</y>
           <foreground_color>
@@ -848,7 +847,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>151</width>
+          <width>121</width>
           <x>0</x>
           <name>Label_1</name>
           <y>30</y>
@@ -900,8 +899,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>85</width>
-          <x>162</x>
+          <width>55</width>
+          <x>132</x>
           <name>Text Update_1</name>
           <y>30</y>
           <foreground_color>
@@ -940,7 +939,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>151</width>
+          <width>121</width>
           <x>0</x>
           <name>Label_19</name>
           <y>60</y>
@@ -992,8 +991,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>85</width>
-          <x>162</x>
+          <width>55</width>
+          <x>132</x>
           <name>Text Update_4</name>
           <y>60</y>
           <foreground_color>
@@ -1015,7 +1014,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>488</height>
+      <height>338</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1033,7 +1032,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>698</width>
+      <width>551</width>
       <x>1</x>
       <name>Advanced</name>
       <y>1</y>
@@ -1072,7 +1071,7 @@ $(pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>247</width>
+        <width>157</width>
         <x>6</x>
         <name>Drive Status</name>
         <y>6</y>
@@ -1113,7 +1112,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>72</width>
-          <x>90</x>
+          <x>0</x>
           <name>Label_2</name>
           <y>48</y>
           <foreground_color>
@@ -1134,7 +1133,7 @@ $(pv_value)</tooltip>
           <wuid>6da67b9e:163820d682c:-7f85</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>Drive ON:</text>
+          <text>Drive on:</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -1154,7 +1153,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>66</width>
-          <x>96</x>
+          <x>6</x>
           <name>Label_2</name>
           <y>17</y>
           <foreground_color>
@@ -1206,7 +1205,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>49</width>
-          <x>168</x>
+          <x>78</x>
           <name>Text Update_1</name>
           <y>48</y>
           <foreground_color>
@@ -1257,7 +1256,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>168</x>
+          <x>78</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>14</y>
@@ -1299,8 +1298,8 @@ $(pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>211</width>
-        <x>252</x>
+        <width>181</width>
+        <x>162</x>
         <name>Drive Control</name>
         <y>6</y>
         <foreground_color>
@@ -1322,7 +1321,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>5fa10957:15d8315a712:-7ee6</wuid>
           <pv_value />
-          <text>Switch drive to START mode</text>
+          <text>Switch drive to start mode</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1339,7 +1338,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
-          <width>175</width>
+          <width>151</width>
           <x>0</x>
           <name>Button_1</name>
           <y>42</y>
@@ -1374,7 +1373,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>5fa10957:15d8315a712:-7d02</wuid>
           <pv_value />
-          <text>Switch drive to STOP mode</text>
+          <text>Switch drive to stop mode</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1391,7 +1390,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
-          <width>175</width>
+          <width>151</width>
           <x>0</x>
           <name>Button_1</name>
           <y>6</y>
@@ -1443,8 +1442,8 @@ pv.setValue("STOP")
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>217</width>
-        <x>462</x>
+        <width>205</width>
+        <x>342</x>
         <name>Magnetic Bearings</name>
         <y>6</y>
         <foreground_color>
@@ -1464,7 +1463,7 @@ pv.setValue("STOP")
           <wuid>2f70796b:15b334751c5:-72ea</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>Magnetic bearings ON:</text>
+          <text>Magnetic bearings on:</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -1483,10 +1482,10 @@ pv.setValue("STOP")
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>138</width>
-          <x>12</x>
+          <width>125</width>
+          <x>7</x>
           <name>Label_2</name>
-          <y>6</y>
+          <y>9</y>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
@@ -1536,10 +1535,10 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>162</x>
+          <x>144</x>
           <name>LED</name>
           <data_type>1</data_type>
-          <y>3</y>
+          <y>6</y>
           <foreground_color>
             <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
           </foreground_color>
@@ -1561,7 +1560,7 @@ $(pv_value)</tooltip>
           <enabled>true</enabled>
           <wuid>5fa10957:15d8315a712:-7cde</wuid>
           <pv_value />
-          <text>Switch magnetic bearings ON</text>
+          <text>Switch magnetic bearings on</text>
           <scripts />
           <border_alarm_sensitive>false</border_alarm_sensitive>
           <height>28</height>
@@ -1578,8 +1577,8 @@ $(pv_value)</tooltip>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <widget_type>Button</widget_type>
-          <width>175</width>
-          <x>12</x>
+          <width>163</width>
+          <x>6</x>
           <name>Button_1</name>
           <y>36</y>
           <foreground_color>
@@ -1633,7 +1632,7 @@ pv.setValue("ON")
         <width>247</width>
         <x>6</x>
         <name>Diagnostics</name>
-        <y>114</y>
+        <y>108</y>
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
@@ -1651,7 +1650,7 @@ pv.setValue("ON")
           <wuid>2f70796b:15b334751c5:-7336</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>Magnetic bearings status OK:</text>
+          <text>Magnetic bearings status ok:</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -1746,7 +1745,7 @@ $(pv_value)</tooltip>
           <wuid>-173c2e3e:15d3bec3af6:-7f8d</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>Logging ON:</text>
+          <text>Logging on:</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -1841,7 +1840,7 @@ $(pv_value)</tooltip>
           <wuid>-173c2e3e:15d3bec3af6:-7f72</wuid>
           <transparent>false</transparent>
           <auto_size>false</auto_size>
-          <text>DSP status OK:</text>
+          <text>DSP status ok:</text>
           <scripts />
           <height>20</height>
           <border_width>1</border_width>
@@ -2415,10 +2414,10 @@ $(pv_value)</tooltip>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <width>427</width>
+        <width>295</width>
         <x>252</x>
         <name>Interlocks</name>
-        <y>114</y>
+        <y>108</y>
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
@@ -2467,7 +2466,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED_10</name>
           <data_type>1</data_type>
           <y>6</y>
@@ -2510,7 +2509,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>186</width>
-          <x>79</x>
+          <x>43</x>
           <name>Label_22</name>
           <y>9</y>
           <foreground_color>
@@ -2551,7 +2550,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>186</width>
-          <x>79</x>
+          <x>43</x>
           <name>Label_2</name>
           <y>33</y>
           <foreground_color>
@@ -2603,7 +2602,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>30</y>
@@ -2657,7 +2656,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>54</y>
@@ -2700,7 +2699,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
           <width>217</width>
-          <x>48</x>
+          <x>12</x>
           <name>Label_2</name>
           <y>57</y>
           <foreground_color>
@@ -2740,8 +2739,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>247</width>
-          <x>18</x>
+          <width>229</width>
+          <x>0</x>
           <name>Label_3</name>
           <y>81</y>
           <foreground_color>
@@ -2793,7 +2792,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>78</y>
@@ -2847,7 +2846,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>102</y>
@@ -2889,8 +2888,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>247</width>
-          <x>18</x>
+          <width>229</width>
+          <x>0</x>
           <name>Label_4</name>
           <y>105</y>
           <foreground_color>
@@ -2930,8 +2929,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>247</width>
-          <x>18</x>
+          <width>229</width>
+          <x>0</x>
           <name>Label_3</name>
           <y>129</y>
           <foreground_color>
@@ -2983,7 +2982,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED</name>
           <data_type>1</data_type>
           <y>126</y>
@@ -3037,7 +3036,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED_2</name>
           <data_type>1</data_type>
           <y>150</y>
@@ -3079,8 +3078,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>247</width>
-          <x>18</x>
+          <width>229</width>
+          <x>0</x>
           <name>Label_5</name>
           <y>153</y>
           <foreground_color>
@@ -3120,8 +3119,8 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <width>247</width>
-          <x>18</x>
+          <width>229</width>
+          <x>0</x>
           <name>Label_6</name>
           <y>177</y>
           <foreground_color>
@@ -3173,7 +3172,7 @@ $(pv_value)</tooltip>
           </background_color>
           <square_led>false</square_led>
           <width>25</width>
-          <x>276</x>
+          <x>240</x>
           <name>LED_3</name>
           <data_type>1</data_type>
           <y>174</y>
