@@ -14,8 +14,6 @@ import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,6 +27,7 @@ import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 
 /**
  * The view containing the perspective buttons.
@@ -38,7 +37,6 @@ public class PerspectiveSwitcherView {
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 	private PerspectivesProvider perspectivesProvider; 
-	private static final int WIDTH = 200;
 	
 	@Inject
 	private EModelService modelService;
@@ -83,19 +81,7 @@ public class PerspectiveSwitcherView {
 		);
 		
 		for (final MPerspective perspective : perspectives) {
-			final Button shortcut = new Button(parent, SWT.LEFT);
-			shortcut.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-			shortcut.setFont(LABEL_FONT);
-			shortcut.setText(perspective.getLabel());
-			shortcut.setToolTipText(perspective.getTooltip());
-			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
-			shortcut.setSelection(perspectivesProvider.isSelected(perspective));
-			shortcut.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent event) {
-					perspectivesProvider.getPartService().switchPerspective(perspective);
-				}
-			});
+			final PerspectiveButton shortcut = new PerspectiveButton(parent, perspective, perspectivesProvider);
 			
 			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
 				@Override
