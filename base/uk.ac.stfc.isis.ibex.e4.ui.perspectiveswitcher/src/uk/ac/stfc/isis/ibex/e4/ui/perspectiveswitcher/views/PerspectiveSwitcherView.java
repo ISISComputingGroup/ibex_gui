@@ -47,9 +47,6 @@ public class PerspectiveSwitcherView {
 	@Inject 
 	private EPartService partService;
 	
-	@Inject
-	private IEventBroker broker; 
-	
 	/**
 	 * Create and initialise the controls within the view.
 	 * 
@@ -81,20 +78,7 @@ public class PerspectiveSwitcherView {
 		);
 		
 		for (final MPerspective perspective : perspectives) {
-			final PerspectiveButton shortcut = new PerspectiveButton(parent, perspective, perspectivesProvider);
-			
-			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
-				@Override
-				public void handleEvent(Event event) {
-				    Object newValue = event.getProperty(EventTags.NEW_VALUE);
-
-				    // only run this, if the NEW_VALUE is a MPerspective
-				    if (!(newValue instanceof MPerspective)) {
-				      return;
-				    }
-				    shortcut.setSelection(perspective.equals((MPerspective) newValue));
-				}
-			});
+			new PerspectiveButton(parent, perspective, perspectivesProvider);
 		}
 	}	
 	
