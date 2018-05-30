@@ -47,6 +47,18 @@
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
 				<description>Summary display for Caens (maintenance of list via the button on this OPI). No properties required.</description>
 				<macros>
+					<macro>
+						<name>MAX_CRATES</name>
+						<description>The maximum number of crates to display (default: 2, max: 15)</description>
+					</macro>
+					<macro>
+						<name>MAX_SLOTS</name>
+						<description>The maximum number of slots to display per crate (default: 5)</description>
+					</macro>
+					<macro>
+						<name>MAX_CHANNELS</name>
+						<description>The maximum number of channels per slot per crate to display (default: 25)</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
@@ -1059,6 +1071,19 @@
 						<name>FERMCHOP</name>
 						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
 					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Fermi chopper - Digital Drive</key>
+			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>FZJ_DD_Fermi_Chopper.opi</path>
+				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
+				<macros>
 				</macros>
 			</value>
 		</entry>  
