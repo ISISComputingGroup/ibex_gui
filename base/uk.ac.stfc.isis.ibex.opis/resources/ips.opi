@@ -70,7 +70,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>661</width>
+    <width>511</width>
     <x>6</x>
     <name>Label</name>
     <y>6</y>
@@ -111,7 +111,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>661</width>
+    <width>511</width>
     <x>6</x>
     <name>Label_1</name>
     <y>42</y>
@@ -679,7 +679,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):CURRENT</pv_name>
+      <pv_name>$(PV_ROOT):CURR</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -771,7 +771,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):CURRENT:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CURR:SP:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -965,7 +965,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):MEASUREDMAGNETCURRENT</pv_name>
+      <pv_name>$(PV_ROOT):MAGNET:CURR:MEAS</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1139,7 +1139,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):TRIPCURRENT</pv_name>
+      <pv_name>$(PV_ROOT):CURR:TRIP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1190,7 +1190,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):TRIPFIELD</pv_name>
+      <pv_name>$(PV_ROOT):FIELD:TRIP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1333,7 +1333,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):PERSISTENTMAGNETCURRENT</pv_name>
+      <pv_name>$(PV_ROOT):MAGNET:CURR:PERSISTENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1384,7 +1384,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):PERSISTENTMAGNETFIELD</pv_name>
+      <pv_name>$(PV_ROOT):MAGNET:FIELD:PERSISTENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1800,7 +1800,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):FIELDSWEEPRATE:SP</pv_name>
+      <pv_name>$(PV_ROOT):FIELD:RATE:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1867,7 +1867,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):FIELDSWEEPRATE</pv_name>
+      <pv_name>$(PV_ROOT):FIELD:RATE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2050,7 +2050,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):NEGCURRENTLIMIT</pv_name>
+      <pv_name>$(PV_ROOT):CURR:LIMIT:NEG</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2142,7 +2142,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):LEADRESISTANCE</pv_name>
+      <pv_name>$(PV_ROOT):RESISTANCE:LEAD</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2234,7 +2234,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):MAGNETINDUCTANCE</pv_name>
+      <pv_name>$(PV_ROOT):MAGNET:INDUCTANCE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2469,7 +2469,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):POSCURRENTLIMIT</pv_name>
+      <pv_name>$(PV_ROOT):CURR:LIMIT:POS</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2561,7 +2561,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SUPPLYVOLTAGE</pv_name>
+      <pv_name>$(PV_ROOT):SUPPLY:VOLT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2611,7 +2611,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):SUPPLYVOLTAGE:STABLE</pv_name>
+      <pv_name>$(PV_ROOT):SUPPLY:VOLT:STABLE</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2747,7 +2747,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):HEATERCURRENT</pv_name>
+      <pv_name>$(PV_ROOT):HEATER:CURR</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
