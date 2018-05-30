@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
+import java.util.Comparator;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -14,10 +17,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.osgi.service.event.Event;
@@ -33,8 +37,8 @@ public class PerspectiveSwitcherView {
 
     private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
-	private ToolBar toolBar;
 	private PerspectivesProvider perspectivesProvider; 
+	private static final int WIDTH = 200;
 	
 	@Inject
 	private EModelService modelService;
@@ -58,20 +62,30 @@ public class PerspectiveSwitcherView {
 	public void draw(Composite parent) {
 		Composite composite = new Composite(parent, SWT.None);
 		composite.setLayout(new GridLayout());
-		
-		toolBar = new ToolBar(composite, SWT.VERTICAL);
-		toolBar.setFont(LABEL_FONT);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 		
-		addPerspectiveShortcuts();
-		addSeparator();
-		addResetCurrentPerspectiveShortcut();
+		addPerspectiveShortcuts(composite);
+		addSeparator(composite);
+		addResetCurrentPerspectiveShortcut(composite);
 	}
 
-	private void addPerspectiveShortcuts() {		
-		for (final MPerspective perspective : perspectivesProvider.getPerspectives()) {
-			final ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
+	private void addPerspectiveShortcuts(Composite parent) {
+		List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
+		perspectives.sort(new Comparator<MPerspective>() 
+		{
+			@Override
+			public int compare(MPerspective p1, MPerspective p2) {
+				return p1.getLabel().compareTo(p2.getLabel());
+				}
+			}
+		);
+		
+		for (final MPerspective perspective : perspectives) {
+			final Button shortcut = new Button(parent, SWT.LEFT);
+			shortcut.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+			shortcut.setFont(LABEL_FONT);
 			shortcut.setText(perspective.getLabel());
 			shortcut.setToolTipText(perspective.getTooltip());
 			shortcut.setImage(ResourceManager.getPluginImageFromUri(perspective.getIconURI()));
@@ -98,12 +112,16 @@ public class PerspectiveSwitcherView {
 		}
 	}	
 	
-	private void addSeparator() {
-		new ToolItem(toolBar, SWT.SEPARATOR);
+	private void addSeparator(Composite parent) {
+		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	}
 
-	private void addResetCurrentPerspectiveShortcut() {
-		ToolItem shortcut = new ToolItem(toolBar, SWT.NONE);
+	private void addResetCurrentPerspectiveShortcut(Composite parent) {
+		Button shortcut = new Button(parent, SWT.NONE);
+		shortcut.setAlignment(SWT.LEFT);
+		shortcut.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		shortcut.setFont(LABEL_FONT);
 		shortcut.setText("Reset layout");
 		shortcut.setToolTipText("Sets the layout of the current perspective back to its default");	
 		shortcut.addSelectionListener(new PerspectiveResetAdapter(perspectivesProvider));
