@@ -1395,5 +1395,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>ITC503</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>EUROTHERM</type>
+        <path>itc503\itc503.opi</path>
+        <description>The OPI for the OI ITC503 temperature controller</description>
+        <macros>
+          <macro>
+            <name>ITC503</name>
+            <description>The ITC503 PV prefix (e.g. ITC503_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
