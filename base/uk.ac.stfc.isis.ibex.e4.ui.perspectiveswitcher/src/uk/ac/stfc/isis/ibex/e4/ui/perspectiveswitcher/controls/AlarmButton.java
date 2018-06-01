@@ -34,10 +34,9 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
  */
 public class AlarmButton extends PerspectiveButton {
 
-    // private static final Color ALARM = SWTResourceManager.getColor(250, 150, 150);
 	private final DataBindingContext bindingContext = new DataBindingContext();
 
-	private final AlarmCountViewModel model;
+	private final AlarmButtonViewModel model;
 
     private static AlarmCounter alarmCounter = Alarm.getInstance().getCounter();
 	
@@ -49,8 +48,9 @@ public class AlarmButton extends PerspectiveButton {
 	public AlarmButton(Composite parent, MPerspective perspective, PerspectivesProvider perspectivesProvider) {
 		super(parent, perspective, perspectivesProvider);
 	
-		model = new AlarmCountViewModel(alarmCounter);
+		model = new AlarmButtonViewModel(alarmCounter);
 
         bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
+        bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("color").observe(model));
 	}
 }

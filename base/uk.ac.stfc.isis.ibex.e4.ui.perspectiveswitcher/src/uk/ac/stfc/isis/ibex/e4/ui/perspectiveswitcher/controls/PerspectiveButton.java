@@ -13,6 +13,7 @@ public class PerspectiveButton extends Button {
 	public PerspectiveButton(Composite parent, MPerspective perspective, PerspectivesProvider perspectivesProvider) {
 		super(parent, perspective.getLabel(), perspective.getIconURI(), perspective.getTooltip());
 		
+		this.model = new PerspectiveButtonViewModel();		
 		this.perspective = perspective;
 		this.perspectivesProvider = perspectivesProvider;
 	}
