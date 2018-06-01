@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.preferences
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: uk.ac.stfc.isis.ibex.ui.perspectives,
- uk.ac.stfc.isis.ibex.ui.perspectives.switcher
+Export-Package: uk.ac.stfc.isis.ibex.ui.perspectives
 Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.logger
