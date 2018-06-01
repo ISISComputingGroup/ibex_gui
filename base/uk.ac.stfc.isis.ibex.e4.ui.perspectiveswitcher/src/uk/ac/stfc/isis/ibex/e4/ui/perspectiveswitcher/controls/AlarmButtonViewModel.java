@@ -59,7 +59,7 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     	
     	String countText;
     	if (count > 0) {
-    		countText = " ( " + (count > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : count.toString()) + ")";
+    		countText = " (" + (count > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : count.toString()) + ")";
     	}
     	else {
     		countText = "";
