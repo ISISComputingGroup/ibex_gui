@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
 
@@ -69,7 +70,12 @@ public class PerspectiveSwitcherView {
 		Collections.sort(perspectives, comparator);
 		
 		for (final MPerspective perspective : perspectives) {
-			new PerspectiveButton(parent, perspective, perspectivesProvider);
+			if (perspective.getLabel().equals("Alarms")) {
+				new AlarmButton(parent, perspective, perspectivesProvider);
+			}
+			else {
+				new PerspectiveButton(parent, perspective, perspectivesProvider);
+			}
 		}
 	}	
 	
