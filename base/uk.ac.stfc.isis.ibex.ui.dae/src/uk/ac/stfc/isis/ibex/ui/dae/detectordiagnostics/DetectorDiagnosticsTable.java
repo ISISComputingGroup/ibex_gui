@@ -94,7 +94,11 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         		return new Comparable<SpectrumInformation>() {
         			@Override
         			public int compareTo(SpectrumInformation arg0) {
-        				return row.getSpectrumNumber().compareTo(arg0.getSpectrumNumber());
+        				try {
+        					return row.getSpectrumNumber().compareTo(arg0.getSpectrumNumber());
+        				} catch (NullPointerException e) {
+        					return 0;
+        				}
         			}
         		};
         	}
@@ -117,7 +121,11 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         		return new Comparable<SpectrumInformation>() {
         			@Override
         			public int compareTo(SpectrumInformation arg0) {
-        				return row.getCountRate().compareTo(arg0.getCountRate());
+        				try {
+        				    return row.getCountRate().compareTo(arg0.getCountRate());
+        				} catch (NullPointerException e) {
+        					return 0;
+        				}
         			}
         		};
         	}
@@ -140,7 +148,11 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         		return new Comparable<SpectrumInformation>() {
         			@Override
         			public int compareTo(SpectrumInformation arg0) {
-        				return row.getMaxSpecBinCount().compareTo(arg0.getMaxSpecBinCount());
+        				try {
+	        				return row.getMaxSpecBinCount().compareTo(arg0.getMaxSpecBinCount());
+	        			} catch (NullPointerException e) {
+	    					return 0;
+	    				}
         			}
         		};
         	}
@@ -163,7 +175,11 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         		return new Comparable<SpectrumInformation>() {
         			@Override
         			public int compareTo(SpectrumInformation arg0) {
-        				return row.getIntegral().compareTo(arg0.getIntegral());
+        				try {
+        				    return row.getIntegral().compareTo(arg0.getIntegral());
+        				} catch (NullPointerException e) {
+        					return 0;
+        				}
         			}
         		};
         	}
