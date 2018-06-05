@@ -29,14 +29,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
-
 /**
  * Describes the target for navigation around the synoptic.
  */
 @XmlRootElement(name = "target")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TargetDescription extends ModelObject {
+public class TargetDescription {
 
     private String name;
     private TargetType type;

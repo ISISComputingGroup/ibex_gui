@@ -79,7 +79,7 @@ public class SynopticViewModel extends ModelObject {
         synoptic.processChildComponents();
         editing.setSynopticFromDescription(description);
         
-        setSelectedComponents(null);
+        setSelectedComponents(new ArrayList<ComponentDescription>());
 	}
 
     /**
@@ -130,7 +130,7 @@ public class SynopticViewModel extends ModelObject {
         component.setTarget(new TargetDescription("NONE", TargetType.OPI));
 
 		int position = 0;
-		if (selectedComponents == null) {
+		if (selectedComponents.isEmpty()) {
 			synoptic.addComponent(component);
 		} else {
 			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size() - 1);
@@ -149,7 +149,7 @@ public class SynopticViewModel extends ModelObject {
      * Allows the selected component(s) to be copied.
      */
     public void copySelectedComponent() {
-        if (selectedComponents == null || selectedComponents.isEmpty()) {
+        if (selectedComponents.isEmpty()) {
             return;
         }
 
@@ -231,14 +231,14 @@ public class SynopticViewModel extends ModelObject {
      * Removes the selected component(s) from the synoptic.
      */
 	public void removeSelectedComponent() {
-		if (selectedComponents != null) {
+		if (!(selectedComponents.isEmpty())) {
 			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 			if (MessageDialog.openConfirm(shell, "Confirm Delete", constructDeleteMessage())) {
 				for (ComponentDescription selected : selectedComponents) {
 					SynopticParentDescription parent = getParent(selected);
 					parent.removeComponent(selected);
 				}
-                setSelectedComponents(null);
+                setSelectedComponents(new ArrayList<ComponentDescription>());
                 refreshTreeView();
 			}
         } 
@@ -252,7 +252,7 @@ public class SynopticViewModel extends ModelObject {
      */
     public void setSelectedComponents(List<ComponentDescription> selected) {
         firePropertyChange("selectedComponents", selectedComponents, selectedComponents = selected);
-        setSelectedProperty(null);
+        broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
         refreshTreeView();
     }
 	
@@ -262,7 +262,7 @@ public class SynopticViewModel extends ModelObject {
      * @return the selected component or null
      */
     public ComponentDescription getSingleSelectedComp() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
+		if (selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
 		} else {
 			return null;
@@ -275,11 +275,7 @@ public class SynopticViewModel extends ModelObject {
      * @return the selected components
      */
 	public List<ComponentDescription> getSelectedComponents() {
-		if (selectedComponents != null) {
-			return selectedComponents;
-		} else {
-			return null;
-		}
+		return selectedComponents;
 	}
 
     /**
@@ -306,10 +302,6 @@ public class SynopticViewModel extends ModelObject {
      * @param listener the listener to add
      */
 	public void addInstrumentUpdateListener(IInstrumentUpdateListener listener) {
-		if (listener == null) {
-			return;
-		}
-
 		instrumentUpdateListeners.add(listener);
 	}
 

@@ -38,11 +38,6 @@ public class TargetDescriptionTest {
     private static final String NEW_NAME = "new name";
     private static final String KEY_0 = "key1";
     private static final String KEY_1 = "key2";
-    private static final String VALUE_0 = "value1";
-    private static final String VALUE_1 = "value2";
-    
-    private static final Property PROPERTY_0 = new Property(KEY_0, VALUE_0);
-    private static final Property PROPERTY_1 = new Property(KEY_1, VALUE_1);
 
     private TargetDescription source;
     
@@ -56,9 +51,6 @@ public class TargetDescriptionTest {
         propertyKeys.add(KEY_0);
         propertyKeys.add(KEY_1);
         source.addProperties(propertyKeys);
-
-        source.replaceOrAddProperty(PROPERTY_0);
-        source.replaceOrAddProperty(PROPERTY_1);
     }
 
     @Test
@@ -80,15 +72,6 @@ public class TargetDescriptionTest {
     }
 
     @Test
-    public void list_of_properties_contains_set_values() {
-        // Act
-        List<Property> properties = source.getProperties();
-
-        // Assert
-        assertTrue(VALUE_0.equals(properties.get(0).getValue()));
-    }
-
-    @Test
     public void if_key_is_in_property_list_contains_return_true() {
         // Assert
         assertTrue(source.containsProperty(KEY_0));
@@ -98,25 +81,6 @@ public class TargetDescriptionTest {
     public void if_key_is_not_in_property_list_contains_return_false() {
         // Assert
         assertFalse(source.containsProperty("not a key"));
-    }
-
-    @Test
-    public void clear_properties_clears_the_list_of_properties() {
-        // Act
-        source.clearProperties();
-
-        // Assert
-        assertTrue(source.getProperties().size() == 0);
-    }
-
-    @Test
-    public void clear_properties_on_an_empty_list_still_returns_empty_list() {
-        // Act
-        source.clearProperties();
-        source.clearProperties();
-
-        // Assert
-        assertTrue(source.getProperties().size() == 0);
     }
 
     @Test
@@ -171,35 +135,6 @@ public class TargetDescriptionTest {
             assertTrue(copied.getProperties().get(i).getKey().equals(sourceKey));
             assertTrue(copied.getProperties().get(i).getValue().equals(sourceValue));
         }
-    }
-
-    @Test
-    public void GIVEN_property_in_target_WHEN_property_replaced_THEN_property_is_changed() {
-        // Arrange
-        Property newProperty = new Property(KEY_0, "new value");
-
-        // Act
-        source.replaceOrAddProperty(newProperty);
-
-        // Assert
-        Property defaultProperty = new Property();
-        assertSame(newProperty, source.getProperty(KEY_0, defaultProperty));
-    }
-
-    @Test
-    public void GIVEN_property_not_in_target_WHEN_property_replaced_THEN_property_is_added() {
-        // Arrange
-        String new_key = "new key";
-        Property newProperty = new Property(new_key, "new value");
-
-        // Act
-        source.replaceOrAddProperty(newProperty);
-
-        // Assert
-        Property defaultProperty = new Property();
-        assertSame(newProperty, source.getProperty(new_key, defaultProperty));
-        final int expected_number_of_properties = 3;
-        assertEquals("Number of properties in the list", expected_number_of_properties, source.getProperties().size());
     }
 
 }

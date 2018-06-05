@@ -73,7 +73,7 @@ public class Property extends ModelObject {
     }
 
 	/**
-	 * Sets the value of a property
+	 * Sets the value of a property.
 	 * 
 	 * @param newValue The new value to set to.
 	 */

@@ -30,16 +30,12 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * The Class TargetPropertiesDescription GUI description for the selected macro.
  */
 public class TargetPropertiesDescription extends Composite {
-
-    private Text txtDescription;
 
     /**
      * Instantiates a new target properties description.
@@ -50,15 +46,10 @@ public class TargetPropertiesDescription extends Composite {
     public TargetPropertiesDescription(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 		
-        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
-            @Override
-            public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_TARGET) {
-                    txtDescription.setText("");
-                }
-            }
-        });
+        setLayout(new FillLayout());
 
+        final Text txtDescription = new Text(this, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+        
         synopticViewModel.addPropertyChangeListener("propSelection", new PropertyChangeListener() {
             
             @Override
@@ -73,13 +64,5 @@ public class TargetPropertiesDescription extends Composite {
                 }
             }
         });
-
-		createControls(this);
-	}
-
-    private void createControls(Composite parent) {
-        setLayout(new FillLayout());
-
-        txtDescription = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
     }
 }
