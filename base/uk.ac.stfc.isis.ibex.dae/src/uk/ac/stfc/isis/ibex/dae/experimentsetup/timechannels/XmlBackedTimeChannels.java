@@ -132,6 +132,8 @@ public class XmlBackedTimeChannels extends TimeChannels {
 		
 		index = Integer.parseInt(calculationMethod.getTextContent());
 		super.setCalculationMethod(CalculationMethod.values()[index]);
+		
+		System.out.println("Initializing from XML");
 	}
 	
 	private void updateNodes() throws XPathExpressionException {

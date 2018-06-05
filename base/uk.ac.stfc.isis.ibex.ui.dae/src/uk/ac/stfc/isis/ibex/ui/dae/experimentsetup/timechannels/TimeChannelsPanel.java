@@ -190,19 +190,28 @@ public class TimeChannelsPanel extends Composite {
      * 
      * @param method the new calculation method
      */
-    private void setCalculationMethod(CalculationMethod method) {
+    private void setCalculationMethod(final CalculationMethod method) {
+    	
         viewModel.setCalculationMethod(method);
-        switch (method) {
-            case USE_TCB_FILE:
-                radioUseTCBFile.setSelection(true);
-                stack.topControl = tcbFilePanel;
-                break;
-            case SPECIFY_PARAMETERS:
-            default:
-                radioSpecifyParameters.setSelection(true);
-                stack.topControl = timeRegimesPanel;
-                break;
+        System.out.println("hello I am in the code");
+        try {
+    	Display.getDefault().syncExec(new Runnable(){
+    		@Override
+    		public void run() {
+    			System.out.println("im in the codez");
+                radioSpecifyParameters.setSelection(viewModel.getCalculationMethod() == CalculationMethod.SPECIFY_PARAMETERS);
+                radioUseTCBFile.setSelection(viewModel.getCalculationMethod() == CalculationMethod.USE_TCB_FILE);
+                
+    	        stack.topControl = viewModel.getCalculationMethod() == CalculationMethod.USE_TCB_FILE ? tcbFilePanel : tcbSettingsSwitchPanel;
+    	        
+                tcbSettingsSwitchPanel.layout();
+                System.out.println("finish da codez");
+    		}
+    	});
+        } catch (Throwable t) {
+        	t.printStackTrace();
         }
+        
     }
 
     @SuppressWarnings("checkstyle:magicnumber")
@@ -228,7 +237,6 @@ public class TimeChannelsPanel extends Composite {
                 } else {
                     setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
                 }
-                tcbSettingsSwitchPanel.layout();
             }
         };
         radioSpecifyParameters.addSelectionListener(listener);
