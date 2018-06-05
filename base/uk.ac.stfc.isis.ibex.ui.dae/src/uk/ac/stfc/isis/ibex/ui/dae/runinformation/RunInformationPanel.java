@@ -533,7 +533,7 @@ public class RunInformationPanel extends Composite {
 		bindLabel(periodGoodFrames, viewModel.periodGoodFrames);
 		bindLabel(periodRawFrames, viewModel.periodRawFrames);
 		bindLabel(periodSequence, viewModel.periodSequence);
-		bindLabel(periodDuration, viewModel.periodSequence);
+		bindLabel(periodDuration, viewModel.periodDuration);
 		bindLabel(monitorSpectrum, viewModel.monitorSpectrum);
 		bindLabel(monitorCounts, viewModel.monitorCounts);
 		bindLabel(npRatio, viewModel.npRatio);
