@@ -88,6 +88,16 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
+            
+            @Override
+            public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
+        		return new Comparable<SpectrumInformation>() {
+        			@Override
+        			public int compareTo(SpectrumInformation arg0) {
+        				return row.getSpectrumNumber().compareTo(arg0.getSpectrumNumber());
+        			}
+        		};
+        	}
         });
     }
     
@@ -101,6 +111,16 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
+            
+            @Override
+            public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
+        		return new Comparable<SpectrumInformation>() {
+        			@Override
+        			public int compareTo(SpectrumInformation arg0) {
+        				return row.getCountRate().compareTo(arg0.getCountRate());
+        			}
+        		};
+        	}
         });
     }
     
@@ -114,6 +134,16 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
+            
+            @Override
+            public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
+        		return new Comparable<SpectrumInformation>() {
+        			@Override
+        			public int compareTo(SpectrumInformation arg0) {
+        				return row.getMaxSpecBinCount().compareTo(arg0.getMaxSpecBinCount());
+        			}
+        		};
+        	}
         });
     }
     
@@ -127,6 +157,16 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
+            
+            @Override
+            public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
+        		return new Comparable<SpectrumInformation>() {
+        			@Override
+        			public int compareTo(SpectrumInformation arg0) {
+        				return row.getIntegral().compareTo(arg0.getIntegral());
+        			}
+        		};
+        	}
         });
     }
 }
