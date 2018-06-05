@@ -191,27 +191,25 @@ public class TimeChannelsPanel extends Composite {
      * @param method the new calculation method
      */
     private void setCalculationMethod(final CalculationMethod method) {
-    	
         viewModel.setCalculationMethod(method);
-        System.out.println("hello I am in the code");
-        try {
-    	Display.getDefault().syncExec(new Runnable(){
+        updateCalculationMethod();
+    }
+    
+    private void updateCalculationMethod() {
+    	Display.getDefault().asyncExec(new Runnable(){
     		@Override
     		public void run() {
-    			System.out.println("im in the codez");
-                radioSpecifyParameters.setSelection(viewModel.getCalculationMethod() == CalculationMethod.SPECIFY_PARAMETERS);
-                radioUseTCBFile.setSelection(viewModel.getCalculationMethod() == CalculationMethod.USE_TCB_FILE);
+    			
+    			final CalculationMethod method = viewModel.getCalculationMethod();
+    			
+                radioSpecifyParameters.setSelection(method == CalculationMethod.SPECIFY_PARAMETERS);
+                radioUseTCBFile.setSelection(method == CalculationMethod.USE_TCB_FILE);
                 
-    	        stack.topControl = viewModel.getCalculationMethod() == CalculationMethod.USE_TCB_FILE ? tcbFilePanel : tcbSettingsSwitchPanel;
+    	        stack.topControl = method == CalculationMethod.USE_TCB_FILE ? tcbFilePanel : timeRegimesPanel;
     	        
                 tcbSettingsSwitchPanel.layout();
-                System.out.println("finish da codez");
     		}
     	});
-        } catch (Throwable t) {
-        	t.printStackTrace();
-        }
-        
     }
 
     @SuppressWarnings("checkstyle:magicnumber")
