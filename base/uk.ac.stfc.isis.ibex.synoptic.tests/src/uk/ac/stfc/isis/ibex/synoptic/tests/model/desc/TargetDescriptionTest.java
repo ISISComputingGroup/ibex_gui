@@ -76,7 +76,7 @@ public class TargetDescriptionTest {
         List<Property> properties = source.getProperties();
 
         // Assert
-        assertTrue(KEY_0.equals(properties.get(0).key()));
+        assertTrue(KEY_0.equals(properties.get(0).getKey()));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class TargetDescriptionTest {
         List<Property> properties = source.getProperties();
 
         // Assert
-        assertTrue(VALUE_0.equals(properties.get(0).value()));
+        assertTrue(VALUE_0.equals(properties.get(0).getValue()));
     }
 
     @Test
@@ -166,10 +166,10 @@ public class TargetDescriptionTest {
 
         // Assert
         for (int i = 1; i < source.getProperties().size(); i++) {
-            String sourceKey = source.getProperties().get(i).key();
-            String sourceValue = source.getProperties().get(i).value();
-            assertTrue(copied.getProperties().get(i).key().equals(sourceKey));
-            assertTrue(copied.getProperties().get(i).value().equals(sourceValue));
+            String sourceKey = source.getProperties().get(i).getKey();
+            String sourceValue = source.getProperties().get(i).getValue();
+            assertTrue(copied.getProperties().get(i).getKey().equals(sourceKey));
+            assertTrue(copied.getProperties().get(i).getValue().equals(sourceValue));
         }
     }
 

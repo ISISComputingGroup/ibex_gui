@@ -82,7 +82,7 @@ public class TargetBuilder {
 		String name = component.name();
 		OpiTarget opiTarget = new OpiTarget(name, description.name());
 		for (Property property : description.getProperties()) {
-			opiTarget.addProperty(property.key(), property.value());
+			opiTarget.addProperty(property.getKey(), property.getValue());
 		}
 		
 		return opiTarget;

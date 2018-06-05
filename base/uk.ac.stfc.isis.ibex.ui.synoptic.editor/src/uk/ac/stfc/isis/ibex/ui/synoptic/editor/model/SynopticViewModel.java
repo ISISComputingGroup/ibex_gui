@@ -301,31 +301,6 @@ public class SynopticViewModel extends ModelObject {
 	}
 
     /**
-     * Update or add the selected property.
-     * 
-     * Will try to update an existing property but if it does not exist then
-     * will add it to the list of properties.
-     *
-     * @param newProperty the new property
-     */
-	public void updateOrAddSelectedProperty(Property newProperty) {
-	    
-		if (newProperty == null) {
-			return;
-		}
-
-        ComponentDescription component = getSingleSelectedComp();
-		if (component != null) {
-			TargetDescription target = component.target();
-			if (target != null) {
-                target.replaceOrAddProperty(newProperty);
-				broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
-				setSelectedProperty(newProperty);
-			}
-		}
-	}
-
-    /**
      * Add a listener for changes to the instrument.
      * 
      * @param listener the listener to add
@@ -395,22 +370,20 @@ public class SynopticViewModel extends ModelObject {
 	}
     
     /**
-     * Gets the OPI property keys for a given target.
+     * Gets the property keys for the current component.
      *
-     * @param targetName the target name
-     * @return the property keys
+     * @return the property of the current component.
      */
-    public List<String> getPropertyKeys(String targetName) {
-        return getOpi(targetName).getKeys();
-    }
-
-    /**
-     * Gets the OPI property keys for the selected target.
-     *
-     * @return the property keys
-     */
-    public List<String> getSelectedPropertyKeys() {
-        return getPropertyKeys(getSingleSelectedComp().target().name());
+    public List<Property> getProperties() {
+        ComponentDescription component = getSingleSelectedComp();
+        
+    	if (component != null) {
+			TargetDescription target = component.target();
+			if (target != null) {
+				return target.getProperties();
+			}
+    	}
+    	return new ArrayList<>();
     }
 
     /**
