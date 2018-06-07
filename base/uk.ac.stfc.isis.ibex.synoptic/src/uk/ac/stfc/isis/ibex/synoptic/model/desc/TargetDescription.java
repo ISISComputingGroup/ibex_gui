@@ -129,39 +129,12 @@ public class TargetDescription {
      */
     public boolean containsProperty(String key) {
         for (Property property : this.properties) {
-            if (key.equals(property.key())) {
+            if (key.equals(property.getKey())) {
                 return true;
             }
         }
         
         return false;
-    }
-
-    /**
-     * Replace or add property. Replace the property if its key exists or add it
-     * if it does not.
-     *
-     * @param newProperty the new property to set (or add if the current
-     *            property does not exist)
-     */
-    public void replaceOrAddProperty(Property newProperty) {
-
-        for (int index = 0; index < properties.size(); index++) {
-            Property property = properties.get(index);
-            if (newProperty.key().equals(property.key())) {
-                properties.set(index, newProperty);
-                return;
-            }
-        }
-
-        properties.add(newProperty);
-    }
-
-    /**
-     * Clear properties.
-     */
-    public void clearProperties() {
-        this.properties = new ArrayList<>();
     }
 
     /**
@@ -183,7 +156,7 @@ public class TargetDescription {
      */
     public Property getProperty(String key, Property defaultProperty) {
         for (Property property : this.properties) {
-            if (key.equals(property.key())) {
+            if (key.equals(property.getKey())) {
                 return property;
             }
         }

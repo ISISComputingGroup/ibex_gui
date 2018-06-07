@@ -2134,61 +2134,6 @@ else:
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>4fdc1aa2:158de06471b:-6ba2</wuid>
-      <pv_value />
-      <text>On/Off</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>22</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT_EURO):RAMPON:SP</pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>81</width>
-      <x>161</x>
-      <name>rampon_setpoint</name>
-      <y>118</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="EXECUTE_PYTHONSCRIPT">
-          <path></path>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-pv = widget.getPV(); 
-value0 = PVUtil.getDouble(pv)
-
-if value0 ==0:
-	pv.setValue(1)
-else:
-	pv.setValue(0)]]></scriptText>
-          <embedded>true</embedded>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
@@ -2368,6 +2313,61 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>4fdc1aa2:158de06471b:-6ba2</wuid>
+      <pv_value />
+      <text>On/Off</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>22</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT_EURO):RAMPON:SP</pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>81</width>
+      <x>161</x>
+      <name>rampon_setpoint</name>
+      <y>118</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -2895,5 +2895,86 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <pv_value />
+    <text>dummy</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>1</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>1</width>
+    <x>772</x>
+    <name>Dummy</name>
+    <y>480</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>2</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-648922a4:1624e4fa0bd:-7d08</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>If making changes to this OPI, please ensure that "Dummy" button appears last in XML file </text>
+    <scripts />
+    <height>181</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>false</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>163</width>
+    <x>282</x>
+    <name>Temerature_label</name>
+    <y>55</y>
+    <foreground_color>
+      <color name="ISIS_Blue" red="0" green="0" blue="255" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
+    </font>
   </widget>
 </display>

@@ -28,13 +28,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -44,6 +44,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
@@ -58,6 +59,12 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -77,8 +84,6 @@ public class NicosView extends ViewPart {
      * The public ID of this class.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
-
-    private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
     
     private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
@@ -96,7 +101,7 @@ public class NicosView extends ViewPart {
      */
     public NicosView() {
         model = Nicos.getDefault().getModel();
-        queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
+        queueScriptViewModel = new QueueScriptViewModel(model);
         scriptStatusViewModel = new ScriptStatusViewModel(model);
         outputLogViewModel = new OutputLogViewModel(model);
 
@@ -171,51 +176,28 @@ public class NicosView extends ViewPart {
         });
         
         Label lblQueuedScripts = new Label(parent, SWT.NONE);
-        lblQueuedScripts.setText("Queued scripts:");
+        lblQueuedScripts.setText("Queued scripts (double click to see contents):");
         new Label(parent, SWT.NONE);
-            
-        Composite tableComposite = new Composite(parent, SWT.NONE);
-        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableComposite.setLayout(tableColumnLayout);
-        
-        final TableViewer tableViewer = new TableViewer(tableComposite, SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);        
-       
-        tableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        tableViewer.getTable().setToolTipText("");
-        tableViewer.getTable().setLinesVisible(true);
-        
-        TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.CENTER);
-        tableColumnLayout.setColumnData(tableViewerColumn.getColumn(), new ColumnWeightData(100, 0, false)); 
-        tableViewerColumn.setLabelProvider(new OwnerDrawLabelProvider() {
-        	// Using our own drawer means that we can write text to cover multiple lines
-        	
-        	private String getText(Object element) {
-        		QueuedScript script = (QueuedScript) element;
-        		return script.reqid;
+        final ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        List list = queuedScriptsViewer.getList();
+        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
+        queuedScriptsViewer.setLabelProvider(new LabelProvider() {
+        	public String getText(Object element) {
+        		QueuedScript code = (QueuedScript) element;
+        		return code.getName();
         	}
-        	
+        });
+        queuedScriptsViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
+        queuedScriptsViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
-			protected void measure(Event event, Object element) {
-				event.width = tableViewer.getTable().getColumn(event.index).getWidth();
-				if (event.width == 0) {
-					return;
-				}
-				Point size = event.gc.textExtent(getText(element));
-				event.width = size.x;
-				event.height = size.y;
-			}
-
-			@Override
-			protected void paint(Event event, Object element) {
-				event.gc.drawText(getText(element), event.x, event.y, true);
+			public void doubleClick(DoubleClickEvent event) {
+				QueuedScript selection = (QueuedScript) ((IStructuredSelection) event.getSelection()).getFirstElement();
+				ExistingScriptDialog dialog = new ExistingScriptDialog(shell, selection);
+				dialog.open();
 			}
 		});
-        tableViewer.setLabelProvider(new TableLabelProvider());
-        
-        tableViewer.setContentProvider(new ObservableListContentProvider());
-        tableViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
 
         Button btnScriptUp =  new Button(parent, SWT.NONE);
 		GridData gd_btnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
@@ -268,13 +250,12 @@ public class NicosView extends ViewPart {
                 QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
                 dialog.open();
             }
-        }
-        );
+        });
         
         btnDequeueScript.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
                 // TODO: disable dequeue button if no script selected in table - MOVE logic to ViewModel!
             	if (selection.size() > 0) {
             		btnDequeueScript.setEnabled(true);
@@ -286,41 +267,37 @@ public class NicosView extends ViewPart {
                 }
                 // TODO: select more than one script in table and pass list to dequeue function
             }
-        }
-        );
+        });
         
         btnScriptUp.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
                 // TODO: disable move buttons if no script selected in table
             	if (selection.size() > 0) {
                 	QueuedScript selected = (QueuedScript) selection.getFirstElement();
                 	queueScriptViewModel.moveScript(selected, true);
             	}
             }
-        }
-        );
+        });
 
         btnScriptDown.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
                 // TODO: disable move buttons if no script selected in table
             	if (selection.size() > 0) {
                 	QueuedScript selected = (QueuedScript) selection.getFirstElement();
                 	queueScriptViewModel.moveScript(selected, false);
             	}
             }
-        }
-        );
+        });
         
         new Label(parent, SWT.NONE);
         
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
         controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
     }
 
     /**

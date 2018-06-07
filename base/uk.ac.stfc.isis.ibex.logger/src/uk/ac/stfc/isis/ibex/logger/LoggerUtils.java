@@ -33,6 +33,9 @@ public final class LoggerUtils {
 
     private LoggerUtils() {
     }
+    
+    private static final String EXTRA_DEBUG_ENV_VAR = "IBEX_GUI_EXTRA_DEBUG";
+    private static final boolean EXTRA_DEBUG = "1".equals(System.getenv(EXTRA_DEBUG_ENV_VAR));
 
     /**
      * Sends an error to the log along with the stack trace of an exception
@@ -48,5 +51,16 @@ public final class LoggerUtils {
     public static void logErrorWithStackTrace(Logger log, String message, Exception e) {
         log.error(message + "\n    " + e.getMessage() + "\n    Stack Trace:\n    "
                 + Joiner.on("\n    ").join(e.getStackTrace()));
+    }
+    
+    /**
+     * Logs a message if the IBEX_GUI_EXTRA_DEBUG environment variable is set to 1. Otherwise does nothing.
+     * @param log the logger to log the message to
+     * @param message the message to log
+     */
+    public static void logIfExtraDebug(Logger logger, String message) {
+    	if (logger != null && EXTRA_DEBUG) {
+			logger.info(message);
+		}
     }
 }

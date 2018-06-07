@@ -28,7 +28,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -39,9 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.DaeSimulationModeModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
@@ -63,16 +60,12 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private final Banner banner = Banner.getInstance();
 
-    private final IndicatorModel daeSimulationModeModel = new DaeSimulationModeModel();
-    private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
 
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
 
-    private Indicator managerMode;
-    private Indicator daeSimulationMode;
     private Indicator inMotion;
     private Control motionControl;
 
@@ -95,16 +88,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
-        
-        daeSimulationMode = new Indicator(parent, SWT.NONE, daeSimulationModeModel, ALARM_FONT);
-        GridData gdDaeSimulationMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdDaeSimulationMode.widthHint = 210;
-        daeSimulationMode.setLayoutData(gdDaeSimulationMode);
-
-        managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
-        GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdManagerMode.widthHint = 210;
-        managerMode.setLayoutData(gdManagerMode);
 
         inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
         GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -172,9 +155,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
                 gdBannerItem.widthHint = ITEM_WIDTH;
 
                 for (IndicatorModel model : models) {
-                    glBannerItemPanel.numColumns = 2 * models.size();
-
-                    addSeparator(bannerItemPanel);
+                    glBannerItemPanel.numColumns = models.size();
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
                     bannerItem.setLayoutData(gdBannerItem);
@@ -184,19 +165,13 @@ public class BannerView extends ViewPart implements ISizeProvider {
         });
     }
 
-    private void addSeparator(Composite parent) {
-        Label sep = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
-        GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
-        gdSep.heightHint = 20;
-        sep.setLayoutData(gdSep);
-    }
-
     /**
      * Removes all indicators for instrument-specific properties from the
      * spangle banner.
      */
     private void disposeBanner() {
-        Display.getDefault().asyncExec(new Runnable() {
+    	// As this involves disposing items, do it using a sync exec to avoid "widget is disposed" issues.
+        Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {
                 for (org.eclipse.swt.widgets.Control item : bannerItemPanel.getChildren()) {

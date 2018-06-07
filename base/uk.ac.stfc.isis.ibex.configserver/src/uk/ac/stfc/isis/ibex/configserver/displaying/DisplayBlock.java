@@ -349,6 +349,9 @@ public class DisplayBlock extends ModelObject {
         return blockState;
     }
 
+    /**
+     * @return The alias to the PV that the blockserver uses creates for this block.
+     */
     public String blockServerAlias() {
         return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
     }

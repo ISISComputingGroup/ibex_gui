@@ -57,12 +57,27 @@ public class SynopticPresenter extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);
 
 	private SynopticModel model;
+	
+	/**
+	 * Presenter for the synoptic navigator panel, the control that allows moving around inside a synoptic.
+	 */
 	private NavigationPresenter navigator;
-
+	
 	private Map<String, TargetNode> targets = new HashMap<>();
+	
+	/**
+	 * The components of the currently selected synoptic.
+	 */
 	private List<Component> components = new ArrayList<>();
+	
+	/**
+	 * Describes the path that has been taken in navigating through a synoptic.
+	 */
 	private List<String> trail;
 
+	/**
+	 * Listens for changes triggered in the synoptic navigator.
+	 */
     private final PropertyChangeListener navigationListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -74,38 +89,49 @@ public class SynopticPresenter extends ModelObject {
 		}
 	};
 
-    private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
-        @Override
-        public void onValue(SynopticDescription value) {
-            updateModel();
-        }
-
-        @Override
-        public void onError(Exception e) {
-            e.printStackTrace();
-            clearComponents();
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                clearComponents();
-            }
-        }
-    };
-
+	/**
+	 * Observes for changes to the synoptic description. The description will be changed
+	 * either when the server sends an updated description for the selected synoptic.
+	 */
+    private final Observer<SynopticDescription> descriptionObserver;
+    
     /**
-     * Presents synoptics.
+     * Manages the presentation of synoptics to the user in the synoptic perspective.
      */
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
-        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
-        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
-		updateModel();
+		updateModel(); 
+		
+		// Must be done after the navigator is initialised otherwise updateModel could
+		// trigger a nullPointer exception.
+		
+		descriptionObserver = new BaseObserver<SynopticDescription>() {
+	        @Override
+	        public void onValue(SynopticDescription value) {
+	            updateModel();
+	        }
+
+	        @Override
+	        public void onError(Exception e) {
+	            e.printStackTrace();
+	            clearComponents();
+	        }
+
+	        @Override
+	        public void onConnectionStatus(boolean isConnected) {
+	            if (!isConnected) {
+	                clearComponents();
+	            }
+	        }
+	    };
+	    
+        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
+        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
+
 	}
 
     private void updateModel() {

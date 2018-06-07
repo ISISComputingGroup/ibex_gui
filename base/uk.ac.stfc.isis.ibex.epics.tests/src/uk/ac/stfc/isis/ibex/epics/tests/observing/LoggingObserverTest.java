@@ -89,10 +89,13 @@ public class LoggingObserverTest {
 	
 	@Test
 	public void changing_to_null_value_does_not_create_log_message() {
+		// Arrange
+		verify(mockLogger, times(1)).info(anyString());  // Info called on update() when observer is added
+		
 		// Act
 		testableObservable.setValue(null);
 		
-		// Assert - The log message is as expected
-		verify(mockLogger, times(0)).info(anyString());
+		// Assert
+		verify(mockLogger, times(1)).info(anyString());  // setValue has not been called again
 	}	
 }

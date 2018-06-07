@@ -217,7 +217,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -328,7 +328,7 @@
         <wuid>6892be24:156313795e2:-560e</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -410,7 +410,7 @@
         <wuid>6892be24:156313795e2:-55a2</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -492,7 +492,7 @@
         <wuid>-53236bab:15635d9faea:-7f38</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -574,7 +574,7 @@
         <wuid>-53236bab:15635d9faea:-7eca</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -656,7 +656,7 @@
         <wuid>-53236bab:15635d9faea:-7e65</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -709,7 +709,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -738,7 +738,7 @@
         <wuid>-53236bab:15635d9faea:-7dfc</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>475</height>
+        <height>495</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>

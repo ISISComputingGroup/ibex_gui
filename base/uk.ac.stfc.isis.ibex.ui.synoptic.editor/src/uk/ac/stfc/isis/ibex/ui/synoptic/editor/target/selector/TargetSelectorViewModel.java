@@ -163,16 +163,6 @@ public class TargetSelectorViewModel extends ModelObject {
         boolean isIconDefault = getIconSelectionIndex() == 0 || iconSelectionIndexForCurrentlySelectedOpi == getIconSelectionIndex();
         
         setOpi(opi, isIconDefault);
-        
-        clearProperties();
-    }
-    
-    private void clearProperties() {
-        if (synopticViewModel.getSingleSelectedComp() == null) {
-            return;
-        }
-        synopticViewModel.getSingleSelectedComp().target().clearProperties();
-        synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
     }
     
     /**
@@ -186,17 +176,11 @@ public class TargetSelectorViewModel extends ModelObject {
         }
         
         TargetDescription currentTarget = synopticViewModel.getSingleSelectedComp().target();
-        TargetDescription newTarget;
-        
-        if (currentTarget == null) {
-            newTarget = new TargetDescription(opi, TargetType.OPI);
-        } else {
-            newTarget = new TargetDescription(currentTarget);
-            newTarget.setType(TargetType.OPI);
-            newTarget.setName(opi);
+        if (!(opi.equals(currentTarget.name()))) {
+        	TargetDescription newTarget = new TargetDescription(opi, TargetType.OPI);
+        	newTarget.addProperties(synopticViewModel.getOpi(opi).getKeys());
+        	synopticViewModel.getSingleSelectedComp().setTarget(newTarget);  
         }
-        
-        synopticViewModel.getSingleSelectedComp().setTarget(newTarget);    
         
         setDescription(synopticViewModel.getOpi(opi).getDescription());
         

@@ -77,6 +77,7 @@ public final class ComponentIcons {
             case KEPCO:
             case TDK_LAMBDA_GENESYS:
             case CAEN:
+            case IPS:
                 return "powersupply";
             case BEAMSTOP:
                 return "beamstop";
@@ -131,6 +132,8 @@ public final class ComponentIcons {
                 return "neocera";
             case KHLY2400:
                 return "keithley2400";
+            case KHLY2700:
+                return "multimeter";
             case ROT_SAMPLE_CHANGER:
                 return "rotating_sample_changer";
             case STRESS_RIG:
@@ -147,6 +150,8 @@ public final class ComponentIcons {
             	return "motion_set_points";
             case DILUTION_FRIDGE:
             	return "dilution_fridge";
+            case COUETTE:
+            	return "couette";
             default:
                 return "cog";
         }

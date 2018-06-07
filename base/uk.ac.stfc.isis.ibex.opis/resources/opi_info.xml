@@ -47,6 +47,18 @@
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
 				<description>Summary display for Caens (maintenance of list via the button on this OPI). No properties required.</description>
 				<macros>
+					<macro>
+						<name>MAX_CRATES</name>
+						<description>The maximum number of crates to display (default: 2, max: 15)</description>
+					</macro>
+					<macro>
+						<name>MAX_SLOTS</name>
+						<description>The maximum number of slots to display per crate (default: 5)</description>
+					</macro>
+					<macro>
+						<name>MAX_CHANNELS</name>
+						<description>The maximum number of channels per slot per crate to display (default: 25)</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
@@ -56,6 +68,10 @@
 				<type>CCD100</type>
 				<path>CCD100/CCD100.opi</path>
 				<description>The OPI for a Chell CCD100</description>
+				<categories>
+					<category>Pressure sensors</category>
+					<category>Flow meters</category>
+				</categories>
 				<macros>
 					<macro>		
 						<name>CCD_1</name>		
@@ -269,6 +285,23 @@
 					<macro>
 						<name>KHLY2400</name>
 						<description>The Keithley 2400 PV name (e.g. KHLY2400_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Keithley 2700</key>
+			<value>
+				<categories>
+					<category>Multimeters</category>
+				</categories>
+				<type>KHLY2700</type>
+				<path>Keithley2700/keithley_scanner_values.opi</path>
+				<description>The OPI for the Keithley 2700 Source Meter.</description>
+				<macros>
+					<macro>
+						<name>KHLY2700</name>
+						<description>The Keithley 2700 PV name (e.g. KHLY2700_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1040,6 +1073,19 @@
 					</macro>
 				</macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Fermi chopper - Digital Drive</key>
+			<value>
+				<categories>
+					<category>Choppers</category>
+				</categories>
+				<type>CHOPPER</type>
+				<path>FZJ_DD_Fermi_Chopper.opi</path>
+				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>  
 		<entry>
 			<key>EnginX 3rd Jaw</key>
@@ -1341,6 +1387,53 @@
           <macro>
             <name>ILM200</name>
             <description>The ILM200 PV prefix (e.g. ILM200_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Couette Cell</key>
+      <value>
+        <categories>
+          <category>Rheometers</category>
+        </categories>
+        <type>COUETTE</type>
+        <path>couette_cell.opi</path>
+        <description>The OPI for the Couette cell</description>
+        <macros>
+          <macro>
+            <name>COUETTE</name>
+            <description>The COUETTE PV prefix (e.g. COUETTE_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>IPS</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>IPS</type>
+        <path>ips.opi</path>
+        <description>The OPI for the Oxford Instruments IPS</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
+      <key>ITC503</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>EUROTHERM</type>
+        <path>itc503\itc503.opi</path>
+        <description>The OPI for the OI ITC503 temperature controller</description>
+        <macros>
+          <macro>
+            <name>ITC503</name>
+            <description>The ITC503 PV prefix (e.g. ITC503_01)</description>
           </macro>
         </macros>
       </value>

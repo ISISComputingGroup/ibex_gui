@@ -386,7 +386,7 @@ $(trace_0_y_pv_value)</tooltip>
     </axis_1_axis_color>
     <axis_0_scale_format></axis_0_scale_format>
     <axis_1_log_scale>false</axis_1_log_scale>
-    <title>Flow vs Time</title>
+    <title>Reading vs Time</title>
     <trace_0_visible>true</trace_0_visible>
     <trace_1_name>$(trace_1_y_pv)</trace_1_name>
     <trace_3_anti_alias>true</trace_3_anti_alias>
@@ -463,7 +463,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_minimum>0.0</axis_0_minimum>
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_1_update_delay>100</trace_1_update_delay>
-    <axis_1_axis_title>Flow</axis_1_axis_title>
+    <axis_1_axis_title>Reading</axis_1_axis_title>
     <trace_2_x_pv_value />
     <axis_1_auto_scale>true</axis_1_auto_scale>
     <trace_1_line_width>1</trace_1_line_width>
