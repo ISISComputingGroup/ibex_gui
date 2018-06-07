@@ -23,7 +23,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -51,19 +50,10 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.OwnerDrawLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.swt.graphics.Image;
-
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 
 /**
@@ -71,16 +61,7 @@ import org.eclipse.jface.viewers.ListViewer;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosView extends ViewPart {
-	private class TableLabelProvider extends LabelProvider implements ITableLabelProvider {
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-		public String getColumnText(Object element, int columnIndex) {
-			return element.toString();
-		}
-	}
-    
-    /**
+	/**
      * The public ID of this class.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
@@ -262,7 +243,7 @@ public class NicosView extends ViewPart {
                 	QueuedScript selected = (QueuedScript) selection.getFirstElement();
                 	queueScriptViewModel.dequeueScript(selected);
             	}
-                else {
+            	else {
                 	btnDequeueScript.setEnabled(false);
                 }
                 // TODO: select more than one script in table and pass list to dequeue function
