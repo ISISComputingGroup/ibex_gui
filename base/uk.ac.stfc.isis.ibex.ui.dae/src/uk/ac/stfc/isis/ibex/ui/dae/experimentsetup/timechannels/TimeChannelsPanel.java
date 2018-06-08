@@ -196,7 +196,7 @@ public class TimeChannelsPanel extends Composite {
     }
     
     private void updateCalculationMethod() {
-    	Display.getDefault().asyncExec(new Runnable(){
+    	Display.getDefault().asyncExec(new Runnable() {
     		@Override
     		public void run() {
     			
