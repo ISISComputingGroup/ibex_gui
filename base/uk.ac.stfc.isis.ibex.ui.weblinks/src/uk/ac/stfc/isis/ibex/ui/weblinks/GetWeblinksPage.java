@@ -69,14 +69,12 @@ public final class GetWeblinksPage {
      */
     public static List<String> getSections(String html) {
         List<String> sectionList = new ArrayList<>();
-        
-        if (html != null) {
-	        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_TITLES);
-	        Matcher matcher = pattern.matcher(html);
-	        while (matcher.find()) {
-	            String currentSection = removeTags(matcher.group(0));
-	            sectionList.add(currentSection);
-	        }
+
+        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_TITLES);
+        Matcher matcher = pattern.matcher(html);
+        while (matcher.find()) {
+            String currentSection = removeTags(matcher.group(0));
+            sectionList.add(currentSection);
         }
         return sectionList;
     }
@@ -118,15 +116,13 @@ public final class GetWeblinksPage {
     public static List<String> getWebLinks(String section, String html) {
 
         List<String> webLinksList = new ArrayList<>();
-        
-        if (html != null) {
-        	String sectionHtml = getSection(section, html);
 
-	        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_LINKS);
-	        Matcher matcher = pattern.matcher(sectionHtml);
-	        while (matcher.find()) {
-	            webLinksList.add(matcher.group(0));
-	        }
+        String sectionHtml = getSection(section, html);
+
+        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_LINKS);
+        Matcher matcher = pattern.matcher(sectionHtml);
+        while (matcher.find()) {
+            webLinksList.add(matcher.group(0));
         }
 
         return webLinksList;
