@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -72,6 +73,18 @@ public class GetWeblinksPageTest {
         // Assert
         assertEquals(expected, actual);
     }
+    
+    @Test
+    public void GIVEN_html_is_null_WHEN_parsing_section_titles_THEN_returned_list_contains_no_titles() {
+        // Arrange
+        List<String> expected = Collections.<String>emptyList();
+        
+        // Act
+        List<String> actual = GetWeblinksPage.getSections(null);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 
     @Test
     public void GIVEN_section_title_WHEN_parsing_weblinks_THEN_returned_list_contains_weblinks_in_section() {
@@ -80,6 +93,18 @@ public class GetWeblinksPageTest {
 
         // Act
         List<String> actual = GetWeblinksPage.getWebLinks(SECTION1, html);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void GIVEN_html_returns_as_null_WHEN_parsing_weblinks_THEN_returned_list_contains_no_weblinks() {
+    	// Arrange
+        List<String> expected = Collections.<String>emptyList();
+
+        // Act
+        List<String> actual = GetWeblinksPage.getWebLinks(SECTION1, null);
 
         // Assert
         assertEquals(expected, actual);
