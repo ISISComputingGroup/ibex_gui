@@ -1438,5 +1438,17 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>Web Links</key>
+      <value>
+        <categories>
+        </categories>
+        <type>UNKNOWN</type>
+        <path>weblinks.opi</path>
+        <description>An OPI containing useful web links.</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>

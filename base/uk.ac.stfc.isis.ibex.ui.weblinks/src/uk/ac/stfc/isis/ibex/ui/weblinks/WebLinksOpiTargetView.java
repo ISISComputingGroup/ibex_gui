@@ -22,29 +22,45 @@
  */
 package uk.ac.stfc.isis.ibex.ui.weblinks;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.widgets.Display;
+
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * The Class SynopticOpiTargetView which shows tabbed OPIs for syniptics.
  */
-public class WebLinksView extends ViewPart {
+public class WebLinksOpiTargetView extends OpiTargetView {
 
     /**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"; //$NON-NLS-1$
+    
+    private static final String VIEW_NAME = "Web Links";
+    private static final String WEB_LINKS_OPI = "weblinks.opi";
     
     @Override
     public void createPartControl(Composite parent) {
-    	parent.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
-    	new Composite(parent, SWT.NONE);
-    	System.out.println("Creating web links view");
+    	System.out.println("Creating web links opi target view");
+    	displayOpi();
     }
 
-    @Override
-    public void setFocus() {
+    /**
+     * Display the web links opi.
+     */
+    public void displayOpi() {
+    	Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					displayOpi(new OpiTarget(VIEW_NAME, WEB_LINKS_OPI), ID);
+				} catch (OPIViewCreationException e) {
+					e.printStackTrace();
+				}
+			}
+    	});  
     }
 }

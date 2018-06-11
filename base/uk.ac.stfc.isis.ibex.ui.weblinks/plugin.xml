@@ -16,21 +16,22 @@
       </perspective>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="uk.ac.stfc.isis.ibex.ui.weblinks.perspective">
          <view
-               closeable="false"
                id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
                minimized="false"
-               moveable="false"
-               ratio="0.1f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               showTitle="false"
+               visible="true">
+         </view>
+         <view
+               id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"
+               minimized="false"
+               relationship="stack"
+               relative="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
+               showTitle="true"
                standalone="true"
                visible="true">
          </view>
@@ -39,10 +40,17 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            allowMultiple="false"
+            allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
             id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
-            name="Web Links"
+            name="web links view"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"
+            name="Web Links OPI view"
             restorable="true">
       </view>
    </extension>

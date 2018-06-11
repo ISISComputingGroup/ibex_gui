@@ -161,6 +161,7 @@ public abstract class OpiTargetView extends OpiView {
             openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
         } catch (PartInitException e) {
             LOG.catching(e);
+            e.printStackTrace();
         } catch (OPIViewCreationException e) {
             workbenchPage.hideView(view);
             throw e;
