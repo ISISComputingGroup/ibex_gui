@@ -21,9 +21,14 @@ package uk.ac.stfc.isis.ibex.ui.weblinks;
 
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
@@ -42,6 +47,30 @@ public class Perspective extends BasePerspective {
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
+        final float viewRatio = 0.1f;
+        layout.addStandaloneView(WebLinksOpiTargetView.ID, false, IPageLayout.RIGHT, viewRatio,
+        		IPageLayout.ID_EDITOR_AREA);
+        openOpi();
+//		Display.getDefault().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(10000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				openOpi();
+//			}
+//		});
+	}
+	
+	private void openOpi() {
+		try {
+			new WebLinksOpiTargetView().initialiseOPI();
+		} catch (OPIViewCreationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

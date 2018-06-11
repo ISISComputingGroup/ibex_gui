@@ -17,35 +17,9 @@
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="uk.ac.stfc.isis.ibex.ui.weblinks.perspective">
-         <view
-               id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
-               minimized="false"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               visible="true">
-         </view>
-         <view
-               id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"
-               minimized="false"
-               relationship="stack"
-               relative="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
-               showTitle="true"
-               standalone="true"
-               visible="true">
-         </view>
-      </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.views">
-      <view
-            allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
-            id="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView"
-            name="web links view"
-            restorable="true">
-      </view>
       <view
             allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"

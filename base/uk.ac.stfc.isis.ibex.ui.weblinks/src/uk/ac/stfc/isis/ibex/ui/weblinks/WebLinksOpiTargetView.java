@@ -22,45 +22,52 @@
  */
 package uk.ac.stfc.isis.ibex.ui.weblinks;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import java.util.LinkedHashMap;
+
+import org.csstudio.opibuilder.runmode.DisplayOpenManager;
+import org.csstudio.opibuilder.runmode.RunnerInput;
+import org.csstudio.opibuilder.util.MacrosInput;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.PartInitException;
 
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
-import uk.ac.stfc.isis.ibex.targets.OpiTarget;
-import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
+import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.OpiView;
 
 /**
  * The Class SynopticOpiTargetView which shows tabbed OPIs for syniptics.
  */
-public class WebLinksOpiTargetView extends OpiTargetView {
+public class WebLinksOpiTargetView extends OpiView {
 
     /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"; //$NON-NLS-1$
-    
-    private static final String VIEW_NAME = "Web Links";
-    private static final String WEB_LINKS_OPI = "weblinks.opi";
-    
-    @Override
-    public void createPartControl(Composite parent) {
-    	System.out.println("Creating web links opi target view");
-    	displayOpi();
-    }
 
-    /**
-     * Display the web links opi.
+    private static final String WEB_LINKS_OPI = "weblinks.opi";
+
+	@Override
+	protected Path opi() throws OPIViewCreationException {
+		Path p = Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
+		System.out.println(p);
+		return p;
+	}
+	
+	/**
+     * Initialise OPI from a path.
+     *
+     * @throws OPIViewCreationException the OPI view creation exception
      */
-    public void displayOpi() {
-    	Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					displayOpi(new OpiTarget(VIEW_NAME, WEB_LINKS_OPI), ID);
-				} catch (OPIViewCreationException e) {
-					e.printStackTrace();
-				}
-			}
-    	});  
+	@Override
+    public void initialiseOPI() throws OPIViewCreationException {
+        try {
+        	DisplayOpenManager d = new DisplayOpenManager(this);
+            MacrosInput macros = new MacrosInput(new LinkedHashMap<String, String>(), false);
+        	
+			final RunnerInput input = new RunnerInput(opi(), d, macros);
+            setOPIInput(input);
+        } catch (PartInitException e) {
+            e.printStackTrace();
+        }
     }
 }
