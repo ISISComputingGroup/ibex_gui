@@ -180,75 +180,78 @@ public class NicosView extends ViewPart {
 			}
 		});
 
-        Button btnScriptUp =  new Button(parent, SWT.NONE);
+        Composite moveComposite = new Composite(parent, SWT.NONE);
+	    moveComposite.setLayout(new GridLayout(1, false));
+	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        
+        Button btnScriptUp =  new Button(moveComposite, SWT.NONE);
 		GridData gd_btnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
 		gd_btnScriptUp.widthHint = 25;
 		btnScriptUp.setLayoutData(gd_btnScriptUp);
 		btnScriptUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
         btnScriptUp.setToolTipText("Move selected script UP");
-		new Label(parent, SWT.NONE);
+		
+		        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
+		        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		        GridLayout ssgLayout = new GridLayout(6, false);
+		        ssgLayout.marginHeight = 10;
+		        ssgLayout.marginWidth = 10;
+		        scriptSendGrp.setLayout(ssgLayout);
+		        
+		                Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
+		                btnCreateScript.setText("Create Script");
+		                btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		                
+		                final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
+		                btnDequeueScript.setText("Dequeue Selected Script");
+		                btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		                
+		                Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
+		                GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		                layoutData.widthHint = 80;
+		                lblQueueScriptStatus.setLayoutData(layoutData);
+		                bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
+		                        BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
+		                
+		                        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
+		                        GridData gd_lblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		                        gd_lblQueueScriptError.widthHint = 80;
+		                        lblQueueScriptError.setLayoutData(gd_lblQueueScriptError);
+		                        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
+		                                BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
+		                        
+		                                btnCreateScript.addSelectionListener(new SelectionAdapter() {
+		                                    @Override
+		                                    public void widgetSelected(SelectionEvent e) {
+		                                        QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
+		                                        dialog.open();
+		                                    }
+		                                });
+		                                
+		                                btnDequeueScript.addSelectionListener(new SelectionAdapter() {
+		                                    @Override
+		                                    public void widgetSelected(SelectionEvent e) {
+		                                    	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
+		                                        // TODO: disable dequeue button if no script selected in table - MOVE logic to ViewModel!
+		                                    	if (selection.size() > 0) {
+		                                    		btnDequeueScript.setEnabled(true);
+		                                        	QueuedScript selected = (QueuedScript) selection.getFirstElement();
+		                                        	queueScriptViewModel.dequeueScript(selected);
+		                                    	}
+		                                    	else {
+		                                        	btnDequeueScript.setEnabled(false);
+		                                        }
+		                                        // TODO: select more than one script in table and pass list to dequeue function
+		                                    }
+		                                });
 
-		Button btnScriptDown =  new Button(parent, SWT.NONE);
+		Button btnScriptDown =  new Button(moveComposite, SWT.NONE);
 		GridData gd_btnScriptDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_btnScriptDown.widthHint = 25;
 		btnScriptDown.setLayoutData(gd_btnScriptDown);
 		btnScriptDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnScriptDown.setToolTipText("Move selected script DOWN");
 		new Label(parent, SWT.NONE);
-
-        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
-        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout ssgLayout = new GridLayout(6, false);
-        ssgLayout.marginHeight = 10;
-        ssgLayout.marginWidth = 10;
-        scriptSendGrp.setLayout(ssgLayout);
-
-        Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-        btnCreateScript.setText("Create Script");
-        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-        
-        final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
-        btnDequeueScript.setText("Dequeue Selected Script");
-        btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-        
-        Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        layoutData.widthHint = 80;
-        lblQueueScriptStatus.setLayoutData(layoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
-                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
-
-        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        GridData gd_lblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gd_lblQueueScriptError.widthHint = 80;
-        lblQueueScriptError.setLayoutData(gd_lblQueueScriptError);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
-                BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
-
-        btnCreateScript.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
-                dialog.open();
-            }
-        });
-        
-        btnDequeueScript.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
-                // TODO: disable dequeue button if no script selected in table - MOVE logic to ViewModel!
-            	if (selection.size() > 0) {
-            		btnDequeueScript.setEnabled(true);
-                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
-                	queueScriptViewModel.dequeueScript(selected);
-            	}
-            	else {
-                	btnDequeueScript.setEnabled(false);
-                }
-                // TODO: select more than one script in table and pass list to dequeue function
-            }
-        });
         
         btnScriptUp.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -273,8 +276,6 @@ public class NicosView extends ViewPart {
             	}
             }
         });
-        
-        new Label(parent, SWT.NONE);
         
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
