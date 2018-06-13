@@ -21,16 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.weblinks;
 
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
-//import uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
@@ -52,35 +45,6 @@ public class Perspective extends BasePerspective {
         final float viewRatio = 0.1f;
         layout.addStandaloneView(WebLinksOpiTargetView.ID, false, IPageLayout.RIGHT, viewRatio,
         		IPageLayout.ID_EDITOR_AREA);
-        
-        //openOpi();
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-//				try {
-//					Thread.sleep(10000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-		        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		        WebLinksOpiTargetView view = (WebLinksOpiTargetView) activePage.findView(WebLinksOpiTargetView.ID);
-		        try {
-					view.initialiseOPI();
-				} catch (OPIViewCreationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	private void openOpi() {
-		try {
-			new WebLinksOpiTargetView().initialiseOPI();
-		} catch (OPIViewCreationException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override

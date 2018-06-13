@@ -28,8 +28,10 @@ import org.csstudio.opibuilder.runmode.DisplayOpenManager;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
@@ -62,7 +64,9 @@ public class WebLinksOpiTargetView extends OpiView {
     public void initialiseOPI() throws OPIViewCreationException {
         try {
         	DisplayOpenManager d = new DisplayOpenManager(this);
-            MacrosInput macros = new MacrosInput(new LinkedHashMap<String, String>(), false);
+        	LinkedHashMap<String, String> macrosMap = new LinkedHashMap<String, String>();
+        	macrosMap.put("INST", Instrument.getInstance().currentInstrument().name());
+            MacrosInput macros = new MacrosInput(macrosMap, false);
         	
 			final RunnerInput input = new RunnerInput(opi(), d, macros);
             setOPIInput(input);
@@ -70,4 +74,22 @@ public class WebLinksOpiTargetView extends OpiView {
             e.printStackTrace();
         }
     }
+	
+	/**
+	 * Overide toolbars.
+	 */
+	@Override
+	public void createToolbarButtons(){
+	}
+	
+	public void init(IViewSite site) throws PartInitException {
+		super.init(site);
+		
+		try {
+			initialiseOPI();
+		} catch (OPIViewCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

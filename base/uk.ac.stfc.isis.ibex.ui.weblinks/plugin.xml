@@ -40,4 +40,10 @@
          </parameter>
       </key>
    </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksInstrumentSwitcher">
+      </InstrumentInfoReceiver>
+   </extension>
 </plugin>
