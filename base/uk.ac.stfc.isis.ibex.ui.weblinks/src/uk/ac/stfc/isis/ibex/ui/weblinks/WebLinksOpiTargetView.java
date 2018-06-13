@@ -22,15 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.weblinks;
 
-import java.util.LinkedHashMap;
-
-import org.csstudio.opibuilder.runmode.DisplayOpenManager;
-import org.csstudio.opibuilder.runmode.RunnerInput;
-import org.csstudio.opibuilder.util.MacrosInput;
-import org.csstudio.trends.databrowser2.Messages;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
@@ -40,14 +33,14 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
 
 /**
- * The Class SynopticOpiTargetView which shows tabbed OPIs for syniptics.
+ * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
 public class WebLinksOpiTargetView extends OpiView {
 
     /**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView";
 
     /**
      * File name of the web links OPI.
@@ -59,9 +52,7 @@ public class WebLinksOpiTargetView extends OpiView {
      */
 	@Override
 	protected Path opi() throws OPIViewCreationException {
-		Path p = Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
-		System.out.println(p);
-		return p;
+		return Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
 	}
 	
 	/**
@@ -71,23 +62,15 @@ public class WebLinksOpiTargetView extends OpiView {
      */
 	@Override
     public void initialiseOPI() throws OPIViewCreationException {
-    	LinkedHashMap<String, String> macrosMap = new LinkedHashMap<String, String>();
-    	macrosMap.put("INST", Instrument.getInstance().currentInstrument().name());
-        MacrosInput macros = new MacrosInput(macrosMap, false);
-    	
-		final RunnerInput input = new RunnerInput(opi(), new DisplayOpenManager(this), macros);
-		try {
-            setOPIInput(input);
-		} catch (PartInitException e) {
-			throw new OPIViewCreationException(e.getMessage());
-		}
+    	macros().put("INST", Instrument.getInstance().currentInstrument().name());
+        super.initialiseOPI();
     }
 	
 	/**
-	 * Overide toolbars to not exist (they appear in the dashboard which looks weird).
+	 * Override toolbars to not exist (they appear in the dashboard which looks weird).
 	 */
 	@Override
-	public void createToolbarButtons(){
+	public void createToolbarButtons() {
 	}
 	
 	/**
@@ -100,7 +83,7 @@ public class WebLinksOpiTargetView extends OpiView {
 		try {
 			initialiseOPI();
 		} catch (OPIViewCreationException e) {
-			MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, e.getMessage()));
+			MessageDialog.openError(getSite().getShell(), "Web Links Error", e.getMessage());
 		}
 	}
 }

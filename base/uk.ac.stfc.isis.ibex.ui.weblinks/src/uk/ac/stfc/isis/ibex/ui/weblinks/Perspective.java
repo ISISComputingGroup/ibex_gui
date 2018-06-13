@@ -45,8 +45,7 @@ public class Perspective extends BasePerspective {
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
-        final float viewRatio = 0.1f;
-        layout.addStandaloneView(WebLinksOpiTargetView.ID, false, IPageLayout.RIGHT, viewRatio,
+        layout.addStandaloneView(WebLinksOpiTargetView.ID, false, IPageLayout.RIGHT, IPageLayout.DEFAULT_VIEW_RATIO,
         		IPageLayout.ID_EDITOR_AREA);
 	}
 	

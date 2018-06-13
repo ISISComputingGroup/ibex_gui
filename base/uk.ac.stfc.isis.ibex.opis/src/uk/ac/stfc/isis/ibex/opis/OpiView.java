@@ -21,11 +21,9 @@ package uk.ac.stfc.isis.ibex.opis;
 import java.util.LinkedHashMap;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.opibuilder.runmode.OPIRuntimeToolBarDelegate;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PartInitException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
