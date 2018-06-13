@@ -71,7 +71,7 @@ public class Rdb {
 		    address = "//" + address;
 		}
 	
-		String url = PROTOCOL + address + ":" + port + "/" + schema;
+		String url = PROTOCOL + address + ":" + port + "/" + schema + "?useSSL=false";
 	
 		connection = DriverManager.getConnection(url, user, password);
     }
