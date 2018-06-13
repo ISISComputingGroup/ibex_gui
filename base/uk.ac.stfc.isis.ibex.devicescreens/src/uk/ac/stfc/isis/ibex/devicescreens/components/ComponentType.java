@@ -48,6 +48,8 @@ public enum ComponentType {
     DANFYSIK,
     /** CAEN component type. */
 	CAEN,
+    /** IPS component type. */
+	IPS,
     /** CCD100 component type. */
     CCD100,
     /** Kepco component type. */
