@@ -27,7 +27,10 @@ import java.util.LinkedHashMap;
 import org.csstudio.opibuilder.runmode.DisplayOpenManager;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
+import org.csstudio.trends.databrowser2.Messages;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 
@@ -46,8 +49,14 @@ public class WebLinksOpiTargetView extends OpiView {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView"; //$NON-NLS-1$
 
+    /**
+     * File name of the web links OPI.
+     */
     private static final String WEB_LINKS_OPI = "weblinks.opi";
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	protected Path opi() throws OPIViewCreationException {
 		Path p = Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
@@ -62,34 +71,36 @@ public class WebLinksOpiTargetView extends OpiView {
      */
 	@Override
     public void initialiseOPI() throws OPIViewCreationException {
-        try {
-        	DisplayOpenManager d = new DisplayOpenManager(this);
-        	LinkedHashMap<String, String> macrosMap = new LinkedHashMap<String, String>();
-        	macrosMap.put("INST", Instrument.getInstance().currentInstrument().name());
-            MacrosInput macros = new MacrosInput(macrosMap, false);
-        	
-			final RunnerInput input = new RunnerInput(opi(), d, macros);
+    	LinkedHashMap<String, String> macrosMap = new LinkedHashMap<String, String>();
+    	macrosMap.put("INST", Instrument.getInstance().currentInstrument().name());
+        MacrosInput macros = new MacrosInput(macrosMap, false);
+    	
+		final RunnerInput input = new RunnerInput(opi(), new DisplayOpenManager(this), macros);
+		try {
             setOPIInput(input);
-        } catch (PartInitException e) {
-            e.printStackTrace();
-        }
+		} catch (PartInitException e) {
+			throw new OPIViewCreationException(e.getMessage());
+		}
     }
 	
 	/**
-	 * Overide toolbars.
+	 * Overide toolbars to not exist (they appear in the dashboard which looks weird).
 	 */
 	@Override
 	public void createToolbarButtons(){
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
 		
 		try {
 			initialiseOPI();
 		} catch (OPIViewCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, e.getMessage()));
 		}
 	}
 }
