@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
@@ -92,10 +93,10 @@ public class BannerView {
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
         
-//        currentConfig = new Indicator(parent, SWT.NONE, currentConfigModel, ALARM_FONT);
-//        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-//        gdCurrentConfig.widthHint = 360;
-//        currentConfig.setLayoutData(gdCurrentConfig);
+        Indicator currentConfig = new Indicator(parent, SWT.NONE, new CurrentConfigModel(), ALARM_FONT);
+        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdCurrentConfig.widthHint = 360;
+        currentConfig.setLayoutData(gdCurrentConfig);
 
         inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
         GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
