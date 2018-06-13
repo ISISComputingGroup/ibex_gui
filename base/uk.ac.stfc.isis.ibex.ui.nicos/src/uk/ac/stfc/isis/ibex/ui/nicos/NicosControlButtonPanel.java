@@ -77,11 +77,13 @@ public class NicosControlButtonPanel extends Composite {
         btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnTogglePause.setText("Pause");
         btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
+        btnTogglePause.setToolTipText("Pause script after current operation");
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnStop.setText("Stop Script Execution");
         btnStop.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/stop.png"));
+        btnStop.setToolTipText("Abort current script and empty queue");
 
         bind();
     }
