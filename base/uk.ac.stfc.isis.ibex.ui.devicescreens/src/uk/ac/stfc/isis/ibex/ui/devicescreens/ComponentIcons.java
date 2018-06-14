@@ -77,6 +77,7 @@ public final class ComponentIcons {
             case KEPCO:
             case TDK_LAMBDA_GENESYS:
             case CAEN:
+            case IPS:
                 return "powersupply";
             case BEAMSTOP:
                 return "beamstop";
