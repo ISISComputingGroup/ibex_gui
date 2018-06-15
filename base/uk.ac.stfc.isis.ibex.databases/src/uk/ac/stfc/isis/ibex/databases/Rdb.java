@@ -31,7 +31,8 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Represents the RDB connection.
  */
 public class Rdb {
-    private static final Logger LOG = IsisLog.getLogger(Rdb.class);
+    private static final String MYSQL_OPTIONS = "?useSSL=false";
+	private static final Logger LOG = IsisLog.getLogger(Rdb.class);
     private final String schema;
     private static final String PROTOCOL = "jdbc:mysql:";
 
@@ -71,7 +72,7 @@ public class Rdb {
 		    address = "//" + address;
 		}
 	
-		String url = PROTOCOL + address + ":" + port + "/" + schema + "?useSSL=false";
+		String url = PROTOCOL + address + ":" + port + "/" + schema + MYSQL_OPTIONS;
 	
 		connection = DriverManager.getConnection(url, user, password);
     }
