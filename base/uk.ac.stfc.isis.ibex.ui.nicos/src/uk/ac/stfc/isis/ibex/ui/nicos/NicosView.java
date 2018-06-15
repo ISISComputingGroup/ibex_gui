@@ -54,7 +54,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -160,7 +162,7 @@ public class NicosView extends ViewPart {
         lblQueuedScripts.setText("Queued scripts (double click to see contents):");
         new Label(parent, SWT.NONE);
         
-        final ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        final ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
         List list = queuedScriptsViewer.getList();
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
@@ -179,22 +181,29 @@ public class NicosView extends ViewPart {
 				dialog.open();
 			}
 		});
+        queuedScriptsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
+                queueScriptViewModel.setSelectedScript((QueuedScript) selection.getFirstElement());
+			}
+		});
 
         Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
         Button btnScriptUp =  new Button(moveComposite, SWT.NONE);
-		GridData gd_btnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-		gd_btnScriptUp.widthHint = 25;
-		btnScriptUp.setLayoutData(gd_btnScriptUp);
+		GridData gdBtnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		gdBtnScriptUp.widthHint = 25;
+		btnScriptUp.setLayoutData(gdBtnScriptUp);
 		btnScriptUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
         btnScriptUp.setToolTipText("Move selected script UP");
 		
 		Button btnScriptDown =  new Button(moveComposite, SWT.NONE);
-		GridData gd_btnScriptDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_btnScriptDown.widthHint = 25;
-		btnScriptDown.setLayoutData(gd_btnScriptDown);
+		GridData gdBtnScriptDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gdBtnScriptDown.widthHint = 25;
+		btnScriptDown.setLayoutData(gdBtnScriptDown);
 		btnScriptDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnScriptDown.setToolTipText("Move selected script DOWN");
 		
@@ -221,9 +230,9 @@ public class NicosView extends ViewPart {
         BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
 
         Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        GridData gd_lblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gd_lblQueueScriptError.widthHint = 80;
-        lblQueueScriptError.setLayoutData(gd_lblQueueScriptError);
+        GridData gdLblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+        gdLblQueueScriptError.widthHint = 80;
+        lblQueueScriptError.setLayoutData(gdLblQueueScriptError);
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
         BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
         
@@ -238,43 +247,33 @@ public class NicosView extends ViewPart {
         btnDequeueScript.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
-                // TODO: disable dequeue button if no script selected in table - MOVE logic to ViewModel!
-            	if (selection.size() > 0) {
-            		btnDequeueScript.setEnabled(true);
-                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
-                	queueScriptViewModel.dequeueScript(selected);
-            	}
-            	else {
-                	btnDequeueScript.setEnabled(false);
-                }
-                // TODO: select more than one script in table and pass list to dequeue function
+                queueScriptViewModel.dequeueScript();
             }
         });
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDequeueScript), 
+        		BeanProperties.value("dequeueButtonEnabled").observe(queueScriptViewModel));
 
         btnScriptUp.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
-                // TODO: disable move buttons if no script selected in table
-            	if (selection.size() > 0) {
-                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
-                	queueScriptViewModel.moveScript(selected, true);
-            	}
+                queueScriptViewModel.moveScript(true);
             }
         });
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptUp), 
+        		BeanProperties.value("upButtonEnabled").observe(queueScriptViewModel));
 
         btnScriptDown.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
-                // TODO: disable move buttons if no script selected in table
-            	if (selection.size() > 0) {
-                	QueuedScript selected = (QueuedScript) selection.getFirstElement();
-                	queueScriptViewModel.moveScript(selected, false);
-            	}
+                queueScriptViewModel.moveScript(false);
             }
         });
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptDown), 
+        		BeanProperties.value("downButtonEnabled").observe(queueScriptViewModel));
+        
         new Label(parent, SWT.NONE);
 
         NicosControlButtonPanel controlPanel =

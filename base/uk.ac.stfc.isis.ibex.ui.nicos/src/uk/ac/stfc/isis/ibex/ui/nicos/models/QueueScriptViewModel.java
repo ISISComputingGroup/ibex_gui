@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +45,10 @@ public class QueueScriptViewModel extends ModelObject {
     private ScriptSendStatus scriptSendStatus;
     private String scriptSendErrorMessage;
     private DataBindingContext bindingContext = new DataBindingContext();
+	private QueuedScript selectedScript;
+	private Boolean upButtonEnabled = false;
+	private Boolean downButtonEnabled = false;
+	private Boolean dequeueButtonEnabled = false;
     /**
      * Constructor.
      * 
@@ -58,6 +64,13 @@ public class QueueScriptViewModel extends ModelObject {
                 BeanProperties.value("scriptSendErrorMessage").observe(model));
         bindingContext.bindValue(BeanProperties.value("scriptSendStatus").observe(this),
                 BeanProperties.value("scriptSendStatus").observe(model));
+        
+        model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				updateButtonEnablisation();
+			}
+		});
     }
 
 
@@ -121,24 +134,19 @@ public class QueueScriptViewModel extends ModelObject {
     
     /**
      * Dequeue the selected script on the script server.
-     * 
-     * @param selected
-     * 			the script to be dequeued
      */
-    public void dequeueScript(QueuedScript selected) {
+    public void dequeueScript() {
         // dequeue command only requires ID (reqid) of script
-    	model.dequeueScript(selected.reqid);
+    	model.dequeueScript(selectedScript.reqid);
     }
 
     /**
      * Move selected script position in queue according to supplied direction. 
      *
-     * @param selectedScript
-     * 			the selected script in the viewtable
      * @param directionUp
      * 			true if direction of desired movement is UP, false if DOWN
      */
-    public void moveScript(QueuedScript selectedScript, Boolean directionUp) {
+    public void moveScript(Boolean directionUp) {
 
     	List<QueuedScript> queue = model.getQueuedScripts();
     	int sourceIndex = queue.indexOf(selectedScript);
@@ -164,6 +172,8 @@ public class QueueScriptViewModel extends ModelObject {
 	    	
 	    	this.extractReqids(queue);
     	}
+    	
+    	updateButtonEnablisation();
     }
 
     /**
@@ -181,5 +191,96 @@ public class QueueScriptViewModel extends ModelObject {
     	}
     	
     	model.sendReorderedQueue(listOfScriptIDs);
+    	updateButtonEnablisation();
+    }
+    
+    private void updateButtonEnablisation() {
+    	updateDownButtonEnabled();
+    	updateUpButtonEnabled();
+    	updateDequeueButtonEnabled();
+    }
+    
+    /**
+     * TODO: doc
+     * @return
+     */
+    public void setSelectedScript(QueuedScript script) {
+    	this.selectedScript = script;
+    	
+    	updateButtonEnablisation();
+    }
+    
+    /**
+     * TODO: doc
+     * @return
+     */
+    public QueuedScript getSelectedScript() {
+    	return selectedScript;
+    }
+    
+    private void updateDequeueButtonEnabled() {
+    	firePropertyChange("dequeueButtonEnabled", null, dequeueButtonEnabled = selectedScript != null);
+	}
+
+	private void updateDownButtonEnabled() {
+    	QueuedScript lastScriptInQueue;
+    	try {
+    		lastScriptInQueue = model.getQueuedScripts().get(model.getQueuedScripts().size() - 1);
+    		 
+    		if (selectedScript == null) {
+	    		downButtonEnabled = false;
+	    	} else if (selectedScript.equals(lastScriptInQueue)) {
+	    		downButtonEnabled = false;
+			} else {
+				downButtonEnabled = true;
+			}
+    	} catch (IndexOutOfBoundsException e) {
+    		downButtonEnabled = false;
+    	}
+    	
+    	firePropertyChange("downButtonEnabled", null, downButtonEnabled);
+    }
+    
+    private void updateUpButtonEnabled() {
+    	QueuedScript firstScriptInQueue;
+    	try {
+    		firstScriptInQueue = model.getQueuedScripts().get(0);
+    		 
+    		if (selectedScript == null) {
+	    		upButtonEnabled = false;
+	    	} else if (selectedScript.equals(firstScriptInQueue)) {
+	    		upButtonEnabled = false;
+			} else {
+				upButtonEnabled = true;
+			}
+    	} catch (IndexOutOfBoundsException e) {
+    		upButtonEnabled = false;
+    	}
+    	
+    	firePropertyChange("upButtonEnabled", null, upButtonEnabled);
+    }
+    
+    /**
+     * TODO: doc
+     * @return
+     */
+    public boolean getUpButtonEnabled() {
+    	return upButtonEnabled;
+    }
+    
+    /**
+     * TODO: doc
+     * @return
+     */
+    public boolean getDownButtonEnabled() {
+    	return downButtonEnabled;
+    }
+    
+    /**
+     * TODO: doc
+     * @return
+     */
+    public boolean getDequeueButtonEnabled() {
+    	return dequeueButtonEnabled;
     }
 }

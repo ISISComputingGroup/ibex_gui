@@ -85,6 +85,7 @@ public class QueuedScript extends ModelObject {
 	// TODO: documentation - do we need this method to be so complicated?
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj) {
 			return true;
 		}
