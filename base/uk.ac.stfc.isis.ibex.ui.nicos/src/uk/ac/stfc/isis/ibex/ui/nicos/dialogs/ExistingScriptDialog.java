@@ -7,9 +7,13 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -36,6 +40,9 @@ public class ExistingScriptDialog extends Dialog {
         this.script = script;
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
@@ -43,7 +50,7 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new StyledText(container, SWT.READ_ONLY | SWT.BORDER);
+        StyledText styledText = new StyledText(container, SWT.BORDER);
         DataBindingContext bindingContext = new DataBindingContext();
         
         bindingContext.bindValue(WidgetProperties.text().observe(styledText),
@@ -52,17 +59,34 @@ public class ExistingScriptDialog extends Dialog {
 		return container;
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {	
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, true);
+		
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true)
+		.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				script.sendNewScriptToNicos();
+			}
+		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
         shell.setText(script.getName());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Point getInitialSize() {
 		return INITIAL_SIZE;

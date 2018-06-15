@@ -1,6 +1,11 @@
 package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
+import java.util.Objects;
+
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
  * Holder of script information returned from server.
@@ -58,6 +63,13 @@ public class QueuedScript extends ModelObject {
 	}
 	
 	/**
+	 * Sends modified script to NICOS.
+	 */
+	public void sendNewScriptToNicos() {
+		Nicos.getDefault().getModel().modifyScript(reqid, script);
+	}
+	
+	/**
 	 * Get the name of the script.
 	 * @return The name of the script.
 	 */
@@ -73,16 +85,17 @@ public class QueuedScript extends ModelObject {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 
-	// TODO: documentation - do we need this method to be so complicated?
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((reqid == null) ? 0 : reqid.hashCode());
-		return result;
+		return Objects.hash(name, script, reqid, user);
 	}
 
-	// TODO: documentation - do we need this method to be so complicated?
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		
@@ -95,17 +108,13 @@ public class QueuedScript extends ModelObject {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		QueuedScript other = (QueuedScript) obj;
-		if (reqid == null) {
-			if (other.reqid != null) {
-				return false;
-			}
-		} else if (!reqid.equals(other.reqid)) {
-			return false;
-		}
-		return true;
+		
+		return Objects.equals(reqid, ((QueuedScript) obj).reqid);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return reqid;

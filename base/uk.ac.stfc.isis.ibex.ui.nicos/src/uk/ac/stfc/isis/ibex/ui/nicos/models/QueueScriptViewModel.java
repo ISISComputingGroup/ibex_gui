@@ -148,9 +148,8 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public void moveScript(Boolean directionUp) {
 
-    	List<QueuedScript> queue = model.getQueuedScripts();
-    	int sourceIndex = queue.indexOf(selectedScript);
-    	int targetIndex = 0;
+    	List<QueuedScript> copyOfQueue = new ArrayList<>(model.getQueuedScripts());
+    	int sourceIndex = copyOfQueue.indexOf(selectedScript);
 
     	// only move scripts:
     	// IF selected script is NOT first AND move direction is up
@@ -159,18 +158,13 @@ public class QueueScriptViewModel extends ModelObject {
     	
     	// TODO: test fails because there are more elements in list than scripts (10?) I think! extras contain null. 
     	
-    	if ((sourceIndex != 0 && directionUp) || (sourceIndex != queue.size() && !directionUp)) {
+    	if ((sourceIndex > 0 && directionUp) || (sourceIndex < copyOfQueue.size() && !directionUp)) {
 	    	
 	    	// subtract 1 if direction UP, add 1 if DOWN
 	    	
-    		targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
-
-    		// TODO: Probably want to create a new queue and swap items in that, rather than modifying the queue passed in.
-	    	// i.e. use an unmodifiable list as the 'master' copy.
-	    	
-	    	/*List<QueuedScript> reorderedQueue = */Collections.swap(queue, sourceIndex, targetIndex);
-	    	
-	    	this.extractReqids(queue);
+    		int targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
+	    	Collections.swap(copyOfQueue, sourceIndex, targetIndex);
+	    	sendReorderedList(copyOfQueue);
     	}
     	
     	updateButtonEnablisation();
@@ -182,14 +176,14 @@ public class QueueScriptViewModel extends ModelObject {
      *  @param reorderedQueue
      *  		queue containing the reordered scripts
      */
-    public void extractReqids(List<QueuedScript> reorderedQueue) {
+    public void sendReorderedList(List<QueuedScript> reorderedQueue) {
  
     	List<String> listOfScriptIDs = new ArrayList<>(); 
     	
     	for (QueuedScript item : reorderedQueue) {
     		listOfScriptIDs.add(item.reqid);
     	}
-    	
+
     	model.sendReorderedQueue(listOfScriptIDs);
     	updateButtonEnablisation();
     }

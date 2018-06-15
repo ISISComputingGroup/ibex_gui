@@ -20,6 +20,7 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
+import uk.ac.stfc.isis.ibex.nicos.messages.ModifyScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
@@ -86,6 +88,11 @@ public class NicosModel extends ModelObject {
      * The period to ask the server for a status update (in ms).
      */
     private static final long UPDATE_STATUS_TIME = 1000;
+    
+    /**
+     * The reason to send to nicos for script modification. Could be defined by user in future.
+     */
+    private static final String MODIFICATION_REASON = "Script modified by IBEX.";
     
     private final ZMQSession session;
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
@@ -431,7 +438,7 @@ public class NicosModel extends ModelObject {
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
-        return new ArrayList<>(queuedScripts);
+        return Collections.unmodifiableList(queuedScripts);
     }
 	
     private void setScriptStatus(ScriptStatus scriptStatus) {
@@ -469,6 +476,25 @@ public class NicosModel extends ModelObject {
         setScriptSendStatus(ScriptSendStatus.NONE);
         // TODO: need to read NICOS reply in case of error
         DequeueScript nicosMessage = new DequeueScript(reqid);
+        SentMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+//        if (!scriptSendMessageDetails.isSent()) {
+//            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
+//            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+//        } else {
+//            setScriptSendStatus(ScriptSendStatus.SENT);
+//        }
+    }
+    
+    /**
+     * Modify script.
+     * 
+     * @param reqid ID of script to dequeue
+     * @param newcode the new code to send
+     */
+    public void modifyScript(String reqid, String newcode) {
+        setScriptSendStatus(ScriptSendStatus.NONE);
+        // TODO: need to read NICOS reply in case of error
+        ModifyScript nicosMessage = new ModifyScript(reqid, newcode, MODIFICATION_REASON);
         SentMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
 //        if (!scriptSendMessageDetails.isSent()) {
 //            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);

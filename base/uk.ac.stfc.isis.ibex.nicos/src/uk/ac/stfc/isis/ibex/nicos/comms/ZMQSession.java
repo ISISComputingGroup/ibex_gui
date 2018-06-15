@@ -149,7 +149,7 @@ public class ZMQSession {
                 return SentMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
             }
         } else {
-            LOG.warn("Error received from server " + resp);
+            LOG.warn("Error received from server " + resp + ", status was " + status);
             return SentMessageDetails.createSendFail(resp);
         }
     }
