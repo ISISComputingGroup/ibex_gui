@@ -202,6 +202,21 @@ public class RunInformationViewModel extends Closer {
      * The simulation mode status.
      */
 	public UpdatedObservableAdapter<Boolean> simMode;
+	
+	/**
+     * The used buffer fraction.
+     */
+	public UpdatedObservableAdapter<Double> eventModeBufUsed;
+
+	 /**
+     * The file size (MB).
+     */
+	public UpdatedObservableAdapter<Double> eventModeFileMB ;
+
+	 /**
+     * The data rate (MB/s).
+     */
+	public UpdatedObservableAdapter<Double> eventModeDataRate;
 
     /**
      * The constructor that binds updating values to observables.
@@ -209,6 +224,7 @@ public class RunInformationViewModel extends Closer {
      * @param observables
      *            A class containing observables bound to underling PVs
      */
+	
 	public RunInformationViewModel(DaeObservables observables) {
 		instrument = adapt(observables.instrumentName);
 		beamCurrent = adapt(observables.beamCurrent);
@@ -249,6 +265,10 @@ public class RunInformationViewModel extends Closer {
 		monitorCounts = adapt(observables.monitorCounts);
 		monitorTo = adapt(observables.monitorTo);
 		npRatio = adapt(observables.npRatio);
+		
+		eventModeBufUsed = adapt(observables.eventModeBufUsed);
+		eventModeFileMB = adapt(observables.eventModeFileMB);
+		eventModeDataRate = adapt(observables.eventModeDataRate);
 	}
 
 	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> observable) {

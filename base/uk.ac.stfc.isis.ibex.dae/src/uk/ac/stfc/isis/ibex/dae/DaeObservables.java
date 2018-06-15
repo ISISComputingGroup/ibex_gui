@@ -303,6 +303,21 @@ public class DaeObservables {
     /**
      * The default constructor for the class. Binds the observables to PVs.
      */
+    public final ForwardingObservable<Double> eventModeBufUsed;
+
+    /**
+     * An observable on the used buffer fraction.
+     */
+    public final ForwardingObservable<Double> eventModeFileMB;
+
+    /**
+     * An observable on the size of the file (MB).
+     */
+    public final ForwardingObservable<Double> eventModeDataRate;
+
+    /**
+     * An observable on the data rate (MB/s).
+     */
     public DaeObservables() {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("INSTNAME")));
@@ -407,6 +422,12 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("SPECTRA_DIR")));
         simulationMode = obsFactory.getSwitchableObservable(new BooleanChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("SIM_MODE")));
+        eventModeBufUsed = obsFactory.getSwitchableObservable(new DoubleChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEBUFUSED")));
+        eventModeFileMB = obsFactory.getSwitchableObservable(new DoubleChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEFILEMB")));
+        eventModeDataRate = obsFactory.getSwitchableObservable(new DoubleChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEDATARATE")));
     }
 
     /**
