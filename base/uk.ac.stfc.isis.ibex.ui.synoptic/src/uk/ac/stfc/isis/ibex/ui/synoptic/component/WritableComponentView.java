@@ -53,14 +53,14 @@ public class WritableComponentView extends Composite {
 	private Label propertyName;
 	private Text text;
 	private Composite composite;
-	private Button setButton;
+	
 	
 	private final WritableComponentProperty property;
 	
 	private final ModifyListener textModifyListener = new ModifyListener() {
 		@Override
 		public void modifyText(ModifyEvent e) {
-			setButton.setEnabled(true);
+			
 		}
 	};
 	
@@ -106,9 +106,6 @@ public class WritableComponentView extends Composite {
 		
 		bindText(property);
 		
-		setButton = new Button(composite, SWT.CENTER);
-		setButton.setEnabled(false);
-		setButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/tick.png"));
 		
 		text.addFocusListener(new FocusListener() {
 			
@@ -128,18 +125,12 @@ public class WritableComponentView extends Composite {
 			public void handleEvent(Event event) {
 				if (event.detail == SWT.TRAVERSE_RETURN) {
 					sendValue();
-					setButton.setFocus();
+					
 				}
 			}
 		});
 		
-		setButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				sendValue();
-			}
-		});
-		
+				
 	}
 
 	private void bindText(final WritableComponentProperty property) {
@@ -153,6 +144,6 @@ public class WritableComponentView extends Composite {
 	private void sendValue() {
 	    property.writer().uncheckedWrite(text.getText());
 		parent.setFocus();
-		setButton.setEnabled(false);
+		
 	}
 }

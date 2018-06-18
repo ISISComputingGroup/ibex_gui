@@ -51,7 +51,7 @@ public abstract class OpiView extends OPIView {
             LOG.catching(e);
         }
     }
-
+    
     /**
      * Macros that the OPI has.
      *

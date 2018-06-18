@@ -316,7 +316,7 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_PymMoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_RFwdoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4">
-          <children xsi:type="basic:Part" xmi:id="_rvX2AIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Web Links"/>
+          <children xsi:type="basic:Part" xmi:id="_rvX2AIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Web Links"/>
         </children>
       </children>
     </children>
