@@ -53,8 +53,8 @@
       <children xsi:type="menu:MenuSeparator" xmi:id="_1qIX8H3WEee2jZQhjWIQ1g" elementId="navigate" toBeRendered="false" visible="false"/>
       <children xsi:type="menu:Menu" xmi:id="_2N6acH3WEee2jZQhjWIQ1g" elementId="help" toBeRendered="false" visible="false" label="Help"/>
     </mainMenu>
-    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status" closeable="true"/>
-    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks" closeable="true"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks"/>
     <sharedElements xsi:type="advanced:Area" xmi:id="_yi1esNadEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.area.0" selectedElement="_ZX9AENacEeekLPLQ_9IvJQ" label="Log Plotter Area">
       <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
         <tags>newtablook</tags>
@@ -96,11 +96,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png" tooltip="The device alarms on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
       <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_RgW1Q4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_McahUJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_RgW1Q4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_McahUJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_RgW1RYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_Sp6lYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_RgW1RYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_Sp6lYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
@@ -113,11 +117,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_-Y_6EIctEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam Status" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.beamstatus/icons/status_32x24.png" tooltip="The status of the beam and MCR news">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ENhdcIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3">
       <children xsi:type="basic:PartSashContainer" xmi:id="_orVuIojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.21" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_orVuI4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.23" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_kS5OQJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.4" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_orVuI4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.23" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_kS5OQJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.4" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_orVuJYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.26" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_lOLKwJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.5" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_orVuJYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.26" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_lOLKwJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.5" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_HX2EYIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.4" containerData="70" horizontal="true">
@@ -138,11 +146,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_btLvUIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" label="DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png" tooltip="Control and feedback from the data acquisition electronics">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ohPQoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.6">
       <children xsi:type="basic:PartSashContainer" xmi:id="_pg6EMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.22" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_pg6EM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.24" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_oxUhYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.7" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_pg6EM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.24" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_oxUhYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.7" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_pg6ENYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.27" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_p15j0JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.8" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_pg6ENYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.27" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_p15j0JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.8" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_svsOEIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.5" containerData="70">
@@ -158,11 +170,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_C5KekKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens" label="Device Screens" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.devicescreens/icons/screen_32x24.png" tooltip="Individual control screens for specific devices">
     <children xsi:type="basic:PartSashContainer" xmi:id="_S27i0KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_TT6ZwKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_ZrBs0KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_cSLVQKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_ZrBs0KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_cSLVQKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_aE920KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_dX_GwKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_aE920KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_dX_GwKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_FYy20KjlEee7e6-cGDhHXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.16" containerData="70" horizontal="true">
@@ -178,11 +194,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.experimentdetails/icons/file148_32x24.png" tooltip="Information relating to the experiment and who is conducting it">
     <children xsi:type="basic:PartSashContainer" xmi:id="_kv6hwJxPEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Tlr_gJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.10" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_Ux1pkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.6" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_WBVikJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.13" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_Ux1pkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.6" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_WBVikJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.13" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_X0AaEJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.7" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_Yt0-AJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.14" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_X0AaEJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.7" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_Yt0-AJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.14" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_c_MskJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.11" containerData="70">
@@ -205,11 +225,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_jl-k8KjWEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic" label="Synoptic" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.synoptic/icons/earth16_32x24.png" tooltip="An overall view of the whole instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_MvPBQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Nt8sQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_SvbCEKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_ToafkKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_SvbCEKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_ToafkKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.18" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.18" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_QLdbEKjYEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.15" containerData="70" horizontal="true">
@@ -231,11 +255,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="NICOS Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_32x24.png" tooltip="Control and feedback from the script server">
     <children xsi:type="basic:PartSashContainer" xmi:id="_41mgMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_5khbsKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_7JTBIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_PVspAKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_7JTBIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_PVspAKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_7liRMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_J_WPYKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_7liRMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_J_WPYKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_83AgIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
@@ -251,11 +279,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="__53Z4KjtEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.scripting" label="Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scripting/icons/script_32x24.png" tooltip="Console to control the instrument via scripts">
     <children xsi:type="basic:PartSashContainer" xmi:id="_6GVfkKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_63_mAKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="__UCTgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_CUS_gKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="__UCTgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_CUS_gKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="__9sUgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_DtVPAKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="__9sUgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_DtVPAKjvEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_krh18KkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
@@ -271,11 +303,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" selectedElement="_OcdgIIf-EeeTH-lQyXhh9A" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_32x24.png" tooltip="Links to useful web pages">
     <children xsi:type="basic:PartSashContainer" xmi:id="_OcdgIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
       <children xsi:type="basic:PartSashContainer" xmi:id="_rBCaMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.23" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_rBCaM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.25" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_uEhgYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.10" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_rBCaM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.25" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_uEhgYJF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.10" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_rBCaNYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.28" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_whUS8JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.11" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_rBCaNYjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.28" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_whUS8JF9EeeTKdd6Cxw1AA" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.11" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_PymMoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" containerData="70" horizontal="true">
@@ -288,11 +324,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_vR5b4KkKEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter" accessibilityPhrase="Log Plotter" label="Log Plotter" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.logplotter/icons/stocks2_32x24.png" tooltip="View graphed logs">
     <children xsi:type="basic:PartSashContainer" xmi:id="_NmT1kKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_WqnHoKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_fHGLwKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_gkmrkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_fHGLwKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_gkmrkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_na2xsKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_nzkzsKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_na2xsKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_nzkzsKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_qNDzkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.9" containerData="70" horizontal="true">
@@ -303,11 +343,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_9lXG4Kp9Eeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors" label="Motors" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.motor/icons/gears6_32x24.png" tooltip="A view of all motors on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="__zMkcKjdEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.18">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Bhbn4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.20" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_MOx7YKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.20" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_OPLs4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.15" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_MOx7YKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.20" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_OPLs4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.15" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.18" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_RKLeYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.18" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_RgwyYKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.9" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_o7cJoKqKEeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.24" containerData="70" horizontal="true">
@@ -332,11 +376,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_lb95kKj_EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator" label="Script Generator" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons/hammer_32x24.png" tooltip="A helper for building instrument control scripts">
     <children xsi:type="basic:PartSashContainer" xmi:id="_tTn84KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_u05iYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_xLzvYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_x03TcKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_xLzvYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_x03TcKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_ymI_YKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_y0Zd0KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_ymI_YKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_y0Zd0KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_virOYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70">
@@ -360,11 +408,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_tAK8kKjYEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ioclog" label="IOC Log" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.log/icons/log_32x24.png" tooltip="Logs of any messages coming from individual devices">
     <children xsi:type="basic:PartSashContainer" xmi:id="_U9TkAKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_tBPeIKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_vivxkKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_xI_WoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_vivxkKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_xI_WoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.2" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_6vdhoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_7nxCoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_6vdhoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.12" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_7nxCoKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.3" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_b1ULYKjeEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="70">
@@ -375,11 +427,15 @@
   <snippets xsi:type="advanced:Perspective" xmi:id="_EEs1QAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer" label="Journal Viewer" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.journalviewer/icons/journal_viewer_32x24.png" tooltip="View data on previous experiments">
     <children xsi:type="basic:PartSashContainer" xmi:id="_QZEw8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.17">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Rqjm8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="32">
-          <children xsi:type="advanced:Placeholder" xmi:id="_glcR4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_glcR4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_ekSScAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="68">
-          <children xsi:type="advanced:Placeholder" xmi:id="_g7MfcAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw"/>
+        <children xsi:type="basic:PartStack" xmi:id="_ekSScAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_g7MfcAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_SW36YAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.21" containerData="70">

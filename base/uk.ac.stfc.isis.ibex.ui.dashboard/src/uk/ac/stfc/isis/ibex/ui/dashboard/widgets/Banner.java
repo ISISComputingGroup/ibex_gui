@@ -75,16 +75,17 @@ public class Banner extends Composite {
 		details.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		lblRun = new Label(details, SWT.NONE);
+		lblRun.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblRun.setFont(textFont);
 		lblRun.setText("Run:");
 		
 		runNumber = new Label(details, SWT.NONE);
-		runNumber.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		runNumber.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		runNumber.setFont(textFont);
 		runNumber.setText("00000001");
 		
 		simMode = new Label(details, SWT.NONE);
-		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		simMode.setFont(simulationModeFont);
 		simMode.setText("SIMULATION MODE");
 		

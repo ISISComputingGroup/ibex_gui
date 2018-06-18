@@ -34,6 +34,6 @@ public final class PyDevConfiguration {
 		IInterpreterManager iMan = PydevPlugin.getPythonInterpreterManager(true);
 		NullProgressMonitor monitor = new NullProgressMonitor();
 		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(), monitor, false);
-		iMan.setInfos(new IInterpreterInfo[]{interpreterInfo}, null, null);
+		iMan.setInfos(new IInterpreterInfo[]{interpreterInfo}, null, monitor);
 	}
 }

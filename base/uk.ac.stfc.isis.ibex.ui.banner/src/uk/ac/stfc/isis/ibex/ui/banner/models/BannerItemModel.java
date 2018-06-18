@@ -24,11 +24,13 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.graphics.Color;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItemState;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.StringUtils;
+import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
 /**
@@ -37,57 +39,88 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
  */
 public class BannerItemModel extends ModelObject implements IndicatorModel {
 
-    private SettableUpdatedValue<String> text;
-    private SettableUpdatedValue<Color> color;
-    private SettableUpdatedValue<Boolean> availability;
-    private BannerItemViewState converter;
-
+    private final SettableUpdatedValue<String> text = new SettableUpdatedValue<>();
+    private final SettableUpdatedValue<Boolean> availability = new SettableUpdatedValue<>(true);
+    private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
+    
+    private final BannerItem item;
+    
     /**
      * Instantiates model and converter.
      * 
      * @param item the banner item being observed
      */
-    public BannerItemModel(BannerItem item) {
-        converter = new BannerItemViewState(item);
-        text = new SettableUpdatedValue<>();
-        color = new SettableUpdatedValue<>();
-        availability = new SettableUpdatedValue<>(true);
+    public BannerItemModel(final BannerItem item) {
+    	this.item = item;
+                
         item.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("currentState")) {
-                    BannerItemState newstate = (BannerItemState) evt.getNewValue();
-                    converter.setState(newstate);
-                    update();
-                }
+            public void propertyChange(final PropertyChangeEvent evt) {
+            	update();
             }
         });
-
+        
         update();
+    }
+    
+    private synchronized void update() {
+    	updateText();
+    	updateColour();
+    }
+    
+    private synchronized void updateText() {
+    	String setText;
+    	
+    	if (item.value() == null) {
+    		setText = item.name() + " (disconnected)";
+    	} else {
+    		setText = item.name() + ": " + item.value();
+    	}
+    	
+    	StringUtils.truncateWithEllipsis(setText, 30);
+    	
+    	text.setValue(setText);
+    }
+    
+    private synchronized void updateColour() {
+    	Color colour;
+    	AlarmState alarm = item.alarm();
+    	
+    	if (alarm == AlarmState.MAJOR) {
+    		colour = IndicatorColours.RED;
+    	} else if (alarm == AlarmState.MINOR) {
+    		colour = IndicatorColours.ORANGE;
+    	} else if (alarm == AlarmState.UNDEFINED || alarm == AlarmState.INVALID) {
+    		colour = IndicatorColours.PURPLE;
+    	} else {
+    		colour = IndicatorColours.BLACK;
+    	}
+    	
+    	this.colour.setValue(colour);
     }
 
     /**
-     * Updates the display parameters of the status message in the GUI upon
-     * state change of the banner item.
+     * @return the text of this banner item.
      */
-    public void update() {
-        text.setValue(converter.getMessage());
-        color.setValue(converter.color());
-    }
+	@Override
+	public UpdatedValue<String> text() {
+		return text;
+	}
 
-    @Override
-    public UpdatedValue<String> text() {
-        return text;
-    }
+	/**
+	 * @return the colour of this banner item.
+	 */
+	@Override
+	public UpdatedValue<Color> color() {
+		return colour;
+	}
 
-    @Override
-    public UpdatedValue<Color> color() {
-        return color;
-    }
+	/**
+	 * @return the availability of this banner item.
+	 */
+	@Override
+	public UpdatedValue<Boolean> availability() {
+		return availability;
+	}
 
-    @Override
-    public UpdatedValue<Boolean> availability() {
-        return availability;
-    }
 }

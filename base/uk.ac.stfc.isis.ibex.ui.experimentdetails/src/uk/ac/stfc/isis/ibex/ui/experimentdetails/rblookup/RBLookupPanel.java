@@ -94,7 +94,7 @@ public class RBLookupPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.selection().observe(date), BeanProperties.value("dateSearch").observe(viewModel));
 		bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboRole), BeanProperties.value("roleSearch").observe(viewModel));
         bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify), BeanProperties.value("nameSearch").observe(viewModel));
-		
+        
 		experimentIDTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {

@@ -25,46 +25,71 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.StringUtils;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
+import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorStateObserver;
+import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorViewStateConverter;
 
 /**
- * Current configuration indicator model.
+ * Dae simulation mode model.
  */
-public class CurrentConfigIndicatorModel extends Closer implements IndicatorModel {
+public class CurrentConfigModel extends Closer implements IndicatorModel {
 
-    private static final String ELIPSES = "...";
-	protected static final int MAX_CONFIG_DISPLAY_LENGTH = 30;
-	private IndicatorObserver<DisplayConfiguration> observer;
+    private IndicatorStateObserver<DisplayConfiguration> observer;
+    private static final String CONFIG_PREFIX = "Config: ";
 
-    /**
-     * Constructor.
+	/**
+     * Constructor for the dae simulation mode banner model.
      */
-    public CurrentConfigIndicatorModel() {
-        observer = registerForClose(new IndicatorObserver<DisplayConfiguration>(Configurations.getInstance().display().displayCurrentConfig()) {
-			
+    public CurrentConfigModel() {
+    	
+    	ForwardingObservable<DisplayConfiguration> currConfig = Configurations.getInstance().display().displayCurrentConfig();
+    	
+    	IndicatorViewStateConverter<DisplayConfiguration> converter = new IndicatorViewStateConverter<DisplayConfiguration>() {
+
+    		private DisplayConfiguration state;
+    		
 			@Override
-			protected void setUnknown() {
-				text.setValue("Configuration is unknown");
-                color.setValue(IndicatorColours.RED);
+			public void setState(DisplayConfiguration state) {
+				this.state = state;
 			}
-			
+
 			@Override
-			protected void setSimMode(DisplayConfiguration value) {
-				if (value != null) {
-					String name = value.name();
-					if (name.length() > MAX_CONFIG_DISPLAY_LENGTH) {
-						name = name.substring(0, MAX_CONFIG_DISPLAY_LENGTH - ELIPSES.length()) + ELIPSES;
-					}
-                    text.setValue("Configuration: " + name);
-                    color.setValue(IndicatorColours.BLACK);
-                } else {
-                	setUnknown();
-                }	
+			public String getMessage() {
+				try {
+				    return StringUtils.truncateWithEllipsis(String.format("%s%s", CONFIG_PREFIX, state.name()), 50);
+				} catch (NullPointerException e) {
+					return "Config: unknown";
+				}
 			}
-		});
+
+			@Override
+			public Color color() {
+				return IndicatorColours.BLACK;
+			}
+
+			@Override
+			public Boolean toBool() {
+				return availability();
+			}
+
+			@Override
+			public Boolean availability() {
+				try {
+				    return state.isConnected();
+				} catch (NullPointerException e) {
+					return false;
+				}
+			}
+		};
+    	
+        observer = registerForClose(new IndicatorStateObserver<DisplayConfiguration>(currConfig, converter));
+        
+        
     }
 
     /**
