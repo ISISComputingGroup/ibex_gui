@@ -183,7 +183,21 @@
 					</macro>                   
 				</macros>
 			</value>
-		</entry>        
+		</entry> 
+		<entry>
+			<key>In Out Laser</key>
+			<value>
+				<categories>
+					<category>Lasers</category>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>ALIGNMENTLASER</type>
+				<path>inout_laser.opi</path>
+				<description>The OPI for a moving alignement laser.</description>
+				<macros>             
+				</macros>
+			</value>
+		</entry>		
 		<entry>
 			<key>In Out Monitor</key>
 			<value>

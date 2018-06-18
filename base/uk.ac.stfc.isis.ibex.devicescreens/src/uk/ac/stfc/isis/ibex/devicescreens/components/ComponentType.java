@@ -58,6 +58,8 @@ public enum ComponentType {
     TDK_LAMBDA_GENESYS,
     /** Beamstop component type. */
 	BEAMSTOP, 
+	/** Alignment laser component type. */
+	ALIGNMENTLASER,
     /** Moving monitor component type. */
 	MOVINGMONITOR,
     /** Rotating bench component type. */
