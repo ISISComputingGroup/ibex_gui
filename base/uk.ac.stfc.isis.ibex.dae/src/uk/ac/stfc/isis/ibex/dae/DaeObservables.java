@@ -293,7 +293,7 @@ public class DaeObservables {
      * An observable on the neutron proton ratio.
      */
     public final ForwardingObservable<Double> npRatio;
-    
+
     /**
      * An observable on the simulation mode state.
      */
@@ -313,7 +313,7 @@ public class DaeObservables {
      * An observable on the data rate (MB/s).
      */
     public final ForwardingObservable<Double> eventModeDataRate;
-   
+
     /**
      * The default constructor for the class. Binds the observables to PVs.
      */
@@ -326,9 +326,8 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("RUNNUMBER")));
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("TITLE")));
-        displayTitle =
-                obsFactory.getSwitchableObservable(new BooleanChannel(),
-                        InstrumentUtils.addPrefix(DAE.endWith("TITLE:DISPLAY")));
+        displayTitle = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("TITLE:DISPLAY")));
         users = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("_USERNAME")));
         goodFrames = obsFactory.getSwitchableObservable(new IntegerChannel(),
@@ -422,7 +421,7 @@ public class DaeObservables {
         simulationMode = obsFactory.getSwitchableObservable(new BooleanChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("SIM_MODE")));
         eventModeBufUsed = obsFactory.getSwitchableObservable(new DoubleChannel(),
-        		InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEBUFUSED")));
+                InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEBUFUSED")));
         eventModeFileMB = obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEFILEMB")));
         eventModeDataRate = obsFactory.getSwitchableObservable(new DoubleChannel(),
