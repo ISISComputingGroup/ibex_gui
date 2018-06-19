@@ -58,7 +58,7 @@
    </extension>
    <extension point="org.eclipse.ui.bindings">
       <key
-            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
+            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspectiveHandler"
             schemeId="IBEX_key_scheme"
             sequence="Alt+Shift+S">
          <parameter

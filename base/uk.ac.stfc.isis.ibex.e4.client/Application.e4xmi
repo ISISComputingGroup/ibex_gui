@@ -291,11 +291,8 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_krh18KkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_sUtoIKkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" visible="false" containerData="70">
-          <children xsi:type="basic:Part" xmi:id="_k3_X4KkBEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting" containerData="70" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.Perspective" label="Scripting"/>
-        </children>
         <children xsi:type="basic:PartStack" xmi:id="_numlYKkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="70">
-          <children xsi:type="basic:Part" xmi:id="_zm3sgKkUEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" toBeRendered="false" visible="false" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scripting/uk.ac.stfc.isis.ibex.ui.scripting.EmptyView"/>
+          <children xsi:type="basic:Part" xmi:id="_zm3sgKkUEeeNfrob_9kcDA" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView"/>
         </children>
       </children>
     </children>
@@ -314,10 +311,8 @@
           </children>
         </children>
       </children>
-      <children xsi:type="basic:PartSashContainer" xmi:id="_PymMoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_RFwdoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4">
-          <children xsi:type="basic:Part" xmi:id="_rvX2AIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Web Links"/>
-        </children>
+      <children xsi:type="basic:PartStack" xmi:id="_UjrzMHO1EeiCkptpdugONg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.4" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_-SS0wHO0EeiCkptpdugONg" elementId="uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView"/>
       </children>
     </children>
   </snippets>

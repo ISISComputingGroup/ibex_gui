@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.osgi.framework.console.ConsoleSession;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbench;
@@ -48,7 +49,8 @@ public class PerspectiveSwitcher {
 		}
 	};
 	
-	public static final String LOG_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.log.perspective";
+	public static final String LOG_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.log.perspective";	
+
 	
 	public PerspectiveSwitcher(IWorkbench workbench, IWorkbenchWindow workbenchWindow) {
 		this.workbench = workbench;
@@ -67,7 +69,7 @@ public class PerspectiveSwitcher {
     				LOG.info("Switching to: " + perspectiveID);
     				
     				//Restart counter if switching to or from IOC log
-    				if (isLogPerspective(perspectiveID) || isCurrentPerspective(LOG_PERSPECTIVE_ID)) {
+    				if (isLogPerspective(perspectiveID)) {
 						counter.start();
 					}
     					
@@ -89,7 +91,7 @@ public class PerspectiveSwitcher {
 	}
 	
 	private boolean isLogPerspective(String perspectiveID) {
-		return perspectiveID.equals(LOG_PERSPECTIVE_ID);
+		return perspectiveID.equals(LOG_PERSPECTIVE_ID) || isCurrentPerspective(LOG_PERSPECTIVE_ID);
 	}
 	
 	private boolean isCurrentPerspective(String perspectiveID) {

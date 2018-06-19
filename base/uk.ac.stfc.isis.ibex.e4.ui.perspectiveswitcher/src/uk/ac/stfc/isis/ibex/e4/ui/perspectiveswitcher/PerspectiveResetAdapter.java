@@ -12,7 +12,6 @@ public class PerspectiveResetAdapter extends SelectionAdapter {
 	private final PerspectivesProvider provider;
 
 	public PerspectiveResetAdapter(PerspectivesProvider provider) {
-		super();
 		this.provider = provider;
 	}
 	

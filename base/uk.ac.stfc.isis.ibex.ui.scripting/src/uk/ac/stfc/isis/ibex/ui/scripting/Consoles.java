@@ -39,18 +39,17 @@ public class Consoles extends AbstractUIPlugin {
 	// The shared instance
 	private static Consoles plugin;
 
-    private GeniePythonConsoleFactory genieConsoleFactory;
+    private GeniePythonConsoleFactory genieConsoleFactory = new GeniePythonConsoleFactory();
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
     public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		PyDevConfiguration.configure();
-        genieConsoleFactory = new GeniePythonConsoleFactory();
+    	PyDevConfiguration.configure();
+    	System.out.println("Scripting plugin started.");
 	}
 
     /**
@@ -68,15 +67,15 @@ public class Consoles extends AbstractUIPlugin {
 		return false;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
     public void stop(BundleContext context) throws Exception {
 		ScriptConsoleManager.getInstance().closeAll();
 		plugin = null;
 		super.stop(context);
+		System.out.println("Scripting plugin stopped.");
 	}
 
 	/**
@@ -94,5 +93,4 @@ public class Consoles extends AbstractUIPlugin {
     public void createConsole() {
         genieConsoleFactory.createConsole(Commands.setInstrument());
     }
-
 }

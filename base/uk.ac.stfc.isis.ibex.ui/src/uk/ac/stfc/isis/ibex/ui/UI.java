@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -30,7 +31,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class UI extends AbstractUIPlugin {
+public class UI extends AbstractUIPlugin implements IStartup {
 
     /**
      * The plug-in ID.
@@ -106,6 +107,14 @@ public class UI extends AbstractUIPlugin {
      */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void earlyStartup() {
+		// Do nothing.
 	}
 
 }
