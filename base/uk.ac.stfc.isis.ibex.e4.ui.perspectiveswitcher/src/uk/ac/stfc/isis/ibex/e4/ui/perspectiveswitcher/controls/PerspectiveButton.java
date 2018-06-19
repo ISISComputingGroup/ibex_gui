@@ -5,22 +5,42 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
+/**
+ * Class for Perspective Buttons.
+ *
+ */
 public class PerspectiveButton extends Button {
-    
+
     private final MPerspective perspective;
     private final PerspectivesProvider perspectivesProvider;
 
-	public PerspectiveButton(Composite parent, MPerspective perspective, PerspectivesProvider perspectivesProvider) {
-		super(parent, perspective.getLabel(), perspective.getIconURI(), perspective.getTooltip());
-		
-		this.model = new PerspectiveButtonViewModel();		
-		this.perspective = perspective;
-		this.perspectivesProvider = perspectivesProvider;
-	}
-	
-	@Override
-	protected void mouseClickAction() {
-		super.mouseClickAction();
-		perspectivesProvider.getPartService().switchPerspective(perspective);
-	}
+    /**
+     * Call constructor for Button and copy passed perspective and
+     * perspectivesProvider.
+     * 
+     * @param parent
+     *            Composite
+     * @param perspective
+     *            MPerspective
+     * @param perspectivesProvider
+     *            PerspectivesProvider
+     * @param model
+     *            ButtonViewModel
+     */
+    public PerspectiveButton(Composite parent, MPerspective perspective, PerspectivesProvider perspectivesProvider,
+            PerspectiveButtonViewModel model) {
+        super(parent, perspective.getIconURI(), perspective.getTooltip(), model);
+
+        this.perspective = perspective;
+        this.perspectivesProvider = perspectivesProvider;
+        if (this.perspectivesProvider.isSelected(perspective)) {
+            model.setActive(true);
+        }
+    }
+
+    @Override
+    protected void mouseClickAction() {
+        super.mouseClickAction();
+        perspectivesProvider.getPartService().switchPerspective(perspective);
+    }
 }

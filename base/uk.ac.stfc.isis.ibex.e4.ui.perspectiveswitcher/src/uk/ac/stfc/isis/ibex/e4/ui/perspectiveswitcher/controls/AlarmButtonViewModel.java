@@ -13,74 +13,74 @@ import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
  * alarm system; chiefly the number of active alarms.
  */
 public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
-	
-	private static final String ALARM = "Alarms";
+
+    private static final String ALARM = "Alarms";
     private static final Color ALARM_COLOR = SWTResourceManager.getColor(250, 150, 150);
-	private static final int MAX_ALARMS = 100;
-	
-	private String text = ALARM;
-	
+    private static final int MAX_ALARMS = 100;
+
+    private int alarmCount = 0;
+
     /**
      * Instantiates a new alarm count view model.
      *
-     * @param alarmCounter the alarm counter model to listen to
+     * @param alarmCounter
+     *            the alarm counter model to listen to
+     * @param buttonLabel
+     *            the label to appear on the button
      */
-	public AlarmButtonViewModel(final AlarmCounter alarmCounter) {
-		super();
+    public AlarmButtonViewModel(final AlarmCounter alarmCounter, String buttonLabel) {
+        super(buttonLabel);
         alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				update(alarmCounter.getCount());
-				
-			}
-		});		
-        update(alarmCounter.getCount());
+            @Override
+            public void propertyChange(PropertyChangeEvent arg0) {
+                alarmCount = alarmCounter.getCount();
+                update();
+            }
+        });
+        update();
+
     }
-	
-	public String getText() {
-		return text;
-	}
-	
-	private void setText(String newText) {
-		firePropertyChange("text", text, text = newText);
-	}
-	
+
     /**
      * Updates the model with the new alarm count.
      *
-     * @param count the current alarm count
+     * @param count
+     *            the current alarm count
      */
-	private void update(long count) {
-        setText(ALARM + alarmCountAsText(count));
-        setColor(chooseColor(count));
-	}
-	
-    private String alarmCountAsText(Long count) {
-    	
-    	String countText;
-    	if (count > 0) {
-    		countText = " (" + (count > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : count.toString()) + ")";
-    	}
-    	else {
-    		countText = "";
-    	}
-    	return countText;
-	}
-    
-    private Color chooseColor(Long alarmCount) {
-    	Color color;
-    	if (alarmCount > 0) {
-    		color = ALARM_COLOR;
-    	}
-    	else if (active) {
-    		color = ACTIVE;
-    	}
-    	else if (inFocus) {
-    		color = FOCUSSED;
-    	}
-    	else {
-    		color = DEFOCUSSED;
-    	}
-    	return color;
+    private void update() {
+        setText(ALARM + alarmCountAsText());
+        setColor(chooseColor());
+    }
+
+    private String alarmCountAsText() {
+        String countText;
+        if (alarmCount > 0) {
+            countText = " ("
+                    + (alarmCount > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : Integer.toString(alarmCount))
+                    + ")";
+        } else {
+            countText = "";
+        }
+        return countText;
+    }
+
+    private Color chooseColor() {
+        Color color;
+        if (alarmCount > 0) {
+            color = ALARM_COLOR;
+        } else if (active) {
+            color = ACTIVE;
+        } else if (inFocus) {
+            color = FOCUSSED;
+        } else {
+            color = DEFOCUSSED;
+        }
+        return color;
+    }
+
+    @Override
+    public void setFocus(boolean inFocus) {
+        super.setFocus(inFocus);
+        update();
     }
 }

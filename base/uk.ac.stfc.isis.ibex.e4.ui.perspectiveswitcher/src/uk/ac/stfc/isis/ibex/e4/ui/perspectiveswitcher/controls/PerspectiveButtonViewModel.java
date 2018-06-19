@@ -10,27 +10,42 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * alarm system; chiefly the number of active alarms.
  */
 public class PerspectiveButtonViewModel extends ButtonViewModel {
-	
+
     protected static final Color ACTIVE = SWTResourceManager.getColor(120, 170, 210);
     private static final Font ACTIVE_FONT = SWTResourceManager.getFont("Arial", 12, SWT.BOLD);
-    
-	protected boolean active = false;
-	
-	public PerspectiveButtonViewModel() {
-		super();
-		setActive(active);
-	}
 
-	public void setActive(boolean newActive) {
-		active = newActive;
-		setColor(active ? ACTIVE : DEFOCUSSED);
-		setFont(active ? ACTIVE_FONT : BUTTON_FONT);
-	}
+    protected boolean active = false;
 
-	@Override
-	public void setFocus(boolean inFocus) {
-		if (! active) {
-			super.setFocus(inFocus);
-		}
-	}
+    /**
+     * Calls constructor for ButtonViewModel, then sets the label to buttonLabel
+     * and defaults the active state to false.
+     * 
+     * @param buttonLabel
+     *            String: label for the button
+     */
+    public PerspectiveButtonViewModel(String buttonLabel) {
+        super();
+        setText(buttonLabel);
+        setActive(active);
+    }
+
+    /**
+     * Set the button to active (focused) or inactive (unfocused) by changing
+     * its colour and font.
+     * 
+     * @param newActive
+     *            boolean: true if active, false otherwise
+     */
+    public void setActive(boolean newActive) {
+        active = newActive;
+        setColor(active ? ACTIVE : DEFOCUSSED);
+        setFont(active ? ACTIVE_FONT : BUTTON_FONT);
+    }
+
+    @Override
+    public void setFocus(boolean inFocus) {
+        if (!active) {
+            super.setFocus(inFocus);
+        }
+    }
 }
