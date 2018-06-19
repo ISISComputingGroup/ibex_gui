@@ -44,7 +44,6 @@ public class NicosControlButtonPanel extends Composite {
 
     DataBindingContext bindingContext = new DataBindingContext();
 
-    private Label lblStatusReadback;
     private Button btnStop;
     private Button btnTogglePause;
     private ScriptStatusViewModel statusModel;
@@ -65,25 +64,22 @@ public class NicosControlButtonPanel extends Composite {
 
         this.statusModel = statusModel;
 
-        GridLayout gridLayout = new GridLayout(3, true);
+        GridLayout gridLayout = new GridLayout(2, true);
         gridLayout.marginHeight = 10;
         gridLayout.marginWidth = 10;
         setLayout(gridLayout);
-
-        lblStatusReadback = new Label(this, SWT.NONE);
-        lblStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         btnTogglePause = new Button(this, SWT.CENTER);
         btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnTogglePause.setText("Pause");
         btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
-        btnTogglePause.setToolTipText("Pause script after current operation");
+        btnTogglePause.setToolTipText("Pause script after the current operation completes.");
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnStop.setText("Stop Script Execution");
+        btnStop.setText("Stop All Scripts and Empty Queue");
         btnStop.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/stop.png"));
-        btnStop.setToolTipText("Abort current script and empty queue");
+        btnStop.setToolTipText("Abort current script and empty the queue. Equivalent to resetting NICOS.");
 
         bind();
     }
@@ -97,8 +93,6 @@ public class NicosControlButtonPanel extends Composite {
                 BeanProperties.value("enableButtons").observe(statusModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblStatusReadback),
-                BeanProperties.value("statusReadback").observe(statusModel));
         
         btnTogglePause.addSelectionListener(new SelectionAdapter() {
             @Override
