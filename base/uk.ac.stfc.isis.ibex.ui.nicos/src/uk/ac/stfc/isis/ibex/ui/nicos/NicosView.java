@@ -79,6 +79,8 @@ public class NicosView extends ViewPart {
 	private ScriptStatusViewModel scriptStatusViewModel;
     private OutputLogViewModel outputLogViewModel;
 
+	private Label lblCurrentError;
+
     /**
      * The default constructor for the view.
      */
@@ -101,44 +103,32 @@ public class NicosView extends ViewPart {
         glParent.marginHeight = 10;
         glParent.marginWidth = 10;
         parent.setLayout(glParent);
-
-        // Connection info
-        Composite connectionGrp = new Composite(parent, SWT.NONE);
-        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 3, 1));
-        GridLayout connLayout = new GridLayout(2, false);
-        connLayout.marginRight = 10;
-        connLayout.marginHeight = 10;
-        connLayout.marginWidth = 10;
-        connectionGrp.setLayout(connLayout);
-
-        Label lblConnectionStatus = new Label(connectionGrp, SWT.NONE);
-        GridData connStatusLayoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
-        connStatusLayoutData.widthHint = 100;
-        lblConnectionStatus.setLayoutData(connStatusLayoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionStatus),
-                BeanProperties.value("connectionStatus").observe(model), null, new ConnectionStatusConverter());
-
-        Label lblConnectionError = new Label(connectionGrp, SWT.NONE);
-        lblConnectionError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
-                BeanProperties.value("connectionErrorMessage").observe(model));
         
         Composite currentScriptInfoContainer = new Composite(parent, SWT.NONE);
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        currentScriptInfoContainer.setLayout(new GridLayout(2, false));
+        currentScriptInfoContainer.setLayout(new GridLayout(4, false));
         
         lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
         lblCurrentScriptStatus.setText("Current script status: ");
         
         Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
-        lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+         lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
                 BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
+        
+        lblCurrentError = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblCurrentError.setText("Current error: ");
+        
+        Label errorIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
+        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(errorIndicator),
+                BeanProperties.value("error").observe(model));
+        
         new Label(parent, SWT.NONE);
         
         Label lblOutput = new Label(parent, SWT.NONE);
         lblOutput.setText("Output");
-        
+               
         StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -162,7 +152,7 @@ public class NicosView extends ViewPart {
         });
         
         Label lblQueuedScripts = new Label(parent, SWT.NONE);
-        lblQueuedScripts.setText("Queued scripts (double click to see contents):");
+        lblQueuedScripts.setText("Queued scripts (double click name to see contents):");
         new Label(parent, SWT.NONE);
         
         final ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
@@ -214,32 +204,18 @@ public class NicosView extends ViewPart {
 		
         Composite scriptSendGrp = new Composite(parent, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout ssgLayout = new GridLayout(6, false);
+        GridLayout ssgLayout = new GridLayout(2, false);
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
         scriptSendGrp.setLayout(ssgLayout);
 		        
         Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-        btnCreateScript.setText("Create Script");
+        btnCreateScript.setText("Create Script and Add to Queue");
         btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         
         final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
         btnDequeueScript.setText("Dequeue Selected Script");
         btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-        
-        Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        layoutData.widthHint = 80;
-        lblQueueScriptStatus.setLayoutData(layoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
-        BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
-
-        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        GridData gdLblQueueScriptError = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gdLblQueueScriptError.widthHint = 80;
-        lblQueueScriptError.setLayoutData(gdLblQueueScriptError);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
-        BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
         
         btnCreateScript.addSelectionListener(new SelectionAdapter() {
         @Override
