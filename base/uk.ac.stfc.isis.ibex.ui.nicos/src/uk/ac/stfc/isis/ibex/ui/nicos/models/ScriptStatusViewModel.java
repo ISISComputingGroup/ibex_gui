@@ -48,6 +48,7 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param model the NicosModel to observe
 	 */
 	public ScriptStatusViewModel(final NicosModel model) {
@@ -68,7 +69,12 @@ public class ScriptStatusViewModel extends ModelObject {
             }
         });
 	}
-	
+
+	/**
+	 * TODO: doc
+	 * 
+	 * @param lineNumber
+	 */
 	private void setLineNumber(int lineNumber) {
 		String line;
 		
@@ -116,12 +122,18 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * A formatted string representation of the line number to display on the user interface.
+	 * 
 	 * @return a formatted string representation of the line number to display on the user interface
 	 */
 	public String getLineNumber() {
 		return lineNumberStr;
 	}
-
+    
+	/**
+	 * TODO: doc
+	 * 
+	 * @param icon
+	 */
     private void setToggleButtonIcon(Image icon) {
         firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
@@ -132,7 +144,12 @@ public class ScriptStatusViewModel extends ModelObject {
     public Image getToggleButtonIcon() {
         return toggleButtonIcon;
     }
-
+    
+    /**
+     * TODO: doc
+     * 
+     * @param text
+     */
     private void setToggleButtonText(String text) {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
     }
@@ -163,18 +180,28 @@ public class ScriptStatusViewModel extends ModelObject {
             model.sendExecutionInstruction(PAUSE_INSTRUCTION);
         }
     }
-
+    
+    /**
+     * TODO: doc
+     * 
+     * @param enable
+     */
     private void setEnableButtons(boolean enable) {
         firePropertyChange("enableButtons", enableButtons, enableButtons = enable);
     }
 
     /**
-     * @return Whether the script run control buttons should be enabled.
+     * @return Whether or not the script run control buttons should be enabled.
      */
     public boolean getEnableButtons() {
         return enableButtons;
     }
-
+    
+    /**
+     * TODO: doc
+     * 
+     * @param status
+     */
     private void setStatusReadback(ScriptStatus status) {
         String displayString = "Status is: " + status.getDesc();
         firePropertyChange("statusReadback", statusReadback, statusReadback = displayString);

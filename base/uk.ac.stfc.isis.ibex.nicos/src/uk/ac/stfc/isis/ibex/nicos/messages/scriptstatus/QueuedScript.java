@@ -2,10 +2,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
 import java.util.Objects;
 
-import com.google.common.base.Strings;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
  * Holder of script information returned from server.
@@ -48,6 +45,7 @@ public class QueuedScript extends ModelObject {
 	
 	/**
 	 * Get the script contents.
+	 * 
 	 * @return The script contents.
 	 */
 	public String getCode() {
@@ -56,21 +54,16 @@ public class QueuedScript extends ModelObject {
 	
 	/**
 	 * Set the contents of the script.
+	 * 
 	 * @param script The contents of the script.
 	 */
 	public void setCode(String script) {
 		firePropertyChange("code", this.script, this.script = script);
 	}
-	
-	/**
-	 * Sends modified script to NICOS.
-	 */
-	public void sendNewScriptToNicos() {
-		Nicos.getDefault().getModel().modifyScript(reqid, script);
-	}
-	
+
 	/**
 	 * Get the name of the script.
+	 * 
 	 * @return The name of the script.
 	 */
 	public String getName() {
@@ -79,6 +72,7 @@ public class QueuedScript extends ModelObject {
 
 	/**
 	 * Set the name of the script.
+	 * 
 	 * @param name The name of the script.
 	 */
 	public void setName(String name) {
@@ -118,6 +112,5 @@ public class QueuedScript extends ModelObject {
 	@Override
 	public String toString() {
 		return reqid;
-	}
-	
+	}	
 }

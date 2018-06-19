@@ -90,7 +90,10 @@ public class NicosView extends ViewPart {
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(3, false);
@@ -172,6 +175,7 @@ public class NicosView extends ViewPart {
         		return code.getName();
         	}
         });
+        
         queuedScriptsViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
         queuedScriptsViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
@@ -181,6 +185,7 @@ public class NicosView extends ViewPart {
 				dialog.open();
 			}
 		});
+        
         queuedScriptsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
@@ -282,7 +287,7 @@ public class NicosView extends ViewPart {
     }
 
     /**
-     * 
+     * {@inheritDoc}
      */
     @Override
     public void setFocus() {

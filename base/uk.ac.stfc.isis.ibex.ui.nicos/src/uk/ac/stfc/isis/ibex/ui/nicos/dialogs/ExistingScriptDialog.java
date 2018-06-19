@@ -9,11 +9,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -50,7 +48,7 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new StyledText(container, SWT.BORDER);
+        StyledText styledText = new StyledText(container, SWT.BORDER | SWT.READ_ONLY);
         DataBindingContext bindingContext = new DataBindingContext();
         
         bindingContext.bindValue(WidgetProperties.text().observe(styledText),
@@ -64,15 +62,8 @@ public class ExistingScriptDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, true);
-		
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true)
-		.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				script.sendNewScriptToNicos();
-			}
-		});
+
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 	}
 	
 	/**

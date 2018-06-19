@@ -39,7 +39,6 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
-import uk.ac.stfc.isis.ibex.nicos.messages.ModifyScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
@@ -88,12 +87,17 @@ public class NicosModel extends ModelObject {
      * The period to ask the server for a status update (in ms).
      */
     private static final long UPDATE_STATUS_TIME = 1000;
+
+    /**
+     * TODO: doc
+     */
+    private static final int MESSAGES_SCALE_FACTOR = 10;
     
     /**
-     * The reason to send to nicos for script modification. Could be defined by user in future.
+     * TODO: doc
      */
-    private static final String MODIFICATION_REASON = "Script modified by IBEX.";
-    
+    private static final int MESSAGES_THRESHOLD = 100;
+
     private final ZMQSession session;
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
     private String scriptSendErrorMessage = "";
@@ -108,9 +112,6 @@ public class NicosModel extends ModelObject {
     private long lastEntryTime;
     private List<QueuedScript> queuedScripts = new ArrayList<>();
 
-    private static final int MESSAGES_SCALE_FACTOR = 10;
-    private static final int MESSAGES_THRESHOLD = 100;
-
     /**
      * Default constructor.
      * 
@@ -118,7 +119,7 @@ public class NicosModel extends ModelObject {
      * 
      * @param session
      *            the session to use to send and receive messages to and from
-     *            the script sever
+     *            the script server
      * @param connectionJob
      *            the job that will periodically be run to reconnect to NICOS if
      *            a connection has failed. (pulled out of class for testing)
@@ -159,6 +160,12 @@ public class NicosModel extends ModelObject {
         this.connectionJob.schedule();
     }
 
+    /**
+     * TODO: doc
+     * 
+     * @param message
+     * 			
+     */
     private void failConnection(String message) {
         setConnectionStatus(ConnectionStatus.FAILED);
         LOG.error(message);
@@ -242,14 +249,19 @@ public class NicosModel extends ModelObject {
     public List<NicosLogEntry> getLogEntries() {
         return newLogEntries;
     }
-
+    
+    /**
+     * TODO: doc
+     * 
+     * @param newLogEntries
+     */
     private void setLogEntries(List<NicosLogEntry> newLogEntries) {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
         this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
     }
 
     /**
-     * Send a script to Nicos. Do not wait for a reply the acknowledgement can
+     * Send a script to NICOS. Do not wait for a reply the acknowledgement can
      * be found in script send status.
      * 
      * @param script
@@ -285,7 +297,7 @@ public class NicosModel extends ModelObject {
     }
 
     /**
-     * Send a message to Nicos
+     * Send a message to NICOS.
      * 
      * @param nicosMessage
      *            message to send
@@ -407,6 +419,12 @@ public class NicosModel extends ModelObject {
         }
     }
 
+    /**
+     * TODO: doc
+     * 
+     * @param entries
+     * @return
+     */
     private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
         List<NicosLogEntry> filtered = new ArrayList<NicosLogEntry>();
         for (NicosLogEntry entry : entries) {
@@ -417,30 +435,47 @@ public class NicosModel extends ModelObject {
         return filtered;
     }
 
+    /**
+     * TODO: doc
+     * 
+     * @param lineNumber
+     */
 	private void setLineNumber(int lineNumber) {		
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
 	
 	/**
 	 * The currently executing line number.
+	 * 
 	 * @return the line number
 	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}
 	
+	/**
+	 * TODO: doc
+	 * 
+	 * @param newQueuedScripts
+	 */
 	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {
 		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
 	}
 	
 	/**
 	 * The currently queued scripts.
+	 * 
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
         return Collections.unmodifiableList(queuedScripts);
     }
 	
+	/**
+	 * TODO: doc
+	 * 
+	 * @param scriptStatus
+	 */
     private void setScriptStatus(ScriptStatus scriptStatus) {
         firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
     }
@@ -454,12 +489,18 @@ public class NicosModel extends ModelObject {
         return scriptStatus;
     }
 
+    /**
+     * TODO: doc
+     * 
+     * @param script
+     */
 	private void setCurrentlyExecutingScript(String script) {
 		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}
 	
 	/**
 	 * The currently executing script.
+	 * 
 	 * @return the script
 	 */
 	public String getCurrentlyExecutingScript() {
@@ -485,25 +526,6 @@ public class NicosModel extends ModelObject {
 //        }
     }
     
-    /**
-     * Modify script.
-     * 
-     * @param reqid ID of script to dequeue
-     * @param newcode the new code to send
-     */
-    public void modifyScript(String reqid, String newcode) {
-        setScriptSendStatus(ScriptSendStatus.NONE);
-        // TODO: need to read NICOS reply in case of error
-        ModifyScript nicosMessage = new ModifyScript(reqid, newcode, MODIFICATION_REASON);
-        SentMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
-//        if (!scriptSendMessageDetails.isSent()) {
-//            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-//            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
-//        } else {
-//            setScriptSendStatus(ScriptSendStatus.SENT);
-//        }
-    }
-
     /**
      * Send reordered list of reqids to NICOS.
      * 

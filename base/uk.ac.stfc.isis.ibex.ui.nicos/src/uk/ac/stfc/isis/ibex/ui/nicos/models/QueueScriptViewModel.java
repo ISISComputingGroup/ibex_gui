@@ -49,7 +49,8 @@ public class QueueScriptViewModel extends ModelObject {
 	private Boolean upButtonEnabled = false;
 	private Boolean downButtonEnabled = false;
 	private Boolean dequeueButtonEnabled = false;
-    /**
+    
+	/**
      * Constructor.
      * 
      * @param model
@@ -68,7 +69,7 @@ public class QueueScriptViewModel extends ModelObject {
         model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				updateButtonEnablisation();
+				updateButtonEnablement();
 			}
 		});
     }
@@ -167,7 +168,7 @@ public class QueueScriptViewModel extends ModelObject {
 	    	sendReorderedList(copyOfQueue);
     	}
     	
-    	updateButtonEnablisation();
+    	updateButtonEnablement();
     }
 
     /**
@@ -185,37 +186,53 @@ public class QueueScriptViewModel extends ModelObject {
     	}
 
     	model.sendReorderedQueue(listOfScriptIDs);
-    	updateButtonEnablisation();
+    	updateButtonEnablement();
     }
     
-    private void updateButtonEnablisation() {
+    /**
+     * Call methods to update state of buttons
+     * 
+     */   
+    private void updateButtonEnablement() {
     	updateDownButtonEnabled();
     	updateUpButtonEnabled();
     	updateDequeueButtonEnabled();
     }
     
     /**
-     * TODO: doc
-     * @return
+     * Set the selected script.
+     * 
+     * @param script
+     * 		The selected script
      */
     public void setSelectedScript(QueuedScript script) {
     	this.selectedScript = script;
     	
-    	updateButtonEnablisation();
+    	updateButtonEnablement();
     }
     
     /**
-     * TODO: doc
-     * @return
+     * Return the selected script in the queue.
+     * 
+     * @return selectedScript
+     * 			The selected script in the queue
      */
     public QueuedScript getSelectedScript() {
     	return selectedScript;
     }
     
+    /**
+     * Determine whether or not Dequeue button can be enabled depending on whether or not script selected in queue.
+     * 
+     */
     private void updateDequeueButtonEnabled() {
     	firePropertyChange("dequeueButtonEnabled", null, dequeueButtonEnabled = selectedScript != null);
 	}
 
+    /**
+     * Determine whether or not Down button can be enabled depending on position of selected script in queue.
+     * 
+     */
 	private void updateDownButtonEnabled() {
     	QueuedScript lastScriptInQueue;
     	try {
@@ -235,6 +252,10 @@ public class QueueScriptViewModel extends ModelObject {
     	firePropertyChange("downButtonEnabled", null, downButtonEnabled);
     }
     
+    /**
+     * Determine whether or not Up button can be enabled depending on position of selected script in queue.
+     * 
+     */
     private void updateUpButtonEnabled() {
     	QueuedScript firstScriptInQueue;
     	try {
@@ -255,24 +276,27 @@ public class QueueScriptViewModel extends ModelObject {
     }
     
     /**
-     * TODO: doc
-     * @return
+     * Get enabled state of Up button.
+     * 
+     * @return enabled state of Up button
      */
     public boolean getUpButtonEnabled() {
     	return upButtonEnabled;
     }
     
     /**
-     * TODO: doc
-     * @return
+     * Get enabled state of Down button.
+     * 
+     * @return enabled state of Down button
      */
     public boolean getDownButtonEnabled() {
     	return downButtonEnabled;
     }
     
     /**
-     * TODO: doc
-     * @return
+     * Get enabled state of Dequeue button.
+     * 
+     * @return enabled state of Dequeue button
      */
     public boolean getDequeueButtonEnabled() {
     	return dequeueButtonEnabled;
