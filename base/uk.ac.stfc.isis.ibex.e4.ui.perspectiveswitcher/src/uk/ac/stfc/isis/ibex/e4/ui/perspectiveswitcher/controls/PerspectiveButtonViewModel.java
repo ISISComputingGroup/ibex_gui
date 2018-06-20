@@ -38,8 +38,18 @@ public class PerspectiveButtonViewModel extends ButtonViewModel {
      */
     public void setActive(boolean newActive) {
         active = newActive;
-        setColor(active ? ACTIVE : DEFOCUSSED);
+        setColor(chooseColor());
         setFont(active ? ACTIVE_FONT : BUTTON_FONT);
+        setFocus(false);
+    }
+
+    /**
+     * Choose a colour based on the state of the button.
+     * 
+     * @return colour
+     */
+    protected Color chooseColor() {
+        return active ? ACTIVE : DEFOCUSSED;
     }
 
     @Override

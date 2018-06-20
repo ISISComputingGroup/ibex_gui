@@ -19,6 +19,8 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     private static final int MAX_ALARMS = 100;
 
     private int alarmCount = 0;
+    private final FlashingButton flash;
+    private boolean alarmSeen = false;
 
     /**
      * Instantiates a new alarm count view model.
@@ -30,11 +32,19 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
      */
     public AlarmButtonViewModel(final AlarmCounter alarmCounter, String buttonLabel) {
         super(buttonLabel);
+
+        flash = new FlashingButton(this);
+        flash.setDefaultColour(DEFOCUSSED);
+
         alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent arg0) {
                 alarmCount = alarmCounter.getCount();
+                if (!active) {
+                    alarmSeen = false;
+                }
                 update();
+                updateFlashing();
             }
         });
         update();
@@ -44,12 +54,24 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     /**
      * Updates the model with the new alarm count.
      *
-     * @param count
-     *            the current alarm count
      */
-    private void update() {
+    protected void update() {
         setText(ALARM + alarmCountAsText());
         setColor(chooseColor());
+    }
+
+    /**
+     * Make sure that the button is flashing when required.
+     */
+    protected void updateFlashing() {
+        if (!this.active) {
+            // If there are alarms that the user hasn't seen yet.
+            if (getAlarmCount() != 0 && !alarmSeen) {
+                flash.start();
+            } else {
+                flash.stop();
+            }
+        }
     }
 
     private String alarmCountAsText() {
@@ -64,7 +86,13 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
         return countText;
     }
 
-    private Color chooseColor() {
+    /**
+     * Choose a colour based on the state of the button.
+     * 
+     * @return colour
+     */
+    @Override
+    protected Color chooseColor() {
         Color color;
         if (alarmCount > 0) {
             color = ALARM_COLOR;
@@ -81,6 +109,37 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     @Override
     public void setFocus(boolean inFocus) {
         super.setFocus(inFocus);
+        if (flash != null) {
+            if (inFocus) {
+                flash.stop();
+            } else {
+                updateFlashing();
+            }
+        }
         update();
+    }
+
+    /**
+     * Get the number of alarms.
+     * 
+     * @return alarmCount
+     */
+    protected int getAlarmCount() {
+        return alarmCount;
+    }
+
+    /**
+     * Calls setActive in PerspectiveButtonViewModel and marks the alarms as
+     * seen.
+     * 
+     * @param newActive
+     *            this perspective now active
+     */
+    @Override
+    public void setActive(boolean newActive) {
+        super.setActive(newActive);
+        if (newActive) {
+            alarmSeen = true;
+        }
     }
 }
