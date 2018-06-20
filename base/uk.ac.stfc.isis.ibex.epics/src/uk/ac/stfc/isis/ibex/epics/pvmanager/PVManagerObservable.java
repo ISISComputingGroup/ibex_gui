@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.epics.pvmanager;
 import static org.epics.pvmanager.ExpressionLanguage.channel;
 import static org.epics.util.time.TimeDuration.ofHertz;
 
-import org.epics.pvmanager.DataSource;
 import org.epics.pvmanager.PVManager;
 import org.epics.pvmanager.PVReader;
 import org.epics.pvmanager.PVReaderEvent;
@@ -66,8 +65,6 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
-		
-		DataSource a = PVManager.getDefaultDataSource();
 		
 		pv = PVManager
 				.read(channel(info.address(), info.type(), Object.class))

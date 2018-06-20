@@ -60,7 +60,6 @@ public class RunControlEditorPanel extends Composite {
     private final Label spacerLabel;
     private final Label spacerLabel2;
     private Group grpGlobalSettings;
-	private DisplayBlock block;
     private boolean canSend;
 
     private final RunControlViewModel viewModel;
@@ -220,7 +219,6 @@ public class RunControlEditorPanel extends Composite {
      *            The new block to examine.
      */
 	public void setBlock(DisplayBlock block) {
-		this.block = block;
 
         viewModel.setBlock(block);
 

@@ -88,7 +88,7 @@ public class BlocksMenu extends MenuManager {
         add(new GroupMarker(BLOCK_MENU_GROUP));
 
         final MenuManager logSubMenu = new MenuManager("Display block history...");
-        logSubMenu.add(new Action("never shown entry"){
+        logSubMenu.add(new Action("never shown entry") {
         	//needed if it's a submenu
         });
         // Allows the menu to be dynamic
@@ -106,7 +106,7 @@ public class BlocksMenu extends MenuManager {
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPresenter);
 				for (final String plot : pvHistoryPresenter.getCurrentDisplays()) {
-					logSubMenu.add(new Action("Add to " + plot + " plot"){
+					logSubMenu.add(new Action("Add to " + plot + " plot") {
 						@Override
 						public void run() {
 							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);

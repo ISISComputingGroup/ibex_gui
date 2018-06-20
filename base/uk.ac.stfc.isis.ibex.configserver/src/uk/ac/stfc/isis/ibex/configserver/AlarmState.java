@@ -26,9 +26,24 @@ package uk.ac.stfc.isis.ibex.configserver;
  * An enumeration containing possible block alarm states.
  */
 public enum AlarmState {
+    /**
+     * NO_ALARM: as expected.
+     */
     NO_ALARM,
+    /**
+     * MINOR: minor alarm.
+     */
     MINOR,
+    /**
+     * MAJOR: major alarm.
+     */
     MAJOR,
+    /**
+     * INVALID: alarm state is invalid.
+     */
     INVALID,
+    /**
+     * UNDEFINED: alarm state is undefined.
+     */
     UNDEFINED
 }

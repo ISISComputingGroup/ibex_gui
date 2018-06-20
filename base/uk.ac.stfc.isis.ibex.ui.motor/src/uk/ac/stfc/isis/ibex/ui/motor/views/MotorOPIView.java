@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 public class MotorOPIView extends OpiTargetView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
-	private String partName = "Motor view";
     private static final Logger LOG = IsisLog.getLogger(MotorOPIView.class);
 	
     /**

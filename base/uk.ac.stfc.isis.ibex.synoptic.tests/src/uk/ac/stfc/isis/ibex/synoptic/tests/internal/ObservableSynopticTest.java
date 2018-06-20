@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 /**
  * This class is responsible for testing the observable synoptic.
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class ObservableSynopticTest {
 
 	/**
