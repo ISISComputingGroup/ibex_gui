@@ -63,9 +63,9 @@ public class PerspectiveSwitcherView {
 
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
-        addPerspectiveShortcuts(composite);
-        addSeparator(composite);
         addResetCurrentPerspectiveShortcut(composite);
+        addSeparator(composite);
+        addPerspectiveShortcuts(composite);
     }
 
     private void addPerspectiveShortcuts(Composite parent) {

@@ -22,6 +22,8 @@ public abstract class Button extends CLabel {
 
     protected ButtonViewModel model;
     private final DataBindingContext bindingContext = new DataBindingContext();
+    @SuppressWarnings("checkstyle:magicnumber")
+    private int buttonWidthMin = 200;
 
     /**
      * Button constructor.
@@ -40,7 +42,10 @@ public abstract class Button extends CLabel {
         super(parent, SWT.SHADOW_OUT);
 
         setLayout(new GridLayout());
-        setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+        // Needs to be wider than default to allow for larger text because its font is bold when the button is active.
+        gridData.minimumWidth = buttonWidthMin;
+        setLayoutData(gridData);
 
         setToolTipText(tooltip);
         setImage(ResourceManager.getPluginImageFromUri(imageUri));
