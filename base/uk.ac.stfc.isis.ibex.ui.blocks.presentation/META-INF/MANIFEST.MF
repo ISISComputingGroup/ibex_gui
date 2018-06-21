@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding.property;bundle-version="1.4.100",
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
  uk.ac.stfc.isis.ibex.logger
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: uk.ac.stfc.isis.ibex.ui.blocks.presentation
 Import-Package: uk.ac.stfc.isis.ibex.configserver.configuration
 Bundle-ActivationPolicy: lazy
