@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.motor;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.widgets,
