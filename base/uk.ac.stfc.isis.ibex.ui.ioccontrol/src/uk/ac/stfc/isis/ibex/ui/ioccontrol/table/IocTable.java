@@ -67,6 +67,7 @@ public class IocTable extends DataboundTable<IocState> {
 		name();
 		description();
 		state();
+		configState();
 	}
 
 	private void name() {
@@ -77,6 +78,7 @@ public class IocTable extends DataboundTable<IocState> {
 			}
 		});
 	}
+	
 	
 	private void description() {
 		createColumn("Description", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
@@ -90,4 +92,13 @@ public class IocTable extends DataboundTable<IocState> {
 	private void state() {
 		createColumn("Status", 2, false, new StateLabelProvider(observeProperty("isRunning")));
 	}
+	
+	private void configState() {
+        createColumn("In current configuration?", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("inCurrentConfig")) {
+            @Override
+            protected String stringFromRow(IocState row) {
+                return row.getInCurrentConfig();
+            }
+        });
+    }
 }
