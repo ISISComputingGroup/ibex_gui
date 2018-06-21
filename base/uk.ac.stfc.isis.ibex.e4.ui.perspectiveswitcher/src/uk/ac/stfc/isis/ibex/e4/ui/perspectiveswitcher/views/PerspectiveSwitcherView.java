@@ -80,7 +80,7 @@ public class PerspectiveSwitcherView {
         Collections.sort(perspectives, comparator);
 
         for (final MPerspective perspective : perspectives) {
-            PerspectiveButtonViewModel model;
+            final PerspectiveButtonViewModel model;
             if (perspective.getLabel().equals("Alarms")) {
                 model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
             } else {
