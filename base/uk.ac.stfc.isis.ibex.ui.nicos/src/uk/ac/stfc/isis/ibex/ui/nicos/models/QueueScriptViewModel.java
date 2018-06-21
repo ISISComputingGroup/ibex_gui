@@ -45,12 +45,12 @@ public class QueueScriptViewModel extends ModelObject {
     private ScriptSendStatus scriptSendStatus;
     private String scriptSendErrorMessage;
     private DataBindingContext bindingContext = new DataBindingContext();
-	private QueuedScript selectedScript;
-	private Boolean upButtonEnabled = false;
-	private Boolean downButtonEnabled = false;
-	private Boolean dequeueButtonEnabled = false;
+    private QueuedScript selectedScript;
+    private Boolean upButtonEnabled = false;
+    private Boolean downButtonEnabled = false;
+    private Boolean dequeueButtonEnabled = false;
     
-	/**
+    /**
      * Constructor.
      * 
      * @param model
@@ -67,11 +67,11 @@ public class QueueScriptViewModel extends ModelObject {
                 BeanProperties.value("scriptSendStatus").observe(model));
         
         model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				updateButtonEnablement();
-			}
-		});
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateButtonEnablement();
+            }
+        });
     }
 
 
@@ -127,7 +127,7 @@ public class QueueScriptViewModel extends ModelObject {
      * Sets the script send status; the status of the last script that was sent.
      *
      * @param scriptSendStatus
-     *			the new script send status
+     *            the new script send status
      */
     public void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
         firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
@@ -138,55 +138,53 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public void dequeueScript() {
         // dequeue command only requires ID (reqid) of script
-    	model.dequeueScript(selectedScript.reqid);
+        model.dequeueScript(selectedScript.reqid);
     }
 
     /**
      * Move selected script position in queue according to supplied direction. 
      *
      * @param directionUp
-     * 			true if direction of desired movement is UP, false if DOWN
+     *             true if direction of desired movement is UP, false if DOWN
      */
     public void moveScript(Boolean directionUp) {
 
-    	List<QueuedScript> copyOfQueue = new ArrayList<>(model.getQueuedScripts());
-    	int sourceIndex = copyOfQueue.indexOf(selectedScript);
+        List<QueuedScript> copyOfQueue = new ArrayList<>(model.getQueuedScripts());
+        int sourceIndex = copyOfQueue.indexOf(selectedScript);
 
-    	// only move scripts:
-    	// IF selected script is NOT first AND move direction is up
-    	// OR 
-    	// IF selected script is NOT last AND move direction is down
-    	
-    	// TODO: test fails because there are more elements in list than scripts (10?) I think! extras contain null. 
-    	
-    	if ((sourceIndex > 0 && directionUp) || (sourceIndex < copyOfQueue.size() && !directionUp)) {
-	    	
-	    	// subtract 1 if direction UP, add 1 if DOWN
-	    	
-    		int targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
-	    	Collections.swap(copyOfQueue, sourceIndex, targetIndex);
-	    	sendReorderedList(copyOfQueue);
-    	}
-    	
-    	updateButtonEnablement();
+        // only move scripts:
+        // IF selected script is NOT first AND move direction is up
+        // OR 
+        // IF selected script is NOT last AND move direction is down
+        
+        if ((sourceIndex > 0 && directionUp) || (sourceIndex < copyOfQueue.size() && !directionUp)) {
+            
+            // subtract 1 if direction UP, add 1 if DOWN
+            
+            int targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
+            Collections.swap(copyOfQueue, sourceIndex, targetIndex);
+            sendReorderedList(copyOfQueue);
+        }
+        
+        updateButtonEnablement();
     }
 
     /**
      *  Create list of reqids in reordered queue and send to NicosModel.
      *  
      *  @param reorderedQueue
-     *  		queue containing the reordered scripts
+     *          queue containing the reordered scripts
      */
     public void sendReorderedList(List<QueuedScript> reorderedQueue) {
  
-    	List<String> listOfScriptIDs = new ArrayList<>(); 
-    	
-    	for (QueuedScript item : reorderedQueue) {
-    		listOfScriptIDs.add(item.reqid);
-    	}
+        List<String> listOfScriptIDs = new ArrayList<>(); 
+        
+        for (QueuedScript item : reorderedQueue) {
+            listOfScriptIDs.add(item.reqid);
+        }
 
-    	model.sendReorderedQueue(listOfScriptIDs);
-    	updateButtonEnablement();
+        model.sendReorderedQueue(listOfScriptIDs);
+        updateButtonEnablement();
     }
     
     /**
@@ -194,31 +192,31 @@ public class QueueScriptViewModel extends ModelObject {
      * 
      */   
     private void updateButtonEnablement() {
-    	updateDownButtonEnabled();
-    	updateUpButtonEnabled();
-    	updateDequeueButtonEnabled();
+        updateDownButtonEnabled();
+        updateUpButtonEnabled();
+        updateDequeueButtonEnabled();
     }
     
     /**
      * Set the selected script.
      * 
      * @param script
-     * 		The selected script
+     *         The selected script
      */
     public void setSelectedScript(QueuedScript script) {
-    	this.selectedScript = script;
-    	
-    	updateButtonEnablement();
+        this.selectedScript = script;
+        
+        updateButtonEnablement();
     }
     
     /**
      * Return the selected script in the queue.
      * 
      * @return selectedScript
-     * 			The selected script in the queue
+     *             The selected script in the queue
      */
     public QueuedScript getSelectedScript() {
-    	return selectedScript;
+        return selectedScript;
     }
     
     /**
@@ -226,30 +224,30 @@ public class QueueScriptViewModel extends ModelObject {
      * 
      */
     private void updateDequeueButtonEnabled() {
-    	firePropertyChange("dequeueButtonEnabled", null, dequeueButtonEnabled = selectedScript != null);
-	}
+        firePropertyChange("dequeueButtonEnabled", null, dequeueButtonEnabled = selectedScript != null);
+    }
 
     /**
      * Determine whether or not Down button can be enabled depending on position of selected script in queue.
      * 
      */
-	private void updateDownButtonEnabled() {
-    	QueuedScript lastScriptInQueue;
-    	try {
-    		lastScriptInQueue = model.getQueuedScripts().get(model.getQueuedScripts().size() - 1);
-    		 
-    		if (selectedScript == null) {
-	    		downButtonEnabled = false;
-	    	} else if (selectedScript.equals(lastScriptInQueue)) {
-	    		downButtonEnabled = false;
-			} else {
-				downButtonEnabled = true;
-			}
-    	} catch (IndexOutOfBoundsException e) {
-    		downButtonEnabled = false;
-    	}
-    	
-    	firePropertyChange("downButtonEnabled", null, downButtonEnabled);
+    private void updateDownButtonEnabled() {
+        QueuedScript lastScriptInQueue;
+        try {
+            lastScriptInQueue = model.getQueuedScripts().get(model.getQueuedScripts().size() - 1);
+             
+            if (selectedScript == null) {
+                downButtonEnabled = false;
+            } else if (selectedScript.equals(lastScriptInQueue)) {
+                downButtonEnabled = false;
+            } else {
+                downButtonEnabled = true;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            downButtonEnabled = false;
+        }
+        
+        firePropertyChange("downButtonEnabled", null, downButtonEnabled);
     }
     
     /**
@@ -257,22 +255,22 @@ public class QueueScriptViewModel extends ModelObject {
      * 
      */
     private void updateUpButtonEnabled() {
-    	QueuedScript firstScriptInQueue;
-    	try {
-    		firstScriptInQueue = model.getQueuedScripts().get(0);
-    		 
-    		if (selectedScript == null) {
-	    		upButtonEnabled = false;
-	    	} else if (selectedScript.equals(firstScriptInQueue)) {
-	    		upButtonEnabled = false;
-			} else {
-				upButtonEnabled = true;
-			}
-    	} catch (IndexOutOfBoundsException e) {
-    		upButtonEnabled = false;
-    	}
-    	
-    	firePropertyChange("upButtonEnabled", null, upButtonEnabled);
+        QueuedScript firstScriptInQueue;
+        try {
+            firstScriptInQueue = model.getQueuedScripts().get(0);
+             
+            if (selectedScript == null) {
+                upButtonEnabled = false;
+            } else if (selectedScript.equals(firstScriptInQueue)) {
+                upButtonEnabled = false;
+            } else {
+                upButtonEnabled = true;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            upButtonEnabled = false;
+        }
+        
+        firePropertyChange("upButtonEnabled", null, upButtonEnabled);
     }
     
     /**
@@ -281,7 +279,7 @@ public class QueueScriptViewModel extends ModelObject {
      * @return enabled state of Up button
      */
     public boolean getUpButtonEnabled() {
-    	return upButtonEnabled;
+        return upButtonEnabled;
     }
     
     /**
@@ -290,7 +288,7 @@ public class QueueScriptViewModel extends ModelObject {
      * @return enabled state of Down button
      */
     public boolean getDownButtonEnabled() {
-    	return downButtonEnabled;
+        return downButtonEnabled;
     }
     
     /**
@@ -299,6 +297,6 @@ public class QueueScriptViewModel extends ModelObject {
      * @return enabled state of Dequeue button
      */
     public boolean getDequeueButtonEnabled() {
-    	return dequeueButtonEnabled;
+        return dequeueButtonEnabled;
     }
 }

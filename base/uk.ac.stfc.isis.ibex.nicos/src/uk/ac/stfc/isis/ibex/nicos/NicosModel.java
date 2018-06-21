@@ -69,12 +69,12 @@ public class NicosModel extends ModelObject {
     /**
      * TODO: doc
      */
-    private static final int MESSAGES_SCALE_FACTOR = 10;
+    private static final int MESSAGES_SCALE_FACTOR = 100;
     
     /**
-     * TODO: doc
+     * Maximum number of messages to fetch at a time.
      */
-    private static final int MESSAGES_THRESHOLD = 100;
+    private static final int MESSAGES_THRESHOLD = 1000;
 
     private final ZMQSession session;
     private RepeatingJob connectionJob;
@@ -277,7 +277,11 @@ public class NicosModel extends ModelObject {
      * @return details about the sending of that message
      */
     private SentMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
-        return session.sendMessage(nicosMessage);
+        SentMessageDetails response = session.sendMessage(nicosMessage);
+        if (!response.isSent()) {
+        	setError(NicosErrorState.NO_RESPONSE);
+        }
+        return response;
     }
     
     /**
@@ -337,10 +341,10 @@ public class NicosModel extends ModelObject {
     }
 
     /**
-     * TODO: doc
+     * Filters old log entries out from a nicos log.
      * 
-     * @param entries
-     * @return
+     * @param entries the original list of entries
+     * @return a new list with old entries removed
      */
     private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
         List<NicosLogEntry> filtered = new ArrayList<NicosLogEntry>();
@@ -353,9 +357,9 @@ public class NicosModel extends ModelObject {
     }
 
     /**
-     * TODO: doc
+     * Set which line number is currently executing.
      * 
-     * @param lineNumber
+     * @param lineNumber the line number
      */
 	private void setLineNumber(int lineNumber) {		
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
@@ -371,9 +375,9 @@ public class NicosModel extends ModelObject {
 	}
 	
 	/**
-	 * TODO: doc
+	 * Set the list of scripts in the nicos queue.
 	 * 
-	 * @param newQueuedScripts
+	 * @param newQueuedScripts the new list of scripts
 	 */
 	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {
 		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
@@ -389,9 +393,9 @@ public class NicosModel extends ModelObject {
     }
 	
 	/**
-	 * TODO: doc
+	 * The status of the currently executing script.
 	 * 
-	 * @param scriptStatus
+	 * @param scriptStatus the status
 	 */
     private void setScriptStatus(ScriptStatus scriptStatus) {
         firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
@@ -431,9 +435,8 @@ public class NicosModel extends ModelObject {
      *            ID of script to dequeue
      */
     public void dequeueScript(String reqid) {
-        // TODO: need to read NICOS reply in case of error
-        DequeueScript nicosMessage = new DequeueScript(reqid);
-        sendMessageToNicos(nicosMessage);
+        DequeueScript message = new DequeueScript(reqid);
+        sendMessageToNicos(message);
     }
     
     /**
@@ -443,7 +446,6 @@ public class NicosModel extends ModelObject {
      *            list of IDs of scripts
      */
 	public void sendReorderedQueue(List<String> listOfScriptIDs) {
-        // TODO: need to read NICOS reply in case of error
         SendReorderedQueue nicosMessage = new SendReorderedQueue(listOfScriptIDs);
         sendMessageToNicos(nicosMessage);
 	}

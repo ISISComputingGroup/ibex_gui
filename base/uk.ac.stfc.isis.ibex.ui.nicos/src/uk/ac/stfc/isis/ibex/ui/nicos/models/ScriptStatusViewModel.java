@@ -77,9 +77,9 @@ public class ScriptStatusViewModel extends ModelObject {
 	}
 
 	/**
-	 * TODO: doc
+	 * Sets the line number of the currently executing script.
 	 * 
-	 * @param lineNumber
+	 * @param lineNumber the line number, or -1 for a script that is not executing
 	 */
 	private void setLineNumber(int lineNumber) {
 		String line;
@@ -136,7 +136,7 @@ public class ScriptStatusViewModel extends ModelObject {
 	}
     
 	/**
-	 * TODO: doc
+	 * The icon for the pause/go button.
 	 * 
 	 * @param icon
 	 */
@@ -152,7 +152,7 @@ public class ScriptStatusViewModel extends ModelObject {
     }
     
     /**
-     * TODO: doc
+     * The text for the pause/go button.
      * 
      * @param text
      */
@@ -188,23 +188,25 @@ public class ScriptStatusViewModel extends ModelObject {
     }
     
     /**
-     * TODO: doc
+     * Whether or not the script run control buttons should be enabled.
      * 
-     * @param enable
+     * @param enable whether they are enabled
      */
     private void setEnableButtons(boolean enable) {
         firePropertyChange("enableButtons", enableButtons, enableButtons = enable);
     }
 
     /**
-     * @return Whether or not the script run control buttons should be enabled.
+     * Whether or not the script run control buttons should be enabled.
+     * 
+     * @return whether they are enabled
      */
     public boolean getEnableButtons() {
         return enableButtons;
     }
     
     /**
-     * TODO: doc
+     * The status readback of the script
      * 
      * @param status
      */
