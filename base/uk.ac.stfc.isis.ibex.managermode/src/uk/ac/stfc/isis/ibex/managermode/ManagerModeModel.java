@@ -205,7 +205,16 @@ public final class ManagerModeModel extends ModelObject {
      */
     public boolean isInManagerMode() throws ManagerModePvNotConnectedException {
         if (inManagerMode == null) {
-            throw new ManagerModePvNotConnectedException("Manager mode PV not connected. Please try again in a few moments.");
+            try {
+                // PV doesn't have time to connect before this is called the
+                // first time, so wait for half a second.
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                //Do nothing.
+            }
+            if (inManagerMode == null) {
+                throw new ManagerModePvNotConnectedException("Manager mode PV not connected. Please try again in a few moments.");
+            }
         }
         return inManagerMode.booleanValue();
     }
