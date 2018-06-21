@@ -75,12 +75,12 @@ public class DeviceScreenVariablesTest {
         mockSwitchableObservable = mock(SwitchableObservable.class);
 
         switchingObservableFactory = mock(ObservableFactory.class);
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
 
         Writable defaultWritable = mock(Writable.class);
         switchingWritableFactory = mock(WritableFactory.class);
-        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), anyString()))
+        when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultWritable);
         }
 
@@ -99,7 +99,7 @@ public class DeviceScreenVariablesTest {
         when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX))).thenReturn(mockSwitchableObservable);
         
         variables = createVariables();
@@ -121,7 +121,7 @@ public class DeviceScreenVariablesTest {
         when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
         
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX)))
                 .thenReturn(mockSwitchableObservable);
 
@@ -138,7 +138,7 @@ public class DeviceScreenVariablesTest {
     public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() throws IOException {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
-        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
+        when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
 
         DeviceScreensDescription inputValue =

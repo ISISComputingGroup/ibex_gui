@@ -44,10 +44,10 @@ public class DisplayBlockTest {
 	@Before
 	public void setUp() {
 		// Arrange
-        inRangeObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
-        enabledObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
-        valueObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
-        descriptionObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
+        inRangeObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
+        enabledObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
+        valueObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
+        descriptionObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
