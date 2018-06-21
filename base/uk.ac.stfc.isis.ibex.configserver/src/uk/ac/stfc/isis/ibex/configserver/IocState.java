@@ -55,6 +55,32 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
 	private String description;
 	private String inCurrentConfig;
 	
+	Observer<EditableConfiguration> currentConfigObserver = new BaseObserver<EditableConfiguration>() {
+        
+        @Override
+        public void onValue(EditableConfiguration value) {
+            final EditableConfiguration config = value; 
+            
+            Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
+            Collection<EditableIoc> availableIocs = new ArrayList<EditableIoc>();
+            addedIocs = config.getAddedIocs();
+            availableIocs = config.getAvailableIocs();
+    
+            for (EditableIoc ioc : addedIocs) {
+       
+                if (ioc.getName().equals(name)) {
+                    firePropertyChange("inCurrentConfig", inCurrentConfig, inCurrentConfig = "Yes");
+                    
+                } 
+            }
+            for (EditableIoc ioc : availableIocs) {
+                if (ioc.getName().equals(name)) {
+                    firePropertyChange("inCurrentConfig", inCurrentConfig, inCurrentConfig = "No");
+                }
+            }
+        }
+    };     
+	
     /**
      * Instantiates a new IOC state.
      *
@@ -72,8 +98,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
 		this.isRunning = isRunning;
 		this.description = description;
 		this.allowControl = allowControl;
-		bindInCurrentConfig();    
-		
+		bindInCurrentConfig();
 	}	
 	
     /**
@@ -151,34 +176,8 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
 	    
 	    ConfigServer server = Configurations.getInstance().server();
 	    ConfigEditing edit = new ConfigEditing(server);	
-        ForwardingObservable<EditableConfiguration> currentConfig = edit.currentConfig();
-        
-        Observer<EditableConfiguration> observer = new BaseObserver<EditableConfiguration>() {
-            
-            @Override
-            public void onValue(EditableConfiguration value) {
-                final EditableConfiguration config = value; 
-                
-                Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
-                Collection<EditableIoc> availableIocs = new ArrayList<EditableIoc>();
-                addedIocs = config.getAddedIocs();
-                availableIocs = config.getAvailableIocs();
-        
-                for (EditableIoc ioc : addedIocs) {
-           
-                    if (ioc.getName().equals(name)) {
-                        firePropertyChange("inCurrentConfig", inCurrentConfig, inCurrentConfig = "Yes");
-                        
-                    } 
-                }
-                for (EditableIoc ioc : availableIocs) {
-                    if (ioc.getName().equals(name)) {
-                        firePropertyChange("inCurrentConfig", inCurrentConfig, inCurrentConfig = "No");
-                    }
-                }
-            }
-        };	    
-	    currentConfig.addObserver(observer); 	    
+        ForwardingObservable<EditableConfiguration> currentConfig = edit.currentConfig();        
+	    currentConfig.addObserver(currentConfigObserver); 	    
 	}
 
 	@Override
