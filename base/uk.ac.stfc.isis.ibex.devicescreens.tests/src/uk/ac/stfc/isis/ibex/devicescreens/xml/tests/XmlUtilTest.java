@@ -50,7 +50,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 /**
  * This class tests the loading and parsing of an xml by the XMLUtil class.
  */
-@SuppressWarnings("checkstyle:methodname")
+@SuppressWarnings( {"checkstyle:methodname", "unchecked"} )
 public class XmlUtilTest {
 
     private static String deviceName = "Eurotherm 2";

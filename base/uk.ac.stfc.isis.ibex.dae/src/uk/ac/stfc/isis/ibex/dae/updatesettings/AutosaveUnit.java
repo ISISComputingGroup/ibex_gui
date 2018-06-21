@@ -23,11 +23,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
+
+/**
+ * Enum containing the possible auto save units for the DAE.
+ */
 public enum AutosaveUnit {
+    /**
+     * Save on every so many frames.
+     */
     FRAMES("Frames"),
+    /**
+     * Save on every so many events.
+     */
     EVENTS("Events"),
+    /**
+     * Save on every so many dashboard polls.
+     */
     DASHBOARD_POLLS("Dashboard polls"),
-    MICROAMPS("μA");
+    /**
+     * Save on every so many micro-amps.
+     */
+    MICROAMPS(Utils.MU + "A");
 	
 	private String text;
 
@@ -39,10 +56,20 @@ public enum AutosaveUnit {
 		}
 	}
 	
+	/**
+	 * Assigns the enum value to the text variable.
+	 *  
+	 * @param text enum value
+	 */
 	AutosaveUnit(String text) {
 		this.text = text;
 	}
-	 
+	
+	/**
+	 * Create a list containing all the auto save units.
+	 * 
+	 * @return a list of each auto save unit.
+	 */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}

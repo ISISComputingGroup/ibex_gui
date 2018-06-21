@@ -19,14 +19,26 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+/**
+ * Holds details of a set of PVs.
+ *
+ */
 public class AvailablePVSet {
 	String name;
 	String description;
 	
+	/**
+	 * 
+	 * @return PV set's name
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * 
+	 * @return PV set's description
+	 */
 	public String getDescription() {
 		return description;
 	}

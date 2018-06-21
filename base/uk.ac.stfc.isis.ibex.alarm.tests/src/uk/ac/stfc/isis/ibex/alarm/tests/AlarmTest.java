@@ -34,6 +34,10 @@ import org.mockito.stubbing.Answer;
 import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * Test the alarm settings for CSS Beast Alarm.
+ *
+ */
 @SuppressWarnings("checkstyle:methodname")
 public class AlarmTest {
 
@@ -258,18 +262,6 @@ public class AlarmTest {
         InstrumentInfo returnedInstrument = mock(InstrumentInfo.class);
         when(returnedInstrument.hostName()).thenReturn(hostName);
         return returnedInstrument;
-    }
-
-    @Test
-    public void default_rdb_url_is_set_correctly() {
-        // Assert
-        assertEquals(DEFAULT_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
-    }
-
-    @Test
-    public void default_jms_url_is_set_correctly() {
-        // Assert
-        assertEquals(DEFAULT_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test

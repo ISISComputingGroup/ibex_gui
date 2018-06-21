@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.tables;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 

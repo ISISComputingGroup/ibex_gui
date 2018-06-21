@@ -23,11 +23,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
