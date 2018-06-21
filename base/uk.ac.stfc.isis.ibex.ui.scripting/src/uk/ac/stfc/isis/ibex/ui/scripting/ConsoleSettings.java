@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import org.eclipse.ui.console.IConsoleConstants;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -32,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
  * This closes and reopens the scripting perspective when instrument is switched.
  */
 public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
-    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
+    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(IConsoleConstants.ID_CONSOLE_VIEW);
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
@@ -43,5 +44,10 @@ public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
     public void preSetInstrument(InstrumentInfo instrument) {
         ScriptConsoleManager.getInstance().closeAll();
         scriptingPerspectiveReopener.closePerspective();
+    }
+    
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        Consoles.createConsole();
     }
 }

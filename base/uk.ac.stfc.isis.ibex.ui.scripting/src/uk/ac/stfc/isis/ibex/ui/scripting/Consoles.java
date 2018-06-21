@@ -39,7 +39,7 @@ public class Consoles extends AbstractUIPlugin {
 	// The shared instance
 	private static Consoles plugin;
 
-    private GeniePythonConsoleFactory genieConsoleFactory = new GeniePythonConsoleFactory();
+    private static final GeniePythonConsoleFactory GENIE_CONSOLE_FACTORY = new GeniePythonConsoleFactory();
 
 	/**
 	 * {@inheritDoc}
@@ -90,7 +90,7 @@ public class Consoles extends AbstractUIPlugin {
     /**
      * Create a new pydev console based on the current instrument.
      */
-    public void createConsole() {
-        genieConsoleFactory.createConsole(Commands.setInstrument());
+    public static void createConsole() {
+        GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
     }
 }

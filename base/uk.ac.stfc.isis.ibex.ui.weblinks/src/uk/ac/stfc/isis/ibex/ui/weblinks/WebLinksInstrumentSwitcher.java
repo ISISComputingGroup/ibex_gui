@@ -9,7 +9,7 @@ import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
  */
 public class WebLinksInstrumentSwitcher extends InstrumentInfoReceiverAdapter {
 	
-	private static final PerspectiveReopener REOPENER = new PerspectiveReopener(Perspective.ID);
+	private static final PerspectiveReopener REOPENER = new PerspectiveReopener("uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks");
 	
 	/**
 	 * {@inheritDoc}
