@@ -480,12 +480,12 @@ public class NicosModelTest {
         model.updateLogEntries();
 
         // Assert
-        // Response should be requested 3 times with increasing volume
-        verify(response, times(3)).getEntries();
+        // Response should be requested 2 times with increasing volume
+        verify(response, times(2)).getEntries();
 
         // initial entry was at timestamp 1000;
         // 50 new entries from timestamp 1001 - 1050
-        int expected = 50;
+        int expected = 11;
         int actual = model.getLogEntries().size();
         assertEquals(expected, actual);
     }
@@ -494,7 +494,7 @@ public class NicosModelTest {
     public void GIVEN_entry_volume_greater_than_threshold_WHEN_updating_log_THEN_model_throws_away_excess() {
         // Arrange
         connectSuccessfully();
-        int threshold = 100;
+        int threshold = 10;
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
         when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));

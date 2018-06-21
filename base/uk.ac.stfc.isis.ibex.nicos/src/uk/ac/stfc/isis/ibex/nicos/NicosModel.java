@@ -175,9 +175,9 @@ public class NicosModel extends ModelObject {
         if (!loginSendMessageDetails.isSent()) {
         	setError(NicosErrorState.FAILED_LOGIN, loginSendMessageDetails.getFailureReason());
             return;
+        } else {
+        	setError(NicosErrorState.NO_ERROR);
         }
-
-        setError(NicosErrorState.NO_ERROR);
         connectionJob.setRunning(false);
         updateStatusJob.setRunning(true);
     }
@@ -216,6 +216,7 @@ public class NicosModel extends ModelObject {
         SentMessageDetails scriptSentMessageDetails = sendMessageToNicos(nicosMessage);
         if (!scriptSentMessageDetails.isSent()) {
             setError(NicosErrorState.SCRIPT_SEND_FAIL);
+            
         }
     }
     
@@ -265,7 +266,7 @@ public class NicosModel extends ModelObject {
     private SentMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
         SentMessageDetails response = session.sendMessage(nicosMessage);
         if (!response.isSent()) {
-        	setError(NicosErrorState.NO_RESPONSE);
+        	disconnect();
         }
         return response;
     }
@@ -307,6 +308,8 @@ public class NicosModel extends ModelObject {
             if (response == null || !message.isSent()) {
                 setError(NicosErrorState.NO_RESPONSE);
                 break;
+            } else {
+            	setError(NicosErrorState.NO_ERROR);
             }
             List<NicosLogEntry> current = response.getEntries();
             if (newEntries.size() == current.size()) {
@@ -323,7 +326,6 @@ public class NicosModel extends ModelObject {
         if (!newEntries.isEmpty()) {
             setLogEntries(newEntries);
         }
-        setError(NicosErrorState.NO_ERROR);
     }
 
     /**

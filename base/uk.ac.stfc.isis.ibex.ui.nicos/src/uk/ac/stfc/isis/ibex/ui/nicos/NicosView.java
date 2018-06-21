@@ -297,7 +297,7 @@ public class NicosView extends ViewPart {
         lblCurrentError.setText("NICOS status: ");
         
         Label errorIndicator = new Label(nicosStatus, SWT.NONE);
-        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(errorIndicator),
                 BeanProperties.value("error").observe(model));
     }
