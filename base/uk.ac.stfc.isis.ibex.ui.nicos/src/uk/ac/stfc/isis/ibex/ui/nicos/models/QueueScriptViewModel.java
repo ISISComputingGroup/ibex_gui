@@ -27,12 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 /**
@@ -42,9 +38,6 @@ public class QueueScriptViewModel extends ModelObject {
 
     private NicosModel model;
     private QueuedScript script;
-    private ScriptSendStatus scriptSendStatus;
-    private String scriptSendErrorMessage;
-    private DataBindingContext bindingContext = new DataBindingContext();
     private QueuedScript selectedScript;
     private Boolean upButtonEnabled = false;
     private Boolean downButtonEnabled = false;
@@ -61,11 +54,6 @@ public class QueueScriptViewModel extends ModelObject {
         
         this.script = new QueuedScript();
         
-        bindingContext.bindValue(BeanProperties.value("scriptSendErrorMessage").observe(this),
-                BeanProperties.value("scriptSendErrorMessage").observe(model));
-        bindingContext.bindValue(BeanProperties.value("scriptSendStatus").observe(this),
-                BeanProperties.value("scriptSendStatus").observe(model));
-        
         model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -73,7 +61,6 @@ public class QueueScriptViewModel extends ModelObject {
             }
         });
     }
-
 
     /**
      * Gets the current script.
@@ -90,54 +77,11 @@ public class QueueScriptViewModel extends ModelObject {
     public void queueScript() {
         model.sendScript(script);
     }
-
-
-    /**
-     * Get the last error message received when queueing a script.
-     * 
-     * Blank for no error message.
-     * 
-     * @return the script send error message
-     */
-    public String getScriptSendErrorMessage() {
-        return scriptSendErrorMessage;
-    }
-
-    /**
-     * Set the script error message and fire a property change.
-     * 
-     * @param scriptSendErrorMessage
-     *            the new error message
-     */
-    public void setScriptSendErrorMessage(String scriptSendErrorMessage) {
-        firePropertyChange("scriptSendErrorMessage", this.scriptSendErrorMessage,
-                this.scriptSendErrorMessage = scriptSendErrorMessage);
-    }
-
-    /**
-     * Get the status of the last script that was sent.
-     * 
-     * @return the status of sending a script
-     */
-    public ScriptSendStatus getScriptSendStatus() {
-        return scriptSendStatus;
-    }
-
-    /**
-     * Sets the script send status; the status of the last script that was sent.
-     *
-     * @param scriptSendStatus
-     *            the new script send status
-     */
-    public void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
-        firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
-    }
     
     /**
      * Dequeue the selected script on the script server.
      */
     public void dequeueScript() {
-        // dequeue command only requires ID (reqid) of script
         model.dequeueScript(selectedScript.reqid);
     }
 
@@ -152,15 +96,10 @@ public class QueueScriptViewModel extends ModelObject {
         List<QueuedScript> copyOfQueue = new ArrayList<>(model.getQueuedScripts());
         int sourceIndex = copyOfQueue.indexOf(selectedScript);
 
-        // only move scripts:
-        // IF selected script is NOT first AND move direction is up
-        // OR 
-        // IF selected script is NOT last AND move direction is down
-        
-        if ((sourceIndex > 0 && directionUp) || (sourceIndex < copyOfQueue.size() && !directionUp)) {
-            
+        // only move scripts if selected script is NOT first AND move direction is up
+        // or selected script is NOT last AND move direction is down
+        if ((sourceIndex > 0 && directionUp) || (sourceIndex < copyOfQueue.size() - 1 && !directionUp)) {
             // subtract 1 if direction UP, add 1 if DOWN
-            
             int targetIndex = directionUp ? sourceIndex - 1 : sourceIndex + 1;
             Collections.swap(copyOfQueue, sourceIndex, targetIndex);
             sendReorderedList(copyOfQueue);

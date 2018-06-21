@@ -52,7 +52,7 @@ public class ScriptStatusViewModelTest {
     private ScriptStatusViewModel viewModel;
 
     @Captor
-    ArgumentCaptor<ExecutionInstruction> captor = ArgumentCaptor.forClass(ExecutionInstruction.class);;
+    ArgumentCaptor<ExecutionInstruction> captor = ArgumentCaptor.forClass(ExecutionInstruction.class);
 
     private String prefixStatus(String status) {
         return "Status is: " + status;

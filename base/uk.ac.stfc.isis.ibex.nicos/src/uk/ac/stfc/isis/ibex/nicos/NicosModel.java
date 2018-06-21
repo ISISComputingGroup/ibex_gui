@@ -66,9 +66,6 @@ public class NicosModel extends ModelObject {
      */
     private static final long UPDATE_STATUS_TIME = 1000;
 
-    /**
-     * TODO: doc
-     */
     private static final int MESSAGES_SCALE_FACTOR = 100;
     
     /**
@@ -136,12 +133,6 @@ public class NicosModel extends ModelObject {
         this.connectionJob.schedule();
     }
 
-    /**
-     * TODO: doc
-     * 
-     * @param message
-     * 			
-     */
     private void failConnection(String message) {
         setError(NicosErrorState.CONNECTION_FAILED);
         LOG.error(message);
@@ -208,11 +199,6 @@ public class NicosModel extends ModelObject {
         return newLogEntries;
     }
     
-    /**
-     * TODO: doc
-     * 
-     * @param newLogEntries
-     */
     private void setLogEntries(List<NicosLogEntry> newLogEntries) {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
         this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
@@ -410,11 +396,6 @@ public class NicosModel extends ModelObject {
         return scriptStatus;
     }
 
-    /**
-     * TODO: doc
-     * 
-     * @param script
-     */
 	private void setCurrentlyExecutingScript(String script) {
 		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}
