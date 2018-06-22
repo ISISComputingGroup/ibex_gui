@@ -1438,5 +1438,20 @@
         </macros>
       </value>
     </entry>
+	<entry>
+      <key>SP2XX</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>sp2xx.opi</path>
+        <description>The OPI for the SP2XX</description>
+        <macros>
+          <macro>
+            <name>SP2XX</name>
+            <description>The SP2XX PV prefix (e.g. SP2XX_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
