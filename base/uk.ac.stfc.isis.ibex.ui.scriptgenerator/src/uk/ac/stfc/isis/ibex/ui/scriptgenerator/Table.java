@@ -27,8 +27,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
@@ -273,5 +275,13 @@ public class Table extends DataboundTable<Row> {
 			rows.add(new Row());
 			setRows(rows);
 		}
+	}
+	
+    /**
+     * Get the comparator for the columns. The script generator requires a null comparator.
+     * @return The comparator for the table.
+     */
+	protected ColumnComparator<Row> comparator() {
+		return new NullComparator<>();
 	}
 }

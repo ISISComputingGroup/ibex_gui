@@ -39,21 +39,35 @@ public class Perspective extends BasePerspective {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective";
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
+        layout.addStandaloneView(WebLinksOpiTargetView.ID, false, IPageLayout.RIGHT, IPageLayout.DEFAULT_VIEW_RATIO,
+        		IPageLayout.ID_EDITOR_AREA);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String id() {
 		return ID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String name() {
         return "&Web Links";
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image image() {
 		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.weblinks", "icons/external1_32x24.png");

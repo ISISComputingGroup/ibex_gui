@@ -67,7 +67,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 	}
 	
     /**
-     * Sets the updateable DAE settings.
+     * Sets the updatable DAE settings.
      * 
      * @param settings the settings.
      */
@@ -226,6 +226,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 	
 	/**
 	 * Gets the index of the new wiring table.
+	 * 
+	 * @return index of the new wiring table
 	 */
 	public int getNewWiringTable() {
 		return Arrays.asList(getWiringTableList()).indexOf(settings.getNewWiringTable());
@@ -261,6 +263,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 	
 	/**
 	 * Gets the index of the new detector table.
+	 * 
+	 * @return index of the new detector table
 	 */
 	public int getNewDetectorTable() {
 		return Arrays.asList(getDetectorTableList()).indexOf(settings.getNewDetectorTable());
@@ -296,6 +300,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 	
 	/**
 	 * Gets the index of the new spectra table.
+	 * 
+	 * @return index of the new spectra table
 	 */
 	public int getNewSpectraTable() {
 		return Arrays.asList(getSpectraTableList()).indexOf(settings.getNewSpectraTable());
@@ -440,34 +446,72 @@ public class DataAcquisitionViewModel extends ModelObject {
 		settings.setFermiChopperVeto(vetoIsActive(selected));	
 	}
 
+	/**
+	 * 
+	 * @return the current Fermi chopper delay
+	 */
 	public double getFcDelay() {
 		return settings.fcDelay();
 	}
 	
-	public void setFcDelay(double value) {
-		settings.setFcDelay(value);
+	/**
+	 * Set the Fermi chopper delay.
+	 * 
+	 * @param newFcDelay the new Fermi chopper delay
+	 */
+	public void setFcDelay(double newFcDelay) {
+		settings.setFcDelay(newFcDelay);
 	}
 
+	/**
+	 * 
+	 * @return the current Fermi chopper width
+	 */
 	public double getFcWidth() {
 		return settings.fcWidth();
 	}
 	
-	public void setFcWidth(double value) {
-		settings.setFcWidth(value);
+	/**
+	 * Set the Fermi chopper width.
+	 * 
+	 * @param newFcWidth the new Fermi chopper width
+	 */
+	public void setFcWidth(double newFcWidth) {
+		settings.setFcWidth(newFcWidth);
 	}
 	
+	/**
+	 * Checks if the current state of the muon millisecond mode is enabled.
+	 * 
+	 * @return boolean: true if enabled, false otherwise
+	 */
 	public boolean getMuonMsMode() {
 		return settings.muonMsMode() == BinaryState.ENABLED;
 	}
 	
-	public void setMuonMsMode(boolean selected) {
-		settings.setMuonMsMode(selected ? BinaryState.ENABLED : BinaryState.DISABLED);
+	/**
+	 * Set the state of the muon millisecond mode.
+	 * 
+	 * @param newMode true for enabled, false otherwise
+	 */
+	public void setMuonMsMode(boolean newMode) {
+		settings.setMuonMsMode(newMode ? BinaryState.ENABLED : BinaryState.DISABLED);
 	}
 	
+	/**
+	 * The current state of the muon Cerenkov pulse (First/Second).
+	 * 
+	 * @return boolean: true if First, false otherwise
+	 */
 	public boolean getMuonCerenkovPulse() {
 		return settings.muonCerenkovPulse() == MuonCerenkovPulse.FIRST;
 	}
 	
+	/**
+	 * Set the state of the muon Cerenkov Pulse (First/Second).
+	 * 
+	 * @param firstEnabled boolean: true for First, false for Second
+	 */
 	public void setMuonCerenkovPulse(boolean firstEnabled) {
 		settings.setMuonCerenkovPulse(firstEnabled ? MuonCerenkovPulse.FIRST : MuonCerenkovPulse.SECOND);
 	}

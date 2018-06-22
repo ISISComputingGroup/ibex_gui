@@ -7,7 +7,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-@SuppressWarnings({ "checkstyle:membername", "unused" })
+@SuppressWarnings("checkstyle:membername")
 public class QueuedScript extends ModelObject {
 	
 	private static final String INITIAL_NAME = "My Script";

@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.NegatingConverter;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocButtonPanel extends Composite {
@@ -46,11 +45,7 @@ public class IocButtonPanel extends Composite {
 	private final Button stop;
 	private final Button restart;
 	
-	private DataBindingContext bindingContext; 
-	private static final UpdateValueStrategy WITH_NEGATION = new UpdateValueStrategy();
-	static {
-		WITH_NEGATION.setConverter(new NegatingConverter());
-	}
+	private DataBindingContext bindingContext;
 	
     private IocState ioc;
 	private final IocControl control;

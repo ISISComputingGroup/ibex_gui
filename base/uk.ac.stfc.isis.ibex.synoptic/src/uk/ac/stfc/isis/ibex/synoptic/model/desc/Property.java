@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * The Class Property which represents a property within a target. This are the
  * macro name and macro value for the target to have. This object is used in
@@ -30,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "targetproperty")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Property {
+public class Property extends ModelObject {
 	
 	private String key;
 	private String value;
@@ -57,7 +59,7 @@ public class Property {
      *
      * @return the string
      */
-	public String key() {
+	public String getKey() {
 		return key;
 	}
 
@@ -66,10 +68,19 @@ public class Property {
      *
      * @return the string
      */
-	public String value() {
+	public String getValue() {
 		return value;
     }
 
+	/**
+	 * Sets the value of a property.
+	 * 
+	 * @param newValue The new value to set to.
+	 */
+	public void setValue(String newValue) {
+		firePropertyChange("value", value, value = newValue);
+	}
+	
     @Override
     public int hashCode() {
         final int prime = 31;

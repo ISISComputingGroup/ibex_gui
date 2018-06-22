@@ -106,6 +106,15 @@ public class RBLookupViewModel extends ModelObject {
 	}
 	
     /**
+     * Get the name to search for.
+     * 
+     * @return the name
+     */
+	public String getNameSearch() {
+		return nameSearch;
+	}
+	
+    /**
      * The types of roles available to search on.
      * 
      * @return the available roles

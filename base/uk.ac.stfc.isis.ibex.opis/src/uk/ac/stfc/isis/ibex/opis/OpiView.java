@@ -50,7 +50,7 @@ public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
             LOG.catching(e);
         }
     }
-
+    
     /**
      * Macros that the OPI has.
      *
