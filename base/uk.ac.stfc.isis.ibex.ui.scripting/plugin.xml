@@ -4,13 +4,13 @@
    <extension
          point="uk.ac.stfc.isis.ibex.ui.perspectives">
       <contribution
-            class="uk.ac.stfc.isis.ibex.ui.scripting.Perspective">
+            class="uk.ac.stfc.isis.ibex.ui.scripting.PerspectiveFactory">
       </contribution>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="uk.ac.stfc.isis.ibex.ui.scripting.Perspective"
+            class="uk.ac.stfc.isis.ibex.ui.scripting.PerspectiveFactory"
             id="uk.ac.stfc.isis.ibex.ui.scripting.perspective"
             name="Scripting">
       </perspective>
