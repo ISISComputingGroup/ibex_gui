@@ -24,7 +24,6 @@ package uk.ac.stfc.isis.ibex.alarm;
 
 import java.lang.reflect.Field;
 
-import javax.jms.Connection;
 import javax.jms.JMSException;
 
 import org.apache.activemq.ActiveMQConnection;
@@ -48,7 +47,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 public class AlarmConnectionCloser {
 
     /** Connection which will be closed on close. */
-    private Connection connection = null;
+    private ActiveMQConnection connection = null;
 
     /** logger. */
     private static final Logger LOG = IsisLog.getLogger(Alarm.class);

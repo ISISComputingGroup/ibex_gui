@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-         <contribution 
-            class="uk.ac.stfc.isis.ibex.ui.devicescreens.Perspective">
-      </contribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectives">
          <perspective
             class="uk.ac.stfc.isis.ibex.ui.devicescreens.Perspective"
