@@ -55,7 +55,7 @@ public final class LoggerUtils {
     
     /**
      * Logs a message if the IBEX_GUI_EXTRA_DEBUG environment variable is set to 1. Otherwise does nothing.
-     * @param log the logger to log the message to
+     * @param logger the logger to log the message to
      * @param message the message to log
      */
     public static void logIfExtraDebug(Logger logger, String message) {

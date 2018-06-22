@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.statusbar;
 
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.PartSite;
@@ -34,75 +33,91 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
-
+/**
+ * For displaying information in a status bar.
+ *
+ */
 public class StatusBar extends AbstractUIPlugin {
-	
-	private static StatusBar instance;
-	
-	private final Display display = Display.getCurrent();
 
-	private Subscription configSubscription;
+    private static StatusBar instance;
 
-	public StatusBar() {
-		instance = this;
-	}
-	
-	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
-		@Override
-		public void onValue(DisplayConfiguration value) {
-			setTitle(value.name(), value.description());
-		}
+    private final Display display = Display.getCurrent();
 
-		@Override
-		public void onError(Exception e) {
-			setUnknownConfiguration();
-		}
+    private Subscription configSubscription;
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setUnknownConfiguration();
-			}
-		}
-		
-		private void setUnknownConfiguration() {
-			setTitle("Unknown", "Unable to display the configuration");
-		}		
-	};	
-	
-	public static StatusBar getInstance() {
-		return instance;
-	}
-	
-	public void subscribeToConfig() {
-		ForwardingObservable<DisplayConfiguration> config = 
-				Configurations.getInstance().display().displayCurrentConfig();
-		
-		configSubscription = config.addObserver(configObserver);
-	}
-	
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		if (configSubscription != null) {
-			configSubscription.removeObserver();
-		}
-		super.stop(context);
-	}
-	
-	private void setTitle(final String title, final String description) {
-		display.asyncExec(new Runnable() {
-			@SuppressWarnings("restriction")
-			@Override
-			public void run() {
-				IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
-				PartSite vSite = (PartSite) site;
-				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
-				
-		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel) statusLineManager.find("CurrentConfigTitle");
-		    	statusItem.setConfig(title);
-		    	statusItem.setToolTip(description);
-		    	statusLineManager.update(true);
-			}
-		});
-	}
+    /**
+     * Constructor, instantiated by the framework. You probably don't want a new
+     * one. getInstance() will return the existing StatusBar.
+     */
+    public StatusBar() {
+        instance = this;
+    }
+
+    private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
+        @Override
+        public void onValue(DisplayConfiguration value) {
+            setTitle(value.name(), value.description());
+        }
+
+        @Override
+        public void onError(Exception e) {
+            setUnknownConfiguration();
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                setUnknownConfiguration();
+            }
+        }
+
+        private void setUnknownConfiguration() {
+            setTitle("Unknown", "Unable to display the configuration");
+        }
+    };
+
+    /**
+     * Get the existing instance of StatusBar.
+     * 
+     * @return StatusBar
+     */
+    public static StatusBar getInstance() {
+        return instance;
+    }
+
+    /**
+     * When the config changes, update the config title on the status bar.
+     */
+    public void subscribeToConfig() {
+        ForwardingObservable<DisplayConfiguration> config = Configurations.getInstance().display()
+                .displayCurrentConfig();
+
+        configSubscription = config.addObserver(configObserver);
+    }
+
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        if (configSubscription != null) {
+            configSubscription.removeObserver();
+        }
+        super.stop(context);
+    }
+
+    private void setTitle(final String title, final String description) {
+        display.asyncExec(new Runnable() {
+            @SuppressWarnings("restriction")
+            @Override
+            public void run() {
+                IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                        .getActivePart().getSite();
+                PartSite vSite = (PartSite) site;
+                IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
+
+                StatusLineConfigLabel statusItem = (StatusLineConfigLabel) statusLineManager.find("CurrentConfigTitle");
+                statusItem.setConfig(title);
+                statusItem.setToolTip(description);
+                statusLineManager.update(true);
+            }
+        });
+    }
 }

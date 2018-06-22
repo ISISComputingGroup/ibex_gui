@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-@SuppressWarnings({ "checkstyle:membername", "unused" })
+@SuppressWarnings("checkstyle:membername")
 public class ReceiveScriptStatus implements ReceiveMessage {
 	/**
 	 * Tuple of two items (status code, line number).
