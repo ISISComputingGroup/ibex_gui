@@ -25,10 +25,14 @@ import java.util.Collection;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
@@ -63,16 +67,37 @@ public class DeleteSynopticHandler extends AbstractHandler {
         SYNOPTIC.delete().subscribe(synopticService);
 	}	
 	
+	private boolean deleteCurrentConfigSynopticConfirmDialog(String selectedSynoptic) {
+        return MessageDialog.openQuestion(SHELL, "Confirm Edit Current Configuration",
+                selectedSynoptic + " is used in the current configuration, are you sure you want to delete it?");
+    }
+		
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
         MultipleSynopticsSelectionDialog dialog =
                 new MultipleSynopticsSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
-			try {
-                synopticService.write(dialog.selectedSynoptics());
-            } catch (IOException e) {
-                throw new ExecutionException("Failed to write to PV", e);
-            }
+		    ConfigServer server = Configurations.getInstance().server();
+		    ConfigEditing edit = new ConfigEditing(server);
+		    String currentConfigSynoptic = server.currentConfig().getValue().synoptic();
+		    for (String selectedSynoptic : dialog.selectedSynoptics()) {
+		        if (currentConfigSynoptic.equals(selectedSynoptic)) {
+		            if (deleteCurrentConfigSynopticConfirmDialog(selectedSynoptic)) {
+		                try {
+		                    synopticService.write(dialog.selectedSynoptics());
+		                    edit.currentConfig().getValue().setSynoptic("-- NONE --");
+		                } catch (IOException e) {
+		                    throw new ExecutionException("Failed to write to PV", e);
+		                } 
+		            }
+		        } else {
+		            try {
+		                synopticService.write(dialog.selectedSynoptics());    
+		            } catch (IOException e) {
+		                throw new ExecutionException("Failed to write to PV", e);
+		            }
+		        }
+		    }    			
 		}
 		return null;
 	}
