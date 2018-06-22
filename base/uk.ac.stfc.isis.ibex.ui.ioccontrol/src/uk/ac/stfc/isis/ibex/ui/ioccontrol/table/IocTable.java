@@ -35,70 +35,74 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 /**
  * Table allowing IOCs to be started and stopped.
  * 
- * Note that all columns in this table are not resizable as the H_SCROLL 
- * has been removed and resizing could cause columns to disappear.
+ * Note that all columns in this table are not resizable as the H_SCROLL has
+ * been removed and resizing could cause columns to disappear.
  * 
- * The H_SCROLL has been removed as it was appearing despite no extra 
- * data being in the table (unsure why)
+ * The H_SCROLL has been removed as it was appearing despite no extra data being
+ * in the table (unsure why)
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<IocState> {
-	/**
-	 * A table that shows the status of all IOCs on the instrument.
-	 * @param parent the parent composite for the table.
-	 * @param style The style of the viewer.
-	 * @param tableStyle The style of the table.
-	 */
-	public IocTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, IocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);	
-		initialise();
-	}
-	
-	@Override
+    /**
+     * A table that shows the status of all IOCs on the instrument.
+     * 
+     * @param parent
+     *            the parent composite for the table.
+     * @param style
+     *            The style of the viewer.
+     * @param tableStyle
+     *            The style of the table.
+     */
+    public IocTable(Composite parent, int style, int tableStyle) {
+        super(parent, style, IocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
+        initialise();
+    }
+
+    @Override
     public void setRows(Collection<IocState> rows) {
         List<IocState> states = new ArrayList<>(rows);
-		Collections.sort(states);
-		super.setRows(states);
-		refresh();
-	}
-	
-	@Override
-	protected void addColumns() {
-		name();
-		description();
-		state();
-		configState();
-	}
+        Collections.sort(states);
+        super.setRows(states);
+        refresh();
+    }
 
-	private void name() {
-		createColumn("Name", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
-			@Override
-			protected String stringFromRow(IocState row) {
-				return row.getName();
-			}
-		});
-	}
-	
-	
-	private void description() {
-		createColumn("Description", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
-			@Override
-			protected String stringFromRow(IocState row) {
-				return row.getDescription();
-			}
-		});	
-	}
-	
-	private void state() {
-		createColumn("Status", 2, false, new StateLabelProvider(observeProperty("isRunning")));
-	}
-	
-	private void configState() {
-        createColumn("In current configuration?", 4, false, new DataboundCellLabelProvider<IocState>(observeProperty("inCurrentConfig")) {
+    @Override
+    protected void addColumns() {
+        name();
+        description();
+        state();
+        configState();
+    }
+
+    private void name() {
+        createColumn("Name", 4, true, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
             @Override
             protected String stringFromRow(IocState row) {
-                return row.getInCurrentConfig();
+                return row.getName();
             }
         });
+    }
+
+    private void description() {
+        createColumn("Description", 4, true, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
+            @Override
+            protected String stringFromRow(IocState row) {
+                return row.getDescription();
+            }
+        });
+    }
+
+    private void state() {
+        createColumn("Status", 2, true, new StateLabelProvider(observeProperty("isRunning")));
+    }
+
+    private void configState() {
+        createColumn("In config?", 4, true,
+                new DataboundCellLabelProvider<IocState>(observeProperty("inCurrentConfig")) {
+                    @Override
+                    protected String stringFromRow(IocState row) {
+                        return row.getInCurrentConfig() ? "Yes" : "No";
+                    }
+                });
     }
 }
