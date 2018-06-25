@@ -22,30 +22,19 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import org.eclipse.ui.console.IConsoleConstants;
-import org.eclipse.ui.console.IConsolePageParticipant;
+import java.util.Objects;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
-import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
  * This closes and reopens the scripting perspective when instrument is switched.
  */
 public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
-    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(IConsoleConstants.ID_CONSOLE_VIEW);
-
-    IConsolePageParticipant a = null;
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        scriptingPerspectiveReopener.reopenPerspective();
-        // ScriptConsole.getActiveScriptConsole().
-    }
 
     /**
      * {@inheritDoc}
@@ -53,7 +42,29 @@ public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
         ScriptConsoleManager.getInstance().closeAll();
-        scriptingPerspectiveReopener.closePerspective();
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+    	Display.getDefault().syncExec(new Runnable() {
+    		@Override
+    		public void run() {
+    			String id;
+
+    			try {
+    				id = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId();
+    			} catch (NullPointerException e) {
+    				// If eclipse throws a wobbly and one of the things above came back as null.
+    				id = null;
+    			}
+	        	
+	        	if (Objects.equals(id, Consoles.PERPECTIVE_ID)) {
+	        		Consoles.createConsole();
+	        	}
+    		}
+    	});
+    }
 }

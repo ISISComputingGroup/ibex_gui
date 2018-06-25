@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import javax.inject.Inject;
-
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -46,11 +44,15 @@ public class Consoles extends AbstractUIPlugin {
      * The plug-in ID.
      */
     public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
+    
+    public static final String PERPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
 
 	// The shared instance
 	private static Consoles plugin;
 
     private static final GeniePythonConsoleFactory GENIE_CONSOLE_FACTORY = new GeniePythonConsoleFactory();
+    
+    private IEclipseContext eclipseContext;
 
 	/**
 	 * {@inheritDoc}
@@ -61,17 +63,14 @@ public class Consoles extends AbstractUIPlugin {
 		plugin = this;
     	PyDevConfiguration.configure();
     	
-    	IEventBroker broker = (IEventBroker) EclipseContextFactory.getServiceContext(context).get(IEventBroker.class);
+    	eclipseContext = EclipseContextFactory.getServiceContext(context);
     	
-    	if (broker == null) {
-    		System.out.println("TOM DEBUG 1");
-    		throw new RuntimeException("TOM DEBUG 1");
-    	}
+    	// Can't get this via injection. The following works though.
+    	IEventBroker broker = eclipseContext.get(IEventBroker.class);
     	
-    	broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
+    	EventHandler handler = new EventHandler() {
             @Override
             public void handleEvent(Event event) {
-            	System.out.println("TOM DEBUG 2");
                 Object newValue = event.getProperty(EventTags.NEW_VALUE);
 
                 // only run this, if the NEW_VALUE is a MPerspective
@@ -79,15 +78,13 @@ public class Consoles extends AbstractUIPlugin {
                     return;
                 }
                 
-                if (((MPerspective) newValue).getElementId().equals("uk.ac.stfc.isis.ibex.ui.scripting.perspective")) {
-                	System.out.println("TOM DEBUG 3");
+                if (((MPerspective) newValue).getElementId().equals(PERPECTIVE_ID)) {
                 	Consoles.createConsole();
                 }
             }
-        });
+        };
     	
-    	
-    	System.out.println("Scripting plugin started.");   	
+    	broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler); 	
 	}
 
     /**
@@ -113,7 +110,6 @@ public class Consoles extends AbstractUIPlugin {
 		ScriptConsoleManager.getInstance().closeAll();
 		plugin = null;
 		super.stop(context);
-		System.out.println("Scripting plugin stopped.");
 	}
 
 	/**
@@ -132,8 +128,10 @@ public class Consoles extends AbstractUIPlugin {
     	Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+				if (!plugin.anyActive()) {
+					GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+				}
 			}
-		});
+    	});
     }
 }
