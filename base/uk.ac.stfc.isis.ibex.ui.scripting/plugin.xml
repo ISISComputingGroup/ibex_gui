@@ -2,14 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="uk.ac.stfc.isis.ibex.ui.scripting.PerspectiveFactory"
-            id="uk.ac.stfc.isis.ibex.ui.scripting.perspective"
-            name="Scripting">
-      </perspective>
-   </extension>
-   <extension
          point="org.python.pydev.pydev_interpreter_new_custom_entries">
       <interpreter_new_custom_entries_participant
             class="uk.ac.stfc.isis.ibex.ui.scripting.PyDevAdditionalInterpreterSettings">
