@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.console.IConsolePageParticipant;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -35,19 +36,24 @@ import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
     private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(IConsoleConstants.ID_CONSOLE_VIEW);
 
+    IConsolePageParticipant a = null;
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
         scriptingPerspectiveReopener.reopenPerspective();
+        // ScriptConsole.getActiveScriptConsole().
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
         ScriptConsoleManager.getInstance().closeAll();
         scriptingPerspectiveReopener.closePerspective();
     }
     
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        Consoles.createConsole();
-    }
 }

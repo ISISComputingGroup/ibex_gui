@@ -26,7 +26,6 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewMo
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
-
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -96,6 +95,7 @@ public class PerspectiveSwitcherView {
                     if (!(newValue instanceof MPerspective)) {
                         return;
                     }
+                    
                     model.setActive(perspective.equals((MPerspective) newValue));
                 }
             });

@@ -19,10 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
@@ -49,7 +60,34 @@ public class Consoles extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
     	PyDevConfiguration.configure();
-    	System.out.println("Scripting plugin started.");
+    	
+    	IEventBroker broker = (IEventBroker) EclipseContextFactory.getServiceContext(context).get(IEventBroker.class);
+    	
+    	if (broker == null) {
+    		System.out.println("TOM DEBUG 1");
+    		throw new RuntimeException("TOM DEBUG 1");
+    	}
+    	
+    	broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
+            @Override
+            public void handleEvent(Event event) {
+            	System.out.println("TOM DEBUG 2");
+                Object newValue = event.getProperty(EventTags.NEW_VALUE);
+
+                // only run this, if the NEW_VALUE is a MPerspective
+                if (!(newValue instanceof MPerspective)) {
+                    return;
+                }
+                
+                if (((MPerspective) newValue).getElementId().equals("uk.ac.stfc.isis.ibex.ui.scripting.perspective")) {
+                	System.out.println("TOM DEBUG 3");
+                	Consoles.createConsole();
+                }
+            }
+        });
+    	
+    	
+    	System.out.println("Scripting plugin started.");   	
 	}
 
     /**
@@ -91,6 +129,11 @@ public class Consoles extends AbstractUIPlugin {
      * Create a new pydev console based on the current instrument.
      */
     public static void createConsole() {
-        GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+    	Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+			}
+		});
     }
 }
