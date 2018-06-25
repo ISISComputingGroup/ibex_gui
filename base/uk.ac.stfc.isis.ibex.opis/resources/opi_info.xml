@@ -185,7 +185,7 @@
 			</value>
 		</entry> 
 		<entry>
-			<key>In Out Laser</key>
+			<key>In Out Alignment Laser</key>
 			<value>
 				<categories>
 					<category>Lasers</category>
@@ -193,8 +193,12 @@
 				</categories>
 				<type>ALIGNMENTLASER</type>
 				<path>inout_laser.opi</path>
-				<description>The OPI for a moving alignement laser.</description>
-				<macros>             
+				<description>The OPI for a moving alignment laser.</description>
+				<macros>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV relating to the motor controlling the laser (e.g. MOT:MTR0103).</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>		
