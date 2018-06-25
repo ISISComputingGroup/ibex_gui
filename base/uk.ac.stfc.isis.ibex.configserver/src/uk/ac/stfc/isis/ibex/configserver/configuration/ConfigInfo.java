@@ -36,6 +36,7 @@ public class ConfigInfo {
 	private final String name;
 	private final String description;
 	private final String pv;
+	private String synoptic;
 	
 	/**
 	 * Constructor.
@@ -43,11 +44,13 @@ public class ConfigInfo {
 	 * @param name The config name
 	 * @param description The config description
 	 * @param pv The dynamic PV for the config
+	 * @param synoptic The default synoptic view for the config
 	 */
-	public ConfigInfo(String name, String description, String pv) {
+	public ConfigInfo(String name, String description, String pv, String synoptic) {
 		this.name = name;
 		this.description = description;
 		this.pv = pv;
+		this.synoptic = synoptic;
 	}
 	
     /**
@@ -70,6 +73,13 @@ public class ConfigInfo {
 	public String pv() {
 		return pv;
 	}
+		
+	/**
+     * @return The default synoptic view for the config
+     */
+    public String synoptic() {
+        return synoptic;
+    }
 	
 	/**
      * Returns just the names of all config info objects passed in excluding

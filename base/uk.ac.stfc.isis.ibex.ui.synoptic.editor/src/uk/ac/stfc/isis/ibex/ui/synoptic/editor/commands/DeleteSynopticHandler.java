@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -32,6 +33,10 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.Editing;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -67,9 +72,9 @@ public class DeleteSynopticHandler extends AbstractHandler {
         SYNOPTIC.delete().subscribe(synopticService);
 	}	
 	
-	private boolean deleteCurrentConfigSynopticConfirmDialog(String selectedSynoptic) {
-        return MessageDialog.openQuestion(SHELL, "Confirm Edit Current Configuration",
-                selectedSynoptic + " is used in the current configuration, are you sure you want to delete it?");
+	private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics, Collection<String> configsUsingSynoptics) {
+        return MessageDialog.openQuestion(SHELL, "Confirm Delete Synoptics", "The following synoptics, " + inUseSynoptics 
+                + ", are respectively used in the configurations: " + configsUsingSynoptics + ". Are you sure you want to delete them?");
     }
 		
 	@Override
@@ -78,26 +83,34 @@ public class DeleteSynopticHandler extends AbstractHandler {
                 new MultipleSynopticsSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 		    ConfigServer server = Configurations.getInstance().server();
-		    ConfigEditing edit = new ConfigEditing(server);
-		    String currentConfigSynoptic = server.currentConfig().getValue().synoptic();
+		    Collection<ConfigInfo> existingConfigs = server.configsInfo().getValue();
+		    Collection<String> configsUsingSynoptic = new ArrayList<String>();
+		    Collection<String> inUseSynoptics = new ArrayList<String>();
 		    for (String selectedSynoptic : dialog.selectedSynoptics()) {
-		        if (currentConfigSynoptic.equals(selectedSynoptic)) {
-		            if (deleteCurrentConfigSynopticConfirmDialog(selectedSynoptic)) {
-		                try {
-		                    synopticService.write(dialog.selectedSynoptics());
-		                    edit.currentConfig().getValue().setSynoptic("-- NONE --");
-		                } catch (IOException e) {
-		                    throw new ExecutionException("Failed to write to PV", e);
-		                } 
-		            }
-		        } else {
-		            try {
-		                synopticService.write(dialog.selectedSynoptics());    
-		            } catch (IOException e) {
-		                throw new ExecutionException("Failed to write to PV", e);
-		            }
-		        }
-		    }    			
+		        for (ConfigInfo existingConfig : existingConfigs) {
+		            String existingConfigSynoptic = existingConfig.synoptic();
+    		        if (existingConfigSynoptic.equals(selectedSynoptic)) {
+    		            configsUsingSynoptic.add(existingConfig.name());
+    		            inUseSynoptics.add(selectedSynoptic);
+    		        }
+		        }    			
+		    }
+    		if (!configsUsingSynoptic.isEmpty()) {
+    		    if (deleteConfigSynopticConfirmDialog(inUseSynoptics, configsUsingSynoptic)) {
+                    try {
+                        synopticService.write(dialog.selectedSynoptics());
+                    } catch (IOException e) {
+                        throw new ExecutionException("Failed to write to PV", e);
+                    } 
+                }
+    		} else {
+                try {
+                    synopticService.write(dialog.selectedSynoptics());    
+                } catch (IOException e) {
+                    throw new ExecutionException("Failed to write to PV", e);
+                }
+            }
+    		
 		}
 		return null;
 	}
