@@ -65,7 +65,7 @@ public class EditConfigHelper extends ConfigHelper {
             if (dialog.doAsComponent()) {
                 server.saveAsComponent().uncheckedWrite(dialog.getComponent());
             } else {
-                if (isCurrent) {
+                if (isCurrent && dialog.switchConfigOnSaveAs()) {
                     server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
                 } else {
                     server.saveAs().uncheckedWrite(dialog.getConfig());
