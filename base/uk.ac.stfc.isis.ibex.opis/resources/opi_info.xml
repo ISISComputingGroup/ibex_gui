@@ -514,35 +514,36 @@
         <description>The OPI for the linear sample changer. No properties required.</description>
         <macros>
 		</macros>
-		</entry>
-		<entry>
-			<key>Fermi chopper - Digital Drive</key>
-			<value>
-				<categories>
-					<category>Choppers</category>
-				</categories>
-				<type>CHOPPER</type>
-				<path>FZJ_DD_Fermi_Chopper.opi</path>
-				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>  
-		<entry>
-			<key>EnginX 3rd Jaw</key>
-			<value>
-				<categories>
-					<category>Jaws and slits</category>
-				</categories>
-				<type>JAWS</type>
-				<path>jaws/enginx_jaws/jaw_overview.opi</path>
-				<description>The OPI for the 3rd Enginx Jawset.</description>
-				<macros>
-					<macro>
-						<name>J</name>
-						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
-					</macro>            
-				</macros>
+      </value>
+	</entry>
+	<entry>
+	  <key>Fermi chopper - Digital Drive</key>
+	    <value>
+			<categories>
+				<category>Choppers</category>
+			</categories>
+			<type>CHOPPER</type>
+			<path>FZJ_DD_Fermi_Chopper.opi</path>
+			<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
+			<macros>
+			</macros>
+		</value>
+	</entry>  
+	<entry>
+		<key>EnginX 3rd Jaw</key>
+		<value>
+			<categories>
+				<category>Jaws and slits</category>
+			</categories>
+			<type>JAWS</type>
+			<path>jaws/enginx_jaws/jaw_overview.opi</path>
+			<description>The OPI for the 3rd Enginx Jawset.</description>
+			<macros>
+				<macro>
+					<name>J</name>
+					<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+				</macro>            
+			</macros>
       </value>
     </entry>
     <entry>
@@ -1412,7 +1413,6 @@
       </value>
     </entry>
     <entry>
-<<<<<<< HEAD
       <key>IPS</key>
       <value>
         <categories>
