@@ -183,25 +183,7 @@
 					</macro>                   
 				</macros>
 			</value>
-		</entry> 
-		<entry>
-			<key>In Out Alignment Laser</key>
-			<value>
-				<categories>
-					<category>Lasers</category>
-					<category>Miscellaneous motion control</category>
-				</categories>
-				<type>ALIGNMENTLASER</type>
-				<path>inout_laser.opi</path>
-				<description>The OPI for a moving alignment laser.</description>
-				<macros>
-					<macro>
-						<name>MM</name>
-						<description>The motor PV relating to the motor controlling the laser (e.g. MOT:MTR0103).</description>
-					</macro>
-				</macros>
-			</value>
-		</entry>		
+		</entry> 		
 		<entry>
 			<key>In Out Monitor</key>
 			<value>
@@ -1336,6 +1318,23 @@
 	    			<macro>
 						<name>MOTION_SET_POINT</name>
 						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+					</macro>	    		
+				</macros>
+			</value>
+		</entry>
+		<entry>
+	    	<key>Motion Set Point (Few)</key>
+			<value>
+				<categories>
+					<category>Miscellaneous motion control</category>
+				</categories>
+				<type>MOTION_SET_POINTS_FEW</type>
+	    		<path>stage/inout_motion_setpoints.opi</path>
+	    		<description>The OPI for motion setpoints for one to three setpoints.</description>
+	    		<macros>
+	    			<macro>
+						<name>MOTION_SET_POINT</name>
+						<description>The motion setpoint to display (e.g. LKUP:LSR)</description>
 					</macro>	    		
 				</macros>
 			</value>
