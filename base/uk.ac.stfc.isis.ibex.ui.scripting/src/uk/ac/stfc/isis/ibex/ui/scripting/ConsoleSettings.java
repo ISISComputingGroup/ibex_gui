@@ -32,39 +32,41 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 
 /**
- * This closes and reopens the scripting perspective when instrument is switched.
+ * This closes and reopens the scripting perspective when instrument is
+ * switched.
  */
 public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        ScriptConsoleManager.getInstance().closeAll();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-    	Display.getDefault().syncExec(new Runnable() {
-    		@Override
-    		public void run() {
-    			String id;
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void preSetInstrument(InstrumentInfo instrument) {
+		ScriptConsoleManager.getInstance().closeAll();
+	}
 
-    			try {
-    				id = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId();
-    			} catch (NullPointerException e) {
-    				// If eclipse throws a wobbly and one of the things above came back as null.
-    				id = null;
-    			}
-	        	
-	        	if (Objects.equals(id, Consoles.PERPECTIVE_ID)) {
-	        		Consoles.createConsole();
-	        	}
-    		}
-    	});
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postSetInstrument(InstrumentInfo instrument) {
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				String id;
+
+				try {
+					id = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId();
+				} catch (NullPointerException e) {
+					// If eclipse throws a wobbly and one of the things above
+					// came back as null.
+					id = null;
+				}
+
+				if (Objects.equals(id, Consoles.PERSPECTIVE_ID)) {
+					Consoles.createConsole();
+				}
+			}
+		});
+	}
 }

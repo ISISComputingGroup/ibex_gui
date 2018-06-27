@@ -27,14 +27,23 @@ import org.python.pydev.plugin.PydevPlugin;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
+/**
+ * PyDev Configuration.
+ *
+ */
 public final class PyDevConfiguration {
-	
-	private PyDevConfiguration() { }
-	
+
+	private PyDevConfiguration() {
+	}
+
+	/**
+	 * Configure PyDev.
+	 */
 	public static void configure() {
 		IInterpreterManager iMan = PydevPlugin.getPythonInterpreterManager(true);
 		NullProgressMonitor monitor = new NullProgressMonitor();
-		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(), monitor, false);
-		iMan.setInfos(new IInterpreterInfo[]{interpreterInfo}, Collections.<String>emptySet(), monitor);
+		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
+				monitor, false);
+		iMan.setInfos(new IInterpreterInfo[] {interpreterInfo}, Collections.<String>emptySet(), monitor);
 	}
 }

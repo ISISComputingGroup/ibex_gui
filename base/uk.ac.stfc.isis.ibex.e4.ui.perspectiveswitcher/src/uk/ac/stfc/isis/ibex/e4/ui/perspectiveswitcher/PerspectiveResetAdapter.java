@@ -5,21 +5,28 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
-
+/**
+ * Deals with resetting the perspective.
+ */
 public class PerspectiveResetAdapter extends SelectionAdapter {
 
 	private final PerspectivesProvider provider;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param provider
+	 *            PerspectivesProvider
+	 */
 	public PerspectiveResetAdapter(PerspectivesProvider provider) {
 		this.provider = provider;
 	}
-	
+
 	@Override
 	public void widgetSelected(SelectionEvent event) {
-        MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
-        perspectiveStack.getSelectedElement().setVisible(true);
-        perspectiveStack.setVisible(true);
+		MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+		perspectiveStack.getSelectedElement().setVisible(true);
+		perspectiveStack.setVisible(true);
 	}
 }
