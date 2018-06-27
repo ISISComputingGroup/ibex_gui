@@ -1312,10 +1312,10 @@
 					<category>Sample changers</category>
 				</categories>
 				<type>MOTION_SET_POINTS</type>
-	    		<path>stage/motion_setpoint.opi</path>
-	    		<description>The OPI for motion setpoints</description>
-	    		<macros>
-	    			<macro>
+	    		        <path>stage/motion_setpoint.opi</path>
+	    		        <description>The OPI for motion setpoints</description>
+	    		        <macros>
+	    			        <macro>
 						<name>MOTION_SET_POINT</name>
 						<description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
 					</macro>	    		
@@ -1329,10 +1329,10 @@
 					<category>Miscellaneous motion control</category>
 				</categories>
 				<type>MOTION_SET_POINTS_FEW</type>
-	    		<path>stage/inout_motion_setpoints.opi</path>
-	    		<description>The OPI for motion setpoints for one to three setpoints.</description>
-	    		<macros>
-	    			<macro>
+	    		        <path>stage/inout_motion_setpoints.opi</path>
+	    		        <description>The OPI for motion setpoints for one to three setpoints.</description>
+	    		        <macros>
+	    			        <macro>
 						<name>MOTION_SET_POINT</name>
 						<description>The motion setpoint to display (e.g. LKUP:LSR)</description>
 					</macro>	    		
