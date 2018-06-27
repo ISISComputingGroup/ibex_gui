@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.SWTObservables;
