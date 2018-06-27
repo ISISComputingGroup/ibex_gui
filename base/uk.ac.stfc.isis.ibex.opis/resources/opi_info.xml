@@ -121,7 +121,15 @@
 					<macro>		
 						<name>MBHVCHAN</name>		
 						<description>CAEN HV channel for B (e.g. 1).</description>		
+					</macro>
+					<macro>		
+						<name>MAHVSLOT</name>		
+						<description>CAEN HV slot for A (e.g. 0).</description>		
 					</macro>		
+					<macro>		
+						<name>MBHVSLOT</name>		
+						<description>CAEN HV slot for B (e.g. 1).</description>		
+					</macro>
 				</macros>
 			</value>		
 		</entry>		
@@ -202,7 +210,15 @@
 					<macro>
 						<name>MM</name>
 						<description>The motor PV relating to the motor controlling the monitor (e.g. MOT:MTR0605).</description>
-					</macro>              
+					</macro> 
+					<macro>		
+						<name>MHVCHAN</name>		
+						<description>CAEN HV channel for the monitor (default: 0).</description>		
+					</macro>
+					<macro>		
+						<name>MHVSLOT</name>		
+						<description>CAEN HV slot for the monitor (default: 0).</description>		
+					</macro>					
 				</macros>
 			</value>
 		</entry>
@@ -400,7 +416,15 @@
 					<macro>
 						<name>M</name>
 						<description>The monitor number (e.g. 1).</description>
-					</macro>                     
+					</macro>
+					<macro>		
+						<name>MHVCHAN</name>
+						<description>CAEN HV channel for the monitor (default: 0).</description>		
+					</macro>
+                    <macro>		
+						<name>MHVSLOT</name>		
+						<description>CAEN HV slot for the monitor (default: 0).</description>		
+					</macro>
 				</macros>
 			</value>
 		</entry>
