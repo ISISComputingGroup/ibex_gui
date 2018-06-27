@@ -63,51 +63,53 @@ public class DeleteSynopticHandler extends AbstractHandler {
      * Constructor that adds a listener to disable the handler if the
      * destination is disabled.
      */
-	public DeleteSynopticHandler() {
+    public DeleteSynopticHandler() {
         synopticService.writeTo(SYNOPTIC.delete());
         SYNOPTIC.delete().subscribe(synopticService);
-	}	
-	
-	private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics, Collection<String> configsUsingSynoptics) {
-        return MessageDialog.openQuestion(SHELL, "Confirm Delete Synoptics", "The following synoptics, " + inUseSynoptics 
-                + ", are respectively used in the configurations: " + configsUsingSynoptics + ". Are you sure you want to delete them?");
     }
-		
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-        MultipleSynopticsSelectionDialog dialog =
-                new MultipleSynopticsSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
-		if (dialog.open() == Window.OK) {
-		    ConfigServer server = Configurations.getInstance().server();
-		    Collection<ConfigInfo> existingConfigs = server.configsInfo().getValue();
-		    Collection<String> configsUsingSynoptic = new ArrayList<String>();
-		    Collection<String> inUseSynoptics = new ArrayList<String>();
-		    for (String selectedSynoptic : dialog.selectedSynoptics()) {
-		        for (ConfigInfo existingConfig : existingConfigs) {
-		            String existingConfigSynoptic = existingConfig.synoptic();
-    		        if (existingConfigSynoptic.equals(selectedSynoptic)) {
-    		            configsUsingSynoptic.add(existingConfig.name());
-    		            inUseSynoptics.add(selectedSynoptic);
-    		        }
-		        }    			
-		    }
-    		if (!configsUsingSynoptic.isEmpty()) {
-    		    if (deleteConfigSynopticConfirmDialog(inUseSynoptics, configsUsingSynoptic)) {
+
+    private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics,
+            Collection<String> configsUsingSynoptics) {
+        return MessageDialog.openQuestion(SHELL, "Confirm Delete Synoptics",
+                "The following synoptics, " + inUseSynoptics + ", are respectively used in the configurations: "
+                        + configsUsingSynoptics + ". Are you sure you want to delete them?");
+    }
+
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(SHELL, TITLE,
+                SYNOPTIC.availableEditableSynoptics());
+        if (dialog.open() == Window.OK) {
+            ConfigServer server = Configurations.getInstance().server();
+            Collection<ConfigInfo> existingConfigs = server.configsInfo().getValue();
+            Collection<String> configsUsingSynoptic = new ArrayList<String>();
+            Collection<String> inUseSynoptics = new ArrayList<String>();
+            for (String selectedSynoptic : dialog.selectedSynoptics()) {
+                for (ConfigInfo existingConfig : existingConfigs) {
+                    String existingConfigSynoptic = existingConfig.synoptic();
+                    if (existingConfigSynoptic.equals(selectedSynoptic)) {
+                        configsUsingSynoptic.add(existingConfig.name());
+                        inUseSynoptics.add(selectedSynoptic);
+                    }
+                }
+            }
+            if (!configsUsingSynoptic.isEmpty()) {
+                if (deleteConfigSynopticConfirmDialog(inUseSynoptics, configsUsingSynoptic)) {
                     try {
                         synopticService.write(dialog.selectedSynoptics());
                     } catch (IOException e) {
                         throw new ExecutionException("Failed to write to PV", e);
-                    } 
+                    }
                 }
-    		} else {
+            } else {
                 try {
-                    synopticService.write(dialog.selectedSynoptics());    
+                    synopticService.write(dialog.selectedSynoptics());
                 } catch (IOException e) {
                     throw new ExecutionException("Failed to write to PV", e);
                 }
             }
-    		
-		}
-		return null;
-	}
+
+        }
+        return null;
+    }
 }
