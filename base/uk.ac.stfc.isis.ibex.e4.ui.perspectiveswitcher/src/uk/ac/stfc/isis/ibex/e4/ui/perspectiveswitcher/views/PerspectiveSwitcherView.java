@@ -26,7 +26,6 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewMo
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
-
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -35,79 +34,80 @@ import org.osgi.service.event.EventHandler;
  */
 public class PerspectiveSwitcherView {
 
-    private PerspectivesProvider perspectivesProvider;
+	private PerspectivesProvider perspectivesProvider;
 
-    @Inject
-    private EModelService modelService;
+	@Inject
+	private EModelService modelService;
 
-    @Inject
-    private MApplication app;
+	@Inject
+	private MApplication app;
 
-    @Inject
-    private EPartService partService;
+	@Inject
+	private EPartService partService;
 
-    @Inject
-    private IEventBroker broker;
+	@Inject
+	private IEventBroker broker;
 
-    /**
-     * Create and initialise the controls within the view.
-     * 
-     * @param parent
-     *            The parent container
-     */
-    @PostConstruct
-    public void draw(Composite parent) {
-        Composite composite = new Composite(parent, SWT.None);
-        composite.setLayout(new GridLayout());
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	/**
+	 * Create and initialise the controls within the view.
+	 * 
+	 * @param parent
+	 *            The parent container
+	 */
+	@PostConstruct
+	public void draw(Composite parent) {
+		Composite composite = new Composite(parent, SWT.None);
+		composite.setLayout(new GridLayout());
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
+		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
-        addResetCurrentPerspectiveShortcut(composite);
-        addSeparator(composite);
-        addPerspectiveShortcuts(composite);
-    }
+		addResetCurrentPerspectiveShortcut(composite);
+		addSeparator(composite);
+		addPerspectiveShortcuts(composite);
+	}
 
-    private void addPerspectiveShortcuts(Composite parent) {
-        List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
+	private void addPerspectiveShortcuts(Composite parent) {
+		List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
 
-        Comparator<MPerspective> comparator = new Comparator<MPerspective>() {
-            @Override
-            public int compare(MPerspective p1, MPerspective p2) {
-                return p1.getLabel().compareTo(p2.getLabel());
-            }
-        };
-        Collections.sort(perspectives, comparator);
+		Comparator<MPerspective> comparator = new Comparator<MPerspective>() {
+			@Override
+			public int compare(MPerspective p1, MPerspective p2) {
+				return p1.getLabel().compareTo(p2.getLabel());
+			}
+		};
+		Collections.sort(perspectives, comparator);
 
-        for (final MPerspective perspective : perspectives) {
-            final PerspectiveButtonViewModel model;
-            if (perspective.getLabel().equals("Alarms")) {
-                model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
-            } else {
-                model = new PerspectiveButtonViewModel(perspective.getLabel());
-            }
-            new PerspectiveButton(parent, perspective, perspectivesProvider, model);
-            broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
-                @Override
-                public void handleEvent(Event event) {
-                    Object newValue = event.getProperty(EventTags.NEW_VALUE);
+		for (final MPerspective perspective : perspectives) {
+			final PerspectiveButtonViewModel model;
+			if (perspective.getLabel().equals("Alarms")) {
+				model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
+			} else {
+				model = new PerspectiveButtonViewModel(perspective.getLabel());
+			}
+			new PerspectiveButton(parent, perspective, perspectivesProvider, model);
+			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
+				@Override
+				public void handleEvent(Event event) {
+					Object newValue = event.getProperty(EventTags.NEW_VALUE);
 
-                    // only run this, if the NEW_VALUE is a MPerspective
-                    if (!(newValue instanceof MPerspective)) {
-                        return;
-                    }
-                    model.setActive(perspective.equals((MPerspective) newValue));
-                }
-            });
-        }
-    }
+					// only run this, if the NEW_VALUE is a MPerspective
+					if (!(newValue instanceof MPerspective)) {
+						return;
+					}
 
-    private void addSeparator(Composite parent) {
-        Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
-        separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    }
+					model.setActive(perspective.equals((MPerspective) newValue));
+				}
+			});
+		}
+	}
 
-    private void addResetCurrentPerspectiveShortcut(Composite parent) {
-        new ResetLayoutButton(parent, perspectivesProvider);
-    }
+	private void addSeparator(Composite parent) {
+		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	}
+
+	private void addResetCurrentPerspectiveShortcut(Composite parent) {
+		new ResetLayoutButton(parent, perspectivesProvider);
+	}
 }

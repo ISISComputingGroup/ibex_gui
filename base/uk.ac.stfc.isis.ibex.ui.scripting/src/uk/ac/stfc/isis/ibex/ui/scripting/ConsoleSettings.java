@@ -22,26 +22,51 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import java.util.Objects;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
-import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
- * This closes and reopens the scripting perspective when instrument is switched.
+ * This closes and reopens the scripting perspective when instrument is
+ * switched.
  */
 public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
-    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
 
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        scriptingPerspectiveReopener.reopenPerspective();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void preSetInstrument(InstrumentInfo instrument) {
+		ScriptConsoleManager.getInstance().closeAll();
+	}
 
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        ScriptConsoleManager.getInstance().closeAll();
-        scriptingPerspectiveReopener.closePerspective();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postSetInstrument(InstrumentInfo instrument) {
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				String id;
+
+				try {
+					id = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId();
+				} catch (NullPointerException e) {
+					// If eclipse throws a wobbly and one of the things above
+					// came back as null.
+					id = null;
+				}
+
+				if (Objects.equals(id, Consoles.PERSPECTIVE_ID)) {
+					Consoles.createConsole();
+				}
+			}
+		});
+	}
 }
