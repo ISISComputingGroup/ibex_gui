@@ -136,7 +136,7 @@ $(pv_value)</tooltip>
         <pv trig="true">$(P)CAEN:crates</pv>
       </rule>
     </rules>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <wuid>-654d67a4:1443fbaccbd:-6502</wuid>
     <auto_size>false</auto_size>
     <scripts />
