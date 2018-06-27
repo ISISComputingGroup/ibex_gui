@@ -21,7 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -142,6 +144,9 @@ public class TargetPropertiesWidget extends Composite {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 table.setRows(viewModel.getProperties());
+                if (!viewModel.getProperties().isEmpty()) {
+                    table.setSelected(viewModel.getProperties().get(0));
+                }
             }
         });
 
