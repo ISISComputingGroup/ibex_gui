@@ -2,38 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-      <contribution
-            class="uk.ac.stfc.isis.ibex.ui.scripting.Perspective">
-      </contribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="uk.ac.stfc.isis.ibex.ui.scripting.Perspective"
-            id="uk.ac.stfc.isis.ibex.ui.scripting.perspective"
-            name="Scripting">
-      </perspective>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="uk.ac.stfc.isis.ibex.ui.scripting.perspective">
-         <view
-               closeable="false"
-               id="org.eclipse.ui.console.ConsoleView"
-               minimized="false"
-               moveable="false"
-               ratio="0.1f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               showTitle="true"
-               standalone="false"
-               visible="true">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
          point="org.python.pydev.pydev_interpreter_new_custom_entries">
       <interpreter_new_custom_entries_participant
             class="uk.ac.stfc.isis.ibex.ui.scripting.PyDevAdditionalInterpreterSettings">

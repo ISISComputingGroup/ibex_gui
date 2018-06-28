@@ -36,7 +36,7 @@ public class InterpreterInfoBuilderParticipant implements IInterpreterInfoBuilde
     @Override
     public BuilderResult syncInfoToPythonPath(IProgressMonitor arg0, InterpreterInfo arg1) {
         // Do nothing
-        return null;
+        return BuilderResult.OK;
     }
 
 }

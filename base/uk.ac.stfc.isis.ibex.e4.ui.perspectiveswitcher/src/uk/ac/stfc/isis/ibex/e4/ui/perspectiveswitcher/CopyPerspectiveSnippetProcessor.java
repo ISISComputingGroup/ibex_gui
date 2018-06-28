@@ -7,33 +7,45 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
-
 /**
- * Copies all snippet perspectives to perspective stack called "MainPerspectiveStack" In order to register/reset perspective and not have to sync two copies in
- * e4xmi.
+ * Copies all snippet perspectives to perspective stack called
+ * "MainPerspectiveStack" In order to register/reset perspective and not have to
+ * sync two copies in e4xmi.
  * 
  */
 public class CopyPerspectiveSnippetProcessor {
 
+    /**
+     * Clone each snippet that is a perspective and add the cloned perspective
+     * to the main PerspectiveStack.
+     * 
+     * @param app
+     *            MApplication
+     * @param partService
+     *            EPartService
+     * @param modelService
+     *            EModelService
+     */
     @Execute
     public void execute(MApplication app, EPartService partService, EModelService modelService) {
-    	
-    	PerspectivesProvider perspectivesProvider = new PerspectivesProvider(app, partService, modelService);    	
+        PerspectivesProvider perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
 
-        // Only do this when no other children, or the restored workspace state will be overwritten.
-        if (!perspectiveStack.getChildren().isEmpty())
+        // Only do this when no other children, or the restored workspace state
+        // will be overwritten.
+        if (!perspectiveStack.getChildren().isEmpty()) {
             return;
+        }
 
-        // clone each snippet that is a perspective and add the cloned perspective into the main PerspectiveStack
+        // clone each snippet that is a perspective and add the cloned
+        // perspective into the main PerspectiveStack
         boolean isFirst = true;
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-           perspectiveStack.getChildren().add(perspective);
-           if (isFirst) {
-        	   perspectiveStack.setSelectedElement(perspective);
-               isFirst = false;
-           }
+            perspectiveStack.getChildren().add(perspective);
+            if (isFirst) {
+                perspectiveStack.setSelectedElement(perspective);
+                isFirst = false;
+            }
         }
     }
 }

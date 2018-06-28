@@ -32,7 +32,6 @@ import org.python.pydev.debug.newconsole.PydevConsoleInterpreter;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
 import org.python.pydev.plugin.PydevPlugin;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -61,37 +60,48 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
 	private final NullProgressMonitor monitor = new NullProgressMonitor();
 
-    private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
+	private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
 
 	@Override
 	public void createConsole(String additionalInitialComands) {
-        try {
+		try {
 			setInitialInterpreterCommands();
 			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
 		} catch (Exception e) {
-            LOG.error(e);
+			LOG.error(e);
 		}
 	}
 
 	private void setInitialInterpreterCommands() {
-		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.python.pydev.debug");
+		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
+				"org.python.pydev.debug");
 		String commands = pydevDebugPreferenceStore.getDefaultString(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS);
 		if (commands == null || commands.contains(Commands.GENIE_INITIALISATION)) {
 			return;
 		}
 
-		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS, Commands.GENIE_INITIALISATION);
+		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
+				Commands.GENIE_INITIALISATION);
 	}
 
-    PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
+	/**
+	 * Creates a Genie Python Interpreter.
+	 * 
+	 * @return Interpreter
+	 * @throws Exception
+	 *             can throw several different exceptions
+	 */
+	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
 		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
-		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(), monitor, false);
+		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
+				monitor, false);
 
-        PydevIProcessFactory iprocessFactory = new PydevIProcessFactory();
+		PydevIProcessFactory iprocessFactory = new PydevIProcessFactory();
 
-		PydevConsoleLaunchInfo launchAndProcess = 
-				iprocessFactory.createLaunch(manager, interpreterInfo, interpreterInfo.getPythonPath(), null, null);
+		PydevConsoleLaunchInfo launchAndProcess = iprocessFactory.createLaunch(manager, interpreterInfo,
+				interpreterInfo.getPythonPath(), null, null);
 
 		return createPydevInterpreter(launchAndProcess, null, null);
 	}
+
 }
