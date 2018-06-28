@@ -61,10 +61,9 @@ public abstract class OpiTargetView extends OpiView {
 	private final String pvPrefix = Instrument.getInstance().currentInstrument().pvPrefix();
 	
     /**
-     * Name of the opi.
+     * The target OPI.
      */
-	private String opiName;
-	private String name;
+	private OpiTarget target;
 
     /**
      * Sets the target opi.
@@ -75,14 +74,13 @@ public abstract class OpiTargetView extends OpiView {
      *             when the OPI can not be created
      */
     public void setOpi(OpiTarget target) throws OPIViewCreationException {
-        this.opiName = target.opiName();
-        this.name = target.name();
+    	this.target = target;
 		initialiseOPI();
 	}
 		
 	@Override
     protected Path opi() throws OPIViewCreationException {
-		Path path = Opi.getDefault().descriptionsProvider().pathFromName(opiName);
+		Path path = Opi.getDefault().descriptionsProvider().pathFromName(target.opiName());
 		
 		if (path != null) {
 			return path;
@@ -91,9 +89,9 @@ public abstract class OpiTargetView extends OpiView {
 		// This is for back-compatibility; previously the opi name in the synoptic was the path
 		// At some point this can be removed.
         try {
-            return Opi.getDefault().opiProvider().pathFromName(opiName);
+            return Opi.getDefault().opiProvider().pathFromName(target.opiName());
         } catch (NullPointerException ex) {
-            throw new OPIViewCreationException("OPI key or path can not be found for '" + opiName + "'");
+            throw new OPIViewCreationException("OPI key or path can not be found for '" + target.opiName() + "'");
         }
 	}
     
@@ -103,9 +101,12 @@ public abstract class OpiTargetView extends OpiView {
 	@Override
     public MacrosInput macros() {
     	MacrosInput macros = emptyMacrosInput();
-    	macros.put("NAME", name);
-    	macros.put("OPINAME", opiName);
+    	macros.put("NAME", target.name());
+    	macros.put("OPINAME", target.opiName());
     	macros.put("P", pvPrefix);
+    	for(Map.Entry<String, String> macro : target.properties().entrySet()) {
+    		macros.put(macro.getKey(), macro.getValue());
+    	}
     	return macros;
     }
 
