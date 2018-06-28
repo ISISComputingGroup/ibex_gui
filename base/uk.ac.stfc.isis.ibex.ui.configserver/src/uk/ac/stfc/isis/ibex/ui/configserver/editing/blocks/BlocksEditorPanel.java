@@ -221,12 +221,6 @@ public class BlocksEditorPanel extends Composite {
 	    char[] blockNameChars = block.getName().toCharArray();
         int length = blockNameChars.length;
         
-        //Removes the "_1" from the name of block, if it's present.
-        if (blockNameChars[length - 2] == '_') {
-            char[] newBlockNameChars = Arrays.copyOfRange(blockNameChars, 0, length - 2);
-            block.setName(String.valueOf(newBlockNameChars));
-        }
-        
         //Assumes the block won't be copied 50 times or more.
         for (int i = 1; i < 50; i++) {
             for (EditableBlock blockInConfig : config.getAllBlocks()) {
