@@ -7,7 +7,7 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.logger.IsisLog
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  com.google.guava
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.apache.logging.log4j,
  org.apache.logging.log4j.core.config.plugins,
