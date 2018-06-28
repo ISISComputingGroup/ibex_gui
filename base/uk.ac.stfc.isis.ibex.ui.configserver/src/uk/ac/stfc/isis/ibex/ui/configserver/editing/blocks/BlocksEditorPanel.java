@@ -217,16 +217,13 @@ public class BlocksEditorPanel extends Composite {
      * 
      * @param block The block whose name should be changed.
      */
-	private void setSimilarName(EditableBlock block) {
-	    char[] blockNameChars = block.getName().toCharArray();
-        int length = blockNameChars.length;
-        
+	private void setSimilarName(EditableBlock block) {     
         //Assumes the block won't be copied 50 times or more.
         for (int i = 1; i < 50; i++) {
             for (EditableBlock blockInConfig : config.getAllBlocks()) {
                 if (block.getName().equals(blockInConfig.getName())) {
                     char[] blockInConfigChars = blockInConfig.getName().toCharArray();
-                    length = blockInConfigChars.length;
+                    int length = blockInConfigChars.length;
                     if (blockInConfigChars[length - 2] == '_') {
                         char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 1);
                         block.setName(String.valueOf(newBlockInConfigChars) + i);
