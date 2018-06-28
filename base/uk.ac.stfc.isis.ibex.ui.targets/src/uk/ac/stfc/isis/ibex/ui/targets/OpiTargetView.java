@@ -64,6 +64,7 @@ public abstract class OpiTargetView extends OpiView {
      * Name of the opi.
      */
 	private String opiName;
+	private String name;
 
     /**
      * Sets the target opi.
@@ -75,8 +76,7 @@ public abstract class OpiTargetView extends OpiView {
      */
     public void setOpi(OpiTarget target) throws OPIViewCreationException {
         this.opiName = target.opiName();
-		
-        addMacros(target);
+        this.name = target.name();
 		initialiseOPI();
 	}
 		
@@ -96,22 +96,18 @@ public abstract class OpiTargetView extends OpiView {
             throw new OPIViewCreationException("OPI key or path can not be found for '" + opiName + "'");
         }
 	}
-	
-    /**
-     * Add the macros to the OPI
-     * 
-     * @param target target of the OPI
-     */
-    private void addMacros(OpiTarget target) {
-		MacrosInput input = macros();
-
-        input.put("NAME", target.name());
-        input.put("OPINAME", this.opiName);
-		input.put("P", pvPrefix);
-        for (Map.Entry<String, String> macro : target.properties().entrySet()) {
-			input.put(macro.getKey(), macro.getValue());
-		}
-	}
+    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+    public MacrosInput macros() {
+    	MacrosInput macros = emptyMacrosInput();
+    	macros.put("NAME", name);
+    	macros.put("OPINAME", opiName);
+    	macros.put("P", pvPrefix);
+    	return macros;
+    }
 
     private static List<IViewPart> openOPIs = new ArrayList<>();
     private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();

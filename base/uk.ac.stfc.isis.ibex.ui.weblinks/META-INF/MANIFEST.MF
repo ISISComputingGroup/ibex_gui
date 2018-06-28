@@ -3,11 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Weblinks
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.weblinks;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.8.2",
  org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.swt,
  uk.ac.stfc.isis.ibex.ui.targets,
- uk.ac.stfc.isis.ibex.ui.perspectives
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.services,
+ org.eclipse.osgi.services,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.model.workbench
+Bundle-ActivationPolicy: lazy
