@@ -60,6 +60,8 @@ public final class ComponentIcons {
 
     private static String getIconNameForType(ComponentType componentType) {
         switch (componentType) {
+            case MOTION_SET_POINTS_FEW:
+                return "in_out_motion_set_points";
             case JAWS:
                 return "jaws";
             case CHOPPER:
