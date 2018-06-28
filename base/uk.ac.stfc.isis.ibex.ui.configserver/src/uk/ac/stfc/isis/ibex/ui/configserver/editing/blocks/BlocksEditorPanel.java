@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,7 +40,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
@@ -50,6 +53,7 @@ public class BlocksEditorPanel extends Composite {
 	private final Button add;
 	private final Button edit;
 	private final Button remove;
+	private final Button copy;
 	
 	private EditableConfiguration config;
 	
@@ -123,6 +127,20 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 		
+		copy = new Button(composite, SWT.NONE);
+        GridData gd_copy = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_copy.widthHint = 110;
+        
+        copy.setLayoutData(gd_copy);
+        copy.setText("Copy Block");
+        copy.setEnabled(false);
+        copy.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) { 
+                copySelected();
+            }
+        });        
+		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -142,13 +160,89 @@ public class BlocksEditorPanel extends Composite {
                 }
             }
         });
+        
+        /*
+         * Allows for a keyboard shortcut (Ctrl+c) to copy block.
+         */
+        table.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {          
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.character == 0x3) {
+                    copySelected();
+                }
+            }
+        });
 	}
-
+	
+	/**
+     * This method is responsible for setting the config to which the blocks will be added.
+     * 
+     * @param config the configuration the blocks are to be registered with.
+     */
 	public void setConfig(EditableConfiguration config) {	
 		this.config = config;
 		
 		add.setEnabled(true);
 		setBlocks(config);
+	}
+	
+	/**
+     * This method is responsible for copying blocks.
+     * 
+     */
+	public void copySelected() {
+	    if (!table.selectedRows().isEmpty()) {
+    	    for (Block block : table.selectedRows()) {
+                EditableBlock added = new EditableBlock(block);
+                setSimilarName(added);
+                try {
+                    config.addNewBlock(added);
+                } catch (DuplicateBlockNameException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                setBlocks(config);
+                setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
+                table.setSelected(added);
+    	    }
+	    } 
+	}
+	
+	/**
+     * This method is responsible for setting a similar name to the passed block so that two blocks don't have the same name.
+     * 
+     * @param block The block whose name should be changed.
+     */
+	private void setSimilarName(EditableBlock block) {
+	    char[] blockNameChars = block.getName().toCharArray();
+        int length = blockNameChars.length;
+        
+        //Removes the "_1" from the name of block, if it's present.
+        if (blockNameChars[length - 2] == '_') {
+            char[] newBlockNameChars = Arrays.copyOfRange(blockNameChars, 0, length - 2);
+            block.setName(String.valueOf(newBlockNameChars));
+        }
+        
+        //Assumes the block won't be copied 50 times or more.
+        for (int i = 1; i < 50; i++) {
+            for (EditableBlock blockInConfig : config.getAllBlocks()) {
+                if (block.getName().equals(blockInConfig.getName())) {
+                    char[] blockInConfigChars = blockInConfig.getName().toCharArray();
+                    length = blockInConfigChars.length;
+                    if (blockInConfigChars[length - 2] == '_') {
+                        char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 1);
+                        block.setName(String.valueOf(newBlockInConfigChars) + i);
+                        
+                    } else {
+                        block.setName(block.getName() + "_" + i);
+                    }
+                }
+            }
+        }  
 	}
 
 	private void setBlocks(EditableConfiguration config) {
@@ -163,6 +257,7 @@ public class BlocksEditorPanel extends Composite {
 			edit.setEnabled(editEnabled(selected));
 		}
 		remove.setEnabled(editEnabled(selected));
+		copy.setEnabled(editEnabled(selected));
 	}
 	
 	private boolean editEnabled(List<EditableBlock> blocks) {
