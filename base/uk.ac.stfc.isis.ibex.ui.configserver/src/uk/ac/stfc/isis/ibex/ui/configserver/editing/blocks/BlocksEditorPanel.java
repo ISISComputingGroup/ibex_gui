@@ -237,6 +237,9 @@ public class BlocksEditorPanel extends Composite {
                         char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 1);
                         block.setName(String.valueOf(newBlockInConfigChars) + i);
                         
+                    } else if (blockInConfigChars[length - 3] == '_') {
+                        char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 2);
+                        block.setName(String.valueOf(newBlockInConfigChars) + i);
                     } else {
                         block.setName(block.getName() + "_" + i);
                     }
