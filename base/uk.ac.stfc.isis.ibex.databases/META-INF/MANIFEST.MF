@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.databases
 Bundle-ClassPath: .,
- lib/mysql-connector-java-5.1.31-bin.jar
+ lib/mysql-connector-java-5.1.46-bin.jar
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.logger
