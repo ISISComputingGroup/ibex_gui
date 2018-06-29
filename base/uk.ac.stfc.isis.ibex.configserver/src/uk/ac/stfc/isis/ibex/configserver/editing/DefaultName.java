@@ -87,6 +87,14 @@ public class DefaultName {
                 + NUMBER_REGEX + closingBracketRegex + CLOSING_GROUP_REGEX);
 	}
 	
+    /**
+     * Method that returns a unique name given a set of already existing names.
+     *
+     * @param existingNames
+     *                      Names that already exist.
+     * @return
+     *          A unique name.
+     */
 	public String getUnique(Collection<String> existingNames) {
 		return uniqueName(existingNames);
 	}

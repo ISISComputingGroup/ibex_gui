@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -54,12 +55,14 @@ public class BlocksEditorPanel extends Composite {
 	private final Button edit;
 	private final Button remove;
 	private final Button copy;
+	private final BlocksEditorViewModel viewModel;
 	
 	private EditableConfiguration config;
 	
-	public BlocksEditorPanel(Composite parent, int style) {
+	public BlocksEditorPanel(Composite parent, int style, BlocksEditorViewModel viewModel) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
+		this.viewModel = viewModel;
 		
 		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION, true);
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -198,7 +201,7 @@ public class BlocksEditorPanel extends Composite {
 	    if (!table.selectedRows().isEmpty()) {
     	    for (Block block : table.selectedRows()) {
                 EditableBlock added = new EditableBlock(block);
-                setSimilarName(added);
+                added.setName(viewModel.getUniqueName(added.getName()));
                 try {
                     config.addNewBlock(added);
                 } catch (DuplicateBlockNameException e1) {
@@ -212,33 +215,7 @@ public class BlocksEditorPanel extends Composite {
 	    } 
 	}
 	
-	/**
-     * This method is responsible for setting a similar name to the passed block so that two blocks don't have the same name.
-     * 
-     * @param block The block whose name should be changed.
-     */
-	private void setSimilarName(EditableBlock block) {     
-        //Assumes the block won't be copied 50 times or more.
-        for (int i = 1; i < 50; i++) {
-            for (EditableBlock blockInConfig : config.getAllBlocks()) {
-                if (block.getName().equals(blockInConfig.getName())) {
-                    char[] blockInConfigChars = blockInConfig.getName().toCharArray();
-                    int length = blockInConfigChars.length;
-                    if (blockInConfigChars[length - 2] == '_') {
-                        char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 1);
-                        block.setName(String.valueOf(newBlockInConfigChars) + i);
-                        
-                    } else if (blockInConfigChars[length - 3] == '_') {
-                        char[] newBlockInConfigChars = Arrays.copyOfRange(blockInConfigChars, 0, length - 2);
-                        block.setName(String.valueOf(newBlockInConfigChars) + i);
-                    } else {
-                        block.setName(block.getName() + "_" + i);
-                    }
-                }
-            }
-        }  
-	}
-
+	
 	private void setBlocks(EditableConfiguration config) {
 		table.setRows(config.getAllBlocks());
 		table.refresh();
