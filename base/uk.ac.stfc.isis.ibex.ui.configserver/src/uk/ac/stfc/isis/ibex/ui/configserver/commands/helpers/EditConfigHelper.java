@@ -65,12 +65,25 @@ public class EditConfigHelper extends ConfigHelper {
             if (dialog.doAsComponent()) {
                 server.saveAsComponent().uncheckedWrite(dialog.getComponent());
             } else {
-                if (isCurrent && dialog.switchConfigOnSaveAs()) {
-                    server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
+                if (isCurrent) {
+                    if (dialog.calledSwitchConfigOnSaveAs()) {
+                        if (dialog.switchConfigOnSaveAs()) {
+                            server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
+                        } else {
+                            server.saveAs().uncheckedWrite(dialog.getConfig());
+                        }
+                    } else {
+                        server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
+                    }
                 } else {
-                    server.saveAs().uncheckedWrite(dialog.getConfig());
+                    if (dialog.switchConfigOnSaveAs()) {
+                            server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
+                    } else {
+                        server.saveAs().uncheckedWrite(dialog.getConfig());
+                    }
                 }
             }
         }
     }
 }
+

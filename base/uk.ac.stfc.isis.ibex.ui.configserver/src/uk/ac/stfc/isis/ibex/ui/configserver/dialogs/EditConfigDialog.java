@@ -44,6 +44,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     private Button saveAsBtn;
     private boolean editBlockFirst;
     private boolean switchConfigOnSaveAs;
+    private boolean calledSwitchConfigOnSaveAs = false;
 
     private ConfigServer server = Configurations.getInstance().server();
 
@@ -99,6 +100,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
                         configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
                 if (dlg.open() == Window.OK) {
                     switchConfigOnSaveAs = dlg.shouldSwitchConfig();
+                    calledSwitchConfigOnSaveAs = true;
                     if (dlg.getNewName() != config.getName()) {
                         config.setName(dlg.getNewName());
                     }
@@ -146,5 +148,12 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      */
     public boolean switchConfigOnSaveAs() {
         return switchConfigOnSaveAs;
+    }
+    /**
+     *
+     * @return true if switchConfigOnSaveAs() has been called.
+     */
+    public boolean calledSwitchConfigOnSaveAs() {
+        return calledSwitchConfigOnSaveAs;
     }
 }
