@@ -55,7 +55,7 @@ public class RecentItems extends ContributionItem {
 	public RecentItems(String id) {
 		super(id);
 	}
-
+	
 	/**
      * Create the menu.
      */

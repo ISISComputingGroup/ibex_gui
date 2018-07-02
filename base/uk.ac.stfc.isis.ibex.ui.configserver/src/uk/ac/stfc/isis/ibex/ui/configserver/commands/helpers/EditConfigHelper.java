@@ -26,6 +26,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
@@ -67,6 +68,7 @@ public class EditConfigHelper extends ConfigHelper {
             } else {
                 if (isCurrent && dialog.switchConfigOnSaveAs()) {
                     server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
+                    Configurations.getInstance().addRecent(dialog.getConfig().getName());
                 } else {
                     server.saveAs().uncheckedWrite(dialog.getConfig());
                 }

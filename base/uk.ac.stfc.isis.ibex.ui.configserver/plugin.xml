@@ -48,6 +48,11 @@
             id="uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponents"
             name="Delete Components">
       </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItemsHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItems"
+            name="Load Recent Configurations">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -130,10 +135,14 @@
                      tooltip="Delete components from the instrument">
                </command>
             </menu>
-            <dynamic
-                  class="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItems"
-                  id="uk.ac.stfc.isis.ibex.ui.configserver.dynamic">
-            </dynamic>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItems"
+                  id="uk.ac.stfc.isis.ibex.ui.config"
+                  label="Recent Configurations"
+                  mnemonic="C"
+                  style="push"
+                  tooltip="Load a recent configuration.">
+            </command>
          </menu>
       </menuContribution>
    </extension>
