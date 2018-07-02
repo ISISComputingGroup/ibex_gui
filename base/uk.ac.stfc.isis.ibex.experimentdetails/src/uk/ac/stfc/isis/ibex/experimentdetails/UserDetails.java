@@ -73,7 +73,7 @@ public class UserDetails extends ModelObject {
      * @return The user's full name.
      */
 	public String getName() {
-		return name.replaceAll("^\\s+|\\s+$", "");
+		return name.trim();
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class UserDetails extends ModelObject {
 	 * @param name The new name to give the user.
 	 */
 	public void setName(String name) {
-		firePropertyChange("name", this.name, this.name = name.replaceAll("^\\s+|\\s+$", ""));
+		firePropertyChange("name", this.name, this.name = name.trim());
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class UserDetails extends ModelObject {
 	 * @return The institute the user works for.
 	 */
 	public String getInstitute() {
-		return institute.replaceAll("^\\s+|\\s+$", "");
+		return institute.trim();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class UserDetails extends ModelObject {
 	 * @param institute The institute to assign the user.
 	 */
 	public void setInstitute(String institute) {
-		firePropertyChange("institute", this.institute, this.institute = institute.replaceAll("^\\s+|\\s+$", ""));
+		firePropertyChange("institute", this.institute, this.institute = institute.trim());
 	}
 
 	/**
