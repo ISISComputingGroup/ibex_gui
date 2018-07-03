@@ -22,6 +22,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+import uk.ac.stfc.isis.ibex.validators.WarningMessage;
 
 /**
  * A dialog for editing blocks.
@@ -61,6 +62,20 @@ public class EditBlockDialog extends TitleAreaDialog {
         }
     };
 
+    private PropertyChangeListener warningListener = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            for (ErrorMessageProvider model : viewModels) {
+                WarningMessage warning = model.getWarning();
+                if (warning.isWarning()) {
+                    setMessage(warning.getMessage(), 2);
+                    return;
+                }
+            }
+            setMessage(null);
+        }
+    };
+
     /**
      * Default constructor.
      * 
@@ -84,6 +99,10 @@ public class EditBlockDialog extends TitleAreaDialog {
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
+        }
+
+		for (ErrorMessageProvider provider : viewModels) {
+            provider.addPropertyChangeListener("warning", warningListener);
         }
 	}
 	

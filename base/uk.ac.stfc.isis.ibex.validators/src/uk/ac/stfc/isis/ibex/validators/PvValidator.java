@@ -38,9 +38,27 @@ public class PvValidator {
      * Message displayed when the PV name is empty.
      */
     public static final String ADDRESS_EMPTY = "PV Address invalid, must not be empty";    
-    private static final String NO_ERROR = "";
+    
+    /**
+     * Message displayed when the PV name contains ":SP".
+     */
+    public static final String ADDRESS_SP = "Block should usually point at the measured quantity. Doing cset on the block will set the SP value if it exists.";
+    
+    /**
+     * Message displayed when the PV name contains ":SP:RBV".
+     */
+    public static final String ADDRESS_SP_RBV = "The setpoint value read back from the device is not a measurement of the value but the value the device is trying to get to.";
 
+    /**
+     * Message displayed when the PV name contains ":CS:SB".
+     */
+    public static final String ADDRESS_CS_SB = "This is an IBEX internal pv are you sure you want a block pointing at it?";
+    
+    private static final String NO_ERROR = "";
+    
     private String errorMessage;
+    
+    private String warningMessage;
 
     /**
      * Creates a PV validator initialised with no error message.
@@ -73,6 +91,31 @@ public class PvValidator {
 
         return isValid;
     }
+    
+    /**
+     * Checks if the Pv Name contains ":SP", ":SP:RBV" and "CS:SB" as these are typical of bad PVs.
+     * 
+     * @param pvAddress the address to validate
+     * @return Boolean addressValid
+     */
+    public Boolean warningPvAddress(String pvAddress) {
+        boolean isValid = false;
+
+        if (pvAddress.contains(":SP")) {
+            if (pvAddress.contains(":SP:RBV")) {
+                setWarningMessage(ADDRESS_SP_RBV);
+            } else {
+                setWarningMessage(ADDRESS_SP);
+            }
+        } else if (pvAddress.contains("CS:SB")) {
+            setWarningMessage(ADDRESS_CS_SB);
+        } else {
+            isValid = true;
+            setWarningMessage(NO_ERROR);
+        }
+
+        return isValid;
+    }
 
     private void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
@@ -83,6 +126,17 @@ public class PvValidator {
      */
     public String getErrorMessage() {
         return errorMessage;
+    }
+    
+    private void setWarningMessage(String warningMessage) {
+        this.warningMessage = warningMessage;
+    }
+
+    /**
+     * @return the last warning message
+     */
+    public String getWarningMessage() {
+        return warningMessage;
     }
 
 }
