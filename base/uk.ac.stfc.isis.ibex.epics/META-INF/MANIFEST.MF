@@ -10,7 +10,8 @@ Bundle-ClassPath: lib/commons-codec-1.9-javadoc.jar,
  lib/joda-time-2.3-javadoc.jar,
  lib/joda-time-2.3-sources.jar,
  lib/joda-time-2.3.jar,
- .
+ .,
+ resources/
 Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
@@ -19,7 +20,9 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  org.diirt.util;bundle-version="3.1.5",
  com.google.guava,
  org.diirt.datasource,
- org.csstudio.platform.libs.jdbc
+ org.csstudio.platform.libs.jdbc,
+ uk.ac.stfc.isis.ibex.e4.ui,
+ org.eclipse.equinox.registry
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

@@ -1,0 +1,31 @@
+package uk.ac.stfc.isis.ibex.epics.pvmanager;
+
+import java.io.IOException;
+import org.eclipse.core.runtime.FileLocator;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
+public class PVManagerSettings {
+	
+	/**
+	 * This is a system property that diirt uses internally to figure out where to find diirt config files.
+	 */
+	private static final String DIIRT_HOME_ENV_VAR = "diirt.home";
+	
+	/**
+	 * The path in the resources folder where diirt config files can be found.
+	 */
+	private static final String DIIRT_DIR = "/diirt/";
+	
+	/**
+	 * Tell PV manager to use our config files.
+	 */
+    public synchronized static void setUp() {
+		try {
+			System.setProperty(DIIRT_HOME_ENV_VAR, 
+	    		FileLocator.resolve(PVManagerSettings.class.getResource(DIIRT_DIR)).getPath());
+		} catch (IOException | RuntimeException err) {
+			IsisLog.getLogger(PVManagerSettings.class).error(err.getMessage(), err);
+		}
+    }
+}

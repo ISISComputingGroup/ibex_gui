@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 
 /**
  * A class for observing an EPICS process variable.
@@ -31,6 +32,10 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
  * @param <T> the PV type (must be a VType)
  */
 public abstract class ObservablePV<T extends VType> extends ClosableObservable<T> implements PV<T> {
+	
+	static {
+		PVManagerSettings.setUp();
+	}
 
 	private final PVInfo<T> info;
 
