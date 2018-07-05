@@ -66,6 +66,10 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		}
     };
 	
+    /**
+     * Create a new PV manager observable.
+     * @param info the parameters to create this PV with
+     */
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
 		
@@ -76,12 +80,18 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
                 .maxRate(ofHertz(UPDATE_FREQUENCY));
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         pv.close();
         super.close();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "PVManagerObservable observing PV " + pv.getName() + " with current value: " + pv.getValue();
