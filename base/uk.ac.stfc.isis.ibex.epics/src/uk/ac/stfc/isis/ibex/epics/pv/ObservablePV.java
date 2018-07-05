@@ -39,6 +39,10 @@ public abstract class ObservablePV<T extends VType> extends ClosableObservable<T
 
 	private final PVInfo<T> info;
 
+	/**
+	 * Create a new observable PV.
+	 * @param info the parameters to create this PV with
+	 */
 	public ObservablePV(PVInfo<T> info) {
         if (info.address().contains("BLOCKSERVER:IOCS")) {
             Logger.getGlobal().info("(Ticket 2161) ObservablePV initialized looking at " + info.address());
@@ -46,6 +50,9 @@ public abstract class ObservablePV<T extends VType> extends ClosableObservable<T
 		this.info = info;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public PVInfo<T> details() {
 		return info;
