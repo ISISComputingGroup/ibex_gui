@@ -26,7 +26,6 @@ import org.diirt.datasource.PVManager;
 import org.diirt.datasource.PVReader;
 import org.diirt.datasource.PVReaderEvent;
 import org.diirt.datasource.PVReaderListener;
-import org.diirt.datasource.DataSource;
 import org.diirt.vtype.VType;
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
@@ -37,6 +36,10 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  * @param <R> the PV type (must be a VType)
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
+	
+	static {
+		PVManagerSettings.setUp();
+	}
 
     private static final int UPDATE_FREQUENCY = 10;
 
@@ -63,10 +66,12 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		}
     };
 	
+    /**
+     * Create a new PV manager observable.
+     * @param info the parameters to create this PV with
+     */
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
-		
-		DataSource a = PVManager.getDefaultDataSource();
 		
 		pv = PVManager
 				.read(channel(info.address(), info.type(), Object.class))
@@ -75,12 +80,18 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
                 .maxRate(ofHertz(UPDATE_FREQUENCY));
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         pv.close();
         super.close();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "PVManagerObservable observing PV " + pv.getName() + " with current value: " + pv.getValue();
