@@ -54,7 +54,10 @@ public class PvValidator {
      */
     public static final String ADDRESS_CS_SB = "This is an IBEX internal pv are you sure you want a block pointing at it?";
     
-    private static final String NO_ERROR = "";
+    /**
+     * Message displayed when the PV name is correct.
+     */
+    public static final String NO_ERROR = "";
     
     private String errorMessage;
     
@@ -93,7 +96,7 @@ public class PvValidator {
     }
     
     /**
-     * Checks if the Pv Name contains ":SP", ":SP:RBV" and "CS:SB" as these are typical of bad PVs.
+     * Checks if the Pv Name ends with ":SP", ":SP:RBV" or contains "CS:SB" as these are typical of bad PVs.
      * 
      * @param pvAddress the address to validate
      * @return Boolean addressValid
@@ -101,12 +104,10 @@ public class PvValidator {
     public Boolean warningPvAddress(String pvAddress) {
         boolean isValid = false;
 
-        if (pvAddress.contains(":SP")) {
-            if (pvAddress.contains(":SP:RBV")) {
-                setWarningMessage(ADDRESS_SP_RBV);
-            } else {
-                setWarningMessage(ADDRESS_SP);
-            }
+        if (pvAddress.endsWith(":SP")) {
+            setWarningMessage(ADDRESS_SP);
+        } else if (pvAddress.endsWith(":SP:RBV")) {
+            setWarningMessage(ADDRESS_SP_RBV);
         } else if (pvAddress.contains("CS:SB")) {
             setWarningMessage(ADDRESS_CS_SB);
         } else {

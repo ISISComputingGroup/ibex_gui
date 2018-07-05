@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -68,7 +69,7 @@ public class EditBlockDialog extends TitleAreaDialog {
             for (ErrorMessageProvider model : viewModels) {
                 WarningMessage warning = model.getWarning();
                 if (warning.isWarning()) {
-                    setMessage(warning.getMessage(), 2);
+                    setMessage(warning.getMessage(), IMessageProvider.WARNING);
                     return;
                 }
             }
@@ -99,11 +100,9 @@ public class EditBlockDialog extends TitleAreaDialog {
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
+			provider.addPropertyChangeListener("warning", warningListener);
         }
 
-		for (ErrorMessageProvider provider : viewModels) {
-            provider.addPropertyChangeListener("warning", warningListener);
-        }
 	}
 	
     @Override
