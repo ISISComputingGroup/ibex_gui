@@ -89,8 +89,12 @@ public class TargetPropertiesViewModel extends ModelObject {
      *            The properties that can be set on the OPI.
      */
     public void setPropeties(List<PropertyDescription> newProperties) {
-        setTableSelection(null);
         boolean hasProperties = newProperties.size() > 0;
+        if (hasProperties) {
+            setTableSelection(newProperties.get(0));
+        } else {
+            setTableSelection(null);
+        }
         setTableEnabled(hasProperties);
         setValueTextEnabled(hasProperties);
         firePropertyChange("properties", properties, properties = newProperties);
