@@ -8,12 +8,12 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * Applies settings to PV manager so that it knows where to find it's configuration.
  */
-public class PVManagerSettings {
+public final class PVManagerSettings {
     
     /**
      * Private constructor, this is a utility class.
      */
-    private PVManagerSettings() {}
+    private PVManagerSettings() { }
     
     /**
      * This is a system property that diirt uses internally to figure out where to find diirt config files.
