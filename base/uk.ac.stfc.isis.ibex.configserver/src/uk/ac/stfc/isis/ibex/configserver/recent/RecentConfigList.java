@@ -37,7 +37,6 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-
 /**
  * Class to manage the list of recently used configurations.
  *
