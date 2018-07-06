@@ -55,7 +55,7 @@ public abstract class ErrorAggregator extends ErrorMessageProvider {
 
         setError(false, null);
     }
-    
+
     /**
      * Get the list of error messages from all children.
      * 
