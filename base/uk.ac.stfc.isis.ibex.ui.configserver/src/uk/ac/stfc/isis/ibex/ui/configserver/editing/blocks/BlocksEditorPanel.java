@@ -95,7 +95,7 @@ public class BlocksEditorPanel extends Composite {
                 } else if (e.character == 0x01) {
                     addNew();
                 //edits first selected block if press "Ctrl +E".
-                } else if (e.character == 0x5) {
+                } else if (e.character == 0x5 && editEnabled(Arrays.asList(table.firstSelectedRow()))) {
                     openEditBlockDialog(table.firstSelectedRow());
                 }
             }
