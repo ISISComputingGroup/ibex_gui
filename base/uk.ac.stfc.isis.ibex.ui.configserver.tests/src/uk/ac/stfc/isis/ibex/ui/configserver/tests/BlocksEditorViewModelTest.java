@@ -51,56 +51,44 @@ public class BlocksEditorViewModelTest {
     }
     
     @Test
-    public void GIVEN_a_name_that_is_in_config_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_a_1_in_parenthesis() {
+    public void GIVEN_a_name_that_is_in_config_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_underscore_1() {
         EditableBlock blockThatExists = mock(EditableBlock.class);
-        when(blockThatExists.getName()).thenReturn("NAME");
+        String name = "NAME"; 
+        when(blockThatExists.getName()).thenReturn(name);
         when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
-        String name = "NAME"; 
-        String expected = name + " (1)";
+        String expected = name + "_1";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
     
     @Test
-    public void GIVEN_a_name_that_is_in_config_and_another_similar_name_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_a_2_in_parenthesis() {
+    public void GIVEN_a_name_that_is_in_config_and_another_similar_name_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_underscore_2() {
         EditableBlock blockThatExists1 = mock(EditableBlock.class);
         EditableBlock blockThatExists2 = mock(EditableBlock.class);
-        when(blockThatExists1.getName()).thenReturn("NAME");
-        when(blockThatExists2.getName()).thenReturn("NAME (1)");
+        String name = "NAME"; 
+        when(blockThatExists1.getName()).thenReturn(name);
+        when(blockThatExists2.getName()).thenReturn(name + "_1");
         when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists1, blockThatExists2));
-        String name = "NAME"; 
-        String expected = name + " (2)";
+        String expected = name + "_2";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
     
     @Test
-    public void GIVEN_a_name_that_is_in_config_and_10_similar_names_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_a_10_in_parenthesis() {
-        EditableBlock blockThatExists1 = mock(EditableBlock.class);
-        EditableBlock blockThatExists2 = mock(EditableBlock.class);
-        EditableBlock blockThatExists3 = mock(EditableBlock.class);
-        EditableBlock blockThatExists4 = mock(EditableBlock.class);
-        EditableBlock blockThatExists5 = mock(EditableBlock.class);
-        EditableBlock blockThatExists6 = mock(EditableBlock.class);
-        EditableBlock blockThatExists7 = mock(EditableBlock.class);
-        EditableBlock blockThatExists8 = mock(EditableBlock.class);
-        EditableBlock blockThatExists9 = mock(EditableBlock.class);
-        EditableBlock blockThatExists10 = mock(EditableBlock.class);
-        EditableBlock blockThatExists11 = mock(EditableBlock.class);
-        when(blockThatExists1.getName()).thenReturn("NAME");
-        when(blockThatExists2.getName()).thenReturn("NAME (1)");
-        when(blockThatExists3.getName()).thenReturn("NAME (2)");
-        when(blockThatExists4.getName()).thenReturn("NAME (3)");
-        when(blockThatExists5.getName()).thenReturn("NAME (4)");
-        when(blockThatExists6.getName()).thenReturn("NAME (5)");
-        when(blockThatExists7.getName()).thenReturn("NAME (6)");
-        when(blockThatExists8.getName()).thenReturn("NAME (7)");
-        when(blockThatExists9.getName()).thenReturn("NAME (8)");
-        when(blockThatExists10.getName()).thenReturn("NAME (9)");
-        when(blockThatExists11.getName()).thenReturn("NAME (10)");
-        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists1, blockThatExists2,blockThatExists3, blockThatExists4,blockThatExists5, blockThatExists6,blockThatExists7, blockThatExists8, blockThatExists9, blockThatExists10, blockThatExists11));
-        String name = "NAME"; 
-        String expected = name + " (11)";
+    public void GIVEN_a_name_that_is_in_config_and_11_similar_names_WHEN_getUniqueName_called_THEN_passed_name_changed_to_the_name_with_underscore_11() {
+        EditableBlock blockList[] = new EditableBlock[11];
+        String name = "NAME";
+        for (int i = 0; i < 11 ; i++){
+            EditableBlock blockThatExists = mock(EditableBlock.class);
+            blockList[i] = blockThatExists;
+            if (i == 0 ) {
+                when(blockList[i].getName()).thenReturn(name);
+            } else{
+                when(blockList[i].getName()).thenReturn(name + "_" + i);
+            }
+        }
+        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockList));
+        String expected = name + "_11";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
@@ -114,12 +102,12 @@ public class BlocksEditorViewModelTest {
     }
     
     @Test
-    public void GIVEN_a_name_that_is_only_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_a_1_in_parenthesis() {
+    public void GIVEN_a_name_that_is_only_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_undercore_1() {
         EditableBlock blockThatExists = mock(EditableBlock.class);
-        when(blockThatExists.getName()).thenReturn("1234");
-        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
         String name = "1234"; 
-        String expected = name + " (1)";
+        when(blockThatExists.getName()).thenReturn(name);
+        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
+        String expected = name + "_1";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
@@ -133,12 +121,12 @@ public class BlocksEditorViewModelTest {
     }
     
     @Test
-    public void GIVEN_a_name_that_is_only_underscores_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_a_1_in_parenthesis() {
+    public void GIVEN_a_name_that_is_only_underscores_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_underscore_1() {
         EditableBlock blockThatExists = mock(EditableBlock.class);
-        when(blockThatExists.getName()).thenReturn("_");
-        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
         String name = "_"; 
-        String expected = name + " (1)";
+        when(blockThatExists.getName()).thenReturn(name);
+        when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
+        String expected = name + "_1";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
@@ -152,12 +140,12 @@ public class BlocksEditorViewModelTest {
     }
     
     @Test
-    public void GIVEN_a_name_that_is_only_underscores_and_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_a_1_in_parenthesis() {
+    public void GIVEN_a_name_that_is_only_underscores_and_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_underscore_1() {
         EditableBlock blockThatExists = mock(EditableBlock.class);
-        when(blockThatExists.getName()).thenReturn("_21_21_21");
+        String name = "_21_21_21_"; 
+        when(blockThatExists.getName()).thenReturn(name);
         when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
-        String name = "_21_21_21"; 
-        String expected = name + " (1)";
+        String expected = name + "_1";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }
@@ -171,12 +159,12 @@ public class BlocksEditorViewModelTest {
     }
     
     @Test
-    public void GIVEN_a_name_that_has_underscores_and_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_a_1_in_parenthesis() {
+    public void GIVEN_a_name_that_has_underscores_and_numbers_and_in_config_WHEN_getUniqueName_called_THEN_name_changed_to_the_name_with_underscore_1() {
         EditableBlock blockThatExists = mock(EditableBlock.class);
-        when(blockThatExists.getName()).thenReturn("NAME_21_21_21");
+        String name = "NAME_21_21_21_NAME"; 
+        when(blockThatExists.getName()).thenReturn(name);
         when(mockConfig.getAllBlocks()).thenReturn(Arrays.asList(blockThatExists));
-        String name = "NAME_21_21_21"; 
-        String expected = name + " (1)";
+        String expected = name + "_1";
         String actual = blockViewModel.getUniqueName(name);
         assertEquals(expected , actual);
     }

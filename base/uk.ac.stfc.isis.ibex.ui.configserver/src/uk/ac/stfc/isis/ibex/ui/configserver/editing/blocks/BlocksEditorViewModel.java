@@ -38,9 +38,8 @@ public class BlocksEditorViewModel extends ModelObject {
         for (Block blockInConfig : config.getAllBlocks()) {
             allBlocksInConfigNames.add(blockInConfig.getName());
         }
-        DefaultName namer = new DefaultName(blockName, " ", true);
+        DefaultName namer = new DefaultName(blockName);
         return namer.getUnique(allBlocksInConfigNames);
     }
-    
 }
 
