@@ -81,7 +81,7 @@ public class TargetPropertiesViewModelTest {
     @Test
     public void WHEN_no_available_properties_THEN_table_and_text_box_are_disabled() {
         // Act
-        viewModel.setPropeties(new ArrayList<PropertyDescription>());
+        viewModel.setProperties(new ArrayList<PropertyDescription>());
 
         // Assert
         assertEquals(false, viewModel.getTableEnabled());
@@ -102,9 +102,9 @@ public class TargetPropertiesViewModelTest {
     }
 
     @Test
-    public void WHEN_set_propeties_to_empty_THEN_value_changes_on_target() {
+    public void WHEN_set_properties_to_empty_THEN_value_changes_on_target() {
         // Act
-        viewModel.setPropeties(new ArrayList<PropertyDescription>());
+        viewModel.setProperties(new ArrayList<PropertyDescription>());
         
 
         // Assert
@@ -115,7 +115,7 @@ public class TargetPropertiesViewModelTest {
     @Test
     public void WHEN_set_properties_THEN_value_changes_on_target() {
         // Act
-        viewModel.setPropeties(Arrays.asList(property1));
+        viewModel.setProperties(Arrays.asList(property1));
 
         // Assert
         assertEquals(propertyValue1, viewModel.getValueText());
