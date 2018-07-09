@@ -694,7 +694,7 @@
 					<macro>
 						<name>TPG300</name>
 						<description>The TPG300 PV prefix (e.g. TPG300_01).</description>
-					</macro>                  
+					</macro>
 				</macros>
 			</value>
 		</entry>
@@ -1470,5 +1470,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+		<key>Keyence TM-3001P</key>
+		<value>
+			<type>KYNCTM3K</type>
+			<categories>
+				<category>Optical Micrometer</category>
+			</categories>
+			<path>kynctm3k.opi</path>
+			<description>The OPI for the Keyence TM-3001P optical micrometer</description>
+		<macros>
+			<macro>
+				<name>KEYENCE</name>
+				<description>The Keyence PV prefix (e.g. KYNCTM3K_01)</description>
+			</macro>
+		</macros>
+		</value>
+	</entry>
 	</opis>
 </descriptions>

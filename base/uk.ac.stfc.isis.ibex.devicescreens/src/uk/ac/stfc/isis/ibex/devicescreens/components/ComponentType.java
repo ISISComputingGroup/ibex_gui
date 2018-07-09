@@ -137,7 +137,9 @@ public enum ComponentType {
     /** Couette cell.*/
     COUETTE,
     /** Motion setpoints.*/
-    MOTION_SET_POINTS;
+    MOTION_SET_POINTS,
+    /** Keyence micrometer. */
+    KEYENCE;
 
 	
 	private Target target;
