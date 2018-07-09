@@ -130,6 +130,8 @@ public class SaveConfigDialog extends TitleAreaDialog {
     private final String currentConfigName;
 
     private boolean switchToNewConfig;
+    
+    private boolean asComponentSelected;
 
     /**
      * Instantiates a new save configuration dialog.
@@ -247,6 +249,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
                 public void widgetSelected(SelectionEvent e) {
                     updateConfigType();
                     update();
+                    asComponentSelected = true;
                 }
             });
         }
@@ -304,11 +307,22 @@ public class SaveConfigDialog extends TitleAreaDialog {
                     return;
                 }
             }
-            switchToNewConfig = askUserWhetherToSwitchToNewConfig();
+            if (isConfig) {
+                if (!asComponentSelected()) {
+                    switchToNewConfig = askUserWhetherToSwitchToNewConfig();
+                }
+            }
             super.okPressed();
             close();
         }
         // else ignore the click
+    }
+    
+    /**
+     * @return Has the option to save as component been selected.
+     */
+    private boolean asComponentSelected() {
+        return asComponentSelected;
     }
 
     /**
