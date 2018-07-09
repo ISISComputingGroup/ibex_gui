@@ -70,7 +70,7 @@ public class WritableComponentView extends Composite {
      *            The property of the component that is writable
      */
 	public WritableComponentView(Composite parent, final WritableComponentProperty property) {
-		this(parent, property, true, true);
+		this(parent, property, true, false);
 	}
 	
 	/**
