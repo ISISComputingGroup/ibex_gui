@@ -53,7 +53,7 @@ public class RecentConfigList {
 	public RecentConfigList() {
 		load();
 	}
-	
+
 	/**
      * Add an item.
      * 
@@ -83,7 +83,7 @@ public class RecentConfigList {
 		}
 		save();
 	}
-	
+
 	/**
      * @return Returns the list of recently used configuration names.
      */
@@ -106,7 +106,7 @@ public class RecentConfigList {
 			e.printStackTrace();
 		}
 	}
-	
+
     /**
      * Load the list.
      */

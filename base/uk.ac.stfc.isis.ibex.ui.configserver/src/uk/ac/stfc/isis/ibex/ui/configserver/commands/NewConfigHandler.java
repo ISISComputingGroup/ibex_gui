@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -69,6 +70,7 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
             } else {
                 if (editDialog.switchConfigOnSaveAs()) {
                     SERVER.setCurrentConfig().uncheckedWrite(editDialog.getConfig());
+                    Configurations.getInstance().addRecent(editDialog.getConfig().getName());
                 } else {
                     SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
                 }

@@ -380,12 +380,14 @@ public class ConfigServer extends Closer {
             switchConfigOnSaveAs(config, switchConfigOnSaveAs);
         } else {
             setCurrentConfig().uncheckedWrite(config.asConfiguration());
+            Configurations.getInstance().addRecent(config.asConfiguration().getName());
         }
     }
     
     private void switchConfigOnSaveAs(EditableConfiguration config, boolean switchConfigOnSaveAs) {
         if (switchConfigOnSaveAs) {
             setCurrentConfig().uncheckedWrite(config.asConfiguration());
+            Configurations.getInstance().addRecent(config.asConfiguration().getName());
         } else {
             saveAs().uncheckedWrite(config.asConfiguration());
         }

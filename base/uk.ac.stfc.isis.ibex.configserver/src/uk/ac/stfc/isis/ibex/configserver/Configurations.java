@@ -142,7 +142,7 @@ public class Configurations extends Closer implements BundleActivator {
 	public void addRecent(String configName) {
 		recent.add(configName);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)

@@ -17,14 +17,14 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.RecentConfigSelectionDialog;
 
 
 /**
  * Handler for loading recent configurations.
  */
 public class RecentItemsHandler extends DisablingConfigHandler<String> {
-    
+
     private Map<String, Configuration> configs;
 
     /**
@@ -36,32 +36,29 @@ public class RecentItemsHandler extends DisablingConfigHandler<String> {
         configs = new HashMap<String, Configuration>();
     }
 
-
     @Override
     public void safeExecute(ExecutionEvent event) {
         updateObservers();
         List<String> recentItemsNames = Configurations.getInstance().recent();
         Collection<ConfigInfo> configsInDialog = SERVER.configsInfo().getValue();
         ArrayList<ConfigInfo> recentConfigs = new ArrayList<ConfigInfo>();
-        System.out.println(recentItemsNames);
         
         for (String recentItemName : recentItemsNames) {
             for (ConfigInfo config : configsInDialog) {
                 if (config.name().equals(recentItemName)) {
                     recentConfigs.add(config);
-                    System.out.println(config.name());
                 }
             }
         }
         
-        
-        ConfigSelectionDialog dialog = new ConfigSelectionDialog(shell(), "Load Recent Configuration",
+        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell(), "Load Recent Configuration",
                 recentConfigs, false, false);
         if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
+                Configurations.getInstance().addRecent(config);
             } else {
                 new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
@@ -69,7 +66,7 @@ public class RecentItemsHandler extends DisablingConfigHandler<String> {
             }
         }
     }
-    
+
     private void updateObservers() {
         for (String name : SERVER.configNames()) {
             if (!configs.containsKey(name)) {
