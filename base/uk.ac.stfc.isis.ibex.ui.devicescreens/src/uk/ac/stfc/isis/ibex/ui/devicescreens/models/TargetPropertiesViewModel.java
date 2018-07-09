@@ -24,7 +24,6 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
