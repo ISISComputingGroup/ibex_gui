@@ -35,6 +35,11 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
     private Switcher switcher;
     private ClosableObservable<T> source;
 
+    /**
+     * Sets up a switchable observable with a closable source.
+     * 
+     * @param source the source observable
+     */
     public SwitchableObservable(ClosableObservable<T> source) {
         super(source);
         this.source = source;
