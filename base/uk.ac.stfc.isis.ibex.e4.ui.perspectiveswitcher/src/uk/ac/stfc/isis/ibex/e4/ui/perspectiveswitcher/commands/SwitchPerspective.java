@@ -10,18 +10,33 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
+/**
+ * Class containing the eclipse command to switch perspectives.
+ */
 public class SwitchPerspective {
 	
+	/**
+	 * The application (injected by eclipse framework).
+	 */
 	@Inject public MApplication app;
 	
+	/**
+	 * The part service (injected by eclipse framework).
+	 */
 	@Inject public EPartService partService;
 	
+	/**
+	 * The model service (injected by eclipse framework).
+	 */
 	@Inject public EModelService modelService;
 	
+	/**
+	 * Eclipse command to switch perspectives.
+	 * @param id the id of the perspective to switch to
+	 */
 	@Execute
 	public void execute(@Named("uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid") String id) {
-		System.out.println("HELLO: " + id);
-	    (new PerspectivesProvider(app, partService, modelService)).switchPerspective(id);
-			
+		PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
+	    provider.switchPerspective(id);
 	}
 }

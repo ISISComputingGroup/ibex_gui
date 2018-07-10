@@ -99,17 +99,89 @@
   <handlers xmi:id="_hPKD8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
-    <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.alarms" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
+    <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
       <tags>type:user</tags>
       <parameters xmi:id="_aIIjMIQcEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms">
         <tags>type:user</tags>
       </parameters>
     </bindings>
-    <bindings xmi:id="_nmDrcIQdEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.0" keySequence="M1+Q" command="_BQbKEKkjEeePZ9uSg3-JRA">
+    <bindings xmi:id="_fZ5gUIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+B" command="_UJcx8IOSEeizju06Crxm-g">
       <tags>type:user</tags>
+      <parameters xmi:id="_fZ5gUYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.1" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus">
+        <tags>type:user</tags>
+      </parameters>
     </bindings>
-    <bindings xmi:id="_OrtRQIQeEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.1" keySequence="M2+M3+S" command="_QRQe4JojEeeX2q28a93CXA">
+    <bindings xmi:id="_qmKkcIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+D" command="_UJcx8IOSEeizju06Crxm-g">
       <tags>type:user</tags>
+      <parameters xmi:id="_qmKkcYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_vzdIsIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+E" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_vzdIsYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_7c1moIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+J" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_7c1moYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_At4CcIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+L" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_At4CcYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ioclog">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_El9uUIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+P" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_El9uUYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_IesTYIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+M" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_IesTYYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_MGVIcIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+N" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_MGVIcYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_SP2EYIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+G" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_SP2EYYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_VqK2MIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+S" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_VqK2MYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.ui.scripting.perspective">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_axpGUIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+Y" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_axpGUYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_ey8YkIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+W" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_ey8YkYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_w_S0QIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+V" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_w_S0QYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens">
+        <tags>type:user</tags>
+      </parameters>
     </bindings>
   </bindingTables>
   <rootContext xmi:id="_no3QoIOVEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="dialog and window" description="default binding context">
