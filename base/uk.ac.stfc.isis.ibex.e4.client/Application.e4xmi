@@ -101,20 +101,20 @@
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.alarms" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
       <tags>type:user</tags>
-      <parameters xmi:id="_aIIjMIQcEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms">
+      <parameters xmi:id="_aIIjMIQcEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms">
         <tags>type:user</tags>
       </parameters>
     </bindings>
     <bindings xmi:id="_nmDrcIQdEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.0" keySequence="M1+Q" command="_BQbKEKkjEeePZ9uSg3-JRA">
       <tags>type:user</tags>
     </bindings>
-    <bindings xmi:id="_OrtRQIQeEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.1" keySequence="ALT+SHIFT+S" command="_QRQe4JojEeeX2q28a93CXA">
+    <bindings xmi:id="_OrtRQIQeEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybinding.1" keySequence="M2+M3+S" command="_QRQe4JojEeeX2q28a93CXA">
       <tags>type:user</tags>
     </bindings>
   </bindingTables>
   <rootContext xmi:id="_no3QoIOVEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="dialog and window" description="default binding context">
-    <children xmi:id="_FCSpgIQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialog"/>
-    <children xmi:id="_Hvhr0IQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.window"/>
+    <children xmi:id="_FCSpgIQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialog" name="dialog"/>
+    <children xmi:id="_Hvhr0IQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.window" name="window"/>
   </rootContext>
   <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png" tooltip="The device alarms on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">

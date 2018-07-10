@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-      <contribution
-            class="uk.ac.stfc.isis.ibex.ui.weblinks.Perspective">
-      </contribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectives">
       <perspective
             class="uk.ac.stfc.isis.ibex.ui.weblinks.Perspective"
@@ -27,18 +21,6 @@
             name="Web Links OPI view"
             restorable="true">
       </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-            schemeId="IBEX_key_scheme"
-            sequence="Alt+Shift+W">
-         <parameter
-               id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
-               value="uk.ac.stfc.isis.ibex.ui.weblinks.perspective">
-         </parameter>
-      </key>
    </extension>
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
