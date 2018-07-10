@@ -154,6 +154,8 @@ public final class ComponentIcons {
             	return "dilution_fridge";
             case COUETTE:
             	return "couette";
+            case SYRINGE_PUMP:
+            	return "syringe_pump";
             default:
                 return "cog";
         }

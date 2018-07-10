@@ -137,7 +137,9 @@ public enum ComponentType {
     /** Couette cell.*/
     COUETTE,
     /** Motion setpoints.*/
-    MOTION_SET_POINTS;
+    MOTION_SET_POINTS,
+    /**Syringe pump*/
+    SYRINGE_PUMP;
 
 	
 	private Target target;
