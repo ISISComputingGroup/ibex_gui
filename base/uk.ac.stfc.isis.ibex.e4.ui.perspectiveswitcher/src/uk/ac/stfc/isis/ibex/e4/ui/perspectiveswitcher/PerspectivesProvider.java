@@ -51,15 +51,6 @@ public class PerspectivesProvider {
     }
 
     /**
-     * Returns the E4 part service.
-     * 
-     * @return The part service
-     */
-    public EPartService getPartService() {
-        return partService;
-    }
-
-    /**
      * Returns the list of all perspectives.
      * 
      * @return The list of perspectives
@@ -127,5 +118,21 @@ public class PerspectivesProvider {
             }
         }
         return perspectives;
+    }
+    
+    /**
+     * Switches to a given perspective by id.
+     * @param id the id of the perspective to switch to
+     */
+    public void switchPerspective(String id) {
+    	partService.switchPerspective(id);
+    }
+    
+    /**
+     * Switches to a given perspective.
+     * @param perspective the the perspective to switch to
+     */
+    public void switchPerspective(MPerspective perspective) {
+    	partService.switchPerspective(perspective);
     }
 }
