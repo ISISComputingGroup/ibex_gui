@@ -72,14 +72,14 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    }
 		Model model = editor.getModel();
 		model.setSaveChanges(false);
-		model.setArchiveRescale(ArchiveRescale.STAGGER);
+		model.setArchiveRescale(ArchiveRescale.NONE);
 		
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
 	    	// Create axis
 			AxisConfig axis = new AxisConfig(displayName);
-			axis.setAutoScale(true);
+			axis.setAutoScale(false);
 			model.addAxis(axis);
 	    	
 			// Create trace
