@@ -36,14 +36,13 @@ import javax.crypto.spec.PBEKeySpec;
 public class PasswordHasher {
 
     /**
-     * Using PBKDF2WithHmacSHA512 would be ideal, but it's not available in all
-     * java 1.7 environments, so use PBKDF2WithHmacSHA1 instead.
+     * Using PBKDF2WithHmacSHA512 which seems to work with Java 1.8.
      */
-    private static final String HASHING_ALGORITHM = "PBKDF2WithHmacSHA1";
+    private static final String HASHING_ALGORITHM = "PBKDF2WithHmacSHA512";
 
     /**
      * Iterations of the hashing algorithm. This is an arbitrary "slowdown"
-     * factor to harden the hash againt brute force attacks.
+     * factor to harden the hash against brute force attacks.
      */
     private static final int ITERATIONS = 10000;
 
@@ -65,7 +64,7 @@ public class PasswordHasher {
      * Changing any of algorithm, iterations, key length or salt will cause this
      * value to change!
      */
-    private String expectedHash = "uVpfg6gqCDPvluvcyQGVm06aN/t435TbfX7fnEDU0+4=";
+    private String expectedHash = "KZCcxHwAgSJ+8Gc/7cd5tfYdvY/Yiu1l6ph6CAPS1Yk=";
 
     /**
      * Creates a password hasher that expects the default password.

@@ -45,6 +45,10 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * @param <R> the PV type (must be a VType)
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
+	
+	static {
+		PVManagerSettings.setUp();
+	}
 
     private static final int UPDATE_FREQUENCY = 10;
     
@@ -60,6 +64,10 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	
 	private static final ExecutorService UPDATE_THREADPOOL = Executors.newCachedThreadPool();
 	
+    /**
+     * Create a new PV manager observable.
+     * @param info the parameters to create this PV with
+     */
 	public PVManagerObservable(final PVInfo<R> info) {
 		super(info);
 		
@@ -108,15 +116,20 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		} catch (ExecutionException | InterruptedException e) {
 			IsisLog.getLogger(getClass()).error(e.getMessage(), e);
 		}
+	}
 		
-	}	
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         pv.close();
         super.close();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "PVManagerObservable observing PV " + pv.getName() + " with current value: " + pv.getValue();

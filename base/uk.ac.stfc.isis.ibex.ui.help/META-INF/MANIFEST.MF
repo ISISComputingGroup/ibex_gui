@@ -12,5 +12,5 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.help,
  org.eclipse.e4.core.di.annotations
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: uk.ac.stfc.isis.ibex.ui.help

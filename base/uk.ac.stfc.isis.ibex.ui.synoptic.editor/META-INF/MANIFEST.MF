@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  org.eclipse.e4.core.di.annotations,
