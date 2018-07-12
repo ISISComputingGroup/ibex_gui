@@ -1,6 +1,5 @@
 from ChannelUtilities import get_summary_channels, get_available_channels, get_max_crates, get_channel_pv_name
-from OPIUtilities import get_cleared_group_widget, create_channel_widget_model
-
+from DisplayUtilities import get_cleared_group_widget, create_channel_widget_model
 
 def add_channel_widgets(this_display, this_pvs):
     """
@@ -25,9 +24,5 @@ def add_channel_widgets(this_display, this_pvs):
         if get_channel_pv_name(crate, slot, channel) in current_included_channels:
             channel_selector_widget.getChildren()[-1].getChild("Include").setValue(1)
 
-
-if __name__ == "__main__":
-    # pv[0] = $(P)CAEN:crates, triggered
-    # pv[1] = $(P)CAEN:CHANLIST, triggered
-    # pv[2-17] = $(P)CAEN:crates.[XX]ST
-    add_channel_widgets(display, pvs)
+#The function that is called by CSS.
+add_channel_widgets(display, pvs)
