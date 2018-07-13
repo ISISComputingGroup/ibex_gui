@@ -52,7 +52,7 @@
       <color red="192" green="192" blue="192" />
     </border_color>
     <widget_type>Web Browser</widget_type>
-    <url>http://127.0.0.1:8988/</url>
+    <url>$(URL)</url>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>

@@ -23,63 +23,62 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import org.csstudio.opibuilder.util.MacrosInput;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.PartInitException;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
-import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
-public class MatplotlibOpiTargetView extends OpiView {
+public class MatplotlibOpiTargetView extends OpiTargetView {
     /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
+    
+    /**
+     * Name of the OPI.
+     */
+    private static final String NAME = "Matplotlib";
 
     /**
      * File name of the web links OPI.
      */
     private static final String OPI = "matplotlib.opi";
     
-	private static MatplotlibOpiTargetView instance;
+    /**
+     * This is the default URL, but it should get set each time explicitly
+     */
+    private static String url = "http://127.0.0.1:8988";
+    
+    /**
+     * Displays the matplotlib OPI with the given URL.
+     * @param url the url where the plot is
+     * @throws OPIViewCreationException  when opi can not be created
+     */
+    public static void displayPlotopiWithUrl(String url) throws OPIViewCreationException {
+    	MatplotlibOpiTargetView.url = url;
+    	displayOpi();
+    }
 	
-	public static MatplotlibOpiTargetView getInstance() {
-		return instance;
-	}
-
+	/**
+     * Display the OPI for a given target.
+     *
+     * @throws OPIViewCreationException when opi can not be created
+     */
+    public static void displayOpi() throws OPIViewCreationException {
+    	OpiTarget target = new OpiTarget(NAME, OPI);
+        OpiTargetView.displayOpi(target, ID);
+    }
+    
     /**
      * {@inheritDoc}
      */
-	@Override
-	protected Path opi() throws OPIViewCreationException {
-		return Opi.getDefault().opiProvider().pathFromName(OPI);
-	}
-	
-	/**
-	 * Override toolbars to not exist (they appear in the dashboard which looks weird).
-	 */
-	@Override
-	public void createToolbarButtons() {
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void init(IViewSite site) throws PartInitException {
-		super.init(site);
-		try {
-			initialiseOPI();
-		} catch (OPIViewCreationException e) {
-			throw new PartInitException(e.getMessage(), e);
-		}
-	}
+    @Override
+    public MacrosInput macros() {
+    	MacrosInput macros = super.macros();
+    	macros.put("URL", url);
+    	return macros;
+    }
 
-	@Override
-	protected MacrosInput macros() {
-		return emptyMacrosInput();
-	}
 }

@@ -812,4 +812,24 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="py4j-java"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="py4j-java.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="py4j-python"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
