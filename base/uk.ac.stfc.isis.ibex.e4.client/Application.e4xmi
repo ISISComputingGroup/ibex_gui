@@ -291,9 +291,11 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_krh18KkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" selectedElement="_numlYKkREeeNfrob_9kcDA" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_numlYKkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="70" selectedElement="_zm3sgKkUEeeNfrob_9kcDA">
+        <children xsi:type="basic:PartStack" xmi:id="_numlYKkREeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50" selectedElement="_zm3sgKkUEeeNfrob_9kcDA">
           <children xsi:type="basic:Part" xmi:id="_zm3sgKkUEeeNfrob_9kcDA" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Scripting"/>
-          <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.ui.graphing.graph" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.GraphView" label="Plot" closeable="true"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_WuLscIXrEeib1Ij4B5lomQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.32" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
         </children>
       </children>
     </children>
