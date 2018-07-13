@@ -2413,10 +2413,7 @@
     <entry>
 		<key>Keyence TM-3001P</key>
 		<value>
-			<type>KYNCTM3K</type>
-			<categories>
-				<category>Optical Micrometer</category>
-			</categories>
+			<type>KEYENCE</type>
 			<path>kynctm3k.opi</path>
 			<description>The OPI for the Keyence TM-3001P optical micrometer</description>
 		<macros>
