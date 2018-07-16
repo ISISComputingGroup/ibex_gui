@@ -33,22 +33,22 @@ public final class ComponentView {
 	
 	private ComponentView() { }
 
-	public static BeamlineComposite create(BeamlineCompositeContainer parent, Component component) {
+	public static BeamlineComposite create(BeamlineCompositeContainer parent, Component component, boolean isPreview) {
 		BeamlineComposite target = component.components().isEmpty() 
-									? createBasicComponent(parent, component) 
-									: createGroupView(parent, component);
+									? createBasicComponent(parent, component, isPreview) 
+									: createGroupView(parent, component, isPreview);
 				
 		parent.registerBeamlineTarget(target);
 		
 		return target;
 	}
 
-	private static GroupView createGroupView(Composite parent, Component component) {
-		return new GroupView(parent, component);
+	private static GroupView createGroupView(Composite parent, Component component, boolean isPreview) {
+		return new GroupView(parent, component, isPreview);
 	}
 
-	private static BasicComponent createBasicComponent(Composite parent, Component component) {
-		BasicComponent componentView = new BasicComponent(parent);
+	private static BasicComponent createBasicComponent(Composite parent, Component component, boolean isPreview) {
+		BasicComponent componentView = new BasicComponent(parent, isPreview);
 		componentView.setName(component.name());
         componentView.setImage(ComponentIcons.iconForType(component.type()));
 		componentView.setProperties(component);
