@@ -43,8 +43,8 @@
     <height>577</height>
     <border_width>1</border_width>
     <scale_options>
-      <width_scalable>false</width_scalable>
-      <height_scalable>false</height_scalable>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>

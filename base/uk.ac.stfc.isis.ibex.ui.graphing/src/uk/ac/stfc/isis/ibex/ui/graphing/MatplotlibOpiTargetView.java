@@ -22,6 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
+import org.apache.logging.log4j.Logger;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
@@ -45,16 +53,34 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      */
     private static final String OPI = "matplotlib.opi";
     
-    private static OpiTarget TARGET = new OpiTarget(NAME, OPI);
+    private static final OpiTarget TARGET = new OpiTarget(NAME, OPI);
+    
+    private static final Logger LOG = IsisLog.getLogger(MatplotlibOpiTargetView.class);
+    
+    private static IViewPart view = null;
 
-	
-	/**
+    /**
      * Display the OPI for a given target.
      *
      * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi() throws OPIViewCreationException {
-        OpiTargetView.displayOpi(TARGET, ID);
+    public static void displayOpi() {
+        Display.getDefault().asyncExec(new Runnable() {
+			@Override
+            public void run() {
+		        try {
+		            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		            if (view != null) {
+		            	workbenchPage.hideView(view);
+		            	view.dispose();
+		            }
+		            view = workbenchPage.showView(ID, null, IWorkbenchPage.VIEW_VISIBLE);
+		            OpiTargetView viewAsOPITarget = (OpiTargetView) view;
+		            viewAsOPITarget.setOpi(TARGET);
+		        } catch (PartInitException | OPIViewCreationException | RuntimeException e) {
+		            LOG.error(e.getMessage(), e);
+		        }
+            }
+        });
     }
-
 }

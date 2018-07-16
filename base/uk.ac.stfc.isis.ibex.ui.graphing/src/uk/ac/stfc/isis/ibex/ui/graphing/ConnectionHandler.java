@@ -3,7 +3,6 @@ package uk.ac.stfc.isis.ibex.ui.graphing;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 
 /**
  * Class to handle function calls from python regarding opening the plot window.
@@ -21,11 +20,7 @@ public class ConnectionHandler {
     	Display.getDefault().asyncExec(new Runnable() {
     		@Override
     		public void run() {
-    			try {
-					MatplotlibOpiTargetView.displayOpi();
-				} catch (OPIViewCreationException | RuntimeException e) {
-					IsisLog.getLogger(ConnectionHandler.class).error(e.getMessage(), e);
-				}
+				MatplotlibOpiTargetView.displayOpi();
     		}
     	});
     }

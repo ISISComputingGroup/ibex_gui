@@ -1438,5 +1438,17 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>MATPLOTLIB</key>
+      <value>
+        <categories>
+        </categories>
+        <type>UNKNOWN</type>
+        <path>matplotlib.opi</path>
+        <description>The OPI for plotting via matplotlib</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
