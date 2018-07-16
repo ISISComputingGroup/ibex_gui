@@ -16,14 +16,14 @@ public class ConnectionHandler {
 	 * Opens the plotting OPI pointing at the given URL.
 	 * @param url the URL to point at
 	 */
-    public void openPlot(String url) {
-    	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI with url: " + url);
+    public void openPlot() {
+    	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI.");
     	Display.getDefault().asyncExec(new Runnable() {
     		@Override
     		public void run() {
     			try {
-					MatplotlibOpiTargetView.displayPlotopiWithUrl(url);
-				} catch (OPIViewCreationException e) {
+					MatplotlibOpiTargetView.displayOpi();
+				} catch (OPIViewCreationException | RuntimeException e) {
 					IsisLog.getLogger(ConnectionHandler.class).error(e.getMessage(), e);
 				}
     		}

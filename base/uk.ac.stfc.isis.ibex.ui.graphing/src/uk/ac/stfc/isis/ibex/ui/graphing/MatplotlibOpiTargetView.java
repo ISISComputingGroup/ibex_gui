@@ -22,7 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
-import org.csstudio.opibuilder.util.MacrosInput;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
@@ -46,20 +45,8 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      */
     private static final String OPI = "matplotlib.opi";
     
-    /**
-     * This is the default URL, but it should get set each time explicitly
-     */
-    private static String url = "http://127.0.0.1:8988";
-    
-    /**
-     * Displays the matplotlib OPI with the given URL.
-     * @param url the url where the plot is
-     * @throws OPIViewCreationException  when opi can not be created
-     */
-    public static void displayPlotopiWithUrl(String url) throws OPIViewCreationException {
-    	MatplotlibOpiTargetView.url = url;
-    	displayOpi();
-    }
+    private static OpiTarget TARGET = new OpiTarget(NAME, OPI);
+
 	
 	/**
      * Display the OPI for a given target.
@@ -67,18 +54,7 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * @throws OPIViewCreationException when opi can not be created
      */
     public static void displayOpi() throws OPIViewCreationException {
-    	OpiTarget target = new OpiTarget(NAME, OPI);
-        OpiTargetView.displayOpi(target, ID);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public MacrosInput macros() {
-    	MacrosInput macros = super.macros();
-    	macros.put("URL", url);
-    	return macros;
+        OpiTargetView.displayOpi(TARGET, ID);
     }
 
 }
