@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.instrument.list;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -105,23 +104,9 @@ public final class InstrumentListUtils {
             }
         }
 
-        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+        Collections.sort(instrumentsAlphabetical, (InstrumentInfo info1, InstrumentInfo info2) -> info1.name().compareTo(info2.name()));
         instrumentsAlphabetical.add(0, topInstrument);
         return instrumentsAlphabetical;
-    }
-
-    /**
-     * Compares instrument infos by their name in alphabetical order.
-     * 
-     * @return The comparison value of two instrument info names alphabetically
-     */
-    private static Comparator<InstrumentInfo> alphabeticalNameComparator() {
-        return new Comparator<InstrumentInfo>() {
-            @Override
-            public int compare(InstrumentInfo info1, InstrumentInfo info2) {
-                return info1.name().compareTo(info2.name());
-            }
-        };
     }
 }
 
