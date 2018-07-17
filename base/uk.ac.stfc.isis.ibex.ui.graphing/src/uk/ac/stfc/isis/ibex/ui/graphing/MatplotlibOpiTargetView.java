@@ -64,7 +64,7 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * @throws OPIViewCreationException when opi can not be created
      */
     public static void displayOpi() {
-        Display.getDefault().asyncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
 			@Override
             public void run() {
 		        try {
