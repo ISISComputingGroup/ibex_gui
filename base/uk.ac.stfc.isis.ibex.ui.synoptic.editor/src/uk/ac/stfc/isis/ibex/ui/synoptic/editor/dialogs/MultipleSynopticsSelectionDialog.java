@@ -78,7 +78,7 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptics:");
 
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI, false);
         setItems(SynopticInfo.names(available).toArray(new String[0]));
 	}
 	

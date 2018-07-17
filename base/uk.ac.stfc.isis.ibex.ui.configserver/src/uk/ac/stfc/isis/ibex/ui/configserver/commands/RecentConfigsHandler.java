@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.RecentConfigSelectionDialog;
 /**
  * Handler for loading recent configurations.
  */
-public class RecentItemsHandler extends DisablingConfigHandler<String> {
+public class RecentConfigsHandler extends DisablingConfigHandler<String> {
 
     private Map<String, Configuration> configs;
 
@@ -31,7 +31,7 @@ public class RecentItemsHandler extends DisablingConfigHandler<String> {
      * Instantiates the handler object and adds observers on the values of all
      * configurations available.
      */
-    public RecentItemsHandler() {
+    public RecentConfigsHandler() {
         super(SERVER.load());
         configs = new HashMap<String, Configuration>();
     }
@@ -39,20 +39,21 @@ public class RecentItemsHandler extends DisablingConfigHandler<String> {
     @Override
     public void safeExecute(ExecutionEvent event) {
         updateObservers();
-        List<String> recentItemsNames = Configurations.getInstance().recent();
+        List<String> recentConfigsNames = Configurations.getInstance().recentNames();
         Collection<ConfigInfo> configsInDialog = SERVER.configsInfo().getValue();
         ArrayList<ConfigInfo> recentConfigs = new ArrayList<ConfigInfo>();
         
-        for (String recentItemName : recentItemsNames) {
+        for (String recentConfigName : recentConfigsNames) {
             for (ConfigInfo config : configsInDialog) {
-                if (config.name().equals(recentItemName)) {
+                if (config.name().equals(recentConfigName)) {
                     recentConfigs.add(config);
                 }
             }
         }
         
+        List<String> recentTimestamps =  Configurations.getInstance().recentTimestamps();
         RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell(), "Load Recent Configuration",
-                recentConfigs, false, false);
+                recentConfigs, recentTimestamps);
         if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);

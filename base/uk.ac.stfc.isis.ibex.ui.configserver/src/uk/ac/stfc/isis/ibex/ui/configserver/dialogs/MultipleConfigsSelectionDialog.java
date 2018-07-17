@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
@@ -30,6 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialogUtils;
 
 /**
  * Dialog for asking the user to select a multiple configurations or components.
@@ -41,6 +41,11 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      * select from.
      */
     protected final Collection<ConfigInfo> available;
+
+    /**
+     * A class containing utilities for selection dialogues.
+     */
+    private SelectionDialogUtils selectionDialogUtils = new SelectionDialogUtils();
 
     /**
      * Is the dialog to do with components? (as opposed to configs)
@@ -91,16 +96,6 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		return selected;
 	}
 
-	/**
-	 * Sorts the given selection as required.
-	 * 
-	 * @param selection
-	 *             The selection to be sorted.
-	 */
-	public void sortSelected(String[] selection) {
-	    Arrays.sort(selection, String.CASE_INSENSITIVE_ORDER);
-	}
-
 	@Override
 	protected void okPressed() {
         selected = asString(items.getSelection());
@@ -111,7 +106,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, false);
 
         String[] names;
         if (includeCurrent) {
@@ -119,7 +114,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         } else {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
-        sortSelected(names);
+        names = selectionDialogUtils.sortSelected(names);
         setItems(names);
 	}
 

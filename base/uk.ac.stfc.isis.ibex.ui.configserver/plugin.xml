@@ -49,8 +49,8 @@
             name="Delete Components">
       </command>
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItemsHandler"
-            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItems"
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentConfigsHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentConfigs"
             name="Load Recent Configurations">
       </command>
    </extension>
@@ -136,7 +136,7 @@
                </command>
             </menu>
             <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentItems"
+                  commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentConfigs"
                   id="uk.ac.stfc.isis.ibex.ui.config"
                   label="Recent Configurations"
                   mnemonic="C"

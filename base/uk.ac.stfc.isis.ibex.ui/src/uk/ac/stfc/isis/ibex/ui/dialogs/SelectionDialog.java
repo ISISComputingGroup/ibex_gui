@@ -119,6 +119,26 @@ public abstract class SelectionDialog extends Dialog {
             item.setText(name);
         }
     }
+    
+    /**
+     * Sets a list of strings as items in a selection table with two columns.
+     * 
+     * @param fitems First column items.
+     * @param sitems Second column items.
+     */
+    protected void setMultipleColumnItems(String[] fitems, String[] sitems) {
+        this.items.clearAll();
+        int i = 0;
+        String[] columns = new String[2];
+        for (String fitem : fitems) {
+            TableItem item = new TableItem(this.items, SWT.NONE);
+            columns[0] = fitem;
+            columns[1] = sitems[i];
+            item.setText(columns);
+            i++;
+        }
+        i = 0;
+    }
 
     /**
      * Converts the items in a table into a list of strings.
@@ -139,9 +159,10 @@ public abstract class SelectionDialog extends Dialog {
      * 
      * @param parent The parent composite
      * @param style The style settings
+     * @param haveTimestamp True if you want a second column with a time stamp.
      * @return The table object
      */
-    protected Table createTable(Composite parent, int style) {
+    protected Table createTable(Composite parent, int style, boolean haveTimestamp) {
         Composite tableComposite = new Composite(parent, SWT.NONE);
         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         Table table = new Table(tableComposite, style);
@@ -150,6 +171,10 @@ public abstract class SelectionDialog extends Dialog {
         TableColumn singleColumn = new TableColumn(table, SWT.NONE);
         TableColumnLayout tableColumnLayout = new TableColumnLayout();
         tableColumnLayout.setColumnData(singleColumn, new ColumnWeightData(1));
+        if (haveTimestamp) {
+            TableColumn secondColumn = new TableColumn(table, SWT.NONE);
+            tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
+        }
         tableComposite.setLayout(tableColumnLayout);
 
         return table;

@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -128,19 +130,41 @@ public class Configurations extends Closer implements BundleActivator {
 	}
 	
     /**
-     * @return the recently used configurations
+     * Returns the names and time stamps of recently used configurations.
+     * 
+     * @return the names and time stamps of recently used configurations.
      */
 	public List<String> recent() {
 		return recent.get();
 	}
+	
+	/**
+	 * Returns the time stamps at which recently used configurations were last loaded.
+	 * 
+     * @return the time stamps at which recently used configurations were last loaded.
+     */
+    public List<String> recentTimestamps() {
+        return recent.getTimestamps();
+    }
+    
+    /**
+     * Returns the names of recently used configurations.
+     * 
+     * @return the names of recently used configurations.
+     */
+    public List<String> recentNames() {
+        return recent.getNames();
+    }
 
     /**
-     * Add a configuration to the "recently used" list.
+     * Add a configuration and time stamp of when it was last used to the "recently used" list.
      * 
      * @param configName the name to add
      */
 	public void addRecent(String configName) {
-		recent.add(configName);
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		recent.add(configName + " " + sdf.format(timestamp));
 	}
 
 	/*

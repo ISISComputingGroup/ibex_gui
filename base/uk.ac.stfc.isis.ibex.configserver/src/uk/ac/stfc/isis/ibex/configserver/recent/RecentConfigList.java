@@ -31,19 +31,24 @@ package uk.ac.stfc.isis.ibex.configserver.recent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
-
 /**
  * Class to manage the list of recently used configurations.
  *
  */
 public class RecentConfigList {
+    private static final String NUMBER_REGEX = "(\\d+)";
+    private static final String SEPARATOR = " ";
 	private List<String> recent;
-	private static final int MRU_LENGTH = 4;
+	private List<String> recentNames = new ArrayList<String>();
+	private List<String> recentTimestamps = new ArrayList<String>();
+	private static final int MRU_LENGTH = 6;
 	private static final String MRU_PREFS = "config-mru-slot-";
 	private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.configserver";
 	
@@ -63,10 +68,10 @@ public class RecentConfigList {
 		// Is it already in the list?
 		boolean first = true;
 		for (String current : recent) {
-			if (current.equals(item)) {
+			if (getName(current).equals(getName(item))) {
 				if (!first) {
 					// Move to first in the list
-					recent.remove(item);
+					recent.remove(current);
 					recent.add(0, item);
 					save();
 				}
@@ -83,13 +88,100 @@ public class RecentConfigList {
 		}
 		save();
 	}
+	
+	/**
+     * Clears the list of recently used configuration names and time stamps of when they were last loaded.
+     */
+    public void clear() {
+        recent.clear();
+    }
 
 	/**
-     * @return Returns the list of recently used configuration names.
+	 * Returns the list of recently used configuration names and time stamps of when they were last loaded.
+	 * 
+     * @return 
+     *          The list of recently used configuration names and time stamps of when they were last loaded.
      */
 	public List<String> get() {
-		return recent;
+	    return recent;
 	}
+
+	/**
+	 * Returns the list of recently used configuration names.
+	 * 
+     * @return 
+     *          The list of recently used configuration names.
+     */
+    public List<String> getNames() {
+        recentNames.clear();
+        for (String item : get()) {
+            recentNames.add(getName(item));
+        }
+        return recentNames;
+    }
+
+	/**
+	 * Returns the list of time stamps at which recently used configurations were last loaded.
+	 * 
+     * @return 
+     *          The list of time stamps at which recently used configurations were last loaded.
+     */
+    public List<String> getTimestamps() {
+        recentTimestamps.clear();
+        for (String item : get()) {
+            recentTimestamps.add(getTimestamp(item));
+        }
+        return recentTimestamps;
+    }
+    
+    /**
+     * Creates a matcher for the time stamp pattern. This allows to find the time stamp in a string with names and time stamps.
+     * 
+     * @param item 
+     *              The original string containing a name and a time stamp.
+     * @return
+     *              The matcher matched to the time stamp pattern.
+     */
+    private Matcher getMatcher(String item) {
+        String pat = SEPARATOR + NUMBER_REGEX + "-" + NUMBER_REGEX + "-" + NUMBER_REGEX + SEPARATOR 
+                + NUMBER_REGEX + ":" + NUMBER_REGEX + ":" + NUMBER_REGEX;
+        Pattern pattern = Pattern.compile("(" + pat + ")");
+        return pattern.matcher(item);
+    }
+	
+	/**
+     * Returns the name minus the time stamp at which recently used configurations were last loaded.
+     * 
+     * @param item
+     *            The original string containing a name and a time stamp.
+     * @return 
+     *            The name without the time stamp at which the item was last loaded.
+     */
+    private String getName(String item) {
+        Matcher match = getMatcher(item);
+        String name = item;
+        if (match.find()) {
+            name = item.replace(match.group(1), "");
+        }
+        return name;
+    }
+    
+    /**
+     * Returns the time stamp at which recently used configurations were last loaded.
+     * 
+     * @param item
+     *            The original string containing a name and a time stamp.
+     * @return 
+     *            The time stamp at which the item was last loaded (trimmed to remove the space separating the name and time stamp).
+     */
+    private String getTimestamp(String item) {
+        Matcher match = getMatcher(item);
+        String timestamp = item;
+        if (match.find()) {
+            timestamp = match.group(1).trim();
+        }
+        return timestamp;
+    }
 
     /**
      * Save the list.

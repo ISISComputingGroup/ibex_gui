@@ -66,7 +66,7 @@ public class RecentItems extends ContributionItem {
 		parent.setText("Recent Configurations");
 		
 		// Create menu items for the list
-		Collection<String> items = configs.recent();
+		Collection<String> items = configs.recentNames();
 		if (items.size() > 0) {
 			Menu child = new Menu(parent);
 			for (String config : items) {
