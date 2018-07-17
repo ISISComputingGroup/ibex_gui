@@ -24,6 +24,7 @@ import java.util.Collection;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -47,6 +48,9 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
                 SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
 		    configService.uncheckedWrite((dialog.selectedConfigs()));
+		    for (String item : dialog.selectedConfigs()) {
+		        Configurations.getInstance().removeRecent(item);
+		    }
 		}
 	}
 }

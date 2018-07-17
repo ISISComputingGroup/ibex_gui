@@ -44,7 +44,7 @@ import org.osgi.service.prefs.Preferences;
  */
 public class RecentConfigList {
     private static final String NUMBER_REGEX = "(\\d+)";
-    private static final String SEPARATOR = " ";
+    private static final String SEPARATOR = "                                      Last loaded on: ";
 	private List<String> recent;
 	private List<String> recentNames = new ArrayList<String>();
 	private List<String> recentTimestamps = new ArrayList<String>();
@@ -94,6 +94,7 @@ public class RecentConfigList {
      */
     public void clear() {
         recent.clear();
+        save();
     }
 
 	/**
@@ -105,6 +106,25 @@ public class RecentConfigList {
 	public List<String> get() {
 	    return recent;
 	}
+	
+	/**
+     * Removes an item from list of recently used configuration names and time stamps of when they were last loaded.
+     * 
+     * @param item 
+     *              The item to remove.
+     */
+    public void remove(String item) {
+        String toBeDeleted = "";
+        for (String current : recent) {
+            if (getName(current).equals(getName(item))) {
+                toBeDeleted = current;
+            }
+        }
+        if (!toBeDeleted.isEmpty()) {
+            recent.remove(toBeDeleted);
+        }
+        save();
+    }
 
 	/**
 	 * Returns the list of recently used configuration names.
@@ -142,10 +162,17 @@ public class RecentConfigList {
      * @return
      *              The matcher matched to the time stamp pattern.
      */
-    private Matcher getMatcher(String item) {
-        String pat = SEPARATOR + NUMBER_REGEX + "-" + NUMBER_REGEX + "-" + NUMBER_REGEX + SEPARATOR 
-                + NUMBER_REGEX + ":" + NUMBER_REGEX + ":" + NUMBER_REGEX;
-        Pattern pattern = Pattern.compile("(" + pat + ")");
+    private Matcher getMatcher(String item, boolean first) {
+        Pattern pattern;
+        if (first) {
+            String pat = SEPARATOR + NUMBER_REGEX + "-" + NUMBER_REGEX + "-" + NUMBER_REGEX + " "
+                    + NUMBER_REGEX + ":" + NUMBER_REGEX + ":" + NUMBER_REGEX;
+            pattern = Pattern.compile("(" + pat + ")");
+        } else {
+            String pat = NUMBER_REGEX + "-" + NUMBER_REGEX + "-" + NUMBER_REGEX + " "
+                    + NUMBER_REGEX + ":" + NUMBER_REGEX + ":" + NUMBER_REGEX;
+            pattern = Pattern.compile("(" + pat + ")");
+        }
         return pattern.matcher(item);
     }
 	
@@ -157,8 +184,8 @@ public class RecentConfigList {
      * @return 
      *            The name without the time stamp at which the item was last loaded.
      */
-    private String getName(String item) {
-        Matcher match = getMatcher(item);
+    public String getName(String item) {
+        Matcher match = getMatcher(item, true);
         String name = item;
         if (match.find()) {
             name = item.replace(match.group(1), "");
@@ -174,13 +201,27 @@ public class RecentConfigList {
      * @return 
      *            The time stamp at which the item was last loaded (trimmed to remove the space separating the name and time stamp).
      */
-    private String getTimestamp(String item) {
-        Matcher match = getMatcher(item);
-        String timestamp = item;
+    public String getTimestamp(String item) {
+        Matcher match = getMatcher(item, true);
+        Matcher secondMatch = getMatcher(item, false);
+        return findPattern(secondMatch, findPattern(match, item));
+    }
+    
+    /**
+     * A method used to find a pattern in a string.
+     * @param match
+     *              The matcher used to find the pattern.
+     * @param item
+     *              The original string.
+     * @return
+     *              The pattern to be returned.
+     */
+    private String findPattern(Matcher match, String item) {
+        String pattern = item;
         if (match.find()) {
-            timestamp = match.group(1).trim();
+            pattern = match.group(1).trim();
         }
-        return timestamp;
+        return pattern;
     }
 
     /**

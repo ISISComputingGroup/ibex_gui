@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 /**
@@ -40,18 +39,13 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
      * The collection of the available configurations/components for the user to
      * select from.
      */
-    protected final Collection<ConfigInfo> recentConfigs;
+    protected List<String> recentConfigs;
 
     /**
      * The currently selected items.
      */
     protected Collection<String> selectedConfigs = new ArrayList<>();
 
-    /**
-     * The time stamps relating to when a recent config was last loaded.
-     */
-    protected List<String> recentTimestamps;
-    
     /**
      * Allows for more than one item to be selected. In this class we set extraListOptions to 0 as we only want to select and load one item.
      */
@@ -63,18 +57,14 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
      * @param title The title of the dialog box.
      * @param recentConfigs A collection of the available configurations/components
      *            for the user to select from.
-     * @param   recentTimestamps A list of the time stamps of when a recent config was last loaded.
      */
     public RecentConfigSelectionDialog(
             Shell parentShell, 
             String title,
-            Collection<ConfigInfo> recentConfigs, List<String> recentTimestamps) {
+            List<String> recentConfigs) {
         super(parentShell, title);
         this.recentConfigs = recentConfigs;
-        this.recentTimestamps = recentTimestamps;
         this.extraListOptions = 0;
-        //This is done because the first item on the list will correspond to the current config, which we don't want to display here as we can't load it.
-        this.recentTimestamps.remove(0);
     }
 
     /**
@@ -86,31 +76,18 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
 
     @Override
     protected void okPressed() {
-        Collection<String> selectedItems = asString(items.getSelection());
-        //The following ensures that double clicking on a time stamp doesn't launch the load process using a time stamp as a config name.
-        for (String item : selectedItems) {
-            for (String configName : ConfigInfo.namesWithoutCurrent(recentConfigs)) {
-                if (item.equals(configName)) {
-                    selectedConfigs = asString(items.getSelection());
-                    super.okPressed();
-                }
-            }
-        }
+        selectedConfigs = asString(items.getSelection());
+        super.okPressed();
     }
 
     @Override
     protected void createSelection(Composite container) {
         Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select one of the last five recently loaded configuration:");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, true);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
         String[] names;
-        names = ConfigInfo.namesWithoutCurrent(recentConfigs).toArray(new String[0]);
-        String[] timestamps;
-        timestamps = recentTimestamps.toArray(new String[0]);
-        for (int i = 0; i < timestamps.length; i++) {
-            timestamps[i] = "Last loaded on: " + timestamps[i];
-        }
-        setMultipleColumnItems(names, timestamps);
+        names = recentConfigs.toArray(new String[0]);
+        setItems(names);
     }
 
     /**
@@ -122,7 +99,4 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
         return selectedConfigs.toArray(new String[1])[0];
     }
 
-    /**
-     * @return A string corresponding to the type of item in the list.
-     */
 }

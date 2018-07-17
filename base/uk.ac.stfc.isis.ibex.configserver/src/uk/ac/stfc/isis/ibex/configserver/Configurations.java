@@ -134,7 +134,7 @@ public class Configurations extends Closer implements BundleActivator {
      * 
      * @return the names and time stamps of recently used configurations.
      */
-	public List<String> recent() {
+	public List<String> getRecent() {
 		return recent.get();
 	}
 	
@@ -143,7 +143,7 @@ public class Configurations extends Closer implements BundleActivator {
 	 * 
      * @return the time stamps at which recently used configurations were last loaded.
      */
-    public List<String> recentTimestamps() {
+    public List<String> getRecentTimestamps() {
         return recent.getTimestamps();
     }
     
@@ -152,8 +152,28 @@ public class Configurations extends Closer implements BundleActivator {
      * 
      * @return the names of recently used configurations.
      */
-    public List<String> recentNames() {
+    public List<String> getRecentNames() {
         return recent.getNames();
+    }
+    
+    /**
+     * Returns the time stamp at which a recently used configuration was last loaded.
+     * 
+     * @param item The string from which to get the time stamp.
+     * @return the time stamp at which a recently used configuration was last loaded.
+     */
+    public String getRecentTimestamp(String item) {
+        return recent.getTimestamp(item);
+    }
+    
+    /**
+     * Returns the name of a recently used configurations.
+     * 
+     * @param item The string from which to get the name.
+     * @return the name of a recently used configurations.
+     */
+    public String getRecentName(String item) {
+        return recent.getName(item);
     }
 
     /**
@@ -164,8 +184,17 @@ public class Configurations extends Closer implements BundleActivator {
 	public void addRecent(String configName) {
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		recent.add(configName + " " + sdf.format(timestamp));
+		recent.add(configName + "                                      Last loaded on: " + sdf.format(timestamp));
 	}
+	
+	/**
+     * Removes a configuration and time stamp of when it was last used from the "recently used" list.
+     * 
+     * @param configName the name to add
+     */
+    public void removeRecent(String configName) {
+        recent.remove(configName);
+    }
 
 	/*
 	 * (non-Javadoc)
