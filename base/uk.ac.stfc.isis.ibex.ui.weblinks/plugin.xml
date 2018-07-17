@@ -2,17 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="uk.ac.stfc.isis.ibex.ui.weblinks.Perspective"
-            id="uk.ac.stfc.isis.ibex.ui.weblinks.perspective"
-            name="Web Links">
-      </perspective>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-   </extension>
-   <extension
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"

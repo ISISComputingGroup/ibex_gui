@@ -60,6 +60,7 @@ public class RunSummary {
      * Creates a view that shows a summary of the current run.
      */
     public RunSummary() {
+    	System.out.println("Creating run summary id = " + System.identityHashCode(this));
         model = DaeUI.getDefault().viewModel().runSummary();
     }
 

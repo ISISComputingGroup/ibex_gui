@@ -32,6 +32,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -119,7 +120,7 @@ public class SpectrumView extends Composite {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (spectrum.getRequiresUpdate()) {
-                    spectrumFigure.update();
+                    Display.getDefault().asyncExec(() -> spectrumFigure.update());
 
                     // Wait for a second before executing in case the user is
                     // still scrolling through spectra numbers.
