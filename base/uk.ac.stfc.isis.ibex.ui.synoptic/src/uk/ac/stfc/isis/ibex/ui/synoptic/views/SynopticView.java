@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
 
 /**
- * Provides the containing view for they synopitc.
+ * Provides the containing view for they synoptic.
  * 
  */
 public class SynopticView extends ViewPart {
@@ -50,7 +50,7 @@ public class SynopticView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {		
-        instrument = new SynopticPanel(parent, SWT.NONE);
+        instrument = new SynopticPanel(parent, SWT.NONE, false);
         instrument.setComponents(presenter.components(), presenter.showBeam());
 
         presenter.addPropertyChangeListener(COMPONENTS_CHANGE, new PropertyChangeListener() {
