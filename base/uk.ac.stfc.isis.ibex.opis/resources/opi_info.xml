@@ -1439,13 +1439,13 @@
       </value>
     </entry>
     <entry>        
-      <key>MATPLOTLIB</key>
+      <key>Matplotlib viewer</key>
       <value>
         <categories>
         </categories>
         <type>UNKNOWN</type>
         <path>matplotlib.opi</path>
-        <description>The OPI for plotting via matplotlib</description>
+        <description>The OPI for displaying plots created via matplotlib</description>
         <macros>
         </macros>
       </value>
