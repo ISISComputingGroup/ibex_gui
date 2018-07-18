@@ -55,7 +55,7 @@ public class ScriptStatusViewModelTest {
     ArgumentCaptor<ExecutionInstruction> captor = ArgumentCaptor.forClass(ExecutionInstruction.class);
 
     private String prefixStatus(String status) {
-        return "Status is: " + status;
+        return "Queue status: " + status;
     }
 
     @Before

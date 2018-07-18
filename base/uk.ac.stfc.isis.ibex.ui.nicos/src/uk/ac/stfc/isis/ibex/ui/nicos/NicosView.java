@@ -45,10 +45,8 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -57,6 +55,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -118,8 +117,14 @@ public class NicosView extends ViewPart {
         queueContainer.setLayout(new GridLayout(2, false));
         
         Label lblQueuedScripts = new Label(queueContainer, SWT.NONE);
-        lblQueuedScripts.setText("Queued scripts (double click name to see contents):");
+        lblQueuedScripts.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+        lblQueuedScripts.setText("Queue");
         lblQueuedScripts.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+        
+        Label lblQueuedScriptsSubLabel = new Label(queueContainer, SWT.NONE);
+        lblQueuedScriptsSubLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
+        lblQueuedScriptsSubLabel.setText("(double click name to see contents)");
+        lblQueuedScriptsSubLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
         final ListViewer queuedScriptsViewer = new ListViewer(queueContainer, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
         List list = queuedScriptsViewer.getList();
@@ -167,7 +172,13 @@ public class NicosView extends ViewPart {
 		btnScriptDown.setLayoutData(gdBtnScriptDown);
 		btnScriptDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnScriptDown.setToolTipText("Move selected script DOWN");
-		
+        
+        Label lblQueueStatusReadback = new Label(queueContainer, SWT.NONE);
+        lblQueueStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueStatusReadback),
+                BeanProperties.value("statusReadback").observe(scriptStatusViewModel));
+        
         Composite scriptSendGrp = new Composite(queueContainer, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(2, false);
@@ -220,6 +231,7 @@ public class NicosView extends ViewPart {
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptDown), 
         		BeanProperties.value("downButtonEnabled").observe(queueScriptViewModel));
+        new Label(queueContainer, SWT.NONE);
 
         
 		
@@ -231,6 +243,7 @@ public class NicosView extends ViewPart {
         outputContainer.setLayout(new GridLayout(1, false));
         
         Label lblOutput = new Label(outputContainer, SWT.NONE);
+        lblOutput.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
         lblOutput.setText("Output");
         
 
@@ -254,6 +267,18 @@ public class NicosView extends ViewPart {
         currentScriptContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         currentScriptContainer.setLayout(new GridLayout(1, false));
         
+        Label lblCurrentScript = new Label(currentScriptContainer, SWT.NONE);
+        lblCurrentScript.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+        lblCurrentScript.setText("Current Script");
+        lblCurrentScript.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+        
+        StyledText txtCurrentScript = new StyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
+        txtCurrentScript.setEditable(false);
+        txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
+                BeanProperties.value("currentlyExecutingScript").observe(model));
+        
         Composite currentScriptInfoContainer = new Composite(currentScriptContainer, SWT.NONE);
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
         currentScriptInfoContainer.setLayout(new GridLayout(2, false));
@@ -266,22 +291,9 @@ public class NicosView extends ViewPart {
         bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
                 BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
         
-        Label lblStatusReadback = new Label(currentScriptInfoContainer, SWT.NONE);
-        lblStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        
-        bindingContext.bindValue(WidgetProperties.text().observe(lblStatusReadback),
-                BeanProperties.value("statusReadback").observe(scriptStatusViewModel));
-        
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(currentScriptContainer, SWT.NONE, scriptStatusViewModel);
         controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        
-        StyledText txtCurrentScript = new StyledText(currentScriptContainer, SWT.BORDER);
-        txtCurrentScript.setEditable(false);
-        txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-        bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
-                BeanProperties.value("currentlyExecutingScript").observe(model));
 	}
     
     private void createStatusContainer(Composite parent) {
