@@ -36,14 +36,23 @@ public class BeamlineCompositeContainer extends BeamlineComposite {
 	private final GridLayout grid = new GridLayout(1, false);
 	
 	private int targetLineHeight;
+	private boolean isPreview;
 	
-	/*
-	 * Composite for storing beamline components. 
+	/**
+	 * Composite for storing beamline components.
+	 * 
+	 * @param parent
+	 *             The parent this composite belongs too.
+	 * @param style
+	 *             The SWT style display.
+	 * @param isPreview
+	 *             True if this composite was created in the synoptic preview.
 	 */
-	public BeamlineCompositeContainer(Composite parent, int style) {
+	public BeamlineCompositeContainer(Composite parent, int style, boolean isPreview) {
 		super(parent, style);
 		
 		super.setLayout(grid);
+		this.isPreview = isPreview;
 		grid.marginHeight = 0;
 		grid.verticalSpacing = 0;
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -55,6 +64,7 @@ public class BeamlineCompositeContainer extends BeamlineComposite {
 	}
 
 	public void registerBeamlineTarget(BeamlineComposite target) {
+	    target.setIsPreview(isPreview);
 		targets.add(target);		
 		setTargetSize(target);
 		grid.numColumns = targets.size();

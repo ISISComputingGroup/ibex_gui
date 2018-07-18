@@ -54,13 +54,12 @@ public class WritableComponentView extends Composite {
 	private Text text;
 	private Composite composite;
 	
-	
 	private final WritableComponentProperty property;
 	
 	private final ModifyListener textModifyListener = new ModifyListener() {
 		@Override
 		public void modifyText(ModifyEvent e) {
-			
+		    
 		}
 	};
 	
@@ -71,7 +70,7 @@ public class WritableComponentView extends Composite {
      *            The property of the component that is writable
      */
 	public WritableComponentView(Composite parent, final WritableComponentProperty property) {
-		this(parent, property, true);
+		this(parent, property, true, false);
 	}
 	
 	/**
@@ -80,8 +79,9 @@ public class WritableComponentView extends Composite {
 	 * @param parent A widget which will be the parent of the new instance (cannot be null)
 	 * @param property The property of the component that is writable
 	 * @param displayName True if the property name should be displayed
+	 * @param isPreview False if the property text can be modified (ie if the view is created in a the synoptic preview).
 	 */
-	public WritableComponentView(Composite parent, final WritableComponentProperty property, boolean displayName) {
+	public WritableComponentView(Composite parent, final WritableComponentProperty property, boolean displayName, final boolean isPreview) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.VERTICAL));
 		
@@ -131,8 +131,9 @@ public class WritableComponentView extends Composite {
 			@Override
 			public void handleEvent(Event event) {
 				if (event.detail == SWT.TRAVERSE_RETURN) {
-					sendValue();
-					
+				    if (!isPreview) {
+				        sendValue();
+				    }
 				}
 			}
 		});
