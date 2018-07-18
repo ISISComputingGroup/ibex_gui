@@ -154,7 +154,8 @@ public class SummaryPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
                 BeanProperties.value("description").observe(config), descValidator, null);
-		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));		
+		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), 
+		        BeanProperties.value("synoptic").observe(config));		
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
                 BeanProperties.value("isNew").observe(config), null, notConverter);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
@@ -189,7 +190,7 @@ public class SummaryPanel extends Composite {
 				updateSynopticNamesInComboBox(value);
 
 			}
-
+            
 			/**
 			 * Get the new list of synoptics and the current default and update the combo box.
 			 * 
@@ -200,20 +201,12 @@ public class SummaryPanel extends Composite {
 				Arrays.sort(names);
 				
 				final String selected = getDefaultSelection(value);
-				
-				
-				Display.getDefault().asyncExec(new Runnable() {
-					
-					@Override
-					public void run() {
-						if (!cmboSynoptic.getControl().isDisposed()) {
-							cmboSynoptic.setInput(names);
-							if (selected != null) {
-								config.setSynoptic(selected);
-							}
-						}
-					}
-				});
+				if (!cmboSynoptic.getControl().isDisposed()) {
+				    cmboSynoptic.setInput(names);
+				    if (selected != null) {
+	                    config.setSynoptic(selected);
+	                }
+				}
 			}
 
 			/**
@@ -246,4 +239,5 @@ public class SummaryPanel extends Composite {
 			}
 		});
 	}
+
 }
