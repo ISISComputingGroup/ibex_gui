@@ -123,7 +123,7 @@ public class NicosView extends ViewPart {
         
         Label lblQueuedScriptsSubLabel = new Label(queueContainer, SWT.NONE);
         lblQueuedScriptsSubLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
-        lblQueuedScriptsSubLabel.setText("(double click name to see contents)");
+        lblQueuedScriptsSubLabel.setText("(double-click name to see contents)");
         lblQueuedScriptsSubLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
         final ListViewer queuedScriptsViewer = new ListViewer(queueContainer, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);

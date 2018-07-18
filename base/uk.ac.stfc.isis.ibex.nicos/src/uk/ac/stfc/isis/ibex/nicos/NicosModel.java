@@ -156,12 +156,12 @@ public class NicosModel extends ModelObject {
         }
 
         GetBanner getBanner = new GetBanner();
-        SentMessageDetails response = sendMessageToNicos(getBanner);
-        if (!response.isSent()) {
-            failConnection(response.getFailureReason());
+        SentMessageDetails bannerSentMessageDetails = sendMessageToNicos(getBanner);
+        if (!bannerSentMessageDetails.isSent()) {
+            failConnection(bannerSentMessageDetails.getFailureReason());
             return;
         } else {
-            ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
+            ReceiveBannerMessage banner = (ReceiveBannerMessage) bannerSentMessageDetails.getResponse();
             if (!banner.protocolValid()) {
             	setError(NicosErrorState.INVALID_PROTOCOL);
                 return;
@@ -171,9 +171,9 @@ public class NicosModel extends ModelObject {
             }
         }
 
-        SentMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());
-        if (!loginSendMessageDetails.isSent()) {
-        	setError(NicosErrorState.FAILED_LOGIN, loginSendMessageDetails.getFailureReason());
+        SentMessageDetails loginSentMessageDetails = sendMessageToNicos(new Login());
+        if (!loginSentMessageDetails.isSent()) {
+        	setError(NicosErrorState.FAILED_LOGIN, loginSentMessageDetails.getFailureReason());
             return;
         } else {
         	setError(NicosErrorState.NO_ERROR);
@@ -246,11 +246,11 @@ public class NicosModel extends ModelObject {
      *            The execution instruction to send to the server.
      */
     public void sendExecutionInstruction(ExecutionInstruction instruction) {
-        SentMessageDetails response = sendMessageToNicos(instruction);
-        if (!response.isSent()) {
+        SentMessageDetails executionInstructionSentMessageDetails = sendMessageToNicos(instruction);
+        if (!executionInstructionSentMessageDetails.isSent()) {
             updateLogEntries();
             NicosLogEntry error = new NicosLogEntry(new Date(),
-                    "Error sending " + instruction.toString() + " command: " + response.getFailureReason() + "\n");
+                    "Error sending " + instruction.toString() + " command: " + executionInstructionSentMessageDetails.getFailureReason() + "\n");
             setLogEntries(Arrays.asList(error));
             getScriptStatus();
         }
@@ -264,11 +264,11 @@ public class NicosModel extends ModelObject {
      * @return details about the sending of that message
      */
     private SentMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
-        SentMessageDetails response = session.sendMessage(nicosMessage);
-        if (!response.isSent()) {
+        SentMessageDetails messageSentMessageDetails = session.sendMessage(nicosMessage);
+        if (!messageSentMessageDetails.isSent()) {
         	disconnect();
         }
-        return response;
+        return messageSentMessageDetails;
     }
     
     /**
@@ -277,15 +277,15 @@ public class NicosModel extends ModelObject {
 	public void updateScriptStatus() {
 		SentMessageDetails message = sendMessageToNicos(new GetScriptStatus());
 		
-		ReceiveScriptStatus response = (ReceiveScriptStatus) message.getResponse();
-		if (response == null || !message.isSent()) {
+		ReceiveScriptStatus scriptStatusSentMessageDetails = (ReceiveScriptStatus) message.getResponse();
+		if (scriptStatusSentMessageDetails == null || !message.isSent()) {
 			setError(NicosErrorState.NO_RESPONSE);
 		} else {
             // Status is a tuple (list) of 2 items - execution status and line number.
-            setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
-            setLineNumber(response.status.get(1));
-			setCurrentlyExecutingScript(response.script);
-			setQueuedScripts(response.requests);
+            setScriptStatus(ScriptStatus.getByValue(scriptStatusSentMessageDetails.status.get(0)));
+            setLineNumber(scriptStatusSentMessageDetails.status.get(1));
+			setCurrentlyExecutingScript(scriptStatusSentMessageDetails.script);
+			setQueuedScripts(scriptStatusSentMessageDetails.requests);
 		}
 	}
 
@@ -303,15 +303,15 @@ public class NicosModel extends ModelObject {
                 break;
             }
             SentMessageDetails message = sendMessageToNicos(new GetLog(numMessages));
-			ReceiveLogMessage response = (ReceiveLogMessage) message.getResponse();
+			ReceiveLogMessage logSentMessageDetails = (ReceiveLogMessage) message.getResponse();
             
-            if (response == null || !message.isSent()) {
+            if (logSentMessageDetails == null || !message.isSent()) {
                 setError(NicosErrorState.NO_RESPONSE);
                 break;
             } else {
             	setError(NicosErrorState.NO_ERROR);
             }
-            List<NicosLogEntry> current = response.getEntries();
+            List<NicosLogEntry> current = logSentMessageDetails.getEntries();
             if (newEntries.size() == current.size()) {
                 // nothing more to fetch
                 break;
