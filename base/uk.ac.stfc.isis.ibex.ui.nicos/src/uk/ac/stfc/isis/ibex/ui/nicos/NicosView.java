@@ -302,7 +302,7 @@ public class NicosView extends ViewPart {
         statusContainer.setLayout(new GridLayout(1, false));
         
         Composite nicosStatus = new Composite(statusContainer, SWT.NONE);
-        nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+        nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         nicosStatus.setLayout(new GridLayout(2, false));
         
         lblCurrentError = new Label(nicosStatus, SWT.NONE);
