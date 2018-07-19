@@ -19,23 +19,33 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.nicos;
+package uk.ac.stfc.isis.ibex.nicos.messages;
+
+import java.util.Arrays;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 
 /**
- * The connection status of the Nicos script server.
+ * Serialisable class to dequeue a script in NICOS.
  */
-public enum ConnectionStatus {
+public class DequeueScript extends NICOSMessage<String> {
+    
+    /**
+     * Constructor.
+     * 
+     * @param reqid
+     *            ID of script
+     */
+    public DequeueScript(String reqid) {
+    	this.command = "unqueue";
+        this.parameters = Arrays.asList(reqid);
+    }
 
-    /** Script server has not been connected to. */
-    DISCONNECTED,
-
-    /** Server is connecting, i.e. sending logon info. */
-    CONNECTING,
-
-    /** Nicos server is connected and the user has logged in. */
-    CONNECTED,
-
-    /** Login on the new connection has failed. */
-    FAILED
-
+    @Override
+    public ReceiveMessage parseResponse(String response) throws ConversionException {
+        JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
+        return new ReceiveStringMessage(deserial.convert(response));
+    }
+        
 }

@@ -36,6 +36,9 @@ public class ExistingScriptDialog extends Dialog {
         this.script = script;
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
@@ -43,7 +46,7 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new StyledText(container, SWT.READ_ONLY | SWT.BORDER);
+        StyledText styledText = new StyledText(container, SWT.BORDER | SWT.READ_ONLY);
         DataBindingContext bindingContext = new DataBindingContext();
         
         bindingContext.bindValue(WidgetProperties.text().observe(styledText),
@@ -52,17 +55,27 @@ public class ExistingScriptDialog extends Dialog {
 		return container;
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {	
+	protected void createButtonsForButtonBar(Composite parent) {
+
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
         shell.setText(script.getName());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Point getInitialSize() {
 		return INITIAL_SIZE;

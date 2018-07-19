@@ -67,7 +67,7 @@ public class Nicos extends Plugin {
     }
 
     /**
-     * @return The model that is connected to nicos on the instrument.
+     * @return The model that is connected to NICOS on the instrument.
      */
     public NicosModel getModel() {
         return model;
@@ -80,8 +80,8 @@ public class Nicos extends Plugin {
         return context;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * (non-Javadoc).
      * 
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.
      * BundleContext)
@@ -91,8 +91,8 @@ public class Nicos extends Plugin {
         Nicos.context = bundleContext;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * (non-Javadoc).
      * 
      * @see
      * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)

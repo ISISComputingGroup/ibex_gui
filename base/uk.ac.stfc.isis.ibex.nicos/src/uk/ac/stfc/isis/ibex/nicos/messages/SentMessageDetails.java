@@ -25,7 +25,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * Class to capture details about having sent a message. This is returned when a
  * message is sent to NICOS.
  */
-public final class SendMessageDetails {
+public final class SentMessageDetails {
 
     private boolean isSent;
     private String failureReason;
@@ -39,8 +39,8 @@ public final class SendMessageDetails {
      * 
      * @return the failure send message details
      */
-    public static SendMessageDetails createSendFail(String failureReason) {
-        return new SendMessageDetails(false, failureReason, null);
+    public static SentMessageDetails createSendFail(String failureReason) {
+        return new SentMessageDetails(false, failureReason, null);
     }
 
     /**
@@ -51,8 +51,8 @@ public final class SendMessageDetails {
      *
      * @return the send message details
      */
-    public static SendMessageDetails createSendSuccess(ReceiveMessage received) {
-        return new SendMessageDetails(true, "", received);
+    public static SentMessageDetails createSendSuccess(ReceiveMessage received) {
+        return new SentMessageDetails(true, "", received);
     }
 
     /**
@@ -65,7 +65,7 @@ public final class SendMessageDetails {
      * @param response
      *            the message that was originally sent to NICOS.
      */
-    private SendMessageDetails(boolean isSent, String failureReason, ReceiveMessage response) {
+    private SentMessageDetails(boolean isSent, String failureReason, ReceiveMessage response) {
         this.isSent = isSent;
         this.failureReason = failureReason;
         this.response = response;

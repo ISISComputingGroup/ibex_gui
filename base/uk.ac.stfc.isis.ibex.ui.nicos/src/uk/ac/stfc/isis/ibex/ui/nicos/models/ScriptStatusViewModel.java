@@ -48,6 +48,7 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param model the NicosModel to observe
 	 */
 	public ScriptStatusViewModel(final NicosModel model) {
@@ -68,7 +69,12 @@ public class ScriptStatusViewModel extends ModelObject {
             }
         });
 	}
-	
+
+	/**
+	 * Sets the line number of the currently executing script.
+	 * 
+	 * @param lineNumber the line number, or -1 for a script that is not executing
+	 */
 	private void setLineNumber(int lineNumber) {
 		String line;
 		
@@ -116,12 +122,18 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * A formatted string representation of the line number to display on the user interface.
+	 * 
 	 * @return a formatted string representation of the line number to display on the user interface
 	 */
 	public String getLineNumber() {
 		return lineNumberStr;
 	}
-
+    
+	/**
+	 * The icon for the pause/go button.
+	 * 
+	 * @param icon
+	 */
     private void setToggleButtonIcon(Image icon) {
         firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
@@ -132,7 +144,12 @@ public class ScriptStatusViewModel extends ModelObject {
     public Image getToggleButtonIcon() {
         return toggleButtonIcon;
     }
-
+    
+    /**
+     * The text for the pause/go button.
+     * 
+     * @param text
+     */
     private void setToggleButtonText(String text) {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
     }
@@ -163,20 +180,32 @@ public class ScriptStatusViewModel extends ModelObject {
             model.sendExecutionInstruction(PAUSE_INSTRUCTION);
         }
     }
-
+    
+    /**
+     * Whether or not the script run control buttons should be enabled.
+     * 
+     * @param enable whether they are enabled
+     */
     private void setEnableButtons(boolean enable) {
         firePropertyChange("enableButtons", enableButtons, enableButtons = enable);
     }
 
     /**
-     * @return Whether the script run control buttons should be enabled.
+     * Whether or not the script run control buttons should be enabled.
+     * 
+     * @return whether they are enabled
      */
     public boolean getEnableButtons() {
         return enableButtons;
     }
-
+    
+    /**
+     * The status readback of the script
+     * 
+     * @param status
+     */
     private void setStatusReadback(ScriptStatus status) {
-        String displayString = "Status is: " + status.getDesc();
+        String displayString = "Queue status: " + status.getDesc();
         firePropertyChange("statusReadback", statusReadback, statusReadback = displayString);
 
     }
