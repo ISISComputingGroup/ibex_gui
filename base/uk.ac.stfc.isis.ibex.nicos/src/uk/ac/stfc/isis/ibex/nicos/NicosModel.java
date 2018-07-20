@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.zeromq.ZMQException;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -225,8 +227,7 @@ public class NicosModel extends ModelObject {
     private void setError(NicosErrorState error, String additionalInformation) {
     	firePropertyChange("error", this.error, this.error = error);
     	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
-            LOG.error("NICOS error: " + error.toString() + ", "); // +
-                                                                  // Strings.nullToEmpty(additionalInformation));
+            LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
     	}
     }
     
