@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -34,10 +37,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -75,12 +80,33 @@ public class NicosView extends ViewPart {
     private QueueScriptViewModel queueScriptViewModel;
 
     private Label lblCurrentScriptStatus;
+    private StyledText txtCurrentScript;
 
 	private ScriptStatusViewModel scriptStatusViewModel;
     private OutputLogViewModel outputLogViewModel;
 
 	private Label lblCurrentError;
 
+    private static final Color NEUTRAL = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+    private static final Color HIGHLIGHT = SWTResourceManager.getColor(SWT.COLOR_CYAN);
+
+    private PropertyChangeListener highlightListener = new PropertyChangeListener() {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    int currentLine = model.getLineNumber();
+                    txtCurrentScript.setLineBackground(0, txtCurrentScript.getLineCount(), NEUTRAL);
+                    if (currentLine > 0 && currentLine <= txtCurrentScript.getLineCount()) {
+                        txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1, HIGHLIGHT);
+                    }
+                }
+            });
+        }
+    };
+    
     /**
      * The default constructor for the view.
      */
@@ -274,13 +300,16 @@ public class NicosView extends ViewPart {
         lblCurrentScript.setText("Current Script");
         lblCurrentScript.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
-        StyledText txtCurrentScript = new NumberedStyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
+        txtCurrentScript = new NumberedStyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
-        
+
+        model.addPropertyChangeListener("lineNumber", highlightListener);
+        model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
+
         Composite currentScriptInfoContainer = new Composite(currentScriptContainer, SWT.NONE);
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
         currentScriptInfoContainer.setLayout(new GridLayout(2, false));
