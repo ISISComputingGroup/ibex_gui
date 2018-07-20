@@ -20,20 +20,43 @@
 package uk.ac.stfc.isis.ibex.ui.dialogs;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
+/*
+ * The panel inside the "Instrument Updating" dialogue box 
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 public class WaitPanel extends Composite {
 
+/**
+ * The panel inside the pop-up dialogue box informing the user that the instrument is updating. 
+ * 
+ * @param parent parent
+ * @param style style
+ */
 	public WaitPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+		super(parent, SWT.BORDER);
+		GridLayout gridLayout = new GridLayout(1, false);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		setLayout(gridLayout);
 		
-		Label lblWaitingForServer = new Label(this, SWT.CENTER);
-		lblWaitingForServer.setAlignment(SWT.CENTER);
+		CLabel lblWaitingForServer = new CLabel(this, SWT.CENTER);
+		lblWaitingForServer.setAlignment(SWT.LEFT);
+		lblWaitingForServer.setTopMargin(75);
+		lblWaitingForServer.setBottomMargin(5);
+		lblWaitingForServer.setRightMargin(5);
+		lblWaitingForServer.setLeftMargin(5);
+		lblWaitingForServer.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
+		lblWaitingForServer.setBackground(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "src/uk/ac/stfc/isis/ibex/ui/dialogs/WaitPanel_Background.png"));
+		lblWaitingForServer.setText("Waiting for the instrument to update...");
+		lblWaitingForServer.setImage(null);
+		lblWaitingForServer.setSize(320, 200);
 		lblWaitingForServer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		lblWaitingForServer.setText("Waiting for the instrument to update");
 	}
 }
