@@ -88,7 +88,6 @@ public class NicosView extends ViewPart {
 	private Label lblCurrentError;
 
     private static final Color NEUTRAL = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-    private static final Color HIGHLIGHT = SWTResourceManager.getColor(SWT.COLOR_CYAN);
 
     private PropertyChangeListener highlightListener = new PropertyChangeListener() {
 
@@ -99,8 +98,10 @@ public class NicosView extends ViewPart {
                 public void run() {
                     int currentLine = model.getLineNumber();
                     txtCurrentScript.setLineBackground(0, txtCurrentScript.getLineCount(), NEUTRAL);
+
                     if (currentLine > 0 && currentLine <= txtCurrentScript.getLineCount()) {
-                        txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1, HIGHLIGHT);
+                        txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1,
+                                scriptStatusViewModel.getHighlightColor());
                     }
                 }
             });
@@ -309,6 +310,7 @@ public class NicosView extends ViewPart {
 
         model.addPropertyChangeListener("lineNumber", highlightListener);
         model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
+        scriptStatusViewModel.addPropertyChangeListener("highlightColor", highlightListener);
 
         Composite currentScriptInfoContainer = new Composite(currentScriptContainer, SWT.NONE);
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
