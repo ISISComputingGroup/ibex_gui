@@ -53,7 +53,7 @@ public class WaitPanel extends Composite {
 		lblWaitingForServer.setRightMargin(5);
 		lblWaitingForServer.setLeftMargin(5);
 		lblWaitingForServer.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
-		lblWaitingForServer.setBackground(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "src/uk/ac/stfc/isis/ibex/ui/dialogs/WaitPanel_Background.png"));
+		lblWaitingForServer.setBackground(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/WaitPanel_Background.png"));
 		lblWaitingForServer.setText("Waiting for the instrument to update...");
 		lblWaitingForServer.setImage(null);
 		lblWaitingForServer.setSize(320, 200);
