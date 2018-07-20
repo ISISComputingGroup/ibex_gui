@@ -1096,13 +1096,13 @@
         <categories>
           <category>Choppers</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>fermi_chopper.opi</path>
-        <description>The OPI for the fermi chopper.</description>
+        <description>The OPI for the Fermi chopper.</description>
         <macros>
           <macro>
             <name>FERMCHOP</name>
-            <description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+            <description>The Fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
           </macro>
         </macros>
       </value>
@@ -1113,7 +1113,7 @@
         <categories>
           <category>Choppers</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>FZJ_DD_Fermi_Chopper.opi</path>
         <description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
         <macros>
@@ -1204,9 +1204,9 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>fermi_chopper_lift.opi</path>
-        <description>The OPI for the fermi chopper lifter.</description>
+        <description>The OPI for the Fermi chopper lifter.</description>
         <macros>
 				</macros>
 			</value>
@@ -1849,13 +1849,13 @@
 				<categories>
 					<category>Choppers</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>fermi_chopper.opi</path>
-				<description>The OPI for the fermi chopper.</description>
+				<description>The OPI for the Fermi chopper.</description>
 				<macros>
 					<macro>
 						<name>FERMCHOP</name>
-						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+						<description>The Fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1866,7 +1866,7 @@
 				<categories>
 					<category>Choppers</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>FZJ_DD_Fermi_Chopper.opi</path>
 				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
 				<macros>
@@ -1957,9 +1957,9 @@
 				<categories>
 					<category>Miscellaneous motion control</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>fermi_chopper_lift.opi</path>
-				<description>The OPI for the fermi chopper lifter.</description>
+				<description>The OPI for the Fermi chopper lifter.</description>
 				<macros>
 				</macros>
 			</value>

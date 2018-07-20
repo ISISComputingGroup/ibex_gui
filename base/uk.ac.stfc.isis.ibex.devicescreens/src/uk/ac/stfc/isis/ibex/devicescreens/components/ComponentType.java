@@ -38,6 +38,8 @@ public enum ComponentType {
 	JAWS,
     /** Chopper component type. */
 	CHOPPER,
+    /** Fermi Chopper component type. */
+	FERMI_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
