@@ -31,13 +31,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.zeromq.ZMQException;
 
-import com.google.common.base.Strings;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.DequeueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
@@ -45,10 +44,9 @@ import uk.ac.stfc.isis.ibex.nicos.messages.Login;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
-import uk.ac.stfc.isis.ibex.nicos.messages.DequeueScript;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendReorderedQueue;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendReorderedQueue;
 import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
@@ -227,7 +225,8 @@ public class NicosModel extends ModelObject {
     private void setError(NicosErrorState error, String additionalInformation) {
     	firePropertyChange("error", this.error, this.error = error);
     	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
-    		LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
+            LOG.error("NICOS error: " + error.toString() + ", "); // +
+                                                                  // Strings.nullToEmpty(additionalInformation));
     	}
     }
     

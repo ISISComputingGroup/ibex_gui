@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
  * The dialog for showing the details of a script that is on the NICOS queue.
@@ -46,7 +47,7 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new StyledText(container, SWT.BORDER | SWT.READ_ONLY);
+        StyledText styledText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY);
         DataBindingContext bindingContext = new DataBindingContext();
         
         bindingContext.bindValue(WidgetProperties.text().observe(styledText),

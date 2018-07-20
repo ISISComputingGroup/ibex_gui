@@ -23,6 +23,13 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -39,6 +46,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
@@ -48,14 +56,7 @@ import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
+import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -131,7 +132,8 @@ public class NicosView extends ViewPart {
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
         queuedScriptsViewer.setLabelProvider(new LabelProvider() {
-        	public String getText(Object element) {
+        	@Override
+            public String getText(Object element) {
         		QueuedScript code = (QueuedScript) element;
         		return code.getName();
         	}
@@ -272,7 +274,7 @@ public class NicosView extends ViewPart {
         lblCurrentScript.setText("Current Script");
         lblCurrentScript.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
-        StyledText txtCurrentScript = new StyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
+        StyledText txtCurrentScript = new NumberedStyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
