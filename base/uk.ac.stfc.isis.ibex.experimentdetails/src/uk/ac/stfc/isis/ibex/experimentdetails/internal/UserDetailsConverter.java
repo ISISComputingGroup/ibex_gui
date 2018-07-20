@@ -19,25 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.UserDetailsList;
 
 /**
  * Converts JSON to UserDetails object.
  */
 public class UserDetailsConverter extends
 		Converter<String, Collection<UserDetails>> {
-	
 	private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 
     /**
@@ -51,7 +50,31 @@ public class UserDetailsConverter extends
         public String institute;
         public Role role;
     }
-
+    
+    /**
+	 *  Takes a list of users and combines those that have the same name and institute into one.
+	 *  @param originalList The original list
+	 *  @return The new list, with combined roles
+	 */
+    public static Collection<UserDetails> combineSameUsers(Collection<UserDetails> originalList) {
+    	List<UserDetails> newList = new ArrayList<UserDetails>();
+		
+        for (UserDetails oldUser : originalList) {
+        	boolean userAdded = false;
+        	for (UserDetails newUser: newList) {
+        		if (oldUser.getName().equals(newUser.getName()) && oldUser.getInstitute().equals(newUser.getInstitute())) {
+        			newUser.setPrimaryRole(newUser.getRole());
+        			userAdded = true;
+        		}
+        	}
+        	if (!userAdded) {
+        		newList.add(oldUser);
+        	}
+		}
+        
+        return newList;
+	}
+    
 	@Override
 	public Collection<UserDetails> convert(String value)
 			throws ConversionException {
@@ -60,15 +83,13 @@ public class UserDetailsConverter extends
         // Convert to intermediate
         IntermediateUserDetails[] parsed = jsonConverter.convert(value);
 		
-        UserDetailsList userDetails = new UserDetailsList();
+        ArrayList<UserDetails> userDetails = new ArrayList<>();
         
         for (IntermediateUserDetails user : parsed) {
         	userDetails.add(new UserDetails(user.name, user.institute, user.role));
         }
         
-        userDetails.combineSameUsers();
-        
-        return userDetails;
+        return combineSameUsers(userDetails);
 	}
 
 }
