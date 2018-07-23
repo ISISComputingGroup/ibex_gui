@@ -19,30 +19,54 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
+import java.util.Arrays;
+
+/**
+ * Enum describing the type of role the user has.
+ */
 public enum Role {
+	/**
+	 * The principal investigator for the experiment.
+	 */
 	PI("PI"),
+	/**
+	 * A user for the experiment.
+	 */
 	USER("User"),
+	/**
+	 * A contact for the experiment.
+	 */
 	CONTACT("Contact"),
+	/**
+	 * The user has no role.
+	 */
 	BLANK("");
-	
+
 	private final String text;
-	
+
+	/**
+	 * Creates the role with the associated label representation.
+	 * @param text The human readable text to describe the role to the user.
+	 */
 	Role(final String text) {
 		this.text = text;
 	}
-	
+
 	@Override
 	public String toString() {
 		return text;
 	}
-	
+
+	/**
+	 * Gets a role based on the string representation of the role.
+	 * @param search The string representation.
+	 * @return The role enum.
+	 */
 	public static Role getByString(String search) {
-		for (Role r : values()) {
-			if (r.toString().equals(search)) {
-				return r;
-			}
-		}
-		return null;
+		return Arrays.stream(values())
+				.filter((r) -> r.toString().equals(search))
+				.findAny()
+				.orElse(BLANK);
 	}
 
 }
