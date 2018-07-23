@@ -47,7 +47,7 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY);
+        StyledText styledText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL);
         DataBindingContext bindingContext = new DataBindingContext();
         
         bindingContext.bindValue(WidgetProperties.text().observe(styledText),
