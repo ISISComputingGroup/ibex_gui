@@ -58,13 +58,25 @@
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks"/>
-    <sharedElements xsi:type="advanced:Area" xmi:id="_yi1esNadEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.area.0" selectedElement="_ZX9AENacEeekLPLQ_9IvJQ" label="Log Plotter Area">
-      <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
+    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_Z43_UIUFEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" horizontal="true">
+      <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" containerData="50" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
         <tags>newtablook</tags>
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <tags>NoAutoCollapse</tags>
-        <children xsi:type="basic:Part" xmi:id="_KUbkENZ8EeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
+        <children xsi:type="basic:Part" xmi:id="_KUbkENZ8EeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter">
+          <menus xmi:id="_GBWhoIUNEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.0">
+            <tags>ViewMenu</tags>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_HOx-EIUNEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.fred" label="fred" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/setup.png" command="_hj--kKkDEeeNUPQOsQF40g"/>
+          </menus>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_dPCC0IUFEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.32" toBeRendered="false" containerData="50">
+        <children xsi:type="basic:Part" xmi:id="_doSQUIUFEeiCJ_qZ_3IIBQ" elementId="org.eclipse.ui.views.PropertySheet" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_TGckEIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.archiveview.ArchiveView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_f1vhMIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.sample_view" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_f7OeIIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.exportview.ExportView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_gYr2MIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.waveformview.WaveformView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
       </children>
     </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
@@ -426,7 +438,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_qNDzkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.9" containerData="70" horizontal="true">
-        <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="org.eclipse.ui.editorss" ref="_yi1esNadEeekLPLQ_9IvJQ"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="org.eclipse.ui.editorss" ref="_Z43_UIUFEeiCJ_qZ_3IIBQ"/>
       </children>
     </children>
   </snippets>

@@ -2,17 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="uk.ac.stfc.isis.ibex.ui.logplotter.Perspective"
-            id="uk.ac.stfc.isis.ibex.ui.logplotter.perspective"
-            name="Log Plotter">
-      </perspective>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-   </extension>
-   <extension
          point="uk.ac.stfc.isis.ibex.ui.blocks.presentation">
       <PVHistoryPresenter
             class="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterHistoryPresenter">
@@ -37,7 +26,7 @@
       <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.logplotter.OpenLogPlotterPopup"
             id="uk.ac.stfc.isis.ibex.ui.logplotter.OpenLogPlotterPopup"
-            name="%LogPlotter">
+            name="%Databrowser">
       </command>
    </extension>
    <extension
