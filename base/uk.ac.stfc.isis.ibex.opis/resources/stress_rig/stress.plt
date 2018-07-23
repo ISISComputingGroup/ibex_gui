@@ -57,7 +57,7 @@
             <point_type>NONE</point_type>
             <point_size>2</point_size>
             <waveform_index>0</waveform_index>
-            <period>0.1</period>
+            <period>3.0</period>
             <ring_size>5000</ring_size>
             <request>OPTIMIZED</request>
         </pv>
