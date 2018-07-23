@@ -193,7 +193,7 @@
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.perspectives</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>

@@ -41,6 +41,6 @@ public class PerspectiveButton extends Button {
     @Override
     protected void mouseClickAction() {
         super.mouseClickAction();
-        perspectivesProvider.getPartService().switchPerspective(perspective);
+        perspectivesProvider.switchPerspective(perspective);
     }
 }
