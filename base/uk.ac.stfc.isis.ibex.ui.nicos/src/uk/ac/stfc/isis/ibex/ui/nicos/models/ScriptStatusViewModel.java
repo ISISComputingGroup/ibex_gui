@@ -6,8 +6,8 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.BreakLevel;
@@ -26,8 +26,8 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final Image RESUME_ICON =
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/resume.png");
 
-    private static final Color HIGHLIGHT = SWTResourceManager.getColor(SWT.COLOR_GREEN);
-    private static final Color HIGHLIGHT_PAUSED = SWTResourceManager.getColor(SWT.COLOR_GRAY);
+    private static final Color HIGHLIGHT = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+    private static final Color HIGHLIGHT_PAUSED = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 
     private static final String PAUSE_TEXT = "Pause Script Execution";
     private static final String RESUME_TEXT = "Resume Script Execution";
