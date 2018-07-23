@@ -1441,8 +1441,10 @@
     <entry>
       <key>TTIPLP</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
         <path>ttiplp.opi</path>
         <description>The OPI for the TTIPLP</description>
         <macros>

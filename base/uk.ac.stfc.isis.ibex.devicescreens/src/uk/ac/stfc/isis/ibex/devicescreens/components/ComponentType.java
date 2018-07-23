@@ -135,7 +135,9 @@ public enum ComponentType {
     /** Couette cell.*/
     COUETTE,
     /** Motion setpoints.*/
-    MOTION_SET_POINTS;
+    MOTION_SET_POINTS,
+    /** Generic Power Supply. */
+    POWER_SUPPLY;
 
 	
 	private Target target;
