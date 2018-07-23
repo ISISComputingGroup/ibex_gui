@@ -57,7 +57,7 @@ public class QueueScriptPanel extends Composite {
         gridLayout.horizontalSpacing = 1;
         setLayout(gridLayout);
         
-        StyledText styledText = new NumberedStyledText(this, SWT.BORDER);
+        StyledText styledText = new NumberedStyledText(this, SWT.BORDER | SWT.V_SCROLL);
         styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
         
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(styledText),

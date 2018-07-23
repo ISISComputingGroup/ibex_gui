@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import org.eclipse.swt.SWT;
@@ -37,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 /**
  * A StyledText widget decorated with line numbers.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class NumberedStyledText extends StyledText {
 
     static final int WIDTH_PX = 12;
