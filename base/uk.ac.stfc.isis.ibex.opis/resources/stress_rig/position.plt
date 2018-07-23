@@ -1,121 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <databrowser>
-    <title>
-        <text></text>
-        <color>
-            <red>0</red>
-            <green>0</green>
-            <blue>0</blue>
-        </color>
-        <font>1|Segoe UI|12.0|1|WINDOWS|1|-16|0|0|0|700|0|0|0|1|0|0|0|0|Segoe UI</font>
-    </title>
-    <graph_settings>
-        <show_title>false</show_title>
-        <show_legend>false</show_legend>
-        <show_plot_area_border>false</show_plot_area_border>
-        <transparent>false</transparent>
-    </graph_settings>
+    <title></title>
+    <save_changes>true</save_changes>
+    <show_legend>false</show_legend>
+    <show_toolbar>false</show_toolbar>
+    <grid>false</grid>
     <scroll>true</scroll>
     <update_period>3.0</update_period>
+    <scroll_step>5</scroll_step>
     <start>-1 hours 0.0 seconds</start>
     <end>now</end>
-    <time_axis>
-        <axis>
-            <name>Time</name>
-            <font>1|Segoe UI|9.0|1|WINDOWS|1|-12|0|0|0|700|0|0|0|1|0|0|0|0|Segoe UI</font>
-            <scale_font>1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI</scale_font>
-            <color>
-                <red>0</red>
-                <green>0</green>
-                <blue>0</blue>
-            </color>
-            <min>1.501754598792E12</min>
-            <max>1.501758198792E12</max>
-            <log_scale>false</log_scale>
-            <autoscale>false</autoscale>
-            <visible>true</visible>
-            <grid_line>
-                <show_grid_line>false</show_grid_line>
-                <dash_grid_line>true</dash_grid_line>
-                <color>
-                    <red>200</red>
-                    <green>200</green>
-                    <blue>200</blue>
-                </color>
-            </grid_line>
-            <format>
-                <auto_format>true</auto_format>
-                <time_format>true</time_format>
-                <format_pattern>HH:mm</format_pattern>
-            </format>
-        </axis>
-    </time_axis>
+    <archive_rescale>STAGGER</archive_rescale>
     <background>
         <red>255</red>
         <green>255</green>
         <blue>255</blue>
     </background>
-    <archive_rescale>STAGGER</archive_rescale>
+    <title_font>Segoe UI|12|1</title_font>
+    <label_font>Segoe UI|9|1</label_font>
+    <scale_font>Segoe UI|9|0</scale_font>
+    <legend_font>Segoe UI|9|1</legend_font>
     <axes>
         <axis>
+            <visible>true</visible>
             <name>Position</name>
-            <font>1|Segoe UI|9.0|1|WINDOWS|1|-12|0|0|0|700|0|0|0|1|0|0|0|0|Segoe UI</font>
-            <scale_font>1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI</scale_font>
+            <use_axis_name>true</use_axis_name>
+            <use_trace_names>false</use_trace_names>
+            <right>false</right>
             <color>
-                <red>21</red>
-                <green>21</green>
-                <blue>196</blue>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
             </color>
             <min>0.0</min>
             <max>10.0</max>
-            <log_scale>false</log_scale>
+            <grid>false</grid>
             <autoscale>true</autoscale>
-            <visible>true</visible>
-            <grid_line>
-                <show_grid_line>false</show_grid_line>
-                <dash_grid_line>true</dash_grid_line>
-                <color>
-                    <red>200</red>
-                    <green>200</green>
-                    <blue>200</blue>
-                </color>
-            </grid_line>
-            <format>
-                <auto_format>true</auto_format>
-                <time_format>false</time_format>
-                <format_pattern>############.##</format_pattern>
-            </format>
+            <log_scale>false</log_scale>
         </axis>
     </axes>
     <annotations>
     </annotations>
     <pvlist>
         <pv>
-            <name>$(PV_ROOT)POS.VAL</name>
             <display_name>Position</display_name>
             <visible>true</visible>
+            <name>$(PV_ROOT)POS.VAL</name>
             <axis>0</axis>
-            <linewidth>2</linewidth>
             <color>
-                <red>21</red>
-                <green>21</green>
-                <blue>196</blue>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
             </color>
             <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
             <waveform_index>0</waveform_index>
-            <period>0.0</period>
+            <period>3.0</period>
             <ring_size>5000</ring_size>
             <request>OPTIMIZED</request>
-            <archive>
-                <name>RDB</name>
-                <url>jdbc:mysql://127.0.0.1/archive</url>
-                <key>1</key>
-            </archive>
-            <archive>
-                <name>RDB</name>
-                <url>jdbc:mysql://130.246.39.152/archive</url>
-                <key>2</key>
-            </archive>
         </pv>
     </pvlist>
 </databrowser>
