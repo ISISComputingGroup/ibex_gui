@@ -96,7 +96,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
          * Hence, set it to null here.
          * 
          * Failure to do this will result in the thread going CPU-bound
-         * and eventually leaking memory while it tries repeatedly to
+         * and eventually leaking memory while it tries repeatedly to connect
          * 
          */
         jmsConsumer = null;
