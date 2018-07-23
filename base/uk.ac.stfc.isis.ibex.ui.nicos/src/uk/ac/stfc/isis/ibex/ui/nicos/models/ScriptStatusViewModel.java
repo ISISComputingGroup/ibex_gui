@@ -43,7 +43,7 @@ public class ScriptStatusViewModel extends ModelObject {
 	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
 
     private boolean enableButtons = false;
-    private Color highlightColor = HIGHLIGHT;
+    private Color highlightColour = HIGHLIGHT;
 
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
@@ -104,7 +104,7 @@ public class ScriptStatusViewModel extends ModelObject {
         setEnableButtons(true);
         this.status = status;
         setStatusReadback(status);
-        setHighlightColor(HIGHLIGHT);
+        setHighlightColour(HIGHLIGHT);
         switch (status) {
             case IDLEEXC:
             case IDLE:
@@ -120,7 +120,7 @@ public class ScriptStatusViewModel extends ModelObject {
             case INBREAK:
                 setToggleButtonIcon(RESUME_ICON);
                 setToggleButtonText(RESUME_TEXT);
-                setHighlightColor(HIGHLIGHT_PAUSED);
+                setHighlightColour(HIGHLIGHT_PAUSED);
                 break;
             case INVALID:
             default:
@@ -226,16 +226,16 @@ public class ScriptStatusViewModel extends ModelObject {
         return statusReadback;
     }
 
-    private void setHighlightColor(Color highlightColor) {
-        firePropertyChange("highlightColor", this.highlightColor, this.highlightColor = highlightColor);
+    private void setHighlightColour(Color highlightColour) {
+        firePropertyChange("highlightColour", this.highlightColour, this.highlightColour = highlightColour);
     }
 
     /**
-     * The color in which to highlight the currently executed line.
+     * The colour in which to highlight the currently executed line.
      * 
-     * @return the color
+     * @return the colour
      */
-    public Color getHighlightColor() {
-        return highlightColor;
+    public Color getHighlightColour() {
+        return highlightColour;
     }
 }

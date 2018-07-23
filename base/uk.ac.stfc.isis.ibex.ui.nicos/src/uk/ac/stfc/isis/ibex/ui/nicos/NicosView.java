@@ -101,7 +101,7 @@ public class NicosView extends ViewPart {
 
                     if (currentLine > 0 && currentLine <= txtCurrentScript.getLineCount()) {
                         txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1,
-                                scriptStatusViewModel.getHighlightColor());
+                                scriptStatusViewModel.getHighlightColour());
                     }
                 }
             });
@@ -310,7 +310,7 @@ public class NicosView extends ViewPart {
 
         model.addPropertyChangeListener("lineNumber", highlightListener);
         model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
-        scriptStatusViewModel.addPropertyChangeListener("highlightColor", highlightListener);
+        scriptStatusViewModel.addPropertyChangeListener("highlightColour", highlightListener);
 
         Composite currentScriptInfoContainer = new Composite(currentScriptContainer, SWT.NONE);
         currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
