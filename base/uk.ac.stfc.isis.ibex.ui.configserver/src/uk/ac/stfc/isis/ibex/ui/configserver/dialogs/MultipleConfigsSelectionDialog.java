@@ -106,7 +106,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, false);
 
         String[] names;
         if (includeCurrent) {

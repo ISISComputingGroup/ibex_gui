@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 /**
@@ -39,7 +40,12 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
      * The collection of the available configurations/components for the user to
      * select from.
      */
-    protected List<String> recentConfigs;
+    protected Collection<ConfigInfo> recentConfigs;
+    
+    /**
+     * The time stamps relating to when a recent config was last loaded.
+     */
+    protected List<String> recentTimestamps;
 
     /**
      * The currently selected items.
@@ -57,13 +63,16 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
      * @param title The title of the dialog box.
      * @param recentConfigs A collection of the available configurations/components
      *            for the user to select from.
+     * @param   recentTimestamps A list of the time stamps of when a recent config was last loaded.
      */
     public RecentConfigSelectionDialog(
             Shell parentShell, 
             String title,
-            List<String> recentConfigs) {
+            Collection<ConfigInfo> recentConfigs,
+            List<String> recentTimestamps) {
         super(parentShell, title);
         this.recentConfigs = recentConfigs;
+        this.recentTimestamps = recentTimestamps;
         this.extraListOptions = 0;
     }
 
@@ -76,18 +85,31 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
 
     @Override
     protected void okPressed() {
-        selectedConfigs = asString(items.getSelection());
-        super.okPressed();
+        Collection<String> selectedItems = asString(items.getSelection());
+        //The following ensures that double clicking on a time stamp doesn't launch the load process using a time stamp as a config name.
+        for (String item : selectedItems) {
+            for (String configName : ConfigInfo.namesWithoutCurrent(recentConfigs)) {
+                if (item.equals(configName)) {
+                    selectedConfigs = asString(items.getSelection());
+                    super.okPressed();
+                }
+            }
+        }
     }
 
     @Override
     protected void createSelection(Composite container) {
         Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select one of the last five recently loaded configuration:");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, true);
         String[] names;
-        names = recentConfigs.toArray(new String[0]);
-        setItems(names);
+        names = ConfigInfo.namesWithoutCurrent(recentConfigs).toArray(new String[0]);
+        String[] timestamps;
+        timestamps = recentTimestamps.toArray(new String[0]);
+        for (int i = 0; i < timestamps.length; i++) {
+            timestamps[i] = "Last loaded on: " + timestamps[i];
+        }
+        setMultipleColumnItems(names, timestamps);
     }
 
     /**

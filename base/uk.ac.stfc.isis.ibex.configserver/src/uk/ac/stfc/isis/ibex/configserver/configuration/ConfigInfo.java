@@ -49,6 +49,7 @@ public class ConfigInfo {
      *            The dynamic PV for the config
      * @param synoptic
      *            The default synoptic view for the config
+     *            
      */
     public ConfigInfo(String name, String description, String pv, String synoptic) {
         this.name = name;

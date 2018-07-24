@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -37,22 +39,25 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
     @Override
     public void safeExecute(ExecutionEvent event) {
         updateObservers();
-        List<String> recentConfigsNames = Configurations.getInstance().getRecent();
-        ArrayList<String> recentConfigs = new ArrayList<String>();
+        List<String> recentConfigsNames = Configurations.getInstance().getRecentNames();
+        Collection<ConfigInfo> configsInDialog = SERVER.configsInfo().getValue();
+        Collection<Configuration> configs = SERVER.configs().getValue();
+        ArrayList<ConfigInfo> recentConfigs = new ArrayList<ConfigInfo>();
+        System.out.println(configs);
         
         for (String recentConfigName : recentConfigsNames) {
-            String justName = Configurations.getInstance().getRecentName(recentConfigName);
-            String currentConfigName =  SERVER.currentConfig().getValue().getName();
-            if (!justName.equals(currentConfigName)) {
-                recentConfigs.add(recentConfigName);
+            for (ConfigInfo config : configsInDialog) {
+                if (config.name().equals(recentConfigName)) {
+                    recentConfigs.add(config);
+                }
             }
         }
         
+        List<String> recentTimestamps = Configurations.getInstance().getRecentTimestamps();
         RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell(), "Load Recent Configuration",
-                recentConfigs);
+                recentConfigs, recentTimestamps);
         if (dialog.open() == Window.OK) {
-            String config = Configurations.getInstance().getRecentName(dialog.selectedConfig());
-            System.out.println(config);
+            String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
                 configService.uncheckedWrite(config);

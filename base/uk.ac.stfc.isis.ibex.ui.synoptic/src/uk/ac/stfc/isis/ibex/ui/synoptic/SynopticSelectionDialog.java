@@ -78,7 +78,7 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptic:");
 		
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL, false);
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		names = selectionDialogUtils.sortSelected(names);
         setItems(names);
