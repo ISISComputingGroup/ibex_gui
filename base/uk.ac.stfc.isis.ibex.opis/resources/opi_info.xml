@@ -1438,5 +1438,16 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>Live View</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>live_view.opi</path>
+        <description>The OPI for a live view of the detector</description>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
