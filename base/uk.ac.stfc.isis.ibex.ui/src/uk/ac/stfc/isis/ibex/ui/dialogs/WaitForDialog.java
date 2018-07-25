@@ -29,10 +29,19 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Class for the pop-up dialogue box informing the user that the instrument is updating.
+ * 
+ */
 public class WaitForDialog extends Dialog {
 	
-	private static final Point INITIAL_SIZE = new Point(250, 100);
+	private static final Point INITIAL_SIZE = new Point(320, 200);
 	
+	/**
+	 * The dialogue box itself.
+	 * 
+	 * @param parentShell parentShell
+	 */
 	public WaitForDialog(Shell parentShell) {
 		super(parentShell);
 	    super.setShellStyle(SWT.ALPHA);	  
@@ -54,6 +63,7 @@ public class WaitForDialog extends Dialog {
 	@Override
 	public int open() {
 		getParentShell().setEnabled(false);        
+		
 		return super.open();
 	}
 	
@@ -64,6 +74,12 @@ public class WaitForDialog extends Dialog {
 		return super.close();
 	}
 
+/**
+ * Sets the cursor.
+ * 
+ * @param cursorType
+ * 				The type of cursor.
+ */
 	public void setCursor(int cursorType) {
 		Cursor cursor = Display.getDefault().getSystemCursor(cursorType);
 		Shell activeShell = Display.getDefault().getActiveShell();
@@ -74,6 +90,7 @@ public class WaitForDialog extends Dialog {
 	
 	@Override
 	protected Point getInitialSize() {
+		
 		return INITIAL_SIZE;
 	}
 }

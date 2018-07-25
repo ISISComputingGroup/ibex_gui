@@ -16,32 +16,36 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.nicos;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.nicos.messages;
+
+import java.util.Arrays;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 
 /**
- * The status of sending a script.
+ * Serialisable class to dequeue a script in NICOS.
  */
-public enum ScriptSendStatus {
+public class DequeueScript extends NICOSMessage<String> {
+    
     /**
-     * No script has ever been sent from this model to the current script
-     * server.
+     * Constructor.
+     * 
+     * @param reqid
+     *            ID of script
      */
-    NONE,
+    public DequeueScript(String reqid) {
+    	this.command = "unqueue";
+        this.parameters = Arrays.asList(reqid);
+    }
 
-    /**
-     * An error occurred while sending the script.
-     */
-    SEND_ERROR,
-
-    /**
-     * Script is being sent to the server or the script has been sent and it has
-     * not confirmed that it has received the script.
-     */
-    SENDING,
-
-    /**
-     * Script has been sent to nicos and nicos has acknowledged the send.
-     */
-    SENT;
-
+    @Override
+    public ReceiveMessage parseResponse(String response) throws ConversionException {
+        JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
+        return new ReceiveStringMessage(deserial.convert(response));
+    }
+        
 }

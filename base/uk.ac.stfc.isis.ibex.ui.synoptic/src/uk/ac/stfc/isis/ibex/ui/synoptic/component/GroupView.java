@@ -38,13 +38,14 @@ public class GroupView extends BeamlineComposite {
 	private Composite groupPropertiesComposite;
 	private BeamlineCompositeContainer groupComponents;
 	private Component component;
+	private boolean isPreview;
 	
 	/**
      * @param parent
      *            The parent component
      */
 	public GroupView(Composite parent) {
-		this(parent, null);
+		this(parent, null, false);
 	}
 	
     /**
@@ -54,8 +55,11 @@ public class GroupView extends BeamlineComposite {
      *            The parent composite that this belongs to.
      * @param component
      *            The component that this view points to.
+     * @param isPreview
+     *              True if this view is created in the synoptic preview.
+     *      
      */
-	public GroupView(Composite parent, Component component) {
+	public GroupView(Composite parent, Component component, boolean isPreview) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.verticalSpacing = 0;
@@ -77,7 +81,7 @@ public class GroupView extends BeamlineComposite {
         nameLabel.setAlignment(SWT.CENTER);
         nameLabel.setBackground(SWTResourceManager.getColor(111, 94, 230));
 		
-		groupComponents = new BeamlineCompositeContainer(this, SWT.NONE);
+		groupComponents = new BeamlineCompositeContainer(this, SWT.NONE, isPreview);
 		
 		if (component != null) {
             setName(component.name());
@@ -120,7 +124,7 @@ public class GroupView extends BeamlineComposite {
 	}
 
 	private void addPropertiesView(Component component) {
-		ComponentPropertiesView propertiesView = new ComponentPropertiesView(groupPropertiesComposite, component);
+		ComponentPropertiesView propertiesView = new ComponentPropertiesView(groupPropertiesComposite, component, isPreview);
 		
 		propertiesView.pack();
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -131,7 +135,7 @@ public class GroupView extends BeamlineComposite {
 
 	private void setComponents(Component component) {
 		for (Component child : component.components()) {
-			BeamlineComposite view = ComponentView.create(groupComponents, child);
+			BeamlineComposite view = ComponentView.create(groupComponents, child, isPreview);
 			groupComponents.registerBeamlineTarget(view);
 		}
 	}
