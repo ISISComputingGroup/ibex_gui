@@ -19,70 +19,95 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
-import javax.annotation.PostConstruct;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
-
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
+import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
- * The main view for the NICOS current Script view.
+ * The main view for the NICOS scripting perspective.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class NicosView {
-	
+public class NicosView extends ViewPart {
 	/**
-	 * The public ID of this class.
-	 */
+     * The public ID of this class.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
-	
-	private final Shell shell;
-    private DataBindingContext bindingContext = new DataBindingContext();
-    StyledText txtCurrentScript;    
     
-    private static final int FIXED_WIDTH = 750;
-    private static final int FIXED_HEIGHT = 225;
+    private final Shell shell;
+    private DataBindingContext bindingContext = new DataBindingContext();
     
     private NicosModel model;
-    private QueueScriptViewModel queueScriptViewModel;    
+    private QueueScriptViewModel queueScriptViewModel;
+
     private Label lblCurrentScriptStatus;
+    private StyledText txtCurrentScript;
+
 	private ScriptStatusViewModel scriptStatusViewModel;
     private OutputLogViewModel outputLogViewModel;
 
+	private Label lblCurrentError;
+
+    private static final Color NEUTRAL = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+
+    private PropertyChangeListener highlightListener = new PropertyChangeListener() {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    int currentLine = model.getLineNumber();
+                    txtCurrentScript.setLineBackground(0, txtCurrentScript.getLineCount(), NEUTRAL);
+
+                    if (currentLine > 0 && currentLine <= txtCurrentScript.getLineCount()) {
+                        txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1,
+                                scriptStatusViewModel.getHighlightColour());
+                    }
+                }
+            });
+        }
+    };
+    
     /**
      * The default constructor for the view.
      */
@@ -94,76 +119,54 @@ public class NicosView {
 
         shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
-
-	@PostConstruct
-	public void createPartControl(Composite parent) {
-		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		Composite nicosComposite = new Composite(scrolledComposite, SWT.NONE);
-		scrolledComposite.setContent(nicosComposite);
-        scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
-		
-		GridLayout glParent = new GridLayout(1, false);
-		glParent.marginHeight = 10;
-		glParent.marginWidth = 10;
-		nicosComposite.setLayout(glParent);
-
-        // Connection info
-        Composite connectionGrp = new Composite(nicosComposite, SWT.NONE);
-        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
-        GridLayout connLayout = new GridLayout(2, false);
-        connLayout.marginHeight = 10;
-        connLayout.marginWidth = 10;
-        connectionGrp.setLayout(connLayout);
-
-        Label lblConnectionStatus = new Label(connectionGrp, SWT.NONE);
-        GridData connStatusLayoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
-        connStatusLayoutData.widthHint = 100;
-        lblConnectionStatus.setLayoutData(connStatusLayoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionStatus),
-                BeanProperties.value("connectionStatus").observe(model), null, new ConnectionStatusConverter());
-
-        Label lblConnectionError = new Label(connectionGrp, SWT.NONE);
-        lblConnectionError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
-                BeanProperties.value("connectionErrorMessage").observe(model));
-
-        txtCurrentScript = new StyledText(nicosComposite, SWT.BORDER);
-        txtCurrentScript.setEditable(false);
-        txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void createPartControl(Composite parent) {
+        GridLayout glParent = new GridLayout(2, true);
+        glParent.marginRight = 10;
+        glParent.marginHeight = 10;
+        glParent.marginWidth = 10;
+        parent.setLayout(glParent);
         
-        final StyledText txtOutput = new StyledText(parent, SWT.V_SCROLL | SWT.BORDER);
-        txtOutput.setEditable(false);
-        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-        
-        bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
-                BeanProperties.value("currentlyExecutingScript").observe(model));
+        createOutputContainer(parent);
+        createCurrentScriptContainer(parent);
+        createStatusContainer(parent);
+        createQueueContainer(parent);
+    }
 
-        txtOutput.addListener(SWT.Modify, new Listener() {
-            @Override
-            public void handleEvent(Event e) {
-                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
-            }
-        });
+	private void createQueueContainer(Composite parent) {
+		Composite queueContainer = new Composite(parent, SWT.BORDER);
+		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gdQueueContainer.heightHint = 300;
+        queueContainer.setLayoutData(gdQueueContainer);
+        queueContainer.setLayout(new GridLayout(2, false));
         
-        Label lblQueuedScripts = new Label(parent, SWT.NONE);
-        lblQueuedScripts.setText("Queued scripts (double click to see contents):");
+        Label lblQueuedScripts = new Label(queueContainer, SWT.NONE);
+        lblQueuedScripts.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+        lblQueuedScripts.setText("Queue");
+        lblQueuedScripts.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
-        ListViewer queuedScriptsViewer = new ListViewer(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        Label lblQueuedScriptsSubLabel = new Label(queueContainer, SWT.NONE);
+        lblQueuedScriptsSubLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
+        lblQueuedScriptsSubLabel.setText("(double-click name to see contents)");
+        lblQueuedScriptsSubLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+        
+        final ListViewer queuedScriptsViewer = new ListViewer(queueContainer, SWT.SINGLE | SWT.BORDER | SWT.V_SCROLL);
         List list = queuedScriptsViewer.getList();
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
         queuedScriptsViewer.setContentProvider(new ObservableListContentProvider());
         queuedScriptsViewer.setLabelProvider(new LabelProvider() {
-        	public String getText(Object element) {
+        	@Override
+            public String getText(Object element) {
         		QueuedScript code = (QueuedScript) element;
         		return code.getName();
         	}
         });
         
         queuedScriptsViewer.setInput(BeanProperties.list("queuedScripts").observe(model));
-        
         queuedScriptsViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
@@ -173,38 +176,183 @@ public class NicosView {
 			}
 		});
         
-        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
+        queuedScriptsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) queuedScriptsViewer.getSelection();
+                queueScriptViewModel.setSelectedScript((QueuedScript) selection.getFirstElement());
+			}
+		});
+
+        Composite moveComposite = new Composite(queueContainer, SWT.NONE);
+	    moveComposite.setLayout(new GridLayout(1, false));
+	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        
+        Button btnScriptUp =  new Button(moveComposite, SWT.NONE);
+		GridData gdBtnScriptUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		gdBtnScriptUp.widthHint = 25;
+		btnScriptUp.setLayoutData(gdBtnScriptUp);
+		btnScriptUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
+        btnScriptUp.setToolTipText("Move selected script UP");
+		
+		Button btnScriptDown =  new Button(moveComposite, SWT.NONE);
+		GridData gdBtnScriptDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gdBtnScriptDown.widthHint = 25;
+		btnScriptDown.setLayoutData(gdBtnScriptDown);
+		btnScriptDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+		btnScriptDown.setToolTipText("Move selected script DOWN");
+        
+        Label lblQueueStatusReadback = new Label(queueContainer, SWT.NONE);
+        lblQueueStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueStatusReadback),
+                BeanProperties.value("statusReadback").observe(scriptStatusViewModel));
+        
+        Composite scriptSendGrp = new Composite(queueContainer, SWT.NONE);
         scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout ssgLayout = new GridLayout(3, false);
+        GridLayout ssgLayout = new GridLayout(2, false);
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
         scriptSendGrp.setLayout(ssgLayout);
-
-        Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-        btnCreateScript.setText("Create Script");
-        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		        
+        final Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
+        btnCreateScript.setText("Create Script and Add to Queue");
+        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
-        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-        layoutData.widthHint = 80;
-        lblQueueScriptStatus.setLayoutData(layoutData);
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
-                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
-
-
-        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
-        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
-                BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
-
+        final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
+        btnDequeueScript.setText("Dequeue Selected Script");
+        btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
         btnCreateScript.addSelectionListener(new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+        	QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
+        	dialog.open();
+        }
+        });
+                
+        btnDequeueScript.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
-                dialog.open();
+                queueScriptViewModel.dequeueScript();
             }
         });
         
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDequeueScript), 
+        		BeanProperties.value("dequeueButtonEnabled").observe(queueScriptViewModel));
+
+        btnScriptUp.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                queueScriptViewModel.moveScript(true);
+            }
+        });
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptUp), 
+        		BeanProperties.value("upButtonEnabled").observe(queueScriptViewModel));
+
+        btnScriptDown.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                queueScriptViewModel.moveScript(false);
+            }
+        });
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptDown), 
+        		BeanProperties.value("downButtonEnabled").observe(queueScriptViewModel));
+        new Label(queueContainer, SWT.NONE);
+
+        
+		
+	}
+
+	private void createOutputContainer(Composite parent) {
+    	Composite outputContainer = new Composite(parent, SWT.BORDER);
+        outputContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        outputContainer.setLayout(new GridLayout(1, false));
+        
+        Label lblOutput = new Label(outputContainer, SWT.NONE);
+        lblOutput.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+        lblOutput.setText("Output");
+        
+
+        final StyledText txtOutput = new StyledText(outputContainer, SWT.V_SCROLL | SWT.BORDER);
+        txtOutput.setEditable(false);
+        txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+
+        bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
+                BeanProperties.value("log").observe(outputLogViewModel));
+        
+        txtOutput.addListener(SWT.Modify, new Listener() {
+            @Override
+            public void handleEvent(Event e) {
+                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
+            }
+        });
+    }
+	
+    private void createCurrentScriptContainer(Composite parent) {
+    	Composite currentScriptContainer = new Composite(parent, SWT.BORDER);
+        currentScriptContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        currentScriptContainer.setLayout(new GridLayout(1, false));
+        
+        Label lblCurrentScript = new Label(currentScriptContainer, SWT.NONE);
+        lblCurrentScript.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+        lblCurrentScript.setText("Current Script");
+        lblCurrentScript.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+        
+        txtCurrentScript = new NumberedStyledText(currentScriptContainer, SWT.V_SCROLL | SWT.BORDER);
+        txtCurrentScript.setEditable(false);
+        txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
+                BeanProperties.value("currentlyExecutingScript").observe(model));
+
+        model.addPropertyChangeListener("lineNumber", highlightListener);
+        model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
+        scriptStatusViewModel.addPropertyChangeListener("highlightColour", highlightListener);
+
+        Composite currentScriptInfoContainer = new Composite(currentScriptContainer, SWT.NONE);
+        currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+        currentScriptInfoContainer.setLayout(new GridLayout(2, false));
+        
+        lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
+        lblCurrentScriptStatus.setText("Current script status: ");
+        
+        Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
+        lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
+                BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
+        
+        NicosControlButtonPanel controlPanel =
+                new NicosControlButtonPanel(currentScriptContainer, SWT.NONE, scriptStatusViewModel);
+        controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	}
+    
+    private void createStatusContainer(Composite parent) {
+    	Composite statusContainer = new Composite(parent, SWT.BORDER);
+        statusContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        statusContainer.setLayout(new GridLayout(1, false));
+        
+        Composite nicosStatus = new Composite(statusContainer, SWT.NONE);
+        nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        nicosStatus.setLayout(new GridLayout(2, false));
+        
+        lblCurrentError = new Label(nicosStatus, SWT.NONE);
+        lblCurrentError.setText("NICOS status: ");
+        
+        Label errorIndicator = new Label(nicosStatus, SWT.NONE);
+        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(errorIndicator),
+                BeanProperties.value("error").observe(model));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFocus() {
+        lblCurrentScriptStatus.setFocus();
     }
 
 }

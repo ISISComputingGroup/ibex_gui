@@ -51,7 +51,7 @@ public class SynopticView {
 	//TODO: Why couldn't we do this with postConstruct?
 	@Inject
 	public SynopticView(Composite parent) {
-		instrument = new SynopticPanel(parent, SWT.NONE);
+        instrument = new SynopticPanel(parent, SWT.NONE, false);
         instrument.setComponents(presenter.components(), presenter.showBeam());
 
         presenter.addPropertyChangeListener(COMPONENTS_CHANGE, new PropertyChangeListener() {

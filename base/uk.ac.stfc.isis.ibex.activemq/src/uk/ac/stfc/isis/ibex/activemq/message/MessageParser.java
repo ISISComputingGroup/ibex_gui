@@ -123,7 +123,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
                     Thread.sleep(TIMEOUT_50_MS);
                 }
             } catch (JMSException | InterruptedException e) {
-                // Do nothing; exception will be caught be exception
+                // Do nothing; exception will be caught by exception
                 // listener (see connect())
             }
         }

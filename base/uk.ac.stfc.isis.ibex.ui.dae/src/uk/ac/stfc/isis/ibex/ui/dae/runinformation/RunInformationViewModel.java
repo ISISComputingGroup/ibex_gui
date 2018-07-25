@@ -32,101 +32,101 @@ import uk.ac.stfc.isis.ibex.ui.dae.run.InstrumentState;
  * the DAE.
  */
 public class RunInformationViewModel extends Closer {
-	
+
     /**
      * The name of the instrument.
      */
-	public UpdatedValue<String> instrument;
+    public UpdatedValue<String> instrument;
 
     /**
      * The status of the run.
      */
-	public UpdatedValue<String> runStatus;
+    public UpdatedValue<String> runStatus;
 
     /**
      * The run number.
      */
-	public UpdatedValue<String> runNumber;
+    public UpdatedValue<String> runNumber;
 
     /**
      * The cycle number.
      */
-	public UpdatedValue<String> isisCycle;
+    public UpdatedValue<String> isisCycle;
 
     /**
      * The current beam current.
      */
-	public UpdatedObservableAdapter<Number> beamCurrent;
+    public UpdatedObservableAdapter<Number> beamCurrent;
 
     /**
      * The number of good frames for this run.
      */
-	public UpdatedObservableAdapter<Integer> goodFrames;
+    public UpdatedObservableAdapter<Integer> goodFrames;
 
     /**
      * The number of counts for this run.
      */
-	public UpdatedObservableAdapter<Double> totalCounts;
+    public UpdatedObservableAdapter<Double> totalCounts;
 
     /**
      * The memory used on the DAE.
      */
-	public UpdatedObservableAdapter<Integer> memoryUsed;
+    public UpdatedObservableAdapter<Integer> memoryUsed;
 
     /**
      * The timing source being used by the DAE.
      */
-	public UpdatedObservableAdapter<String> timingSource;
-	
+    public UpdatedObservableAdapter<String> timingSource;
+
     /**
      * The current RB number.
      */
-	public UpdatedObservableAdapter<String> rbNumber;
+    public UpdatedObservableAdapter<String> rbNumber;
 
     /**
      * The number of raw frames for this run.
      */
-	public UpdatedObservableAdapter<Integer> rawFrames;
+    public UpdatedObservableAdapter<Integer> rawFrames;
 
     /**
      * The total current for this run.
      */
-	public UpdatedObservableAdapter<Number> totalCurrent;
+    public UpdatedObservableAdapter<Number> totalCurrent;
 
     /**
      * The count rate of the DAE.
      */
-	public UpdatedObservableAdapter<Double> countRate;
+    public UpdatedObservableAdapter<Double> countRate;
 
     /**
      * The event mode value.
      */
-	public UpdatedObservableAdapter<Double> eventMode;
-	
+    public UpdatedObservableAdapter<Double> eventMode;
+
     /**
      * The start time of the current run.
      */
-	public UpdatedObservableAdapter<String> startTime;
+    public UpdatedObservableAdapter<String> startTime;
 
     /**
      * The duration of the current run in seconds.
      */
-	public UpdatedObservableAdapter<Integer> runDuration;
+    public UpdatedObservableAdapter<Integer> runDuration;
 
     /**
      * The number of time channels.
      */
-	public UpdatedObservableAdapter<Integer> timeChannels;
+    public UpdatedObservableAdapter<Integer> timeChannels;
 
     /**
      * The number of spectra.
      */
-	public UpdatedObservableAdapter<Integer> spectra;
+    public UpdatedObservableAdapter<Integer> spectra;
 
     /**
      * The title for the current run.
      */
-	public UpdatedObservableAdapter<String> title;
+    public UpdatedObservableAdapter<String> title;
 
     /**
      * Whether or not to display the title on the webpage.
@@ -136,17 +136,17 @@ public class RunInformationViewModel extends Closer {
     /**
      * The users of the instrument for the current run.
      */
-	public UpdatedObservableAdapter<String> users;
-	
+    public UpdatedObservableAdapter<String> users;
+
     /**
      * The current period.
      */
-	public UpdatedObservableAdapter<Integer> period;
+    public UpdatedObservableAdapter<Integer> period;
 
     /**
      * The number of good frames for the current period.
      */
-	public UpdatedObservableAdapter<Integer> periodGoodFrames;
+    public UpdatedObservableAdapter<Integer> periodGoodFrames;
 
     /**
      * The number of raw frames for the current period.
@@ -156,32 +156,32 @@ public class RunInformationViewModel extends Closer {
     /**
      * The duration of the current period in seconds.
      */
-	public UpdatedObservableAdapter<Integer> periodDuration;
+    public UpdatedObservableAdapter<Integer> periodDuration;
 
     /**
      * The total number of periods.
      */
-	public UpdatedObservableAdapter<Integer> totalPeriods;
+    public UpdatedObservableAdapter<Integer> totalPeriods;
 
     /**
      * The period type.
      */
-	public UpdatedObservableAdapter<String> periodType;
+    public UpdatedObservableAdapter<String> periodType;
 
     /**
      * The period sequence.
      */
-	public UpdatedObservableAdapter<Integer> periodSequence;
-	
+    public UpdatedObservableAdapter<Integer> periodSequence;
+
     /**
      * The detector number for the monitor spectrum.
      */
-	public UpdatedObservableAdapter<Integer> monitorSpectrum;
+    public UpdatedObservableAdapter<Integer> monitorSpectrum;
 
     /**
      * The lower time limit for the monitor.
      */
-	public UpdatedObservableAdapter<Double> monitorFrom;
+    public UpdatedObservableAdapter<Double> monitorFrom;
 
     /**
      * The upper time limit for the monitor.
@@ -191,17 +191,32 @@ public class RunInformationViewModel extends Closer {
     /**
      * The number of monitor counts.
      */
-	public UpdatedObservableAdapter<Integer> monitorCounts;
+    public UpdatedObservableAdapter<Integer> monitorCounts;
 
     /**
      * The neutron/proton ratio.
      */
-	public UpdatedObservableAdapter<Double> npRatio;
-	
-	/**
+    public UpdatedObservableAdapter<Double> npRatio;
+
+    /**
      * The simulation mode status.
      */
-	public UpdatedObservableAdapter<Boolean> simMode;
+    public UpdatedObservableAdapter<Boolean> simMode;
+
+    /**
+     * The used buffer fraction.
+     */
+    public UpdatedObservableAdapter<Double> eventModeBufUsed;
+
+    /**
+     * The file size (MB).
+     */
+    public UpdatedObservableAdapter<Double> eventModeFileMB;
+
+    /**
+     * The data rate (MB/s).
+     */
+    public UpdatedObservableAdapter<Double> eventModeDataRate;
 
     /**
      * The constructor that binds updating values to observables.
@@ -209,49 +224,54 @@ public class RunInformationViewModel extends Closer {
      * @param observables
      *            A class containing observables bound to underling PVs
      */
-	public RunInformationViewModel(DaeObservables observables) {
-		instrument = adapt(observables.instrumentName);
-		beamCurrent = adapt(observables.beamCurrent);
-		goodFrames = adapt(observables.goodFrames);
-		totalCounts = adapt(observables.totalDaeCounts);
-		memoryUsed = adapt(observables.daeMemoryUsed);
-		timingSource = adapt(observables.timingSource);
-		
-		runStatus = new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(observables.runState)));
-		rbNumber = adapt(observables.rbNumber);
-		rawFrames = adapt(observables.rawFrames);
-		totalCurrent = adapt(observables.beamCurrent);
-		countRate = adapt(observables.countRate);
-		eventMode = adapt(observables.eventMode);
-		
-		runNumber = adapt(observables.runNumber);
-		startTime = adapt(observables.startTime);
-		runDuration = adapt(observables.runDuration);
-		timeChannels = adapt(observables.timeChannels);
-		spectra = adapt(observables.spectra);		
-		isisCycle = adapt(observables.isisCycle);
-		simMode = adapt(observables.simulationMode);
-		
-		title = adapt(observables.title);
-        displayTitle = adapt(observables.displayTitle);
-		users = adapt(observables.users);
-		
-		period = adapt(observables.currentPeriod);
-		periodGoodFrames = adapt(observables.periodGoodFrames);
-		periodDuration = adapt(observables.periodDuration);
-		totalPeriods = adapt(observables.totalPeriods);
-		periodRawFrames = adapt(observables.periodRawFrames);
-		periodType = adapt(observables.periodType);
-		periodSequence = adapt(observables.periodSequence);
-		
-		monitorSpectrum = adapt(observables.monitorSpectrum);
-		monitorFrom = adapt(observables.monitorFrom);
-		monitorCounts = adapt(observables.monitorCounts);
-		monitorTo = adapt(observables.monitorTo);
-		npRatio = adapt(observables.npRatio);
-	}
 
-	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> observable) {
-		return registerForClose(new UpdatedObservableAdapter<>(observable));
-	}
+    public RunInformationViewModel(DaeObservables observables) {
+        instrument = adapt(observables.instrumentName);
+        beamCurrent = adapt(observables.beamCurrent);
+        goodFrames = adapt(observables.goodFrames);
+        totalCounts = adapt(observables.totalDaeCounts);
+        memoryUsed = adapt(observables.daeMemoryUsed);
+        timingSource = adapt(observables.timingSource);
+
+        runStatus = new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(observables.runState)));
+        rbNumber = adapt(observables.rbNumber);
+        rawFrames = adapt(observables.rawFrames);
+        totalCurrent = adapt(observables.beamCurrent);
+        countRate = adapt(observables.countRate);
+        eventMode = adapt(observables.eventMode);
+
+        runNumber = adapt(observables.runNumber);
+        startTime = adapt(observables.startTime);
+        runDuration = adapt(observables.runDuration);
+        timeChannels = adapt(observables.timeChannels);
+        spectra = adapt(observables.spectra);
+        isisCycle = adapt(observables.isisCycle);
+        simMode = adapt(observables.simulationMode);
+
+        title = adapt(observables.title);
+        displayTitle = adapt(observables.displayTitle);
+        users = adapt(observables.users);
+
+        period = adapt(observables.currentPeriod);
+        periodGoodFrames = adapt(observables.periodGoodFrames);
+        periodDuration = adapt(observables.periodDuration);
+        totalPeriods = adapt(observables.totalPeriods);
+        periodRawFrames = adapt(observables.periodRawFrames);
+        periodType = adapt(observables.periodType);
+        periodSequence = adapt(observables.periodSequence);
+
+        monitorSpectrum = adapt(observables.monitorSpectrum);
+        monitorFrom = adapt(observables.monitorFrom);
+        monitorCounts = adapt(observables.monitorCounts);
+        monitorTo = adapt(observables.monitorTo);
+        npRatio = adapt(observables.npRatio);
+
+        eventModeBufUsed = adapt(observables.eventModeBufUsed);
+        eventModeFileMB = adapt(observables.eventModeFileMB);
+        eventModeDataRate = adapt(observables.eventModeDataRate);
+    }
+
+    private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> observable) {
+        return registerForClose(new UpdatedObservableAdapter<>(observable));
+    }
 }

@@ -41,9 +41,11 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
  */
 public class EditConfigDialog extends ConfigDetailsDialog {
 
-	private Button saveAsBtn;
+    private Button saveAsBtn;
     private boolean editBlockFirst;
-	
+    private boolean switchConfigOnSaveAs;
+    private boolean calledSwitchConfigOnSaveAs = false;
+
     private ConfigServer server = Configurations.getInstance().server();
 
     /**
@@ -68,7 +70,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
             boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
         this.editBlockFirst = editBlockFirst;
-	}
+    }
 
     @Override
     protected Control createDialogArea(Composite parent) {
@@ -80,63 +82,78 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         return control;
     }
 
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		if (!isBlank && !this.config.getName().isEmpty()) { 
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        if (!isBlank && !this.config.getName().isEmpty()) {
             createButton(parent, IDialogConstants.OK_ID, "Save", true);
-		}
+        }
 
-		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
-		saveAsBtn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
+        saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
+        saveAsBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 Collection<String> configNames = server.configNames();
                 Collection<String> componentNames = server.componentNames();
-				boolean hasComponents = !config.getEditableComponents()
-						.getSelected().isEmpty();
+                boolean hasComponents = !config.getEditableComponents().getSelected().isEmpty();
                 String currentConfigName = server.currentConfig().getValue().name();
-				SaveConfigDialog dlg = new SaveConfigDialog(null, config
-						.getName(), config.getDescription(), configNames,
-                        componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
-				if (dlg.open() == Window.OK) {
-					if (dlg.getNewName() != config.getName()) {
-						config.setName(dlg.getNewName());
-					}
+                SaveConfigDialog dlg = new SaveConfigDialog(null, config.getName(), config.getDescription(),
+                        configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
+                if (dlg.open() == Window.OK) {
+                    switchConfigOnSaveAs = dlg.shouldSwitchConfig();
+                    calledSwitchConfigOnSaveAs = true;
+                    if (dlg.getNewName() != config.getName()) {
+                        config.setName(dlg.getNewName());
+                    }
 
-					config.setDescription(dlg.getNewDescription());
-					doAsComponent = dlg.willBeComponent();
+                    config.setDescription(dlg.getNewDescription());
+                    doAsComponent = dlg.willBeComponent();
 
-					okPressed();
-				}
-			}
-		});
+                    okPressed();
+                }
+            }
+        });
 
-		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+        createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 
         // Show any error message and set buttons after creating those buttons
         super.showErrorMessage();
-	}
+    }
 
-	@Override
-	public void setErrorMessage(String newErrorMessage) {
-		if (newErrorMessage == null) {
-			setOKEnabled(true);
-			saveAsBtn.setEnabled(true);
-		} else {
-			setOKEnabled(false);
-			saveAsBtn.setEnabled(false);
-		}
-		super.setErrorMessage(newErrorMessage);
-	}
+    @Override
+    public void setErrorMessage(String newErrorMessage) {
+        if (newErrorMessage == null) {
+            setOKEnabled(true);
+            saveAsBtn.setEnabled(true);
+        } else {
+            setOKEnabled(false);
+            saveAsBtn.setEnabled(false);
+        }
+        super.setErrorMessage(newErrorMessage);
+    }
 
     private void selectBlocksTab() {
         editor.selectBlocksTab();
     }
 
-	private void setOKEnabled(boolean value) {
-		Button okButton = getButton(IDialogConstants.OK_ID);
-		if (okButton != null) {
-			okButton.setEnabled(value);
-		}
-	}
+    private void setOKEnabled(boolean value) {
+        Button okButton = getButton(IDialogConstants.OK_ID);
+        if (okButton != null) {
+            okButton.setEnabled(value);
+        }
+    }
+    
+    /**
+     * 
+     * @return true if we should switch to the new config
+     */
+    public boolean switchConfigOnSaveAs() {
+        return switchConfigOnSaveAs;
+    }
+    /**
+     *
+     * @return true if switchConfigOnSaveAs() has been called.
+     */
+    public boolean calledSwitchConfigOnSaveAs() {
+        return calledSwitchConfigOnSaveAs;
+    }
 }

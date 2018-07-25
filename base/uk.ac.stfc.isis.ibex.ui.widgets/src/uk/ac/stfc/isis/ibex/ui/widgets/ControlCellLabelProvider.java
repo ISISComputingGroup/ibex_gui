@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
@@ -44,6 +43,11 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	private final Map<ViewerCell, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
+	/**
+	 * Constructor for the control cell label provider.
+	 * 
+	 * @param attributeMaps A map of the attributes that this cell will observe.
+	 */
 	protected ControlCellLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}

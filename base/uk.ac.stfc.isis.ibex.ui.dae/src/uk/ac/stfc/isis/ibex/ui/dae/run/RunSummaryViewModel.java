@@ -29,6 +29,10 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.BooleanWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
+/**
+ * View Model for the DAE perspective's "Run Summary" tab.
+ *
+ */
 public class RunSummaryViewModel extends Closer {
 	
 	private IDae model;
@@ -110,10 +114,18 @@ public class RunSummaryViewModel extends Closer {
 		return title;
 	}
 	
+	/**
+	 * 
+	 * @return all state transitioning actions on the DAE
+	 */
 	public DaeActions actions() {
 		return model.actions();
 	}
 	
+	/**
+	 * 
+	 * @return producer that creates new LogMessages as they arrive
+	 */
 	public ILogMessageProducer logMessageSource() {
 		return logModel;
 	}

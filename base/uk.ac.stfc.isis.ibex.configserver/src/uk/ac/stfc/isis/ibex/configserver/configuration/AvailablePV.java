@@ -19,32 +19,65 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+/**
+ * Holds the details of an available PV.
+ *
+ */
 public class AvailablePV {
 	private String name;
 	private String description;
 	
+	/**
+	 * Create a new AvailablePV.
+	 * 
+	 * @param name PV name
+	 * @param description PV description
+	 */
 	public AvailablePV(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 	
+	/**
+	 * Clone an existing AvailablePV.
+	 * 
+	 * @param other existing AvailablePV to clone
+	 */
 	public AvailablePV(AvailablePV other) {
 		this.name = other.name;
 		this.description = other.description;
 	}
 	
+	/**
+	 * 
+	 * @return PV name
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Set this PV's name.
+	 * 
+	 * @param name new PV name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * 
+	 * @return PV description
+	 */
 	public String getDescription() {
 		return description;
 	}
 	
+	/**
+	 * Set this PV's description.
+	 * 
+	 * @param description new PV description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}

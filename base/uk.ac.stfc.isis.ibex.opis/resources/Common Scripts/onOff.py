@@ -1,9 +1,9 @@
-from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
 
-pv = widget.getPV(); 
+pv = widget.getPV()
 current_value = int(PVUtil.getDouble(pv))
 
 if current_value == 0:
-	pv.setValue(1)
+    pv.setValue(1)
 else:
-	pv.setValue(0)
+    pv.setValue(0)
