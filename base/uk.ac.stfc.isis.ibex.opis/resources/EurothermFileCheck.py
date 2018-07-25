@@ -1,5 +1,5 @@
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-from org.epics.vtype import AlarmSeverity
+from org.diirt.vtype import AlarmSeverity
 from org.csstudio.opibuilder.util import OPIColor
 
 def check(file_type, pv):

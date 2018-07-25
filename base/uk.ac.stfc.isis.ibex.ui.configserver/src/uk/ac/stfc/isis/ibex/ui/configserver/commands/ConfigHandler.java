@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
@@ -44,21 +44,40 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  *
  * @param <T> The type of data expected from the underlying PV
  */
-public abstract class ConfigHandler<T> extends AbstractHandler {
+public abstract class ConfigHandler<T> {
     /** The configuration server object. */
 	protected static final ConfigServer SERVER = Configurations.getInstance().server();
     /** The object for editing a configuration. */
 	protected static final Editing EDITING = Configurations.getInstance().edit();
+	/** can execute the handler */
+	private boolean canExecute;
 
+	/**
+	 * The Handler can be executed.
+	 * @param canExecute true if it can be executed; false otherwise
+	 */
+	protected void setCanExecute(boolean canExecute) {
+		this.canExecute = canExecute;
+	}
+	
+	/**
+	 * 
+	 * @return whether the handler can be executed
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return this.canExecute;
+	}
+	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for modifying the command if the underlying PV cannot be written to.
 	 */
-	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {	
+	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
 			canWriteChanged(canWrite);
-		}	
+		};
 	};
 	
 	/**
@@ -72,24 +91,6 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 	}
 	
     /**
-     * Returns the shell for the active window.
-     * 
-     * @return the shell
-     */
-	protected Shell shell() {
-		return activeWindow().getShell();
-	}
-	
-    /**
-     * Returns the active workbench window.
-     * 
-     * @return the window
-     */
-	protected IWorkbenchWindow activeWindow() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-	}
-	
-    /**
      * Abstract method for handling a change in write status.
      * 
      * @param canWrite whether can write or not
@@ -97,24 +98,22 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 	public abstract void canWriteChanged(boolean canWrite);
 	
     /**
-     * Implements the required eclipse interface.
+     * Execute the handler and catch any errors to display to the user.
      * 
      * Declared as final here, implement executeAndCatchErrors instead so that
      * we can "hook into" any errors that occur in any of these dialogs and do
      * something sensible with them.
      * 
-     * @param event
-     *            the execution event
-     * @return null (ignored by eclipse framework)
+     * @param shell
+     *            the shell to use for the dialogue
      */
-    @Override
-    public final Object execute(ExecutionEvent event) {
+    @Execute
+    public final void execute(Shell shell) {
         try {
-            safeExecute(event);
+            safeExecute(shell);
         } catch (RuntimeException e) {
             onError(e);
         }
-        return null;
     }
 
     /**
@@ -125,7 +124,7 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
      * @param event
      *            the eclipse event
      */
-    public abstract void safeExecute(ExecutionEvent event);
+    public abstract void safeExecute(Shell event);
 
     /**
      * Error handler. Override this to provide specific error handling

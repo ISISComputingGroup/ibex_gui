@@ -19,9 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -37,12 +38,12 @@ public class EditSynopticHandler extends SynopticEditorHandler {
 
 	private static final String TITLE = "Edit Synoptic";
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+	@Execute
+	public Object execute(Shell shell) throws ExecutionException {		
         SynopticSelectionDialog dialog =
-                new SynopticSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
+                new SynopticSelectionDialog(shell, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
-			openDialog(load(dialog.selectedSynoptic()), TITLE, false);
+			openDialog(shell, load(dialog.selectedSynoptic()), TITLE, false);
 		}
 		return null;
 	}

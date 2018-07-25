@@ -1,0 +1,101 @@
+package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
+/**
+ * A model to provide easy access to the listeners for the interaction with the
+ * alarm system; chiefly the number of active alarms.
+ */
+public class ButtonViewModel extends ModelObject {
+
+    protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
+    protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
+
+    protected static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+
+    protected Color color = DEFOCUSSED;
+    protected Font font = BUTTON_FONT;
+    protected boolean inFocus = false;
+    protected String text = "";
+
+    /**
+     * Initialises button focus and font.
+     */
+    public ButtonViewModel() {
+        setFocus(inFocus);
+        setFont(font);
+    }
+
+    /**
+     * Get the colour of the button.
+     * 
+     * @return colour (Color)
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Get the font of the button label.
+     * 
+     * @return font (Font)
+     */
+    public Font getFont() {
+        return font;
+    }
+
+    /**
+     * Set the button colour.
+     * 
+     * @param newColor
+     *            Colour to change button to.
+     */
+    protected void setColor(Color newColor) {
+        firePropertyChange("color", color, color = newColor);
+    }
+
+    /**
+     * Set the button label font.
+     * 
+     * @param newFont
+     *            new font for the button label.
+     */
+    protected void setFont(Font newFont) {
+        firePropertyChange("font", font, font = newFont);
+    }
+
+    /**
+     * Set whether the button is in focus.
+     * 
+     * @param inFocus
+     *            boolean, true if button focused, false otherwise.
+     */
+    protected void setFocus(boolean inFocus) {
+        this.inFocus = inFocus;
+        setColor(inFocus ? FOCUSSED : DEFOCUSSED);
+    }
+
+    /**
+     * Just returns Alarm text.
+     * 
+     * @return String "Alarms ([alarm_count])"
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Set the button label text.
+     * 
+     * @param newText
+     *            new label for button.
+     */
+    protected void setText(String newText) {
+        firePropertyChange("text", text, text = newText);
+    }
+}
