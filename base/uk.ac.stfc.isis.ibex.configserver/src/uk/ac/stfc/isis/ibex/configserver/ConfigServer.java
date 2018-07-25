@@ -141,14 +141,6 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Collection<ConfigInfo>> configsInfo() {
 		return variables.configsInfo;
 	}
-	
-	/**
-     * Returns an observable to on the configurations available.
-     * @return the Collection<{@link Configuration}> observable object
-     */
-    public ForwardingObservable<Collection<Configuration>> configs() {
-        return variables.configs;
-    }
 
 	/**
 	 * Returns an observable to the information on what components are available.

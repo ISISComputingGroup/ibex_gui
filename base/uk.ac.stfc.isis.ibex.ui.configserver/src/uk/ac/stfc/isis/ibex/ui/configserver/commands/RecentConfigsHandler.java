@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +10,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -39,23 +36,12 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
     @Override
     public void safeExecute(ExecutionEvent event) {
         updateObservers();
-        List<String> recentConfigsNames = Configurations.getInstance().getRecentNames();
-        Collection<ConfigInfo> configsInDialog = SERVER.configsInfo().getValue();
-        Collection<Configuration> configs = SERVER.configs().getValue();
-        ArrayList<ConfigInfo> recentConfigs = new ArrayList<ConfigInfo>();
-        System.out.println(configs);
+        List<String> recentConfigs = Configurations.getInstance().getRecentWithoutCurrent(SERVER.configsInfo().getValue());
+        List<String> timeStamps = Configurations.getInstance().getLastModifiedTimestampsWithoutCurrent(SERVER.configsInfo().getValue());
         
-        for (String recentConfigName : recentConfigsNames) {
-            for (ConfigInfo config : configsInDialog) {
-                if (config.name().equals(recentConfigName)) {
-                    recentConfigs.add(config);
-                }
-            }
-        }
-        
-        List<String> recentTimestamps = Configurations.getInstance().getRecentTimestamps();
         RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell(), "Load Recent Configuration",
-                recentConfigs, recentTimestamps);
+                recentConfigs, timeStamps);
+        
         if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);

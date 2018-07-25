@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.configserver.internal.LoggingConfigurationObserver;
@@ -121,74 +120,71 @@ public class Configurations extends Closer implements BundleActivator {
 	public Editing edit() {
 		return editing;
 	}
-	
+
     /**
      * @return IOC information
      */
 	public IocControl iocControl() {
 		return iocControl;
 	}
-	
-    /**
-     * Returns the names and time stamps of recently used configurations.
-     * 
-     * @return the names and time stamps of recently used configurations.
-     */
-	public List<String> getRecent() {
-		return recent.get();
-	}
-	
-	/**
-	 * Returns the time stamps at which recently used configurations were last loaded.
-	 * 
-     * @return the time stamps at which recently used configurations were last loaded.
-     */
-    public List<String> getRecentTimestamps() {
-        return recent.getTimestamps();
-    }
-    
+
     /**
      * Returns the names of recently used configurations.
      * 
      * @return the names of recently used configurations.
      */
-    public List<String> getRecentNames() {
-        return recent.getNames();
-    }
-    
-    /**
-     * Returns the time stamp at which a recently used configuration was last loaded.
+	public List<String> getRecent() {
+		return recent.get();
+	}
+
+	/**
+     * Returns the names of recently used configurations without that of the current configuration.
      * 
-     * @param item The string from which to get the time stamp.
-     * @return the time stamp at which a recently used configuration was last loaded.
+     * @param configsInServer
+     *                 The collection of information on the configurations in the server.
+     * @return 
+     *                  The names of recently used configurations without that of the current configuration.
      */
-    public String getRecentTimestamp(String item) {
-        return recent.getTimestamp(item);
-    }
-    
-    /**
-     * Returns the name of a recently used configurations.
-     * 
-     * @param item The string from which to get the name.
-     * @return the name of a recently used configurations.
-     */
-    public String getRecentName(String item) {
-        return recent.getName(item);
+    public List<String> getRecentWithoutCurrent(Collection<ConfigInfo> configsInServer) {
+        return recent.getWithoutCurrent(configsInServer);
     }
 
     /**
-     * Add a configuration and time stamp of when it was last used to the "recently used" list.
+     * Returns the time stamp of when recently used configurations were last modified.
      * 
-     * @param configName the name to add
+     * @param configsInServer
+     *                 The collection of information on the configurations in the server.
+     * @return 
+     *                  The names of recently used configurations.
+     */
+    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
+        return recent.getLastModifiedTimestamps(configsInServer);
+    }
+
+    /**
+     * Returns the time stamp of when recently used configurations were last modified without that of the current configuration.
+     * 
+     * @param configsInServer
+     *                 The collection of information on the configurations in the server.
+     * @return 
+     *                 The names of recently used configurations without that of the current configuration.
+     */
+    public List<String> getLastModifiedTimestampsWithoutCurrent(Collection<ConfigInfo> configsInServer) {
+        return recent.getLastModifiedTimestampsWithoutCurrent(configsInServer);
+    }
+
+    /**
+     * Add a configuration to the "recently used" list.
+     * 
+     * @param configName
+     *                 The name to add.
      */
 	public void addRecent(String configName) {
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		recent.add(configName + "                                      Last loaded on: " + sdf.format(timestamp));
+		recent.add(configName);
 	}
 	
 	/**
-     * Removes a configuration and time stamp of when it was last used from the "recently used" list.
+     * Removes a configuration from the "recently used" list.
      * 
      * @param configName the name to add
      */

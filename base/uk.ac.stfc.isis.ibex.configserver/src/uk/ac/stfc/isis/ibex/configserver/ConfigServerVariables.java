@@ -65,8 +65,6 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Configuration> currentConfig;
     /** Provides an "empty" configuration. */
 	public final ForwardingObservable<Configuration> blankConfig;
-	/** Provides all the configurations. */
-    public final ForwardingObservable<Collection<Configuration>> configs;
     /** Provides the configuration information for all the configurations. */
 	public final ForwardingObservable<Collection<ConfigInfo>> configsInfo;
     /** Provides the component information for all the components. */
@@ -148,8 +146,6 @@ public class ConfigServerVariables extends Closer {
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
         componentDetails =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
-                        converters.toConfigList());
-        configs = InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()),
                         converters.toConfigList());
         configsInfo =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
