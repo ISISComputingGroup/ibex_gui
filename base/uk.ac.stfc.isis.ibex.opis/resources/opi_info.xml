@@ -1921,7 +1921,7 @@
 			<key>IEG system</key>
 			<value>
 				<categories>
-					<category>Gas handling systems</category>
+					<category>Gas and liquid handling systems</category>
 				</categories>
 				<type>GAS_EXCHANGE</type>
 				<path>ieg_system.opi</path>
@@ -2422,8 +2422,10 @@
 	<entry>
       <key>SP2XX</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+			<category>Gas and liquid handling systems</category>
+		</categories>
+        <type>SYRINGE_PUMP</type>
         <path>sp2xx.opi</path>
         <description>The OPI for the SP2XX</description>
         <macros>
