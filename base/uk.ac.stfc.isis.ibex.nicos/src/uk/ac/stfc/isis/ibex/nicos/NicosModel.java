@@ -20,8 +20,10 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,11 +31,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.zeromq.ZMQException;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
+import uk.ac.stfc.isis.ibex.nicos.messages.DequeueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetBanner;
 import uk.ac.stfc.isis.ibex.nicos.messages.GetLog;
@@ -43,7 +48,8 @@ import uk.ac.stfc.isis.ibex.nicos.messages.NicosLogEntry;
 import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SendReorderedQueue;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
@@ -56,51 +62,28 @@ public class NicosModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(NicosModel.class);
 
     /**
-     * Error for when a script fails to send.
-     */
-    public static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
-
-    /**
-     * Error for when a login fails.
-     */
-    public static final String FAILED_LOGIN_MESSAGE = "Failed to login: ";
-
-    /**
-     * Error for when the protocol received from the server is unrecognised.
-     */
-    public static final String INVALID_PROTOCOL = "NICOS protocol is invalid";
-
-    /**
-     * Error for when the serialiser received from the server is unrecognised.
-     */
-    public static final String INVALID_SERIALISER = "NICOS serialiser is invalid";
-    
-    /**
-     * Error for when a response was expected but none was received.
-     */
-    public static final String NO_RESPONSE = "Server did not respond to request.";
-
-    /**
      * The period to ask the server for a status update (in ms).
      */
     private static final long UPDATE_STATUS_TIME = 1000;
+
+    private static final int MESSAGES_SCALE_FACTOR = 100;
     
+    /**
+     * Maximum number of messages to fetch at a time.
+     */
+    private static final int MESSAGES_THRESHOLD = 1000;
+
     private final ZMQSession session;
-    private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
-    private String scriptSendErrorMessage = "";
-    private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
-    private String connectionErrorMessage = "";
     private RepeatingJob connectionJob;
 	private int lineNumber;
     private ScriptStatus scriptStatus;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
-    private List<NicosLogEntry> newLogEntries;
+    private List<NicosLogEntry> newLogEntries = new ArrayList<>();
     private long lastEntryTime;
-    private List<QueuedScript> queuedScripts;
+    private List<QueuedScript> queuedScripts = new ArrayList<>();
 
-    private static final int MESSAGES_SCALE_FACTOR = 10;
-    private static final int MESSAGES_THRESHOLD = 100;
+	private NicosErrorState error = NicosErrorState.NO_ERROR;
 
     /**
      * Default constructor.
@@ -109,7 +92,7 @@ public class NicosModel extends ModelObject {
      * 
      * @param session
      *            the session to use to send and receive messages to and from
-     *            the script sever
+     *            the script server
      * @param connectionJob
      *            the job that will periodically be run to reconnect to NICOS if
      *            a connection has failed. (pulled out of class for testing)
@@ -151,9 +134,8 @@ public class NicosModel extends ModelObject {
     }
 
     private void failConnection(String message) {
-        setConnectionStatus(ConnectionStatus.FAILED);
+        setError(NicosErrorState.CONNECTION_FAILED);
         LOG.error(message);
-        setConnectionErrorMessage(message);
         connectionJob.setRunning(true);
         updateStatusJob.setRunning(false);
     }
@@ -165,39 +147,37 @@ public class NicosModel extends ModelObject {
      *            The instrument to connect to.
      */
     public void connect(InstrumentInfo instrument) {
-        setConnectionStatus(ConnectionStatus.CONNECTING);
-        setConnectionErrorMessage("");
 
         try {
             session.connect(instrument);
         } catch (ZMQException e) {
-            failConnection(e.getMessage());
+            setError(NicosErrorState.CONNECTION_FAILED);
             return;
         }
 
         GetBanner getBanner = new GetBanner();
-        SendMessageDetails response = sendMessageToNicos(getBanner);
-        if (!response.isSent()) {
-            failConnection(response.getFailureReason());
+        SentMessageDetails bannerSentMessageDetails = sendMessageToNicos(getBanner);
+        if (!bannerSentMessageDetails.isSent()) {
+            failConnection(bannerSentMessageDetails.getFailureReason());
             return;
         } else {
-            ReceiveBannerMessage banner = (ReceiveBannerMessage) response.getResponse();
+            ReceiveBannerMessage banner = (ReceiveBannerMessage) bannerSentMessageDetails.getResponse();
             if (!banner.protocolValid()) {
-                failConnection(INVALID_PROTOCOL);
+            	setError(NicosErrorState.INVALID_PROTOCOL);
                 return;
             } else if (!banner.serializerValid()) {
-                failConnection(INVALID_SERIALISER);
+            	setError(NicosErrorState.INVALID_SERIALISER);
                 return;
             }
         }
 
-        SendMessageDetails loginSendMessageDetails = sendMessageToNicos(new Login());
-        if (!loginSendMessageDetails.isSent()) {
-            failConnection(FAILED_LOGIN_MESSAGE + loginSendMessageDetails.getFailureReason());
+        SentMessageDetails loginSentMessageDetails = sendMessageToNicos(new Login());
+        if (!loginSentMessageDetails.isSent()) {
+        	setError(NicosErrorState.FAILED_LOGIN, loginSentMessageDetails.getFailureReason());
             return;
+        } else {
+        	setError(NicosErrorState.NO_ERROR);
         }
-
-        setConnectionStatus(ConnectionStatus.CONNECTED);
         connectionJob.setRunning(false);
         updateStatusJob.setRunning(true);
     }
@@ -207,24 +187,9 @@ public class NicosModel extends ModelObject {
      */
     public void disconnect() {
         session.disconnect();
-        setConnectionStatus(ConnectionStatus.DISCONNECTED);
-        setConnectionErrorMessage("");
+        setError(NicosErrorState.CONNECTION_FAILED);
         connectionJob.setRunning(true);
         updateStatusJob.setRunning(false);
-    }
-
-
-    /**
-     * Get the status of the last script that was sent.
-     * 
-     * @return the status of sending a script
-     */
-    public ScriptSendStatus getScriptSendStatus() {
-        return scriptSendStatus;
-    }
-
-    private void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
-        firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
     }
 
     /**
@@ -233,29 +198,45 @@ public class NicosModel extends ModelObject {
     public List<NicosLogEntry> getLogEntries() {
         return newLogEntries;
     }
-
+    
     private void setLogEntries(List<NicosLogEntry> newLogEntries) {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
         this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
     }
 
     /**
-     * Send a script to Nicos. Do not wait for a reply the acknowledgement can
+     * Send a script to NICOS. Do not wait for a reply the acknowledgement can
      * be found in script send status.
      * 
      * @param script
      *            to queue
      */
     public void sendScript(QueuedScript script) {
-        setScriptSendStatus(ScriptSendStatus.SENDING);
         QueueScript nicosMessage = new QueueScript(script);
-        SendMessageDetails scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
-        if (!scriptSendMessageDetails.isSent()) {
-            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
-        } else {
-            setScriptSendStatus(ScriptSendStatus.SENT);
+        SentMessageDetails scriptSentMessageDetails = sendMessageToNicos(nicosMessage);
+        if (!scriptSentMessageDetails.isSent()) {
+            setError(NicosErrorState.SCRIPT_SEND_FAIL);
+            
         }
+    }
+    
+    private void setError(NicosErrorState error) {
+    	setError(error, "");
+    }
+    
+    private void setError(NicosErrorState error, String additionalInformation) {
+    	firePropertyChange("error", this.error, this.error = error);
+    	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
+            LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
+    	}
+    }
+    
+    /**
+     * Gets the last error in communication with NICOS.
+     * @return the error
+     */
+    public NicosErrorState getError() {
+    	return error == null ? NicosErrorState.NO_ERROR : error;
     }
 
     /**
@@ -265,102 +246,46 @@ public class NicosModel extends ModelObject {
      *            The execution instruction to send to the server.
      */
     public void sendExecutionInstruction(ExecutionInstruction instruction) {
-        SendMessageDetails response = sendMessageToNicos(instruction);
-        if (!response.isSent()) {
+        SentMessageDetails executionInstructionSentMessageDetails = sendMessageToNicos(instruction);
+        if (!executionInstructionSentMessageDetails.isSent()) {
             updateLogEntries();
             NicosLogEntry error = new NicosLogEntry(new Date(),
-                    "Error sending " + instruction.toString() + " command: " + response.getFailureReason() + "\n");
+                    "Error sending " + instruction.toString() + " command: " + executionInstructionSentMessageDetails.getFailureReason() + "\n");
             setLogEntries(Arrays.asList(error));
             getScriptStatus();
         }
     }
 
     /**
-     * Send a message to Nicos
+     * Send a message to NICOS.
      * 
      * @param nicosMessage
      *            message to send
      * @return details about the sending of that message
      */
-    private SendMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
-        return session.sendMessage(nicosMessage);
-    }
-
-    /**
-     * Get the last error message received when queueing a script.
-     * 
-     * Blank for no error message.
-     * 
-     * @return the script send error message
-     */
-    public String getScriptSendErrorMessage() {
-        return scriptSendErrorMessage;
-    }
-
-    /**
-     * Set the script error message and fire a property change.
-     * 
-     * @param sciptSendErrorMessage
-     *            the new error message
-     */
-    private void setScriptSendErrorMessage(String sciptSendErrorMessage) {
-        firePropertyChange("scriptSendErrorMessage", this.scriptSendErrorMessage,
-                this.scriptSendErrorMessage = sciptSendErrorMessage);
-    }
-
-    /**
-     * @return the Script Server connection status
-     */
-    public ConnectionStatus getConnectionStatus() {
-        return this.connectionStatus;
-    }
-
-    /**
-     * Set the connection status
-     * 
-     * @param connectionStatus
-     *            the new connection status
-     */
-    private void setConnectionStatus(ConnectionStatus connectionStatus) {
-        firePropertyChange("connectionStatus", this.connectionStatus, this.connectionStatus = connectionStatus);
-    }
-
-    /**
-     * Get the last error message received when connecting.
-     * 
-     * Blank for no error message.
-     * 
-     * @return the log in error message
-     */
-    public String getConnectionErrorMessage() {
-        return connectionErrorMessage;
-    }
-
-    /**
-     * Set the connection error message and fire a property change.
-     * 
-     * @param connectionErrorMessage
-     *            the new error message
-     */
-    private void setConnectionErrorMessage(String connectionErrorMessage) {
-        firePropertyChange("connectionErrorMessage", this.connectionErrorMessage,
-                this.connectionErrorMessage = connectionErrorMessage);
+    private SentMessageDetails sendMessageToNicos(NICOSMessage<?> nicosMessage) {
+        SentMessageDetails messageSentMessageDetails = session.sendMessage(nicosMessage);
+        if (!messageSentMessageDetails.isSent()) {
+        	disconnect();
+        }
+        return messageSentMessageDetails;
     }
     
     /**
      * Gets the status of the currently executing script from the server.
      */
 	public void updateScriptStatus() {
-		ReceiveScriptStatus response = (ReceiveScriptStatus) sendMessageToNicos(new GetScriptStatus()).getResponse();
-		if (response == null) {
-			failConnection(NO_RESPONSE);
+		SentMessageDetails message = sendMessageToNicos(new GetScriptStatus());
+		
+		ReceiveScriptStatus scriptStatusSentMessageDetails = (ReceiveScriptStatus) message.getResponse();
+		if (scriptStatusSentMessageDetails == null || !message.isSent()) {
+			setError(NicosErrorState.NO_RESPONSE);
 		} else {
-            // Status is a tuple (list) of 2 items - execution status and line
-            // number.
-            setScriptStatus(ScriptStatus.getByValue(response.status.get(0)));
-            setLineNumber(response.status.get(1));
-			setCurrentlyExecutingScript(response.script);
-			setQueuedScripts(response.requests);
+            // Status is a tuple (list) of 2 items - execution status and line number.
+            setScriptStatus(ScriptStatus.getByValue(scriptStatusSentMessageDetails.status.get(0)));
+            setLineNumber(scriptStatusSentMessageDetails.status.get(1));
+			setCurrentlyExecutingScript(scriptStatusSentMessageDetails.script);
+			setQueuedScripts(scriptStatusSentMessageDetails.requests);
 		}
 	}
 
@@ -377,12 +302,16 @@ public class NicosModel extends ModelObject {
                         "WARNING: Message volume is too high. Some messages may be ommitted.\n"));
                 break;
             }
-            ReceiveLogMessage response = (ReceiveLogMessage) sendMessageToNicos(new GetLog(numMessages)).getResponse();
-            if (response == null) {
-                failConnection(NO_RESPONSE);
+            SentMessageDetails message = sendMessageToNicos(new GetLog(numMessages));
+			ReceiveLogMessage logSentMessageDetails = (ReceiveLogMessage) message.getResponse();
+            
+            if (logSentMessageDetails == null || !message.isSent()) {
+                setError(NicosErrorState.NO_RESPONSE);
                 break;
+            } else {
+            	setError(NicosErrorState.NO_ERROR);
             }
-            List<NicosLogEntry> current = response.getEntries();
+            List<NicosLogEntry> current = logSentMessageDetails.getEntries();
             if (newEntries.size() == current.size()) {
                 // nothing more to fetch
                 break;
@@ -399,6 +328,12 @@ public class NicosModel extends ModelObject {
         }
     }
 
+    /**
+     * Filters old log entries out from a nicos log.
+     * 
+     * @param entries the original list of entries
+     * @return a new list with old entries removed
+     */
     private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
         List<NicosLogEntry> filtered = new ArrayList<NicosLogEntry>();
         for (NicosLogEntry entry : entries) {
@@ -409,30 +344,47 @@ public class NicosModel extends ModelObject {
         return filtered;
     }
 
+    /**
+     * Set which line number is currently executing.
+     * 
+     * @param lineNumber the line number
+     */
 	private void setLineNumber(int lineNumber) {		
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
 	
 	/**
 	 * The currently executing line number.
+	 * 
 	 * @return the line number
 	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}
 	
-	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {		
+	/**
+	 * Set the list of scripts in the nicos queue.
+	 * 
+	 * @param newQueuedScripts the new list of scripts
+	 */
+	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {
 		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
 	}
 	
 	/**
 	 * The currently queued scripts.
+	 * 
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
-		return queuedScripts;
-	}
+        return Collections.unmodifiableList(queuedScripts);
+    }
 	
+	/**
+	 * The status of the currently executing script.
+	 * 
+	 * @param scriptStatus the status
+	 */
     private void setScriptStatus(ScriptStatus scriptStatus) {
         firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
     }
@@ -452,9 +404,32 @@ public class NicosModel extends ModelObject {
 	
 	/**
 	 * The currently executing script.
+	 * 
 	 * @return the script
 	 */
 	public String getCurrentlyExecutingScript() {
 		return currentlyExecutingScript;
+	}
+	
+    /**
+     * Dequeue script.
+     * 
+     * @param reqid
+     *            ID of script to dequeue
+     */
+    public void dequeueScript(String reqid) {
+        DequeueScript message = new DequeueScript(reqid);
+        sendMessageToNicos(message);
+    }
+    
+    /**
+     * Send reordered list of reqids to NICOS.
+     * 
+     * @param listOfScriptIDs
+     *            list of IDs of scripts
+     */
+	public void sendReorderedQueue(List<String> listOfScriptIDs) {
+        SendReorderedQueue nicosMessage = new SendReorderedQueue(listOfScriptIDs);
+        sendMessageToNicos(nicosMessage);
 	}
 }

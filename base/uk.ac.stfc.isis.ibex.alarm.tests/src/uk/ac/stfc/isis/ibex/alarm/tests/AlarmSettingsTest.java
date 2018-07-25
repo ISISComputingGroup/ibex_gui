@@ -33,7 +33,8 @@ import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
- * Tests for the AlarmSettings class.
+ * Test the alarm settings for CSS Beast Alarm.
+ *
  */
 @SuppressWarnings("checkstyle:methodname")
 public class AlarmSettingsTest {

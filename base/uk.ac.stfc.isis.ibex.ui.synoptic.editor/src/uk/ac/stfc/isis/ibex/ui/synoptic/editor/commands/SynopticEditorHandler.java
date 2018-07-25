@@ -50,35 +50,20 @@ public abstract class SynopticEditorHandler {
 	public SynopticEditorHandler() {
 		synopticService.writeTo(SYNOPTIC.delete());
 		SYNOPTIC.delete().subscribe(synopticService);
+		
+		canExecute = synopticService.canWrite();
 	}
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for modifying the command if the underlying PV cannot be written to.
 	 */
-	protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
+	protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>(){
 		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			canWriteChanged(canWrite);
-		};
+		public synchronized void onCanWriteChanged(boolean canWrite) {
+			canExecute = canWrite;
+		}
 	};
-
-    /**
-     * Handle a change in write status.
-     * 
-     * @param canWrite whether can write or not
-     */
-	public void canWriteChanged(boolean canWrite) {
-		setCanExecute(canWrite);		
-	}
-
-	/**
-	 * The Handler can be executed.
-	 * @param canExecute true if it can be executed; false otherwise
-	 */
-	protected void setCanExecute(boolean canExecute) {
-		this.canExecute = canExecute;
-	}
 	
 	/**
 	 * 
@@ -86,7 +71,7 @@ public abstract class SynopticEditorHandler {
 	 */
 	@CanExecute
 	public boolean canExecute() {
-		return this.canExecute;
+		return canExecute;
 	}
 
     /**

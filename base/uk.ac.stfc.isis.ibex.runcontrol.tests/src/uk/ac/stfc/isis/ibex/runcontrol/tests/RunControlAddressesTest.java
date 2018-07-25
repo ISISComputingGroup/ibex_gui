@@ -25,7 +25,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlAddresses;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings("checkstyle:methodname")
 public class RunControlAddressesTest {
 	@Test
 	public void get_low_limit_pv() {

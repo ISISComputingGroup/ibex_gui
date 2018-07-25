@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
+import java.util.Objects;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -7,7 +9,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-@SuppressWarnings({ "checkstyle:membername", "unused" })
+@SuppressWarnings("checkstyle:membername")
 public class QueuedScript extends ModelObject {
 	
 	private static final String INITIAL_NAME = "My Script";
@@ -43,6 +45,7 @@ public class QueuedScript extends ModelObject {
 	
 	/**
 	 * Get the script contents.
+	 * 
 	 * @return The script contents.
 	 */
 	public String getCode() {
@@ -51,14 +54,16 @@ public class QueuedScript extends ModelObject {
 	
 	/**
 	 * Set the contents of the script.
+	 * 
 	 * @param script The contents of the script.
 	 */
 	public void setCode(String script) {
 		firePropertyChange("code", this.script, this.script = script);
 	}
-	
+
 	/**
 	 * Get the name of the script.
+	 * 
 	 * @return The name of the script.
 	 */
 	public String getName() {
@@ -67,22 +72,27 @@ public class QueuedScript extends ModelObject {
 
 	/**
 	 * Set the name of the script.
+	 * 
 	 * @param name The name of the script.
 	 */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((reqid == null) ? 0 : reqid.hashCode());
-		return result;
+		return Objects.hash(name, script, reqid, user);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj) {
 			return true;
 		}
@@ -92,16 +102,15 @@ public class QueuedScript extends ModelObject {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		QueuedScript other = (QueuedScript) obj;
-		if (reqid == null) {
-			if (other.reqid != null) {
-				return false;
-			}
-		} else if (!reqid.equals(other.reqid)) {
-			return false;
-		}
-		return true;
+		
+		return Objects.equals(reqid, ((QueuedScript) obj).reqid);
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return reqid;
+	}	
 }

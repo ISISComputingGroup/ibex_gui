@@ -41,7 +41,7 @@
     <wuid>23373536:1425af424d3:-6d3a</wuid>
     <auto_size>true</auto_size>
     <scripts />
-    <height>266</height>
+    <height>302</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -367,6 +367,8 @@ $(pv_value)</tooltip>
     </scale_options>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PV_ROOT>$(P)CAEN</PV_ROOT>
+      <SEL>hv0:$(MHVSLOT):$(MHVCHAN)</SEL>
     </macros>
     <visible>true</visible>
     <group_name></group_name>

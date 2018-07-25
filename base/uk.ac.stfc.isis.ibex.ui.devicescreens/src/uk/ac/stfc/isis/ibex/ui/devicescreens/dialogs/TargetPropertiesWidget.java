@@ -142,6 +142,9 @@ public class TargetPropertiesWidget extends Composite {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 table.setRows(viewModel.getProperties());
+                if (!viewModel.getProperties().isEmpty()) {
+                    table.setSelected(viewModel.getProperties().get(0));
+                }
             }
         });
 

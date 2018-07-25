@@ -35,9 +35,20 @@ import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class ComponentPropertiesView extends Composite {
-		
-	public ComponentPropertiesView(Composite parent, Component component) {
+    
+    private boolean isPreview;
+	/**
+	 * The view for the component properties in the synoptic displays.
+	 * @param parent
+	 *             The parent this view belongs too.
+	 * @param component
+	 *             The component whose properties are to be displayed.
+	 * @param isPreview
+	 *             True if the synoptic display has been created in the synoptic preview.
+	 */
+	public ComponentPropertiesView(Composite parent, Component component, boolean isPreview) {
 		super(parent, SWT.BORDER);
+		this.isPreview = isPreview;
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.verticalSpacing = 1;
 		gridLayout.marginWidth = 0;
@@ -96,7 +107,7 @@ public class ComponentPropertiesView extends Composite {
 	}
 
 	private void createWriter(WritableComponentProperty property, boolean displayPropertyName) {
-		WritableComponentView propertyView = new WritableComponentView(this, property, displayPropertyName);
+		WritableComponentView propertyView = new WritableComponentView(this, property, displayPropertyName, isPreview);
 		setViewSize(propertyView);
 	}		
 

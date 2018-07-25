@@ -104,7 +104,7 @@ public class RBLookupViewModel extends ModelObject {
 		firePropertyChange("nameSearch", nameSearch, nameSearch = name);
         searchForExperimentID();
 	}
-	
+
     /**
      * Get the name to search for.
      * 

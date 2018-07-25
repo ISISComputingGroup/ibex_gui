@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * This class is responsible for testing the Observing Synoptic Model.
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class ObservingSynopticModelTest {
 
 	/**

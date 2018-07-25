@@ -20,14 +20,57 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Provides error message.
+ *
+ */
 public abstract class ErrorMessageProvider extends ModelObject {
     protected ErrorMessage error = new ErrorMessage();
+    protected WarningMessage warning = new WarningMessage();
     
+    /**
+     * Sets warning to listener.
+     *
+     *@param inError
+     *                  true if there is an error.
+     *
+     *@param message
+     *                  the warning message.
+     */
     protected void setError(boolean inError, String message) {
     	firePropertyChange("error", this.error, this.error = new ErrorMessage(inError, message));
     }
     
+    /**
+     * Returns the error.
+     *
+     *@return
+     *       the error.
+     */
     public ErrorMessage getError() {
     	return error;
+    }
+    
+    /**
+     * Sets warning to listener.
+     * 
+     * @param inWarning
+     *                  true if there is a warning.
+     *
+     *@param message
+     *                  the warning message.
+     */
+    public void setWarning(boolean inWarning, String message) {
+        firePropertyChange("warning", this.warning, this.warning = new WarningMessage(inWarning, message));
+    }
+    
+    /**
+     * Returns the warning.
+     *
+     *@return
+     *       the warning.
+     */
+    public WarningMessage getWarning() {
+        return warning;
     }
 }

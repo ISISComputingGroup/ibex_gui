@@ -28,8 +28,7 @@ public class DescriptionsProviderTest {
 	private String opiPath1 = "TestOpi1\\TestOpi1.opi";
 	private String opiDescription1 = "This is test OPI 1";
 	private List<String> opiCategories1 = Collections.<String>emptyList();
-	
-    private String opiType2 = "Type2";
+
     private String opiName2 = "Test Opi 2";
     private String opiPath2 = "TestOpi2\\TestOpi2.opi";
     private String opiDescription2 = "This is test OPI 2";

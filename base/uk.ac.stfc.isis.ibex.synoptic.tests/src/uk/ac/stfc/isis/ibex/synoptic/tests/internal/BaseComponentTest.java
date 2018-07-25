@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.targets.Target;
  * This class is responsible for testing the Base Component.
  *
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class BaseComponentTest {
 
 	/**

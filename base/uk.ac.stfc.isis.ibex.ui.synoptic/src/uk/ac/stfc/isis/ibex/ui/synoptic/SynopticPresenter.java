@@ -101,12 +101,10 @@ public class SynopticPresenter extends ModelObject {
      */
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
-
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
 		updateModel(); 
-		
 		// Must be done after the navigator is initialised otherwise updateModel could
 		// trigger a nullPointer exception.
 		descriptionObserver = new BaseObserver<SynopticDescription>() {
@@ -252,7 +250,6 @@ public class SynopticPresenter extends ModelObject {
 		if (currentTarget instanceof GroupedComponentTarget) {
             displayGroupTarget((GroupedComponentTarget) currentTarget);
 		}
-
 		if (currentTarget instanceof OpiTarget) {
             try {
                 SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
