@@ -1,24 +1,34 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 /**
  * Copies all snippet perspectives to perspective stack called
  * "MainPerspectiveStack" In order to register/reset perspective and not have to
  * sync two copies in e4xmi.
- * 
+ *
  */
 public class CopyPerspectiveSnippetProcessor {
 
-    /**
+    private PerspectivesProvider perspectivesProvider;
+    private MPerspectiveStack perspectiveStack;
+
+     /**
      * Clone each snippet that is a perspective and add the cloned perspective
      * to the main PerspectiveStack.
-     * 
+     *
      * @param app
      *            MApplication
      * @param partService
@@ -27,9 +37,10 @@ public class CopyPerspectiveSnippetProcessor {
      *            EModelService
      */
     @Execute
-    public void execute(MApplication app, EPartService partService, EModelService modelService) {
-        PerspectivesProvider perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
-        MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
+    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
+        perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
+        perspectiveStack = perspectivesProvider.getTopLevelStack();
+
 
         // Only do this when no other children, or the restored workspace state
         // will be overwritten.
@@ -46,6 +57,27 @@ public class CopyPerspectiveSnippetProcessor {
                 perspectiveStack.setSelectedElement(perspective);
                 isFirst = false;
             }
+            subscribeChangedElement(broker, perspective);
         }
+    }
+
+    public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
+
+	EventHandler handler = new EventHandler() {
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement element = (MUIElement) event.getProperty(EventTags.ELEMENT);
+
+				if (!perspectiveStack.getSelectedElement().equals(perspective)) {
+					return;
+				}
+
+				if (!(element instanceof MPartSashContainerElement)) {
+					return;
+				}
+			}
+		};
+
+		broker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, handler);
     }
 }
