@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
-@SuppressWarnings("checkstyle:methodname")
+@SuppressWarnings( {"checkstyle:methodname", "unchecked"} )
 public class DeviceScreensDescriptionToXmlConverterTest {
 
     @Test

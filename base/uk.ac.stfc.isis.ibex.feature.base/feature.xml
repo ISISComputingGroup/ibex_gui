@@ -39,27 +39,6 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.e4.ui.beamstatus"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.e4.ui.blocks"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.e4.ui.handlers"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher"
          download-size="0"
          install-size="0"
@@ -592,13 +571,6 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.synoptic"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.perspectives"
          download-size="0"
          install-size="0"
          version="0.0.0"

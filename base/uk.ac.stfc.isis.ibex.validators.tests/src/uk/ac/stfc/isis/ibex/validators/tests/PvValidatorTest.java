@@ -45,6 +45,19 @@ public class PvValidatorTest {
     }
 
     /**
+     * Test method for {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}.
+     */
+    @Test
+    public void GIVEN_plain_pv_address_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "valid";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
+    }
+
+    /**
      * Test method for
      * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
      */
@@ -56,6 +69,20 @@ public class PvValidatorTest {
         PvValidator addressValid = new PvValidator();
         // Assert
         assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}.
+     */
+    @Test
+    public void GIVEN_pv_address_with_field_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "valid.field";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
     }
 
     /**
@@ -74,6 +101,20 @@ public class PvValidatorTest {
 
     /**
      * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}.
+     */
+    @Test
+    public void GIVEN_pv_address_with_non_alpha_character_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "va_:lid.fi_:eld";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
      * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
      */
     @Test
@@ -84,6 +125,20 @@ public class PvValidatorTest {
         PvValidator addressValid = new PvValidator();
         // Assert
         assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}.
+     */
+    @Test
+    public void GIVEN_pv_address_with_dash_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "va_:l-d.fi_:eld";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
     }
 
     /**
@@ -149,7 +204,7 @@ public class PvValidatorTest {
      * .
      */
     @Test
-    public void invalid_pv_address() {
+    public void GIVEN_invalid_pv_address_WHEN_validate_THEN_error() {
         // Arrange
         String testAddress = "invalid@";
         // Act
@@ -159,12 +214,87 @@ public class PvValidatorTest {
     }
 
     /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}
+     * .
+     */
+    @Test
+    public void GIVEN_pv_address_containing_but_not_ending_with_colon_SP_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "NAME:SP:ETC";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
+    }
+    
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}
+     * .
+     */
+    @Test
+    public void GIVEN_pv_address_ending_with_colon_SP_WHEN_check_warning_THEN_warning() {
+        // Arrange
+        String testAddress = "NAME:SP";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.warningPvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}
+     * .
+     */
+    @Test
+    public void GIVEN_pv_address_ending_with_colon_SP_colon_RBV_WHEN_check_warning_THEN_warning() {
+        // Arrange
+        String testAddress = "NAME:SP";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.warningPvAddress(testAddress));
+    }
+    
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}
+     * .
+     */
+    @Test
+    public void GIVEN_pv_address_containing_but_not_ending_with_colon_SP_colon_RBV_WHEN_check_warning_THEN_valid() {
+        // Arrange
+        String testAddress = "NAME:SP:RBV:ETC";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.warningPvAddress(testAddress));
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#warningPvAddress(java.lang.String)}
+     * .
+     */
+    @Test
+    public void GIVEN_pv_address_containing_CS_colon_SB_colon_WHEN_check_warning_THEN_warning() {
+        // Arrange
+        String testAddress = "CS:SB:NAME";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.warningPvAddress(testAddress));
+    }
+
+    /**
      * Test method for {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getErrorMessage()}.
      */
     @Test
-    public void get_message_for_valid() {
+    public void GIVEN_valid_pv_address_WHEN_get_error_message_THEN_get_blanck() {
         // Arrange
-        String expected = "";
+        String expected = PvValidator.NO_ERROR;
         String testAddress = "valid";
         // Act
         PvValidator addressValid = new PvValidator();
@@ -178,7 +308,7 @@ public class PvValidatorTest {
      * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getErrorMessage()}.
      */
     @Test
-    public void get_message_for_invalid() {
+    public void GIVEN_invalid_pv_address_WHEN_get_error_message_THEN_get_invalid_address_error_message() {
         // Arrange
         String expected = PvValidator.ADDRESS_FORMAT;
         String testAddress = "invalid@";
@@ -194,7 +324,7 @@ public class PvValidatorTest {
      * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getErrorMessage()}.
      */
     @Test
-    public void get_message_for_empty_address_string() {
+    public void GIVEN_empty_pv_address_WHEN_get_error_message_THEN_get_empty_error_message() {
         // Arrange
         String expected = PvValidator.ADDRESS_EMPTY;
         String testAddress = "";
@@ -203,6 +333,86 @@ public class PvValidatorTest {
         addressValid.validatePvAddress(testAddress);
         // Assert
         assertEquals(expected, addressValid.getErrorMessage());
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getWarningMessage()}.
+     */
+    @Test
+    public void GIVEN_pv_address_containing_but_not_ending_with_colon_SP_WHEN_get_warning_message_THEN_get_empty_message() {
+        // Arrange
+        String expected = PvValidator.NO_ERROR;
+        String testAddress = "NAME:SP:ETC";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.warningPvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getWarningMessage());
+    }
+    
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getWarningMessage()}.
+     */
+    @Test
+    public void GIVEN_pv_address_containing_but_not_ending_with_colon_SP_colon_RBV_WHEN_get_warning_message_THEN_get_empty_message() {
+        // Arrange
+        String expected = PvValidator.NO_ERROR;
+        String testAddress = "NAME:SP:RBV:ETC";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.warningPvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getWarningMessage());
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getWarningMessage()}.
+     */
+    @Test
+    public void GIVEN_pv_address_ending_with_colon_SP_WHEN_get_warning_message_THEN_get_address_SP_warning_message() {
+        // Arrange
+        String expected = PvValidator.ADDRESS_SP;
+        String testAddress = "NAME:SP";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.warningPvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getWarningMessage());
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getWarningMessage()}.
+     */
+    @Test
+    public void GIVEN_pv_address_ending_with_colon_SP_colon_RBV_WHEN_get_warning_message_THEN_get_address_SP_RBV_warning_message() {
+        // Arrange
+        String expected = PvValidator.ADDRESS_SP_RBV;
+        String testAddress = "NAME:SP:RBV";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.warningPvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getWarningMessage());
+    }
+
+    /**
+     * Test method for
+     * {@link uk.ac.stfc.isis.ibex.validators.PvValidator#getWarningMessage()}.
+     */
+    @Test
+    public void GIVEN_pv_address_containing_CS_colon_SB_colon_WHEN_get_warning_message_THEN_get_address_CS_SB_warning_message() {
+        // Arrange
+        String expected = PvValidator.ADDRESS_CS_SB;
+        String testAddress = "CS:SB:NAME";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.warningPvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getWarningMessage());
     }
 
 }

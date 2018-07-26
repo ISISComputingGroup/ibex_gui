@@ -42,7 +42,7 @@ public interface PVHistoryPresenter {
 	 * Adds a PV to a pre-existing display.
 	 * @param pvAddress The PV to plot the history of.
 	 * @param display The user-friendly name for the plot and the axis
-	 * @param presenterName The name of the presenter to add the PV to.
+	 * @param displayName The name of the display to add the PV to.
 	 */
 	void addToDisplay(String pvAddress, String display, String displayName);
 }

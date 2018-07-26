@@ -42,7 +42,8 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
     private BufferedObservablePair<Integer, float[]> yData;
 	
     private abstract class DataObserver extends BaseObserver<Pair<Integer, float[]>> {
-        protected double[] toDoubleArray(float[] value, int length) {
+        protected double[] toDoubleArray(float[] value, int nord) {
+        	int length = Math.min(nord, value.length);
             double[] doubles = new double[length];
             for (int i = 0; i < length; i++) {
                 doubles[i] = value[i];

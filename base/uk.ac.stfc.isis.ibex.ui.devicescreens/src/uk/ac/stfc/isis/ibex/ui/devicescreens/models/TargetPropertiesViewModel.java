@@ -61,9 +61,9 @@ public class TargetPropertiesViewModel extends ModelObject {
             public void propertyChange(PropertyChangeEvent evt) {
                 DeviceDescriptionWrapper target = (DeviceDescriptionWrapper) evt.getNewValue();
                 if (target == null) {
-                    setPropeties(new ArrayList<PropertyDescription>());
+                    setProperties(new ArrayList<PropertyDescription>());
                 } else {
-                    setPropeties(target.getProperties());
+                    setProperties(target.getProperties());
                 }
             }
         });
@@ -74,9 +74,9 @@ public class TargetPropertiesViewModel extends ModelObject {
             public void propertyChange(PropertyChangeEvent evt) {
                 String key = (String) evt.getNewValue();
                 if (key == null || key == "") {
-                    setPropeties(new ArrayList<PropertyDescription>());
+                    setProperties(new ArrayList<PropertyDescription>());
                 } else {
-                    setPropeties(viewModel.getTargetScreen().getProperties());
+                    setProperties(viewModel.getTargetScreen().getProperties());
                 }
             }
         });
@@ -88,9 +88,13 @@ public class TargetPropertiesViewModel extends ModelObject {
      * @param newProperties
      *            The properties that can be set on the OPI.
      */
-    public void setPropeties(List<PropertyDescription> newProperties) {
-        setTableSelection(null);
-        boolean hasProperties = newProperties.size() > 0;
+    public void setProperties(List<PropertyDescription> newProperties) {
+        boolean hasProperties = !newProperties.isEmpty();
+        if (hasProperties) {
+            setTableSelection(newProperties.get(0));
+        } else {
+            setTableSelection(null);
+        }
         setTableEnabled(hasProperties);
         setValueTextEnabled(hasProperties);
         firePropertyChange("properties", properties, properties = newProperties);

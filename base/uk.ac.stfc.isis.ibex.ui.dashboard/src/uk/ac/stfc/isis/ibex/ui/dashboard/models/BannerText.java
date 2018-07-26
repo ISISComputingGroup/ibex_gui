@@ -24,6 +24,11 @@ import java.beans.PropertyChangeListener;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Banner shows instrument name and state, that text is held here.
+ * Updates when those values change.
+ *
+ */
 public class BannerText extends UpdatedValue<String> {
 		
 	private final PropertyChangeListener update = new PropertyChangeListener() {
@@ -36,6 +41,13 @@ public class BannerText extends UpdatedValue<String> {
 	private final UpdatedValue<String> name;
 	private final UpdatedValue<String> state;
 	
+	/**
+	 * Store name and state of instrument,
+	 * create a listener for an updates to those.
+	 * 
+	 * @param name instrument name
+	 * @param state instrument state
+	 */
 	public BannerText(UpdatedValue<String> name, UpdatedValue<String> state) {
 		this.name = name;
 		this.state = state;

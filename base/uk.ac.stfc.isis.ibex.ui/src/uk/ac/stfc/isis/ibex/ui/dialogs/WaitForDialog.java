@@ -38,7 +38,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
  */
 public class WaitForDialog extends Dialog {
 	
-	private static final Point INITIAL_SIZE = new Point(250, 100);
+	private static final Point INITIAL_SIZE = new Point(320, 200);
 	
 	/**
 	 * Instantiates a new wait for dialog.
@@ -71,6 +71,7 @@ public class WaitForDialog extends Dialog {
 		if (parentShell != null) {
 			parentShell.setEnabled(false);
 		}
+		
 		return super.open();
 	}
 	
@@ -99,6 +100,7 @@ public class WaitForDialog extends Dialog {
 	
 	@Override
 	protected Point getInitialSize() {
+		
 		return INITIAL_SIZE;
 	}
 }

@@ -183,17 +183,16 @@
 		<module>../uk.ac.stfc.isis.ibex.opis</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.handlers</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.help</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.log</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.perspectives</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>
@@ -204,7 +203,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.motor</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.beamstatus</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
 		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>

@@ -119,7 +119,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Name column.
      */
 	private void name() {
-        TableViewerColumn name = createColumn("Name", 1, false, new DecoratedCellLabelProvider<EditableIoc>(
+        createColumn("Name", 1, false, new DecoratedCellLabelProvider<EditableIoc>(
 				observeProperty("name"), 
 				Arrays.asList(rowDecorator, simulationDecorator)) {
 			@Override
@@ -133,7 +133,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      * Creates the Description column.
      */
 	private void description() {
-        TableViewerColumn desc = createColumn("Description", 2, false, new DecoratedCellLabelProvider<EditableIoc>(
+        createColumn("Description", 2, false, new DecoratedCellLabelProvider<EditableIoc>(
                 observeProperty("name"), 
 				Arrays.asList(rowDecorator)) {
 			@Override
