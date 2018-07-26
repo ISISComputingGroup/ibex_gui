@@ -14,6 +14,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+
 /**
  * Copies all snippet perspectives to perspective stack called
  * "MainPerspectiveStack" In order to register/reset perspective and not have to
@@ -75,6 +77,8 @@ public class CopyPerspectiveSnippetProcessor {
 				if (!(element instanceof MPartSashContainerElement)) {
 					return;
 				}
+
+				ResetLayoutButtonModel.getInstance().setChanged(true);
 			}
 		};
 
