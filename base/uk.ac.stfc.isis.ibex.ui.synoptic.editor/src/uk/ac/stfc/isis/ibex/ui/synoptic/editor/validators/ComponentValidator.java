@@ -41,7 +41,7 @@ public class ComponentValidator extends ErrorAggregator {
     private Map<Integer, SynopticPvValidator> validators = new HashMap<>();
     
     /**
-     * Default constructor. Adds change listners to the component.
+     * Default constructor. Adds change listeners to the component.
      * 
      * @param component
      *            The component to validate

@@ -3,7 +3,10 @@ package uk.ac.stfc.isis.ibex.ui.nicos.models;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -23,6 +26,9 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final Image RESUME_ICON =
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/resume.png");
 
+    private static final Color HIGHLIGHT = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+    private static final Color HIGHLIGHT_PAUSED = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+
     private static final String PAUSE_TEXT = "Pause Script Execution";
     private static final String RESUME_TEXT = "Resume Script Execution";
 
@@ -37,6 +43,7 @@ public class ScriptStatusViewModel extends ModelObject {
 	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
 
     private boolean enableButtons = false;
+    private Color highlightColour = HIGHLIGHT;
 
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
@@ -48,6 +55,7 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param model the NicosModel to observe
 	 */
 	public ScriptStatusViewModel(final NicosModel model) {
@@ -68,7 +76,12 @@ public class ScriptStatusViewModel extends ModelObject {
             }
         });
 	}
-	
+
+	/**
+	 * Sets the line number of the currently executing script.
+	 * 
+	 * @param lineNumber the line number, or -1 for a script that is not executing
+	 */
 	private void setLineNumber(int lineNumber) {
 		String line;
 		
@@ -91,6 +104,7 @@ public class ScriptStatusViewModel extends ModelObject {
         setEnableButtons(true);
         this.status = status;
         setStatusReadback(status);
+        setHighlightColour(HIGHLIGHT);
         switch (status) {
             case IDLEEXC:
             case IDLE:
@@ -106,6 +120,7 @@ public class ScriptStatusViewModel extends ModelObject {
             case INBREAK:
                 setToggleButtonIcon(RESUME_ICON);
                 setToggleButtonText(RESUME_TEXT);
+                setHighlightColour(HIGHLIGHT_PAUSED);
                 break;
             case INVALID:
             default:
@@ -116,12 +131,18 @@ public class ScriptStatusViewModel extends ModelObject {
 
 	/**
 	 * A formatted string representation of the line number to display on the user interface.
+	 * 
 	 * @return a formatted string representation of the line number to display on the user interface
 	 */
 	public String getLineNumber() {
 		return lineNumberStr;
 	}
-
+    
+	/**
+	 * The icon for the pause/go button.
+	 * 
+	 * @param icon
+	 */
     private void setToggleButtonIcon(Image icon) {
         firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
@@ -132,7 +153,12 @@ public class ScriptStatusViewModel extends ModelObject {
     public Image getToggleButtonIcon() {
         return toggleButtonIcon;
     }
-
+    
+    /**
+     * The text for the pause/go button.
+     * 
+     * @param text
+     */
     private void setToggleButtonText(String text) {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
     }
@@ -163,20 +189,32 @@ public class ScriptStatusViewModel extends ModelObject {
             model.sendExecutionInstruction(PAUSE_INSTRUCTION);
         }
     }
-
+    
+    /**
+     * Whether or not the script run control buttons should be enabled.
+     * 
+     * @param enable whether they are enabled
+     */
     private void setEnableButtons(boolean enable) {
         firePropertyChange("enableButtons", enableButtons, enableButtons = enable);
     }
 
     /**
-     * @return Whether the script run control buttons should be enabled.
+     * Whether or not the script run control buttons should be enabled.
+     * 
+     * @return whether they are enabled
      */
     public boolean getEnableButtons() {
         return enableButtons;
     }
-
+    
+    /**
+     * The status readback of the script
+     * 
+     * @param status
+     */
     private void setStatusReadback(ScriptStatus status) {
-        String displayString = "Status is: " + status.getDesc();
+        String displayString = "Queue status: " + status.getDesc();
         firePropertyChange("statusReadback", statusReadback, statusReadback = displayString);
 
     }
@@ -186,5 +224,18 @@ public class ScriptStatusViewModel extends ModelObject {
      */
     public String getStatusReadback() {
         return statusReadback;
+    }
+
+    private void setHighlightColour(Color highlightColour) {
+        firePropertyChange("highlightColour", this.highlightColour, this.highlightColour = highlightColour);
+    }
+
+    /**
+     * The colour in which to highlight the currently executed line.
+     * 
+     * @return the colour
+     */
+    public Color getHighlightColour() {
+        return highlightColour;
     }
 }

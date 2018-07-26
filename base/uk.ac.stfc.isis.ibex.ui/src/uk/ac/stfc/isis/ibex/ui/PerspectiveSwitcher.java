@@ -30,70 +30,90 @@ import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Oversees perspective switching.
+ */
 public class PerspectiveSwitcher {
 
 	private static final Logger LOG = IsisLog.getLogger(PerspectiveSwitcher.class);
-	
-	private final IWorkbench workbench;	   
+
+	private final IWorkbench workbench;
 	private final IWorkbenchWindow workbenchWindow;
 
 	private final Display display = Display.getDefault();
 
 	private static LogCounter counter = Log.getInstance().getCounter();
-	
-	private static final Runnable DO_NOTHING = new Runnable() {	
+
+	private static final Runnable DO_NOTHING = new Runnable() {
 		@Override
-		public void run() {	
+		public void run() {
 			// Do nothing
 		}
 	};
-	
+
+	/**
+	 * ID for the log perspective.
+	 */
 	public static final String LOG_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.log.perspective";
-	
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param workbench
+	 *            root object for the Eclipse Platform UI
+	 * @param workbenchWindow
+	 *            top level window in the workbench
+	 */
 	public PerspectiveSwitcher(IWorkbench workbench, IWorkbenchWindow workbenchWindow) {
 		this.workbench = workbench;
 		this.workbenchWindow = workbenchWindow;
 	}
-		
+
+	/**
+	 * Switch to the new perspective unless already on that perspective.
+	 * 
+	 * @param perspectiveID
+	 *            ID of the new perspective
+	 * @return true if already on that perspective
+	 */
 	public Runnable switchTo(final String perspectiveID) {
-		return isCurrentPerspective(perspectiveID) 
-					? DO_NOTHING : makeTheSwitch(perspectiveID);
-    }
-	
+		return isCurrentPerspective(perspectiveID) ? DO_NOTHING : makeTheSwitch(perspectiveID);
+	}
+
 	private Runnable makeTheSwitch(final String perspectiveID) {
 		return runInDisplayThread(new Runnable() {
-    		public void run() {
-    			try {
-    				LOG.info("Switching to: " + perspectiveID);
-    				
-    				//Restart counter if switching to or from IOC log
-    				if (isLogPerspective(perspectiveID) || isCurrentPerspective(LOG_PERSPECTIVE_ID)) {
+			public void run() {
+				try {
+					LOG.info("Switching to: " + perspectiveID);
+
+					// Restart counter if switching to or from IOC log
+					if (isLogPerspective(perspectiveID)) {
 						counter.start();
 					}
-    					
-                	workbench.showPerspective(perspectiveID, workbenchWindow);
-                } catch (WorkbenchException e) {
-                	LOG.warn("Workbench Error: " + e.getMessage());
-                }
-            }
-        }); 		
-	}	
-	
+
+					workbench.showPerspective(perspectiveID, workbenchWindow);
+				} catch (WorkbenchException e) {
+					LOG.warn("Workbench Error: " + e.getMessage());
+				}
+			}
+		});
+	}
+
 	private Runnable runInDisplayThread(final Runnable runnable) {
-		return new Runnable() {		
+		return new Runnable() {
 			@Override
 			public void run() {
 				display.syncExec(runnable);
 			}
 		};
 	}
-	
+
 	private boolean isLogPerspective(String perspectiveID) {
-		return perspectiveID.equals(LOG_PERSPECTIVE_ID);
+		return perspectiveID.equals(LOG_PERSPECTIVE_ID) || isCurrentPerspective(LOG_PERSPECTIVE_ID);
 	}
-	
+
 	private boolean isCurrentPerspective(String perspectiveID) {
-		IPerspectiveDescriptor activePerspective = workbenchWindow.getActivePage().getPerspective();		
-	    return activePerspective != null && activePerspective.getId().equals(perspectiveID); 
+		IPerspectiveDescriptor activePerspective = workbenchWindow.getActivePage().getPerspective();
+		return activePerspective != null && activePerspective.getId().equals(perspectiveID);
 	}
 }

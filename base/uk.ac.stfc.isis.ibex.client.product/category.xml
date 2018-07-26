@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/uk.ac.stfc.isis.ibex.feature.base_1.0.0.qualifier.jar" id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier">
-      <category name="CSS_ISIS"/>
-   </feature>
-   <category-def name="CSS_ISIS" label="CSS_ISIS"/>
-</site>

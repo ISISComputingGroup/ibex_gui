@@ -40,14 +40,28 @@ public class Macro extends ModelObject {
 	 * create the object. This mean the parent class's constructor is NOT called.
 	 * GSON does not care if this is private.
 	 */
+	@SuppressWarnings("unused")
 	private Macro() {
 	}
 
+	/**
+	 * Create this Macro based on an existing Macro.
+	 * 
+	 * @param other exiting Macro to clone
+	 */
 	public Macro(Macro other) {
 		this(other.getName(), other.getValue(), other.getDescription(), other
 				.getPattern());
 	}
 
+	/**
+	 * Create a new Macro.
+	 * 
+	 * @param name macro name
+	 * @param value macro value
+	 * @param description macro description
+	 * @param pattern Regex pattern macro value should follow
+	 */
 	public Macro(String name, String value, String description, String pattern) {
 		this.name = name;
 		this.value = value;
@@ -55,34 +69,70 @@ public class Macro extends ModelObject {
 		this.pattern = pattern;
 	}
 
+	/**
+	 * Set Macro name and fire a property change.
+	 * 
+	 * @param name new Macro name
+	 */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 
+	/**
+	 * 
+	 * @return macro name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Set Macro value and fire a property change.
+	 * 
+	 * @param value new Macro value
+	 */
 	public void setValue(String value) {
 		firePropertyChange("value", this.value, this.value = value);
 	}
 
+	 /**
+     * 
+     * @return macro value
+     */
 	public String getValue() {
 		return value;
 	}
 
+	/**
+	 * Set macro description.
+	 * 
+	 * @param description new macro description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	 /**
+     * 
+     * @return macro description
+     */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Set macro regex pattern.
+	 * 
+	 * @param pattern new regex pattern
+	 */
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
 
+	/**
+     * 
+     * @return macro regex pattern
+     */
 	public String getPattern() {
 		return pattern;
 	}

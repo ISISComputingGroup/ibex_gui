@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -28,14 +27,29 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 
+/**
+ * Controls how the state labels in the IOC Table appear.
+ *
+ */
 public class StateLabelProvider extends SortableObservableMapCellLabelProvider<IocState> {
 
 	public static final String TEXT_RUNNING = "Running";
 	public static final String TEXT_NOT_RUNNING = "Stopped";
 	
-	public static final Color COLOR_RUNNING = SWTResourceManager.getColor(19, 145, 44); // Green
+	/**
+	 * Text is green while running.
+	 */
+	public static final Color COLOR_RUNNING = SWTResourceManager.getColor(19, 145, 44);
+	/**
+	 * Text is red while stopped.
+	 */
 	public static final Color COLOR_STOPPED = SWTResourceManager.getColor(173, 66, 66); // RED
 
+	/**
+	 * Constructor for the state label provider.
+	 * 
+	 * @param attributeMaps A map of the attributes that this cell will observe.
+	 */
 	public StateLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}

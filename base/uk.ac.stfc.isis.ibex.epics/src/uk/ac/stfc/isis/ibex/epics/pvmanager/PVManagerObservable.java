@@ -19,18 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.epics.pvmanager;
 
-import static org.epics.pvmanager.ExpressionLanguage.channel;
-import static org.epics.util.time.TimeDuration.ofHertz;
+import static org.diirt.datasource.ExpressionLanguage.channel;
+import static org.diirt.util.time.TimeDuration.ofHertz;
 
-import org.epics.pvmanager.DataSource;
-import org.epics.pvmanager.PVManager;
-import org.epics.pvmanager.PVReader;
-import org.epics.pvmanager.PVReaderEvent;
-import org.epics.pvmanager.PVReaderListener;
-import org.epics.vtype.VType;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import static org.diirt.datasource.ExpressionLanguage.latestValueOf;
+
+import org.diirt.datasource.PVManager;
+import org.diirt.datasource.PVReader;
+import org.diirt.datasource.PVReaderEvent;
+import org.diirt.datasource.PVReaderListener;
+import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * A class for observing a PV via PVManager.
@@ -38,50 +45,91 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  * @param <R> the PV type (must be a VType)
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
+	
+	static {
+		PVManagerSettings.setUp();
+	}
 
     private static final int UPDATE_FREQUENCY = 10;
-
+    
     private PVReader<R> pv;	
 	
 	/**
 	 * An instance of an inner anonymous class for handling PV changes.
+	 * 
+	 * Create this in the constructor to ensure it is being run in the current thread,
+	 * otherwise PV manager has issues.
 	 */
-	private final PVReaderListener<R> observingListener = new PVReaderListener<R>() {
-		@Override
-		public void pvChanged(PVReaderEvent<R> evt) {
-			boolean isConnected = pv.isConnected();
-			if (evt.isConnectionChanged()) {
-                setConnectionStatus(isConnected);
-			}
-			
-			if (evt.isExceptionChanged()) {
-				setError(pv.lastException());
-			}
-			
-			if (evt.isValueChanged() && isConnected) {
-				setValue(pv.getValue());
-            }
-		}
-    };
+	private PVReaderListener<R> observingListener;
 	
-	public PVManagerObservable(PVInfo<R> info) {
+	private static final ExecutorService UPDATE_THREADPOOL = Executors.newCachedThreadPool();
+	
+    /**
+     * Create a new PV manager observable.
+     * @param info the parameters to create this PV with
+     */
+	public PVManagerObservable(final PVInfo<R> info) {
 		super(info);
 		
-		DataSource a = PVManager.getDefaultDataSource();
+		Future<?> result = UPDATE_THREADPOOL.submit(new Runnable() {
+			/**
+			 * IMPORTANT: PVManager requires creating the listener and registering it
+			 * to be done in the same thread, and in the same runnable, to avoid missing
+			 * values.
+			 */
+			@Override
+			public void run() {
+				observingListener = new PVReaderListener<R>() {
+					@Override
+					public synchronized void pvChanged(PVReaderEvent<R> evt) {
+						boolean isConnected = pv.isConnected();
+						try {
+							if (evt.isConnectionChanged()) {
+				                setConnectionStatus(isConnected);
+							}
+							
+							if (evt.isExceptionChanged()) {
+								setError(pv.lastException());
+							}
+							
+							if (evt.isValueChanged() && isConnected) {
+								setValue(pv.getValue());
+				            }
+						} catch (RuntimeException e) {
+							// Ensure errors get logged not swallowed silently (if they propagate up to this level)
+							IsisLog.getLogger(PVManagerObservable.this.getClass()).error(e.getMessage(), e);
+						}
+					}
+			    };
+			    
+			    pv = PVManager
+						.read(latestValueOf(channel(info.address(), info.type(), Object.class)))
+						.readListener(observingListener)
+						.notifyOn(UPDATE_THREADPOOL)
+		                .maxRate(ofHertz(UPDATE_FREQUENCY));
+			}
+		});
 		
-		pv = PVManager
-				.read(channel(info.address(), info.type(), Object.class))
-				.readListener(observingListener)
-				.notifyOn(new CurrentThreadExecutor())
-                .maxRate(ofHertz(UPDATE_FREQUENCY));
-	}	
-	
+		try {
+			// Wait for above to be finished.
+			result.get();
+		} catch (ExecutionException | InterruptedException e) {
+			IsisLog.getLogger(getClass()).error(e.getMessage(), e);
+		}
+	}
+		
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
         pv.close();
         super.close();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "PVManagerObservable observing PV " + pv.getName() + " with current value: " + pv.getValue();

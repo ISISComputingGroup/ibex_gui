@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -21,18 +20,44 @@ package uk.ac.stfc.isis.ibex.ui.logplotter;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.ui.IPerspectiveRegistry;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.ui.UI;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * This class is needed to display OPI PVs in the databrowser.
  */
 public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser2.OpenDataBrowserPopup {
+	
+	private static final String LOG_PLOTTER_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
+	/**
+	 * Override CSStudio command to switch to log plotter perspective first, before adding items to databrowser.
+	 */
 	@Override
-    public Object execute(final ExecutionEvent event) throws ExecutionException {       
-		UI.getDefault().switchPerspective(Perspective.ID);
-		return super.execute(event);
-
+    public Object execute(final ExecutionEvent event) {       
+		try {
+			switchToLogPlotter();
+			return super.execute(event);
+		} catch (ExecutionException | RuntimeException e) {
+			IsisLog.getLogger(getClass()).error(e.getMessage(), e);
+			return null;
+		}
     }
+	
+	/**
+	 * This is a bit of a hack to switch perspectives in a way that is compatible with both E4 and the E3 compatibility layer.
+	 * 
+	 * Can't use our normal perspective provider as that requires dependency injection, which we can't use with E3-style extension
+	 * points. Can't move away from E3 extension points as this is what the CSStudio view uses.
+	 */
+	private static void switchToLogPlotter() {
+		final IWorkbench workbench = PlatformUI.getWorkbench();
+        final IPerspectiveRegistry registry = workbench.getPerspectiveRegistry();
+        final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+        page.setPerspective(registry.findPerspectiveWithId(LOG_PLOTTER_PERSPECTIVE_ID));
+	}
 }

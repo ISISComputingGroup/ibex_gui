@@ -24,83 +24,126 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
 
+/**
+ * The Class WaitFor which is a handler which will show and hide the wait for the server dialogue.
+ */
 public class WaitFor {
 	
 	private WaitForDialog dialog;	
-	private final Display display = Display.getDefault();
-	
+		
 	private final Collection<Waiting> waiters = new ArrayList<>();
 	
-	public WaitFor() {
+	private IEclipseContext context;
+	
+	
+	/**
+	 * Sets the up wait for dialogue.
+	 *
+	 * @param context the eclipse context
+	 */
+	@PostConstruct
+	public void setUp(IEclipseContext context) {
+		this.context = context;
 		configure();
 	}
 	
+	/**
+	 *  
+	 * @return true; this handler can always be executed 
+	 */
+	@CanExecute 
+	public boolean canExecute() {
+		return true;
+	}
+	
+	/**
+	 * Get the registered extension points and add change listeners
+	 */
 	private void configure() {
 		for (IConfigurationElement element : getRegistered()) {
 			try {
-				Waiting waiter = extractWaiter(element);	
+				Waiting waiter = (Waiting) element.createExecutableExtension("class");	
 				waiters.add(waiter);
-				waiter.addPropertyChangeListener("isWaiting", showWaitDialog(waiter));
+				waiter.addPropertyChangeListener("isWaiting", showWaitDialogListener(waiter));
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private PropertyChangeListener showWaitDialog(final Waiting waiter) {
+	/**
+	 * Show wait dialog listener, which will trigger the wait dialogue if the listener changes.
+	 *
+	 * @param waiter the waiter
+	 * @return the property change listener
+	 */
+	private PropertyChangeListener showWaitDialogListener(final Waiting waiter) {
 		return new PropertyChangeListener() {	
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				display.asyncExec(handleWait(waiter));
+				Display.getDefault().asyncExec(handleWait(waiter));
 			}
 		};
 	}
 	
+	/**
+	 * Create a waiting dialogue and wait until it is closed.
+	 */
+	@Execute
 	private void doWait() {
-		if (dialog == null) {
-			createDialog();
+		if (dialog != null) {
+			return;
 		}
+		dialog = ContextInjectionFactory.make(WaitForDialog.class, context);
+		dialog.setBlockOnOpen(true);
+		dialog.open(); // open and wait for dialogue to be closed by stop wait.
 		
-
-		dialog.open();
-		dialog.setCursor(SWT.CURSOR_ARROW);
+		dialog = null;
 	}
 
+	/**
+	 * Close the waiting dialogue.
+	 */
 	private void stopWait() {
 		if (dialog != null) {
+			dialog.setCursor(SWT.CURSOR_ARROW);
 			dialog.close();
         }
         AlarmReloadManager.getInstance().queueDelayedUpdate();
 	}
 	
-	// Must call from the UI thread.
-	private void createDialog() {
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		dialog = new WaitForDialog(shell);
-		dialog.setBlockOnOpen(true);
-	}
-	
+	/**
+	 * Gets the registered extensions.
+	 *
+	 * @return the registered
+	 */
 	private IConfigurationElement[] getRegistered() {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		return registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.ui.wait");		
 	}
 
-	private Waiting extractWaiter(IConfigurationElement element) throws CoreException {
-		return (Waiting) element.createExecutableExtension("class");
-	}
-	
+	/**
+	 * Handle waiting status change in a waiter.
+	 *
+	 * @param waiter the waiter that has changed
+	 * @return the runnable to use to either stop the wait or show the dialogue
+	 */
 	private Runnable handleWait(final Waiting waiter) {
 		return new Runnable() {
 			@Override

@@ -155,19 +155,6 @@ public class Synoptic extends Closer implements BundleActivator {
 		return variables.available.getValue();
 	}
 	
-    /**
-     * @return SynopticInformation for the default Synoptic.
-     */
-    public SynopticInfo getDefaultSynoptic() {
-        SynopticInfo defaultSynoptic = null;
-        for (SynopticInfo info : variables.available.getValue()) {
-            if (info.isDefault()) {
-                defaultSynoptic = info;
-                break;
-            }
-        }
-        return defaultSynoptic;
-    }
 
     /**
      * Provides a collection of synoptics that can be edited.

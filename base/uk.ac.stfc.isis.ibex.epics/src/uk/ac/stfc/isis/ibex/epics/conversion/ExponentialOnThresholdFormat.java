@@ -40,7 +40,6 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
     private static final String EXPONENTIAL_PATTERN = "0.####E0";
     private static final double SMALL_NUMBER_THRESHOLD = 0.001;
     private static final double BIG_NUMBER_THRESHOLD = 1000000;
-    private static final int INTEGER_EXPO_FRACTIONAL_DIGITS = 4;
 
     private final NumberFormat defaultFormat;
 

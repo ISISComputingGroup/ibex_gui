@@ -61,7 +61,6 @@ public class ObservableComponentTest {
 	public void set_up_observable_component() {
 		// Arrange - used as before for use in each test
 		String addressSuffix = "Address Suffix";
-		String channelValue = "Channel";
 		String synopticDescription = "Synoptic Description";
 		String pvDisplayName = "PV Display Name";
 		String targetValue = "Target Value";

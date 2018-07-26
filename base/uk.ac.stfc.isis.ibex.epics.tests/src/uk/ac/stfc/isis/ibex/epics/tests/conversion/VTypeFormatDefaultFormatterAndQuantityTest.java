@@ -24,36 +24,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.epics.vtype.Display;
-import org.epics.vtype.VBoolean;
-import org.epics.vtype.VBooleanArray;
-import org.epics.vtype.VByte;
-import org.epics.vtype.VDoubleArray;
-import org.epics.vtype.VEnum;
-import org.epics.vtype.VEnumArray;
-import org.epics.vtype.VFloat;
-import org.epics.vtype.VFloatArray;
-import org.epics.vtype.VImage;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VIntArray;
-import org.epics.vtype.VLong;
-import org.epics.vtype.VLongArray;
-import org.epics.vtype.VMultiDouble;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VDouble;
-import org.epics.vtype.VShort;
-import org.epics.vtype.VStatistics;
-import org.epics.vtype.VString;
-import org.epics.vtype.VStringArray;
-import org.epics.vtype.VTable;
-import org.epics.vtype.VType;
-import org.epics.vtype.ValueFactory;
-import org.epics.util.array.ListBoolean;
-import org.epics.util.array.ListDouble;
-import org.epics.util.array.ListFloat;
-import org.epics.util.array.ListInt;
-import org.epics.util.array.ListLong;
-import org.epics.util.text.NumberFormats;
+import org.diirt.vtype.Display;
+import org.diirt.vtype.VBoolean;
+import org.diirt.vtype.VBooleanArray;
+import org.diirt.vtype.VByte;
+import org.diirt.vtype.VDoubleArray;
+import org.diirt.vtype.VEnum;
+import org.diirt.vtype.VEnumArray;
+import org.diirt.vtype.VFloat;
+import org.diirt.vtype.VFloatArray;
+import org.diirt.vtype.VImage;
+import org.diirt.vtype.VInt;
+import org.diirt.vtype.VIntArray;
+import org.diirt.vtype.VLong;
+import org.diirt.vtype.VLongArray;
+import org.diirt.vtype.VMultiDouble;
+import org.diirt.vtype.VNumber;
+import org.diirt.vtype.VDouble;
+import org.diirt.vtype.VShort;
+import org.diirt.vtype.VStatistics;
+import org.diirt.vtype.VString;
+import org.diirt.vtype.VStringArray;
+import org.diirt.vtype.VTable;
+import org.diirt.vtype.VType;
+import org.diirt.vtype.ValueFactory;
+import org.diirt.util.array.ListBoolean;
+import org.diirt.util.array.ListDouble;
+import org.diirt.util.array.ListFloat;
+import org.diirt.util.array.ListInt;
+import org.diirt.util.array.ListLong;
+import org.diirt.util.text.NumberFormats;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -67,7 +67,6 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
  * Byte array values missing as unable to produce from ValueFactory.
  * 
  */
-@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class VTypeFormatDefaultFormatterAndQuantityTest {
 
     @Test

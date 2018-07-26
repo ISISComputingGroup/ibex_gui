@@ -189,10 +189,16 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
         
     	if (!(nameVal.isValidName(name, currentRules))) {
     		setError(true, nameVal.getErrorMessage());
+    		setWarning(false, null);
     	} else if (!(addressValid.validatePvAddress(pvAddress))) {
     		setError(true, addressValid.getErrorMessage());
+    		setWarning(false, null);
+    	} else if (!(addressValid.warningPvAddress(pvAddress))) {
+    	    setWarning(true, addressValid.getWarningMessage());
+    	    setError(false, null);
     	} else {
     		setError(false, null);
+    		setWarning(false, null);
     	}
     }
 

@@ -72,36 +72,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
      * The default for the location of EPICS utils.
      */
     public static final String DEFAULT_EPICS_UTILS_DIRECTORY = "C:\\Instrument\\Apps\\EPICS_UTILS";
-
-    /**
-     * The preference setting for the instrument scientist password.
-     */
-    public static final String INSTRUMENT_SCIENTIST_PASSWORD = "instrument_scientist_password";
-
-    /**
-     * The default instrument scientist password.
-     */
-    public static final String DEFAULT_INSTRUMENT_SCIENTIST_PASSWORD = "reliablebeam";
-    
-    /**
-     * The preference setting for the administrator password.
-     */
-    public static final String ADMINISTRATOR_PASSWORD = "administrator_password";
-
-    /**
-     * The default administrator password.
-     */
-    public static final String DEFAULT_ADMINISTRATOR_PASSWORD = "asyndriver";  
-
-    /**
-     * The preference setting for the initial user.
-     */
-    public static final String INITIAL_USER = "initial_user";
-
-    /**
-     * The default initial user.
-     */
-    public static final String DEFAULT_INITIAL_USER = "Default user";
     
     /**
      * The scope for the preference settings.
@@ -118,7 +88,7 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
      * 
      * @return the preferences
      */
-	public static IEclipsePreferences getPreferences() {
+	private static IEclipsePreferences getPreferences() {
         return SCOPE_CONTEXT.getNode(PREFERENCE_NODE);
     }
 		
@@ -157,33 +127,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
 	public static String epicsUtilsPath() {
 		return getPreferences().get(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
 	}
-
-    /**
-     * Gets the preference for the administrator password.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String administratorPassword() {
-		return getPreferences().get(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
-	}
-	
-    /**
-     * Gets the preference for the instrument password.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String instrumentScientistPassword() {
-		return getPreferences().get(INSTRUMENT_SCIENTIST_PASSWORD, DEFAULT_INSTRUMENT_SCIENTIST_PASSWORD);
-	}
-	
-    /**
-     * Gets the preference for the initial user.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String initialUser() {
-		return getPreferences().get(INITIAL_USER, DEFAULT_INITIAL_USER);
-	}
 	
 	@Override
 	public void initializeDefaultPreferences() {
@@ -205,9 +148,7 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
         entries.put(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
         entries.put(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
         entries.put(GENIE_PYTHON_DIRECTORY,  DEFAULT_GENIE_PYTHON_DIRECTORY);
-        entries.put(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
-        entries.put(INITIAL_USER, DEFAULT_INITIAL_USER);
-    		
+        
         return entries;
 	}
 }

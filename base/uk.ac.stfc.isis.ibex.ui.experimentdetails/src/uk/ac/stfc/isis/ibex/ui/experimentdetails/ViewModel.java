@@ -24,13 +24,24 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Model;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
 public class ViewModel {
+
+    private static ViewModel instance;
 	
 	public final Model model = ExperimentDetails.getInstance().model();
 	
 	public final StringWritableObservableAdapter rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
 	
-	public ViewModel() {
-		
+    private ViewModel() {
+        instance = this;
+    }
+
+    // TODO: Don't use a singleton here split this into three separate view
+    // models instead.
+    public static ViewModel getInstance() {
+        if (instance == null) {
+            instance = new ViewModel();
+        }
+        return instance;
 	}
 	
 }
