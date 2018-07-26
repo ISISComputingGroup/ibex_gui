@@ -25,11 +25,15 @@ import java.util.Map;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * Stores all the display options (for example colour blindness palettes).
  */
-public final class DisplayPreferences {
-
+public final class DisplayPreferences extends ModelObject {
+	
+	private static DisplayPreferences instance;
+	
     private static final Color NORMAL_VISION_MOVING_COLOR = SWTResourceManager.getColor(160, 250, 170);
     private static final Color NORMAL_VISION_STOPPED_COLOR = SWTResourceManager.getColor(255, 200, 200);
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
@@ -41,9 +45,20 @@ public final class DisplayPreferences {
     private static final Color COLOURBLIND_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
     /**
-     * Private constructor for this utility class.
+     * Private constructor for this utility singleton class.
      */
     private DisplayPreferences() {
+    }
+    
+    /**
+     * Get the instance of this singleton.
+     * @return The instance of this singleton.
+     */
+    public static DisplayPreferences getInstance() {
+    	if (instance == null) {
+    		instance = new DisplayPreferences();
+    	}
+    	return instance;
     }
 
     private static final Map<ColourOption, MotorBackgroundPalette> PALETTE_OPTIONS;
@@ -56,7 +71,7 @@ public final class DisplayPreferences {
                 COLOURBLIND_STOPPED_COLOR, COLOURBLIND_DISABLED_COLOR, COLOURBLIND_UNNAMED_COLOR));
     }
 
-    private static MotorBackgroundPalette currentMotorBackgroundPalette =
+    private MotorBackgroundPalette currentMotorBackgroundPalette =
             PALETTE_OPTIONS.get(ColourOption.NORMAL_VISION);
 
     /**
@@ -64,7 +79,7 @@ public final class DisplayPreferences {
      * 
      * @return the current motor background palette.
      */
-    public static MotorBackgroundPalette getMotorBackgroundPalette() {
+    public MotorBackgroundPalette getMotorBackgroundPalette() {
         return currentMotorBackgroundPalette;
     }
 
@@ -73,7 +88,8 @@ public final class DisplayPreferences {
      * 
      * @param paletteKey the new motor background palette
      */
-    public static void setMotorBackgroundPalette(ColourOption paletteKey) {
-        currentMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
+    public void setMotorBackgroundPalette(ColourOption paletteKey) {
+        MotorBackgroundPalette newMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
+        firePropertyChange("motorBackgroundPalette", currentMotorBackgroundPalette, currentMotorBackgroundPalette=newMotorBackgroundPalette);
     }
 }

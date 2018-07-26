@@ -19,24 +19,32 @@
 
 package uk.ac.stfc.isis.ibex.ui.help;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * The handler for opening the about dialog window via the menu.
  */
-public class AboutHandler extends AbstractHandler {
-
-	@Override
-	public Object execute(ExecutionEvent e) throws ExecutionException {
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+public class AboutHandler {
+	
+	/**
+	 * Opens the 'About' dialog window in help menu.
+	 * @param shell The shell to open 'About' window in help menu.
+	 */
+	@Execute
+	public void execute(Shell shell) {
 		AboutDialogBox dialog = new AboutDialogBox(shell);
 		dialog.open();
-		
-		return null;
+	}
+	
+	/**
+	 * Help menu option always available (not instrument dependent).
+	 * @return True
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return true;
 	}
 
 }

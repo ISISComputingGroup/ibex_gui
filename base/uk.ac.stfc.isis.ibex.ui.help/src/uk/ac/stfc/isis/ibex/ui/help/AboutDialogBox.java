@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * A dialog box that contains information about the Ibex client and server
+ * A dialog box that contains information about the IBEX client and server
  * versions.
  */
 public class AboutDialogBox extends TitleAreaDialog {

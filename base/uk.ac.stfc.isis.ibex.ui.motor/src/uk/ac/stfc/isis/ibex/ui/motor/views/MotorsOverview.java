@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +37,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
@@ -55,8 +58,6 @@ public class MotorsOverview extends Composite {
     private static final int HEIGHT_DIMENSION = 74;
     private static final int WIDTH_DIMENSION = 85;
 
-    private MotorBackgroundPalette palette;
-
 
     /**
      * Constructor for the motors overview.
@@ -65,14 +66,13 @@ public class MotorsOverview extends Composite {
      * @param style - The base style to be applied to the overview
      * @param palette - The new palette to use.
      */
-    public MotorsOverview(Composite parent, int style, MotorBackgroundPalette palette) {
+    public MotorsOverview(Composite parent, int style) {
 		super(parent, style);
         setBackground(GREY_COLOUR);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		motorComposite = new Composite(this, SWT.NONE);
         motorComposite.setBackground(BACKGROUND_COLOUR);
-        this.palette = palette;
 	}
 	
     /**
@@ -102,17 +102,6 @@ public class MotorsOverview extends Composite {
 		}
 	}
 
-    /**
-     * Sets the motor background palette for each individual motor in the view.
-     * 
-     * @param palette the new palette to set on each individual motor.
-     */
-    public void setPalette(MotorBackgroundPalette palette) {
-        for (MinimalMotorView view : minimalViews) {
-            view.getViewModel().setPalette(palette);
-        }
-    }
-
 	@Override
 	public void addMouseListener(MouseListener listener) {
 		super.addMouseListener(listener);
@@ -131,7 +120,6 @@ public class MotorsOverview extends Composite {
 	
 	private void addMinimalView(Motor motor) {
         MinimalMotorViewModel model = new MinimalMotorViewModel();
-        model.setPalette(palette);
         model.setMotor(motor);
         MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, model);
 		view.setLayoutData(viewLayout());

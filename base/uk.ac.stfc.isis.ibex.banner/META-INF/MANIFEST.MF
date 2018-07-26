@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.configserver
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.banner,
  uk.ac.stfc.isis.ibex.banner.motion

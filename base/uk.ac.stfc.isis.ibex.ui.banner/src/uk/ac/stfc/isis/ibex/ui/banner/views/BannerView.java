@@ -22,14 +22,15 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -38,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
@@ -47,7 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
  * View of the spangle banner containing various instrument status messages.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BannerView extends ViewPart implements ISizeProvider {
+public class BannerView {
 
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
@@ -55,7 +57,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
      * View ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
-    private static final int FIXED_HEIGHT = 35;
     private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
@@ -68,13 +69,16 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private Indicator inMotion;
     private Control motionControl;
-
+    
     /**
-     * {@inheritDoc}
+     * Create the controls for the part.
+     * 
+     * @param parent parent panel to add controls to
      */
-    @Override
+    @PostConstruct
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(5, false);
+
+        GridLayout glParent = new GridLayout(10, false);
         glParent.marginRight = 2;
         glParent.horizontalSpacing = 8;
         glParent.verticalSpacing = 0;
@@ -88,6 +92,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
+        
+        Indicator currentConfig = new Indicator(parent, SWT.NONE, new CurrentConfigModel(), ALARM_FONT);
+        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdCurrentConfig.widthHint = 360;
+        currentConfig.setLayoutData(gdCurrentConfig);
 
         inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
         GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -98,30 +107,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
         GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdMotionControl.widthHint = 100;
         motionControl.setLayoutData(gdMotionControl);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getSizeFlags(boolean width) {
-        return SWT.MIN | SWT.MAX;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int computePreferredSize(boolean width, int availableParallel, int availablePerpendicular,
-            int preferredResult) {
-        return width ? 0 : FIXED_HEIGHT;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setFocus() {
+       
     }
 
     /**
@@ -148,7 +134,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
      */
     private void setBanner(final Collection<IndicatorModel> models) {
         disposeBanner();
-        Display.getDefault().asyncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {
                 GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);

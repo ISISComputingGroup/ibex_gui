@@ -40,16 +40,17 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
  * The synoptic's components with an optionally overlaid beamline.
  * 
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticPanel extends Composite {
 
 	private BeamlineCompositeContainer instrumentComposite;
 	private LineDecoration beamline;
 	private ScrolledComposite scrolledComposite;
+	private boolean isPreview;
 	
-    public SynopticPanel(Composite parent, int style) {
+    public SynopticPanel(Composite parent, int style, boolean isPreview) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.VERTICAL));
+		this.isPreview = isPreview;
 
 		scrolledComposite = new ScrolledComposite(this, SWT.NONE | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
@@ -77,7 +78,7 @@ public class SynopticPanel extends Composite {
 
 	private void reset() {
 		clearInstrument();
-		instrumentComposite = new BeamlineCompositeContainer(scrolledComposite, SWT.NONE);
+		instrumentComposite = new BeamlineCompositeContainer(scrolledComposite, SWT.NONE, isPreview);
 		scrolledComposite.setContent(instrumentComposite);
 	}
 	
@@ -97,7 +98,7 @@ public class SynopticPanel extends Composite {
 		}
 		
 		for (Component component : components) {
-			ComponentView.create(instrumentComposite, component);
+			ComponentView.create(instrumentComposite, component, isPreview);
 		}
 		
 		if (showBeam) {

@@ -31,10 +31,21 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
+/**
+ * Displays an item on the banner bar.
+ *
+ */
 public class Indicator extends Composite {
 
 	private final StyledText text;
 	
+	/**
+	 * Constructor.
+	 * @param parent Parent of indicator.
+	 * @param style SWT Style.
+	 * @param model Indicator Model.
+	 * @param font Font for text.
+	 */
 	public Indicator(Composite parent, int style, IndicatorModel model, Font font) {
 		super(parent, style);
 		setEnabled(false);

@@ -21,12 +21,12 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.text.NumberFormat;
 
-import org.epics.vtype.SimpleValueFormat;
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VString;
-import org.epics.vtype.VType;
-import org.epics.vtype.ValueFormat;
+import org.diirt.vtype.SimpleValueFormat;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VNumber;
+import org.diirt.vtype.VString;
+import org.diirt.vtype.VType;
+import org.diirt.vtype.ValueFormat;
 
 /**
  * The default formatter for VType to String.

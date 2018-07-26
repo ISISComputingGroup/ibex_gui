@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -67,11 +68,12 @@ public class SynchrotronPanel extends Composite {
     }
 
     private void bind(SynchrotronObservables sync) {
+        ISWTObservableValue currentProperty = WidgetProperties.text().observe(beamCurrent);
+        ISWTObservableValue frequencyProperty = WidgetProperties.text().observe(beamFrequency);
+        
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent),
-                BeanProperties.value("value").observe(sync.beamCurrent));
-        bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency),
-                BeanProperties.value("value").observe(sync.beamFrequency));
+        bindingContext.bindValue(currentProperty, BeanProperties.value("value").observe(sync.beamCurrent));
+        bindingContext.bindValue(frequencyProperty, BeanProperties.value("value").observe(sync.beamFrequency));
     }
 
 }

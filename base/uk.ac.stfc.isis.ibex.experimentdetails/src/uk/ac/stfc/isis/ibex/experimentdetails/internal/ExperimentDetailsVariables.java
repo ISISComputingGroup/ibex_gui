@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -51,12 +52,19 @@ public class ExperimentDetailsVariables {
     /** The observable for the current settings of the beam parameters.*/
     public final ForwardingObservable<Collection<Parameter>> beamParameters;
 
+    /** The observable for the current rb number. **/
     public final ForwardingObservable<String> rbNumber;
+    /** The writable for the current rb number. **/
     public final Writable<String> rbNumberSetter;
 
+    /** The observable for the current user details. **/
     public final ForwardingObservable<Collection<UserDetails>> userDetails;
+    
+    /** The writable for setting the current user details. **/
     public final Writable<UserDetails[]> userDetailsSetter;
 
+    private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter(UserDetails[].class);
+    
     public ExperimentDetailsVariables() {
         availableSampleParameters =
                 InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
@@ -76,8 +84,7 @@ public class ExperimentDetailsVariables {
                 new UserDetailsConverter());
         userDetailsSetter = InstrumentUtils.convert(
                 writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
-                        InstrumentUtils.addPrefix("ED:USERNAME:SP")),
-                new UserDetailsSerialiser());
+                        InstrumentUtils.addPrefix("ED:USERNAME:SP")), userDetailsSerialiser);
 	}
 	
 	 /**

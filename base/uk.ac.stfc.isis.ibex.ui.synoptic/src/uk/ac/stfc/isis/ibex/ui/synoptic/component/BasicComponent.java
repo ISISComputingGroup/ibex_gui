@@ -36,23 +36,27 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 
 
 /**
- * A basic beamline component that.
+ * A basic beam line component.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BasicComponent extends BeamlineComposite {
 
 	private Label image;
 	private Composite propertiesComposite;
+	private boolean isPreview;
 	
     /**
      * Constructor for this component.
      * 
      * @param parent
      *            The parent that holds the component.
+     * @param isPreview
+     *              If the component has been created by the synoptic preview.
      */
-	public BasicComponent(Composite parent) {
+	public BasicComponent(Composite parent, boolean isPreview) {
 		super(parent, SWT.NONE);
 		
+		this.isPreview = isPreview;
 		GridLayout gd = new GridLayout(1, false);
 		gd.marginHeight = 0;
 		gd.marginWidth = 0;
@@ -107,8 +111,7 @@ public class BasicComponent extends BeamlineComposite {
 		if (component.properties().isEmpty()) {
 			return;
 		}
-		
-		ComponentPropertiesView propertiesView = new ComponentPropertiesView(propertiesComposite, component);
+		ComponentPropertiesView propertiesView = new ComponentPropertiesView(propertiesComposite, component, isPreview);
 		
 		propertiesView.pack();
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

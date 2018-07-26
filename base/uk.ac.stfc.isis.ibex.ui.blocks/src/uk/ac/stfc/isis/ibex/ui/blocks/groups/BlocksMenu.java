@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -34,6 +33,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
+import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
@@ -48,9 +48,10 @@ public class BlocksMenu extends MenuManager {
     private static final String EDIT_BLOCK_PREFIX = "Edit host ";
     private static final String COMPONENT_SUFFIX = "component";
     private static final String CONFIGURATION_SUFFIX = "configuration";
-	
+	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
+
 	private final IAction editBlockAction;
-	
+
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
@@ -97,6 +98,7 @@ public class BlocksMenu extends MenuManager {
         final IAction newPresenter = new Action("New Plot") {
 			@Override
 			public void run() {
+				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
 				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
@@ -109,6 +111,7 @@ public class BlocksMenu extends MenuManager {
 					logSubMenu.add(new Action("Add to " + plot + " plot") {
 						@Override
 						public void run() {
+							BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
 							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);
 						}
 					});
@@ -127,7 +130,7 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct                
             }
         };
 	}

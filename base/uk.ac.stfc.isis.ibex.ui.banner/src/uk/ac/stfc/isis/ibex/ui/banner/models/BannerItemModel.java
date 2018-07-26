@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.StringUtils;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
@@ -43,9 +44,6 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
     
     private final BannerItem item;
-    
-    private static final int MAX_TEXT_LENGTH = 30;
-    private static final String ELIPSES = "...";
     
     /**
      * Instantiates model and converter.
@@ -79,9 +77,8 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     		setText = item.name() + ": " + item.value();
     	}
     	
-    	if (setText.length() > MAX_TEXT_LENGTH) {
-    		setText = setText.substring(0, MAX_TEXT_LENGTH - ELIPSES.length()) + ELIPSES;
-    	}
+    	StringUtils.truncateWithEllipsis(setText, 30);
+    	
     	text.setValue(setText);
     }
     

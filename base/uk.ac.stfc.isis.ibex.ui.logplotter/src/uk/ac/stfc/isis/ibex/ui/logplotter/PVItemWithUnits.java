@@ -64,7 +64,7 @@ public class PVItemWithUnits extends PVItem {
 				 */
 				@Override
 				public void onValue(String value) {
-					setUnits(value);
+					setPVUnits(value);
 				}
 				
 				/**
@@ -72,7 +72,7 @@ public class PVItemWithUnits extends PVItem {
 				 */
 				@Override
 				public void onError(Exception e) {
-					setUnits(null);
+					setPVUnits(null);
 				}
 				
 				/**
@@ -81,7 +81,7 @@ public class PVItemWithUnits extends PVItem {
 				@Override
 				public void onConnectionStatus(boolean isConnected) {
 					if (!isConnected) {
-						setUnits(null);
+						setPVUnits(null);
 					}
 				}
 			});
@@ -92,7 +92,7 @@ public class PVItemWithUnits extends PVItem {
 	 * Sets the units and fires a property change on the GUI thread to let CSS know something has changed.
 	 * @param units the new units to set.
 	 */
-	private synchronized void setUnits(String units) {
+	private synchronized void setPVUnits(String units) {
 		final String displayString = Strings.isNullOrEmpty(units) ? displayNameWithoutUnits : String.format("%s (%s)", displayNameWithoutUnits, units);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override

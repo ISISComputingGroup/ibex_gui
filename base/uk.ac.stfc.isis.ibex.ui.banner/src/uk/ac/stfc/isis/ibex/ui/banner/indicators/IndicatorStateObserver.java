@@ -79,7 +79,7 @@ public class IndicatorStateObserver<T> implements Closable {
 	}	
 	
 	public UpdatedValue<Boolean> availability() {
-		return bool;
+		return availability;
 	}
 	
 	@Override
@@ -92,7 +92,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		text.setValue(viewConverter.getMessage());
 		color.setValue(viewConverter.color());
 		bool.setValue(viewConverter.toBool());
-		bool.setValue(viewConverter.availability());
+		availability.setValue(viewConverter.availability());
 	}
 	
 }

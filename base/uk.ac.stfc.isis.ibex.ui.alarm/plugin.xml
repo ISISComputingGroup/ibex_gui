@@ -14,49 +14,9 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective"
-            id="uk.ac.stfc.isis.ibex.ui.alarm.perspective"
+            id="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms"
             name="Log">
       </perspective>
-   </extension>
-   <extension
-         point="uk.ac.stfc.isis.ibex.ui.perspectives">
-      <contribution
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective">
-      </contribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="uk.ac.stfc.isis.ibex.ui.alarm.perspective">
-         <view
-               closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
-               minimized="false"
-               ratio="0.1f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               showTitle="false"
-               visible="true">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
-         point="uk.ac.stfc.isis.ibex.instrument.info">
-      <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmsInstrumentInfoReceiver">
-      </InstrumentInfoReceiver>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-            schemeId="IBEX_key_scheme"
-            sequence="Alt+Shift+A">
-         <parameter
-               id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
-               value="uk.ac.stfc.isis.ibex.ui.alarm.perspective">
-         </parameter>
-      </key>
    </extension>
 
 </plugin>

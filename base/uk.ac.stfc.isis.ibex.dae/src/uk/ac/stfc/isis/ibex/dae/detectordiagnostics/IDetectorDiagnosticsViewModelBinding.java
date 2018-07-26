@@ -84,7 +84,7 @@ public interface IDetectorDiagnosticsViewModelBinding {
      * @param isEnabled
      *            the new diagnostics enabled
      */
-    void setDiagnosticsEnabled(boolean isEnabled);
+    void setDiagnosticsViewEnabled(boolean isEnabled);
 
     /**
      * Update the number of spectra that should be displayed.

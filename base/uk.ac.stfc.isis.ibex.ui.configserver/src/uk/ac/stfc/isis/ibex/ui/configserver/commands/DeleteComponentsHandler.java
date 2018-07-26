@@ -22,9 +22,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.DeleteComponentsViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
@@ -45,12 +45,14 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 	}
 
     /**
-     * {@inheritDoc}
+     * Open the delete components dialogue.
+     *
+     * @param shell the shell
      */
-    @Override
-    public void safeExecute(ExecutionEvent event) {
+	@Override
+	public void safeExecute(Shell shell) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());
-        MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell(), 
+        MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell, 
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet());
         
         if (dialog.open() == Window.OK) {
@@ -60,15 +62,15 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
             if (selectedDependencies.isEmpty()) {
                 configService.uncheckedWrite(toDelete);
             } else {
-                displayWarning(selectedDependencies);
-                safeExecute(event); // Re-open selection dialog.
+                displayWarning(selectedDependencies, shell);
+                safeExecute(shell); // Re-open selection dialog.
             }
         }
     }
     
-    private void displayWarning(Map<String, Collection<String>> selectedDependencies) {
+    private void displayWarning(Map<String, Collection<String>> selectedDependencies, Shell shell) {
         String message = viewModel.buildWarning(selectedDependencies);
-        new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING, new String[] {"Ok"}, 0)
+        new MessageDialog(shell, "Component in Use", null, message, MessageDialog.WARNING, new String[] {"Ok"}, 0)
                 .open();
     }
 

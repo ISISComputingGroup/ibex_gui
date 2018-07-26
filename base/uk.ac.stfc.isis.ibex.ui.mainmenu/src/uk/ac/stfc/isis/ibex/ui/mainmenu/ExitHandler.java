@@ -19,21 +19,22 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.ui.IWorkbench;
 
 /**
  * Exits the GUI. Note this will call the preShutdown method in
  * uk.ac.stfc.isis.ibex.product.ApplicationWorkbenchAdvisor.
  *
  */
-public class ExitHandler extends AbstractHandler {
+public class ExitHandler {
 
-    @Override
-    public Object execute(ExecutionEvent arg0) throws ExecutionException {
-        PlatformUI.getWorkbench().close();
-        return null;
+	/**
+	 * Exits the application.
+	 * @param workbench The workbench to close.
+	 */
+    @Execute
+    public void execute(IWorkbench workbench) {
+        workbench.close();
     }
 }
