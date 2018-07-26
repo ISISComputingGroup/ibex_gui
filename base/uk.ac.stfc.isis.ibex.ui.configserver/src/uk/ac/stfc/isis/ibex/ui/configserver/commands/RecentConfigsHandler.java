@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -34,12 +34,12 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
     }
 
     @Override
-    public void safeExecute(ExecutionEvent event) {
+    public void safeExecute(Shell shell) {
         updateObservers();
         List<String> recentConfigs = Configurations.getInstance().getRecentWithoutCurrent(SERVER.configsInfo().getValue());
         List<String> timeStamps = Configurations.getInstance().getLastModifiedTimestampsWithoutCurrent(SERVER.configsInfo().getValue());
         
-        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell(), "Load Recent Configuration",
+        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell, "Load Recent Configuration",
                 recentConfigs, timeStamps);
         
         if (dialog.open() == Window.OK) {
@@ -49,9 +49,9 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
                 configService.uncheckedWrite(config);
                 Configurations.getInstance().addRecent(config);
             } else {
-                new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
+                new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-                safeExecute(event);
+                execute(shell);
             }
         }
     }
