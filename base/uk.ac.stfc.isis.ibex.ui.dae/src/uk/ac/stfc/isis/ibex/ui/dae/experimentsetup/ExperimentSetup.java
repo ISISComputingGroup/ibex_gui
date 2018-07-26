@@ -35,6 +35,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -106,6 +107,29 @@ public class ExperimentSetup {
 		gridLayout.marginBottom = 10;
 		gridLayout.horizontalSpacing = 0;
         content.setLayout(gridLayout);
+        
+        Button btnSendChanges = new Button(content, SWT.NONE);
+        /*Color color = new Color(DISPLAY, 255, 105, 180);
+        btnSendChanges.setBackground(color);
+        btnSendChanges.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+        System.out.println(btnSendChanges.getForeground());
+        System.out.println(btnSendChanges.getBackground());*/
+        btnSendChanges.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    viewModel.experimentSetup().updateDae();
+                    sendingChanges.open();
+                } catch (Exception err) {
+                    // Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
+                    IsisLog.getLogger(this.getClass()).error(err);
+                    MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
+                            "Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
+                }
+            }
+        });
+        btnSendChanges.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        btnSendChanges.setText("Apply Changes");
 		
         CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -142,24 +166,6 @@ public class ExperimentSetup {
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
 
-        Button btnSendChanges = new Button(content, SWT.NONE);
-        btnSendChanges.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            	try {
-            		viewModel.experimentSetup().updateDae();
-            		sendingChanges.open();
-        		} catch (Exception err) {
-        			// Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
-        			IsisLog.getLogger(this.getClass()).error(err);
-        			MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
-        					"Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
-        		}
-            }
-        });
-        btnSendChanges.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        btnSendChanges.setText("Apply Changes");
-        
         //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));

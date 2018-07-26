@@ -33,6 +33,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -55,6 +56,8 @@ public class TimeChannelsPanel extends Composite {
     private Composite tcbFilePanel;
     private Composite timeRegimesPanel;
 	private List<TimeRegimeView> timeRegimeViews = new ArrayList<TimeRegimeView>();
+	private Color changed = new Color(DISPLAY, 255, 105, 180);
+	private Color unchanged = new Color(DISPLAY, 240, 240, 240);
 	
 	private TimeChannelsViewModel viewModel;
 	private Combo timeUnit;
@@ -165,7 +168,7 @@ public class TimeChannelsPanel extends Composite {
 					view.setTitle(String.format("Time regime %d", count));
 					
 					count++;
-					timeRegimeViews.add(view);					
+					timeRegimeViews.add(view);		
 				}
 				
                 timeRegimesPanel.layout();
@@ -231,8 +234,12 @@ public class TimeChannelsPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (radioUseTCBFile.getSelection()) {
+                    radioSpecifyParameters.setBackground(unchanged);
+                    radioUseTCBFile.setBackground(changed);
                     setCalculationMethod(CalculationMethod.USE_TCB_FILE);
                 } else {
+                    radioUseTCBFile.setBackground(unchanged);
+                    radioSpecifyParameters.setBackground(changed);
                     setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
                 }
             }
@@ -289,6 +296,7 @@ public class TimeChannelsPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setNewTimeChannelFile(timeChannelFileSelector.getText());
+                lblTimeChannelChange.setBackground(changed);
             }
         });
     }

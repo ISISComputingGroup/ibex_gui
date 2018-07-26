@@ -83,7 +83,7 @@ public class TimeRegimeView extends Composite {
 		mode.setEditingSupport(new TimeRegimeModeEditingSupport(viewer, TimeRegimeRow.class, TimeRegimeMode.class));
 		
 		viewer.setLabelProvider(new TimeRegimeLabelProvider());		
-		viewer.setContentProvider(ArrayContentProvider.getInstance());		
+		viewer.setContentProvider(ArrayContentProvider.getInstance());
 	}
 		
 	private void createTableLayout() {
