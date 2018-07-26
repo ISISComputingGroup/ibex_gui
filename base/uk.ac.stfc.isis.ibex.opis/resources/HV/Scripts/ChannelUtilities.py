@@ -74,7 +74,7 @@ def _get_max(this_display, macro, default_value, upper_limit=None):
     
     try:
         max_value = int(max_value)
-    except TypeError:
+    except (TypeError, ValueError):
         max_value = default_value   
     
     if max_value is None:
