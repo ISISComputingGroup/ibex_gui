@@ -60,7 +60,31 @@ public class CopyPerspectiveSnippetProcessor {
                 isFirst = false;
             }
             subscribeChangedElement(broker, perspective);
+            subscribeSelectedPerspective(broker, perspective);
         }
+    }
+
+    public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
+
+	EventHandler handler = new EventHandler() {
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement element = (MUIElement) event.getProperty(EventTags.NEW_VALUE);
+
+				if (!perspectiveStack.getSelectedElement().equals(perspective)) {
+					return;
+				}
+
+				if (!(element instanceof MPerspective)) {
+					return;
+				}
+
+				ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
+
+			}
+		};
+
+		broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, handler);
     }
 
     public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
