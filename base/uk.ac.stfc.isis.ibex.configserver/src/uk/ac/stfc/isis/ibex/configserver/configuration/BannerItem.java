@@ -17,7 +17,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  * CREATED FROM JSON therefore uses snake case
  */
-@SuppressWarnings("checkstyle:MemberName")
 public class BannerItem extends ModelObject {
 
     private String name;
@@ -124,10 +123,10 @@ public class BannerItem extends ModelObject {
 	}
     
     /**
-     * Sets the current state of the property based on the PV value and fires a
+     * Sets the current state of the alarm based on the PV value and fires a
      * property change for listeners.
      * 
-     * @param value the state value of the property.
+     * @param alarm the alarm state to be set
      */
     public synchronized void setCurrentAlarm(AlarmState alarm) {
         firePropertyChange("alarm", this.currentAlarmState, this.currentAlarmState = alarm);

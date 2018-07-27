@@ -118,4 +118,4 @@ if not "%RELEASE%" == "YES" (
 )
 
 REM build MSI kit
-call build_msi.bat %INSTALLDIR%
+REM call build_msi.bat %INSTALLDIR%

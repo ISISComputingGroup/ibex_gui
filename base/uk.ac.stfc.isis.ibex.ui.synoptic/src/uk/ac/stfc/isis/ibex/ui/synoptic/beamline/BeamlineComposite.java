@@ -41,6 +41,7 @@ public abstract class BeamlineComposite extends Composite  {
     protected CLabel nameLabel;
     private SynopticPresenter presenter = Activator.getDefault().presenter();
     private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);
+    private boolean isPreview;
 
     /**
      * The default constructor for the composite.
@@ -101,10 +102,22 @@ public abstract class BeamlineComposite extends Composite  {
             @Override
             public void handleEvent(Event event) {
                 if (presenter.isValidTarget(target)) {
-                    presenter.navigateTo(target);
+                    if (!isPreview) {
+                        presenter.navigateTo(target);
+                    }
                 }
             }
         });
+    }
+    
+    /**
+     * Sets whether or not the beamline composite is created in the synoptic preview menu.
+     * 
+     * @param isPreview
+     *                  True if the beamline composite is created in the synoptic preview menu
+     */
+    public void setIsPreview(boolean isPreview) {
+        this.isPreview = isPreview;
     }
 
     /**

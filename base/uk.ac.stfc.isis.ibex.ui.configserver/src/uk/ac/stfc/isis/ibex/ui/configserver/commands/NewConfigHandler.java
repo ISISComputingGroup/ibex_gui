@@ -70,7 +70,11 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
             } else {
-                SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
+                if (editDialog.switchConfigOnSaveAs()) {
+                    SERVER.setCurrentConfig().uncheckedWrite(editDialog.getConfig());
+                } else {
+                    SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
+                }
             }
         }
 	}

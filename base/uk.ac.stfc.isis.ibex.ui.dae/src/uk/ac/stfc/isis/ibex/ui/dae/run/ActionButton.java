@@ -29,8 +29,19 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.model.Action;
 
+/**
+ * ActionButtons: on press: will perform the action assigned to them.
+ *
+ */
 public class ActionButton extends Button {
 
+    /**
+     * Create a new action button.
+     * 
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
+     * @param style the style of control to construct
+     * @param action the action the button should perform
+     */
 	public ActionButton(Composite parent, int style, Action action) {
 		super(parent, style);
 		

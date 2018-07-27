@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  * This class is responsible for testing the Instrument Description Parser.
  */
 
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class InstrumentDescriptionParserTest {
 
 	/**
@@ -63,7 +63,7 @@ public class InstrumentDescriptionParserTest {
 		String value = expected;
 		// Act
 		try {
-			SynopticDescription testDesc = parser.convert(value);
+			parser.convert(value);
 			fail("ConversionException not thrown");
 		} catch (ConversionException e) {
 			assertNotNull(e.getMessage());

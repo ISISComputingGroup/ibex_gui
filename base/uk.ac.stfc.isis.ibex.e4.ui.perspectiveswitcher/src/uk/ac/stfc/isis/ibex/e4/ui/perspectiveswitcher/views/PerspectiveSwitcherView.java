@@ -69,14 +69,8 @@ public class PerspectiveSwitcherView {
 
 	private void addPerspectiveShortcuts(Composite parent) {
 		List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
-
-		Comparator<MPerspective> comparator = new Comparator<MPerspective>() {
-			@Override
-			public int compare(MPerspective p1, MPerspective p2) {
-				return p1.getLabel().compareTo(p2.getLabel());
-			}
-		};
-		Collections.sort(perspectives, comparator);
+		
+		Collections.sort(perspectives, (MPerspective p1, MPerspective p2) -> p1.getLabel().compareTo(p2.getLabel()));
 
 		for (final MPerspective perspective : perspectives) {
 			final PerspectiveButtonViewModel model;
