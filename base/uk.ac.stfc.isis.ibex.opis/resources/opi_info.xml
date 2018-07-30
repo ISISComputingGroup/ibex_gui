@@ -3401,10 +3401,12 @@
     <entry>
       <key>NGPSPSU</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+            <category>Power supplies</category>
+        </categories>
+        <type>NGPS</type>
         <path>ngpspsu.opi</path>
-        <description>The OPI for the NGPSPSU</description>
+        <description>The OPI for the NGPS power supply unit.</description>
         <macros>
           <macro>
             <name>NGPSPSU</name>
