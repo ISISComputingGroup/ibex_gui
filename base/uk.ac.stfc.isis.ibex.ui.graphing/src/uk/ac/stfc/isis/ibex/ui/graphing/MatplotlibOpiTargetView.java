@@ -57,13 +57,25 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * Logger for errors.
      */
     private static final Logger LOG = IsisLog.getLogger(MatplotlibOpiTargetView.class);
+    
+    /**
+     * Macro name for the URL.
+     */
+    private static final String URL_MACRO_NAME = "URL";
 
     /**
      * Display the OPI for a given target.
      *
      * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi() {
+    public static synchronized void displayOpi(final String url) {
+    	
+    	if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
+    		TARGET.properties().remove(URL_MACRO_NAME);
+    	}
+    	
+    	TARGET.addProperty(URL_MACRO_NAME, url);
+    	
         Display.getDefault().syncExec(new Runnable() {
 			@Override
             public void run() {

@@ -15,12 +15,12 @@ public class ConnectionHandler {
 	 * Opens the plotting OPI pointing at the given URL.
 	 * @param url the URL to point at
 	 */
-    public void openPlot() {
+    public void openPlot(final String url) {
     	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI.");
     	Display.getDefault().asyncExec(new Runnable() {
     		@Override
     		public void run() {
-				MatplotlibOpiTargetView.displayOpi();
+				MatplotlibOpiTargetView.displayOpi(url);
     		}
     	});
     }
