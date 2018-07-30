@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
@@ -29,6 +30,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosCurrentScriptContainer {
 	
+	private Label lblCurrentlyExecutingScript;
     private Label lblCurrentScriptStatus;
     private StyledText txtCurrentScript;
     private final NicosModel model;
@@ -73,7 +75,21 @@ public class NicosCurrentScriptContainer {
     public void createCurrentScriptContainer(Composite parent) {
         parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         parent.setLayout(new GridLayout(1, false));
+      
         
+        Composite currentScriptExecutingContainer = new Composite(parent, SWT.NONE);
+        currentScriptExecutingContainer.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+        currentScriptExecutingContainer.setLayout(new GridLayout(2, false));
+
+        lblCurrentlyExecutingScript = new Label(currentScriptExecutingContainer, SWT.NONE);
+        lblCurrentlyExecutingScript.setText("Currently Executing: ");
+
+        Composite currentScriptNameContainer = new Composite(parent, SWT.NONE);
+        currentScriptNameContainer.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+        currentScriptNameContainer.setLayout(new GridLayout(2, false));
+//        bindingContext.bindValue(WidgetProperties.text().observe(lblCurrentlyExecutingScript),
+//        		BeanProperties.value("currentlyExecutingScript").observe(model));
+
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
