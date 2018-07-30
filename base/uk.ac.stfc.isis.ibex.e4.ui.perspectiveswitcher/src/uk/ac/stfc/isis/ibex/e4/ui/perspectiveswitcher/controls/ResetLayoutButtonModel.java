@@ -14,6 +14,10 @@ public class ResetLayoutButtonModel extends ModelObject {
 
   private static ResetLayoutButtonModel instance = null;
 
+  /**
+   * Get the instance of this singleton.
+   * @return The instance of this singleton.
+   */
   public static ResetLayoutButtonModel getInstance() {
 	  if (instance == null) {
 		  instance = new ResetLayoutButtonModel();
@@ -21,10 +25,22 @@ public class ResetLayoutButtonModel extends ModelObject {
 	  return instance;
   }
 
+  /**
+   * Checks whether the current layout has changed.
+   *
+   * @return isChanged
+   * 			True if the current perspective has changed.
+   */
   public boolean isChanged() {
     return this.changed;
   }
 
+  /**
+   * Set whether or not the layout of the current perspective has changed.
+   *
+   * @param changed
+   * 			True if the layout of the current perspective has changed. False if not.
+   */
   public void setChanged(boolean changed) {
 	  currentPerspective = getCurrentPerspective();
 	  if (changed) {
@@ -35,10 +51,21 @@ public class ResetLayoutButtonModel extends ModelObject {
 	  firePropertyChange("layoutModified", null, this.changed = changed);
   }
 
+  /**
+   * Return the current perspective.
+   *
+   * @return The current perspective.
+   */
   public MPerspective getCurrentPerspective() {
 	  return this.currentPerspective;
   }
 
+  /**
+   * Set the current perspective.
+   *
+   * @param perspective
+   * 			The perspective that is now the current perspective.
+   */
   public void setCurrentPerspective(MPerspective perspective) {
 	  this.currentPerspective = perspective;
 	  if (this.changedPerspectives.contains(perspective)) {

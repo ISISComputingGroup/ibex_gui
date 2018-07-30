@@ -12,6 +12,9 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
     private static final Color RESET_COLOR = SWTResourceManager.getColor(250, 150, 150);
     private ResetLayoutButtonModel model;
 
+    /**
+     * Initiate a new reset layout button view model.
+     */
     public ResetLayoutButtonViewModel() {
     	this.model = ResetLayoutButtonModel.getInstance();
 

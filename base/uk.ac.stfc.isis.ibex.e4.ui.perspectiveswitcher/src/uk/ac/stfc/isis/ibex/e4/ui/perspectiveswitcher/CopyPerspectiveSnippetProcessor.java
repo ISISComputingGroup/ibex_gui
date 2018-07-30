@@ -64,6 +64,13 @@ public class CopyPerspectiveSnippetProcessor {
         }
     }
 
+    /**
+     * Listen to perspective changes and set the new perspective as
+     * current perspective in ResetLayoutButtonModel.
+     *
+     * @param broker
+     * @param perspective
+     */
     public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
 
 	EventHandler handler = new EventHandler() {
@@ -87,6 +94,13 @@ public class CopyPerspectiveSnippetProcessor {
 		broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, handler);
     }
 
+    /**
+     * Listen to perspective content changes set the current
+     * perspective in ResetLayoutButtonModel to changed.
+     *
+     * @param broker
+     * @param perspective
+     */
     public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
 
 	EventHandler handler = new EventHandler() {
