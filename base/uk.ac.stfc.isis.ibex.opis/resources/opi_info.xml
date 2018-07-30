@@ -3406,7 +3406,7 @@
         </categories>
         <type>NGPS</type>
         <path>ngpspsu.opi</path>
-        <description>The OPI for the NGPS power supply unit.</description>
+        <description>The OPI for the NGPS power supply unit</description>
         <macros>
           <macro>
             <name>NGPSPSU</name>
