@@ -22,11 +22,10 @@
  */
 package uk.ac.stfc.isis.ibex.ui.weblinks;
 
+import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
-
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
@@ -36,7 +35,6 @@ import uk.ac.stfc.isis.ibex.opis.OpiView;
  * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
 public class WebLinksOpiTargetView extends OpiView {
-
     /**
      * Class ID.
      */
@@ -46,6 +44,12 @@ public class WebLinksOpiTargetView extends OpiView {
      * File name of the web links OPI.
      */
     private static final String WEB_LINKS_OPI = "weblinks.opi";
+    
+	private static WebLinksOpiTargetView instance;
+	
+	public static WebLinksOpiTargetView getInstance() {
+		return instance;
+	}
 
     /**
      * {@inheritDoc}
@@ -54,17 +58,6 @@ public class WebLinksOpiTargetView extends OpiView {
 	protected Path opi() throws OPIViewCreationException {
 		return Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
 	}
-	
-	/**
-     * Initialise OPI from a path.
-     *
-     * @throws OPIViewCreationException the OPI view creation exception
-     */
-	@Override
-    public void initialiseOPI() throws OPIViewCreationException {
-    	macros().put("INST", Instrument.getInstance().currentInstrument().name());
-        super.initialiseOPI();
-    }
 	
 	/**
 	 * Override toolbars to not exist (they appear in the dashboard which looks weird).
@@ -79,11 +72,17 @@ public class WebLinksOpiTargetView extends OpiView {
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
-		
 		try {
 			initialiseOPI();
 		} catch (OPIViewCreationException e) {
-			MessageDialog.openError(getSite().getShell(), "Web Links Error", e.getMessage());
+			throw new PartInitException(e.getMessage(), e);
 		}
+	}
+
+	@Override
+	protected MacrosInput macros() {
+		MacrosInput macros = emptyMacrosInput();
+		macros.put("INST", Instrument.getInstance().currentInstrument().name());
+		return macros;
 	}
 }

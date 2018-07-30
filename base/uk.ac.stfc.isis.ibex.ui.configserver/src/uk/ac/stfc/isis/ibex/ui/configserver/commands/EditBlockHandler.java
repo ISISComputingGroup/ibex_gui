@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
 
@@ -43,11 +43,13 @@ public final class EditBlockHandler extends EditConfigHandler {
     }
 
     /**
-     * {@inheritDoc}
+     * Open the edit block dialogue.
+     * 
+     * @param shell shell to open
      */
-    @Override
-    public void safeExecute(ExecutionEvent event) {
-        new EditBlockHelper(shell(), SERVER).createDialog(blockName);
+	@Override
+	public void safeExecute(Shell shell) {
+        new EditBlockHelper(shell, SERVER).createDialog(blockName);
     }
 
 }

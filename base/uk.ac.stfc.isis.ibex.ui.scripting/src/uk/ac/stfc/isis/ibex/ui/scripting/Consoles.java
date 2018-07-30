@@ -19,10 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
@@ -30,69 +39,102 @@ import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManag
  * The activator class controls the plug-in life cycle.
  */
 public class Consoles extends AbstractUIPlugin {
-	
-    /**
-     * The plug-in ID.
-     */
-    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
+
+	/**
+	 * The plug-in ID.
+	 */
+	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
+
+	/**
+	 * The perspective ID.
+	 */
+	public static final String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
 
 	// The shared instance
 	private static Consoles plugin;
 
-    private GeniePythonConsoleFactory genieConsoleFactory;
+	private static final GeniePythonConsoleFactory GENIE_CONSOLE_FACTORY = new GeniePythonConsoleFactory();
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	private IEclipseContext eclipseContext;
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-    public void start(BundleContext context) throws Exception {
+	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		PyDevConfiguration.configure();
-        genieConsoleFactory = new GeniePythonConsoleFactory();
+
+		eclipseContext = EclipseContextFactory.getServiceContext(context);
+
+		// Can't get this via injection. The following works though.
+		IEventBroker broker = eclipseContext.get(IEventBroker.class);
+
+		EventHandler handler = new EventHandler() {
+			@Override
+			public void handleEvent(Event event) {
+				Object newValue = event.getProperty(EventTags.NEW_VALUE);
+
+				// only run this, if the NEW_VALUE is a MPerspective
+				if (!(newValue instanceof MPerspective)) {
+					return;
+				}
+
+				if (((MPerspective) newValue).getElementId().equals(PERSPECTIVE_ID)) {
+					Consoles.createConsole();
+				}
+			}
+		};
+
+		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
 	}
 
-    /**
-     * Are there any active console open.
-     *
-     * @return true, if there are; false otherwise
-     */
+	/**
+	 * Are there any active console open.
+	 *
+	 * @return true, if there are; false otherwise
+	 */
 	public boolean anyActive() {
 		for (IConsole console : ConsolePlugin.getDefault().getConsoleManager().getConsoles()) {
 			if (console instanceof ScriptConsole) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-    public void stop(BundleContext context) throws Exception {
+	public void stop(BundleContext context) throws Exception {
 		ScriptConsoleManager.getInstance().closeAll();
 		plugin = null;
 		super.stop(context);
 	}
 
 	/**
-     * Returns the shared instance.
-     *
-     * @return the shared instance
-     */
+	 * Returns the shared instance.
+	 *
+	 * @return the shared instance
+	 */
 	public static Consoles getDefault() {
 		return plugin;
 	}
 
-    /**
-     * Create a new pydev console based on the current instrument.
-     */
-    public void createConsole() {
-        genieConsoleFactory.createConsole(Commands.setInstrument());
-    }
-
+	/**
+	 * Create a new pydev console based on the current instrument.
+	 */
+	public static void createConsole() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (!plugin.anyActive()) {
+					GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+				}
+			}
+		});
+	}
 }

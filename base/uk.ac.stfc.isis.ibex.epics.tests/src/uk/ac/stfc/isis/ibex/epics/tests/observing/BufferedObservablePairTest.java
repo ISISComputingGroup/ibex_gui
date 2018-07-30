@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings({ "unchecked" })
 /**
  * Test for BufferedObservablePair
  */

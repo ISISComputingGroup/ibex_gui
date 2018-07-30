@@ -23,6 +23,7 @@ import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -96,6 +97,7 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
                 alarmModel = AlarmClientModel.getInstance();
                 counter.setAlarmModel(alarmModel);
             }
+            
 		} catch (Exception e) {
 			LOG.info("Alarm Client Model not found");
 		}
@@ -149,6 +151,14 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
         return alarmConnectionCloser;
     }
 
+	/**
+	 * Set up alarm messages for the current instrument. Called when view is
+	 * being instantiated to avoid delay in displaying the alarms.
+	 */
+	public void initInstrument() {
+		setInstrument(Instrument.getInstance().currentInstrument());
+	}
+    
     /**
      * Set up the alarm model default value and create the new alarm model.
      * 
@@ -158,7 +168,19 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
     public void setInstrument(InstrumentInfo instrument) {
         alarmSettings.setInstrument(instrument);
         setupAlarmModel();
+        forceRefresh();
     }
+
+	/**
+	 * This forces BEAST to reinitialise the communicator when the URLs have
+	 * changed.
+	 */
+	private void forceRefresh() {
+		if (alarmModel != null) {
+			alarmModel.setConfigurationName("Annunciator", null);
+			alarmModel.setConfigurationName("Instrument", null);
+		}
+	}
 
     /**
      * Close the current alarm model.

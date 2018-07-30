@@ -21,12 +21,12 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.*;
 
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VEnum;
-import org.epics.vtype.VFloatArray;
-import org.epics.vtype.ValueFactory;
-import org.epics.util.array.ListByte;
-import org.epics.util.array.ListFloat;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VEnum;
+import org.diirt.vtype.VFloatArray;
+import org.diirt.vtype.ValueFactory;
+import org.diirt.util.array.ListByte;
+import org.diirt.util.array.ListFloat;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
  * This class is responsible for ... 
  *
  */
-@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class VTypeFormatMiscTest {
 
 	// Byte array values missing as unable to produce from ValueFactory

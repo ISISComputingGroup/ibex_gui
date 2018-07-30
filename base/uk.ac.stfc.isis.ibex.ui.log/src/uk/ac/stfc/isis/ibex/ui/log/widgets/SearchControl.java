@@ -41,6 +41,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
+/**
+ * The Class Search Control to allow searching within the log.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
 	private static final LogMessageFields[] FIELDS = {
@@ -81,19 +84,23 @@ public class SearchControl extends Canvas {
 
     private ProgressBar progressBar;
 	
+	/**
+	 * Instantiates a new search control.
+	 *
+	 * @param parent the parent in which this control resides
+	 * @param searcher a model to allow searching of log messages
+	 */
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
-		super(parent, SWT.NONE);
-		
+		super(parent, SWT.NONE);		
 		this.parent = parent;
 		this.searcher = searcher;
 
-        GridLayout gl = new GridLayout(2, false);
-        gl.marginWidth = 0;
+        GridLayout gl = new GridLayout(1, false);
         setLayout(gl);
 
         Group grpFilter = new Group(this, SWT.NONE);
         grpFilter.setText("Filter Options");
-        grpFilter.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         GridLayout glGrpFilter = new GridLayout(6, false);
         glGrpFilter.verticalSpacing = 0;
@@ -220,6 +227,11 @@ public class SearchControl extends Canvas {
 		
 	}
 
+	/**
+	 * Sets the searcher model.
+	 *
+	 * @param searcher the new searcher for searching the log database
+	 */
 	public void setSearcher(ISearchModel searcher) {
 		this.searcher = searcher;
 	}

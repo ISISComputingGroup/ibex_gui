@@ -58,16 +58,11 @@ public class Navigator extends Composite {
 	
 	public Navigator(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gridLayout = new GridLayout(6, false);
-		gridLayout.marginRight = 2;
-		gridLayout.marginLeft = 2;
-		gridLayout.marginTop = -6;
-		gridLayout.marginBottom = -6;
-		setLayout(gridLayout);
+		setLayout(new GridLayout(6, false));
 		
 		gotoCombo = new Combo(this, SWT.READ_ONLY);
 		GridData gdGotoCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gdGotoCombo.widthHint = 120;
+		gdGotoCombo.widthHint = 200;
 		gotoCombo.setLayoutData(gdGotoCombo);
 		new Label(this, SWT.NONE);
 		

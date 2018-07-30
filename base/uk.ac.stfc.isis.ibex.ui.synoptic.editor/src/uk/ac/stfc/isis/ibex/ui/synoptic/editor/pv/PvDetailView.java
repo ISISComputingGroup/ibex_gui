@@ -92,7 +92,7 @@ public class PvDetailView extends Composite {
      * @param parent
      *            The composite to display the controls on.
      */
-	public void createControls(Composite parent) {	
+	public void createControls(final Composite parent) {	
 		setLayout(new GridLayout(1, false));
 
 		noSelectionComposite = new Composite(parent, SWT.NONE);
@@ -147,7 +147,7 @@ public class PvDetailView extends Composite {
         btnSelectBlock.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.openBlockDialog();
+                model.openBlockDialog(parent.getShell());
             }
         });
 
@@ -157,7 +157,7 @@ public class PvDetailView extends Composite {
         btnPickPV.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.openPvDialog();
+                model.openPvDialog(parent.getShell());
             }
         });
 	}
