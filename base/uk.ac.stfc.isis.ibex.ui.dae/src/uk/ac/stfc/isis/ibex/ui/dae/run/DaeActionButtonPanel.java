@@ -30,9 +30,21 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
 
+/**
+ * Pane which contains the action buttons in the DAE perspective in the "Run Summary" tab.
+ * For example "BEGIN RUN" or "END RUN".
+ *
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
 
+    /**
+     * Create the panel with all the buttons inside.
+     * 
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
+     * @param style the style of control to construct
+     * @param actions all state transitioning actions on the DAE
+     */
 	public DaeActionButtonPanel(Composite parent, int style, DaeActions actions) {
 		super(parent, style);
 		

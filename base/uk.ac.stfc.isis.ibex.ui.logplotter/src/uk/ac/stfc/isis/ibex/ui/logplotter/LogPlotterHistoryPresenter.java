@@ -39,7 +39,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -58,6 +57,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 						 .map(e -> (DataBrowserEditor) e);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<String> getCurrentDisplays() {
 		return getCurrentDataBrowsers().map(e -> e.getTitle())
@@ -70,14 +72,14 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    }
 		Model model = editor.getModel();
 		model.setSaveChanges(false);
-		model.setArchiveRescale(ArchiveRescale.STAGGER);
+		model.setArchiveRescale(ArchiveRescale.NONE);
 		
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
 	    	// Create axis
 			AxisConfig axis = new AxisConfig(displayName);
-			axis.setAutoScale(true);
+			axis.setAutoScale(false);
 			model.addAxis(axis);
 	    	
 			// Create trace
@@ -95,6 +97,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    }
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void newDisplay(String pvAddress, final String displayName) {		
 	    // Create new editor
@@ -108,6 +113,9 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    addPVToEditor(pvAddress, displayName, editor);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addToDisplay(String pvAddress, String display, String presenterName) {
 		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))

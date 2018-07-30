@@ -13,7 +13,11 @@ public enum SpectrumYAxisTypes {
 	
 	private String name;
 	
-	private SpectrumYAxisTypes(String name) {
+	/**
+	 * Constructor for enum representing the possible Y axes on a spectrum plot.
+	 * @param name text displayed to the user.
+	 */
+	SpectrumYAxisTypes(String name) {
 		this.name = name;
 	}
 	

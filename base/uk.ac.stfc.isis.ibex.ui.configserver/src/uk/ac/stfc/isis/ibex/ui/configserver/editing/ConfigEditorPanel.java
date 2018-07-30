@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.TabItem;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocOverviewPanel;
@@ -58,14 +59,13 @@ public class ConfigEditorPanel extends Composite {
      *            An integer giving the panel style using SWT style flags.
      * @param dialog
      *            The message displayer used to show error messages to the user.
-     * @param isComponent
-     *            Whether the configuration being displayed is a component or
-     *            not.
+     * @param config
+     *            The current config
      * @param configurationViewModels
      *            A class holding a number of view models for displaying
      *            configuration data to the user.
      */
-    public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, boolean isComponent,
+    public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, EditableConfiguration config,
             ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(1, false);
@@ -81,7 +81,7 @@ public class ConfigEditorPanel extends Composite {
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        if (isComponent) {
+        if (config.getIsComponent()) {
             components = null;
         } else {
             TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
@@ -100,7 +100,7 @@ public class ConfigEditorPanel extends Composite {
         blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText("Blocks");
 		
-		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE);
+		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE, new BlocksEditorViewModel(config));
 		blocksTab.setControl(blocks);
 		
 		TabItem groupsTab = new TabItem(editorTabs, SWT.NONE);
@@ -108,6 +108,8 @@ public class ConfigEditorPanel extends Composite {
 		
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
+		
+		setConfigToEdit(config);
 	}
 
     /**
@@ -116,7 +118,7 @@ public class ConfigEditorPanel extends Composite {
      * @param config
      *            The configuration to edit.
      */
-	public void setConfigToEdit(EditableConfiguration config) {		
+	private void setConfigToEdit(EditableConfiguration config) {		
 		iocs.setConfig(config);
 		blocks.setConfig(config);
 		if (components != null) {

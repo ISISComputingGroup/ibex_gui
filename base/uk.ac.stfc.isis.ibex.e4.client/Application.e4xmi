@@ -55,13 +55,25 @@
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks"/>
-    <sharedElements xsi:type="advanced:Area" xmi:id="_yi1esNadEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.area.0" selectedElement="_ZX9AENacEeekLPLQ_9IvJQ" label="Log Plotter Area">
-      <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
+    <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_Z43_UIUFEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.5" horizontal="true">
+      <children xsi:type="basic:PartStack" xmi:id="_ZX9AENacEeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.19" containerData="50" selectedElement="_KUbkENZ8EeekLPLQ_9IvJQ">
         <tags>newtablook</tags>
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <tags>NoAutoCollapse</tags>
-        <children xsi:type="basic:Part" xmi:id="_KUbkENZ8EeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter"/>
+        <children xsi:type="basic:Part" xmi:id="_KUbkENZ8EeekLPLQ_9IvJQ" elementId="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Log Plotter">
+          <menus xmi:id="_GBWhoIUNEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.0">
+            <tags>ViewMenu</tags>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_HOx-EIUNEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.fred" label="fred" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/setup.png" command="_hj--kKkDEeeNUPQOsQF40g"/>
+          </menus>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_dPCC0IUFEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.32" toBeRendered="false" containerData="50">
+        <children xsi:type="basic:Part" xmi:id="_doSQUIUFEeiCJ_qZ_3IIBQ" elementId="org.eclipse.ui.views.PropertySheet" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_TGckEIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.archiveview.ArchiveView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_f1vhMIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.sample_view" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_f7OeIIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.exportview.ExportView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
+        <children xsi:type="basic:Part" xmi:id="_gYr2MIUXEeiCJ_qZ_3IIBQ" elementId="org.csstudio.trends.databrowser.waveformview.WaveformView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" closeable="true"/>
       </children>
     </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
@@ -93,6 +105,98 @@
   <handlers xmi:id="_Q7_cIKkEEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.about" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.AboutHandler" command="_hj--kKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_v5ccsKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.usermanual" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.ManualHandler" command="_w0psQKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_37kgEKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.consolelogdialog" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.logger/uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
+  <handlers xmi:id="_hPKD8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
+  <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
+    <tags>type:user</tags>
+    <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_aIIjMIQcEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_fZ5gUIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+B" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_fZ5gUYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.1" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_qmKkcIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+D" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_qmKkcYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_vzdIsIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+E" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_vzdIsYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_7c1moIQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+J" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_7c1moYQzEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.2" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_At4CcIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+L" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_At4CcYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ioclog">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_El9uUIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+P" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_El9uUYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_IesTYIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+M" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_IesTYYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_MGVIcIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+N" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_MGVIcYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_SP2EYIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+G" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_SP2EYYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_VqK2MIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+S" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_VqK2MYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.ui.scripting.perspective">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_axpGUIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+Y" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_axpGUYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_ey8YkIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+W" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_ey8YkYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+    <bindings xmi:id="_w_S0QIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+V" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_w_S0QYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
+  </bindingTables>
+  <rootContext xmi:id="_no3QoIOVEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="dialog and window" description="default binding context">
+    <children xmi:id="_FCSpgIQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialog" name="dialog"/>
+    <children xmi:id="_Hvhr0IQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.window" name="window"/>
+  </rootContext>
   <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png" tooltip="The device alarms on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
       <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="30" horizontal="true">
@@ -267,11 +371,21 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_83AgIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="50">
-          <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosView" label="Current script"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_bjNsoI_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.25">
+          <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="90">
+            <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputContainer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputContainer" label="Output"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_mi000I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.33" containerData="10">
+            <children xsi:type="basic:Part" xmi:id="_m1vw0I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.nicosstatus" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosStatusContainer" label="Status"/>
+          </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
-          <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" label="Script output"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_cC6gYI_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.26">
+          <children xsi:type="basic:PartStack" xmi:id="_sS4H4I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.34" containerData="50">
+            <children xsi:type="basic:Part" xmi:id="_tKj90I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.currentscript" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosCurrentScriptContainer" label="Current script"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
+            <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosQueueContainer" label="Script output"/>
+          </children>
         </children>
       </children>
     </children>
@@ -334,7 +448,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_qNDzkKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.9" containerData="70" horizontal="true">
-        <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="org.eclipse.ui.editorss" ref="_yi1esNadEeekLPLQ_9IvJQ"/>
+        <children xsi:type="advanced:Placeholder" xmi:id="_W1z3wNUNEeeRPIKhqhrQWA" elementId="org.eclipse.ui.editorss" ref="_Z43_UIUFEeiCJ_qZ_3IIBQ"/>
       </children>
     </children>
   </snippets>
@@ -463,6 +577,10 @@
   <commands xmi:id="_hj--kKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="About IBEX" description="About IBEX"/>
   <commands xmi:id="_w0psQKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.usermanual" commandName="User Manual " description="User Manual"/>
   <commands xmi:id="_5pQ8gKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.consolelog" commandName="Console Log" description="Console Log"/>
+  <commands xmi:id="_UJcx8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchperspetives" commandName="Switch Perspetives" description="Switch Perspetives">
+    <tags>type:user</tags>
+    <parameters xmi:id="_cauroIOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" name="perspectiveid" optional="false"/>
+  </commands>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

@@ -21,25 +21,21 @@
  */
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * Provides methods to get the current date and time.
  */
 public class DateTimeProvider {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
     /**
      * Returns the current date.
      * 
      * @return The date.
      */
-    public String getDate() {
+    public LocalDate getDate() {
 
-        return dateFormat.format(new Date());
+        return LocalDate.now();
     }
 
     /**
@@ -47,7 +43,7 @@ public class DateTimeProvider {
      * 
      * @return The time.
      */
-    public String getTime() {
-        return timeFormat.format(new Date());
+    public LocalTime getTime() {
+        return LocalTime.now();
     }
 }

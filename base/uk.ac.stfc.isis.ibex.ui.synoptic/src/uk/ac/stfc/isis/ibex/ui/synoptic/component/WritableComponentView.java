@@ -27,22 +27,22 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
+/**
+ * A component which allows the user to change a device property in the synoptic perspective.
+ *
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class WritableComponentView extends Composite {
 	
@@ -54,13 +54,12 @@ public class WritableComponentView extends Composite {
 	private Text text;
 	private Composite composite;
 	
-	
 	private final WritableComponentProperty property;
 	
 	private final ModifyListener textModifyListener = new ModifyListener() {
 		@Override
 		public void modifyText(ModifyEvent e) {
-			
+		    
 		}
 	};
 	
@@ -71,10 +70,18 @@ public class WritableComponentView extends Composite {
      *            The property of the component that is writable
      */
 	public WritableComponentView(Composite parent, final WritableComponentProperty property) {
-		this(parent, property, true);
+		this(parent, property, true, false);
 	}
 	
-	public WritableComponentView(Composite parent, final WritableComponentProperty property, boolean displayName) {
+	/**
+	 * Constructs a new instance of this class given its parent and a writable property.
+	 * 
+	 * @param parent A widget which will be the parent of the new instance (cannot be null)
+	 * @param property The property of the component that is writable
+	 * @param displayName True if the property name should be displayed
+	 * @param isPreview False if the property text can be modified (ie if the view is created in a the synoptic preview).
+	 */
+	public WritableComponentView(Composite parent, final WritableComponentProperty property, boolean displayName, final boolean isPreview) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.VERTICAL));
 		
@@ -124,8 +131,9 @@ public class WritableComponentView extends Composite {
 			@Override
 			public void handleEvent(Event event) {
 				if (event.detail == SWT.TRAVERSE_RETURN) {
-					sendValue();
-					
+				    if (!isPreview) {
+				        sendValue();
+				    }
 				}
 			}
 		});

@@ -82,10 +82,9 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new ConfigEditorPanel(parent, SWT.NONE, this, config.getIsComponent(), configurationViewModels);
+        editor = new ConfigEditorPanel(parent, SWT.NONE, this, config, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
-        editor.setConfigToEdit(config);
 		return editor;
 	}
 

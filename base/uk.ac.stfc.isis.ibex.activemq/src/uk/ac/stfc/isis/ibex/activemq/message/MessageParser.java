@@ -62,6 +62,9 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
      *            true to start, false to stop
      */
     public void setRunning(boolean run) {
+    	if (run && jmsConsumer == null) {
+    		throw new IllegalStateException("Cannot start running without a consumer");
+    	}
         running = run;
     }
     
@@ -83,6 +86,21 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
      */
     public void closeJMSConsumer() throws JMSException {
         jmsConsumer.close();
+        
+        /**
+         * Once the consumer is closed, we can't do anything with it
+         * and it can never be reopened. Additionally there is no
+         * isClosed() on a consumer so we can't tell that it's closed
+         * after the fact.
+         * 
+         * Hence, set it to null here.
+         * 
+         * Failure to do this will result in the thread going CPU-bound
+         * and eventually leaking memory while it tries repeatedly to connect
+         * 
+         */
+        jmsConsumer = null;
+        setRunning(false);
     }
 
     /**
@@ -105,7 +123,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
                     Thread.sleep(TIMEOUT_50_MS);
                 }
             } catch (JMSException | InterruptedException e) {
-                // Do nothing; exception will be caught be exception
+                // Do nothing; exception will be caught by exception
                 // listener (see connect())
             }
         }

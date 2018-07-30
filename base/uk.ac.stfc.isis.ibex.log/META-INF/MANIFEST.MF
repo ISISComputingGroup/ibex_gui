@@ -17,7 +17,6 @@ Export-Package: uk.ac.stfc.isis.ibex.log,
  uk.ac.stfc.isis.ibex.log.message,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.log.rdb
-Bundle-ClassPath: .,
- lib/mysql-connector-java-5.1.31-bin.jar
+Bundle-ClassPath: .
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j

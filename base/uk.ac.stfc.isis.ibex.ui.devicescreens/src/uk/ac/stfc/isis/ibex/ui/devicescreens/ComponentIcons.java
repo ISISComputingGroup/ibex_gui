@@ -60,10 +60,14 @@ public final class ComponentIcons {
 
     private static String getIconNameForType(ComponentType componentType) {
         switch (componentType) {
+            case MOTION_SET_POINTS_FEW:
+                return "in_out_motion_set_points";
             case JAWS:
                 return "jaws";
             case CHOPPER:
                 return "chopper";
+            case FERMI_CHOPPER:
+                return "fermi_chopper";
             case MONITOR:
                 return "monitor";
             case SAMPLESTACK:
@@ -152,6 +156,10 @@ public final class ComponentIcons {
             	return "dilution_fridge";
             case COUETTE:
             	return "couette";
+            case SYRINGE_PUMP:
+            	return "syringe_pump";
+            case KEYENCE:
+            	return "keyence";
             default:
                 return "cog";
         }

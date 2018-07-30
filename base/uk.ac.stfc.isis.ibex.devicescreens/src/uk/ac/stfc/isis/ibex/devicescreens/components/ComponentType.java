@@ -38,6 +38,8 @@ public enum ComponentType {
 	JAWS,
     /** Chopper component type. */
 	CHOPPER,
+    /** Fermi Chopper component type. */
+	FERMI_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
@@ -57,7 +59,9 @@ public enum ComponentType {
     /** Lambda Genesys component type. */
     TDK_LAMBDA_GENESYS,
     /** Beamstop component type. */
-	BEAMSTOP, 
+    BEAMSTOP, 
+    /** Motion set points for one to three set points. */
+    MOTION_SET_POINTS_FEW,
     /** Moving monitor component type. */
 	MOVINGMONITOR,
     /** Rotating bench component type. */
@@ -135,9 +139,13 @@ public enum ComponentType {
     /** Couette cell.*/
     COUETTE,
     /** Motion setpoints.*/
-    MOTION_SET_POINTS;
+    MOTION_SET_POINTS,
+    /**Syringe pump*/
+    SYRINGE_PUMP,
+    /** Keyence micrometer. */
+    KEYENCE;
 
-	
+
 	private Target target;
 
     /**
