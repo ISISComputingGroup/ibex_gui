@@ -38,6 +38,8 @@ public enum ComponentType {
 	JAWS,
     /** Chopper component type. */
 	CHOPPER,
+    /** Fermi Chopper component type. */
+	FERMI_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
@@ -138,10 +140,12 @@ public enum ComponentType {
     COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS,
+    /**Syringe pump*/
+    SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE;
 
-	
+
 	private Target target;
 
     /**

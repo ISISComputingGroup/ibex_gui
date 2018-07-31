@@ -23,8 +23,22 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Model for indicators displayed on the banner.
+ */
 public interface IndicatorModel {
+	/**
+	 * @return Text model for indicator model.
+	 */
 	UpdatedValue<String> text();
+	
+	/**
+	 * @return Colour model for indicator model.
+	 */
 	UpdatedValue<Color> color();
+	
+	/**
+	 * @return Boolean model for indicator model.
+	 */
 	UpdatedValue<Boolean> availability();
 }

@@ -22,24 +22,24 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 import java.text.NumberFormat;
 import java.util.Arrays;
 
-import org.epics.util.array.IteratorByte;
-import org.epics.util.array.IteratorDouble;
-import org.epics.util.array.IteratorFloat;
-import org.epics.util.array.IteratorInt;
-import org.epics.vtype.Display;
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VDouble;
-import org.epics.vtype.VDoubleArray;
-import org.epics.vtype.VEnum;
-import org.epics.vtype.VFloatArray;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VIntArray;
-import org.epics.vtype.VLong;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VShort;
-import org.epics.vtype.VString;
-import org.epics.vtype.VType;
-import org.epics.vtype.ValueUtil;
+import org.diirt.util.array.IteratorByte;
+import org.diirt.util.array.IteratorDouble;
+import org.diirt.util.array.IteratorFloat;
+import org.diirt.util.array.IteratorInt;
+import org.diirt.vtype.Display;
+import org.diirt.vtype.VByteArray;
+import org.diirt.vtype.VDouble;
+import org.diirt.vtype.VDoubleArray;
+import org.diirt.vtype.VEnum;
+import org.diirt.vtype.VFloatArray;
+import org.diirt.vtype.VInt;
+import org.diirt.vtype.VIntArray;
+import org.diirt.vtype.VLong;
+import org.diirt.vtype.VNumber;
+import org.diirt.vtype.VShort;
+import org.diirt.vtype.VString;
+import org.diirt.vtype.VType;
+import org.diirt.vtype.ValueUtil;
 
 /**
  * This class is responsible for converting PVManager VType in to Java types.

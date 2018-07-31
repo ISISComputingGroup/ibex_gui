@@ -1096,13 +1096,13 @@
         <categories>
           <category>Choppers</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>fermi_chopper.opi</path>
-        <description>The OPI for the fermi chopper.</description>
+        <description>The OPI for the Fermi chopper.</description>
         <macros>
           <macro>
             <name>FERMCHOP</name>
-            <description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+            <description>The Fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
           </macro>
         </macros>
       </value>
@@ -1113,7 +1113,7 @@
         <categories>
           <category>Choppers</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>FZJ_DD_Fermi_Chopper.opi</path>
         <description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
         <macros>
@@ -1204,9 +1204,9 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-        <type>CHOPPER</type>
+        <type>FERMI_CHOPPER</type>
         <path>fermi_chopper_lift.opi</path>
-        <description>The OPI for the fermi chopper lifter.</description>
+        <description>The OPI for the Fermi chopper lifter.</description>
         <macros>
 				</macros>
 			</value>
@@ -1849,13 +1849,13 @@
 				<categories>
 					<category>Choppers</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>fermi_chopper.opi</path>
-				<description>The OPI for the fermi chopper.</description>
+				<description>The OPI for the Fermi chopper.</description>
 				<macros>
 					<macro>
 						<name>FERMCHOP</name>
-						<description>The fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+						<description>The Fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -1866,7 +1866,7 @@
 				<categories>
 					<category>Choppers</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>FZJ_DD_Fermi_Chopper.opi</path>
 				<description>The OPI for the FZJ Digital Drive Fermi Chopper.</description>
 				<macros>
@@ -1921,7 +1921,7 @@
 			<key>IEG system</key>
 			<value>
 				<categories>
-					<category>Gas handling systems</category>
+					<category>Gas and liquid handling systems</category>
 				</categories>
 				<type>GAS_EXCHANGE</type>
 				<path>ieg_system.opi</path>
@@ -1957,9 +1957,9 @@
 				<categories>
 					<category>Miscellaneous motion control</category>
 				</categories>
-				<type>CHOPPER</type>
+				<type>FERMI_CHOPPER</type>
 				<path>fermi_chopper_lift.opi</path>
-				<description>The OPI for the fermi chopper lifter.</description>
+				<description>The OPI for the Fermi chopper lifter.</description>
 				<macros>
 				</macros>
 			</value>
@@ -2422,8 +2422,10 @@
 	<entry>
       <key>SP2XX</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+			<category>Gas and liquid handling systems</category>
+		</categories>
+        <type>SYRINGE_PUMP</type>
         <path>sp2xx.opi</path>
         <description>The OPI for the SP2XX</description>
         <macros>
@@ -2448,5 +2450,16 @@
 		</macros>
 		</value>
 	</entry>
+    <entry>        
+      <key>Live View</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>live_view.opi</path>
+        <description>The OPI for a live view of the detector</description>
+      </value>
+    </entry>
 	</opis>
 </descriptions>

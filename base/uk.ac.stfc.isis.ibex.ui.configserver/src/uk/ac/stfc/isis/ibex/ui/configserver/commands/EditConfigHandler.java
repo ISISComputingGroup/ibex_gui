@@ -19,9 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
@@ -41,18 +41,21 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 		super(SERVER.saveAs());
 	}
 
-    /**
-     * {@inheritDoc}
-     */
+	
+	/**
+	 * Open the edit config dialogue for the given config.
+	 *
+	 * @param shell the shell
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
+	public void safeExecute(Shell shell) {
         ConfigSelectionDialog selectionDialog =
-                new ConfigSelectionDialog(shell(), TITLE, SERVER.configsInfo().getValue(), false, true);
-        EditConfigHelper helper = new EditConfigHelper(shell(), SERVER);
+                new ConfigSelectionDialog(shell, TITLE, SERVER.configsInfo().getValue(), false, true);
+        EditConfigHelper helper = new EditConfigHelper(shell, SERVER);
 		if (selectionDialog.open() == Window.OK) {
 			String configName = selectionDialog.selectedConfig();
             if (configName.equals(SERVER.currentConfig().getValue().name())) {
-                if (editCurrentConfigConfirmDialog(configName)) {
+                if (editCurrentConfigConfirmDialog(configName, shell)) {
                     helper.createDialogCurrent();
                 }
             } else {
@@ -61,8 +64,8 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 		}
 	}
 	
-    private boolean editCurrentConfigConfirmDialog(String configName) {
-        return MessageDialog.openQuestion(shell(), "Confirm Edit Current Configuration",
+    private boolean editCurrentConfigConfirmDialog(String configName, Shell shell) {
+        return MessageDialog.openQuestion(shell, "Confirm Edit Current Configuration",
                 configName + " is the current configuration, are you sure you want to edit it?");
     }
 }

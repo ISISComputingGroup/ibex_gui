@@ -70,7 +70,7 @@ public class VersionPanel extends Composite {
         clientVersion = new Label(this, SWT.NONE);
         clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
-        final String versionText = Platform.getBundle(versionBundleId).getVersion().toString();
+        final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
         clientVersion.setText(versionText);
 
         Label lblPvPrefix = new Label(this, SWT.NONE);

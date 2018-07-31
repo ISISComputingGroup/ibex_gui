@@ -29,8 +29,7 @@ public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	public void newDisplay(String pvAddress, String displayName) {
 		// do nothing
 	}
-
-	@Override
+	
 	public ArrayList<String> getCurrentDisplays() {
 		// TODO Auto-generated method stub
 		return null;

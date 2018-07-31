@@ -1,7 +1,6 @@
 from ChannelUtilities import get_available_channels, get_max_crates, get_channel_pv_name
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-
 def update_channels(this_display, this_pvs):
     """
     Updates the channels available on the summary maintenance page
@@ -29,8 +28,5 @@ def update_channels(this_display, this_pvs):
         this_display.getWidget('update').getPV().setValue(new_pv_value)
 
 
-if __name__ == "__main__":
-    # PVs
-    # pv[0] = loc://CAEN:CHANLIST:UPDATE, triggered
-    # pv[1-16] = $(P)CAEN:crates.[XX]ST
-    update_channels(display, pvs)
+#The function called by CSS
+update_channels(display, pvs)

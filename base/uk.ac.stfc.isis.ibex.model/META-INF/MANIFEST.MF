@@ -7,6 +7,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: uk.ac.stfc.isis.ibex.model
 Bundle-ClassPath: .

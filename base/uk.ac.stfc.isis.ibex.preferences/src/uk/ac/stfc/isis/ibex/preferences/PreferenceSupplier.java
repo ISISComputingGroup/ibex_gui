@@ -19,108 +19,83 @@
 
 package uk.ac.stfc.isis.ibex.preferences;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * Supplies the details for the IBEX preference page.
  */
-public class PreferenceSupplier extends AbstractPreferenceInitializer {
+public class PreferenceSupplier {
 	
     /**
      * The preference setting for the location of EPICS base.
      */
-    public static final String EPICS_BASE_DIRECTORY = "epics_base_directory";
+    private static final String EPICS_BASE_DIRECTORY = "epics_base_directory";
 
     /**
      * The default for the location of EPICS base.
      */
-    public static final String DEFAULT_EPICS_BASE_DIRECTORY = "c:\\Instrument\\Apps\\EPICS\\base\\master\\bin\\windows-x64";
+    private static final String DEFAULT_EPICS_BASE_DIRECTORY = "c:\\Instrument\\Apps\\EPICS\\base\\master\\bin\\windows-x64";
 
     /**
      * The preference setting for the location of Python.
      */
-    public static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
+    private static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
 
     /**
      * The default for the location of Python.
      */
-    public static final String DEFAULT_PYTHON_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
+    private static final String DEFAULT_PYTHON_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
     
     /**
      * The preference setting for the location of genie_python.
      */
-    public static final String GENIE_PYTHON_DIRECTORY = "genie_python_directory";
+    private static final String GENIE_PYTHON_DIRECTORY = "genie_python_directory";
 
     /**
      * The default for the location of genie_python.
      */
-    public static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
     
     /**
      * The preference setting for the location of EPICS utils.
      */
-    public static final String EPICS_UTILS_DIRECTORY = "epics_utils_directory";
+    private static final String EPICS_UTILS_DIRECTORY = "epics_utils_directory";
 
     /**
      * The default for the location of EPICS utils.
      */
-    public static final String DEFAULT_EPICS_UTILS_DIRECTORY = "C:\\Instrument\\Apps\\EPICS_UTILS";
-
-    /**
-     * The preference setting for the instrument scientist password.
-     */
-    public static final String INSTRUMENT_SCIENTIST_PASSWORD = "instrument_scientist_password";
-
-    /**
-     * The default instrument scientist password.
-     */
-    public static final String DEFAULT_INSTRUMENT_SCIENTIST_PASSWORD = "reliablebeam";
-    
-    /**
-     * The preference setting for the administrator password.
-     */
-    public static final String ADMINISTRATOR_PASSWORD = "administrator_password";
-
-    /**
-     * The default administrator password.
-     */
-    public static final String DEFAULT_ADMINISTRATOR_PASSWORD = "asyndriver";  
-
-    /**
-     * The preference setting for the initial user.
-     */
-    public static final String INITIAL_USER = "initial_user";
-
-    /**
-     * The default initial user.
-     */
-    public static final String DEFAULT_INITIAL_USER = "Default user";
-    
-    /**
-     * The scope for the preference settings.
-     */
-	public static final IScopeContext SCOPE_CONTEXT = InstanceScope.INSTANCE;
+    private static final String DEFAULT_EPICS_UTILS_DIRECTORY = "C:\\Instrument\\Apps\\EPICS_UTILS";
 
     /**
      * The overall preferences name.
      */
-    public static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.preferences";
+    private static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.preferences";
+    
+    /**
+     * Defines which perspectives to hide.
+     */
+    private static final String PERSPECTIVES_TO_HIDE = "perspectives_not_shown";
+    
+    /**
+     * Defines which perspectives to hide by default.
+     */
+    private static final String DEFAULT_PERSPECTIVES_TO_HIDE = "";
 	
     /**
-     * Gets the IBEX preferences.
+     * Gets a string from the IBEX preference store.
      * 
-     * @return the preferences
+     * @return the preferences string, or the default if it was not present.
      */
-	public static IEclipsePreferences getPreferences() {
-        return SCOPE_CONTEXT.getNode(PREFERENCE_NODE);
-    }
+	private static String getString(String name, String def) {
+		return Platform.getPreferencesService().getString(PREFERENCE_NODE, name, def, null);
+	}
 		
     /**
      * Gets the preference setting for EPICS base directory.
@@ -128,7 +103,7 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
      * @return the setting (uses default if not set)
      */
 	public static String epicsBase() {
-		return getPreferences().get(EPICS_BASE_DIRECTORY, DEFAULT_EPICS_BASE_DIRECTORY);
+		return getString(EPICS_BASE_DIRECTORY, DEFAULT_EPICS_BASE_DIRECTORY);
 	}
 	
     /**
@@ -137,16 +112,29 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
      * @return the setting (uses default if not set)
      */
 	public static String pythonInterpreterPath() {
-		return getPreferences().get(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
 	}
 	
     /**
+     * Gets a list of perspective IDs which should not be shown.
+     * 
+     * @return a list of perspective IDs which should not be shown (may be empty, but never null).
+     */
+	public static List<String> perspectivesToHide() {
+		String preferencesString = getString(PERSPECTIVES_TO_HIDE, DEFAULT_PERSPECTIVES_TO_HIDE);
+		if (preferencesString == null || preferencesString.isEmpty()) {
+			return Collections.<String>emptyList();
+		}
+		return Arrays.asList(preferencesString.split(",")).stream().map(s -> s.trim()).collect(Collectors.toList());
+	}
+	
+	/**
      * Gets the preference setting for genie_python directory.
      * 
      * @return the setting (uses default if not set)
      */
 	public static String geniePythonPath() {
-		return getPreferences().get(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY);
+		return getString(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY);
 	}
 	
 	/**
@@ -155,59 +143,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
      * @return the setting (uses default if not set)
      */
 	public static String epicsUtilsPath() {
-		return getPreferences().get(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
-	}
-
-    /**
-     * Gets the preference for the administrator password.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String administratorPassword() {
-		return getPreferences().get(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
-	}
-	
-    /**
-     * Gets the preference for the instrument password.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String instrumentScientistPassword() {
-		return getPreferences().get(INSTRUMENT_SCIENTIST_PASSWORD, DEFAULT_INSTRUMENT_SCIENTIST_PASSWORD);
-	}
-	
-    /**
-     * Gets the preference for the initial user.
-     * 
-     * @return the setting (uses default if not set)
-     */
-	public static String initialUser() {
-		return getPreferences().get(INITIAL_USER, DEFAULT_INITIAL_USER);
-	}
-	
-	@Override
-	public void initializeDefaultPreferences() {
-        IPreferenceStore store = Preferences.getDefault().getPreferenceStore();
-        Map<String, String> initializationEntries = PreferenceSupplier.getInitializationEntries();
-        for (Map.Entry<String, String> entry : initializationEntries.entrySet()) {
-            store.setDefault(entry.getKey(), entry.getValue());
-        }
-    }
-
-    /**
-     * Gets the initial settings for the preferences.
-     * 
-     * @return the initial settings
-     */
-	public static Map<String, String> getInitializationEntries() {
-        Map<String, String> entries = new HashMap<String, String>();
-        entries.put(EPICS_BASE_DIRECTORY, DEFAULT_EPICS_BASE_DIRECTORY);
-        entries.put(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
-        entries.put(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
-        entries.put(GENIE_PYTHON_DIRECTORY,  DEFAULT_GENIE_PYTHON_DIRECTORY);
-        entries.put(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
-        entries.put(INITIAL_USER, DEFAULT_INITIAL_USER);
-    		
-        return entries;
+		return getString(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
 	}
 }

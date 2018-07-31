@@ -21,9 +21,10 @@ package uk.ac.stfc.isis.ibex.epics.pv;
 
 import java.util.logging.Logger;
 
-import org.epics.vtype.VType;
+import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 
 /**
  * A class for observing an EPICS process variable.
@@ -31,9 +32,17 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
  * @param <T> the PV type (must be a VType)
  */
 public abstract class ObservablePV<T extends VType> extends ClosableObservable<T> implements PV<T> {
+	
+	static {
+		PVManagerSettings.setUp();
+	}
 
 	private final PVInfo<T> info;
 
+	/**
+	 * Create a new observable PV.
+	 * @param info the parameters to create this PV with
+	 */
 	public ObservablePV(PVInfo<T> info) {
         if (info.address().contains("BLOCKSERVER:IOCS")) {
             Logger.getGlobal().info("(Ticket 2161) ObservablePV initialized looking at " + info.address());
@@ -41,6 +50,9 @@ public abstract class ObservablePV<T extends VType> extends ClosableObservable<T
 		this.info = info;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public PVInfo<T> details() {
 		return info;

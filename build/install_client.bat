@@ -10,7 +10,7 @@ if not exist "%BASEDIR%COPY_COMPLETE.txt" (
 )
 REM Copy the Client files across
 set APPSDIR=C:\Instrument\Apps
-set CLIENTDIR=%APPSDIR%\Client
+set CLIENTDIR=%APPSDIR%\Client_E4
 mkdir %CLIENTDIR%
 xcopy /q /s /e /h %BASEDIR%Client %CLIENTDIR%
 if %errorlevel% neq 0 (
