@@ -356,7 +356,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="NICOS Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_32x24.png" tooltip="Control and feedback from the script server">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="Script Server" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_server_32x24.png" tooltip="Control and feedback from the script server">
     <children xsi:type="basic:PartSashContainer" xmi:id="_41mgMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_5khbsKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_7JTBIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -384,7 +384,7 @@
             <children xsi:type="basic:Part" xmi:id="_tKj90I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.currentscript" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosCurrentScriptContainer" label="Current script"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
-            <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosQueueContainer" label="Script output"/>
+            <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosQueueContainer" label="Queue"/>
           </children>
         </children>
       </children>
