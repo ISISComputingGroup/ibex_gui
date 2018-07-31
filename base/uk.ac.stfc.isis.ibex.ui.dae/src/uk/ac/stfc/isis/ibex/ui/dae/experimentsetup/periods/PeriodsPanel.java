@@ -252,10 +252,22 @@ public class PeriodsPanel extends Composite {
 
         cmbPeriodFile = new Combo(cmpSwitchSourceFile, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmbPeriodFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        
+
+        cmbPeriodFile.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.setNewPeriodFile(cmbPeriodFile.getText());
+                }
+        });
+
+        cmbPeriodType.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.setPeriodType(cmbPeriodType.getSelectionIndex());
+            }
+        });
+
         utils.addSelectionListenersWithCurrent(cmbPeriodFile, cmpSwitchSourceFile, lblPeriodFileRB);
-        
-        
     }
 
     /**

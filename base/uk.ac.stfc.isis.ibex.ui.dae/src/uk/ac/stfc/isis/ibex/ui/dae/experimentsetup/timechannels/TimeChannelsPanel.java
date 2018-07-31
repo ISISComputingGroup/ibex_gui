@@ -296,6 +296,13 @@ public class TimeChannelsPanel extends Composite {
         timeChannelFileSelector = new Combo(timeChannelFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         timeChannelFileSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         
+        timeChannelFileSelector.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setNewTimeChannelFile(timeChannelFileSelector.getText());
+            }
+        });
+        
         utils.addSelectionListenersWithCurrent(timeChannelFileSelector, timeChannelFilePanel, timeChannelFileRB);
     }
     

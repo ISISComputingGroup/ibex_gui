@@ -73,13 +73,8 @@ public class DataAcquisitionPanel extends Composite {
     private Label fcDelay;
     private Label fcWidth;
     private Label wiringTableRB;
-    private Label lblWiringChange;
     private Label detectorTableRB;
-    private Label lblDetectorChange;
     private Label spectraTableRB;
-    private Label lblSpectraChange;
-    private Label lblDaeTimeingSource;
-    private Label lblAutosaveEvery;
 
     private DataBindingContext bindingContext;
     
@@ -136,7 +131,7 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(wiringTablePanel, SWT.NONE);
 
-        lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
+        Label lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
         lblWiringChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblWiringChange.setText("Change:");
 
@@ -165,7 +160,7 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(detectorTablePanel, SWT.NONE);
 
-        lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
+        Label lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
         lblDetectorChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDetectorChange.setText("Change:");
 
@@ -194,7 +189,7 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(spectraTablePanel, SWT.NONE);
 
-        lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
+        Label lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
         lblSpectraChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblSpectraChange.setText("Change:");
 
@@ -338,7 +333,7 @@ public class DataAcquisitionPanel extends Composite {
         cmpTimeingSource.setLayout(gl_cmpTimeingSource);
         cmpTimeingSource.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-        lblDaeTimeingSource = new Label(cmpTimeingSource, SWT.NONE);
+        Label lblDaeTimeingSource = new Label(cmpTimeingSource, SWT.NONE);
         lblDaeTimeingSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDaeTimeingSource.setText("DAE Timing Source:");
 
@@ -359,7 +354,7 @@ public class DataAcquisitionPanel extends Composite {
         cmpAutosaveFreq.setLayout(gl_cmpAutosaveFreq);
         cmpAutosaveFreq.setBackgroundMode(SWT.INHERIT_DEFAULT);
         
-        lblAutosaveEvery = new Label(cmpAutosaveFreq, SWT.NONE);
+        Label lblAutosaveEvery = new Label(cmpAutosaveFreq, SWT.NONE);
         lblAutosaveEvery.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblAutosaveEvery.setText("Autosave every:");
 
