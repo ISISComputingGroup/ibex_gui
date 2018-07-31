@@ -56,7 +56,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Commands</name>
+    <name>Status</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -180,10 +180,10 @@
       <format_type>0</format_type>
       <height>19</height>
       <horizontal_alignment>1</horizontal_alignment>
-      <name>Setpoint_text</name>
+      <name>error_code</name>
       <precision>3</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)ERROR</pv_name>
+      <pv_name>$(PV_ROOT)ERROR.VAL</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
