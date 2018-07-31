@@ -42,72 +42,98 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <description></description>
     </action>
   </actions>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
     <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <show_native_border>true</show_native_border>
-    <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>1</horizontal_alignment>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
     <rules />
     <enabled>true</enabled>
-    <wuid>-336ad6f:141c65e96ed:-7fc4</wuid>
-    <next_focus>0</next_focus>
-    <pv_value />
+    <wuid>-52f1e29e:164f0ce3b14:-7fa4</wuid>
+    <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <read_only>true</read_only>
     <text>TPG26x Pressure</text>
     <scripts />
-    <show_units>true</show_units>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>37</height>
-    <multiline_input>false</multiline_input>
-    <border_width>0</border_width>
+    <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <vertical_alignment>1</vertical_alignment>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
-    <precision_from_pv>true</precision_from_pv>
-    <widget_type>Text</widget_type>
-    <confirm_message></confirm_message>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <format_type>0</format_type>
-    <limits_from_pv>false</limits_from_pv>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
     <background_color>
-      <color name="ISIS_Title_Background" red="255" green="255" blue="255" />
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <password_input>false</password_input>
-    <name>Text</name>
-    <width>253</width>
-    <x>24</x>
-    <y>18</y>
-    <maximum>1.7976931348623157E308</maximum>
-    <actions hook="false" hook_all="false" />
+    <width>331</width>
+    <x>6</x>
+    <name>Label</name>
+    <y>6</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <minimum>-1.7976931348623157E308</minimum>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
     <font>
-      <opifont.name fontName="Arial" height="18" style="1">ISIS_Header1</opifont.name>
+      <opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-52f1e29e:164f0ce3b14:-7f7a</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>$(NAME)</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>647</width>
+    <x>6</x>
+    <name>Label_1</name>
+    <y>42</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-    <border_style>1</border_style>
+    <border_style>13</border_style>
     <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>-335c4d15:141df6bc595:-7bca</wuid>
+    <wuid>-52f1e29e:164f0ce3b14:-79d6</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>103</height>
+    <height>110</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -119,99 +145,36 @@ $(pv_value)</tooltip>
     </macros>
     <visible>true</visible>
     <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
     </border_color>
     <widget_type>Grouping Container</widget_type>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>595</width>
-    <x>24</x>
-    <name>Grouping Container</name>
-    <y>366</y>
+    <width>648</width>
+    <x>6</x>
+    <name>Pressure readings</name>
+    <y>395</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <actions hook="false" hook_all="false" />
-    <show_scrollbar>false</show_scrollbar>
+    <show_scrollbar>true</show_scrollbar>
     <font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
     </font>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <show_native_border>false</show_native_border>
-      <precision>0</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip></tooltip>
       <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-2d7f07ed:141da67ee82:-7fc3</wuid>
-      <next_focus>0</next_focus>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <read_only>true</read_only>
-      <text>Pressure Gauge 2</text>
-      <scripts />
-      <show_units>true</show_units>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>24</height>
-      <multiline_input>false</multiline_input>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text</widget_type>
-      <confirm_message></confirm_message>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>0</format_type>
-      <limits_from_pv>false</limits_from_pv>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <password_input>false</password_input>
-      <name>Text_4</name>
-      <width>182</width>
-      <x>5</x>
-      <y>61</y>
-      <maximum>1.7976931348623157E308</maximum>
-      <actions hook="false" hook_all="false" />
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <minimum>-1.7976931348623157E308</minimum>
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-2d7f07ed:141da67ee82:-7fc2</wuid>
+      <wuid>-52f1e29e:164f0ce3b14:-7993</wuid>
       <transparent>false</transparent>
-      <pv_value />
       <auto_size>false</auto_size>
-      <text>######</text>
-      <rotation_angle>0.0</rotation_angle>
+      <text>Pressure Gauge 1:</text>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <show_units>false</show_units>
-      <height>30</height>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -219,50 +182,129 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):2:PRESSURE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text Update</widget_type>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <wrap_words>false</wrap_words>
-      <format_type>6</format_type>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
       <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>127</width>
-      <x>198</x>
-      <name>North_2</name>
-      <y>58</y>
+      <width>108</width>
+      <x>0</x>
+      <name>Label_2</name>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
       <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <horizontal_alignment>2</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-52f1e29e:164f0ce3b14:-796f</wuid>
+      <transparent>false</transparent>
+      <auto_size>false</auto_size>
+      <text>Pressure Gauge 2:</text>
+      <scripts />
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>108</width>
+      <x>0</x>
+      <name>Label_2</name>
+      <y>30</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <horizontal_alignment>2</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-52f1e29e:164f0ce3b14:-790d</wuid>
+      <transparent>false</transparent>
+      <auto_size>false</auto_size>
+      <text>Units:</text>
+      <scripts />
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>108</width>
+      <x>0</x>
+      <name>Label_2</name>
+      <y>54</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
+      <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>7f94559c:141357de30e:-7b91</wuid>
-      <transparent>false</transparent>
+      <wuid>-52f1e29e:164f0ce3b14:-78f1</wuid>
+      <transparent>true</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
       <rotation_angle>0.0</rotation_angle>
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <show_units>false</show_units>
-      <height>30</height>
+      <show_units>true</show_units>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -279,89 +321,33 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <wrap_words>false</wrap_words>
-      <format_type>6</format_type>
+      <format_type>0</format_type>
       <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>127</width>
-      <x>198</x>
-      <name>North</name>
-      <y>20</y>
+      <width>85</width>
+      <x>126</x>
+      <name>Text Update</name>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <show_native_border>false</show_native_border>
       <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <horizontal_alignment>2</horizontal_alignment>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>7f94559c:141357de30e:-7b8e</wuid>
-      <next_focus>0</next_focus>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <read_only>true</read_only>
-      <text>Pressure Gauge 1</text>
-      <scripts />
-      <show_units>true</show_units>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>24</height>
-      <multiline_input>false</multiline_input>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text</widget_type>
-      <confirm_message></confirm_message>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>0</format_type>
-      <limits_from_pv>false</limits_from_pv>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <password_input>false</password_input>
-      <name>Text_1</name>
-      <width>182</width>
-      <x>5</x>
-      <y>23</y>
-      <maximum>1.7976931348623157E308</maximum>
-      <actions hook="false" hook_all="false" />
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <minimum>-1.7976931348623157E308</minimum>
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>289e434c:1562260786d:-7e9b</wuid>
-      <transparent>false</transparent>
+      <wuid>-52f1e29e:164f0ce3b14:-78dd</wuid>
+      <transparent>true</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
@@ -369,7 +355,7 @@ $(pv_value)</tooltip>
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <show_units>true</show_units>
-      <height>30</height>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -377,7 +363,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):UNITS</pv_name>
+      <pv_name>$(PV_ROOT):2:PRESSURE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -390,183 +376,57 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>61</width>
-      <x>330</x>
-      <name>North_2</name>
-      <y>20</y>
+      <width>85</width>
+      <x>126</x>
+      <name>Text Update</name>
+      <y>30</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>289e434c:1562260786d:-7e7f</wuid>
-      <transparent>false</transparent>
+      <wuid>-52f1e29e:164f0ce3b14:-78c0</wuid>
       <pv_value />
-      <auto_size>false</auto_size>
-      <text>######</text>
-      <rotation_angle>0.0</rotation_angle>
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <show_units>true</show_units>
-      <height>30</height>
+      <height>27</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
+        <height_scalable>false</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
+      <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):UNITS</pv_name>
-      <vertical_alignment>1</vertical_alignment>
+      <pv_name>$(PV_ROOT):UNITS:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text Update</widget_type>
+      <widget_type>Combo</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <wrap_words>false</wrap_words>
-      <format_type>0</format_type>
       <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>61</width>
-      <x>330</x>
-      <name>North_2</name>
-      <y>58</y>
+      <width>90</width>
+      <x>124</x>
+      <name>Combo</name>
+      <y>50</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
-      <rules>
-        <rule name="VisibleOnError" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT):1:ERROR</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>289e434c:1562260786d:-7c0a</wuid>
-      <transparent>false</transparent>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <text>######</text>
-      <rotation_angle>0.0</rotation_angle>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <show_units>true</show_units>
-      <height>34</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT):1:ERROR</pv_name>
-      <vertical_alignment>1</vertical_alignment>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text Update</widget_type>
-      <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
-      <wrap_words>false</wrap_words>
-      <format_type>0</format_type>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <width>187</width>
-      <x>396</x>
-      <name>North_2</name>
-      <y>18</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>2</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
-      <rules>
-        <rule name="VisibleOnError" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT):2:ERROR</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>289e434c:1562260786d:-7b5c</wuid>
-      <transparent>false</transparent>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <text>######</text>
-      <rotation_angle>0.0</rotation_angle>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <show_units>true</show_units>
-      <height>34</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT):2:ERROR</pv_name>
-      <vertical_alignment>1</vertical_alignment>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text Update</widget_type>
-      <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
-      <wrap_words>false</wrap_words>
-      <format_type>0</format_type>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <width>187</width>
-      <x>396</x>
-      <name>North_5</name>
-      <y>56</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -594,7 +454,7 @@ $(trace_0_y_pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <x>24</x>
+    <x>6</x>
     <y>78</y>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <axis_count>2</axis_count>
@@ -643,7 +503,7 @@ $(trace_0_y_pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <axis_0_maximum>120.0</axis_0_maximum>
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
-    <height>277</height>
+    <height>318</height>
     <trigger_pv_value />
     <axis_1_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -652,7 +512,20 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_log_scale>false</axis_0_log_scale>
     <trace_0_x_pv_value />
     <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-    <rules />
+    <rules>
+      <rule name="Pressure_1_visible" prop_id="trace_0_visible" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):1:VISIBLE.VAL</pv>
+      </rule>
+      <rule name="Pressure_2_visible" prop_id="trace_1_visible" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):2:VISIBLE.VAL</pv>
+      </rule>
+    </rules>
     <axis_1_visible>true</axis_1_visible>
     <trace_0_update_delay>100</trace_0_update_delay>
     <trace_1_concatenate_data>true</trace_1_concatenate_data>
@@ -682,16 +555,16 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_time_format>0</axis_1_time_format>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <show_plot_area_border>false</show_plot_area_border>
-    <width>595</width>
+    <width>648</width>
     <trace_1_x_pv_value />
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
-      <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </title_font>
     <trace_0_y_pv_value />
     <trace_1_visible>true</trace_1_visible>
     <plot_area_background_color>
-      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </plot_area_background_color>
     <axis_1_title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
@@ -709,142 +582,5 @@ $(trace_0_y_pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-    <border_style>1</border_style>
-    <tooltip></tooltip>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>289e434c:1562260786d:-7ea9</wuid>
-    <transparent>false</transparent>
-    <lock_children>false</lock_children>
-    <scripts />
-    <height>61</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <visible>true</visible>
-    <border_color>
-      <color name="ISIS_Purple" red="128" green="0" blue="255" />
-    </border_color>
-    <widget_type>Grouping Container</widget_type>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>595</width>
-    <x>24</x>
-    <name>Grouping Container_1</name>
-    <y>480</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <show_scrollbar>true</show_scrollbar>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <show_native_border>false</show_native_border>
-      <precision>0</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <horizontal_alignment>2</horizontal_alignment>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-2c92a390:1425bd26b46:-7e2c</wuid>
-      <next_focus>0</next_focus>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <read_only>true</read_only>
-      <text>Units</text>
-      <scripts />
-      <show_units>true</show_units>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>24</height>
-      <multiline_input>false</multiline_input>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text</widget_type>
-      <confirm_message></confirm_message>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <format_type>0</format_type>
-      <limits_from_pv>false</limits_from_pv>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <password_input>false</password_input>
-      <name>Text_1</name>
-      <width>169</width>
-      <x>12</x>
-      <y>21</y>
-      <maximum>1.7976931348623157E308</maximum>
-      <actions hook="false" hook_all="false" />
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <minimum>-1.7976931348623157E308</minimum>
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-2c92a390:1425bd26b46:-7e6c</wuid>
-      <pv_value />
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>30</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <items_from_pv>true</items_from_pv>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT):UNITS:SP</pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Combo</widget_type>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </background_color>
-      <width>100</width>
-      <x>198</x>
-      <name>Combo</name>
-      <y>18</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
-      </font>
-    </widget>
   </widget>
 </display>
