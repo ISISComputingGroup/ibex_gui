@@ -7,6 +7,8 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+
 /**
  * Copies all snippet perspectives to perspective stack called
  * "MainPerspectiveStack" In order to register/reset perspective and not have to
@@ -40,12 +42,14 @@ public class CopyPerspectiveSnippetProcessor {
         // clone each snippet that is a perspective and add the cloned
         // perspective into the main PerspectiveStack
         boolean isFirst = true;
-        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            perspectiveStack.getChildren().add(perspective);
-            if (isFirst) {
-                perspectiveStack.setSelectedElement(perspective);
-                isFirst = false;
-            }
+        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {	
+        	if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
+        		perspectiveStack.getChildren().add(perspective);
+                if (isFirst) {
+                    perspectiveStack.setSelectedElement(perspective);
+                    isFirst = false;
+                }
+        	}
         }
     }
 }
