@@ -35,7 +35,6 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -76,11 +75,15 @@ public class ExperimentSetup {
     private static final int FIXED_WIDTH = 700;
     private static final int FIXED_HEIGHT = 600;
 	
+    PanelUtilities utils;
     /**
      * Constructor.
      */
     public ExperimentSetup() {
         viewModel = DaeUI.getDefault().viewModel();
+        utils = new PanelUtilities(viewModel);
+        updateIsChanged(false);
+        
     }
 
     /**
@@ -109,15 +112,11 @@ public class ExperimentSetup {
         content.setLayout(gridLayout);
         
         Button btnSendChanges = new Button(content, SWT.NONE);
-        /*Color color = new Color(DISPLAY, 255, 105, 180);
-        btnSendChanges.setBackground(color);
-        btnSendChanges.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-        System.out.println(btnSendChanges.getForeground());
-        System.out.println(btnSendChanges.getBackground());*/
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
+                    applyChangesToUI();
                     viewModel.experimentSetup().updateDae();
                     sendingChanges.open();
                 } catch (Exception err) {
@@ -141,7 +140,7 @@ public class ExperimentSetup {
 		Composite timeChannelsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setControl(timeChannelsComposite);
 		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE);
+		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, utils);
 		
 		CTabItem tbtmDataAcquisition = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setText("Data Acquisition");
@@ -149,7 +148,7 @@ public class ExperimentSetup {
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
 		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE);
+		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, utils);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPeriods.setText("Periods");
@@ -157,7 +156,7 @@ public class ExperimentSetup {
 		Composite periodsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmPeriods.setControl(periodsComposite);
 		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		periods = new PeriodsPanel(periodsComposite, SWT.NONE);
+		periods = new PeriodsPanel(periodsComposite, SWT.NONE, utils);
 		
 		tabFolder.setSelection(0);
         GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -165,7 +164,7 @@ public class ExperimentSetup {
         // disappearing
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
-
+        
         //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));
@@ -223,5 +222,26 @@ public class ExperimentSetup {
                 setChildrenEnabled(isRunning != null && !isRunning);
             }
         });
+    }
+    
+    /**
+     * Gets rid of labels marking un-applied changes and tells viw model that the changes have been applied.
+     * 
+     */
+    private void applyChangesToUI() {
+        timeChannels.removeChangeLabels();
+        dataAcquisition.removeChangeLabels();
+        periods.removeChangeLabels();
+        utils.unlabelCells();
+        updateIsChanged(false);
+    }
+    
+    /**
+     * Tells the viewModel if changes have been made in the experiment setup but haven't been applied.
+     * 
+     * @isChanged True if changes have been made in the experiment setup but haven't been applied.
+     */
+    private void updateIsChanged(boolean isChanged) {
+        viewModel.setIsChanged(isChanged);
     }
 }

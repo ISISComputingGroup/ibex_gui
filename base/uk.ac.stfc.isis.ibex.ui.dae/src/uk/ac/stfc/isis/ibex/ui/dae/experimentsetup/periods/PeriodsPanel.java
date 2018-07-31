@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.PanelUtilities;
 
 /**
  * View for the periods tab in the experiment setup.
@@ -62,6 +63,8 @@ public class PeriodsPanel extends Composite {
 	private Text txtHardwarePeriods;
 	private Text txtOutputDelay;
     private Label lblPeriodFileRB;
+    private Label lblPeriodChange;
+    private Label lblPeriodType;
     private Button radioSpecifyParameters;
     private Button radioUsePeriodFile;
     private Label lblNote;
@@ -69,6 +72,7 @@ public class PeriodsPanel extends Composite {
     private Group grpSettings;
     private Composite cmpSwitchTypeSoftware;
     private Composite cmpSwitchTypeHardware;
+    private Composite cmpPeriodType;
     private Composite cmpSource;
     private Composite cmpSwitchSourceFile;
     private Composite cmpSwitchSourceParam;
@@ -76,7 +80,8 @@ public class PeriodsPanel extends Composite {
 
     private StackLayout stackType = new StackLayout();
     private StackLayout stackSource = new StackLayout();
-
+    
+    private PanelUtilities utils;
 	private static final Display DISPLAY = Display.getCurrent();
 	
     /**
@@ -86,8 +91,9 @@ public class PeriodsPanel extends Composite {
      * @param style The SWT style.
      */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
-	public PeriodsPanel(Composite parent, int style) {
+	public PeriodsPanel(Composite parent, int style, PanelUtilities utils) {
 		super(parent, style);
+		this.utils = utils;
         GridLayout gl_main = new GridLayout(1, false);
         gl_main.verticalSpacing = 15;
         setLayout(gl_main);
@@ -103,16 +109,19 @@ public class PeriodsPanel extends Composite {
         gl_setupPanel.verticalSpacing = 10;
         cmpSetup.setLayout(gl_setupPanel);
 
-        Composite cmpPeriodType = new Composite(cmpSetup, SWT.NONE);
+        cmpPeriodType = new Composite(cmpSetup, SWT.NONE);
         GridLayout gl_cmpPeriodType = new GridLayout(2, false);
         gl_cmpPeriodType.marginWidth = 0;
         cmpPeriodType.setLayout(gl_cmpPeriodType);
+        cmpPeriodType.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-        Label lblPeriodType = new Label(cmpPeriodType, SWT.NONE);
+        lblPeriodType = new Label(cmpPeriodType, SWT.NONE);
         lblPeriodType.setText("Period Type:");
 
         cmbPeriodType = new Combo(cmpPeriodType, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmbPeriodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
+        
+        utils.addSelectionListenersWithoutCurrent(cmbPeriodType, cmpPeriodType); 
 
         // Group dynamically displaying setup options
         grpSettings = new Group(this, SWT.NONE);
@@ -199,7 +208,8 @@ public class PeriodsPanel extends Composite {
         radioUsePeriodFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
         radioUsePeriodFile.setText(PeriodSetupSource.FILE.toString());
         radioUsePeriodFile.addSelectionListener(sourceSelectionListener);
-
+        utils.addRadioBtnSelectionListener(radioUsePeriodFile, radioSpecifyParameters);
+        
         cmpSource = new Composite(cmpSwitchTypeHardware, SWT.NONE);
         cmpSource.setLayout(stackSource);
         cmpSource.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -212,7 +222,7 @@ public class PeriodsPanel extends Composite {
         lblNote.setText("Frames are not used in external signal control mode");
         lblNote.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        tblPeriods = new PeriodsTableView(cmpSwitchSourceParam, SWT.NONE);
+        tblPeriods = new PeriodsTableView(cmpSwitchSourceParam, SWT.NONE, utils);
         tblPeriods.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Panel to load file with period settings
@@ -221,6 +231,7 @@ public class PeriodsPanel extends Composite {
         gl_cmpSwitchSourceFile.marginWidth = 0;
         gl_cmpSwitchSourceFile.horizontalSpacing = 20;
         cmpSwitchSourceFile.setLayout(gl_cmpSwitchSourceFile);
+        cmpSwitchSourceFile.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
         Label lblPeriod = new Label(cmpSwitchSourceFile, SWT.NONE);
         lblPeriod.setText("Period File:");
@@ -235,27 +246,17 @@ public class PeriodsPanel extends Composite {
 
         new Label(cmpSwitchSourceFile, SWT.NONE);
 
-        Label lblPeriodChange = new Label(cmpSwitchSourceFile, SWT.NONE);
+        lblPeriodChange = new Label(cmpSwitchSourceFile, SWT.NONE);
         lblPeriodChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblPeriodChange.setText("Change:");
 
         cmbPeriodFile = new Combo(cmpSwitchSourceFile, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmbPeriodFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-        cmbPeriodFile.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.setNewPeriodFile(cmbPeriodFile.getText());
-            }
-        });
-
-        cmbPeriodType.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.setPeriodType(cmbPeriodType.getSelectionIndex());
-            }
-        });
-	}
+        
+        utils.addSelectionListenersWithCurrent(cmbPeriodFile, cmpSwitchSourceFile, lblPeriodFileRB);
+        
+        
+    }
 
     /**
      * Binds model data to the relevant UI elements for automatic update.
@@ -274,7 +275,11 @@ public class PeriodsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtSoftwarePeriods), BeanProperties.value("softwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHardwarePeriods), BeanProperties.value("hardwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtOutputDelay), BeanProperties.value("outputDelay").observe(viewModel));
-
+		
+		utils.addTextInputPropertyChangeListener("softwarePeriods", txtSoftwarePeriods, viewModel);
+		utils.addTextInputPropertyChangeListener("hardwarePeriods", txtHardwarePeriods, viewModel);
+		utils.addTextInputPropertyChangeListener("outputDelay", txtOutputDelay, viewModel);
+		
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtHardwarePeriods),
                 BeanProperties.value("internalPeriod").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(radioSpecifyParameters),
@@ -361,5 +366,15 @@ public class PeriodsPanel extends Composite {
                 cmpSource.layout();
             }
         });
+    }
+    
+    public void removeChangeLabels(){
+        cmpPeriodType.setBackground(utils.getColour(false));
+        cmpSwitchSourceFile.setBackground(utils.getColour(false));
+        radioSpecifyParameters.setBackground(utils.getColour(false));
+        radioUsePeriodFile.setBackground(utils.getColour(false));
+        txtSoftwarePeriods.setBackground(utils.getWhite());
+        txtHardwarePeriods.setBackground(utils.getWhite());
+        txtOutputDelay.setBackground(utils.getWhite());
     }
 }

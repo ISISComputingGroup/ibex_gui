@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.PanelUtilities;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class PeriodsTableView extends Composite {
@@ -50,10 +51,11 @@ public class PeriodsTableView extends Composite {
 	private TableViewerColumn frames;
 	private TableViewerColumn binaryOutput;
 	private TableViewerColumn label;
+	private PanelUtilities utils;
 	
-	public PeriodsTableView(Composite parent, int style) {
+	public PeriodsTableView(Composite parent, int style, PanelUtilities utils) {
 		super(parent, style);
-		
+		this.utils = utils;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		// TableColumn layout needs its own composite to work
 		tableComposite = new Composite(this, SWT.NONE);
@@ -88,7 +90,8 @@ public class PeriodsTableView extends Composite {
 		label.setEditingSupport(new LabelEditingSupport(viewer, Period.class));
 		
 		viewer.setLabelProvider(new PeriodLabelProvider());		
-		viewer.setContentProvider(ArrayContentProvider.getInstance());		
+		viewer.setContentProvider(ArrayContentProvider.getInstance());
+		utils.addTableListener(viewer.getTable(), viewer);
 	}
 	
 	private TableViewerColumn addColumn(String name, int weight) {

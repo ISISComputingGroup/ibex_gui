@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeMode;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.PanelUtilities;
 
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class TimeRegimeView extends Composite {
@@ -44,10 +45,12 @@ public class TimeRegimeView extends Composite {
 	private Composite tableComposite;
 	private TableColumnLayout tableLayout;
 	private Label lblTimeRegime;
+	private PanelUtilities utils;
 	
-	public TimeRegimeView(Composite parent, int style) {
+	public TimeRegimeView(Composite parent, int style, PanelUtilities utils) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
+		this.utils = utils;
 		
 		lblTimeRegime = new Label(this, SWT.NONE);
 		lblTimeRegime.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
@@ -69,7 +72,6 @@ public class TimeRegimeView extends Composite {
 		createTableLayout();
 
 		viewer = new TableViewer(tableComposite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		
 		TableViewerColumn from = addColumn("From", 25);
 		from.setEditingSupport(new FromEditingSupport(viewer, TimeRegimeRow.class));
 		
@@ -84,6 +86,7 @@ public class TimeRegimeView extends Composite {
 		
 		viewer.setLabelProvider(new TimeRegimeLabelProvider());		
 		viewer.setContentProvider(ArrayContentProvider.getInstance());
+		utils.addTableListener(viewer.getTable(), viewer);
 	}
 		
 	private void createTableLayout() {
@@ -104,13 +107,13 @@ public class TimeRegimeView extends Composite {
 		column.setText(name);
 		column.setResizable(false);
 		tableLayout.setColumnData(column, new ColumnWeightData(weight, 50, false));
-		
 		return viewerColumn;
 	}
 	
 	private void setTable() {
 		table = viewer.getTable();
 		table.setHeaderVisible(true);
-		table.setLinesVisible(true);		
+		table.setLinesVisible(true);
 	}
+
 }

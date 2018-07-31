@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -58,17 +59,31 @@ public class DataAcquisitionPanel extends Composite {
     private Button btnSMP;
     private Button btnTs2Pulse;
     private Button btnIsisHz;
-
+    
+    private Composite wiringTablePanel;
+    private Composite detectorTablePanel;
+    private Composite spectraTablePanel;
+    private Composite cmpTimeingSource;
+    private Composite cmpAutosaveUnits;
+    
     private Button btnMuonMsMode;
     private Button btnMuonPulseFirst;
+    private Button btnMuonPulseSecond;
 
     private Label fcDelay;
     private Label fcWidth;
     private Label wiringTableRB;
+    private Label lblWiringChange;
     private Label detectorTableRB;
+    private Label lblDetectorChange;
     private Label spectraTableRB;
+    private Label lblSpectraChange;
+    private Label lblDaeTimeingSource;
+    private Label lblAutosaveEvery;
 
     private DataBindingContext bindingContext;
+    
+    private PanelUtilities utils;
     
     /**
      * The maximum spectrum number that can be set in the data acquisition tab.
@@ -85,8 +100,9 @@ public class DataAcquisitionPanel extends Composite {
      *            The SWT flags giving the style of the panel.
      */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
-    public DataAcquisitionPanel(Composite parent, int style) {
+    public DataAcquisitionPanel(Composite parent, int style, PanelUtilities utils) {
         super(parent, style);
+        this.utils = utils;
         setLayout(new GridLayout(1, false));
 
         GridData gdLabels = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
@@ -101,9 +117,10 @@ public class DataAcquisitionPanel extends Composite {
         grpTables.setLayout(glGrpTables);
 
         // Wiring table selection
-        Composite wiringTablePanel = new Composite(grpTables, SWT.NONE);
+        wiringTablePanel = new Composite(grpTables, SWT.NONE);
         wiringTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         wiringTablePanel.setLayout(new GridLayout(3, false));
+        wiringTablePanel.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
         Label lblWiring = new Label(wiringTablePanel, SWT.NONE);
         lblWiring.setLayoutData(gdLabels);
@@ -119,18 +136,21 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(wiringTablePanel, SWT.NONE);
 
-        Label lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
+        lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
         lblWiringChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblWiringChange.setText("Change:");
 
         wiringTableSelector = new Combo(wiringTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         wiringTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        
+        utils.addSelectionListenersWithCurrent(wiringTableSelector, wiringTablePanel, wiringTableRB);
 
         // Detector table selection
-        Composite detectorTablePanel = new Composite(grpTables, SWT.NONE);
+        detectorTablePanel = new Composite(grpTables, SWT.NONE);
         detectorTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         detectorTablePanel.setLayout(new GridLayout(3, false));
-
+        detectorTablePanel.setBackgroundMode(SWT.INHERIT_DEFAULT);
+        
         Label lblDetector = new Label(detectorTablePanel, SWT.NONE);
         lblDetector.setLayoutData(gdLabels);
         lblDetector.setText("Detector Table:");
@@ -145,17 +165,20 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(detectorTablePanel, SWT.NONE);
 
-        Label lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
+        lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
         lblDetectorChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDetectorChange.setText("Change:");
 
         detectorTableSelector = new Combo(detectorTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         detectorTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        
+        utils.addSelectionListenersWithCurrent(detectorTableSelector, detectorTablePanel, detectorTableRB);
 
         // Spectra table selection
-        Composite spectraTablePanel = new Composite(grpTables, SWT.NONE);
+        spectraTablePanel = new Composite(grpTables, SWT.NONE);
         spectraTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         spectraTablePanel.setLayout(new GridLayout(3, false));
+        spectraTablePanel.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
         Label lblSpectra = new Label(spectraTablePanel, SWT.NONE);
         lblSpectra.setLayoutData(gdLabels);
@@ -171,18 +194,21 @@ public class DataAcquisitionPanel extends Composite {
 
         new Label(spectraTablePanel, SWT.NONE);
 
-        Label lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
+        lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
         lblSpectraChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblSpectraChange.setText("Change:");
 
         spectraTableSelector = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         spectraTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
+        spectraTableSelector.setTouchEnabled(true);
+        
+        utils.addSelectionListenersWithCurrent(spectraTableSelector, spectraTablePanel, spectraTableRB);
+        
         Group grpMonitor = new Group(this, SWT.NONE);
         grpMonitor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         grpMonitor.setText("Monitor");
         grpMonitor.setLayout(new GridLayout(8, false));
-
+        
         Label lblSpectrum = new Label(grpMonitor, SWT.NONE);
         lblSpectrum.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblSpectrum.setText("Spectrum:");
@@ -292,38 +318,69 @@ public class DataAcquisitionPanel extends Composite {
         btnMuonPulseFirst.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         btnMuonPulseFirst.setText("First");
 
-        Button btnMuonPulseSecond = new Button(muonPulseComposite, SWT.FLAT | SWT.RADIO);
+        btnMuonPulseSecond = new Button(muonPulseComposite, SWT.FLAT | SWT.RADIO);
         btnMuonPulseSecond.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         btnMuonPulseSecond.setText("Second");
+        
+
+        utils.addRadioBtnSelectionListener(btnMuonPulseFirst, btnMuonPulseSecond);
 
         Group grpTiming = new Group(this, SWT.NONE);
         grpTiming.setText("Timing");
         grpTiming.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        grpTiming.setLayout(new GridLayout(3, false));
+        grpTiming.setLayout(new GridLayout(2, false));
+        
+        // Panel to change timeing source
+        cmpTimeingSource = new Composite(grpTiming, SWT.NONE);
+        GridLayout gl_cmpTimeingSource = new GridLayout(2, false);
+        gl_cmpTimeingSource.marginWidth = 0;
+        gl_cmpTimeingSource.horizontalSpacing = 20;
+        cmpTimeingSource.setLayout(gl_cmpTimeingSource);
+        cmpTimeingSource.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-        Label lblDaeTimeingSource = new Label(grpTiming, SWT.NONE);
+        lblDaeTimeingSource = new Label(cmpTimeingSource, SWT.NONE);
         lblDaeTimeingSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDaeTimeingSource.setText("DAE Timing Source:");
 
-        daeTimingSource = new Combo(grpTiming, SWT.DROP_DOWN | SWT.READ_ONLY);
+        daeTimingSource = new Combo(cmpTimeingSource, SWT.DROP_DOWN | SWT.READ_ONLY);
         daeTimingSource.setItems(DaeTimingSource.allToString().toArray(new String[0]));
         GridData gd_daeTimingSource = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
         gd_daeTimingSource.widthHint = 100;
         daeTimingSource.setLayoutData(gd_daeTimingSource);
         new Label(grpTiming, SWT.NONE);
-
-        Label lblAutosaveEvery = new Label(grpTiming, SWT.NONE);
+        
+        utils.addSelectionListenersWithoutCurrent(daeTimingSource, cmpTimeingSource);
+        
+        // Panel to change autosave frequency.
+        Composite cmpAutosaveFreq = new Composite(grpTiming, SWT.NONE);
+        GridLayout gl_cmpAutosaveFreq = new GridLayout(2, false);
+        gl_cmpAutosaveFreq.marginWidth = 0;
+        gl_cmpAutosaveFreq.horizontalSpacing = 20;
+        cmpAutosaveFreq.setLayout(gl_cmpAutosaveFreq);
+        cmpAutosaveFreq.setBackgroundMode(SWT.INHERIT_DEFAULT);
+        
+        lblAutosaveEvery = new Label(cmpAutosaveFreq, SWT.NONE);
         lblAutosaveEvery.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblAutosaveEvery.setText("Autosave every:");
 
-        autosaveFrequency = new Text(grpTiming, SWT.BORDER);
+        autosaveFrequency = new Text(cmpAutosaveFreq, SWT.BORDER);
         GridData gd_autosaveFrequency = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gd_autosaveFrequency.widthHint = 100;
         autosaveFrequency.setLayoutData(gd_autosaveFrequency);
+        
+        // Panel to change autosave units.
+        cmpAutosaveUnits = new Composite(grpTiming, SWT.NONE);
+        GridLayout gl_cmpAutosaveUnits = new GridLayout(1, false);
+        gl_cmpAutosaveUnits.marginWidth = 0;
+        gl_cmpAutosaveUnits.horizontalSpacing = 20;
+        cmpAutosaveUnits.setLayout(gl_cmpAutosaveUnits);
+        cmpAutosaveUnits.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-        autosaveUnits = new Combo(grpTiming, SWT.DROP_DOWN | SWT.READ_ONLY);
+        autosaveUnits = new Combo(cmpAutosaveUnits, SWT.DROP_DOWN | SWT.READ_ONLY);
         autosaveUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         autosaveUnits.setItems(AutosaveUnit.allToString().toArray(new String[0]));
+        
+        utils.addSelectionListenersWithoutCurrent(autosaveUnits, cmpAutosaveUnits);
 
     }
 
@@ -341,14 +398,14 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("wiringTable").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(wiringTableSelector), 
         		BeanProperties.value("newWiringTable").observe(viewModel));
-
+        
         bindingContext.bindList(WidgetProperties.items().observe(detectorTableSelector),
                 BeanProperties.list("detectorTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(detectorTableRB),
                 BeanProperties.value("detectorTable").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(detectorTableSelector), 
         		BeanProperties.value("newDetectorTable").observe(viewModel));
-
+        
         bindingContext.bindList(WidgetProperties.items().observe(spectraTableSelector),
                 BeanProperties.list("spectraTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(spectraTableRB),
@@ -362,7 +419,11 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("from").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(to),
                 BeanProperties.value("to").observe(viewModel));
-
+        
+        utils.addSpinnerPropertyChangeListenerDataAc("monitorSpectrum", monitorSpectrum, viewModel);
+        utils.addTextInputPropertyChangeListener("to", to, viewModel);
+        utils.addTextInputPropertyChangeListener("from", from, viewModel);
+        
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto0),
                 BeanProperties.value("veto0").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto1),
@@ -371,7 +432,12 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("veto2").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto3),
                 BeanProperties.value("veto3").observe(viewModel));
-
+        
+        utils.addBtnSelectionListener(btnVeto0);
+        utils.addBtnSelectionListener(btnVeto1);
+        utils.addBtnSelectionListener(btnVeto2);
+        utils.addBtnSelectionListener(btnVeto3);
+        
         bindingContext.bindValue(WidgetProperties.selection().observe(btnSMP),
                 BeanProperties.value("smpVeto").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnFermiChopper),
@@ -380,6 +446,11 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("ts2PulseVeto").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnIsisHz),
                 BeanProperties.value("isis50HzVeto").observe(viewModel));
+        
+        utils.addBtnSelectionListener(btnSMP);
+        utils.addBtnSelectionListener(btnFermiChopper);
+        utils.addBtnSelectionListener(btnTs2Pulse);
+        utils.addBtnSelectionListener(btnIsisHz);
 
         bindingContext.bindValue(WidgetProperties.text().observe(fcDelay),
                 BeanProperties.value("fcDelay").observe(viewModel));
@@ -390,6 +461,8 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("muonMsMode").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(daeTimingSource),
                 BeanProperties.value("timingSource").observe(viewModel));
+        
+        utils.addBtnSelectionListener(btnMuonMsMode);
 
         bindingContext.bindValue(WidgetProperties.selection().observe(btnMuonPulseFirst),
                 BeanProperties.value("muonCerenkovPulse").observe(viewModel));
@@ -398,5 +471,32 @@ public class DataAcquisitionPanel extends Composite {
                 BeanProperties.value("autosaveFrequency").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(autosaveUnits),
                 BeanProperties.value("autosaveUnits").observe(viewModel));
+        
+        utils.addTextInputPropertyChangeListener("autosaveFrequency", autosaveFrequency, viewModel);
     }
+    
+    public void removeChangeLabels(){
+        to.setBackground(utils.getWhite());
+        from.setBackground(utils.getWhite());
+        monitorSpectrum.setBackground(utils.getWhite());
+        autosaveFrequency.setBackground(utils.getColour(false));
+        btnFermiChopper.setBackground(utils.getColour(false));
+        btnIsisHz.setBackground(utils.getColour(false));
+        btnMuonMsMode.setBackground(utils.getColour(false));
+        btnMuonPulseFirst.setBackground(utils.getColour(false));
+        btnMuonPulseSecond.setBackground(utils.getColour(false));
+        btnSMP.setBackground(utils.getColour(false));
+        btnTs2Pulse.setBackground(utils.getColour(false));
+        autosaveFrequency.setBackground(utils.getWhite());
+        btnVeto0.setBackground(utils.getColour(false));
+        btnVeto1.setBackground(utils.getColour(false));
+        btnVeto2.setBackground(utils.getColour(false));
+        btnVeto3.setBackground(utils.getColour(false));
+        wiringTablePanel.setBackground(utils.getColour(false));
+        detectorTablePanel.setBackground(utils.getColour(false));
+        spectraTablePanel.setBackground(utils.getColour(false));
+        cmpTimeingSource.setBackground(utils.getColour(false));
+        cmpAutosaveUnits.setBackground(utils.getColour(false));
+    }
+    
 }
