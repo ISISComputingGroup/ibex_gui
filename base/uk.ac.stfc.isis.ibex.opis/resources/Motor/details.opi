@@ -1675,74 +1675,6 @@ $(pv_value)</tooltip>
       <x>354</x>
       <y>150</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <alpha>255</alpha>
-      <anti_alias>true</anti_alias>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_DAE_Spectra_Plot" red="0" green="0" blue="255" />
-      </background_color>
-      <bg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </bg_gradient_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </fg_gradient_color>
-      <fill_level>100.0</fill_level>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Yellow" red="255" green="255" blue="0" />
-      </foreground_color>
-      <gradient>false</gradient>
-      <height>29</height>
-      <horizontal_fill>true</horizontal_fill>
-      <line_color>
-        <color name="ISIS_Purple" red="128" green="0" blue="255" />
-      </line_color>
-      <line_style>0</line_style>
-      <line_width>0</line_width>
-      <name>Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules>
-        <rule name="Visibility" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0!=0">
-            <value>true</value>
-          </exp>
-          <exp bool_exp="!(pv0!=0)">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(M).LVIO</pv>
-        </rule>
-      </rules>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>false</transparent>
-      <visible>true</visible>
-      <widget_type>Rectangle</widget_type>
-      <width>367</width>
-      <wuid>-31370ed3:164f0e1d0f3:-7e9e</wuid>
-      <x>66</x>
-      <y>38</y>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -1927,7 +1859,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+        <opifont.name fontName="Arial" height="14" style="1" pixels="false">ISIS_Label</opifont.name>
       </font>
       <foreground_color>
         <color name="ISIS_Shutter_Moving" red="255" green="150" blue="0" />
@@ -1959,10 +1891,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>242</width>
+      <width>439</width>
       <wrap_words>true</wrap_words>
       <wuid>-1799f1cd:164f4c79366:-7e9e</wuid>
-      <x>77</x>
+      <x>0</x>
       <y>186</y>
     </widget>
   </widget>
