@@ -33,11 +33,10 @@ public final class Commands {
 	 * The command to initialise genie.
 	 */
 	public static final String GENIE_INITIALISATION = 
-			"# Configuring GENIE PYTHON, please wait\n" 
-			+ "import sys;sys.executable=''\n" 
+			"import matplotlib \n"
+			+ "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
 			+ "from genie_python.genie_startup import * \n" 
-			+ "load_script(None, globals()) \n"
-			+ "%matplotlib qt4 \n";
+			+ "load_script(None, globals()) \n";
 
     private Commands() {
     }

@@ -103,6 +103,7 @@ Server scripting Icon at uk.ac.stfc.isis.ibex.ui.nicos\icons made by Smashicons 
       <plugin id="uk.ac.stfc.isis.ibex.ui.dashboard" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.devicescreens" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.experimentdetails" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.graphing" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.help" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.ioccontrol" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.log" autoStart="false" startLevel="0" />
