@@ -81,7 +81,7 @@ public class ExperimentSetup {
      */
     public ExperimentSetup() {
         viewModel = DaeUI.getDefault().viewModel();
-        utils = new PanelUtilities(viewModel);
+        utils = new PanelUtilities(viewModel, DISPLAY);
         updateIsChanged(false);
         
     }

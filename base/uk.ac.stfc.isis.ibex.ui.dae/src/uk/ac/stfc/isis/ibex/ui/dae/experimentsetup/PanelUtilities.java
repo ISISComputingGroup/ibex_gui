@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -40,7 +42,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
@@ -52,21 +53,23 @@ import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
  */
 public class PanelUtilities {
 
-    private static final Display DISPLAY = Display.getCurrent();
-    
-    private Color changed = SWTResourceManager.getColor(SWT.COLOR_YELLOW);
-    private Color white = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-    private Color unchanged = new Color(DISPLAY, 240, 240, 240);
+    private Color changed;
+    private Color white;
+    private Color unchanged;
     private DaeViewModel daeViewModel;
     ViewerCell recordedCell;
     private String recordedValue = "";
     private MouseListener mouseListener;
+    private List<ViewerCell> changedCells = new ArrayList<ViewerCell>();
     
     /**
      * The constructor for the class.
      */
-    public PanelUtilities(DaeViewModel daeViewModel) {
+    public PanelUtilities(DaeViewModel daeViewModel, Display DISPLAY) {
         this.daeViewModel = daeViewModel;
+        changed = DISPLAY.getSystemColor(SWT.COLOR_YELLOW);
+        white = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
+        unchanged = new Color(DISPLAY, 240, 240, 240);
     }
     
     /**
@@ -229,8 +232,12 @@ public class PanelUtilities {
             table.addMouseListener(mouseListener);
         }
     }
-
-    private void tryToChangeBackgroundOfCell() {
+    
+    /**
+     * A method that tries to change the background of a recorded cell. If the change happens it also notifies the daeViewModel.
+     * 
+     */
+    public void tryToChangeBackgroundOfCell() {
         checkThatRecordedValueIsNotEmpty();
     }
 
@@ -250,6 +257,7 @@ public class PanelUtilities {
         if (!recordedValue.equals(recordedCell.getText())) {
             recordedCell.setBackground(changed);
             setIsChanged(true);
+            addToChangedCells(recordedCell);
         }
     }
 
@@ -258,15 +266,19 @@ public class PanelUtilities {
      * This is used once the changes have been applied.
      */
     public void unlabelCells() {
+        for (ViewerCell cell : changedCells) {
+            cell.setBackground(white);
+        }
+        changedCells.clear();
         setRecordedCell(null);
         setRecordedCellValue("");
     }
 
-    private void setRecordedCell(ViewerCell recordedCell) {
+    public void setRecordedCell(ViewerCell recordedCell) {
         this.recordedCell = recordedCell;
     }
 
-    private void setRecordedCellValue(String recordedValue) {
+    public void setRecordedCellValue(String recordedValue) {
         this.recordedValue = recordedValue;
     }
 
@@ -304,6 +316,10 @@ public class PanelUtilities {
      */
     public void setIsChanged(boolean isChanged) {
         daeViewModel.setIsChanged(isChanged);
+    }
+    
+    private void addToChangedCells(ViewerCell cell) {
+        changedCells.add(cell);
     }
 
 }

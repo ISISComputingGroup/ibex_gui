@@ -63,8 +63,6 @@ public class PeriodsPanel extends Composite {
 	private Text txtHardwarePeriods;
 	private Text txtOutputDelay;
     private Label lblPeriodFileRB;
-    private Label lblPeriodChange;
-    private Label lblPeriodType;
     private Button radioSpecifyParameters;
     private Button radioUsePeriodFile;
     private Label lblNote;
@@ -81,8 +79,9 @@ public class PeriodsPanel extends Composite {
     private StackLayout stackType = new StackLayout();
     private StackLayout stackSource = new StackLayout();
     
-    private PanelUtilities utils;
 	private static final Display DISPLAY = Display.getCurrent();
+	
+	private PanelUtilities utils;
 	
     /**
      * Standard constructor.
@@ -115,7 +114,7 @@ public class PeriodsPanel extends Composite {
         cmpPeriodType.setLayout(gl_cmpPeriodType);
         cmpPeriodType.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-        lblPeriodType = new Label(cmpPeriodType, SWT.NONE);
+        Label lblPeriodType = new Label(cmpPeriodType, SWT.NONE);
         lblPeriodType.setText("Period Type:");
 
         cmbPeriodType = new Combo(cmpPeriodType, SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -246,7 +245,7 @@ public class PeriodsPanel extends Composite {
 
         new Label(cmpSwitchSourceFile, SWT.NONE);
 
-        lblPeriodChange = new Label(cmpSwitchSourceFile, SWT.NONE);
+        Label lblPeriodChange = new Label(cmpSwitchSourceFile, SWT.NONE);
         lblPeriodChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblPeriodChange.setText("Change:");
 
@@ -257,7 +256,7 @@ public class PeriodsPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setNewPeriodFile(cmbPeriodFile.getText());
-                }
+            }
         });
 
         cmbPeriodType.addSelectionListener(new SelectionAdapter() {

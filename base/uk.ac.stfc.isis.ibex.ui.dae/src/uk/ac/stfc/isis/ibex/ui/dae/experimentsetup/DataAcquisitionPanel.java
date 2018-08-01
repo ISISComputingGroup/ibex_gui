@@ -195,7 +195,6 @@ public class DataAcquisitionPanel extends Composite {
 
         spectraTableSelector = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         spectraTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        spectraTableSelector.setTouchEnabled(true);
         
         utils.addSelectionListenersWithCurrent(spectraTableSelector, spectraTablePanel, spectraTableRB);
         

@@ -64,7 +64,6 @@ public class TimeChannelsPanel extends Composite {
 
     private Combo timeChannelFileSelector;
     private Label timeChannelFileRB;
-    private Label lblTimeChannelChange;
     private Button radioSpecifyParameters;
     private Button radioUseTCBFile;
     private Composite timeChannelFilePanel;
@@ -289,7 +288,7 @@ public class TimeChannelsPanel extends Composite {
 
         new Label(timeChannelFilePanel, SWT.NONE);
 
-        lblTimeChannelChange = new Label(timeChannelFilePanel, SWT.NONE);
+        Label lblTimeChannelChange = new Label(timeChannelFilePanel, SWT.NONE);
         lblTimeChannelChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblTimeChannelChange.setText("Change:");
 
