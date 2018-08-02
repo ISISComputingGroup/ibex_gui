@@ -261,6 +261,7 @@
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 	</modules>
 </project>
 
