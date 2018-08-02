@@ -64,6 +64,15 @@ public class ResetLayoutButtonModel extends ModelObject {
 	}
 
 	/**
+	 * Get the set of changed perspectives.
+	 *
+	 * @return The set of changed perspectives.
+	 */
+	public Set<MPerspective> getChangedPerspectives() {
+		return this.changedPerspectives;
+	}
+
+	/**
 	 * Return the current perspective.
 	 *
 	 * @return The current perspective.
