@@ -143,7 +143,9 @@ public enum ComponentType {
     /**Syringe pump*/
     SYRINGE_PUMP,
     /** Keyence micrometer. */
-    KEYENCE;
+    KEYENCE,
+	/** Generic Power Supply. */
+    POWER_SUPPLY;
 
 
 	private Target target;
