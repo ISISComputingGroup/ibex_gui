@@ -38,6 +38,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MessageBox;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -114,20 +116,20 @@ public class BlocksEditorPanel extends Composite {
 		gd_add.widthHint = 110;
 		
 		add.setLayoutData(gd_add);
-		add.setText("Add Block");	
+		add.setText("&Add Block");
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 addNew();
 			}
 		});
-
+		
         copy = new Button(composite, SWT.NONE);
         GridData gd_copy = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_copy.widthHint = 110;
         
         copy.setLayoutData(gd_copy);
-        copy.setText("Copy Block");
+        copy.setText("&Duplicate Block");
         copy.setEnabled(false);
         copy.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -135,7 +137,7 @@ public class BlocksEditorPanel extends Composite {
                 copySelected();
             }
         });
-
+        
 		edit = new Button(composite, SWT.NONE);
 		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_edit.widthHint = 110;
@@ -146,7 +148,7 @@ public class BlocksEditorPanel extends Composite {
                 openEditBlockDialog(table.firstSelectedRow());
 			}
 		});
-		edit.setText("Edit Block");
+		edit.setText("&Edit Block");
 		edit.setEnabled(false);
 		
 		remove = new Button(composite, SWT.NONE);
@@ -161,7 +163,6 @@ public class BlocksEditorPanel extends Composite {
 				deleteSelected();
 			}
 		});
-		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -169,7 +170,6 @@ public class BlocksEditorPanel extends Composite {
 				setSelectedBlocks(selected);
 			}
 		});
-
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
@@ -181,7 +181,6 @@ public class BlocksEditorPanel extends Composite {
                 }
             }
         });
-        
 	}
 	
 	/**
@@ -296,5 +295,15 @@ public class BlocksEditorPanel extends Composite {
     private void openEditBlockDialog(EditableBlock toEdit) {
         EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
         dialog.open();
+    }
+
+    public void showMnemonics() {
+        Event event = new Event();
+        event.keyCode = SWT.ALT;
+        event.type = SWT.KeyDown;
+        Display.getCurrent().post(event);
+        event.type = SWT.KeyUp;
+        Display.getCurrent().post(event);
+
     }
 }
