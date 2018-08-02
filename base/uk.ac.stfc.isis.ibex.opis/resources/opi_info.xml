@@ -2467,7 +2467,7 @@
         <categories>
             <category>Power supplies</category>
         </categories>
-        <type>NGPS</type>
+        <type>POWER_SUPPLY</type>
         <path>ngpspsu.opi</path>
         <description>The OPI for the NGPS power supply unit</description>
         <macros>
