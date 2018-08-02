@@ -62,6 +62,7 @@ public class CopyPerspectiveSnippetProcessor {
             subscribeChangedElement(broker, perspective);
             subscribeSelectedPerspective(broker, perspective);
         }
+        ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
     }
 
     /**
@@ -104,6 +105,8 @@ public class CopyPerspectiveSnippetProcessor {
     public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
 
 	EventHandler handler = new EventHandler() {
+		boolean alreadyCalled = false;
+
 			@Override
 			public void handleEvent(Event event) {
 				MUIElement element = (MUIElement) event.getProperty(EventTags.ELEMENT);
@@ -114,6 +117,12 @@ public class CopyPerspectiveSnippetProcessor {
 
 				if (!(element instanceof MPartSashContainerElement)) {
 					return;
+				}
+
+				// The event is called when the workbench first starts up even though nothing has changed.
+				if (!alreadyCalled) {
+				  alreadyCalled = true;
+				  return;
 				}
 
 				ResetLayoutButtonModel.getInstance().setChanged(true);

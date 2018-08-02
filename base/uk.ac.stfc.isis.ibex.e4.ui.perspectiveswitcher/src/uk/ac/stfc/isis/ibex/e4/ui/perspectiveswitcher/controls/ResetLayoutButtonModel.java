@@ -26,6 +26,17 @@ public class ResetLayoutButtonModel extends ModelObject {
   }
 
   /**
+   * Reset changed to false a set the current perspective.
+   *
+   * @param perspective
+   * 			The perspective that is now the current perspective.
+   */
+  public void reset(MPerspective perspective) {
+	  this.changed = false;
+	  this.currentPerspective = perspective;
+  }
+
+  /**
    * Checks whether the current layout has changed.
    *
    * @return isChanged
