@@ -6531,7 +6531,7 @@ $(pv_value)</tooltip>
       </path>
     </scripts>
     <style>1</style>
-    <text>Back to motor overview</text>
+    <text>Return to motor overview</text>
     <toggle_button>false</toggle_button>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
