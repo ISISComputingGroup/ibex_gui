@@ -15,6 +15,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * Copies all snippet perspectives to perspective stack called
@@ -48,15 +49,17 @@ public class CopyPerspectiveSnippetProcessor {
 		if (!perspectiveStack.getChildren().isEmpty()) {
 			return;
 		}
-
+        
 		// clone each snippet that is a perspective and add the cloned
 		// perspective into the main PerspectiveStack
 		boolean isFirst = true;
 		for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-			perspectiveStack.getChildren().add(perspective);
-			if (isFirst) {
-				perspectiveStack.setSelectedElement(perspective);
-				isFirst = false;
+			if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
+				perspectiveStack.getChildren().add(perspective);
+				if (isFirst) {
+					perspectiveStack.setSelectedElement(perspective);
+					isFirst = false;
+				}
 			}
 			subscribeChangedElement(broker, perspective);
 			subscribeSelectedPerspective(broker, perspective);

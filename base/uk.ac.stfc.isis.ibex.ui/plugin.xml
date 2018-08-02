@@ -3,14 +3,6 @@
 <plugin>
    <extension-point id="uk.ac.stfc.isis.ibex.ui.wait" name="uk.ac.stfc.isis.ibex.ui.wait" schema="schema/uk.ac.stfc.isis.ibex.ui.wait.exsd"/>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="uk.ac.stfc.isis.ibex.ui.preference.PreferencePage"
-            id="uk.ac.stfc.isis.ibex.ui.preference.PreferencePage"
-            name="ISIS">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.ui.startup">
       <startup
             class="uk.ac.stfc.isis.ibex.ui.UI">uk.ac.stfc.isis.ibex.ui.UI</startup>

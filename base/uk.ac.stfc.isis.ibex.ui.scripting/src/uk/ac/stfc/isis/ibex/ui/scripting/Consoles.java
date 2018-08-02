@@ -35,6 +35,8 @@ import org.osgi.service.event.EventHandler;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
+import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
+
 /**
  * The activator class controls the plug-in life cycle.
  */
@@ -88,6 +90,8 @@ public class Consoles extends AbstractUIPlugin {
 		};
 
 		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
+		
+		GraphingConnector.startListening();
 	}
 
 	/**
