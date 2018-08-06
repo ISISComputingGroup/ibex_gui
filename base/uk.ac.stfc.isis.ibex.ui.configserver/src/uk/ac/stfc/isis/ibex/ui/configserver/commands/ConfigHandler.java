@@ -51,17 +51,13 @@ public abstract class ConfigHandler<T> {
 	protected static final Editing EDITING = Configurations.getInstance().edit();
 	/** can execute the handler */
 	private boolean canExecute;
-	
-	private static final Object LOCK = new Object();
 
 	/**
 	 * The Handler can be executed.
 	 * @param canExecute true if it can be executed; false otherwise
 	 */
 	protected void setCanExecute(boolean canExecute) {
-		synchronized (LOCK) {
-			this.canExecute = canExecute;
-		}
+		this.canExecute = canExecute;
 	}
 	
 	/**
@@ -70,9 +66,7 @@ public abstract class ConfigHandler<T> {
 	 */
 	@CanExecute
 	public boolean canExecute() {
-		synchronized (LOCK) {
-			return this.canExecute;
-		}
+		return this.canExecute;
 	}
 	
 	/**
@@ -86,8 +80,6 @@ public abstract class ConfigHandler<T> {
 				canWriteChanged(canWrite);
 			}
 		};
-		
-		
 	};
 	
 	/**
@@ -119,13 +111,11 @@ public abstract class ConfigHandler<T> {
      */
     @Execute
     public final void execute(Shell shell) {
-    	synchronized (LOCK) {
-	        try {
-	            safeExecute(shell);
-	        } catch (RuntimeException e) {
-	            onError(e);
-	        }
-    	}
+        try {
+            safeExecute(shell);
+        } catch (RuntimeException e) {
+            onError(e);
+        }
     }
 
     /**

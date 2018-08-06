@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
  * 
  * It sets the menu labels, and opens the dialogue for editing or viewing a configuration.
  */
-public class EditCurrentConfigHandler extends DisablingConfigHandler<Configuration> {
+public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 
     private static final String EDIT_MENU_TEXT = "Edit Current Configuration...";
     private static final String READ_ONLY_TEXT = "View Current Configuration...";
