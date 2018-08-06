@@ -10,30 +10,30 @@ import org.eclipse.ui.PlatformUI;
  */
 public class PerspectiveResetAdapter extends SelectionAdapter {
 
-	private final PerspectivesProvider provider;
+    private final PerspectivesProvider provider;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param provider
-	 *            PerspectivesProvider
-	 */
-	public PerspectiveResetAdapter(PerspectivesProvider provider) {
-		this.provider = provider;
-	}
+    /**
+     * Constructor.
+     * 
+     * @param provider
+     *            PerspectivesProvider
+     */
+    public PerspectiveResetAdapter(PerspectivesProvider provider) {
+        this.provider = provider;
+    }
 
-	@Override
-	public void widgetSelected(SelectionEvent event) {
-		resetPerspective();
-	}
+    @Override
+    public void widgetSelected(SelectionEvent event) {
+        resetPerspective();
+    }
 
-	/**
-	 * Method that resets the current perspective.
-	 */
-	public void resetPerspective(){
-	    MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
+    /**
+     * Method that resets the current perspective.
+     */
+    public void resetPerspective() {
+        MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
         perspectiveStack.getSelectedElement().setVisible(true);
         perspectiveStack.setVisible(true);
-	}
+    }
 }

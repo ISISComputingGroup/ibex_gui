@@ -14,22 +14,25 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
  * Class containing the eclipse command to reset perspectives.
  */
 public class ResetPerspective {
-    
+
     /**
      * The application (injected by eclipse framework).
      */
-    @Inject public MApplication app;
-    
+    @Inject
+    public MApplication app;
+
     /**
      * The part service (injected by eclipse framework).
      */
-    @Inject public EPartService partService;
-    
+    @Inject
+    public EPartService partService;
+
     /**
      * The model service (injected by eclipse framework).
      */
-    @Inject public EModelService modelService;
-    
+    @Inject
+    public EModelService modelService;
+
     /**
      * Eclipse command to rest perspectives.
      */
