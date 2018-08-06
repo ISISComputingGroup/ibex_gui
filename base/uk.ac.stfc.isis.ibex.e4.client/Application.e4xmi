@@ -193,7 +193,7 @@
         <tags>type:user</tags>
       </parameters>
     </bindings>
-    <bindings xmi:id="_fq1XQJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+O" command="_NufGcJZmEeilnu5vNzjU3w">
+    <bindings xmi:id="_fq1XQJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+Z" command="_NufGcJZmEeilnu5vNzjU3w">
       <tags>type:user</tags>
     </bindings>
   </bindingTables>
