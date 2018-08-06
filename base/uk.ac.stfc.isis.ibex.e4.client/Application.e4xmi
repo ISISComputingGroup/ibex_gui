@@ -105,7 +105,8 @@
   <handlers xmi:id="_Q7_cIKkEEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.about" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.AboutHandler" command="_hj--kKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_v5ccsKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.usermanual" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.ManualHandler" command="_w0psQKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_37kgEKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.consolelogdialog" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.logger/uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
-  <handlers xmi:id="_hPKD8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
+  <handlers xmi:id="_JRFiEJlbEeiJWOfXjwtf9A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
+  <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
@@ -191,6 +192,9 @@
       <parameters xmi:id="_w_S0QYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens">
         <tags>type:user</tags>
       </parameters>
+    </bindings>
+    <bindings xmi:id="_fq1XQJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+O" command="_NufGcJZmEeilnu5vNzjU3w">
+      <tags>type:user</tags>
     </bindings>
   </bindingTables>
   <rootContext xmi:id="_no3QoIOVEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="dialog and window" description="default binding context">
@@ -580,6 +584,9 @@
   <commands xmi:id="_UJcx8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchperspetives" commandName="Switch Perspetives" description="Switch Perspetives">
     <tags>type:user</tags>
     <parameters xmi:id="_cauroIOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" name="perspectiveid" optional="false"/>
+  </commands>
+  <commands xmi:id="_NufGcJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.resetperspectives" commandName="Reset Perspectives" description="Reset Perspectives">
+    <tags>type:user</tags>
   </commands>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>

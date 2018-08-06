@@ -24,9 +24,16 @@ public class PerspectiveResetAdapter extends SelectionAdapter {
 
 	@Override
 	public void widgetSelected(SelectionEvent event) {
-		MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
-		perspectiveStack.getSelectedElement().setVisible(true);
-		perspectiveStack.setVisible(true);
+		resetPerspective();
+	}
+
+	/**
+	 * Method that resets the current perspective.
+	 */
+	public void resetPerspective(){
+	    MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+        perspectiveStack.getSelectedElement().setVisible(true);
+        perspectiveStack.setVisible(true);
 	}
 }
