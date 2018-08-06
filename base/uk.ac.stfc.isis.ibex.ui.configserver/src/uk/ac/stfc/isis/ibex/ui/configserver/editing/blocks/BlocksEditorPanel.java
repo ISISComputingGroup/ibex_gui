@@ -89,16 +89,22 @@ public class BlocksEditorPanel extends Composite {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
-                    deleteSelected();
+                    if (!table.selectedRows().isEmpty()) {
+                        deleteSelected();
+                    }
                 //copies selected blocks if press "Ctrl + D".
                 } else if (e.character == 0x4) {
-                    copySelected();
+                    if (!table.selectedRows().isEmpty()) {
+                        copySelected();
+                    }
                 //adds new block if press "Ctrl + A".
                 } else if (e.character == 0x01) {
                     addNew();
                 //edits first selected block if press "Ctrl +E".
                 } else if (e.character == 0x5 && editEnabled(Arrays.asList(table.firstSelectedRow()))) {
-                    openEditBlockDialog(table.firstSelectedRow());
+                    if (!table.selectedRows().isEmpty()) {
+                        openEditBlockDialog(table.firstSelectedRow());
+                    }
                 }
             }
         });
@@ -196,24 +202,22 @@ public class BlocksEditorPanel extends Composite {
 	}
 	
 	private void copySelected() {
-	    if (!table.selectedRows().isEmpty()) {
-    	    for (Block block : table.selectedRows()) {
-                EditableBlock added = new EditableBlock(block);
-                added.setName(viewModel.getUniqueName(added.getName()));
+	    for (Block block : table.selectedRows()) {
+	        EditableBlock added = new EditableBlock(block);
+	        added.setName(viewModel.getUniqueName(added.getName()));
                 
-                try {
-                    config.addNewBlock(added);
-                } catch (DuplicateBlockNameException e1) {
-                    MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
-                            "Failed to add block " + added.getName() + ":\nBlock with this name already exists.",
-                            MessageDialog.ERROR, new String[] {"OK"}, 0);
-                    error.open();
-                }
-                setBlocks(config);
-                setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
-                table.setSelected(added);
-    	    }
-	    } 
+	        try {
+	            config.addNewBlock(added);
+	        } catch (DuplicateBlockNameException e1) {
+	            MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
+	                    "Failed to add block " + added.getName() + ":\nBlock with this name already exists.",
+	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
+	            error.open();
+	        }
+	        setBlocks(config);
+	        setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
+	        table.setSelected(added);
+	    }
 	}
 
 	private void addNew() {
@@ -275,6 +279,12 @@ public class BlocksEditorPanel extends Composite {
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
 			setSelectedBlocks(table.selectedRows());
+		}
+		
+		if (table.isEmpty()){
+		    edit.setEnabled(false);
+		    remove.setEnabled(false);
+	        copy.setEnabled(false);
 		}
 	}
 
