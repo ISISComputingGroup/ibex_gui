@@ -65,7 +65,7 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
-                Configurations.getInstance().addRecent(config);
+                Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
             } else {
                 new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();

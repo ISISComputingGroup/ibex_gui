@@ -38,6 +38,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
 /**
@@ -45,7 +46,10 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
  *
  */
 public class RecentItems extends ContributionItem {
-	
+    
+    /** The configuration server object. */
+    protected static final ConfigServer SERVER = Configurations.getInstance().server();
+    
 	private static Configurations configs;
 
 	/**
@@ -76,7 +80,7 @@ public class RecentItems extends ContributionItem {
 		parent.setText("Recent Configurations");
 		
 		// Create menu items for the list
-		Collection<String> items = configs.getRecent();
+		Collection<String> items = configs.getRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
 		if (items.size() > 0) {
 			Menu child = new Menu(parent);
 			for (String config : items) {

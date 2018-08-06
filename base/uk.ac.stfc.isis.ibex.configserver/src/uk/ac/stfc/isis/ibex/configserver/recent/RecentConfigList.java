@@ -46,9 +46,16 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
  *
  */
 public class RecentConfigList {
-    /** The configuration server object. */
-	private List<String> recent;
-	private static final int MRU_LENGTH = 6;
+    
+    /** 
+     * The list of recently used configurations (includes name of current configuration). 
+     */
+	private List<String> listOfRecentlyLoadedConfigs;
+	
+	/**
+	 * The maximum number of items in the recently used configuration list.
+	 */
+	private static final int LENGTH_OF_RENCENTLY_USED_LIST_ = 6;
 	private static final String MRU_PREFS = "config-mru-slot-";
 	private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.configserver";
 
@@ -67,12 +74,12 @@ public class RecentConfigList {
 	public void add(String item) {
 		// Is it already in the list?
 		boolean first = true;
-		for (String current : recent) {
+		for (String current : listOfRecentlyLoadedConfigs) {
 			if (current.equals(item)) {
 				if (!first) {
 					// Move to first in the list
-					recent.remove(current);
-					recent.add(0, item);
+					listOfRecentlyLoadedConfigs.remove(current);
+					listOfRecentlyLoadedConfigs.add(0, item);
 					save();
 				}
 				// Done
@@ -82,9 +89,9 @@ public class RecentConfigList {
 		}
 		
 		// Not in the list, so add it, removing the oldest item if required
-		recent.add(0, item);
-		while (recent.size() > MRU_LENGTH) {
-			recent.remove(MRU_LENGTH);
+		listOfRecentlyLoadedConfigs.add(0, item);
+		while (listOfRecentlyLoadedConfigs.size() > LENGTH_OF_RENCENTLY_USED_LIST_) {
+			listOfRecentlyLoadedConfigs.remove(LENGTH_OF_RENCENTLY_USED_LIST_);
 		}
 		save();
 	}
@@ -146,7 +153,7 @@ public class RecentConfigList {
      * Clears the list of recently used configuration names and time stamps of when they were last loaded.
      */
     public void clear() {
-        recent.clear();
+        listOfRecentlyLoadedConfigs.clear();
         save();
     }
 
@@ -158,9 +165,9 @@ public class RecentConfigList {
      * @return
      *          The list of recently used configuration names without the current configuration.
      */
-    public List<String> getWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        List<String> recentWithoutCurrent = (List<String>) ConfigInfo.namesWithoutCurrent(configNamesToConfigInfos(recent, configsInServer));
-        return recentWithoutCurrent;
+    public List<String> getNamesOfRecentlyLoadedConfigs(Collection<ConfigInfo> configsInServer) {
+        List<String> namesOfRecentlyLoadedConfigs = (List<String>) ConfigInfo.namesWithoutCurrent(configNamesToConfigInfos(listOfRecentlyLoadedConfigs, configsInServer));
+        return namesOfRecentlyLoadedConfigs;
     }
 
     /**
@@ -171,9 +178,9 @@ public class RecentConfigList {
      * @return
      *          The list of time stamps of the recently used configuration without that of the current configuration.
      */
-    public List<String> getLastModifiedTimestampsWithoutCurrent(Collection<ConfigInfo> configsInServer) {
+    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
         List<String> timestamps = new ArrayList<String>();
-        Collection<ConfigInfo> configsWithoutCurrent = configNamesToConfigInfos(getWithoutCurrent(configsInServer), configsInServer);
+        Collection<ConfigInfo> configsWithoutCurrent = configNamesToConfigInfos(getNamesOfRecentlyLoadedConfigs(configsInServer), configsInServer);
         for (ConfigInfo config : configsWithoutCurrent) {
             timestamps.add(getLastModified(config));
         }
@@ -186,26 +193,9 @@ public class RecentConfigList {
      * @return 
      *          The list of recently used configuration names.
      */
-	public List<String> get() {
-	    return recent;
+	public List<String> getListOfRecentlyLoadedConfigs() {
+	    return listOfRecentlyLoadedConfigs;
 	}
-
-	/**
-     * Returns the list of time stamps of the recently used configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return
-     *          The list of time stamps of the recently used configuration.
-     */
-    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
-        List<String> timestamps = new ArrayList<String>();
-        Collection<ConfigInfo> configs = configNamesToConfigInfos(recent, configsInServer);
-        for (ConfigInfo config : configs) {
-            timestamps.add(getLastModified(config));
-        }
-        return timestamps;
-    }
 
 	/**
      * Removes an item from list of recently used configuration names and time stamps of when they were last loaded.
@@ -215,13 +205,13 @@ public class RecentConfigList {
      */
     public void remove(String item) {
         String toBeDeleted = "";
-        for (String current : recent) {
+        for (String current : listOfRecentlyLoadedConfigs) {
             if (current.equals(item)) {
                 toBeDeleted = current;
             }
         }
         if (!toBeDeleted.isEmpty()) {
-            recent.remove(toBeDeleted);
+            listOfRecentlyLoadedConfigs.remove(toBeDeleted);
         }
         save();
     }
@@ -232,8 +222,8 @@ public class RecentConfigList {
 	private void save() {
 		IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		Preferences mruPrefs = prefs.node(MRU_PREFS);
-		for (int i = 0; i < recent.size(); i++) {
-			mruPrefs.put(((Integer) i).toString(), recent.get(i));
+		for (int i = 0; i < listOfRecentlyLoadedConfigs.size(); i++) {
+			mruPrefs.put(((Integer) i).toString(), listOfRecentlyLoadedConfigs.get(i));
 		}
 		try {
 			mruPrefs.flush();
@@ -246,13 +236,13 @@ public class RecentConfigList {
      * Load the list.
      */
 	private void load() {
-		recent = new ArrayList<String>();
+		listOfRecentlyLoadedConfigs = new ArrayList<String>();
 		IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		Preferences mruPrefs = prefs.node(MRU_PREFS);
 		try {
 			String[] names = mruPrefs.keys();
-			for (int i = 0; i < names.length && i < MRU_LENGTH; i++) {
-				recent.add(mruPrefs.get(names[i], ""));
+			for (int i = 0; i < names.length && i < LENGTH_OF_RENCENTLY_USED_LIST_; i++) {
+				listOfRecentlyLoadedConfigs.add(mruPrefs.get(names[i], ""));
 			}
 		} catch (BackingStoreException e) {
 			e.printStackTrace();

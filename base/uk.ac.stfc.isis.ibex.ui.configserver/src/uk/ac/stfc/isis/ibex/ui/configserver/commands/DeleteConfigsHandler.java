@@ -51,7 +51,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 		if (dialog.open() == Window.OK) {
 		    configService.uncheckedWrite((dialog.selectedConfigs()));
 		    for (String item : dialog.selectedConfigs()) {
-		        Configurations.getInstance().removeRecent(item);
+		        Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
 		    }
 		}
 	}

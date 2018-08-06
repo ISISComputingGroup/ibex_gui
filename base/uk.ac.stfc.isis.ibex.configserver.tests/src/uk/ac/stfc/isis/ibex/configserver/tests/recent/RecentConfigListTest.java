@@ -18,7 +18,8 @@ import uk.ac.stfc.isis.ibex.configserver.recent.RecentConfigList;
 
 public class RecentConfigListTest {
 
-    private static final int MRU_LENGTH = 6;
+    /** The configuration server object. */
+    private static final int MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST = 6;
     private static final String name = "NAME";
     private static final String TIMESTAMP = "2018-15-13 12:45:0";
     RecentConfigList recentConfigList = new RecentConfigList();
@@ -40,30 +41,30 @@ public class RecentConfigListTest {
         List<String> expecteds = new ArrayList<String>();
         expecteds.add(name);
         recentConfigList.add(name);
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertEquals(expecteds, actuals);
     }
 
     @Test
     public void GIVEN_name_already_in_list_WHEN_add_to_list_containing_several_names_THEN_name_at_top_of_list() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name +i);
         }
         String expected = name + 5;
         recentConfigList.add(expected);
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertEquals(expected, actuals.get(0));
     }
 
     @Test
     public void GIVEN_name_already_in_list_WHEN_add_to_list_containing_several_names_THEN_name_only_exists_once_in_list() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         String expected = name + 5;
         recentConfigList.add(expected);
-        List<String> actuals = recentConfigList.get();
-        for (int i = 0; i < MRU_LENGTH; i++){
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++){
             if (i == 0 ) {
                 assertEquals(expected, actuals.get(i));
             } else {
@@ -74,56 +75,56 @@ public class RecentConfigListTest {
 
     @Test
     public void GIVEN_name_already_in_list_WHEN_remove_name_THEN_name_is_not_in_list_and_list_not_empty() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         String toBeRemoved = name + 5;
         recentConfigList.remove(toBeRemoved);
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertFalse(actuals.contains(toBeRemoved));
         assertFalse(actuals.isEmpty());
     }
 
     @Test
     public void GIVEN_list_WHEN_clear_THEN_list_is_empty() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         recentConfigList.clear();
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertTrue(actuals.isEmpty());
     }
 
     @Test
     public void GIVEN_name_already_first_in_list_WHEN_add_to_list_containing_several_names_THEN_name_at_top_of_list() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         String expected = name + 0;
         recentConfigList.add(expected);
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertEquals(expected, actuals.get(0));
     }
 
     @Test
     public void GIVEN_list_of_6_names_WHEN_add_name_not_already_in_list_THEN_still_6_names() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         String expected = name;
         recentConfigList.add(expected);
-        List<String> actuals = recentConfigList.get();
-        assertEquals(MRU_LENGTH, actuals.size());
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
+        assertEquals(MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST, actuals.size());
     }
 
     @Test
     public void GIVEN_list_of_6_names_WHEN_add_name_not_already_in_list_THEN_name_is_at_top_of_list() {
-        for(int i = 0; i < MRU_LENGTH; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_ITEMS_IN_RECENTLY_USED_LIST; i++) {
             recentConfigList.add(name + i);
         }
         String expected = name;
         recentConfigList.add(expected);
-        List<String> actuals = recentConfigList.get();
+        List<String> actuals = recentConfigList.getListOfRecentlyLoadedConfigs();
         assertEquals(expected, actuals.get(0));
     }
 
@@ -151,7 +152,7 @@ public class RecentConfigListTest {
     }
 
     @Test
-    public void GIVEN_a_config_in_server_WHEN_get_lat_time_modified_THEN_get_correct_timestamp() {
+    public void GIVEN_a_config_in_server_WHEN_get_last_time_modified_THEN_get_correct_timestamp() {
         ConfigInfo config = mock(ConfigInfo.class);
         Collection<String> timestamps = new ArrayList<String>();
         String expected = "";

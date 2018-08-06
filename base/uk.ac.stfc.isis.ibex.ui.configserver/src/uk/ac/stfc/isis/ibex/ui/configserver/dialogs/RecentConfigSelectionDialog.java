@@ -101,14 +101,20 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
         Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select one of the last five recently loaded configuration:");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, true);
-        String[] names;
-        names = recentConfigs.toArray(new String[0]);
+        setMultipleColumnItems(configNamesToArray(), timestampsToArray());
+    }
+    
+    private String[] configNamesToArray(){
+        return recentConfigs.toArray(new String[0]);
+    }
+    
+    private String[] timestampsToArray(){
         String[] timestamps;
         timestamps = recentTimestamps.toArray(new String[0]);
         for (int i = 0; i < timestamps.length; i++) {
             timestamps[i] = "Last modified: " + timestamps[i];
         }
-        setMultipleColumnItems(names, timestamps);
+        return timestamps;
     }
 
     /**

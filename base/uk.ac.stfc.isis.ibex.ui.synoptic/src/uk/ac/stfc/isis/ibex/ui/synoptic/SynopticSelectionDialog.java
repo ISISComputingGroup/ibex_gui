@@ -20,6 +20,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +30,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
-import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialogUtils;
 
 /**
  * Dialog for asking the user to select a single synoptic.
@@ -40,11 +40,6 @@ public class SynopticSelectionDialog extends SelectionDialog {
 	private final Collection<SynopticInfo> available;
 
 	private SynopticInfo selectedSynoptic;
-	
-	/**
-	 * A class containing utilities for selection dialogues.
-	 */
-	private SelectionDialogUtils selectionDialogUtils = new SelectionDialogUtils();
 
 	/**
 	 * @param parentShell The shell to open the dialog from.
@@ -80,7 +75,7 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL, false);
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
-		names = selectionDialogUtils.sortSelected(names);
+		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         setItems(names);
 	}
 

@@ -128,15 +128,6 @@ public class Configurations extends Closer implements BundleActivator {
 		return iocControl;
 	}
 
-    /**
-     * Returns the names of recently used configurations.
-     * 
-     * @return the names of recently used configurations.
-     */
-	public List<String> getRecent() {
-		return recent.get();
-	}
-
 	/**
      * Returns the names of recently used configurations without that of the current configuration.
      * 
@@ -145,20 +136,8 @@ public class Configurations extends Closer implements BundleActivator {
      * @return 
      *                  The names of recently used configurations without that of the current configuration.
      */
-    public List<String> getRecentWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        return recent.getWithoutCurrent(configsInServer);
-    }
-
-    /**
-     * Returns the time stamp of when recently used configurations were last modified.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return 
-     *                  The names of recently used configurations.
-     */
-    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
-        return recent.getLastModifiedTimestamps(configsInServer);
+    public List<String> getRecentlyLoadedConfigurations(Collection<ConfigInfo> configsInServer) {
+        return recent.getNamesOfRecentlyLoadedConfigs(configsInServer);
     }
 
     /**
@@ -169,8 +148,8 @@ public class Configurations extends Closer implements BundleActivator {
      * @return 
      *                 The names of recently used configurations without that of the current configuration.
      */
-    public List<String> getLastModifiedTimestampsWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        return recent.getLastModifiedTimestampsWithoutCurrent(configsInServer);
+    public List<String> getLastModifiedTimestampsOfRecentlyLoadedConfigurations(Collection<ConfigInfo> configsInServer) {
+        return recent.getLastModifiedTimestamps(configsInServer);
     }
 
     /**
@@ -179,7 +158,7 @@ public class Configurations extends Closer implements BundleActivator {
      * @param configName
      *                 The name to add.
      */
-	public void addRecent(String configName) {
+	public void addNameToRecentlyLoadedConfigList(String configName) {
 		recent.add(configName);
 	}
 	
@@ -188,7 +167,7 @@ public class Configurations extends Closer implements BundleActivator {
      * 
      * @param configName the name to add
      */
-    public void removeRecent(String configName) {
+    public void removeNameFromRecentlyLoadedConfigList(String configName) {
         recent.remove(configName);
     }
 
