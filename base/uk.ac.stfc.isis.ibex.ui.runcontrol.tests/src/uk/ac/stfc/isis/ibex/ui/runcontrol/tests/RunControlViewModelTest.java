@@ -19,8 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol.tests;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +43,8 @@ public class RunControlViewModelTest {
     private Collection<DisplayBlock> blocks;
 
     private DisplayBlock mockBlock;
+    
+    private static final double ASSERTION_TOLERANCE = 1e-15;
 
     @Before
     public void setUp() {
@@ -48,23 +52,23 @@ public class RunControlViewModelTest {
         runControlServer = mock(RunControlServer.class);
 
         mockBlock = mock(DisplayBlock.class);
-        when(mockBlock.getHighLimit()).thenReturn("0");
-        when(mockBlock.getLowLimit()).thenReturn("0");
+        when(mockBlock.getHighLimit()).thenReturn(0.);
+        when(mockBlock.getLowLimit()).thenReturn(0.);
         when(mockBlock.getEnabled()).thenReturn(false);
 
 
         blocks = new ArrayList<>();
         runControlViewModel = new RunControlViewModel(blocks, runControlServer);
 
-        runControlViewModel.setTxtHighLimit("0");
-        runControlViewModel.setTxtLowLimit("0");
+        runControlViewModel.setHighLimit(0.);
+        runControlViewModel.setLowLimit(0.);
     }
 
     @Test
     public void WHEN_valid_limits_set_THEN_send_enabled() {
         // Act
-        runControlViewModel.setTxtLowLimit("0");
-        runControlViewModel.setTxtHighLimit("1");
+        runControlViewModel.setLowLimit(0.);
+        runControlViewModel.setHighLimit(1.);
 
         // Assert
         assertEquals(runControlViewModel.getSendEnabled(), true);
@@ -73,7 +77,7 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_invalid_low_limit_set_THEN_send_disabled() {
         // Act
-        runControlViewModel.setTxtLowLimit("1");
+        runControlViewModel.setLowLimit(1.);
         
         // Assert
         assertFalse(runControlViewModel.getSendEnabled());
@@ -82,7 +86,7 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_invalid_high_limit_set_THEN_send_disabled() {
         // Act
-        runControlViewModel.setTxtHighLimit("-1");
+        runControlViewModel.setHighLimit(-1.0);
 
         // Assert
         assertFalse(runControlViewModel.getSendEnabled());
@@ -94,7 +98,7 @@ public class RunControlViewModelTest {
         runControlViewModel.setBlock(null);
 
         // Assert
-        assertEquals(runControlViewModel.getTxtLowLimit(), "");
+        assertEquals(runControlViewModel.getLowLimit(), 0., ASSERTION_TOLERANCE);
     }
 
     @Test
@@ -103,7 +107,7 @@ public class RunControlViewModelTest {
         runControlViewModel.setBlock(null);
 
         // Assert
-        assertEquals(runControlViewModel.getTxtHighLimit(), "");
+        assertEquals(runControlViewModel.getHighLimit(), 0., ASSERTION_TOLERANCE);
     }
 
     @Test
@@ -127,27 +131,27 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_new_block_is_set_THEN_high_limit_is_set_to_blocks() {
         // Arrange
-        String newHigh = "1.0";
+        double newHigh = 1.0;
         when(mockBlock.getHighLimit()).thenReturn(newHigh);
 
         // Act
         runControlViewModel.setBlock(mockBlock);
 
         // Assert
-        assertEquals(runControlViewModel.getTxtHighLimit(), newHigh);
+        assertEquals(runControlViewModel.getHighLimit(), newHigh, ASSERTION_TOLERANCE);
     }
 
     @Test
     public void WHEN_new_block_is_set_THEN_low_limit_is_set_to_blocks() {
         // Arrange
-        String newLow = "-1.0";
+        double newLow = -1.0;
         when(mockBlock.getHighLimit()).thenReturn(newLow);
 
         // Act
         runControlViewModel.setBlock(mockBlock);
 
         // Assert
-        assertEquals(runControlViewModel.getTxtHighLimit(), newLow);
+        assertEquals(runControlViewModel.getHighLimit(), newLow, ASSERTION_TOLERANCE);
     }
 
     @Test

@@ -18,15 +18,18 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol.tests;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
@@ -37,7 +40,7 @@ public class EditableRunControlSettingTest {
 		String blockName = "blockname";
 
 		// Mock writer with stub method for write
-		Writer<String> mockWriter = mock(Writer.class);
+		Writer<Double> mockWriter = mock(Writer.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);
@@ -47,11 +50,11 @@ public class EditableRunControlSettingTest {
 		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
-		setting.setLowLimit("0");
+		setting.setLowLimit(0.);
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).uncheckedWrite("0");
+		verify(mockWriter, times(1)).uncheckedWrite(0.);
 	}
 	
 	@Test
@@ -60,7 +63,7 @@ public class EditableRunControlSettingTest {
 		String blockName = "blockname";
 
 		// Mock writer with stub method for write
-		Writer<String> mockWriter = mock(Writer.class);
+		Writer<Double> mockWriter = mock(Writer.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);
@@ -70,11 +73,11 @@ public class EditableRunControlSettingTest {
 		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
 
 		// Act
-		setting.setHighLimit("100");
+		setting.setHighLimit(100.);
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).uncheckedWrite("100");
+		verify(mockWriter, times(1)).uncheckedWrite(100.);
 	}
 	
 	@Test
