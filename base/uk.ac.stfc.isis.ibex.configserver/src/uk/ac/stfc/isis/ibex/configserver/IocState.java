@@ -38,19 +38,20 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Class to hold information about the state of an IOC.
- *
- * Note: instances of this class are recreated each time the configuration changes.
- * Need to make sure that there are no references to this class left over after a 
- * configuration change, otherwise will get a memory leak. Registering an observer
- * in an observable means you WILL have a reference back from the observable to this
- * class.
  */
 public class IocState extends ModelObject implements Comparable<IocState>, INamed {
-	
+    
+    /**
+     * Note: instances of this class are recreated each time the configuration changes.
+     * Need to make sure that there are no references to this class left over after a 
+     * configuration change, otherwise will get a memory leak. Registering an observer
+     * in an observable means you WILL have a reference back from the observable to this
+     * class.
+     */
     private static final ForwardingObservable<Configuration> CURRENT_CONFIG_OBSERVABLE = 
-    		Configurations.getInstance().server().currentConfig();
+            Configurations.getInstance().server().currentConfig();
 
-	private final String name;
+    private final String name;
 
     private boolean isRunning;
     private final String description;
@@ -105,13 +106,16 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
     }
 
     /**
-     * Gets whether or not the IOC is in the current configuration.
+     * Gets whether or not the IOC is in the current configuration. The result is calculated
+     * at run-time so that it is as up to date as possible with the actual configuration
+     * being used. Can't easily use listeners here because it will cause a memory leak (see
+     * javadoc at top of class)
      * 
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {
         return CURRENT_CONFIG_OBSERVABLE.getValue().getIocs().stream()
-        		.anyMatch(ioc -> Objects.equals(ioc.getName(), name));
+                .anyMatch(ioc -> Objects.equals(ioc.getName(), name));
     }
 
     @Override
