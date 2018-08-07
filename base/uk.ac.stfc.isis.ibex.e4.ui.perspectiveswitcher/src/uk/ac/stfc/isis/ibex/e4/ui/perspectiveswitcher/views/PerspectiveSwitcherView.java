@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
