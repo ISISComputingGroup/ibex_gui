@@ -38,22 +38,24 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Class to hold information about the state of an IOC.
+ * 
+ * Implementation note: this class represents an immutable instance of the state
+ * of an IOC at a particular time.
  */
 public class IocState extends ModelObject implements Comparable<IocState>, INamed {
-    
+
     /**
-     * Note: instances of this class are recreated each time the configuration changes.
-     * Need to make sure that there are no references to this class left over after a 
-     * configuration change, otherwise will get a memory leak. Registering an observer
-     * in an observable means you WILL have a reference back from the observable to this
-     * class.
+     * Note: instances of this class are recreated each time the configuration
+     * changes. Need to make sure that there are no references to this class
+     * left over after a configuration change, otherwise will get a memory leak.
+     * Registering an observer in an observable means you WILL have a reference
+     * back from the observable to this class.
      */
-    private static final ForwardingObservable<Configuration> CURRENT_CONFIG_OBSERVABLE = 
-            Configurations.getInstance().server().currentConfig();
+    private static final ForwardingObservable<Configuration> CURRENT_CONFIG_OBSERVABLE = Configurations.getInstance()
+	    .server().currentConfig();
 
     private final String name;
-
-    private boolean isRunning;
+    private final boolean isRunning;
     private final String description;
 
     /**
@@ -65,35 +67,30 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      *            whether the IOC is running
      * @param description
      *            description of the IOC
-     * @param allowControl
-     *            whether the user is allowed control it
      */
     public IocState(String name, boolean isRunning, String description) {
-        this.name = name;
-        this.isRunning = isRunning;
-        this.description = description;
+	this.name = name;
+	this.isRunning = isRunning;
+	this.description = description;
     }
 
+    /**
+     * Gets the name of the IOC corresponding to this IOCState.
+     * 
+     * @return the name
+     */
     @Override
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
+     * Gets whether this IOC is running or not.
      * 
-     * @return True if it is running; False otherwise
+     * @return true if it is running; false otherwise
      */
     public boolean getIsRunning() {
-        return isRunning;
-    }
-
-    /**
-     *
-     * @param isRunning
-     *            true if it is running; False if not running
-     */
-    public void setIsRunning(boolean isRunning) {
-        firePropertyChange("isRunning", this.isRunning, this.isRunning = isRunning);
+	return isRunning;
     }
 
     /**
@@ -102,24 +99,27 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return the description
      */
     public String getDescription() {
-        return description;
+	return description;
     }
 
     /**
-     * Gets whether or not the IOC is in the current configuration. The result is calculated
-     * at run-time so that it is as up to date as possible with the actual configuration
-     * being used. Can't easily use listeners here because it will cause a memory leak (see
-     * javadoc at top of class)
+     * Gets whether or not the IOC is in the current configuration. The result
+     * is calculated at run-time so that it is as up to date as possible with
+     * the actual configuration being used. Can't easily use listeners here
+     * because it will cause a memory leak.
      * 
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {
-        return CURRENT_CONFIG_OBSERVABLE.getValue().getIocs().stream()
-                .anyMatch(ioc -> Objects.equals(ioc.getName(), name));
+	return CURRENT_CONFIG_OBSERVABLE.getValue().getIocs().stream()
+		.anyMatch(ioc -> Objects.equals(ioc.getName(), name));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compareTo(IocState iocState) {
-        return name.compareTo(iocState.getName());
+	return name.compareTo(iocState.getName());
     }
 }
