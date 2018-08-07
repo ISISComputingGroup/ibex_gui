@@ -39,7 +39,13 @@ public enum ExecutionInstructionType {
     /**
      * Stop the execution of the current script.
      */
-    STOP("stop");
+    STOP("stop"),
+	
+	/**
+	 * Skip the current script.
+	 */
+	SKIP("complete");
+
 
     private String command;
 

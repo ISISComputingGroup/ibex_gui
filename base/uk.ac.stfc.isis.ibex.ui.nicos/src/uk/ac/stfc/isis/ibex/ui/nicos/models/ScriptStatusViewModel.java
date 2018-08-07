@@ -38,6 +38,8 @@ public class ScriptStatusViewModel extends ModelObject {
             new ExecutionInstruction(ExecutionInstructionType.BREAK, BreakLevel.AFTER_LINE);
     private static final ExecutionInstruction RESUME_INSTRUCTION =
             new ExecutionInstruction(ExecutionInstructionType.CONTINUE, null);
+    private static final ExecutionInstruction SKIP_SCRIPT =
+            new ExecutionInstruction(ExecutionInstructionType.STOP, BreakLevel.AFTER_LINE);
 
 	private static final String NOT_EXECUTING = "Execution finished.";
 	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
@@ -177,6 +179,14 @@ public class ScriptStatusViewModel extends ModelObject {
     public void stopExecution() {
         model.sendExecutionInstruction(STOP_INSTRUCTION);
     }
+    
+    /**
+     * Send a message to the NICOS server telling it to skip the current script.
+     */
+    public void skipExecution() {
+        model.sendExecutionInstruction(SKIP_SCRIPT);
+    }
+
 
     /**
      * Send a message to the NICOS server telling it to pause the current script

@@ -45,6 +45,7 @@ public class NicosControlButtonPanel extends Composite {
 
     private Button btnStop;
     private Button btnTogglePause;
+    private Button btnSkipCurrent;
     private ScriptStatusViewModel statusModel;
 
     /**
@@ -63,7 +64,7 @@ public class NicosControlButtonPanel extends Composite {
 
         this.statusModel = statusModel;
 
-        GridLayout gridLayout = new GridLayout(2, true);
+        GridLayout gridLayout = new GridLayout(3, true);
         gridLayout.marginHeight = 10;
         gridLayout.marginWidth = 10;
         setLayout(gridLayout);
@@ -73,6 +74,12 @@ public class NicosControlButtonPanel extends Composite {
         btnTogglePause.setText("Pause");
         btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
         btnTogglePause.setToolTipText("Pause script after the current operation completes.");
+        
+        btnSkipCurrent = new Button(this, SWT.CENTER);
+        btnSkipCurrent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        btnSkipCurrent.setText("Skip Current Script");
+        btnSkipCurrent.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/skip.png"));
+        btnSkipCurrent.setToolTipText("Skip the currently executing script and move on to the next one in the queue.");
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -92,11 +99,20 @@ public class NicosControlButtonPanel extends Composite {
                 BeanProperties.value("enableButtons").observe(statusModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSkipCurrent),
+                BeanProperties.value("enableButtons").observe(statusModel));
         
         btnTogglePause.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 statusModel.toggleExecution();
+            }
+        });
+        
+        btnSkipCurrent.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                statusModel.skipExecution();
             }
         });
 
