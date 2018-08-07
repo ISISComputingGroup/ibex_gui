@@ -197,9 +197,9 @@ public class RunControlEditorPanel extends Composite {
                 BeanProperties.value("sendEnabled").observe(viewModel));
     	
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtLowLimit),
-                BeanProperties.value("txtLowLimit").observe(viewModel));
+                BeanProperties.value("lowLimit").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHighLimit),
-                BeanProperties.value("txtHighLimit").observe(viewModel));
+                BeanProperties.value("highLimit").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
                 BeanProperties.value("rcEnabled").observe(viewModel));
     }

@@ -39,8 +39,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
 
     private RunControlValidator runControlValidator = new RunControlValidator();
     
-    private String txtHighLimit = "";
-    private String txtLowLimit = "";
+    private double highLimit;
+    private double lowLimit;
     private boolean rcEnabled;
 
     private boolean sendEnabled;
@@ -69,8 +69,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
      * Resets the current values to those of the current block's configuration.
      */
     public void resetCurrentBlock() {
-        setTxtHighLimit(currentBlock.getConfigurationHighLimit());
-        setTxtLowLimit(currentBlock.getConfigurationLowLimit());
+        setHighLimit(currentBlock.getConfigurationHighLimit());
+        setLowLimit(currentBlock.getConfigurationLowLimit());
         setRcEnabled(currentBlock.getConfigurationEnabled());
 
         setSendEnabled(true);
@@ -88,7 +88,7 @@ public class RunControlViewModel extends ErrorMessageProvider {
         }
     }
     
-    private void checkIsValid(String lowLimit, String highLimit) {
+    private void checkIsValid() {
         boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
 		setSendEnabled(isValid);
 		setError(!(isValid), runControlValidator.getErrorMessage());
@@ -105,8 +105,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
 
         if (currentBlock == null) {
             setSendEnabled(false);
-            setTxtLowLimit("");
-            setTxtHighLimit("");
+            setLowLimit(0);
+            setHighLimit(0);
             setRcEnabled(false);
 
             // This isn't actually an error
@@ -114,8 +114,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
             return;
         }
 
-        setTxtLowLimit(block.getLowLimit().trim());
-        setTxtHighLimit(block.getHighLimit().trim());
+        setLowLimit(block.getLowLimit());
+        setHighLimit(block.getHighLimit());
         setRcEnabled(block.getEnabled());
     }
 
@@ -125,8 +125,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
     public void sendChanges() {
         if (currentBlock != null) {
             RunControlSetter setter = setters.get(currentBlock);
-            setter.setLowLimit(txtLowLimit);
-            setter.setHighLimit(txtHighLimit);
+            setter.setLowLimit(lowLimit);
+            setter.setHighLimit(highLimit);
             setter.setEnabled(rcEnabled);
         }
 
@@ -138,8 +138,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
      * 
      * @return The low limit for the block.
      */
-    public String getTxtLowLimit() {
-        return txtLowLimit;
+    public double getLowLimit() {
+        return lowLimit;
     }
 
     /**
@@ -148,9 +148,9 @@ public class RunControlViewModel extends ErrorMessageProvider {
      * @param txtLowLimit
      *            The new low limit for the block.
      */
-    public void setTxtLowLimit(String txtLowLimit) {
-        checkIsValid(txtLowLimit, txtHighLimit);
-        firePropertyChange("txtLowLimit", this.txtLowLimit, this.txtLowLimit = txtLowLimit);
+    public void setLowLimit(double lowLimit) {
+        firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
+        checkIsValid();
 	}
 	
     /**
@@ -158,8 +158,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
      * 
      * @return The high limit for the block.
      */
-	public String getTxtHighLimit() {
-		return txtHighLimit;
+	public double getHighLimit() {
+		return highLimit;
 	}
 
     /**
@@ -168,9 +168,9 @@ public class RunControlViewModel extends ErrorMessageProvider {
      * @param txtHighLimit
      *            The new high limit for the block.
      */
-    public void setTxtHighLimit(String txtHighLimit) {
-        checkIsValid(txtLowLimit, txtHighLimit);
-        firePropertyChange("txtHighLimit", this.txtHighLimit, this.txtHighLimit = txtHighLimit);
+    public void setHighLimit(double highLimit) {
+        firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+        checkIsValid();
 	}
 
     /**
@@ -180,8 +180,8 @@ public class RunControlViewModel extends ErrorMessageProvider {
      *            True to enable run control
      */
     public void setRcEnabled(boolean enabled) {
-        checkIsValid(txtLowLimit, txtHighLimit);
         firePropertyChange("rcEnabled", this.rcEnabled, this.rcEnabled = enabled);
+        checkIsValid();
     }
 
     /**

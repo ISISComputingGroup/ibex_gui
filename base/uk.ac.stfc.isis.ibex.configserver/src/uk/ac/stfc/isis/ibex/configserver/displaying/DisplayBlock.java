@@ -56,13 +56,13 @@ public class DisplayBlock extends ModelObject {
      * The current low limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String lowlimit = "";
+    private double lowlimit;
 
     /**
      * The current high limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String highlimit = "";
+    private double highlimit;
 
     /**
      * Specifies whether the block is currently under run-control. This can be
@@ -174,27 +174,27 @@ public class DisplayBlock extends ModelObject {
         }
     };
 
-    private final BaseObserver<String> lowLimitAdapter = new BaseObserver<String>() {
+    private final BaseObserver<Double> lowLimitAdapter = new BaseObserver<Double>() {
         @Override
-        public void onValue(String value) {
+        public void onValue(Double value) {
             setLowLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setLowLimit("error");
+            setLowLimit(0);
         }
     };
 
-    private final BaseObserver<String> highLimitAdapter = new BaseObserver<String>() {
+    private final BaseObserver<Double> highLimitAdapter = new BaseObserver<Double>() {
         @Override
-        public void onValue(String value) {
+        public void onValue(Double value) {
             setHighLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setHighLimit("error");
+            setHighLimit(0);
         }
     };
 
@@ -236,8 +236,8 @@ public class DisplayBlock extends ModelObject {
             ForwardingObservable<String> descriptionSource,
             ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
-            ForwardingObservable<String> lowLimitSource,
-            ForwardingObservable<String> highLimitSource,
+            ForwardingObservable<Double> lowLimitSource,
+            ForwardingObservable<Double> highLimitSource,
             ForwardingObservable<String> enabledSource, String blockServerAlias) {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
@@ -296,14 +296,14 @@ public class DisplayBlock extends ModelObject {
     /**
      * @return the current low limit for run-control.
      */
-    public String getLowLimit() {
+    public Double getLowLimit() {
         return lowlimit;
     }
 
     /**
      * @return the current high limit for run-control.
      */
-    public String getHighLimit() {
+    public Double getHighLimit() {
         return highlimit;
     }
 
@@ -317,15 +317,15 @@ public class DisplayBlock extends ModelObject {
     /**
      * @return the low limit set in the configuration.
      */
-    public String getConfigurationLowLimit() {
-        return Float.toString(block.getRCLowLimit());
+    public Double getConfigurationLowLimit() {
+        return block.getRCLowLimit();
     }
 
     /**
      * @return the high limit set in the configuration.
      */
-    public String getConfigurationHighLimit() {
-        return Float.toString(block.getRCHighLimit());
+    public Double getConfigurationHighLimit() {
+        return block.getRCHighLimit();
     }
 
     /**
@@ -372,11 +372,11 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
-    private synchronized void setLowLimit(String limit) {
+    private synchronized void setLowLimit(double limit) {
         firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
     }
 
-    private synchronized void setHighLimit(String limit) {
+    private synchronized void setHighLimit(double limit) {
         firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
     }
 

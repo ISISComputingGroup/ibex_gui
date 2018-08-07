@@ -27,11 +27,8 @@ import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
  * The view model for the run-control settings for a block.
  */
 public class BlockRunControlViewModel extends ErrorMessageProvider {    
-	private String lowLimitText = "";
-	private String highLimitText = "";    
-	
-	private float lowLimit;
-    private float highLimit;
+	private double lowLimit;
+    private double highLimit;
     private boolean enabled;
     
     private final Block editingBlock;
@@ -45,16 +42,9 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
     public BlockRunControlViewModel(final Block editingBlock) {
     	this.editingBlock = editingBlock;
     	
-    	setLowLimitText(Float.toString(editingBlock.getRCLowLimit()));
-    	setHighLimitText(Float.toString(editingBlock.getRCHighLimit()));
-    	enabled = editingBlock.getRCEnabled();
-	}
-    
-    /**
-     * @return the low limit
-     */
-    public String getLowLimitText() {
-		return lowLimitText;
+    	setLowLimit(editingBlock.getRCLowLimit());
+    	setHighLimit(editingBlock.getRCHighLimit());
+    	setEnabled(editingBlock.getRCEnabled());
 	}
     
     /**
@@ -62,21 +52,9 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
      * 
      * @param lowLimitText the new value
      */
-	public void setLowLimitText(String lowLimitText) {
-		boolean isValid = runControlValidator.isValid(lowLimitText, highLimitText);
-		if (isValid) {
-			lowLimit = Float.parseFloat(lowLimitText);
-		}
-		setError(!(isValid), runControlValidator.getErrorMessage());
-		
-		firePropertyChange("lowLimitText", this.lowLimitText, this.lowLimitText = lowLimitText);
-	}
-	
-    /**
-     * @return the high limit
-     */
-	public String getHighLimitText() {
-		return highLimitText;
+	public void setLowLimit(double lowLimit) {
+		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
+		updateErrors();
 	}
 
     /**
@@ -84,27 +62,28 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
      * 
      * @param highLimitText the new value
      */
-	public void setHighLimitText(String highLimitText) {
-		boolean isValid = runControlValidator.isValid(lowLimitText, highLimitText);
-		if (isValid) {
-			highLimit = Float.parseFloat(highLimitText);
-		}
-		setError(!(isValid), runControlValidator.getErrorMessage());
-		
-		firePropertyChange("highLimitText", this.highLimitText, this.highLimitText = highLimitText);
+	public void setHighLimit(double highLimit) {
+		firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+		updateErrors();
+	}
+	
+	private void updateErrors() {
+		// boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
+		boolean isValid = true;
+		setError(!isValid, runControlValidator.getErrorMessage());
 	}
 	
     /**
      * @return the low limit
      */
-	public float getLowLimit() {
+	public double getLowLimit() {
 		return lowLimit;
 	}
 	
     /**
      * @return the high limit
      */
-	public float getHighLimit() {
+	public double getHighLimit() {
 		return highLimit;
 	}
 	

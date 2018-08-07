@@ -45,8 +45,8 @@ public class Block extends ModelObject {
 	private String component;
 
     private boolean runcontrol;
-    private float lowlimit;
-    private float highlimit;
+    private double lowlimit;
+    private double highlimit;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -82,8 +82,8 @@ public class Block extends ModelObject {
      * @param logRate time between archive samples (seconds)
      * @param logDeadband deadband for the block to be archived
      */
-    public Block(String name, String pv, boolean visible, boolean local, String component, float lowLimit,
-            float highLimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
+    public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
+            double highLimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -257,7 +257,7 @@ public class Block extends ModelObject {
      * 
      * @return the low limit for run-control
      */
-    public float getRCLowLimit() {
+    public double getRCLowLimit() {
         return lowlimit;
     }
 
@@ -266,7 +266,7 @@ public class Block extends ModelObject {
      * 
      * @param rclow the new low limit for run-control
      */
-    public void setRCLowLimit(float rclow) {
+    public void setRCLowLimit(double rclow) {
         firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
@@ -275,7 +275,7 @@ public class Block extends ModelObject {
      * 
      * @return the high limit for run-control
      */
-    public float getRCHighLimit() {
+    public double getRCHighLimit() {
         return highlimit;
     }
 
@@ -284,7 +284,7 @@ public class Block extends ModelObject {
      * 
      * @param rchigh the new high limit for run-control
      */
-    public void setRCHighLimit(float rchigh) {
+    public void setRCHighLimit(double rchigh) {
         firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 

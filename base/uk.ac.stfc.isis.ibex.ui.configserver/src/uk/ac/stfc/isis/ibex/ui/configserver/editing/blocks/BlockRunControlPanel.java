@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -33,10 +32,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.validators.NumericalVerifyListener;
+
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
-    private Text lowLimitText;
-    private Text highLimitText;
+    private Text lowLimit;
+    private Text highLimit;
     private Button btnEnabled;
 
     public BlockRunControlPanel(Composite parent, int style, BlockRunControlViewModel viewModel) {
@@ -52,15 +53,17 @@ public class BlockRunControlPanel extends Composite {
         lblLowLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblLowLimit.setText("Low Limit:");
 
-        lowLimitText = new Text(grpRuncontrolSettings, SWT.BORDER);
-        lowLimitText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        lowLimit = new Text(grpRuncontrolSettings, SWT.BORDER);
+        lowLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        lowLimit.addVerifyListener(new NumericalVerifyListener());
 
         Label lblHighLimit = new Label(grpRuncontrolSettings, SWT.NONE);
         lblHighLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblHighLimit.setText("High Limit:");
 
-        highLimitText = new Text(grpRuncontrolSettings, SWT.BORDER);
-        highLimitText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        highLimit = new Text(grpRuncontrolSettings, SWT.BORDER);
+        highLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        highLimit.addVerifyListener(new NumericalVerifyListener());
 
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -74,15 +77,15 @@ public class BlockRunControlPanel extends Composite {
 		
         bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
                 BeanProperties.value("enabled").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimitText),
+        bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimit),
                 BeanProperties.value("enabled").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(highLimitText),
+        bindingContext.bindValue(WidgetProperties.enabled().observe(highLimit),
                 BeanProperties.value("enabled").observe(viewModel));
         
-        bindingContext.bindValue(SWTObservables.observeText(lowLimitText, SWT.Modify),
-                BeanProperties.value("lowLimitText").observe(viewModel));
-        bindingContext.bindValue(SWTObservables.observeText(highLimitText, SWT.Modify),
-                BeanProperties.value("highLimitText").observe(viewModel)); 
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
+                BeanProperties.value("lowLimit").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
+                BeanProperties.value("highLimit").observe(viewModel)); 
         
 	}
 }

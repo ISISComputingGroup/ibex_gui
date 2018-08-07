@@ -26,12 +26,6 @@ package uk.ac.stfc.isis.ibex.validators;
  * Provides validation for PV items.
  */
 public class RunControlValidator {
-
-    public static final String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";
-    public static final String HIGH_LIMIT_EMPTY = "The high run control limit must not be empty";
-    
-    public static final String LOW_LIMIT_FLOAT = "The low run control limit must be a decimal";
-    public static final String LOW_LIMIT_EMPTY = "The low run control limit must not be empty";
     
     public static final String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
 
@@ -43,39 +37,10 @@ public class RunControlValidator {
         this.errorMessage = NO_ERROR;
     }
 
-	public boolean isValid(String lowLimitText, String highLimitText) {
-		boolean isValid = false;
-		float tmpLowLimit;
-		float tmpHighLimit;
-		
-		if (lowLimitText == null || highLimitText == null) {
-			setErrorMessage(NO_ERROR);
-			return false;
-		}
-		
-		try {
-			tmpLowLimit = Float.parseFloat(lowLimitText);
-		} catch (NumberFormatException e) {
-	    	if (lowLimitText.isEmpty()) {
-	    		setErrorMessage(LOW_LIMIT_EMPTY);
-	    	} else {
-	    		setErrorMessage(LOW_LIMIT_FLOAT);
-	    	}
-	    	return false;
-		}
-		
-		try {
-			tmpHighLimit = Float.parseFloat(highLimitText);
-		} catch (NumberFormatException e) {
-	    	if (highLimitText.isEmpty()) {
-	    		setErrorMessage(HIGH_LIMIT_EMPTY);
-	    	} else {
-	    		setErrorMessage(HIGH_LIMIT_FLOAT);
-	    	}
-	    	return false;
-		}
-		
-    	if (tmpLowLimit > tmpHighLimit) {
+	public boolean isValid(double lowLimit, double highLimit) {
+		boolean isValid;
+    	if (lowLimit > highLimit) {
+    		isValid = false;
     		setErrorMessage(LOW_LIMIT_LESS);
         } else {
             isValid = true;
