@@ -29,54 +29,31 @@
  */
 package uk.ac.stfc.isis.ibex.configserver;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Objects;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Class to hold information about the state of an IOC.
  *
+ * Note: instances of this class are recreated each time the configuration changes.
+ * Need to make sure that there are no references to this class left over after a 
+ * configuration change, otherwise will get a memory leak. Registering an observer
+ * in an observable means you WILL have a reference back from the observable to this
+ * class.
  */
 public class IocState extends ModelObject implements Comparable<IocState>, INamed {
-    private final String name;
-    private final boolean allowControl;
+	
+    private static final ForwardingObservable<Configuration> CURRENT_CONFIG_OBSERVABLE = 
+    		Configurations.getInstance().server().currentConfig();
+
+	private final String name;
 
     private boolean isRunning;
-    private String description;
-    private boolean inCurrentConfig;
-
-    Observer<EditableConfiguration> currentConfigObserver = new BaseObserver<EditableConfiguration>() {
-
-        @Override
-        public void onValue(EditableConfiguration value) {
-            final EditableConfiguration config = value;
-
-            Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
-            Collection<EditableIoc> availableIocs = new ArrayList<EditableIoc>();
-            addedIocs = config.getAddedIocs();
-            availableIocs = config.getAvailableIocs();
-
-            for (EditableIoc ioc : addedIocs) {
-
-                if (ioc.getName().equals(name)) {
-                    setInCurrentConfig(true);
-                }
-            }
-            for (EditableIoc ioc : availableIocs) {
-                if (ioc.getName().equals(name)) {
-                    setInCurrentConfig(false);
-                }
-            }
-        }
-    };
+    private final String description;
 
     /**
      * Instantiates a new IOC state.
@@ -90,22 +67,10 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @param allowControl
      *            whether the user is allowed control it
      */
-    public IocState(String name, boolean isRunning, String description, boolean allowControl) {
+    public IocState(String name, boolean isRunning, String description) {
         this.name = name;
         this.isRunning = isRunning;
         this.description = description;
-        this.allowControl = allowControl;
-        bindInCurrentConfig();
-    }
-
-    /**
-     * Copy constructor.
-     *
-     * @param other
-     *            the value to copy
-     */
-    public IocState(IocState other) {
-        this(other.name, other.isRunning, other.description, other.allowControl);
     }
 
     @Override
@@ -140,42 +105,13 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
     }
 
     /**
-     *
-     * @return true if user is allowed to control it; false otherwise
-     */
-    public boolean getAllowControl() {
-        return allowControl;
-    }
-
-    /**
      * Gets whether or not the IOC is in the current configuration.
      * 
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {
-        return this.inCurrentConfig;
-    }
-
-    /**
-     * Binds inCurrentConfig to the current config.
-     * 
-     */
-    public void bindInCurrentConfig() {
-        ConfigServer server = Configurations.getInstance().server();
-        ConfigEditing edit = new ConfigEditing(server);
-        ForwardingObservable<EditableConfiguration> currentConfig = edit.currentConfig();
-        currentConfig.addObserver(currentConfigObserver);
-    }
-
-    /**
-     * Sets inCurrentConfig to true if the IOC is in the current configuration;
-     * false otherwise.
-     * 
-     * @param inConfig
-     *            true if in current config, false otherwise
-     */
-    public void setInCurrentConfig(boolean inConfig) {
-        firePropertyChange("inCurrentConfig", inCurrentConfig, inCurrentConfig = inConfig);
+        return CURRENT_CONFIG_OBSERVABLE.getValue().getIocs().stream()
+        		.anyMatch(ioc -> Objects.equals(ioc.getName(), name));
     }
 
     @Override
