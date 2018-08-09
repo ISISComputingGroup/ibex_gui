@@ -139,17 +139,4 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		search.setSearchText(searchText);
 		this.viewer().refresh();
 	}
-
-	/**
-     * Checks if the table is empty
-     * @return True if the table is empty.
-     */
-    public boolean isEmpty() {
-        int nbOfTableItems = table().getItemCount();
-        if (nbOfTableItems == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }

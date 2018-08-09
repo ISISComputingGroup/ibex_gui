@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,24 +90,22 @@ public class BlocksEditorPanel extends Composite {
         table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.keyCode == SWT.DEL) {
-                    if (!table.selectedRows().isEmpty()) {
-                        deleteSelected();
-                    }
-                //copies selected blocks if press "Ctrl + D".
-                } else if (e.character == 0x4) {
-                    if (!table.selectedRows().isEmpty()) {
-                        copySelected();
-                    }
-                //adds new block if press "Ctrl + A".
-                } else if (e.character == 0x01) {
-                    addNew();
-                //edits first selected block if press "Ctrl +E".
-                } else if (e.character == 0x5 && editEnabled(Arrays.asList(table.firstSelectedRow()))) {
-                    if (!table.selectedRows().isEmpty()) {
+            	if (editEnabled(table.selectedRows())) {
+	                if (e.keyCode == SWT.DEL) {
+	                    deleteSelected();
+	                //copies selected blocks if press "Ctrl + D".
+	                } else if (e.character == 0x4) {
+	                    copySelected();
+	                //edits first selected block if press "Ctrl +E". 
+	                } else if (e.character == 0x5) {
                         openEditBlockDialog(table.firstSelectedRow());
                     }
                 }
+	                
+	            //adds new block if press "Ctrl + A".
+	            if (e.character == 0x01) {
+	            	addNew();
+	            }              
             }
         });
 		
@@ -136,7 +136,6 @@ public class BlocksEditorPanel extends Composite {
         
         copy.setLayoutData(gd_copy);
         copy.setText("&Duplicate Block");
-        copy.setEnabled(false);
         copy.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) { 
@@ -155,10 +154,8 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 		edit.setText("&Edit Block");
-		edit.setEnabled(false);
 		
 		remove = new Button(composite, SWT.NONE);
-		remove.setEnabled(false);
 		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_remove.widthHint = 110;
 		remove.setLayoutData(gd_remove);
@@ -169,6 +166,7 @@ public class BlocksEditorPanel extends Composite {
 				deleteSelected();
 			}
 		});
+		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -187,6 +185,8 @@ public class BlocksEditorPanel extends Composite {
                 }
             }
         });
+        
+        setSelectedBlocks(new ArrayList<>());
 	}
 	
 	/**
@@ -198,6 +198,14 @@ public class BlocksEditorPanel extends Composite {
 		this.config = config;
 		
 		add.setEnabled(true);
+		
+		config.addPropertyChangeListener("blocks", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				setBlocks(config);
+			}
+		});
+		
 		setBlocks(config);
 	}
 	
@@ -214,8 +222,7 @@ public class BlocksEditorPanel extends Composite {
 	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
 	            error.open();
 	        }
-	        setBlocks(config);
-	        setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
+	        setSelectedBlocks(Arrays.asList(added));
 	        table.setSelected(added);
 	    }
 	}
@@ -225,8 +232,7 @@ public class BlocksEditorPanel extends Composite {
         EditableBlock added = blockFactory.createNewBlock();
         EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
         dialog.open();
-        setBlocks(config);
-        setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
+        setSelectedBlocks(Arrays.asList(added));
         table.setSelected(added);
 	}
 	
@@ -234,7 +240,7 @@ public class BlocksEditorPanel extends Composite {
 		table.setRows(config.getAllBlocks());
 		table.refresh();
 	}
-
+	
 	private void setSelectedBlocks(List<EditableBlock> selected) {
 		if (selected.size() > 1) {
 			edit.setEnabled(false);
@@ -246,11 +252,12 @@ public class BlocksEditorPanel extends Composite {
 	}
 
 	private boolean editEnabled(List<EditableBlock> blocks) {
-		boolean output = true;
+		boolean enabled = !blocks.isEmpty();
+		
 		for (EditableBlock block : blocks) {
-			output &= block != null && block.isEditable();
+			enabled &= block != null && block.isEditable();
 		}
-		return output;
+		return enabled;
 	}
 
 	private void deleteSelected() {
@@ -273,18 +280,11 @@ public class BlocksEditorPanel extends Composite {
 		if (returnCode == SWT.OK) {
 			int index = table.getSelectionIndex();
 			config.removeBlocks(toRemove);
-			setBlocks(config);
 		
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
 			setSelectedBlocks(table.selectedRows());
-		}
-		
-		if (table.isEmpty()){
-		    edit.setEnabled(false);
-		    remove.setEnabled(false);
-	        copy.setEnabled(false);
 		}
 	}
 
