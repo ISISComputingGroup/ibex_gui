@@ -90,7 +90,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getEnabled().toString();
+                            return setting.getRCEnabled().toString();
                         }
                         return "";
                     }
@@ -102,7 +102,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getLowLimit().toString();
+                            return setting.getRCLowLimit().toString();
                         }
                         return "";
                     }
@@ -115,7 +115,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
             @Override
 			public String stringFromRow(DisplayBlock setting) {
                 if (setting != null) {
-                    return setting.getHighLimit().toString();
+                    return setting.getRCHighLimit().toString();
                 }
                 return "";
             }

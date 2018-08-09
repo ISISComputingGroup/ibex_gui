@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * JSON.
  */
 @SuppressWarnings("checkstyle:membername")
-public class Block extends ModelObject {
+public class Block extends ModelObject implements IRuncontrol {
 
     /**
      * Default value to give to periodic scan.
@@ -239,7 +239,8 @@ public class Block extends ModelObject {
      * 
      * @return whether run-control is enabled
      */
-    public boolean getRCEnabled() {
+    @Override
+	public Boolean getRCEnabled() {
         return runcontrol;
 	}
 	
@@ -248,7 +249,8 @@ public class Block extends ModelObject {
      * 
      * @param runcontrol whether run-control should be enabled
      */
-    public void setRCEnabled(boolean runcontrol) {
+    @Override
+	public void setRCEnabled(Boolean runcontrol) {
         firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
@@ -257,7 +259,8 @@ public class Block extends ModelObject {
      * 
      * @return the low limit for run-control
      */
-    public double getRCLowLimit() {
+    @Override
+	public Double getRCLowLimit() {
         return lowlimit;
     }
 
@@ -266,7 +269,8 @@ public class Block extends ModelObject {
      * 
      * @param rclow the new low limit for run-control
      */
-    public void setRCLowLimit(double rclow) {
+    @Override
+	public void setRCLowLimit(Double rclow) {
         firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
@@ -275,7 +279,8 @@ public class Block extends ModelObject {
      * 
      * @return the high limit for run-control
      */
-    public double getRCHighLimit() {
+    @Override
+	public Double getRCHighLimit() {
         return highlimit;
     }
 
@@ -284,7 +289,8 @@ public class Block extends ModelObject {
      * 
      * @param rchigh the new high limit for run-control
      */
-    public void setRCHighLimit(double rchigh) {
+    @Override
+	public void setRCHighLimit(Double rchigh) {
         firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 

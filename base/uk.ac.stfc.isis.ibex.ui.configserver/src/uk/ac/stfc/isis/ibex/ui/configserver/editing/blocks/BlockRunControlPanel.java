@@ -32,8 +32,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.validators.NumericalVerifyListener;
-
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
     private Text lowLimit;
@@ -55,7 +53,6 @@ public class BlockRunControlPanel extends Composite {
 
         lowLimit = new Text(grpRuncontrolSettings, SWT.BORDER);
         lowLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        lowLimit.addVerifyListener(new NumericalVerifyListener());
 
         Label lblHighLimit = new Label(grpRuncontrolSettings, SWT.NONE);
         lblHighLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -63,7 +60,6 @@ public class BlockRunControlPanel extends Composite {
 
         highLimit = new Text(grpRuncontrolSettings, SWT.BORDER);
         highLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        highLimit.addVerifyListener(new NumericalVerifyListener());
 
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));

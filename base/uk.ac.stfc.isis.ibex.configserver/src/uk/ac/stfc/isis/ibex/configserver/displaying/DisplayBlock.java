@@ -23,6 +23,7 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -36,7 +37,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * provides better encapsulation of Block's functionality.
  *
  */
-public class DisplayBlock extends ModelObject {
+public class DisplayBlock extends ModelObject implements IRuncontrol {
     private final String blockServerAlias;
     private final Block block;
     private String value;
@@ -177,24 +178,24 @@ public class DisplayBlock extends ModelObject {
     private final BaseObserver<Double> lowLimitAdapter = new BaseObserver<Double>() {
         @Override
         public void onValue(Double value) {
-            setLowLimit(value);
+            setRCLowLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setLowLimit(0);
+            setRCLowLimit(null);
         }
     };
 
     private final BaseObserver<Double> highLimitAdapter = new BaseObserver<Double>() {
         @Override
         public void onValue(Double value) {
-            setHighLimit(value);
+            setRCHighLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setHighLimit(0);
+            setRCHighLimit(null);
         }
     };
 
@@ -202,10 +203,10 @@ public class DisplayBlock extends ModelObject {
         @Override
         public void onValue(String value) {
             if (value.equals("YES")) {
-                setEnabled(true);
+                setRCEnabled(true);
             } else {
             	// If in doubt set to false
-                setEnabled(false);
+                setRCEnabled(false);
             }
             setRuncontrolState(checkRuncontrolState());
         }
@@ -213,7 +214,7 @@ public class DisplayBlock extends ModelObject {
         @Override
         public void onError(Exception e) {
             // If in doubt set to false
-            setEnabled(false);
+            setRCEnabled(false);
         }
     };
 
@@ -296,21 +297,24 @@ public class DisplayBlock extends ModelObject {
     /**
      * @return the current low limit for run-control.
      */
-    public Double getLowLimit() {
+    @Override
+	public Double getRCLowLimit() {
         return lowlimit;
     }
 
     /**
      * @return the current high limit for run-control.
      */
-    public Double getHighLimit() {
+    @Override
+	public Double getRCHighLimit() {
         return highlimit;
     }
 
     /**
      * @return whether run-control is currently enabled.
      */
-    public Boolean getEnabled() {
+    @Override
+	public Boolean getRCEnabled() {
         return runcontrolEnabled;
     }
 
@@ -372,15 +376,18 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
-    private synchronized void setLowLimit(double limit) {
+    @Override
+	public synchronized void setRCLowLimit(Double limit) {
         firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
     }
 
-    private synchronized void setHighLimit(double limit) {
+    @Override
+	public synchronized void setRCHighLimit(Double limit) {
         firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
     }
 
-    private synchronized void setEnabled(Boolean enabled) {
+    @Override
+	public synchronized void setRCEnabled(Boolean enabled) {
         firePropertyChange("enabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
     }
 

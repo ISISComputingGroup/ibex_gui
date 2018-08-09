@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -195,13 +196,16 @@ public class RunControlEditorPanel extends Composite {
     	
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSend),
                 BeanProperties.value("sendEnabled").observe(viewModel));
-    	
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtLowLimit),
-                BeanProperties.value("lowLimit").observe(viewModel));
+                BeanProperties.value("lowLimitStr").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHighLimit),
-                BeanProperties.value("highLimit").observe(viewModel));
+                BeanProperties.value("highLimitStr").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
                 BeanProperties.value("rcEnabled").observe(viewModel));
+    }
+    
+    private class DoubleUpdateStrategy extends UpdateValueStrategy {
+    	
     }
 	
     private void setAllEnabled(boolean enabled) {

@@ -20,20 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
-import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
 /**
  * The view model for the run-control settings for a block.
  */
-public class BlockRunControlViewModel extends ErrorMessageProvider {    
-	private double lowLimit;
-    private double highLimit;
-    private boolean enabled;
+public class BlockRunControlViewModel extends AbstractRunControlViewModel {    
     
     private final Block editingBlock;
-    private final RunControlValidator runControlValidator = new RunControlValidator();
-    
+	
     /**
      * Constructor.
      * 
@@ -48,67 +42,16 @@ public class BlockRunControlViewModel extends ErrorMessageProvider {
 	}
     
     /**
-     * Set the low limit.
-     * 
-     * @param lowLimitText the new value
-     */
-	public void setLowLimit(double lowLimit) {
-		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
-		updateErrors();
-	}
-
-    /**
-     * Set the high limit.
-     * 
-     * @param highLimitText the new value
-     */
-	public void setHighLimit(double highLimit) {
-		firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
-		updateErrors();
-	}
-	
-	private void updateErrors() {
-		// boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
-		boolean isValid = true;
-		setError(!isValid, runControlValidator.getErrorMessage());
-	}
-	
-    /**
-     * @return the low limit
-     */
-	public double getLowLimit() {
-		return lowLimit;
-	}
-	
-    /**
-     * @return the high limit
-     */
-	public double getHighLimit() {
-		return highLimit;
-	}
-	
-    /**
-     * Set whether run-control is enabled.
-     * 
-     * @param enabled enable or not
-     */
-	public void setEnabled(boolean enabled) {
-		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
-	}
-	
-    /**
-     * @return whether run-control is enabled
-     */
-	public boolean getEnabled() {
-		return enabled;
-	}
-    
-    /**
      * Update the stored settings.
      */
     public void updateBlock() {
-    	editingBlock.setRCHighLimit(highLimit);
-    	editingBlock.setRCLowLimit(lowLimit);
-    	editingBlock.setRCEnabled(enabled);
+    	editingBlock.setRCHighLimit(getHighLimit());
+    	editingBlock.setRCLowLimit(getLowLimit());
+    	editingBlock.setRCEnabled(getEnabled());
     }
+
+	@Override
+	protected void onValidate(boolean validationPassed) {
+		// nothing?
+	}
 }

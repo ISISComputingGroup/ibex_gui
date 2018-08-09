@@ -28,7 +28,7 @@ package uk.ac.stfc.isis.ibex.validators;
 public class RunControlValidator {
     
     public static final String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
-
+    public static final String INVALID_LIMIT = "The run control limits must be numbers";
     public static final String NO_ERROR = "";
     
     private String errorMessage;
@@ -37,16 +37,17 @@ public class RunControlValidator {
         this.errorMessage = NO_ERROR;
     }
 
-	public boolean isValid(double lowLimit, double highLimit) {
-		boolean isValid;
-    	if (lowLimit > highLimit) {
-    		isValid = false;
+	public boolean isValid(Double lowLimit, Double highLimit) {
+		if (lowLimit == null || highLimit == null) {
+			setErrorMessage(INVALID_LIMIT);
+			return false;
+		} else if (lowLimit > highLimit) {
     		setErrorMessage(LOW_LIMIT_LESS);
+    		return false;
         } else {
-            isValid = true;
             setErrorMessage(NO_ERROR);
+            return true;
         }
-    	return isValid;
     	
 	}
 
