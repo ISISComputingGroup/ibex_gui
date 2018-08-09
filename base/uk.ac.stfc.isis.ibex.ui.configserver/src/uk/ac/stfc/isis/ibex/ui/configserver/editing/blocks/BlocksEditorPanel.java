@@ -231,7 +231,6 @@ public class BlocksEditorPanel extends Composite {
 	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
 	            error.open();
 	        }
-	        viewModel.setSelectedBlocks(Arrays.asList(added));
 	        table.setSelected(added);
 	    }
 	}
@@ -241,7 +240,6 @@ public class BlocksEditorPanel extends Composite {
         EditableBlock added = blockFactory.createNewBlock();
         EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
         dialog.open();
-        viewModel.setSelectedBlocks(Arrays.asList(added));
         table.setSelected(added);
 	}
 	
@@ -270,11 +268,11 @@ public class BlocksEditorPanel extends Composite {
 		if (returnCode == SWT.OK) {
 			int index = table.getSelectionIndex();
 			config.removeBlocks(toRemove);
-		
+			
+			
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
-			viewModel.setSelectedBlocks(table.selectedRows());
 		}
 	}
 

@@ -158,7 +158,10 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param index the new selection index
      */
 	public void setSelectionIndex(int index) {
-		table.setSelection(index);
+		table.select(index);
+		// Forces the viewer to refresh the selection and call events
+		IStructuredSelection selected = viewer.getStructuredSelection();
+		viewer.setSelection(selected);
 	}
 	
     /**
