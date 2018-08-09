@@ -178,24 +178,24 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
     private final BaseObserver<Double> lowLimitAdapter = new BaseObserver<Double>() {
         @Override
         public void onValue(Double value) {
-            setRCLowLimit(value);
+            setRunControlLowLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setRCLowLimit(null);
+            setRunControlLowLimit(null);
         }
     };
 
     private final BaseObserver<Double> highLimitAdapter = new BaseObserver<Double>() {
         @Override
         public void onValue(Double value) {
-            setRCHighLimit(value);
+            setRunControlHighLimit(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setRCHighLimit(null);
+            setRunControlHighLimit(null);
         }
     };
 
@@ -203,10 +203,10 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         @Override
         public void onValue(String value) {
             if (value.equals("YES")) {
-                setRCEnabled(true);
+                setRunControlEnabled(true);
             } else {
             	// If in doubt set to false
-                setRCEnabled(false);
+                setRunControlEnabled(false);
             }
             setRuncontrolState(checkRuncontrolState());
         }
@@ -214,7 +214,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         @Override
         public void onError(Exception e) {
             // If in doubt set to false
-            setRCEnabled(false);
+            setRunControlEnabled(false);
         }
     };
 
@@ -298,7 +298,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
      * @return the current low limit for run-control.
      */
     @Override
-	public Double getRCLowLimit() {
+	public Double getRunControlLowLimit() {
         return lowlimit;
     }
 
@@ -306,7 +306,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
      * @return the current high limit for run-control.
      */
     @Override
-	public Double getRCHighLimit() {
+	public Double getRunControlHighLimit() {
         return highlimit;
     }
 
@@ -314,7 +314,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
      * @return whether run-control is currently enabled.
      */
     @Override
-	public Boolean getRCEnabled() {
+	public Boolean getRunControlEnabled() {
         return runcontrolEnabled;
     }
 
@@ -322,21 +322,21 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
      * @return the low limit set in the configuration.
      */
     public Double getConfigurationLowLimit() {
-        return block.getRCLowLimit();
+        return block.getRunControlLowLimit();
     }
 
     /**
      * @return the high limit set in the configuration.
      */
     public Double getConfigurationHighLimit() {
-        return block.getRCHighLimit();
+        return block.getRunControlHighLimit();
     }
 
     /**
      * @return whether run-control is enabled in the configuration.
      */
     public Boolean getConfigurationEnabled() {
-        return block.getRCEnabled();
+        return block.getRunControlEnabled();
     }
 
     /**
@@ -376,19 +376,28 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-	public synchronized void setRCLowLimit(Double limit) {
-        firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
+	public synchronized void setRunControlLowLimit(Double limit) {
+        firePropertyChange("runControlLowLimit", this.lowlimit, this.lowlimit = limit);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-	public synchronized void setRCHighLimit(Double limit) {
-        firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
+	public synchronized void setRunControlHighLimit(Double limit) {
+        firePropertyChange("runControlHighLimit", this.highlimit, this.highlimit = limit);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-	public synchronized void setRCEnabled(Boolean enabled) {
-        firePropertyChange("enabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
+	public synchronized void setRunControlEnabled(Boolean enabled) {
+        firePropertyChange("runControlEnabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
     }
 
     private void setBlockState(BlockState blockState) {

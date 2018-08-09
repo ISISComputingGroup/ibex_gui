@@ -4,7 +4,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
-public abstract class AbstractRunControlViewModel extends ErrorMessageProvider {
+public abstract class AbstractRunControlViewModel extends ErrorMessageProvider implements IRuncontrol {
 	
 	private Double lowLimit;
     private Double highLimit;
@@ -12,57 +12,111 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider {
     
     private final RunControlValidator runControlValidator = new RunControlValidator();
     
-    protected IRuncontrol block;
+    protected IRuncontrol source;
     
     /**
-     * Resets the current values to those of the current block's configuration.
+     * Field that the GUI should bind to to update high limit.
      */
-    public void resetCurrentBlock() {
-        setHighLimit(block.getRCHighLimit());
-        setLowLimit(block.getRCLowLimit());
-        setEnabled(block.getRCEnabled());
-
-        checkIsValid();
-    }
+    public static final String HIGH_LIMIT_BINDING_NAME = "runControlHighLimitStr";
+    
+    /**
+     * Field that the GUI should bind to to update low limit.
+     */
+	public static final String LOW_LIMIT_BINDING_NAME = "runControlLowLimitStr";
 	
 	/**
-     * Set the low limit.
-     * 
+     * Field that the GUI should bind to to update enablement.
+     */
+	public static final String ENABLED_BINDING_NAME = "runControlEnabled";
+    
+    /**
+     * Resets the current values to those from the source.
+     */
+    public abstract void resetFromSource();
+	
+	/**
+     * Set the new low limit for run control.
      * @param lowLimitText the new value
      */
-	public void setLowLimit(Double lowLimit) {
-		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
-		updateErrors();
-	}
-
-    /**
-     * Set the high limit.
-     * 
-     * @param highLimitText the new value
-     */
-	public void setHighLimit(Double highLimit) {
-		firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+	@Override
+	public void setRunControlLowLimit(Double lowLimit) {
+		System.out.println(String.format("Low limit set to: %f", lowLimit));
+		firePropertyChange("runControlLowLimit", this.lowLimit, this.lowLimit = lowLimit);
+		firePropertyChange("runControlLowLimitStr", null, getRunControlLowLimitStr());
 		updateErrors();
 	}
 	
-	private void updateErrors() {
-		// boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
-		boolean isValid = true;
-		setError(!isValid, runControlValidator.getErrorMessage());
-	}
-	
-    /**
+	/**
+	 * Gets the low limit for run control.
      * @return the low limit
      */
-	public Double getLowLimit() {
+	@Override
+	public Double getRunControlLowLimit() {
 		return lowLimit;
 	}
 	
+	/**
+	 * Gets the low limit as a string.
+	 * @return the low limit as a string
+	 */
+	public String getRunControlLowLimitStr() {
+		Double value = getRunControlLowLimit();
+		return value == null ? "" : value.toString();
+	}
+	
+	/**
+	 * Sets the low limit from a string.
+	 * @param lowLimit the limit as a string
+	 */
+	public void setRunControlLowLimitStr(String value) {
+		System.out.println("Hello.");
+		try {
+			setRunControlLowLimit(Double.valueOf(value));
+		} catch (NumberFormatException | NullPointerException e) {
+			setRunControlLowLimit(null);
+		}
+	}
+
     /**
+     * Set the high limit for run control.
+     * @param highLimitText the new value
+     */
+	@Override
+	public void setRunControlHighLimit(Double highLimit) {
+		System.out.println(String.format("High limit set to: %f", highLimit));
+		firePropertyChange("runControlHighLimit", this.highLimit, this.highLimit = highLimit);
+		firePropertyChange("runControlHighLimitStr", null, getRunControlHighLimitStr());
+		updateErrors();
+	}
+	
+	/**
+	 * Get the high limit for run control.
      * @return the high limit
      */
-	public Double getHighLimit() {
+	@Override
+	public Double getRunControlHighLimit() {
 		return highLimit;
+	}
+	
+	/**
+	 * Gets the high limit as a string.
+	 * @return the high limit as a string
+	 */
+	public String getRunControlHighLimitStr() {
+		Double value = getRunControlHighLimit();
+		return value == null ? "" : value.toString();
+	}
+	
+	/**
+	 * Sets the high limit from a string.
+	 * @param highLimit the limit as a string
+	 */
+	public void setRunControlHighLimitStr(String value) {
+		try {
+			setRunControlHighLimit(Double.valueOf(value));
+		} catch (NumberFormatException | NullPointerException e) {
+			setRunControlHighLimit(null);
+		}
 	}
 	
     /**
@@ -70,27 +124,45 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider {
      * 
      * @param enabled enable or not
      */
-	public void setEnabled(boolean enabled) {
-		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+	@Override
+	public void setRunControlEnabled(Boolean enabled) {
+		firePropertyChange("runControlEnabled", this.enabled, this.enabled = enabled);
+		updateErrors();
 	}
 	
     /**
      * @return whether run-control is enabled
      */
-	public boolean getEnabled() {
+	@Override
+	public Boolean getRunControlEnabled() {
 		return enabled;
 	}
 	
-	public void setBlock(IRuncontrol block) {
-		this.block = block;
-		checkIsValid();
-	}
-	
-	private void checkIsValid() {
-        boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
+	private void updateErrors() {
+		boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
 		setError(!isValid, runControlValidator.getErrorMessage());
 		onValidate(isValid);
-    }
+	}
 	
-	protected abstract void onValidate(boolean validationPassed);
+	/**
+	 * Sets the source of this runcontrol model (e.g. a block).
+	 * @param source the new source
+	 */
+	public void setSource(IRuncontrol source) {
+		this.source = source;
+		if (source != null) {
+			setRunControlHighLimit(source.getRunControlHighLimit());
+			setRunControlLowLimit(source.getRunControlLowLimit());
+			setRunControlEnabled(source.getRunControlEnabled());
+		}
+		updateErrors();
+	}
+	
+	/**
+	 * Called after a validation is done.
+	 * @param validationPassed true if validation passed; false otherwise
+	 */
+	protected void onValidate(boolean validationPassed) {
+		// Default to no implementation - subclasses can override.
+	};
 }

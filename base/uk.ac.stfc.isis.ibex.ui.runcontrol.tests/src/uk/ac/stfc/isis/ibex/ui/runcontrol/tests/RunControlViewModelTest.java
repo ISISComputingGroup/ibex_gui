@@ -52,23 +52,23 @@ public class RunControlViewModelTest {
         runControlServer = mock(RunControlServer.class);
 
         mockBlock = mock(DisplayBlock.class);
-        when(mockBlock.getHighLimit()).thenReturn(0.);
-        when(mockBlock.getLowLimit()).thenReturn(0.);
-        when(mockBlock.getEnabled()).thenReturn(false);
+        when(mockBlock.getRunControlHighLimit()).thenReturn(0.);
+        when(mockBlock.getRunControlLowLimit()).thenReturn(0.);
+        when(mockBlock.getRunControlEnabled()).thenReturn(false);
 
 
         blocks = new ArrayList<>();
         runControlViewModel = new RunControlViewModel(blocks, runControlServer);
 
-        runControlViewModel.setHighLimit(0.);
-        runControlViewModel.setLowLimit(0.);
+        runControlViewModel.setRunControlHighLimit(0.);
+        runControlViewModel.setRunControlLowLimit(0.);
     }
 
     @Test
     public void WHEN_valid_limits_set_THEN_send_enabled() {
         // Act
-        runControlViewModel.setLowLimit(0.);
-        runControlViewModel.setHighLimit(1.);
+        runControlViewModel.setRunControlLowLimit(0.);
+        runControlViewModel.setRunControlHighLimit(1.);
 
         // Assert
         assertEquals(runControlViewModel.getSendEnabled(), true);
@@ -77,7 +77,7 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_invalid_low_limit_set_THEN_send_disabled() {
         // Act
-        runControlViewModel.setLowLimit(1.);
+        runControlViewModel.setRunControlLowLimit(1.);
         
         // Assert
         assertFalse(runControlViewModel.getSendEnabled());
@@ -86,7 +86,7 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_invalid_high_limit_set_THEN_send_disabled() {
         // Act
-        runControlViewModel.setHighLimit(-1.0);
+        runControlViewModel.setRunControlHighLimit(-1.0);
 
         // Assert
         assertFalse(runControlViewModel.getSendEnabled());
@@ -95,34 +95,34 @@ public class RunControlViewModelTest {
     @Test
     public void WHEN_null_block_is_set_THEN_low_limit_emptied() {
         // Act
-        runControlViewModel.setBlock(null);
+        runControlViewModel.setSource(null);
 
         // Assert
-        assertEquals(runControlViewModel.getLowLimit(), 0., ASSERTION_TOLERANCE);
+        assertEquals(runControlViewModel.getRunControlLowLimit(), 0., ASSERTION_TOLERANCE);
     }
 
     @Test
     public void WHEN_null_block_is_set_THEN_high_limit_emptied() {
         // Act
-        runControlViewModel.setBlock(null);
+        runControlViewModel.setSource(null);
 
         // Assert
-        assertEquals(runControlViewModel.getHighLimit(), 0., ASSERTION_TOLERANCE);
+        assertEquals(runControlViewModel.getRunControlHighLimit(), 0., ASSERTION_TOLERANCE);
     }
 
     @Test
     public void WHEN_null_block_is_set_THEN_rc_disabled() {
         // Act
-        runControlViewModel.setBlock(null);
+        runControlViewModel.setSource(null);
 
         // Assert
-        assertEquals(runControlViewModel.getRcEnabled(), false);
+        assertEquals(runControlViewModel.getRunControlEnabled(), false);
     }
 
     @Test
     public void WHEN_null_block_is_set_THEN_view_model_is_not_in_error() {
         // Act
-        runControlViewModel.setBlock(null);
+        runControlViewModel.setSource(null);
 
         // Assert
         assertEquals(runControlViewModel.getError().isError(), false);
@@ -132,37 +132,37 @@ public class RunControlViewModelTest {
     public void WHEN_new_block_is_set_THEN_high_limit_is_set_to_blocks() {
         // Arrange
         double newHigh = 1.0;
-        when(mockBlock.getHighLimit()).thenReturn(newHigh);
+        when(mockBlock.getRunControlHighLimit()).thenReturn(newHigh);
 
         // Act
-        runControlViewModel.setBlock(mockBlock);
+        runControlViewModel.setSource(mockBlock);
 
         // Assert
-        assertEquals(runControlViewModel.getHighLimit(), newHigh, ASSERTION_TOLERANCE);
+        assertEquals(runControlViewModel.getRunControlHighLimit(), newHigh, ASSERTION_TOLERANCE);
     }
 
     @Test
     public void WHEN_new_block_is_set_THEN_low_limit_is_set_to_blocks() {
         // Arrange
         double newLow = -1.0;
-        when(mockBlock.getHighLimit()).thenReturn(newLow);
+        when(mockBlock.getRunControlHighLimit()).thenReturn(newLow);
 
         // Act
-        runControlViewModel.setBlock(mockBlock);
+        runControlViewModel.setSource(mockBlock);
 
         // Assert
-        assertEquals(runControlViewModel.getHighLimit(), newLow, ASSERTION_TOLERANCE);
+        assertEquals(runControlViewModel.getRunControlHighLimit(), newLow, ASSERTION_TOLERANCE);
     }
 
     @Test
     public void WHEN_new_block_is_set_THEN_rc_enabled_is_set_to_blocks() {
         // Arrange
-        when(mockBlock.getEnabled()).thenReturn(true);
+        when(mockBlock.getRunControlEnabled()).thenReturn(true);
 
         // Act
-        runControlViewModel.setBlock(mockBlock);
+        runControlViewModel.setSource(mockBlock);
 
         // Assert
-        assertEquals(runControlViewModel.getRcEnabled(), true);
+        assertEquals(runControlViewModel.getRunControlEnabled(), true);
     }
 }

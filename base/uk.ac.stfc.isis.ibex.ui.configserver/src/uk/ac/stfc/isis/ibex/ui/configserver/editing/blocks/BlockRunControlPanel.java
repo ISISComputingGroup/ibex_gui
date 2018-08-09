@@ -72,16 +72,15 @@ public class BlockRunControlPanel extends Composite {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
         bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
-                BeanProperties.value("enabled").observe(viewModel));
+                BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimit),
-                BeanProperties.value("enabled").observe(viewModel));
+                BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(highLimit),
-                BeanProperties.value("enabled").observe(viewModel));
-        
+                BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
-                BeanProperties.value("lowLimit").observe(viewModel));
+                BeanProperties.value(BlockRunControlViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
-                BeanProperties.value("highLimit").observe(viewModel)); 
+                BeanProperties.value(BlockRunControlViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel)); 
         
 	}
 }

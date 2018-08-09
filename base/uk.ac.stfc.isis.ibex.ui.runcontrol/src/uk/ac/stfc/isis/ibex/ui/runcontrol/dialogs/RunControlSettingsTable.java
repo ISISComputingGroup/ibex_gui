@@ -86,11 +86,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addEnabled() {
-        createColumn("Enabled", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("enabled"), Arrays.asList(rowDecorator)) {
+        createColumn("Enabled", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlEnabled"), Arrays.asList(rowDecorator)) {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getRCEnabled().toString();
+                            return setting.getRunControlEnabled().toString();
                         }
                         return "";
                     }
@@ -98,11 +98,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addLowLimit() {
-        createColumn("Low Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("lowLimit"), Arrays.asList(rowDecorator)) {
+        createColumn("Low Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlLowLimit"), Arrays.asList(rowDecorator)) {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getRCLowLimit().toString();
+                            return setting.getRunControlLowLimit().toString();
                         }
                         return "";
                     }
@@ -110,12 +110,12 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addHighLimit() {
-        createColumn("High Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("highLimit"),
+        createColumn("High Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlHighLimit"),
                 Arrays.asList(rowDecorator)) {
             @Override
 			public String stringFromRow(DisplayBlock setting) {
                 if (setting != null) {
-                    return setting.getRCHighLimit().toString();
+                    return setting.getRunControlHighLimit().toString();
                 }
                 return "";
             }

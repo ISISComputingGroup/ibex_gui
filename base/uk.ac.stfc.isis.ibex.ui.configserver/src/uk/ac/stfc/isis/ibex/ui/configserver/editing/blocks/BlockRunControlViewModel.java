@@ -35,23 +35,25 @@ public class BlockRunControlViewModel extends AbstractRunControlViewModel {
      */
     public BlockRunControlViewModel(final Block editingBlock) {
     	this.editingBlock = editingBlock;
-    	
-    	setLowLimit(editingBlock.getRCLowLimit());
-    	setHighLimit(editingBlock.getRCHighLimit());
-    	setEnabled(editingBlock.getRCEnabled());
+    	resetFromSource();
 	}
     
     /**
      * Update the stored settings.
      */
     public void updateBlock() {
-    	editingBlock.setRCHighLimit(getHighLimit());
-    	editingBlock.setRCLowLimit(getLowLimit());
-    	editingBlock.setRCEnabled(getEnabled());
+    	editingBlock.setRunControlHighLimit(getRunControlHighLimit());
+    	editingBlock.setRunControlLowLimit(getRunControlLowLimit());
+    	editingBlock.setRunControlEnabled(getRunControlEnabled());
     }
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
-	protected void onValidate(boolean validationPassed) {
-		// nothing?
+	public void resetFromSource() {
+		setRunControlLowLimit(editingBlock.getRunControlLowLimit());
+    	setRunControlHighLimit(editingBlock.getRunControlHighLimit());
+    	setRunControlEnabled(editingBlock.getRunControlEnabled());
 	}
 }

@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
-
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -92,7 +91,7 @@ public class GroupRow extends Composite {
                 BeanProperties.value("value").observe(block));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblStatus),
-                BeanProperties.value("enabled").observe(block));
+                BeanProperties.value("runControlEnabled").observe(block));
 
         UpdateValueStrategy symbolStrategy = new UpdateValueStrategy();
         symbolStrategy.setConverter(new RunControlSymbolConverter());

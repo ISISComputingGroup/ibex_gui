@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.runcontrol;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
@@ -68,12 +69,25 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
         }
     }
     
+    @Override
+	public void resetFromSource() {
+    	Optional<DisplayBlock> sourceBlock = setters.keySet().stream()
+    			.filter(block -> (block == source))
+    			.findFirst();
+    	
+    	if (sourceBlock.isPresent()) {
+    		setRunControlHighLimit(sourceBlock.get().getConfigurationHighLimit());
+    		setRunControlLowLimit(sourceBlock.get().getConfigurationHighLimit());
+    		setRunControlEnabled(sourceBlock.get().getConfigurationEnabled());
+    	}
+    }
+    
     public void sendChanges() {
-    	if (block != null) {
-    		RunControlSetter setter = setters.get(block);
-    		setter.setLowLimit(getLowLimit());
-    		setter.setHighLimit(getHighLimit());
-    		setter.setEnabled(getEnabled());
+    	if (source != null) {
+    		RunControlSetter setter = setters.get(source);
+    		setter.setLowLimit(getRunControlLowLimit());
+    		setter.setHighLimit(getRunControlHighLimit());
+    		setter.setEnabled(getRunControlEnabled());
     	}
     	setSendEnabled(false);
     }
@@ -97,6 +111,9 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
 		firePropertyChange("sendEnabled", this.sendEnabled, this.sendEnabled = sendEnabled);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void onValidate(boolean validationPassed) {
 		setSendEnabled(validationPassed);

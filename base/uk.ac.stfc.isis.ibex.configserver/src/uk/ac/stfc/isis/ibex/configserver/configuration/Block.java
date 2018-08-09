@@ -240,7 +240,7 @@ public class Block extends ModelObject implements IRuncontrol {
      * @return whether run-control is enabled
      */
     @Override
-	public Boolean getRCEnabled() {
+	public Boolean getRunControlEnabled() {
         return runcontrol;
 	}
 	
@@ -250,8 +250,8 @@ public class Block extends ModelObject implements IRuncontrol {
      * @param runcontrol whether run-control should be enabled
      */
     @Override
-	public void setRCEnabled(Boolean runcontrol) {
-        firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
+	public void setRunControlEnabled(Boolean runcontrol) {
+        firePropertyChange("runControlEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
     /**
@@ -260,7 +260,7 @@ public class Block extends ModelObject implements IRuncontrol {
      * @return the low limit for run-control
      */
     @Override
-	public Double getRCLowLimit() {
+	public Double getRunControlLowLimit() {
         return lowlimit;
     }
 
@@ -270,8 +270,8 @@ public class Block extends ModelObject implements IRuncontrol {
      * @param rclow the new low limit for run-control
      */
     @Override
-	public void setRCLowLimit(Double rclow) {
-        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
+	public void setRunControlLowLimit(Double rclow) {
+        firePropertyChange("runControlLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
     /**
@@ -280,7 +280,7 @@ public class Block extends ModelObject implements IRuncontrol {
      * @return the high limit for run-control
      */
     @Override
-	public Double getRCHighLimit() {
+	public Double getRunControlHighLimit() {
         return highlimit;
     }
 
@@ -290,8 +290,8 @@ public class Block extends ModelObject implements IRuncontrol {
      * @param rchigh the new high limit for run-control
      */
     @Override
-	public void setRCHighLimit(Double rchigh) {
-        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
+	public void setRunControlHighLimit(Double rchigh) {
+        firePropertyChange("runControlHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 
     /**
