@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -45,13 +44,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.MessageBox;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 
 /**
  * The class responsible for creating the block editor panel.
@@ -249,45 +248,19 @@ public class BlocksEditorPanel extends Composite {
 	}
 
 	private void deleteSelected() {
-		List<EditableBlock> toRemove = table.selectedRows();
-		String dialogTitle = "Delete Block";
-		String dialogText = "Do you really want to delete the block";
-		
-		if (toRemove.size() == 1) {
-			dialogText += " " + toRemove.get(0).getName() + "?";
-		} else {
-			dialogTitle = "Delete Blocks";
-			dialogText += "s " + blockNamesToString(toRemove) + "?";
-		}
-				
-		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
-		dialog.setText(dialogTitle);
-		dialog.setMessage(dialogText);
-		int returnCode = dialog.open();
+    	List<EditableBlock> toRemove = table.selectedRows();
+    	
+    	DeleteTableItemHelper<EditableBlock> helper = new DeleteTableItemHelper<>();
+        int returnCode = helper.createDeleteDialog("Block", toRemove);
 		
 		if (returnCode == SWT.OK) {
 			int index = table.getSelectionIndex();
 			config.removeBlocks(toRemove);
 			
-			
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
 		}
-	}
-
-	private String blockNamesToString(List<EditableBlock> blocks) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < blocks.size(); i++) {
-			EditableBlock block = blocks.get(i);
-			sb.append(block.getName());
-			if (i == blocks.size() - 2) {
-				sb.append(" and ");
-			} else if (i != blocks.size() - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
 	}
 
     private void openEditBlockDialog(EditableBlock toEdit) {
