@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -90,7 +93,7 @@ public class BlocksEditorPanel extends Composite {
         table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-            	if (editEnabled(table.selectedRows())) {
+            	if (viewModel.editEnabled(table.selectedRows())) {
 	                if (e.keyCode == SWT.DEL) {
 	                    deleteSelected();
 	                //copies selected blocks if press "Ctrl + D".
@@ -171,7 +174,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				List<EditableBlock> selected = table.selectedRows();
-				setSelectedBlocks(selected);
+				viewModel.setSelectedBlocks(selected);
 			}
 		});
         table.addMouseListener(new MouseAdapter() {
@@ -186,7 +189,15 @@ public class BlocksEditorPanel extends Composite {
             }
         });
         
-        setSelectedBlocks(new ArrayList<>());
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.enabled().observe(edit),
+                BeanProperties.value("editEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(copy),
+                BeanProperties.value("copyDeleteEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(remove),
+                BeanProperties.value("copyDeleteEnabled").observe(viewModel));
+        
+        viewModel.setSelectedBlocks(new ArrayList<>());
 	}
 	
 	/**
@@ -196,8 +207,6 @@ public class BlocksEditorPanel extends Composite {
      */
 	public void setConfig(EditableConfiguration config) {	
 		this.config = config;
-		
-		add.setEnabled(true);
 		
 		config.addPropertyChangeListener("blocks", new PropertyChangeListener() {
 			@Override
@@ -222,7 +231,7 @@ public class BlocksEditorPanel extends Composite {
 	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
 	            error.open();
 	        }
-	        setSelectedBlocks(Arrays.asList(added));
+	        viewModel.setSelectedBlocks(Arrays.asList(added));
 	        table.setSelected(added);
 	    }
 	}
@@ -232,32 +241,13 @@ public class BlocksEditorPanel extends Composite {
         EditableBlock added = blockFactory.createNewBlock();
         EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
         dialog.open();
-        setSelectedBlocks(Arrays.asList(added));
+        viewModel.setSelectedBlocks(Arrays.asList(added));
         table.setSelected(added);
 	}
 	
 	private void setBlocks(EditableConfiguration config) {
 		table.setRows(config.getAllBlocks());
 		table.refresh();
-	}
-	
-	private void setSelectedBlocks(List<EditableBlock> selected) {
-		if (selected.size() > 1) {
-			edit.setEnabled(false);
-		} else {
-			edit.setEnabled(editEnabled(selected));
-		}
-		remove.setEnabled(editEnabled(selected));
-		copy.setEnabled(editEnabled(selected));
-	}
-
-	private boolean editEnabled(List<EditableBlock> blocks) {
-		boolean enabled = !blocks.isEmpty();
-		
-		for (EditableBlock block : blocks) {
-			enabled &= block != null && block.isEditable();
-		}
-		return enabled;
 	}
 
 	private void deleteSelected() {
@@ -284,7 +274,7 @@ public class BlocksEditorPanel extends Composite {
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
-			setSelectedBlocks(table.selectedRows());
+			viewModel.setSelectedBlocks(table.selectedRows());
 		}
 	}
 
