@@ -3,6 +3,8 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
@@ -39,12 +41,12 @@ public class BlocksEditorViewModel extends ModelObject {
      *          The new unique name for the block.
      */
     public String getUniqueName(String blockName) {
-        Collection<String> allBlocksInConfigNames = new ArrayList<String>();
-        for (Block blockInConfig : config.getAllBlocks()) {
-            allBlocksInConfigNames.add(blockInConfig.getName());
-        }
+    	List<String> blockNames = config.getAllBlocks().stream()
+    			.map(b -> b.getName())
+    			.collect(Collectors.toList());
+    	
         DefaultName namer = new DefaultName(blockName);
-        return namer.getUnique(allBlocksInConfigNames);
+        return namer.getUnique(blockNames);
     }
     
 	public boolean editEnabled(List<EditableBlock> blocks) {
