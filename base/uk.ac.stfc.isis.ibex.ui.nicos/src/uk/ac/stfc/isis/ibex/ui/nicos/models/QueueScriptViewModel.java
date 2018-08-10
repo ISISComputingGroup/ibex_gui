@@ -23,9 +23,13 @@ package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
@@ -37,7 +41,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 public class QueueScriptViewModel extends ModelObject {
 
     private NicosModel model;
-    private QueuedScript script;
+    private QueuedScript scriptToSend;
     private QueuedScript selectedScript;
     private Boolean upButtonEnabled = false;
     private Boolean downButtonEnabled = false;
@@ -52,7 +56,7 @@ public class QueueScriptViewModel extends ModelObject {
     public QueueScriptViewModel(NicosModel model) {
         this.model = model;
         
-        this.script = new QueuedScript();
+        this.scriptToSend = new QueuedScript();
         
         model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
             @Override
@@ -68,14 +72,14 @@ public class QueueScriptViewModel extends ModelObject {
      * @return the script
      */
     public QueuedScript getScript() {
-        return script;
+        return scriptToSend;
     }
 
     /**
      * Queue the current script on the script server.
      */
     public void queueScript() {
-        model.sendScript(script);
+        model.sendScript(scriptToSend);
     }
     
     /**
@@ -115,14 +119,9 @@ public class QueueScriptViewModel extends ModelObject {
      *          queue containing the reordered scripts
      */
     public void sendReorderedList(List<QueuedScript> reorderedQueue) {
- 
-        List<String> listOfScriptIDs = new ArrayList<>(); 
-        
-        for (QueuedScript item : reorderedQueue) {
-            listOfScriptIDs.add(item.reqid);
-        }
+        List<String> scriptIDs = reorderedQueue.stream().map(s -> s.reqid).collect(Collectors.toList());
 
-        model.sendReorderedQueue(listOfScriptIDs);
+        model.sendReorderedQueue(scriptIDs);
         updateButtonEnablement();
     }
     
@@ -143,8 +142,7 @@ public class QueueScriptViewModel extends ModelObject {
      *         The selected script
      */
     public void setSelectedScript(QueuedScript script) {
-        this.selectedScript = script;
-        
+        selectedScript = script;
         updateButtonEnablement();
     }
     
@@ -160,56 +158,36 @@ public class QueueScriptViewModel extends ModelObject {
     
     /**
      * Determine whether or not Dequeue button can be enabled depending on whether or not script selected in queue.
-     * 
      */
     private void updateDequeueButtonEnabled() {
         firePropertyChange("dequeueButtonEnabled", null, dequeueButtonEnabled = selectedScript != null);
     }
-
+    
+    /**
+     * Determines if the selected script is null or in the specified position.
+     * @param position
+     * 			The position to check.
+     * @return True if selected script is null or in the specified, false otherwise
+     */
+    private boolean isNullOrInPosition(int position) {
+    	int scriptIdx = model.getQueuedScripts().indexOf(selectedScript);
+    	return (scriptIdx == -1 || scriptIdx == position);
+    }
+    
     /**
      * Determine whether or not Down button can be enabled depending on position of selected script in queue.
-     * 
      */
     private void updateDownButtonEnabled() {
-        QueuedScript lastScriptInQueue;
-        try {
-            lastScriptInQueue = model.getQueuedScripts().get(model.getQueuedScripts().size() - 1);
-             
-            if (selectedScript == null) {
-                downButtonEnabled = false;
-            } else if (selectedScript.equals(lastScriptInQueue)) {
-                downButtonEnabled = false;
-            } else {
-                downButtonEnabled = true;
-            }
-        } catch (IndexOutOfBoundsException e) {
-            downButtonEnabled = false;
-        }
-        
-        firePropertyChange("downButtonEnabled", null, downButtonEnabled);
+    	boolean newButtonStatus = !isNullOrInPosition(model.getQueuedScripts().size() - 1);
+        firePropertyChange("downButtonEnabled", downButtonEnabled, downButtonEnabled = newButtonStatus);
     }
     
     /**
      * Determine whether or not Up button can be enabled depending on position of selected script in queue.
-     * 
      */
     private void updateUpButtonEnabled() {
-        QueuedScript firstScriptInQueue;
-        try {
-            firstScriptInQueue = model.getQueuedScripts().get(0);
-             
-            if (selectedScript == null) {
-                upButtonEnabled = false;
-            } else if (selectedScript.equals(firstScriptInQueue)) {
-                upButtonEnabled = false;
-            } else {
-                upButtonEnabled = true;
-            }
-        } catch (IndexOutOfBoundsException e) {
-            upButtonEnabled = false;
-        }
-        
-        firePropertyChange("upButtonEnabled", null, upButtonEnabled);
+    	boolean newButtonStatus = !isNullOrInPosition(0);
+        firePropertyChange("upButtonEnabled", upButtonEnabled, upButtonEnabled = newButtonStatus);
     }
     
     /**
@@ -238,4 +216,15 @@ public class QueueScriptViewModel extends ModelObject {
     public boolean getDequeueButtonEnabled() {
         return dequeueButtonEnabled;
     }
+
+    /**
+     * Sets the contents of a script based on the contents of a file at the specified path.
+     * @param scriptPath The path to the script.
+     * @throws IOException Thrown if the file cannot be read.
+     */
+	public void loadContentsFromFile(String scriptPath) throws IOException {
+		List<String> lines = Files.readAllLines(Paths.get(scriptPath));
+		String contents = lines.stream().collect(Collectors.joining("\n"));
+		scriptToSend.setCode(contents);
+	}
 }
