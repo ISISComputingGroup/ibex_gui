@@ -20,10 +20,8 @@
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Provides a default name, appended with a number if needed, for adding or
@@ -34,14 +32,10 @@ import java.util.stream.Collectors;
 public class DefaultName {
 
     private static final String NUMBER_REGEX = "(\\d+)";
-    private static final String OPENING_GROUP_REGEX = "?(";
-    private static final String CLOSING_GROUP_REGEX = ")?";
 
-	private final String name;
     private final String separator;
     private final String openingBracket;
     private final String closingBracket;
-	private final Pattern namePattern;
 	private final String nameRoot;
 	
     /**
@@ -67,9 +61,8 @@ public class DefaultName {
      *            True if brackets are desired
      */
     public DefaultName(String name, String separator, boolean brackets) {
-        this.name = name;
         this.separator = separator;
-
+        
         if (brackets) {
             openingBracket = "(";
             closingBracket = ")";
@@ -79,8 +72,6 @@ public class DefaultName {
         }
 
         nameRoot = getNameRoot(name);
-        namePattern = Pattern.compile(nameRoot + OPENING_GROUP_REGEX + Pattern.quote(separator) + Pattern.quote(openingBracket)
-                + NUMBER_REGEX + Pattern.quote(closingBracket) + CLOSING_GROUP_REGEX + "$");
 	}
 	
     /**
@@ -92,28 +83,13 @@ public class DefaultName {
      *          A unique name.
      */
 	public String getUnique(Collection<String> existingNames) {
-		if (!existingNames.contains(name)) {
-			// If the name is not already taken we can avoid all the computation below.
-			return name;
-		}
-		
-		Set<Integer> taken = existingNames.stream()
-				.map(name -> namePattern.matcher(name))
-				.filter(match -> match.matches())
-				.map(match -> match.group(2))
-				.filter(str -> str != null)
-				.map(str -> Integer.parseInt(str))
-				.collect(Collectors.toSet());
-
-        return nameRoot + separator + openingBracket + nextAvailable(taken) + closingBracket;
-	}
-
-	private String nextAvailable(Set<Integer> taken) {
-		Integer i = 1;
-		while (taken.contains(i)) {
-			i++;
-		}
-		return i.toString();
+        Integer i = 1;
+        String proposedName = nameRoot;
+        while (existingNames.contains(proposedName)) {
+        	proposedName = String.format("%s%s%s%s%s", nameRoot, separator, openingBracket, i, closingBracket);
+        	i++;
+        }
+        return proposedName;
 	}
 
     /**
@@ -124,15 +100,9 @@ public class DefaultName {
      * @return The name without the suffix
      */
     private String getNameRoot(String name) {
-    	
         Pattern pattern = Pattern.compile(
         		String.format("%s(%s%s%s)$", separator, Pattern.quote(openingBracket), NUMBER_REGEX, Pattern.quote(closingBracket)));
         Matcher match = pattern.matcher(name);
-        
-        if (match.matches()) {
-            return name.substring(0, match.start());
-        } else {
-        	return name;
-        }
+        return match.find() ? name.substring(0, match.start()) : name;
     }
 }
