@@ -542,16 +542,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * Remove a block from the configuration.
-     * 
-     * @param block
-     *            the block to remove
-     */
-    public void removeBlock(EditableBlock block) {
-    	removeBlocks(Arrays.asList(block));
-    }
-
-    /**
      * Remove multiple blocks from the configuration.
      * 
      * @param blocks

@@ -38,11 +38,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.AddIocDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
@@ -246,22 +246,10 @@ public class IocOverviewPanel extends Composite {
     }
     
     private void deleteSelected() {
-
-        List<EditableIoc> toRemove = table.selectedRows();
-        String dialogTitle = "Delete IOC";
-        String dialogText = "Do you really want to delete the IOC";
-        
-        if (toRemove.size() == 1) {
-            dialogText += " " + toRemove.get(0).getName() + "?";
-        } else {
-            dialogTitle = "Delete IOCs";
-            dialogText += "s " + iocNamesToString(toRemove) + "?";
-        }
-                
-        MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
-        dialog.setText(dialogTitle);
-        dialog.setMessage(dialogText);
-        int returnCode = dialog.open();
+    	List<EditableIoc> toRemove = table.selectedRows();
+    	
+    	DeleteTableItemHelper<EditableIoc> helper = new DeleteTableItemHelper<>();
+        int returnCode = helper.createDeleteDialog("IOC", toRemove);
         
         if (returnCode == SWT.OK) {
             int index = table.getSelectionIndex();
@@ -275,19 +263,4 @@ public class IocOverviewPanel extends Composite {
             setSelectedIocs(table.selectedRows());
         }
     }
-
-    private String iocNamesToString(List<EditableIoc> iocs) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < iocs.size(); i++) {
-            EditableIoc ioc = iocs.get(i);
-            sb.append(ioc.getName());
-            if (i == iocs.size() - 2) {
-                sb.append(" and ");
-            } else if (i != iocs.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
-    }
-
 }

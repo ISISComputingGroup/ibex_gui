@@ -22,9 +22,9 @@
  */
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
@@ -58,12 +58,9 @@ public class BlockFactory {
         return block;
     }
 
-    private Collection<String> blockNames() {
-        List<String> names = new ArrayList<>();
-        for (Block block : config.transformBlocks()) {
-            names.add(block.getName());
-        }
-
-        return names;
+    private Collection<String> blockNames() {    
+        return config.transformBlocks().stream()
+    			.map(b -> b.getName())
+    			.collect(Collectors.toList());
     }
 }
