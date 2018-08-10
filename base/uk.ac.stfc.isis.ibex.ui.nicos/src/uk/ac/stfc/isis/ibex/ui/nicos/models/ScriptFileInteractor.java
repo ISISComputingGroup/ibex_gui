@@ -19,47 +19,52 @@ public abstract class ScriptFileInteractor {
 	private final String action;
 	private final int fileStyle;
 	protected final QueuedScript script;
-	
-    protected static final String LINE_SEP = System.lineSeparator();
-	private static final String DEFAULT_SCRIPT_DIRECTORY = "c:\\scripts";
-    private static final String[] ALLOWED_SCRIPT_NAMES = {"Python Scripts (*.py)"};
-    private static final String[] ALLOWED_SCRIPT_EXTENSIONS = {"*.py"};
 
-    /**
-     * Create the manipulator.
-     * @param shell The shell to produce dialog boxes from.
-     * @param action The name of the action being performed.
-     * @param fileStyle The style of file dialog to open.
-     * @param script The script to act on.
-     */
-    protected ScriptFileInteractor(Shell shell, String action, int fileStyle, QueuedScript script) {
-    	this.shell = shell;
-    	this.action = action;
-    	this.fileStyle = fileStyle;
-    	this.script = script;
-    }
-    
-    private String getScriptPath() {
+	protected static final String LINE_SEP = System.lineSeparator();
+	private static final String DEFAULT_SCRIPT_DIRECTORY = "c:\\scripts";
+	private static final String[] ALLOWED_SCRIPT_NAMES = { "Python Scripts (*.py)" };
+	private static final String[] ALLOWED_SCRIPT_EXTENSIONS = { "*.py" };
+
+	/**
+	 * Create the manipulator.
+	 * 
+	 * @param shell
+	 *            The shell to produce dialog boxes from.
+	 * @param action
+	 *            The name of the action being performed.
+	 * @param fileStyle
+	 *            The style of file dialog to open.
+	 * @param script
+	 *            The script to act on.
+	 */
+	protected ScriptFileInteractor(Shell shell, String action, int fileStyle, QueuedScript script) {
+		this.shell = shell;
+		this.action = action;
+		this.fileStyle = fileStyle;
+		this.script = script;
+	}
+
+	private String getScriptPath() {
 		FileDialog dialog = new FileDialog(shell, fileStyle);
 		dialog.setFilterExtensions(ALLOWED_SCRIPT_EXTENSIONS);
 		dialog.setFilterNames(ALLOWED_SCRIPT_NAMES);
 		dialog.setFilterPath(DEFAULT_SCRIPT_DIRECTORY);
 		dialog.setOverwrite(fileStyle == SWT.SAVE);
 		return dialog.open();
-    }
-    
-    private void errorDialog(String scriptPath) {
+	}
+
+	private void errorDialog(String scriptPath) {
 		MessageBox dialog = new MessageBox(shell, SWT.ICON_ERROR);
 		dialog.setMessage(action + " failed on path " + scriptPath);
 		dialog.setText(action + " Script Failed");
 		dialog.open();
-    }
-    
-    /**
-     * Executes the action.
-     */
+	}
+
+	/**
+	 * Executes the action.
+	 */
 	public void execute() {
-    	String scriptPath = getScriptPath();
+		String scriptPath = getScriptPath();
 		if (!Strings.isNullOrEmpty(scriptPath)) {
 			try {
 				manipulateFile(scriptPath);
@@ -67,11 +72,15 @@ public abstract class ScriptFileInteractor {
 				errorDialog(scriptPath);
 			}
 		}
-    }
-    /**
-     * Perform the file interaction.
-     * @param path The path to the file.
-     * @throws IOException Thrown if the file interaction fails.
-     */
-    protected abstract void manipulateFile(String path) throws IOException;
+	}
+
+	/**
+	 * Perform the file interaction.
+	 * 
+	 * @param path
+	 *            The path to the file.
+	 * @throws IOException
+	 *             Thrown if the file interaction fails.
+	 */
+	protected abstract void manipulateFile(String path) throws IOException;
 }

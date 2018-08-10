@@ -14,11 +14,14 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 /**
  * Saves a script to file.
  */
-public class SaveScriptAction extends ScriptFileInteractor {	
+public class SaveScriptAction extends ScriptFileInteractor {
 	/**
 	 * Constructor for the saving action.
-	 * @param shell The shell to open any dialogs in.
-	 * @param script The script to save.
+	 * 
+	 * @param shell
+	 *            The shell to open any dialogs in.
+	 * @param script
+	 *            The script to save.
 	 */
 	public SaveScriptAction(Shell shell, QueuedScript script) {
 		super(shell, "Save", SWT.SAVE, script);

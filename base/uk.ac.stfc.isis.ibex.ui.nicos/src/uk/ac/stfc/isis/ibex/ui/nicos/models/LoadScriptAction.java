@@ -17,8 +17,11 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 public class LoadScriptAction extends ScriptFileInteractor {
 	/**
 	 * Constructor for the loading action.
-	 * @param shell The shell to open any dialogs in.
-	 * @param script The script to load.
+	 * 
+	 * @param shell
+	 *            The shell to open any dialogs in.
+	 * @param script
+	 *            The script to load.
 	 */
 	public LoadScriptAction(Shell shell, QueuedScript script) {
 		super(shell, "Load", SWT.OPEN, script);
@@ -30,5 +33,4 @@ public class LoadScriptAction extends ScriptFileInteractor {
 		String contents = lines.stream().collect(Collectors.joining(LINE_SEP));
 		script.setCode(contents);
 	}
-
 }

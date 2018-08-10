@@ -31,14 +31,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
-
-import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
@@ -64,13 +58,13 @@ public class QueueScriptDialog extends Dialog {
      */
     public QueueScriptDialog(Shell parentShell, QueueScriptViewModel model) {
 		super(parentShell);
-		setShellStyle(SWT.DIALOG_TRIM);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
         this.model = model;
 	}
     
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		new QueuedScriptToolbar(parent, model.getScript(), true);
+        new QueuedScriptToolbar(parent, model.getScript(), true);
 	    
         creator = new QueueScriptPanel(parent, SWT.NONE, model);
         creator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
