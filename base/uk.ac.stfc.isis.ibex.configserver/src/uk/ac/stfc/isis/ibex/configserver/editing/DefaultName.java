@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
  * Provides a default name, appended with a number if needed, for adding or
  * copying items. Separator and whether or not to use brackets can be
  * configured.
- *
  */
 public class DefaultName {
 
