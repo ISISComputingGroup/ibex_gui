@@ -37,8 +37,12 @@ public class RunControlValidator {
         this.errorMessage = NO_ERROR;
     }
 
-	public boolean isValid(Double lowLimit, Double highLimit) {
-		if (lowLimit == null || highLimit == null) {
+	public boolean isValid(Double lowLimit, Double highLimit, boolean enabled) {
+		if (!enabled) {
+			// Run control not enabled - valid no matter what the limits are.
+			setErrorMessage(null);
+			return true;
+		} else if (lowLimit == null || highLimit == null) {
 			setErrorMessage(INVALID_LIMIT);
 			return false;
 		} else if (lowLimit > highLimit) {

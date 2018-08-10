@@ -40,7 +40,6 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
      */
 	@Override
 	public void setRunControlLowLimit(Double lowLimit) {
-		System.out.println(String.format("Low limit set to: %f", lowLimit));
 		firePropertyChange("runControlLowLimit", this.lowLimit, this.lowLimit = lowLimit);
 		firePropertyChange("runControlLowLimitStr", null, getRunControlLowLimitStr());
 		updateErrors();
@@ -69,7 +68,6 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	 * @param lowLimit the limit as a string
 	 */
 	public void setRunControlLowLimitStr(String value) {
-		System.out.println("Hello.");
 		try {
 			setRunControlLowLimit(Double.valueOf(value));
 		} catch (NumberFormatException | NullPointerException e) {
@@ -83,7 +81,6 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
      */
 	@Override
 	public void setRunControlHighLimit(Double highLimit) {
-		System.out.println(String.format("High limit set to: %f", highLimit));
 		firePropertyChange("runControlHighLimit", this.highLimit, this.highLimit = highLimit);
 		firePropertyChange("runControlHighLimitStr", null, getRunControlHighLimitStr());
 		updateErrors();
@@ -139,7 +136,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	}
 	
 	private void updateErrors() {
-		boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
+		boolean isValid = runControlValidator.isValid(lowLimit, highLimit, enabled);
 		setError(!isValid, runControlValidator.getErrorMessage());
 		onValidate(isValid);
 	}

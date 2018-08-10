@@ -35,7 +35,7 @@ public class RunControlValidatorTest {
 	private void checkPassedWithMessage(double lowLimit, double highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit, true);
         
         // Assert
         assertTrue(isValid);
@@ -45,7 +45,7 @@ public class RunControlValidatorTest {
 	private void checkFailedWithMessage(double lowLimit, double highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit, true);
         
         // Assert
         assertFalse(isValid);
