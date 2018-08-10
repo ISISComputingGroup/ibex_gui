@@ -42,25 +42,32 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 	private final WriteExpressionImpl<T> writeExpression;
 	private final PVWriter<T> pv;
 	
+	private final Object pvLock = new Object();
+	
 	private final PVWriterListener<T> observingListener = new PVWriterListener<T>() {
+		/**
+		 * Implementation note: MUST be thread-safe!
+		 */
 		@Override
 		public void pvChanged(PVWriterEvent<T> evt) {
-			if (pv == null) {
-				return;
-			}
-			
-			if (evt.isConnectionChanged()) {
-				LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()),
-						"(Ticket 3001) PV canWrite changed to " + pv.isWriteConnected() + ". This PV is " + details().address());
-				canWriteChanged(pv.isWriteConnected());
-			}
-			
-			if (evt.isExceptionChanged()) {
-				error(pv.lastWriteException());
-			}
-			
-			if (evt.isWriteFailed()) {
-				error(new WriteException("Write failed"));
+			synchronized (pvLock) {
+				if (pv == null) {
+					return;
+				}
+				
+				if (evt.isConnectionChanged()) {
+					LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()),
+							"(Ticket 3001) PV canWrite changed to " + pv.isWriteConnected() + ". This PV is " + details().address());
+					canWriteChanged(pv.isWriteConnected());
+				}
+				
+				if (evt.isExceptionChanged()) {
+					error(pv.lastWriteException());
+				}
+				
+				if (evt.isWriteFailed()) {
+					error(new WriteException("Write failed"));
+				}
 			}
 		}
 	};
@@ -76,23 +83,26 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 	
 	@Override
 	public void write(T value) throws IOException {
-	    
-	    if (!canWrite()) {
-	        String message = "Can't write to PV '" + writeExpression.getName() + "'.";
-	        
-	        if (pv.lastWriteException() != null) {
-	            message += " Caused by: " + pv.lastWriteException().toString();
-	            throw new IOException(message, pv.lastWriteException());
-	        } else {
-	            throw new IOException(message);
-	        }
+	    synchronized (pvLock) {
+		    if (!canWrite()) {
+		        String message = "Can't write to PV '" + writeExpression.getName() + "'.";
+		        
+		        if (pv.lastWriteException() != null) {
+		            message += " Caused by: " + pv.lastWriteException().toString();
+		            throw new IOException(message, pv.lastWriteException());
+		        } else {
+		            throw new IOException(message);
+		        }
+		    }
+		    
+			pv.write(value);
 	    }
-	    
-		pv.write(value);
 	}
 
 	@Override
 	public void close() {
-		pv.close();
+		synchronized (pvLock) {
+			pv.close();
+		}
 	}
 }
