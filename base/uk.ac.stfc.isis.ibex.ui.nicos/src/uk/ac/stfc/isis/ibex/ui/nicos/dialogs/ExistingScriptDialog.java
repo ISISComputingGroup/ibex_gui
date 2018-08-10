@@ -47,10 +47,11 @@ public class ExistingScriptDialog extends Dialog {
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL);
+        StyledText codeText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL);
+        
         DataBindingContext bindingContext = new DataBindingContext();
         
-        bindingContext.bindValue(WidgetProperties.text().observe(styledText),
+        bindingContext.bindValue(WidgetProperties.text().observe(codeText),
                 BeanProperties.value("code").observe(script));
         
 		return container;

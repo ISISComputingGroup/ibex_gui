@@ -23,9 +23,6 @@ package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -216,15 +213,4 @@ public class QueueScriptViewModel extends ModelObject {
     public boolean getDequeueButtonEnabled() {
         return dequeueButtonEnabled;
     }
-
-    /**
-     * Sets the contents of a script based on the contents of a file at the specified path.
-     * @param scriptPath The path to the script.
-     * @throws IOException Thrown if the file cannot be read.
-     */
-	public void loadContentsFromFile(String scriptPath) throws IOException {
-		List<String> lines = Files.readAllLines(Paths.get(scriptPath));
-		String contents = lines.stream().collect(Collectors.joining("\n"));
-		scriptToSend.setCode(contents);
-	}
 }

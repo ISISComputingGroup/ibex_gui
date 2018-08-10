@@ -54,10 +54,6 @@ public class QueueScriptDialog extends Dialog {
 
     private QueueScriptViewModel model;
 
-    private static final String DEFAULT_SCRIPT_DIRECTORY = "c:\\scripts";
-    private static final String[] ALLOWED_SCRIPT_NAMES = {"Python Scripts (*.py)"};
-    private static final String[] ALLOWED_SCRIPT_EXTENSIONS = {"*.py"};
-
 	/**
      * The constructor for this class.
      * 
@@ -71,41 +67,10 @@ public class QueueScriptDialog extends Dialog {
 		setShellStyle(SWT.DIALOG_TRIM);
         this.model = model;
 	}
-	
-    private String getLoadScriptPath() {
-		FileDialog dialog = new FileDialog(getShell());
-		dialog.setFilterExtensions(ALLOWED_SCRIPT_EXTENSIONS);
-		dialog.setFilterNames(ALLOWED_SCRIPT_NAMES);
-		dialog.setFilterPath(DEFAULT_SCRIPT_DIRECTORY);
-		return dialog.open();
-    }
-    
-    private void loadScript() {
-    	String scriptPath = getLoadScriptPath();
-		if (!Strings.isNullOrEmpty(scriptPath)) {
-			try {
-				model.loadContentsFromFile(scriptPath);
-			} catch (IOException e) {
-				MessageBox dialog = new MessageBox(getShell(), SWT.ICON_ERROR);
-				dialog.setMessage("Opening " + scriptPath + " failed.");
-				dialog.setText("Load Script Failed");
-				dialog.open();
-			}
-		}
-    }
     
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		ToolBar toolbar = new ToolBar(parent, SWT.FLAT | SWT.WRAP | SWT.LEFT);
-	    ToolItem loadScript = new ToolItem(toolbar, SWT.PUSH);
-	    loadScript.setToolTipText("Load Script");
-	    loadScript.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.nicos", "icons/open_folder.png"));
-	    loadScript.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				loadScript();
-			}
-		});
+		new QueuedScriptToolbar(parent, model.getScript(), true);
 	    
         creator = new QueueScriptPanel(parent, SWT.NONE, model);
         creator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
