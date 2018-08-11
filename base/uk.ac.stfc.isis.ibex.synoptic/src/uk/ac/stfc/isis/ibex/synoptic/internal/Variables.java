@@ -126,7 +126,7 @@ public class Variables {
     }
 
     private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
-		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
+		return new JsonDeserialisingConverter<>(SynopticInfo[].class).andThen(Convert.<SynopticInfo>toCollection());
 	}	
 
     /**
@@ -179,7 +179,7 @@ public class Variables {
     }
 
     private Converter<Collection<String>, String> namesToString() {
-        return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+        return Convert.toArray(new String[0]).andThen(new JsonSerialisingConverter<String[]>(String[].class));
     }
 
     private Writable<String> writeCompressed(String address) {

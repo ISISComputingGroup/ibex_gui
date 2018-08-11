@@ -65,15 +65,15 @@ public class ConvertingObservableTest {
 		testObservable = new TestableObservable<>();
 
 		mockConverter = mock(Converter.class);
-		when(mockConverter.convert(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
-		when(mockConverter.convert(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
-		when(mockConverter.convert(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
+		when(mockConverter.apply(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
+		when(mockConverter.apply(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
+		when(mockConverter.apply(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
         convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.addObserver(mockObserver);
 		
 		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
-		when(mockConverterWithException.convert(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
+		when(mockConverterWithException.apply(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 	}
 	
 	@Test

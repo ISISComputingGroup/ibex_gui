@@ -24,12 +24,12 @@ import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-public class Decompressor extends Converter<byte[], byte[]> {
+public class Decompressor implements Converter<byte[], byte[]> {
 	
     private static final int KB_IN_BYTES = 1024;
 
     @Override
-	public byte[] convert(byte[] value) throws ConversionException {
+	public byte[] apply(byte[] value) throws ConversionException {
 		final Inflater decompressor = new Inflater();
 		try {
 			return decompress(value, decompressor);

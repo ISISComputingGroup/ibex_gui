@@ -43,7 +43,7 @@ public class MotorVariables extends Closer {
 
 	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
 		@Override
-		public MotorDirection convert(Short value) throws ConversionException {
+		public MotorDirection apply(Short value) throws ConversionException {
 			if (value == null) {
 				return MotorDirection.UNKNOWN;
 			}
@@ -54,7 +54,7 @@ public class MotorVariables extends Closer {
 
 	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
 		@Override
-		public Boolean convert(Short value) throws ConversionException {
+		public Boolean apply(Short value) throws ConversionException {
 			if (value == null) {
 				return null;
 			}
@@ -65,7 +65,7 @@ public class MotorVariables extends Closer {
 
 	private static final Converter<String, String> CAPITALISE_FIRST_LETTER_ONLY = new Converter<String, String>() {
 		@Override
-		public String convert(String value) throws ConversionException {
+		public String apply(String value) throws ConversionException {
 			if (value == null || value.length() == 0) {
 				return value;
 			}

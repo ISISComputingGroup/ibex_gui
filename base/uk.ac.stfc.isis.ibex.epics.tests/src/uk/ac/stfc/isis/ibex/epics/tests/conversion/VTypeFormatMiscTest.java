@@ -49,7 +49,7 @@ public class VTypeFormatMiscTest {
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		String result = converter.convert(value);
+		String result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, TestingEnum.TEST1.toString());
@@ -74,7 +74,7 @@ public class VTypeFormatMiscTest {
 		float[] test = new float[] {};
 		
 		// Act
-		float[] result = converter.convert(value);
+		float[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test, 0);
@@ -99,7 +99,7 @@ public class VTypeFormatMiscTest {
 		float[] test = new float[] {0.0f, 1.0f};
 		
 		// Act
-		float[] result = converter.convert(value);
+		float[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test, 0);
@@ -124,7 +124,7 @@ public class VTypeFormatMiscTest {
 		byte[] test = new byte[] {};
 		
 		// Act
-		byte[] result = converter.convert(value);
+		byte[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test);
@@ -149,7 +149,7 @@ public class VTypeFormatMiscTest {
 		byte[] test = new byte[] {0x00};
 		
 		// Act
-		byte[] result = converter.convert(value);
+		byte[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test);

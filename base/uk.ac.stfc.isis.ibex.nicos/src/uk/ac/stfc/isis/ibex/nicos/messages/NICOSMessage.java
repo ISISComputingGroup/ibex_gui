@@ -48,7 +48,7 @@ public abstract class NICOSMessage<T> {
     public List<String> getMulti() throws ConversionException {
         @SuppressWarnings("rawtypes")
         JsonSerialisingConverter<List> serialiser = new JsonSerialisingConverter<>(List.class);
-        return Arrays.asList(command, "", serialiser.convert(parameters));
+        return Arrays.asList(command, "", serialiser.apply(parameters));
     }
 
     /**

@@ -43,7 +43,7 @@ public class Observables {
 
 	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
 		@Override
-		public InMotionState convert(Double value) throws ConversionException {
+		public InMotionState apply(Double value) throws ConversionException {
 			if (value == null) {
 				return InMotionState.UNKNOWN;
 			}

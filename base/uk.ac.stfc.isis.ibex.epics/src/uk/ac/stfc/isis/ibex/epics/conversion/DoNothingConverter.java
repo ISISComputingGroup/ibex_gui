@@ -28,7 +28,7 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
  * @param <T>
  *            The type of the input/output value.
  */
-public class DoNothingConverter<T> extends Converter<T, T> {
+public class DoNothingConverter<T> implements Converter<T, T> {
 
     /**
      * @param value
@@ -36,7 +36,7 @@ public class DoNothingConverter<T> extends Converter<T, T> {
      * @throws ConversionException
      */
     @Override
-    public T convert(T value) throws ConversionException {
+    public T apply(T value) throws ConversionException {
         return value;
     }
 

@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * Creates a map of IOC parameters for each IOC specified in the JSON.
  *
  */
-public class IocsParametersConverter extends Converter<String, Map<String, IocParameters>> {
+public class IocsParametersConverter implements Converter<String, Map<String, IocParameters>> {
 	private final Gson gson = new Gson();
 
     // CHECKSTYLE:OFF The declaration format for GSON's TypeToken upsets
@@ -48,7 +48,7 @@ public class IocsParametersConverter extends Converter<String, Map<String, IocPa
     // CHECKSTYLE:ON
 
 	@Override
-	public Map<String, IocParameters> convert(String json) throws ConversionException {
+	public Map<String, IocParameters> apply(String json) throws ConversionException {
 		try {
 			return gson.fromJson(json, SERVER_IOC_DATA_FORMAT);
 		} catch (JsonSyntaxException e) {

@@ -294,7 +294,7 @@ public class Channels {
          * @return the observable
          */
 		public static ClosableObservable<String> elapsedTimeReader(String pvAddress) {
-			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.toLong().apply(new ElapsedTimeFormatter()));
+			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.toLong().andThen(new ElapsedTimeFormatter()));
 		}
 		
         /**
@@ -304,7 +304,7 @@ public class Channels {
          * @return the observable
          */
 		public static ClosableObservable<String> dateTimeReader(String pvAddress) {
-			return convertObservablePV(pvAddress, VString.class, VTypeFormat.fromVString().apply(new DateTimeFormatter()));
+			return convertObservablePV(pvAddress, VString.class, VTypeFormat.fromVString().andThen(new DateTimeFormatter()));
 		}
 	}
 	

@@ -38,7 +38,7 @@ public class GetBanner extends NICOSMessage<String> {
 
     @Override
     public ReceiveBannerMessage parseResponse(String response) throws ConversionException {
-        return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).convert(response);
+        return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).apply(response);
     }
 
 }

@@ -66,7 +66,7 @@ public class JsonConvertersTest {
 		Converter<String, Configuration> conv = new JsonConverters().toConfig();
 	
 		// Act
-		Configuration config = conv.convert(configJson);
+		Configuration config = conv.apply(configJson);
 
 		// Assert
 		assertEquals(configDescription, config.description());
@@ -85,7 +85,7 @@ public class JsonConvertersTest {
 		Converter<String, ServerStatus> conv = new JsonConverters().toServerStatus();
 	
 		// Act
-		ServerStatus server = conv.convert(serverStatusBusy);
+		ServerStatus server = conv.apply(serverStatusBusy);
 
 		// Assert
 		assertTrue(server.isBusy());
@@ -97,7 +97,7 @@ public class JsonConvertersTest {
 		Converter<String, ServerStatus> conv = new JsonConverters().toServerStatus();
 	
 		// Act
-		ServerStatus server = conv.convert(serverStatusNotBusy);
+		ServerStatus server = conv.apply(serverStatusNotBusy);
 
 		// Assert
 		assertTrue(!server.isBusy());
@@ -109,7 +109,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<ConfigInfo>> conv = new JsonConverters().toConfigsInfo();
 	
 		// Act
-		Collection<ConfigInfo> cInfos = conv.convert(configInfos);
+		Collection<ConfigInfo> cInfos = conv.apply(configInfos);
 
 		// Assert
 		assertTrue(cInfos.size() == 1);
@@ -127,7 +127,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<ComponentInfo>> conv = new JsonConverters().toComponents();
 	
 		// Act
-		Collection<ComponentInfo> comps = conv.convert(configInfos);
+		Collection<ComponentInfo> comps = conv.apply(configInfos);
 
 		// Assert
 		assertTrue(comps.size() == 1);
@@ -145,7 +145,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<EditableIoc>> conv = new JsonConverters().toIocs();
 	
 		// Act
-		Collection<EditableIoc> iocs = conv.convert(editableIocJson);
+		Collection<EditableIoc> iocs = conv.apply(editableIocJson);
 
 		// Assert
 		assertTrue(iocs.size() == 1);
@@ -161,7 +161,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<PV>> conv = new JsonConverters().toPVs();
 	
 		// Act
-		Collection<PV> pvs = conv.convert(pvsJson);
+		Collection<PV> pvs = conv.apply(pvsJson);
 
 		// Assert
 		assertTrue(pvs.size() == 1);
@@ -180,7 +180,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<String>> conv = new JsonConverters().toNames();
 		
 		//Act
-		Collection<String> namesList = conv.convert(namesJson);
+		Collection<String> namesList = conv.apply(namesJson);
 		
 		//Assert
 		assertEquals(namesList.size(), 2);
@@ -197,7 +197,7 @@ public class JsonConvertersTest {
 		String namesJson = "[\"TEST_CONFIG1\",\"TEST_CONFIG2\"]";
 		
 		//Act
-		String test = conv.convert(namesList);
+		String test = conv.apply(namesList);
 		
 		//Assert
 		assertEquals(namesJson, test);
@@ -212,7 +212,7 @@ public class JsonConvertersTest {
 		String expected = "\"" + nameJson + "\"";
 		
 		//Act
-		String test = conv.convert(nameJson);
+		String test = conv.apply(nameJson);
 		
 		//Assert
 		assertEquals(expected, test);
@@ -225,7 +225,7 @@ public class JsonConvertersTest {
 		Converter<String, Collection<IocState>> conv = new JsonConverters().toIocStates();
 		
 		//Act
-		Collection<IocState> iocList = conv.convert(editableIocJson);
+		Collection<IocState> iocList = conv.apply(editableIocJson);
 		
 		//Assert
 		assertEquals(1, iocList.size());
@@ -243,7 +243,7 @@ public class JsonConvertersTest {
 		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
 		
 		//Act
-		String test = conv.convert(testConfig);
+		String test = conv.apply(testConfig);
 		
 		//Assert
 		assertEquals(expected, test);
@@ -255,7 +255,7 @@ public class JsonConvertersTest {
         Converter<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        conv.convert("{}");
+        conv.apply("{}");
 
     }
 
@@ -265,7 +265,7 @@ public class JsonConvertersTest {
         Converter<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        conv.convert("{");
+        conv.apply("{");
 
     }
     
@@ -276,7 +276,7 @@ public class JsonConvertersTest {
         Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.convert(bannerJson));
+        List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.apply(bannerJson));
 
         // Assert
         assertEquals(1, bannerList.size());
@@ -289,6 +289,6 @@ public class JsonConvertersTest {
         Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        new ArrayList<BannerItem>(conv.convert(bannerJsonBroken));
+        new ArrayList<BannerItem>(conv.apply(bannerJsonBroken));
     }
 }

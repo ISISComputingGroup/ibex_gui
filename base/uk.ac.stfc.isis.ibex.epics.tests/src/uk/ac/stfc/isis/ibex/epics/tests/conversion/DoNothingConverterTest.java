@@ -37,7 +37,7 @@ public class DoNothingConverterTest {
         DoNothingConverter<String> converter = new DoNothingConverter<>();
 
         // Act
-        String result = converter.convert(VALUE);
+        String result = converter.apply(VALUE);
 
         // Assert
         assertEquals(VALUE, result);

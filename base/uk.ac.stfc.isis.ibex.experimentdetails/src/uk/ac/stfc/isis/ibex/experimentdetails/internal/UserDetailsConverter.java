@@ -25,7 +25,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 /**
  * Converts JSON to UserDetails object.
  */
-public class UserDetailsConverter extends
+public class UserDetailsConverter implements
 		Converter<String, Collection<UserDetails>> {
 	private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 
@@ -76,12 +76,11 @@ public class UserDetailsConverter extends
 	}
     
 	@Override
-	public Collection<UserDetails> convert(String value)
-			throws ConversionException {
+	public Collection<UserDetails> apply(String value) {
         Converter<String, IntermediateUserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(
                 IntermediateUserDetails[].class, gson);
         // Convert to intermediate
-        IntermediateUserDetails[] parsed = jsonConverter.convert(value);
+        IntermediateUserDetails[] parsed = jsonConverter.apply(value);
 		
         ArrayList<UserDetails> userDetails = new ArrayList<>();
         

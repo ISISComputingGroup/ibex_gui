@@ -98,7 +98,7 @@ public class FilteredCollectionObservable<T extends INamed> extends
         Converter<Collection<T>, Collection<T>> converter = new Converter<Collection<T>, Collection<T>>() {
 
             @Override
-            public Collection<T> convert(Collection<T> value) throws ConversionException {
+            public Collection<T> apply(Collection<T> value) throws ConversionException {
                 return Lists.newArrayList(value);
             }
         };

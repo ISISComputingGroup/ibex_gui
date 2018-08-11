@@ -29,10 +29,10 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 /**
  * Parses an input XML into a Synoptic.
  */
-public class SynopticParser extends Converter<String, SynopticDescription> {
+public class SynopticParser implements Converter<String, SynopticDescription> {
 
 	@Override
-    public SynopticDescription convert(String value)
+    public SynopticDescription apply(String value)
 			throws ConversionException {
 		try {
             return XMLUtil.fromXml(value, SynopticDescription.class);

@@ -27,7 +27,7 @@ public class GetLog extends NICOSMessage<String> {
 	@Override
     public ReceiveLogMessage parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String[][]> deserial = new JsonDeserialisingConverter<>(String[][].class);
-        return new ReceiveLogMessage(deserial.convert(response));
+        return new ReceiveLogMessage(deserial.apply(response));
 	}
 
 }

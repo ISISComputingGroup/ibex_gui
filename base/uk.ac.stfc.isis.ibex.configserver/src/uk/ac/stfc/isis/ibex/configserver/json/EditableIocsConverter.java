@@ -32,10 +32,10 @@ import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
-public class EditableIocsConverter extends Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
+public class EditableIocsConverter implements Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
 	
 	@Override
-	public Collection<EditableIoc> convert(Map<String, IocParameters> value) throws ConversionException {
+	public Collection<EditableIoc> apply(Map<String, IocParameters> value) throws ConversionException {
 		return Lists.newArrayList(Iterables.transform(value.entrySet(), new Function<Map.Entry<String, IocParameters>, EditableIoc>() {
 
 			@Override

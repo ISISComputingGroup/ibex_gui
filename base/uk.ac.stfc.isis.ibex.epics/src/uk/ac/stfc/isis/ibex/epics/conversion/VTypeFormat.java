@@ -76,7 +76,7 @@ public final class VTypeFormat {
 	public static <R extends VNumber> Converter<R, Number> toNumber() {
 		return new Converter<R, Number>() {
 			@Override
-			public Number convert(R value) throws ConversionException {
+			public Number apply(R value) throws ConversionException {
 				return value.getValue();
 			}
 		};
@@ -89,7 +89,7 @@ public final class VTypeFormat {
 	public static <R extends VNumber> Converter<R, String> quantityWithUnits() {
 		return new Converter<R, String>() {
 			@Override
-			public String convert(R value) throws ConversionException {
+			public String apply(R value) throws ConversionException {
 				return value.getFormat().format(value.getValue()) + " " + value.getUnits();
 			}
 		};
@@ -103,7 +103,7 @@ public final class VTypeFormat {
 	public static <R extends VNumber> Converter<R, Number> toNumberWithPrecision() {
 		return new Converter<R, Number>() {
 			@Override
-			public Number convert(R value) throws ConversionException {
+			public Number apply(R value) throws ConversionException {
 				VNumber val = value;
 				Display display = ValueUtil.displayOf(val);
 				if (display != null) {
@@ -120,8 +120,8 @@ public final class VTypeFormat {
      */
 	public static Converter<VByteArray, String> fromVByteArray() {
 		return extractBytes()
-				.apply(Convert.fromBytes())
-				.apply(Convert.trim());
+				.andThen(Convert.fromBytes())
+				.andThen(Convert.trim());
 	}	
 
     /**
@@ -129,7 +129,7 @@ public final class VTypeFormat {
      */
 	public static Converter<VType, float[]> fromVFloatArray() {
 		return toVFloatArray()
-				.apply(extractFloats());
+				.andThen(extractFloats());
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public final class VTypeFormat {
      */
     public static Converter<VType, double[]> fromVDoubleArray() {
         return toVDoubleArray()
-                .apply(extractDoubles());
+                .andThen(extractDoubles());
     }
     
     /**
@@ -145,14 +145,14 @@ public final class VTypeFormat {
      */
     public static Converter<VType, int[]> fromVIntegerArray() {
         return toVIntegerArray()
-                .apply(extractIntegers());
+                .andThen(extractIntegers());
     }
 	
     /**
      * @return Converter from a VByteArray of zipped, hexed values to a String
      */
 	public static Converter<VByteArray, String> fromZippedHexVByteArray() {
-		return extractBytes().apply(Convert.fromZippedHex());
+		return extractBytes().andThen(Convert.fromZippedHex());
 	}
 
     /**
@@ -161,7 +161,7 @@ public final class VTypeFormat {
 	public static Converter<VType, VFloatArray> toVFloatArray() {
 		return new Converter<VType, VFloatArray>() {
 			@Override
-			public VFloatArray convert(VType value) throws ConversionException {
+			public VFloatArray apply(VType value) throws ConversionException {
 				try {
 					return (VFloatArray) value;
 				} catch (ClassCastException e) {
@@ -177,7 +177,7 @@ public final class VTypeFormat {
     public static Converter<VType, VDoubleArray> toVDoubleArray() {
         return new Converter<VType, VDoubleArray>() {
             @Override
-            public VDoubleArray convert(VType value) throws ConversionException {
+            public VDoubleArray apply(VType value) throws ConversionException {
                 try {
                     return (VDoubleArray) value;
                 } catch (ClassCastException e) {
@@ -193,7 +193,7 @@ public final class VTypeFormat {
     public static Converter<VType, VIntArray> toVIntegerArray() {
         return new Converter<VType, VIntArray>() {
             @Override
-            public VIntArray convert(VType value) throws ConversionException {
+            public VIntArray apply(VType value) throws ConversionException {
                 try {
                     return (VIntArray) value;
                 } catch (ClassCastException e) {
@@ -209,7 +209,7 @@ public final class VTypeFormat {
 	public static Converter<VType, VByteArray> toVByteArray() {
 		return new Converter<VType, VByteArray>() {
 			@Override
-			public VByteArray convert(VType value) throws ConversionException {
+			public VByteArray apply(VType value) throws ConversionException {
 				try {
 					return (VByteArray) value;
 				} catch (ClassCastException e) {
@@ -225,7 +225,7 @@ public final class VTypeFormat {
 	public static Converter<VType, VInt> toVInt() {
 		return new Converter<VType, VInt>() {
 			@Override
-			public VInt convert(VType value) throws ConversionException {
+			public VInt apply(VType value) throws ConversionException {
 				try {
 					return (VInt) value;
 				} catch (ClassCastException e) {
@@ -241,7 +241,7 @@ public final class VTypeFormat {
 	public static Converter<VInt, Long> toLong() {
 		return new Converter<VInt, Long>() {
 			@Override
-			public Long convert(VInt value) throws ConversionException {
+			public Long apply(VInt value) throws ConversionException {
 				return Long.valueOf(value.getValue());
 			}
 		};
@@ -255,7 +255,7 @@ public final class VTypeFormat {
 	public static <E extends Enum<E>> Converter<VEnum, E> toEnum(final Class<E> enumType) {
 		return new Converter<VEnum, E>() {
 			@Override
-			public E convert(VEnum value) throws ConversionException {
+			public E apply(VEnum value) throws ConversionException {
 				String text = value.getValue();
 				
 				// Replace characters which can't be used in java enums with underscores.
@@ -279,7 +279,7 @@ public final class VTypeFormat {
 	public static Converter<VEnum, String> toEnumString() {
 		return new Converter<VEnum, String>() {
 			@Override
-			public String convert(VEnum value) throws ConversionException {
+			public String apply(VEnum value) throws ConversionException {
 				return value.getValue();
 			}
 		};
@@ -291,7 +291,7 @@ public final class VTypeFormat {
 	public static Converter<VString, String> fromVString() {
 		return new Converter<VString, String>() {
 			@Override
-			public String convert(VString value) throws ConversionException {
+			public String apply(VString value) throws ConversionException {
 				if (value == null) {
 					throw new ConversionException("value is null");
 				}
@@ -307,7 +307,7 @@ public final class VTypeFormat {
 	public static Converter<VDouble, Double> fromDouble() {
 		return new Converter<VDouble, Double>() {
 			@Override
-			public Double convert(VDouble value) {
+			public Double apply(VDouble value) {
 				return value.getValue();
 			}
 		};
@@ -319,7 +319,7 @@ public final class VTypeFormat {
 	public static Converter<VInt, Integer> fromVInt() {
 		return new Converter<VInt, Integer>() {
 			@Override
-			public Integer convert(VInt value) throws ConversionException {
+			public Integer apply(VInt value) throws ConversionException {
 				try {
 					return value.getValue();
 				} catch (ClassCastException e) {
@@ -335,7 +335,7 @@ public final class VTypeFormat {
 	public static Converter<VEnum, String> enumValue() {
 		return new Converter<VEnum, String>() {
 			@Override
-			public String convert(VEnum value) {
+			public String apply(VEnum value) {
 				return value.getValue();
 			}
 		};
@@ -347,7 +347,7 @@ public final class VTypeFormat {
 	public static Converter<VShort, Short> fromShort() {
 		return new Converter<VShort, Short>() {
 			@Override
-			public Short convert(VShort value) {
+			public Short apply(VShort value) {
 				return value.getValue();
 			}
 		};	
@@ -359,7 +359,7 @@ public final class VTypeFormat {
 	public static Converter<VLong, Long> fromLong() {
 		return new Converter<VLong, Long>() {
 			@Override
-			public Long convert(VLong value) {
+			public Long apply(VLong value) {
 				return value.getValue();
 			}
 		};	
@@ -371,7 +371,7 @@ public final class VTypeFormat {
 	public static Converter<VByteArray, byte[]> extractBytes() {
 		return new Converter<VByteArray, byte[]>() {
 			@Override
-			public byte[] convert(VByteArray value) throws ConversionException {
+			public byte[] apply(VByteArray value) throws ConversionException {
 				if (value == null) {
 					throw new ConversionException("value to format was null");
 				}
@@ -399,7 +399,7 @@ public final class VTypeFormat {
 	public static Converter<VFloatArray, float[]> extractFloats() {
 		return new Converter<VFloatArray, float[]>() {
 			@Override
-			public float[] convert(VFloatArray value) throws ConversionException {
+			public float[] apply(VFloatArray value) throws ConversionException {
 				if (value == null) {
 					throw new ConversionException("value to format was null");
 				}
@@ -424,7 +424,7 @@ public final class VTypeFormat {
     public static Converter<VDoubleArray, double[]> extractDoubles() {
         return new Converter<VDoubleArray, double[]>() {
             @Override
-            public double[] convert(VDoubleArray value) throws ConversionException {
+            public double[] apply(VDoubleArray value) throws ConversionException {
                 if (value == null) {
                     throw new ConversionException("value to format was null");
                 }
@@ -449,7 +449,7 @@ public final class VTypeFormat {
     public static Converter<VIntArray, int[]> extractIntegers() {
         return new Converter<VIntArray, int[]>() {
             @Override
-            public int[] convert(VIntArray value) throws ConversionException {
+            public int[] apply(VIntArray value) throws ConversionException {
                 if (value == null) {
                     throw new ConversionException("value to format was null");
                 }

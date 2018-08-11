@@ -23,12 +23,12 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-public class ElapsedTimeFormatter extends Converter<Long, String> {
+public class ElapsedTimeFormatter implements Converter<Long, String> {
 		
     private static final int ONE_SECOND_IN_MS = 1000;
 
     @Override
-	public String convert(Long elapsedSeconds) throws ConversionException {
+	public String apply(Long elapsedSeconds) throws ConversionException {
         Period period = new Period(ONE_SECOND_IN_MS * elapsedSeconds);
 		PeriodFormatter formatter = new PeriodFormatterBuilder()
 			.appendHours().appendSuffix(" hours ")

@@ -21,7 +21,7 @@ public class GetScriptStatus extends NICOSMessage<Object> {
 	 */
 	@Override
 	public ReceiveScriptStatus parseResponse(String response) throws ConversionException {
-		return new JsonDeserialisingConverter<>(ReceiveScriptStatus.class).convert(response);
+		return new JsonDeserialisingConverter<>(ReceiveScriptStatus.class).apply(response);
 	}
 
 }

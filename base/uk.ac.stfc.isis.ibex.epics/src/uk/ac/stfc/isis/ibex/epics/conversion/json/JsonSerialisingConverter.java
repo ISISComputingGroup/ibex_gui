@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <T>
  *            The type to serialise to.
  */
-public class JsonSerialisingConverter<T> extends Converter<T, String> {
+public class JsonSerialisingConverter<T> implements Converter<T, String> {
 
 	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
 			new SpecificClassExclusionStrategy(PropertyChangeSupport.class);
@@ -56,7 +56,7 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
 	}
 	
 	@Override
-	public String convert(T value) throws ConversionException {
+	public String apply(T value) throws ConversionException {
 		return gson.toJson(value, classOfT);
 	}
 }

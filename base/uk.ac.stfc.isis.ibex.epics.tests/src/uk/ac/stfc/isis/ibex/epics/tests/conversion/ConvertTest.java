@@ -22,7 +22,7 @@ public class ConvertTest {
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(testZippedHexed);
+		String result = converter.apply(testZippedHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -36,7 +36,7 @@ public class ConvertTest {
 		String test = "test";
 				
 		//Act
-		byte[] result = converter.convert(test);
+		byte[] result = converter.apply(test);
 		
 		//Assert
 		assertArrayEquals(testZippedHexed, result);
@@ -50,7 +50,7 @@ public class ConvertTest {
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(testHexed);
+		String result = converter.apply(testHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -65,7 +65,7 @@ public class ConvertTest {
 		String test = "test";
 		
 		//Act
-		String result = converter.convert(test);
+		String result = converter.apply(test);
 		
 		//Assert
 		assertEquals(testHexed, result);
@@ -77,7 +77,7 @@ public class ConvertTest {
 		Converter<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
-		boolean result = converter.convert("YES");
+		boolean result = converter.apply("YES");
 		
 		//Assert
 		assertEquals(true, result);
@@ -89,7 +89,7 @@ public class ConvertTest {
 		Converter<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
-		boolean result = converter.convert("NO");
+		boolean result = converter.apply("NO");
 		
 		//Assert
 		assertEquals(false, result);

@@ -60,7 +60,7 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 		synchronized (this.source) {
 			if (formatter != null && value != null) {
 				try {
-					newValue = formatter.convert(value);
+					newValue = formatter.apply(value);
 				} catch (ConversionException e) {
 					setError(e);
 				}

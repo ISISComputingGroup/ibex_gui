@@ -46,7 +46,7 @@ public class SendReorderedQueue extends NICOSMessage<List<String>> {
     @Override
     public ReceiveMessage parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
-        return new ReceiveStringMessage(deserial.convert(response));
+        return new ReceiveStringMessage(deserial.apply(response));
     }
         
 }

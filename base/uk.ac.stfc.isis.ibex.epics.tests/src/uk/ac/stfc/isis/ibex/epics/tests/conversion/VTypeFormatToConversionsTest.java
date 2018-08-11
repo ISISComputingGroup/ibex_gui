@@ -58,7 +58,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.456);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.456);
@@ -74,7 +74,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.456, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		// Note: Number here should not be altered as there is no consideration of precision in toNumber
@@ -91,7 +91,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.4, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.4);
@@ -104,7 +104,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.456);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.456);
@@ -120,7 +120,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.456, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.5);
@@ -136,7 +136,7 @@ public class VTypeFormatToConversionsTest {
 		VDouble vnum = ValueFactory.newVDouble(123.4, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.4);
@@ -159,7 +159,7 @@ public class VTypeFormatToConversionsTest {
 		VFloatArray test = ValueFactory.newVFloatArray(data, null, null, null);
 		
 		// Act
-		VFloatArray result = converter.convert(test);
+		VFloatArray result = converter.apply(test);
 		
 		// Assert
 		assertEquals(result, test);
@@ -183,7 +183,7 @@ public class VTypeFormatToConversionsTest {
 		VByteArray test = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 		
 		// Act
-		VByteArray result = converter.convert(test);
+		VByteArray result = converter.apply(test);
 		
 		// Assert
 		assertEquals(result, test);
@@ -197,7 +197,7 @@ public class VTypeFormatToConversionsTest {
 		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
-		VInt result = converter.convert(value);
+		VInt result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, value);
@@ -211,7 +211,7 @@ public class VTypeFormatToConversionsTest {
 		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
-		Long result = converter.convert(value);
+		Long result = converter.apply(value);
 		
 		// Assert
 		Long check = (long) test;
@@ -226,7 +226,7 @@ public class VTypeFormatToConversionsTest {
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		TestingEnum result = converter.convert(value);
+		TestingEnum result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, TestingEnum.TEST1);
@@ -240,7 +240,7 @@ public class VTypeFormatToConversionsTest {
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		String result = converter.convert(value);
+		String result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, "TEST1");

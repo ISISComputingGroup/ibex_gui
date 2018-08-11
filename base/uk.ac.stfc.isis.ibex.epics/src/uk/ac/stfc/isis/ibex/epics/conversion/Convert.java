@@ -36,10 +36,10 @@ public final class Convert {
      */
 	public static Converter<String, byte[]> toZippedHex() {
 		return asBytes()
-				.apply(compress())
-				.apply(toHex())
-				.apply(fromChars())
-				.apply(asBytes());
+				.andThen(compress())
+				.andThen(toHex())
+				.andThen(fromChars())
+				.andThen(asBytes());
 	}
 
     /**
@@ -47,10 +47,10 @@ public final class Convert {
      */
 	public static Converter<byte[], String> fromZippedHex() {
 		return fromBytes()
-				.apply(asChars())
-				.apply(deHex())
-				.apply(decompress())
-				.apply(fromBytes());
+				.andThen(asChars())
+				.andThen(deHex())
+				.andThen(decompress())
+				.andThen(fromBytes());
 	}
 
     /**
@@ -58,8 +58,8 @@ public final class Convert {
      */
 	public static Converter<String, String> toHexString() {
 		return asBytes()
-				.apply(toHex())
-				.apply(fromChars());
+				.andThen(toHex())
+				.andThen(fromChars());
 	}
 
     /**
@@ -67,8 +67,8 @@ public final class Convert {
      */
 	public static Converter<String, String> fromHexString() {
 		return asChars()
-				.apply(deHex())
-				.apply(fromBytes());
+				.andThen(deHex())
+				.andThen(fromBytes());
 	}
 
     /**
@@ -96,7 +96,7 @@ public final class Convert {
      * @return A converter to dehex a char array to a byte array
      */
 	public static Converter<char[], byte[]> deHex() {
-		return removeUnsetChars().apply(new Dehexer());
+		return removeUnsetChars().andThen(new Dehexer());
 	}
 	
     /**
@@ -105,7 +105,7 @@ public final class Convert {
 	public static Converter<char[], char[]> removeUnsetChars() {
 		return new Converter<char[], char[]>() {	
 			@Override
-			public char[] convert(char[] value) throws ConversionException {				
+			public char[] apply(char[] value) throws ConversionException {				
 				return new String(value).trim().toCharArray();
 			}
 		};
@@ -117,7 +117,7 @@ public final class Convert {
 	public static Converter<String, String> trim() {
 		return new Converter<String, String>() {
 			@Override
-			public String convert(String value) throws ConversionException {
+			public String apply(String value) throws ConversionException {
 				return value.trim();
 			}
 		};
@@ -129,7 +129,7 @@ public final class Convert {
 	public static Converter<byte[], String> fromBytes() {
 		return new Converter<byte[], String>() {
 			@Override
-			public String convert(byte[] value) throws ConversionException {
+			public String apply(byte[] value) throws ConversionException {
 				try {
 					return new String(value, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -145,7 +145,7 @@ public final class Convert {
 	public static Converter<char[], String> fromChars() {
 		return new Converter<char[], String>() {
 			@Override
-			public String convert(char[] value) {
+			public String apply(char[] value) {
 				return new String(value);				
 			}
 		};
@@ -157,7 +157,7 @@ public final class Convert {
 	public static Converter<String, char[]> asChars() {
 		return new Converter<String, char[]>() {
 			@Override
-			public char[] convert(String value) {
+			public char[] apply(String value) {
 				return value.toCharArray();				
 			}
 		};
@@ -169,7 +169,7 @@ public final class Convert {
 	public static Converter<String, byte[]> asBytes() {
 		return new Converter<String, byte[]>() {
 			@Override
-			public byte[] convert(String value) throws ConversionException {
+			public byte[] apply(String value) throws ConversionException {
 				try {
 					return value.getBytes("UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -185,7 +185,7 @@ public final class Convert {
 	public static Converter<String, Boolean> toBoolean() {
 		return new Converter<String, Boolean>() {
 			@Override
-			public Boolean convert(String value) throws ConversionException {
+			public Boolean apply(String value) throws ConversionException {
 				String val = value.toLowerCase(Locale.ENGLISH);
 				switch (val) {
 					case "yes":
@@ -207,7 +207,7 @@ public final class Convert {
 	public static <T> Converter<T[], Collection<T>> toCollection() {
 		return new Converter<T[], Collection<T>>() {
 			@Override
-			public Collection<T> convert(T[] value) throws ConversionException {
+			public Collection<T> apply(T[] value) throws ConversionException {
 				return Arrays.asList(value);
 			}
 		};
@@ -223,7 +223,7 @@ public final class Convert {
 	public static <T> Converter<Collection<T>, T[]> toArray(final T[] arrayOfType) {
 		return new Converter<Collection<T>, T[]>() {
 			@Override
-			public T[] convert(Collection<T> value) throws ConversionException {
+			public T[] apply(Collection<T> value) throws ConversionException {
 				return value.toArray(arrayOfType);
 			}
 		};

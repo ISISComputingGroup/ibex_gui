@@ -82,7 +82,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000 unit");
@@ -100,7 +100,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000 ");
@@ -118,7 +118,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 unit");
@@ -136,7 +136,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 ");
@@ -154,7 +154,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -172,7 +172,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -190,7 +190,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -208,7 +208,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -226,7 +226,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -244,7 +244,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -262,7 +262,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -280,7 +280,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -295,7 +295,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456 unit");
@@ -312,7 +312,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456 ");
@@ -329,7 +329,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 unit");
@@ -347,7 +347,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 ");
@@ -364,7 +364,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -381,7 +381,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -398,7 +398,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -416,7 +416,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -433,7 +433,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -451,7 +451,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -468,7 +468,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -485,7 +485,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -499,7 +499,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VString vstring = ValueFactory.newVString(string, null, null);
 
 	// Act
-	String result = converter.convert(vstring);
+	String result = converter.apply(vstring);
 
 	// Assert
 	assertEquals(result, string);
@@ -513,7 +513,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBoolean value = ValueFactory.newVBoolean(true, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "true");
@@ -530,7 +530,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 unit");
@@ -547,7 +547,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 ");
@@ -565,7 +565,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VTable value = ValueFactory.newVTable(types, names, values);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "VTable[2x0, [Name 1, Name 2]]");
@@ -584,7 +584,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -603,7 +603,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -619,7 +619,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VImage value = ValueFactory.newVImage(1, 1, data);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -635,7 +635,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VEnum value = ValueFactory.newVEnum(0, labels, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, test);
@@ -658,7 +658,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -690,7 +690,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBooleanArray value = ValueFactory.newVBooleanArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -722,7 +722,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -754,7 +754,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -783,7 +783,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -800,7 +800,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VStringArray value = ValueFactory.newVStringArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[Test]");
@@ -831,7 +831,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -862,7 +862,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -892,7 +892,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -922,7 +922,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -953,7 +953,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -984,7 +984,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1004,7 +1004,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1024,7 +1024,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1044,7 +1044,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1064,7 +1064,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1084,7 +1084,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1104,7 +1104,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1124,7 +1124,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1144,7 +1144,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1164,7 +1164,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1184,7 +1184,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1204,7 +1204,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1224,7 +1224,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1241,7 +1241,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456");
@@ -1259,7 +1259,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456");
@@ -1279,7 +1279,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1299,7 +1299,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1319,7 +1319,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1339,7 +1339,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1359,7 +1359,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1379,7 +1379,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1399,7 +1399,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1419,7 +1419,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1439,7 +1439,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1459,7 +1459,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1475,7 +1475,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VString vstring = ValueFactory.newVString(string, null, null);
 
 	// Act
-	String result = converter.convert(vstring);
+	String result = converter.apply(vstring);
 
 	// Assert
 	assertEquals(result, string);
@@ -1490,7 +1490,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBoolean value = ValueFactory.newVBoolean(true, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "true");
@@ -1510,7 +1510,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1530,7 +1530,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1549,7 +1549,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VTable value = ValueFactory.newVTable(types, names, values);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "VTable[2x0, [Name 1, Name 2]]");
@@ -1569,7 +1569,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1589,7 +1589,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1606,7 +1606,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VImage value = ValueFactory.newVImage(1, 1, data);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1624,7 +1624,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VEnum value = ValueFactory.newVEnum(0, labels, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, test);
@@ -1649,7 +1649,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1682,7 +1682,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBooleanArray value = ValueFactory.newVBooleanArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1714,7 +1714,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1746,7 +1746,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1776,7 +1776,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1794,7 +1794,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VStringArray value = ValueFactory.newVStringArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[Test]");
@@ -1825,7 +1825,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1856,7 +1856,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1887,7 +1887,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1918,7 +1918,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1949,7 +1949,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1980,7 +1980,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1998,7 +1998,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 unit");
@@ -2017,7 +2017,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 ");

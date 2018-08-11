@@ -45,7 +45,7 @@ public class Login extends NICOSMessage<Map<String, String>> {
 
     @Override
     public ReceiveLoginMessage parseResponse(String response) throws ConversionException {
-        return new JsonDeserialisingConverter<>(ReceiveLoginMessage.class).convert(response);
+        return new JsonDeserialisingConverter<>(ReceiveLoginMessage.class).apply(response);
     }
         
 }

@@ -33,7 +33,7 @@ public class MotorSetPointVariables {
 
 	private static final Converter<Double, Boolean> TO_BOOLEAN = new Converter<Double, Boolean>() {
 		@Override
-		public Boolean convert(Double value) throws ConversionException {
+		public Boolean apply(Double value) throws ConversionException {
 			return value != null && value == 0.0;
 		}
 	};

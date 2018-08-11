@@ -106,7 +106,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
     private TOut transform(TIn value) {
         try {
-            return converter.convert(value);
+            return converter.apply(value);
         } catch (ConversionException e) {
             error(e);
         }

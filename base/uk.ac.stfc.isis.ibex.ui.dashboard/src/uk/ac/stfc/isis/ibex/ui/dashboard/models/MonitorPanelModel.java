@@ -100,7 +100,7 @@ public class MonitorPanelModel extends Closer {
         ConvertingObservable<Integer, String> countsAsString = new ConvertingObservable<>(observables.dae.monitorCounts,
                 new Converter<Integer, String>() {
                     @Override
-                    public String convert(Integer value) throws ConversionException {
+                    public String apply(Integer value) throws ConversionException {
                         return value.toString();
                     }
                 });

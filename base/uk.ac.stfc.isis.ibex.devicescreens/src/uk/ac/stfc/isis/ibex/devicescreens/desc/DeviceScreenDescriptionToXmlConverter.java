@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 /**
  * Converts a DeviceScreenDescription into a string in XML format.
  */
-public class DeviceScreenDescriptionToXmlConverter extends Converter<DeviceScreensDescription, String> {
+public class DeviceScreenDescriptionToXmlConverter implements Converter<DeviceScreensDescription, String> {
 
     private final Observable<String> schema;
 
@@ -61,7 +61,7 @@ public class DeviceScreenDescriptionToXmlConverter extends Converter<DeviceScree
      *             if a conversion error has occurred
      */
     @Override
-    public String convert(DeviceScreensDescription value) throws ConversionException {
+    public String apply(DeviceScreensDescription value) throws ConversionException {
         if (Strings.isNullOrEmpty(schema.getValue())) {
             DeviceScreens.LOG.debug("Device screens schema not found, attempting to save anyway.");
         }

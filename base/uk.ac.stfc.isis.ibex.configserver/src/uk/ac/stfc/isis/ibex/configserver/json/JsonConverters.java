@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
@@ -53,14 +54,14 @@ public class JsonConverters implements Converters {
 	@Override
 	public Converter<String, Configuration> toConfig() {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
-		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
+		return new JsonDeserialisingConverter<>(Configuration.class, gson).andThen(withFunction(INIT_CONFIG));
 	}
 
     @Override
     public Converter<String, Collection<Configuration>> toConfigList() {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
         return new JsonDeserialisingConverter<>(Configuration[].class, gson)
-                .apply(Convert.<Configuration>toCollection()).apply(forEach(INIT_CONFIG));
+                .andThen(Convert.<Configuration>toCollection()).andThen(forEach(INIT_CONFIG));
     }
 
 	@Override
@@ -80,24 +81,24 @@ public class JsonConverters implements Converters {
 
 	@Override
 	public Converter<String, Collection<ConfigInfo>> toConfigsInfo() {
-		return new JsonDeserialisingConverter<>(ConfigInfo[].class).apply(Convert.<ConfigInfo>toCollection());
+		return new JsonDeserialisingConverter<>(ConfigInfo[].class).andThen(Convert.<ConfigInfo>toCollection());
 	}
 
 	@Override
 	public Converter<String, Collection<ComponentInfo>> toComponents() {
 		return new JsonDeserialisingConverter<>(ComponentInfo[].class)
-				.apply(Convert.<ComponentInfo>toCollection())
-				.apply(forEach(INIT_COMP));
+				.andThen(Convert.<ComponentInfo>toCollection())
+				.andThen(forEach(INIT_COMP));
 	}
 
 	@Override
 	public Converter<String, Collection<EditableIoc>> toIocs() {
-		return new IocsParametersConverter().apply(new EditableIocsConverter());
+		return new IocsParametersConverter().andThen(new EditableIocsConverter());
 	}
 	
 	@Override
 	public Converter<String, Collection<PV>> toPVs() {
-		return new JsonDeserialisingConverter<>(String[][].class).apply(new PVsConverter());
+		return new JsonDeserialisingConverter<>(String[][].class).andThen(new PVsConverter());
 	}
 	
 	@Override
@@ -107,12 +108,12 @@ public class JsonConverters implements Converters {
 	
 	@Override
 	public Converter<Collection<String>, String> namesToString() {
-		return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+		return Convert.toArray(new String[0]).andThen(new JsonSerialisingConverter<String[]>(String[].class));
 	}
 	
 	@Override
 	public Converter<String, Collection<String>> toNames() {
-		return new JsonDeserialisingConverter<>(String[].class).apply(Convert.<String>toCollection());
+		return new JsonDeserialisingConverter<>(String[].class).andThen(Convert.<String>toCollection());
 	}
 	
 	@Override
@@ -122,13 +123,13 @@ public class JsonConverters implements Converters {
 	
 	@Override
 	public Converter<String, Collection<IocState>> toIocStates() {
-		return new IocsParametersConverter().apply(new IocStateConverter());
+		return new IocsParametersConverter().andThen(new IocStateConverter());
 	}
 	
 	private static <A, B> Converter<A, B> withFunction(final Function<A, B> function) {
 		return new Converter<A, B>() {
 			@Override
-			public B convert(A value) throws ConversionException {
+			public B apply(A value) throws ConversionException {
 				return function.apply(value);
 			}
 		};
@@ -137,7 +138,7 @@ public class JsonConverters implements Converters {
 	private static <T> Converter<Collection<T>, Collection<T>> forEach(final Function<T, T> function) {
 		return new Converter<Collection<T>, Collection<T>>() {
 			@Override
-			public Collection<T> convert(Collection<T> value) throws ConversionException {
+			public Collection<T> apply(Collection<T> value) throws ConversionException {
 				return Lists.newArrayList(Iterables.transform(value, function));
 			}
 		};
@@ -159,6 +160,6 @@ public class JsonConverters implements Converters {
 
 	@Override
 	public Converter<String, Collection<BannerItem>> toBannerDescription() {
-		return new JsonDeserialisingConverter<>(BannerItem[].class).apply(Convert.<BannerItem>toCollection());
+		return new JsonDeserialisingConverter<>(BannerItem[].class).andThen(Convert.<BannerItem>toCollection());
 	}
 }

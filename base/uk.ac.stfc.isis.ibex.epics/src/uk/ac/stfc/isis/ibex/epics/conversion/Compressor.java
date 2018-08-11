@@ -23,12 +23,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.Deflater;
 
-public class Compressor extends Converter<byte[], byte[]> {
+public class Compressor implements Converter<byte[], byte[]> {
 		
     private static final int KB_IN_BYTES = 1024;
 
     @Override
-	public byte[] convert(byte[] value) throws ConversionException {
+	public byte[] apply(byte[] value) throws ConversionException {
 		final Deflater compressor = new Deflater();
 		compressor.setInput(value);
 		compressor.finish();

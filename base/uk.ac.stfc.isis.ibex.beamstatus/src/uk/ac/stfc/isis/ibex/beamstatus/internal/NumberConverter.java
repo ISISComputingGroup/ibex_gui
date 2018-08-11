@@ -26,10 +26,10 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * Converts a number to it's string representation, giving UNKNOWN if the number
  * is null.
  */
-public class NumberConverter extends Converter<Number, String> {
+public class NumberConverter implements Converter<Number, String> {
 
 	@Override
-	public String convert(Number value) throws ConversionException {
+	public String apply(Number value) throws ConversionException {
 		if (value == null) {
 			return "UNKNOWN";
 		}

@@ -80,8 +80,8 @@ public class XmlUtilTest {
         String singleXml =
                 DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
         DeviceScreensDescriptionXmlParser converterFromXML = new DeviceScreensDescriptionXmlParser();
-        singleDeviceScreensDescription = converterFromXML.convert(singleXml);
-        multipleDeviceScreensDescription = converterFromXML.convert(xmlTextMultipleDescription);
+        singleDeviceScreensDescription = converterFromXML.apply(singleXml);
+        multipleDeviceScreensDescription = converterFromXML.apply(xmlTextMultipleDescription);
         
         mockSchemaObservable = mock(Observable.class);
         when(mockSchemaObservable.getValue()).thenReturn(null);
@@ -146,7 +146,7 @@ public class XmlUtilTest {
                     throws JAXBException, SAXException {
         try {
             // Act
-            String outputXml = convertToXML.convert(multipleDeviceScreensDescription);
+            String outputXml = convertToXML.apply(multipleDeviceScreensDescription);
             
             // Assert
             assertEquals(xmlTextMultipleDescription, outputXml);
@@ -179,7 +179,7 @@ public class XmlUtilTest {
         // Act
         try {
             when(mockSchemaObservable.getValue()).thenReturn(schema);
-            String outputXml = convertToXML.convert(deviceScreensDescription);
+            String outputXml = convertToXML.apply(deviceScreensDescription);
             assertEquals(expectedXml, outputXml);
         } catch (Exception e) {
             e.printStackTrace();
