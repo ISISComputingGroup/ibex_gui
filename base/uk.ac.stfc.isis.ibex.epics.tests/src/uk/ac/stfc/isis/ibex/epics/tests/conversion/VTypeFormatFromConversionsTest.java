@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 import org.diirt.util.array.ListByte;
 import org.diirt.util.array.ListFloat;
@@ -36,7 +37,6 @@ import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -49,7 +49,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vfloat_array() throws ConversionException {
 	// Arrange
-	Converter<VType, float[]> converter = VTypeFormat.fromVFloatArray();
+	Function<VType, float[]> converter = VTypeFormat.fromVFloatArray();
 
 	ListFloat data = new ListFloat() {
 	    @Override
@@ -74,7 +74,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vbyte_array() throws ConversionException {
 	// Arrange
-	Converter<VByteArray, String> converter = VTypeFormat.fromVByteArray();
+	Function<VByteArray, String> converter = VTypeFormat.fromVByteArray();
 
 	ListByte data = new ListByte() {
 	    @Override
@@ -100,7 +100,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vstring() throws ConversionException {
 	// Arrange
-	Converter<VString, String> converter = VTypeFormat.fromVString();
+	Function<VString, String> converter = VTypeFormat.fromVString();
 
 	String test = "Test";
 	VString value = ValueFactory.newVString(test, null, null);
@@ -115,7 +115,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_double() throws ConversionException {
 	// Arrange
-	Converter<VDouble, Double> converter = VTypeFormat.fromDouble();
+	Function<VDouble, Double> converter = VTypeFormat.fromDouble();
 
 	Double number = new Double(123.456);
 
@@ -131,7 +131,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vint() throws ConversionException {
 	// Arrange
-	Converter<VInt, Integer> converter = VTypeFormat.fromVInt();
+	Function<VInt, Integer> converter = VTypeFormat.fromVInt();
 
 	Integer number = new Integer(123);
 
@@ -147,7 +147,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_short() throws ConversionException {
 	// Arrange
-	Converter<VShort, Short> converter = VTypeFormat.fromShort();
+	Function<VShort, Short> converter = VTypeFormat.fromShort();
 
 	Short number = new Short((short) 123);
 
@@ -163,7 +163,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_long() throws ConversionException {
 	// Arrange
-	Converter<VLong, Long> converter = VTypeFormat.fromLong();
+	Function<VLong, Long> converter = VTypeFormat.fromLong();
 
 	Long number = new Long(123);
 

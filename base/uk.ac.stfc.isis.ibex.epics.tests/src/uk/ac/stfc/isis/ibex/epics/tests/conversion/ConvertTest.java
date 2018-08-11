@@ -1,8 +1,12 @@
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.function.Function;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
@@ -17,7 +21,7 @@ public class ConvertTest {
 	@Test
 	public void convert_from_zipped_hex() throws ConversionException {
 		//Arrange
-		Converter<byte[], String> converter = Convert.fromZippedHex();
+		Function<byte[], String> converter = Convert.fromZippedHex();
 		
 		String expected = "test";
 		
@@ -31,7 +35,7 @@ public class ConvertTest {
 	@Test
 	public void convert_to_zipped_hex() throws ConversionException {
 		//Arrange
-		Converter<String, byte[]> converter = Convert.toZippedHex();
+		Function<String, byte[]> converter = Convert.toZippedHex();
 		
 		String test = "test";
 				
@@ -45,7 +49,7 @@ public class ConvertTest {
 	@Test
 	public void convert_from_hex() throws ConversionException {
 		//Arrange
-		Converter<String, String> converter = Convert.fromHexString();
+		Function<String, String> converter = Convert.fromHexString();
 		
 		String expected = "test";
 		
@@ -60,7 +64,7 @@ public class ConvertTest {
 	@Test
 	public void convert_to_hex() throws ConversionException {
 		//Arrange
-		Converter<String, String> converter = Convert.toHexString();
+		Function<String, String> converter = Convert.toHexString();
 		
 		String test = "test";
 		

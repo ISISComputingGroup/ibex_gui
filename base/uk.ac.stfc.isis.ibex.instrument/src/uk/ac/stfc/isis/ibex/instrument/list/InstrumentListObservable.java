@@ -23,11 +23,11 @@
 package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
@@ -90,7 +90,7 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      *         containing the list of instruments
      */
     private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
-        Converter<String, Collection<InstrumentInfo>> converter =
+        Function<String, Collection<InstrumentInfo>> converter =
                 new JsonDeserialisingConverter<>(InstrumentInfo[].class).andThen(Convert.<InstrumentInfo>toCollection());
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }

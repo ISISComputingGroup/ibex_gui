@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * Provides a series of converters for common PV types.
@@ -34,7 +35,7 @@ public final class Convert {
     /**
      * @return A converter from a String to a zipped and hexed byte array
      */
-	public static Converter<String, byte[]> toZippedHex() {
+	public static Function<String, byte[]> toZippedHex() {
 		return asBytes()
 				.andThen(compress())
 				.andThen(toHex())
@@ -45,7 +46,7 @@ public final class Convert {
     /**
      * @return A converter from a zipped and hexed byte array to a String
      */
-	public static Converter<byte[], String> fromZippedHex() {
+	public static Function<byte[], String> fromZippedHex() {
 		return fromBytes()
 				.andThen(asChars())
 				.andThen(deHex())
@@ -56,7 +57,7 @@ public final class Convert {
     /**
      * @return A converter from a String to a hexed String
      */
-	public static Converter<String, String> toHexString() {
+	public static Function<String, String> toHexString() {
 		return asBytes()
 				.andThen(toHex())
 				.andThen(fromChars());
@@ -65,7 +66,7 @@ public final class Convert {
     /**
      * @return A converter from a hexed String to a dehexed String
      */
-	public static Converter<String, String> fromHexString() {
+	public static Function<String, String> fromHexString() {
 		return asChars()
 				.andThen(deHex())
 				.andThen(fromBytes());
@@ -95,7 +96,7 @@ public final class Convert {
     /**
      * @return A converter to dehex a char array to a byte array
      */
-	public static Converter<char[], byte[]> deHex() {
+	public static Function<char[], byte[]> deHex() {
 		return removeUnsetChars().andThen(new Dehexer());
 	}
 	

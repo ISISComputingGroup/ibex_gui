@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.function.Function;
 
 import org.diirt.util.array.IteratorByte;
 import org.diirt.util.array.IteratorDouble;
@@ -56,7 +57,7 @@ public final class VTypeFormat {
      * @param <R> conversion source object type
      * @return A converter between the original object and a string with units
      */
-	public static <R extends VType> Converter<R, String> defaultFormatter() {
+	public static <R extends VType> Function<R, String> defaultFormatter() {
 		return new VTypeDefaultFormatter<R>().withUnits;
 	}
 
@@ -65,7 +66,7 @@ public final class VTypeFormat {
      * @return A converter between the original object and a string without
      *         units
      */
-	public static <R extends VType> Converter<R, String> defaultFormatterNoUnits() {
+	public static <R extends VType> Function<R, String> defaultFormatterNoUnits() {
 		return new VTypeDefaultFormatter<R>().noUnits;
 	}
 	
@@ -73,8 +74,8 @@ public final class VTypeFormat {
      * @param <R> conversion source object type
      * @return a number with no consideration for formatting or precision
      */
-	public static <R extends VNumber> Converter<R, Number> toNumber() {
-		return new Converter<R, Number>() {
+	public static <R extends VNumber> Function<R, Number> toNumber() {
+		return new Function<R, Number>() {
 			@Override
 			public Number apply(R value) throws ConversionException {
 				return value.getValue();
@@ -86,8 +87,8 @@ public final class VTypeFormat {
      * @param <R> conversion source object type
      * @return a string of the number supplied with any associated units
      */
-	public static <R extends VNumber> Converter<R, String> quantityWithUnits() {
-		return new Converter<R, String>() {
+	public static <R extends VNumber> Function<R, String> quantityWithUnits() {
+		return new Function<R, String>() {
 			@Override
 			public String apply(R value) throws ConversionException {
 				return value.getFormat().format(value.getValue()) + " " + value.getUnits();
@@ -100,8 +101,8 @@ public final class VTypeFormat {
      * @return a number formatted with the precision defined by the underlying
      *         PV
      */
-	public static <R extends VNumber> Converter<R, Number> toNumberWithPrecision() {
-		return new Converter<R, Number>() {
+	public static <R extends VNumber> Function<R, Number> toNumberWithPrecision() {
+		return new Function<R, Number>() {
 			@Override
 			public Number apply(R value) throws ConversionException {
 				VNumber val = value;
@@ -118,7 +119,7 @@ public final class VTypeFormat {
     /**
      * @return Converter from VByteArray to a String
      */
-	public static Converter<VByteArray, String> fromVByteArray() {
+	public static Function<VByteArray, String> fromVByteArray() {
 		return extractBytes()
 				.andThen(Convert.fromBytes())
 				.andThen(Convert.trim());
@@ -127,7 +128,7 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VFloatArray to a float array
      */
-	public static Converter<VType, float[]> fromVFloatArray() {
+	public static Function<VType, float[]> fromVFloatArray() {
 		return toVFloatArray()
 				.andThen(extractFloats());
 	}
@@ -135,7 +136,7 @@ public final class VTypeFormat {
 	/**
      * @return Converter from a VDoubleArray to a double array
      */
-    public static Converter<VType, double[]> fromVDoubleArray() {
+    public static Function<VType, double[]> fromVDoubleArray() {
         return toVDoubleArray()
                 .andThen(extractDoubles());
     }
@@ -143,7 +144,7 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VIntArray to an int array
      */
-    public static Converter<VType, int[]> fromVIntegerArray() {
+    public static Function<VType, int[]> fromVIntegerArray() {
         return toVIntegerArray()
                 .andThen(extractIntegers());
     }
@@ -151,15 +152,15 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VByteArray of zipped, hexed values to a String
      */
-	public static Converter<VByteArray, String> fromZippedHexVByteArray() {
+	public static Function<VByteArray, String> fromZippedHexVByteArray() {
 		return extractBytes().andThen(Convert.fromZippedHex());
 	}
 
     /**
      * @return Converter from a VType to a VFloatArray
      */
-	public static Converter<VType, VFloatArray> toVFloatArray() {
-		return new Converter<VType, VFloatArray>() {
+	public static Function<VType, VFloatArray> toVFloatArray() {
+		return new Function<VType, VFloatArray>() {
 			@Override
 			public VFloatArray apply(VType value) throws ConversionException {
 				try {
@@ -174,8 +175,8 @@ public final class VTypeFormat {
 	/**
      * @return Converter from a VType to a VDoubleArray
      */
-    public static Converter<VType, VDoubleArray> toVDoubleArray() {
-        return new Converter<VType, VDoubleArray>() {
+    public static Function<VType, VDoubleArray> toVDoubleArray() {
+        return new Function<VType, VDoubleArray>() {
             @Override
             public VDoubleArray apply(VType value) throws ConversionException {
                 try {
@@ -190,8 +191,8 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VType to a VIntegerArray
      */
-    public static Converter<VType, VIntArray> toVIntegerArray() {
-        return new Converter<VType, VIntArray>() {
+    public static Function<VType, VIntArray> toVIntegerArray() {
+        return new Function<VType, VIntArray>() {
             @Override
             public VIntArray apply(VType value) throws ConversionException {
                 try {
@@ -206,8 +207,8 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VType to a VByteArray
      */
-	public static Converter<VType, VByteArray> toVByteArray() {
-		return new Converter<VType, VByteArray>() {
+	public static Function<VType, VByteArray> toVByteArray() {
+		return new Function<VType, VByteArray>() {
 			@Override
 			public VByteArray apply(VType value) throws ConversionException {
 				try {
@@ -222,8 +223,8 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VType to a VInt
      */
-	public static Converter<VType, VInt> toVInt() {
-		return new Converter<VType, VInt>() {
+	public static Function<VType, VInt> toVInt() {
+		return new Function<VType, VInt>() {
 			@Override
 			public VInt apply(VType value) throws ConversionException {
 				try {
@@ -238,8 +239,8 @@ public final class VTypeFormat {
     /**
      * @return Converter from a VInt to a long
      */
-	public static Converter<VInt, Long> toLong() {
-		return new Converter<VInt, Long>() {
+	public static Function<VInt, Long> toLong() {
+		return new Function<VInt, Long>() {
 			@Override
 			public Long apply(VInt value) throws ConversionException {
 				return Long.valueOf(value.getValue());
@@ -252,8 +253,8 @@ public final class VTypeFormat {
      * @param enumType The class describing the type of the enumerator
      * @return A converter from VEnum to an enumerator of the given type
      */
-	public static <E extends Enum<E>> Converter<VEnum, E> toEnum(final Class<E> enumType) {
-		return new Converter<VEnum, E>() {
+	public static <E extends Enum<E>> Function<VEnum, E> toEnum(final Class<E> enumType) {
+		return new Function<VEnum, E>() {
 			@Override
 			public E apply(VEnum value) throws ConversionException {
 				String text = value.getValue();
@@ -276,8 +277,8 @@ public final class VTypeFormat {
     /**
      * @return A converter between VEnum and a String
      */
-	public static Converter<VEnum, String> toEnumString() {
-		return new Converter<VEnum, String>() {
+	public static Function<VEnum, String> toEnumString() {
+		return new Function<VEnum, String>() {
 			@Override
 			public String apply(VEnum value) throws ConversionException {
 				return value.getValue();
@@ -288,8 +289,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VString to a String
      */
-	public static Converter<VString, String> fromVString() {
-		return new Converter<VString, String>() {
+	public static Function<VString, String> fromVString() {
+		return new Function<VString, String>() {
 			@Override
 			public String apply(VString value) throws ConversionException {
 				if (value == null) {
@@ -304,8 +305,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VDouble to a double
      */
-	public static Converter<VDouble, Double> fromDouble() {
-		return new Converter<VDouble, Double>() {
+	public static Function<VDouble, Double> fromDouble() {
+		return new Function<VDouble, Double>() {
 			@Override
 			public Double apply(VDouble value) {
 				return value.getValue();
@@ -316,8 +317,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VInt to an integer
      */
-	public static Converter<VInt, Integer> fromVInt() {
-		return new Converter<VInt, Integer>() {
+	public static Function<VInt, Integer> fromVInt() {
+		return new Function<VInt, Integer>() {
 			@Override
 			public Integer apply(VInt value) throws ConversionException {
 				try {
@@ -332,8 +333,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VEnum to a String
      */
-	public static Converter<VEnum, String> enumValue() {
-		return new Converter<VEnum, String>() {
+	public static Function<VEnum, String> enumValue() {
+		return new Function<VEnum, String>() {
 			@Override
 			public String apply(VEnum value) {
 				return value.getValue();
@@ -344,8 +345,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VShort to a short
      */
-	public static Converter<VShort, Short> fromShort() {
-		return new Converter<VShort, Short>() {
+	public static Function<VShort, Short> fromShort() {
+		return new Function<VShort, Short>() {
 			@Override
 			public Short apply(VShort value) {
 				return value.getValue();
@@ -356,8 +357,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VLong to a long
      */
-	public static Converter<VLong, Long> fromLong() {
-		return new Converter<VLong, Long>() {
+	public static Function<VLong, Long> fromLong() {
+		return new Function<VLong, Long>() {
 			@Override
 			public Long apply(VLong value) {
 				return value.getValue();
@@ -368,8 +369,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VByte array to an array of bytes
      */
-	public static Converter<VByteArray, byte[]> extractBytes() {
-		return new Converter<VByteArray, byte[]>() {
+	public static Function<VByteArray, byte[]> extractBytes() {
+		return new Function<VByteArray, byte[]>() {
 			@Override
 			public byte[] apply(VByteArray value) throws ConversionException {
 				if (value == null) {
@@ -396,8 +397,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VFloat array to an array of floats
      */
-	public static Converter<VFloatArray, float[]> extractFloats() {
-		return new Converter<VFloatArray, float[]>() {
+	public static Function<VFloatArray, float[]> extractFloats() {
+		return new Function<VFloatArray, float[]>() {
 			@Override
 			public float[] apply(VFloatArray value) throws ConversionException {
 				if (value == null) {
@@ -421,8 +422,8 @@ public final class VTypeFormat {
 	/**
      * @return A converter from a VDouble array to an array of doubles
      */
-    public static Converter<VDoubleArray, double[]> extractDoubles() {
-        return new Converter<VDoubleArray, double[]>() {
+    public static Function<VDoubleArray, double[]> extractDoubles() {
+        return new Function<VDoubleArray, double[]>() {
             @Override
             public double[] apply(VDoubleArray value) throws ConversionException {
                 if (value == null) {
@@ -446,8 +447,8 @@ public final class VTypeFormat {
     /**
      * @return A converter from a VInteger array to an array of ints
      */
-    public static Converter<VIntArray, int[]> extractIntegers() {
-        return new Converter<VIntArray, int[]>() {
+    public static Function<VIntArray, int[]> extractIntegers() {
+        return new Function<VIntArray, int[]>() {
             @Override
             public int[] apply(VIntArray value) throws ConversionException {
                 if (value == null) {

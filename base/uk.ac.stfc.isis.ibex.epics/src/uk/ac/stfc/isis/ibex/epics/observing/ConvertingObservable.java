@@ -19,10 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts the source data to a specific type via a converter.
@@ -37,13 +37,13 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 	/**
 	 * Contains the transformation function to convert the raw source value to the new observable value.
 	 */
-	private final Converter<R, T> formatter;
+	private final Function<R, T> formatter;
 	
 	/**
 	 * @param source The source of raw data
 	 * @param formatter Converts raw data from the source to the value supplied by this observable
 	 */
-	public ConvertingObservable(ClosableObservable<R> source, Converter<R, T> formatter) {
+	public ConvertingObservable(ClosableObservable<R> source, Function<R, T> formatter) {
 		this.formatter = formatter;
 		// setValue can be set any time from this call so the formatter must be set first.
 		setSource(source);

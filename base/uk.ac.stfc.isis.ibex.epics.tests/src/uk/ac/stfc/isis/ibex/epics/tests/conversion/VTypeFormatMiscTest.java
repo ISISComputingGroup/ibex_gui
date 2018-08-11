@@ -19,18 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
+import java.util.function.Function;
+
+import org.diirt.util.array.ListByte;
+import org.diirt.util.array.ListFloat;
 import org.diirt.vtype.VByteArray;
 import org.diirt.vtype.VEnum;
 import org.diirt.vtype.VFloatArray;
 import org.diirt.vtype.ValueFactory;
-import org.diirt.util.array.ListByte;
-import org.diirt.util.array.ListFloat;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -44,7 +46,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_enum_value() throws ConversionException {
 		// Arrange
-		Converter<VEnum, String> converter = VTypeFormat.enumValue();
+		Function<VEnum, String> converter = VTypeFormat.enumValue();
 				
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
@@ -58,7 +60,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_floats_empty() throws ConversionException {
 		// Arrange
-		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
+		Function<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
 		
 		ListFloat data = new ListFloat() {
 			@Override
@@ -83,7 +85,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_floats() throws ConversionException {
 		// Arrange
-		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
+		Function<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
 		
 		ListFloat data = new ListFloat() {
 			@Override
@@ -108,7 +110,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_bytes_empty() throws ConversionException {
 		// Arrange
-		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		Function<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
 		
 		ListByte data = new ListByte() {
 			@Override
@@ -133,7 +135,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_bytes() throws ConversionException {
 		// Arrange
-		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		Function<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
 		
 		ListByte data = new ListByte() {
 			@Override
