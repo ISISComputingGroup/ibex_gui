@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -80,6 +82,15 @@ public class ConfigEditorPanel extends Composite {
 		
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		editorTabs.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (editorTabs.getSelection()[0].equals(blocksTab)){
+                    blocks.showMnemonics();
+                }
+            }
+        });
 
         if (config.getIsComponent()) {
             components = null;

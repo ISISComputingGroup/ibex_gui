@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * The interface for a class that displays the history of a PV in some way.
@@ -29,7 +29,7 @@ public interface PVHistoryPresenter {
 	 * Get all the displays that the PV History could be added to.
 	 * @return A list of the names of the presenters.
 	 */
-	ArrayList<String> getCurrentDisplays();
+	Stream<String> getDataBrowserTitles();
 	
 	/**
 	 * Creates a new display and plots the PV history on it.
