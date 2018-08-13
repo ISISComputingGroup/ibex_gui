@@ -41,7 +41,10 @@ public class ExistingScriptDialog extends Dialog {
      * {@inheritDoc}
      */
 	@Override
+	@SuppressWarnings("unchecked")
 	protected Control createDialogArea(Composite parent) {
+		new QueuedScriptToolbar(parent, script, false);
+		
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		

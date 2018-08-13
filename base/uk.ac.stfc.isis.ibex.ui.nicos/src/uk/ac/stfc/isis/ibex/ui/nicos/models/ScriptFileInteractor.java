@@ -50,6 +50,7 @@ public abstract class ScriptFileInteractor {
 		dialog.setFilterNames(ALLOWED_SCRIPT_NAMES);
 		dialog.setFilterPath(DEFAULT_SCRIPT_DIRECTORY);
 		dialog.setOverwrite(fileStyle == SWT.SAVE);
+		dialog.setFileName(script.getName() + ".py");
 		return dialog.open();
 	}
 
