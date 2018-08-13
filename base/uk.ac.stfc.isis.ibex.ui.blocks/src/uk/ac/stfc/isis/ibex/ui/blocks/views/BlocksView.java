@@ -19,8 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.views;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -39,6 +42,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
@@ -48,7 +52,9 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
  */
 public class BlocksView {
 
-    /**
+    
+
+	/**
      * The default constructor.
      */
 	public BlocksView() {
@@ -71,7 +77,7 @@ public class BlocksView {
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
-			setGroups(value.groups());
+			setGroups(Optional.of(value.groups()));
 		}
 
 		@Override
@@ -86,17 +92,17 @@ public class BlocksView {
 			}
 		}
 
-		private void setGroups(Collection<DisplayGroup> newGroups) {
+		private void setGroups(Optional<Collection<DisplayGroup>> newGroups) {
 			if (groups != null) {
 				groups.updateGroups(newGroups);
 			}
 		}
 		
 		private void setUnknownConfiguration() {
-			setGroups(Collections.<DisplayGroup>emptyList());
+			setGroups(Optional.empty());
 		}		
-	};	
-
+	};
+	
 	/**
 	 * Create the controls within the blocks view.
 	 * 
@@ -128,8 +134,6 @@ public class BlocksView {
      */
     @PreDestroy
 	public void dispose() {
-		if (configSubscription != null) {
-			configSubscription.removeObserver();
-		}
+    	configSubscription.removeObserver();
 	}
 }

@@ -21,7 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -120,17 +122,19 @@ public class GroupsPanel extends Composite {
 	 * 
 	 * @param groups The new set of groups.
 	 */
-	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
-	    
-		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups, showHiddenBlocks);
+	public synchronized void updateGroups(final Optional<Collection<DisplayGroup>> groups) {
+		
+		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups.orElse(Collections.<DisplayGroup>emptyList()), showHiddenBlocks);
 		
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				clear();
-				if (groups.isEmpty()) {
-					// Leave text blank
-					showBanner("");
+				if (groups.isPresent() && groups.get().isEmpty()) {
+					showBanner("Blockserver connected, no groups present.");
+					return;
+				} else if (!groups.isPresent()) {
+					showBanner("Blockserver disconnected.");
 					return;
 				}
 				addGroups();
