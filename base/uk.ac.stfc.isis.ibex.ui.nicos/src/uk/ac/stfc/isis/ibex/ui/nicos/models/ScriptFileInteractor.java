@@ -22,8 +22,8 @@ public abstract class ScriptFileInteractor {
 
 	protected static final String LINE_SEP = System.lineSeparator();
 	private static final String DEFAULT_SCRIPT_DIRECTORY = "c:\\scripts";
-	private static final String[] ALLOWED_SCRIPT_NAMES = { "Python Scripts (*.py)" };
-	private static final String[] ALLOWED_SCRIPT_EXTENSIONS = { "*.py" };
+	private static final String[] ALLOWED_SCRIPT_NAMES = {"Python Scripts (*.py)"};
+	private static final String[] ALLOWED_SCRIPT_EXTENSIONS = {"*.py"};
 
 	/**
 	 * Create the manipulator.
