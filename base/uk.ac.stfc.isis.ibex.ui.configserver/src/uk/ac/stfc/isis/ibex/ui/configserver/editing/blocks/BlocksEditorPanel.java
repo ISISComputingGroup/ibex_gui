@@ -92,7 +92,7 @@ public class BlocksEditorPanel extends Composite {
         table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-            	if (viewModel.editEnabled(table.selectedRows())) {
+            	if (viewModel.getEditEnabled()) {
 	                if (e.keyCode == SWT.DEL) {
 	                    deleteSelected();
 	                //copies selected blocks if press "Ctrl + D".
@@ -268,6 +268,9 @@ public class BlocksEditorPanel extends Composite {
         dialog.open();
     }
 
+    /**
+     * Show the mneumonic underlining to the user.
+     */
     public void showMnemonics() {
         Event event = new Event();
         event.keyCode = SWT.ALT;

@@ -76,6 +76,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * @return An object with parameters for width, heigh, x position, y
      *         poistion and maximised flag
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     private WindowLayout getPreviousWindowSettings() {
         int windowHeight = MIN_WINDOW_HEIGHT;
         int windowWidth = MIN_WINDOW_WIDTH;

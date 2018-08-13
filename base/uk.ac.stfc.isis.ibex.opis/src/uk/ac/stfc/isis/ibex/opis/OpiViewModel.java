@@ -21,14 +21,14 @@ public class OpiViewModel {
 	/**
 	 * (Weak) set of OpiViews that have been created.
 	 */
-    private static Set<OpiView> VIEWS = Collections.newSetFromMap(new WeakHashMap<OpiView, Boolean>());
+    private static final Set<OpiView> VIEWS = Collections.newSetFromMap(new WeakHashMap<OpiView, Boolean>());
     
     /**
      * Attempts to refresh all the OPIs that were registered in this class.
      * 
      * This is done asynchronously on the GUI thread.
      */
-    public synchronized static void refreshViews() {
+    public static synchronized void refreshViews() {
     	for (OpiView view : VIEWS) {
 			Display.getDefault().asyncExec(() -> {
 				try {
@@ -47,7 +47,7 @@ public class OpiViewModel {
      * 
      * @param view the opi to register
      */
-    public synchronized static void addView(OpiView view) {
+    public static synchronized void addView(OpiView view) {
     	VIEWS.add(view);
     }
 }

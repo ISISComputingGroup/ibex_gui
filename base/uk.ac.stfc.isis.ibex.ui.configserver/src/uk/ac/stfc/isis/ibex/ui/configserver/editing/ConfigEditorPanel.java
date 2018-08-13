@@ -86,7 +86,7 @@ public class ConfigEditorPanel extends Composite {
 		editorTabs.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (editorTabs.getSelection()[0].equals(blocksTab)){
+                if (editorTabs.getSelection()[0].equals(blocksTab)) {
                     blocks.showMnemonics();
                 }
             }

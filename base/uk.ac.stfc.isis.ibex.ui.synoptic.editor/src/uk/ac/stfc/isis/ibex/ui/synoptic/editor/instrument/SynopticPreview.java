@@ -79,6 +79,7 @@ public class SynopticPreview extends Dialog {
 	}
 
 	@Override
+	@SuppressWarnings("checkstyle:magicnumber")
 	protected Point getInitialSize() {
 		return new Point(1200, 500);
 	}
