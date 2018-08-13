@@ -38,12 +38,4 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
         });
         setColor(DEFOCUSSED);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void setFocus(boolean inFocus) {
-        this.inFocus = inFocus;
-    }
 }
