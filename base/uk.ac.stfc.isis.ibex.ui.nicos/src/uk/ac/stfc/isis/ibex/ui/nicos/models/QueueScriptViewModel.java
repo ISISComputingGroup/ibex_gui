@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.swt.widgets.Shell;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
@@ -212,5 +214,13 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public boolean getDequeueButtonEnabled() {
         return dequeueButtonEnabled;
+    }
+    
+    /**
+     * Saves the currently selected script.
+     * @param shell The shell to open up dialog boxes within.
+     */
+    public void saveSelected(Shell shell) {
+    	(new SaveScriptAction(shell, selectedScript)).execute();
     }
 }

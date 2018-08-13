@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
@@ -57,6 +59,19 @@ public class NicosQueueContainer {
 		
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		bindingContext = new DataBindingContext();
+	}
+	
+	private void createQueuedScriptMenu(ListViewer queuedScriptsViewer) {
+        Menu queuedScriptMenu = new Menu(queuedScriptsViewer.getList());
+        MenuItem saveScript = new MenuItem(queuedScriptMenu, SWT.PUSH);
+        saveScript.setText("Save to file...");
+        saveScript.addSelectionListener(new SelectionAdapter() {
+        	@Override
+            public void widgetSelected(SelectionEvent e) {
+        		queueScriptViewModel.saveSelected(shell);
+        	}
+		});
+        queuedScriptsViewer.getList().setMenu(queuedScriptMenu);
 	}
 	
 	/**
@@ -106,6 +121,8 @@ public class NicosQueueContainer {
 			}
 		});
 
+        createQueuedScriptMenu(queuedScriptsViewer);
+        
         Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
