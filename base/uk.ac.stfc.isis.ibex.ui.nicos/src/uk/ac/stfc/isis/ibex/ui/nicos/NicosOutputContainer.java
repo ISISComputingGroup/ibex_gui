@@ -10,8 +10,6 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 
@@ -41,11 +39,6 @@ public class NicosOutputContainer {
         bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
                 BeanProperties.value("log").observe(outputLogViewModel));
         
-        txtOutput.addListener(SWT.Modify, new Listener() {
-            @Override
-            public void handleEvent(Event e) {
-                txtOutput.setTopIndex(txtOutput.getLineCount() - 1);
-            }
-        });
+        txtOutput.addListener(SWT.Modify, e -> txtOutput.setTopIndex(txtOutput.getLineCount() - 1));
     }
 }

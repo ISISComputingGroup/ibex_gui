@@ -75,13 +75,7 @@ public class QueueScriptDialog extends Dialog {
         queueBtn = createButton(parent, IDialogConstants.OK_ID, "Queue", false);
         queueBtn.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
 
-        queueBtn.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.queueScript();
-            }
-        });
+        queueBtn.addListener(SWT.Selection, e -> model.queueScript());
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
 	}	

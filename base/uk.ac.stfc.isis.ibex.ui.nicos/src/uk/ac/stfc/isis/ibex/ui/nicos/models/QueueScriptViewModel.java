@@ -54,15 +54,9 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public QueueScriptViewModel(NicosModel model) {
         this.model = model;
-        
         this.scriptToSend = new QueuedScript();
         
-        model.addPropertyChangeListener("queuedScripts", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateButtonEnablement();
-            }
-        });
+        model.addPropertyChangeListener("queuedScripts", e -> updateButtonEnablement());
     }
 
     /**
