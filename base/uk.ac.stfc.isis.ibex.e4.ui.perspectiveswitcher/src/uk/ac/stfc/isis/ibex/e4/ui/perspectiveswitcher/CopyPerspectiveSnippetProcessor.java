@@ -25,113 +25,113 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 public class CopyPerspectiveSnippetProcessor {
 
-	private PerspectivesProvider perspectivesProvider;
-	private MPerspectiveStack perspectiveStack;
+    private PerspectivesProvider perspectivesProvider;
+    private MPerspectiveStack perspectiveStack;
 
-	/**
-	 * Clone each snippet that is a perspective and add the cloned perspective
-	 * to the main PerspectiveStack.
-	 *
-	 * @param app
-	 *            MApplication
-	 * @param partService
-	 *            EPartService
-	 * @param modelService
-	 *            EModelService
-	 */
-	@Execute
-	public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
-		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
-		perspectiveStack = perspectivesProvider.getTopLevelStack();
+    /**
+     * Clone each snippet that is a perspective and add the cloned perspective
+     * to the main PerspectiveStack.
+     *
+     * @param app
+     *            MApplication
+     * @param partService
+     *            EPartService
+     * @param modelService
+     *            EModelService
+     */
+    @Execute
+    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
+        perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
+        perspectiveStack = perspectivesProvider.getTopLevelStack();
 
-		// Only do this when no other children, or the restored workspace state
-		// will be overwritten.
-		if (!perspectiveStack.getChildren().isEmpty()) {
-			return;
-		}
-        
-		// clone each snippet that is a perspective and add the cloned
-		// perspective into the main PerspectiveStack
-		boolean isFirst = true;
-		for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-			if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
-				perspectiveStack.getChildren().add(perspective);
-				if (isFirst) {
-					perspectiveStack.setSelectedElement(perspective);
-					isFirst = false;
-				}
-			}
-			subscribeChangedElement(broker, perspective);
-			subscribeSelectedPerspective(broker, perspective);
-		}
-		ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
-	}
+        // Only do this when no other children, or the restored workspace state
+        // will be overwritten.
+        if (!perspectiveStack.getChildren().isEmpty()) {
+            return;
+        }
 
-	/**
-	 * Listen to perspective changes and set the new perspective as current
-	 * perspective in ResetLayoutButtonModel.
-	 *
-	 * @param broker
-	 * @param perspective
-	 */
-	public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
+        // clone each snippet that is a perspective and add the cloned
+        // perspective into the main PerspectiveStack
+        boolean isFirst = true;
+        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
+            if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
+                perspectiveStack.getChildren().add(perspective);
+                if (isFirst) {
+                    perspectiveStack.setSelectedElement(perspective);
+                    isFirst = false;
+                }
+            }
+            subscribeChangedElement(broker, perspective);
+            subscribeSelectedPerspective(broker, perspective);
+        }
+        ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
+    }
 
-		EventHandler handler = new EventHandler() {
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement element = (MUIElement) event.getProperty(EventTags.NEW_VALUE);
+    /**
+     * Listen to perspective changes and set the new perspective as current
+     * perspective in ResetLayoutButtonModel.
+     *
+     * @param broker
+     * @param perspective
+     */
+    public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
 
-				if (!perspectiveStack.getSelectedElement().equals(perspective)) {
-					return;
-				}
+        EventHandler handler = new EventHandler() {
+            @Override
+            public void handleEvent(Event event) {
+                MUIElement element = (MUIElement) event.getProperty(EventTags.NEW_VALUE);
 
-				if (!(element instanceof MPerspective)) {
-					return;
-				}
+                if (!perspectiveStack.getSelectedElement().equals(perspective)) {
+                    return;
+                }
 
-				ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
+                if (!(element instanceof MPerspective)) {
+                    return;
+                }
 
-			}
-		};
+                ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
 
-		broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, handler);
-	}
+            }
+        };
 
-	/**
-	 * Listen to perspective content changes set the current perspective in
-	 * ResetLayoutButtonModel to changed.
-	 *
-	 * @param broker
-	 * @param perspective
-	 */
-	public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
+        broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, handler);
+    }
 
-		EventHandler handler = new EventHandler() {
-			boolean alreadyCalled = false;
+    /**
+     * Listen to perspective content changes set the current perspective in
+     * ResetLayoutButtonModel to changed.
+     *
+     * @param broker
+     * @param perspective
+     */
+    public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
 
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement element = (MUIElement) event.getProperty(EventTags.ELEMENT);
+        EventHandler handler = new EventHandler() {
+            boolean alreadyCalled = false;
 
-				if (!perspectiveStack.getSelectedElement().equals(perspective)) {
-					return;
-				}
+            @Override
+            public void handleEvent(Event event) {
+                MUIElement element = (MUIElement) event.getProperty(EventTags.ELEMENT);
 
-				if (!(element instanceof MPartSashContainerElement)) {
-					return;
-				}
+                if (!perspectiveStack.getSelectedElement().equals(perspective)) {
+                    return;
+                }
 
-				// The event is called when the workbench first starts up even
-				// though nothing has changed.
-				if (!alreadyCalled) {
-					alreadyCalled = true;
-					return;
-				}
+                if (!(element instanceof MPartSashContainerElement)) {
+                    return;
+                }
 
-				ResetLayoutButtonModel.getInstance().setChanged(true);
-			}
-		};
+                // The event is called when the workbench first starts up even
+                // though nothing has changed.
+                if (!alreadyCalled) {
+                    alreadyCalled = true;
+                    return;
+                }
 
-		broker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, handler);
-	}
+                ResetLayoutButtonModel.getInstance().setChanged(true);
+            }
+        };
+
+        broker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, handler);
+    }
 }

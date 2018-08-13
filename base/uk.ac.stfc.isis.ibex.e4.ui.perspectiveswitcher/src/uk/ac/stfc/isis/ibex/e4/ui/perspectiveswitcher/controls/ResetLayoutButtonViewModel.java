@@ -16,26 +16,26 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
      * Initiate a new reset layout button view model.
      */
     public ResetLayoutButtonViewModel() {
-    	this.model = ResetLayoutButtonModel.getInstance();
+        this.model = ResetLayoutButtonModel.getInstance();
 
         model.addPropertyChangeListener("layoutModified", new PropertyChangeListener() {
-			
-			@Override
-			public void propertyChange(final PropertyChangeEvent evt) {
-				Display.getDefault().syncExec(new Runnable() {
-					@Override
-					public void run() {
-						if ((boolean) evt.getNewValue()) {
-							// Set colour - red
-							setColor(RESET_COLOR);
-						} else {
-							// set colour - normal
-							setColor(DEFOCUSSED);
-						}
-					}
-				});
-			}
-		});
+
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                Display.getDefault().syncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ((boolean) evt.getNewValue()) {
+                            // Set colour - red
+                            setColor(RESET_COLOR);
+                        } else {
+                            // set colour - normal
+                            setColor(DEFOCUSSED);
+                        }
+                    }
+                });
+            }
+        });
         setColor(DEFOCUSSED);
     }
 
@@ -44,6 +44,6 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
      */
     @Override
     protected void setFocus(boolean inFocus) {
-    	this.inFocus = inFocus;
+        this.inFocus = inFocus;
     }
 }
