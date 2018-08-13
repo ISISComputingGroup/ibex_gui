@@ -21,22 +21,15 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.OutputLogViewModel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosOutputContainer {
 	
-	private final DataBindingContext bindingContext;
-	private OutputLogViewModel outputLogViewModel;
-	
-	/**
-	 * Constructor.
-	 */
-	public NicosOutputContainer() {
-		bindingContext = new DataBindingContext();
-		outputLogViewModel = new OutputLogViewModel(Nicos.getDefault().getModel());
-	}
+	private final DataBindingContext bindingContext = new DataBindingContext();
+	private OutputLogViewModel outputLogViewModel = new OutputLogViewModel(Nicos.getDefault().getModel());
 	
 	/**
 	 * Creates the view.
 	 * @param parent the parent injected by eclipse
 	 */
 	@PostConstruct
+	@SuppressWarnings("unchecked")
 	public void createOutputContainer(Composite parent) {
 		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		parent.setLayout(new GridLayout(1, false));

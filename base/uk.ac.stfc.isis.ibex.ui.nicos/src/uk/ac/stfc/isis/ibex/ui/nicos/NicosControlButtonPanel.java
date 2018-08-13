@@ -36,7 +36,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
- *
+ * A panel that contains buttons that provide control over the current NICOS script.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosControlButtonPanel extends Composite {
@@ -83,6 +83,7 @@ public class NicosControlButtonPanel extends Composite {
         bind();
     }
 
+    @SuppressWarnings("unchecked")
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(btnTogglePause),
                 BeanProperties.value("toggleButtonText").observe(statusModel));
