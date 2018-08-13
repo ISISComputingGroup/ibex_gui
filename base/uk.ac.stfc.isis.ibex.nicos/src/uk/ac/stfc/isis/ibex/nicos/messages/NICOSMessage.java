@@ -31,12 +31,12 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 /**
  * A message that can be serialised and sent to NICOS.
  * 
- * @param <T>
+ * @param <ARGTYPE>
  *            The type of parameters to send.
  */
-public abstract class NICOSMessage<T> {
+public abstract class NICOSMessage<TSEND, TRESP> {
     protected String command = "";
-    protected List<T> parameters = new ArrayList<>();
+    protected List<TSEND> parameters = new ArrayList<>();
     
     /**
      * Converts the message into a list of messages to send NICOS.
@@ -61,5 +61,5 @@ public abstract class NICOSMessage<T> {
      * @throws ConversionException
      *             Thrown when the response from NICOS is not as expected.
      */
-    public abstract ReceiveMessage parseResponse(String response) throws ConversionException;
+    public abstract TRESP parseResponse(String response) throws ConversionException;
 }

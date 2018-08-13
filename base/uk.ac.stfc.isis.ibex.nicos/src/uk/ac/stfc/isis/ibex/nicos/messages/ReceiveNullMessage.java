@@ -24,6 +24,6 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 /**
  * Generic response object for parsing empty responses from NICOS.
  */
-public class ReceiveNullMessage implements ReceiveMessage {
+public class ReceiveNullMessage implements ReceiveMessage<Object> {
 
 }

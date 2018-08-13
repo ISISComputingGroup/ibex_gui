@@ -23,5 +23,5 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public interface ReceiveMessage {
+public interface ReceiveMessage<T> {
 }

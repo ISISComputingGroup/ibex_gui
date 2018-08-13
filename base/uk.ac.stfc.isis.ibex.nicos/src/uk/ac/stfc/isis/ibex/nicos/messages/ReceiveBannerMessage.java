@@ -27,7 +27,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
 @SuppressWarnings({ "checkstyle:membername", "unused" })
-public class ReceiveBannerMessage implements ReceiveMessage {
+public class ReceiveBannerMessage implements ReceiveMessage<ReceiveBannerMessage> {
     private String custom_path;
     private String nicos_root;
     private String rsakey;

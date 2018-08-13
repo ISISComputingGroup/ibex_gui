@@ -30,7 +30,7 @@ import java.util.List;
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
 @SuppressWarnings({ "checkstyle:magicnumber" })
-public class ReceiveLogMessage implements ReceiveMessage {
+public class ReceiveLogMessage implements ReceiveMessage<ReceiveLogMessage> {
 
     private List<NicosLogEntry> entries;
 

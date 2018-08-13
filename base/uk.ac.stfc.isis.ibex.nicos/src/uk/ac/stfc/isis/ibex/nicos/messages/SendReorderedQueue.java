@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Serialisable class to send a list of rearranged script IDs to NICOS.
  */
-public class SendReorderedQueue extends NICOSMessage<List<String>> {
+public class SendReorderedQueue extends NICOSMessage<List<String>, String> {
     
     /**
      * Constructor.
@@ -44,9 +44,9 @@ public class SendReorderedQueue extends NICOSMessage<List<String>> {
     }
 
     @Override
-    public ReceiveMessage parseResponse(String response) throws ConversionException {
+    public String parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
-        return new ReceiveStringMessage(deserial.convert(response));
+        return deserial.convert(response);
     }
         
 }
