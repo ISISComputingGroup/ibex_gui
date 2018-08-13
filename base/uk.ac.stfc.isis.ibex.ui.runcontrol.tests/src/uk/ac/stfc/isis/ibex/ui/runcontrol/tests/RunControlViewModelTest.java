@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.runcontrol.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -72,24 +71,6 @@ public class RunControlViewModelTest {
 
         // Assert
         assertEquals(runControlViewModel.getSendEnabled(), true);
-    }
-
-    @Test
-    public void WHEN_invalid_low_limit_set_THEN_send_disabled() {
-        // Act
-        runControlViewModel.setRunControlLowLimit(1.);
-        
-        // Assert
-        assertFalse(runControlViewModel.getSendEnabled());
-    }
-
-    @Test
-    public void WHEN_invalid_high_limit_set_THEN_send_disabled() {
-        // Act
-        runControlViewModel.setRunControlHighLimit(-1.0);
-
-        // Assert
-        assertFalse(runControlViewModel.getSendEnabled());
     }
 
     @Test
