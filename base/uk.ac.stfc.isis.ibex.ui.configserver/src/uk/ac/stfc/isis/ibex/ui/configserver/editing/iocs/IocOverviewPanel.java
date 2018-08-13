@@ -27,11 +27,8 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -138,21 +135,8 @@ public class IocOverviewPanel extends Composite {
             }
         });
 
-        btnEditIoc.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                openIocDialog(table.firstSelectedRow(), false);
-            }
-        });
-        
-        btnDeleteIoc.addSelectionListener(new SelectionAdapter() {
-            
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                deleteSelected();
-            }
-        });
+        btnEditIoc.addListener(SWT.Selection, e -> openIocDialog(table.firstSelectedRow(), false));
+        btnDeleteIoc.addListener(SWT.Selection, e -> deleteSelected());
 
         table.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
@@ -162,15 +146,7 @@ public class IocOverviewPanel extends Composite {
             }
         });
 
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                EditableIoc toEdit = table.getItemAtPoint(new Point(e.x, e.y));
-                if (toEdit != null) {
-                    openIocDialog(table.firstSelectedRow(), false);
-                }
-            }
-        });
+        table.viewer().addDoubleClickListener(e -> openIocDialog(table.firstSelectedRow(), false));
 	}
 
     private void setSelectedIocs(List<EditableIoc> selected) {

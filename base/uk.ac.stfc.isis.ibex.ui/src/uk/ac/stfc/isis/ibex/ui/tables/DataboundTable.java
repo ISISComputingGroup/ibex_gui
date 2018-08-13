@@ -45,13 +45,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
@@ -431,20 +429,6 @@ public abstract class DataboundTable<TRow> extends Composite {
     @Override
     public void addKeyListener(KeyListener listener) {
         viewer.getTable().addKeyListener(listener);
-    }
-
-    /**
-     * Gets the item at a point.
-     *
-     * @param pt the point
-     * @return the item at point
-     */
-    public TRow getItemAtPoint(Point pt) {
-        TableItem item = table.getItem(pt);
-        if (item == null) {
-            return null;
-        }
-        return firstSelectedRow();
     }
     
     /**

@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -170,17 +172,16 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    EditableBlock block = table.firstSelectedRow();
-                    if (!block.hasComponent()) {
-                        openEditBlockDialog(block);
-                    }
+		table.viewer().addDoubleClickListener(new IDoubleClickListener() {
+			
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				EditableBlock block = table.firstSelectedRow();
+                if (!block.hasComponent()) {
+                    openEditBlockDialog(block);
                 }
-            }
-        });
+			}
+		});
         
 	}
 	
