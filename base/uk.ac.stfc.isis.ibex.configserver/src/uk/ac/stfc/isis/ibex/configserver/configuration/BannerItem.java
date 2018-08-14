@@ -48,23 +48,23 @@ public class BannerItem extends ModelObject {
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
 
-	@Override
-	public void onValue(String value) {
-	    setCurrentValue(value);
-	}
+    @Override
+    public void onValue(String value) {
+        setCurrentValue(value);
+    }
 
-	@Override
-	public void onError(Exception e) {
-	    setCurrentValue(null);
-	    IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
-	}
+    @Override
+    public void onError(Exception e) {
+        setCurrentValue(null);
+        IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
+    }
 
-	@Override
-	public void onConnectionStatus(boolean isConnected) {
-	    if (!isConnected) {
-		setCurrentValue(null);
-	    }
-	}
+    @Override
+    public void onConnectionStatus(boolean isConnected) {
+        if (!isConnected) {
+        setCurrentValue(null);
+        }
+    }
     };
 
     private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
@@ -76,7 +76,7 @@ public class BannerItem extends ModelObject {
 
     @Override
     public void onError(Exception e) {
-    	setCurrentAlarm(AlarmState.INVALID);
+        setCurrentAlarm(AlarmState.INVALID);
         IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
     }
 

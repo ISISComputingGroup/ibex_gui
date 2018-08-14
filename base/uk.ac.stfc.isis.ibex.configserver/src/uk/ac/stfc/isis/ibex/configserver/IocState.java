@@ -58,9 +58,9 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      *            description of the IOC
      */
     public IocState(String name, boolean isRunning, String description) {
-	this.name = name;
-	this.isRunning = isRunning;
-	this.description = description;
+    this.name = name;
+    this.isRunning = isRunning;
+    this.description = description;
     }
 
     /**
@@ -70,7 +70,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      */
     @Override
     public String getName() {
-	return name;
+    return name;
     }
 
     /**
@@ -79,7 +79,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return true if it is running; false otherwise
      */
     public boolean getIsRunning() {
-	return isRunning;
+    return isRunning;
     }
 
     /**
@@ -88,7 +88,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return the description
      */
     public String getDescription() {
-	return description;
+    return description;
     }
 
     /**
@@ -105,8 +105,8 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {
-	Configuration currentConfig = Configurations.getInstance().server().currentConfig().getValue();
-	return currentConfig.getIocs().stream().anyMatch(ioc -> Objects.equals(ioc.getName(), name));
+    Configuration currentConfig = Configurations.getInstance().server().currentConfig().getValue();
+    return currentConfig.getIocs().stream().anyMatch(ioc -> Objects.equals(ioc.getName(), name));
     }
 
     /**
@@ -114,6 +114,6 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      */
     @Override
     public int compareTo(IocState iocState) {
-	return name.compareTo(iocState.getName());
+    return name.compareTo(iocState.getName());
     }
 }
