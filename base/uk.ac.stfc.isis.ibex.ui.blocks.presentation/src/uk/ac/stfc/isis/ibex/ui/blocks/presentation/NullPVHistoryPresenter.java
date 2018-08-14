@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * A null object for the PV history presenter, to use when a real object is unavailable.
@@ -30,9 +30,8 @@ public class NullPVHistoryPresenter implements PVHistoryPresenter {
 		// do nothing
 	}
 	
-	public ArrayList<String> getCurrentDisplays() {
-		// TODO Auto-generated method stub
-		return null;
+	public Stream<String> getDataBrowserTitles() {
+		return Stream.empty();
 	}
 
 	@Override

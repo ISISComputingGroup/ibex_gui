@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	/**
 	 * @return A stream of all the current DataBrowserEditors.
 	 */
-	private Stream<DataBrowserEditor> getCurrentDataBrowsers() {
+	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
 		Stream<IEditorReference> editorRefs = Arrays.stream(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences());
 		
 		return editorRefs.map(e -> e.getEditor(false))
@@ -61,9 +60,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ArrayList<String> getCurrentDisplays() {
-		return getCurrentDataBrowsers().map(e -> e.getTitle())
-									   .collect(Collectors.toCollection(ArrayList::new));
+	public Stream<String> getDataBrowserTitles() {
+		return getCurrentDataBrowsers().map(e -> e.getTitle());
 	}
 	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {

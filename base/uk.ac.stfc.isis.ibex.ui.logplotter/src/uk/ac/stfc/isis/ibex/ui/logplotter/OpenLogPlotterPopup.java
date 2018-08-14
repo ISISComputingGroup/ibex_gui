@@ -41,7 +41,10 @@ public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser2.OpenDa
     public Object execute(final ExecutionEvent event) {       
 		try {
 			switchToLogPlotter();
-			return super.execute(event);
+			super.execute(event);
+			// We can't get the editor from the parent so turn off save changes dialog for all editors
+			LogPlotterHistoryPresenter.getCurrentDataBrowsers().forEach(db -> db.getModel().setSaveChanges(false));
+			return null;
 		} catch (ExecutionException | RuntimeException e) {
 			IsisLog.getLogger(getClass()).error(e.getMessage(), e);
 			return null;

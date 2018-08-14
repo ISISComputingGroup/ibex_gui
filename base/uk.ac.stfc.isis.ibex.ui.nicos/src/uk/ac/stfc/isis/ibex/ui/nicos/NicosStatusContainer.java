@@ -46,7 +46,7 @@ public class NicosStatusContainer {
         nicosStatus.setLayout(new GridLayout(2, false));
         
         lblCurrentError = new Label(nicosStatus, SWT.NONE);
-        lblCurrentError.setText("NICOS status: ");
+        lblCurrentError.setText("Server status: ");
         
         Label errorIndicator = new Label(nicosStatus, SWT.NONE);
         errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
