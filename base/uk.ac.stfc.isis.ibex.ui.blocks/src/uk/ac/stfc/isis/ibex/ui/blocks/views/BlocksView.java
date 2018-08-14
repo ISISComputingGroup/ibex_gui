@@ -19,9 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.views;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +40,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
@@ -92,7 +89,7 @@ public class BlocksView {
 			}
 		}
 
-		private void setGroups(Optional<Collection<DisplayGroup>> newGroups) {
+		private void setGroups(Optional<List<DisplayGroup>> newGroups) {
 			if (groups != null) {
 				groups.updateGroups(newGroups);
 			}

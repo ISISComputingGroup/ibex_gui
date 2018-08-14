@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
@@ -42,17 +45,14 @@ public final class HiddenGroupFilter {
      * @param showHidden - whether hidden blocks are being shown
      * @return - a list of groups that should be displayed
      */
-    public static Collection<DisplayGroup> getVisibleGroups(Collection<DisplayGroup> allGroups, boolean showHidden) {
-        
-        if (showHidden) {
-            return allGroups;
-        }
-        
-        List<DisplayGroup> result = new ArrayList<DisplayGroup>();
-        for (DisplayGroup g : allGroups) {
-            if (g.containsAnyVisibleBlocks()) {
-                result.add(g);
-            }   
+    public static Optional<List<DisplayGroup>> getVisibleGroups(Optional<List<DisplayGroup>> allGroups, boolean showHidden) {
+        Optional<List<DisplayGroup>> result;
+    	if (!allGroups.isPresent()) {
+    		result = Optional.empty();
+    	} else if (showHidden) {
+            result = allGroups;
+        } else {
+	        result = Optional.of(allGroups.get().stream().filter(g -> g.containsAnyVisibleBlocks()).collect(Collectors.toList()));
         }
         return result;
     }
