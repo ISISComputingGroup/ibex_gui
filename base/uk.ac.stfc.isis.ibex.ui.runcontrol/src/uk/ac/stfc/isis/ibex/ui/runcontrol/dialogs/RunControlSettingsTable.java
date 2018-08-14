@@ -34,7 +34,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
 
     public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, DisplayBlock.class, tableStyle);
+        super(parent, style, tableStyle);
 
         initialise();
     }
