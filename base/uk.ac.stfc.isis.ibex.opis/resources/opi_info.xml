@@ -2475,6 +2475,7 @@
             <name>NGPSPSU</name>
             <description>The NGPSPSU PV prefix (e.g. NGPSPSU_01)</description>
           </macro>
+        </macros>
       </value>
     </entry>
     <entry>        
