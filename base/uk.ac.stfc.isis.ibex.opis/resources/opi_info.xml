@@ -425,7 +425,6 @@
 						<name>MHVSLOT</name>
 						<description>CAEN HV slot for the monitor (default: 0).</description>
 					</macro>
-<<<<<<< HEAD
         </macros>
       </value>
     </entry>
@@ -466,9 +465,6 @@
           </macro>
         </macros>
       </value>
-=======
-				</macros>
-			</value>
 		</entry>
 		<entry>
 			<key>Pinhole Selector</key>
@@ -490,7 +486,6 @@
 					</macro>
 				</macros>
 			</value>
->>>>>>> origin/master
     </entry>
     <entry>
       <key>PGC</key>
