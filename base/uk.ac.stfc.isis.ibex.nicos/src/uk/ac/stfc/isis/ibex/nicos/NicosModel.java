@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -268,11 +267,7 @@ public class NicosModel extends ModelObject {
      * @return details about the sending of that message
      */
     private <TSEND, TRESP> SentMessageDetails<TRESP> sendMessageToNicos(NICOSMessage<TSEND, TRESP> nicosMessage) {
-        SentMessageDetails<TRESP> messageSentMessageDetails = session.sendMessage(nicosMessage);
-        if (!messageSentMessageDetails.isSent()) {
-        	// TODO: think.
-        }
-        return messageSentMessageDetails;
+        return session.sendMessage(nicosMessage);
     }
     
     /**
@@ -284,6 +279,7 @@ public class NicosModel extends ModelObject {
 		ReceiveScriptStatus scriptStatusSentMessageDetails = message.getResponse();
 		if (scriptStatusSentMessageDetails == null || !message.isSent()) {
 			setError(NicosErrorState.NO_RESPONSE);
+			disconnect();  //  We should always be able to get a response from this message. If we can't, NICOS is probably down.
 		} else {
             // Status is a tuple (list) of 2 items - execution status and line number.
             setScriptStatus(ScriptStatus.getByValue(scriptStatusSentMessageDetails.status.get(0)));
@@ -293,41 +289,55 @@ public class NicosModel extends ModelObject {
 		}
 	}
 
-    /**
+	/**
      * Gets the latest messages from the NICOS log.
      */
     public void updateLogEntries() {
-
-    	List<NicosLogEntry> entries;
-    	int messages_to_ask_for = 10;
-
-		do {
-			SentMessageDetails<ReceiveLogMessage> message = sendMessageToNicos(new GetLog(messages_to_ask_for));
+        int numMessages = 1;
+        long firstEntryTime = 0;
+        List<NicosLogEntry> newEntries = new ArrayList<NicosLogEntry>();
+        do {
+            if (numMessages > MESSAGES_THRESHOLD) {
+                newEntries.add(new NicosLogEntry(new Date(),
+                        "WARNING: Message volume is too high. Some messages may be ommitted.\n"));
+                break;
+            }
+            SentMessageDetails<ReceiveLogMessage> message = sendMessageToNicos(new GetLog(numMessages));
 			ReceiveLogMessage logSentMessageDetails = message.getResponse();
-	        if (logSentMessageDetails == null || !message.isSent()) {
-	            setError(NicosErrorState.NO_RESPONSE);
-	            return;
-	        } else {
-	        	setError(NicosErrorState.NO_ERROR);
-	        }
-	        entries = logSentMessageDetails.getEntries();
-	        messages_to_ask_for *= MESSAGES_SCALE_FACTOR;
-	        
-		} while (!entries.isEmpty() && entries.get(0).getTimeStamp() > this.lastEntryTime && messages_to_ask_for <= MESSAGES_THRESHOLD);
-        
-        entries = entries.stream()
-        		.filter(entry -> entry.getTimeStamp() > this.lastEntryTime)
-        		.sorted((entry1, entry2) -> Long.compare(entry1.getTimeStamp(), entry2.getTimeStamp()))
-        		.limit(MESSAGES_THRESHOLD)
-        		.collect(Collectors.toList());
-        
-        if (!entries.isEmpty()) {
-            setLogEntries(entries);
+            
+            if (logSentMessageDetails == null || !message.isSent()) {
+                setError(NicosErrorState.NO_RESPONSE);
+                break;
+            } else {
+            	setError(NicosErrorState.NO_ERROR);
+            }
+            List<NicosLogEntry> current = logSentMessageDetails.getEntries();
+            if (newEntries.size() == current.size()) {
+                // nothing more to fetch
+                break;
+            }
+            
+            newEntries = new ArrayList<NicosLogEntry>(current);
+            firstEntryTime = newEntries.get(0).getTimeStamp();
+            numMessages *= MESSAGES_SCALE_FACTOR;
+        } while (firstEntryTime > this.lastEntryTime);
+
+        newEntries = filterOld(newEntries);
+        if (!newEntries.isEmpty()) {
+            setLogEntries(newEntries);
         }
     }
-    
-    private static boolean askForMoreEntries(Collection<NicosLogEntry> entries) {
-    	return true;
+
+    /**
+     * Filters old log entries out from a nicos log.
+     * 
+     * @param entries the original list of entries
+     * @return a new list with old entries removed
+     */
+    private List<NicosLogEntry> filterOld(List<NicosLogEntry> entries) {
+        return entries.stream()
+        		.filter(e -> e.getTimeStamp() > this.lastEntryTime)
+        		.collect(Collectors.toList());
     }
 
     /**
