@@ -31,8 +31,10 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 /**
  * A message that can be serialised and sent to NICOS.
  * 
- * @param <ARGTYPE>
+ * @param <TSEND>
  *            The type of parameters to send.
+ * @param <TRESP>
+ * 			  The type of the response.
  */
 public abstract class NICOSMessage<TSEND, TRESP> {
     protected String command = "";
@@ -46,8 +48,7 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      *             thrown when the conversion cannot take place.
      */
     public List<String> getMulti() throws ConversionException {
-        @SuppressWarnings("rawtypes")
-        JsonSerialisingConverter<List> serialiser = new JsonSerialisingConverter<>(List.class);
+        JsonSerialisingConverter<List<TSEND>> serialiser = new JsonSerialisingConverter<>(List.class);
         return Arrays.asList(command, "", serialiser.convert(parameters));
     }
 
@@ -55,7 +56,7 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      * Parses the response from NICOS once this command has been sent.
      * 
      * @param response
-     *            The string response from NICOS.
+     *            The response from NICOS.
      * 
      * @return The response from NICOS.
      * @throws ConversionException
