@@ -2,10 +2,9 @@ package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
@@ -37,7 +36,7 @@ public class LoadScriptAction extends ScriptFileInteractor {
 	protected void manipulateFile(String pathString) throws IOException {
 		Path filePath = Paths.get(pathString);
 		List<String> lines = Files.readAllLines(filePath);
-		String contents = lines.stream().collect(Collectors.joining(LINE_SEP));
+		String contents = String.join(LINE_SEP, lines);
 		script.setCode(contents);
 		script.setName(getFileName(filePath));
 	}
