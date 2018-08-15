@@ -19,12 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Menu;
+
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
 /**
  * Holds all the actions for the context menu for the Groups.
