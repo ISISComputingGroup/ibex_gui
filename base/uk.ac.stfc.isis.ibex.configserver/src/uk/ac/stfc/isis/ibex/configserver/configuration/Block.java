@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -31,7 +32,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * JSON.
  */
 @SuppressWarnings("checkstyle:membername")
-public class Block extends ModelObject implements IRuncontrol {
+public class Block extends ModelObject implements IRuncontrol, INamed {
 
     /**
      * Default value to give to periodic scan.

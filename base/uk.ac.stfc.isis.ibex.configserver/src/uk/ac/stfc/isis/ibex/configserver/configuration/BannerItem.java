@@ -48,6 +48,7 @@ public class BannerItem extends ModelObject {
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
 
+
 	@Override
 	public void onValue(String value) {
 	    setCurrentValue(value);
@@ -68,6 +69,7 @@ public class BannerItem extends ModelObject {
     };
 
     private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
+
 
 	@Override
 	public void onValue(AlarmState alarm) {

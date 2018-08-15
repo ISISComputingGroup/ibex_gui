@@ -25,8 +25,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -36,7 +34,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
- *
+ * A panel that contains buttons that provide control over the current NICOS script.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosControlButtonPanel extends Composite {
@@ -83,6 +81,7 @@ public class NicosControlButtonPanel extends Composite {
         bind();
     }
 
+    @SuppressWarnings("unchecked")
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(btnTogglePause),
                 BeanProperties.value("toggleButtonText").observe(statusModel));
@@ -93,18 +92,7 @@ public class NicosControlButtonPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
         
-        btnTogglePause.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                statusModel.toggleExecution();
-            }
-        });
-
-        btnStop.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                statusModel.stopExecution();
-            }
-        });
+        btnTogglePause.addListener(SWT.Selection, e -> statusModel.toggleExecution());
+        btnStop.addListener(SWT.Selection, e -> statusModel.stopExecution());
     }
 }

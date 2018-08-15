@@ -23,4 +23,3 @@ Import-Package: com.google.common.base,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.preferences
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8

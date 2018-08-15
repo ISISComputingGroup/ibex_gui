@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -113,7 +114,7 @@ public class BlocksTest extends EditableConfigurationTest {
 		
 		// Act
 		EditableBlock gapx = getFirst(edited.getAllBlocks());
-		edited.removeBlock(gapx);
+		edited.removeBlocks(Arrays.asList(gapx));
 		
 		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());

@@ -17,6 +17,6 @@
  */
 
 /**
- * The view for the DAE
+ * The view for the DAE.
  */
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;

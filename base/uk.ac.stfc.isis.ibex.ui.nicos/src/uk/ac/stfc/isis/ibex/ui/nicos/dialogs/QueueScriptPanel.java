@@ -51,6 +51,7 @@ public class QueueScriptPanel extends Composite {
      * @param model
      *            the view model for queueing a script
      */
+    @SuppressWarnings("unchecked")
     public QueueScriptPanel(Composite parent, int style, QueueScriptViewModel model) {
 		super(parent, style);
         GridLayout gridLayout = new GridLayout(2, false);
