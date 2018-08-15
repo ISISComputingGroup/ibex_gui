@@ -28,7 +28,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Control; 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -46,7 +46,6 @@ public class QueueScriptDialog extends Dialog {
 
     private QueueScriptViewModel model;
 
-
 	/**
      * The constructor for this class.
      * 
@@ -60,9 +59,11 @@ public class QueueScriptDialog extends Dialog {
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
         this.model = model;
 	}
-	
+    
 	@Override
 	protected Control createDialogArea(Composite parent) {
+        new QueuedScriptToolbar(parent, model.getScript(), true);
+	    
         creator = new QueueScriptPanel(parent, SWT.NONE, model);
         creator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		return creator;
@@ -74,13 +75,7 @@ public class QueueScriptDialog extends Dialog {
         queueBtn = createButton(parent, IDialogConstants.OK_ID, "Queue", false);
         queueBtn.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
 
-        queueBtn.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                model.queueScript();
-            }
-        });
+        queueBtn.addListener(SWT.Selection, e -> model.queueScript());
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
 	}	

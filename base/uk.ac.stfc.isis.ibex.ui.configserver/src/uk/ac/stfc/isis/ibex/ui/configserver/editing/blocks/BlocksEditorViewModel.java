@@ -1,12 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -49,7 +45,7 @@ public class BlocksEditorViewModel extends ModelObject {
         return namer.getUnique(blockNames);
     }
     
-	public boolean editEnabled(List<EditableBlock> blocks) {
+	private boolean editEnabled(List<EditableBlock> blocks) {
 		boolean enabled = !blocks.isEmpty();
 		
 		for (EditableBlock block : blocks) {
@@ -58,22 +54,42 @@ public class BlocksEditorViewModel extends ModelObject {
 		return enabled;
 	}
     
+	/**
+	 * Get whether the edit action is possible.
+	 * @return True if the selected block(s) can be edited.
+	 */
 	public boolean getEditEnabled() {
 		return editEnabled;
 	}
 	
+	/**
+	 * Set whether the edit action is possible.
+	 * @param editEnabled True if the selected block(s) can be edited.
+	 */
 	public void setEditEnabled(boolean editEnabled) {
 		firePropertyChange("editEnabled", this.editEnabled, this.editEnabled = editEnabled);
 	}
 	
+	/**
+	 * Get whether the copy/delete actions are possible.
+	 * @return True if the selected block(s) can be copied/deleted.
+	 */
 	public boolean getCopyDeleteEnabled() {
 		return copyDeleteEnabled;
 	}
 	
+	/**
+	 * Set whether the copy/delete actions are possible.
+	 * @param copyDeleteEnabled True if the selected block(s) can be copied/deleted.
+	 */
 	public void setCopyDeleteEnabled(boolean copyDeleteEnabled) {
 		firePropertyChange("copyDeleteEnabled", this.copyDeleteEnabled, this.copyDeleteEnabled = copyDeleteEnabled);
 	}
 	
+	/**
+	 * Set the blocks which have been selected.
+	 * @param selected The blocks that have been selected.
+	 */
 	public void setSelectedBlocks(List<EditableBlock> selected) {
 		if (selected.size() > 1) {
 			setEditEnabled(false);

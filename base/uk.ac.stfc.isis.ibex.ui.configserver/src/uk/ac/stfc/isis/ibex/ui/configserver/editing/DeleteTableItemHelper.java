@@ -9,9 +9,19 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 
+/**
+ * Helps remove named items from tables.
+ * @param <T> The type of the named items.
+ */
 public class DeleteTableItemHelper<T extends INamed> {
 	Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	
+	/**
+	 * Creates a confirmation dialog asking the user if they are sure they want to delete the items.
+	 * @param itemType The collective name for the items.
+	 * @param toRemove A list of items that may be removed.
+	 * @return The return code of the dialog box.
+	 */
     public int createDeleteDialog(String itemType, List<T> toRemove) {
         String dialogTitle = "Delete " + itemType;
         String dialogText = "Do you really want to delete the " + itemType;

@@ -48,7 +48,7 @@ public class TargetPropertyTable extends DataboundTable<Property> {
      * @param instrument the synoptic model for the instrument
      */
     public TargetPropertyTable(Composite parent, final SynopticViewModel instrument) {
-    	super(parent, SWT.NONE, Property.class, SWT.FULL_SELECTION);
+    	super(parent, SWT.NONE, SWT.FULL_SELECTION);
 		initialise();
 		
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {

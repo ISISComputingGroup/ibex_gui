@@ -76,7 +76,7 @@ public class BlocksMenu extends MenuManager {
 		}	
 	};
 	
-	private IAction createAddToPlotAction(String plotName){
+	private IAction createAddToPlotAction(String plotName) {
 		return new Action("Add to " + plotName + " plot") {
 			@Override
 			public void run() {
