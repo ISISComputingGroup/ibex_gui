@@ -51,7 +51,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
      * @param tableStyle the table style
      */
     public DeviceScreensTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, DeviceDescription.class, tableStyle);
+        super(parent, style, tableStyle);
         comparator = new DeviceScreensComparator();
         
 		initialise();

@@ -78,6 +78,13 @@ public class DefaultNamesTest {
 	}
 	
 	@Test
+    public void GIVEN_numbered_block_1_is_taken_but_root_is_not_WHEN_duplicate_THEN_use_root() {
+		DefaultName blockName = new DefaultName("BLOCK_WITH_NUMBER_1");
+        existingBlock.add("BLOCK_WITH_NUMBER_1");
+        assertThat(blockName.getUnique(existingBlock), is("BLOCK_WITH_NUMBER"));
+	}
+	
+	@Test
     public void if_nonsequential_block_names_next_available_is_used() {
 		existingBlock.add(DEFAULT_NAME);
         existingBlock.add(numberedDefaultBlock(2));

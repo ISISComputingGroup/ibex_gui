@@ -44,7 +44,7 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
      *            The SWT style of the underlying table.
      */
 	public IocPVsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, PVDefaultValue.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	}

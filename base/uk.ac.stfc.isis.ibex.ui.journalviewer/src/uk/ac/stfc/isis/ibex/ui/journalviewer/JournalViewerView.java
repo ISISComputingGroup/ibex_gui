@@ -121,7 +121,7 @@ public class JournalViewerView {
 		}
 		
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
-		table = new DataboundTable<JournalRow>(parent, tableStyle, JournalRow.class, tableStyle) {
+		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
 			protected void addColumns() {
 				changeTableColumns();
