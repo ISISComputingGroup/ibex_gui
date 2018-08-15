@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.views;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +60,10 @@ public class BlocksView {
      * The view ID.
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-
+	
+	/**
+	 * The part service currently in use.
+	 */
 	@Inject
 	public static EPartService partService;
 	

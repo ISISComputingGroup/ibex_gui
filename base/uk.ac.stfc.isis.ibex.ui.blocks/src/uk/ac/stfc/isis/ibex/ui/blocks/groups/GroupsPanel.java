@@ -20,8 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

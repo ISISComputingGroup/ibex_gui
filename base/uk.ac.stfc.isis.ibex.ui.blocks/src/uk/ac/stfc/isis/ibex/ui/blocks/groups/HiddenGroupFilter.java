@@ -18,11 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
