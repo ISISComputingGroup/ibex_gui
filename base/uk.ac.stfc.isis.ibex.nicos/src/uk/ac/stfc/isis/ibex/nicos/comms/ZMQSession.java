@@ -112,6 +112,10 @@ public class ZMQSession {
      * 
      * @param message
      *            The message to send.
+     * @param <TSEND> 
+     *            The type of message parameters to send.
+     * @param <TRESP> 
+     *            The type of message response to expect.       
      * @return The response.
      */
     public <TSEND, TRESP> SentMessageDetails<TRESP> sendMessage(NICOSMessage<TSEND, TRESP> message) {

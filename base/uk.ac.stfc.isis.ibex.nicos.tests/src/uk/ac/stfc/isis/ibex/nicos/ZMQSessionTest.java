@@ -45,7 +45,6 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 
 public class ZMQSessionTest {
@@ -202,7 +201,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_parsable_message_from_server_WHEN_message_sent_THEN_successful_message_returned()
             throws ConversionException {
-        ReceiveMessage<String> recieved = mock(ReceiveMessage.class);
+        String recieved = new String();
         when(zmq.receiveString()).thenReturn("ok");
         when(mockMessage.parseResponse(anyString())).thenReturn(recieved);
         SentMessageDetails<String> resp = sendBlankMessage(2);

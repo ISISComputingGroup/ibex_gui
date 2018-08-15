@@ -24,6 +24,8 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 /**
  * Class to capture details about having sent a message. This is returned when a
  * message is sent to NICOS.
+ * 
+ * @param <T> The type of response to expect.
  */
 public final class SentMessageDetails<T> {
 
@@ -36,6 +38,8 @@ public final class SentMessageDetails<T> {
      *
      * @param failureReason
      *            the failure reason
+     *            
+     * @param <T> The type of response to expect.
      * 
      * @return the failure send message details
      */
@@ -48,6 +52,8 @@ public final class SentMessageDetails<T> {
      * 
      * @param received
      *            The message received from NICOS.
+     * 
+     * @param <T> The type of response to expect.
      *
      * @return the send message details
      */

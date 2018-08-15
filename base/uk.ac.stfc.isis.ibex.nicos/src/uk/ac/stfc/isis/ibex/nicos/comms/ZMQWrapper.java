@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * A class that wraps the specific ZMQ library to aid in testing.
  */
-public class ZMQWrapper {
+public final class ZMQWrapper {
 	
 	private final Logger logger = IsisLog.getLogger(getClass());
 
@@ -41,7 +41,7 @@ public class ZMQWrapper {
 
     private static final int RECEIVE_TIMEOUT = 500;
     
-    private static ZMQWrapper INSTANCE = new ZMQWrapper();
+    private static final ZMQWrapper INSTANCE = new ZMQWrapper();
     private static final Object ZMQ_COMMS_LOCK = new Object();
     
     /**
@@ -57,7 +57,7 @@ public class ZMQWrapper {
      * Get the instance of this singleton.
      * @return the single instance of this ZMQ wrapper
      */
-    public synchronized static ZMQWrapper getInstance() {
+    public static synchronized ZMQWrapper getInstance() {
     	return INSTANCE;
     }
     
@@ -88,6 +88,8 @@ public class ZMQWrapper {
      * }
      * 
      * Which guarantees that the write and read will execute with no intermediate ZMQ operations.
+     * 
+     * @return The lock.
      */
     public Object getLock() {
     	return ZMQ_COMMS_LOCK;
