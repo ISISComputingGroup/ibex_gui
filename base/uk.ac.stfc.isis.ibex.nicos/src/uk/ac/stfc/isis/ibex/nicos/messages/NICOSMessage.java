@@ -48,7 +48,8 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      *             thrown when the conversion cannot take place.
      */
     public List<String> getMulti() throws ConversionException {
-        JsonSerialisingConverter<List<TSEND>> serialiser = new JsonSerialisingConverter<>(List.class);
+        @SuppressWarnings("rawtypes")
+		JsonSerialisingConverter<List<TSEND>> serialiser = new JsonSerialisingConverter(List.class);
         return Arrays.asList(command, "", serialiser.convert(parameters));
     }
 
