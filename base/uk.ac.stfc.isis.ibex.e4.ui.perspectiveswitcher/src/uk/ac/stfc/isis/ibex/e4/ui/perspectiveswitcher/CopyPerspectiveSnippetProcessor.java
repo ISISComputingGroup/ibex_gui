@@ -33,11 +33,13 @@ public class CopyPerspectiveSnippetProcessor {
      * to the main PerspectiveStack.
      *
      * @param app
-     *            MApplication
+     *            The MApplication used.
      * @param partService
-     *            EPartService
+     *            The EPartService used.
      * @param modelService
-     *            EModelService
+     *            The EModelService used.
+     * @param broker
+     *            The IEventBroker used.           
      */
     @Execute
     public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
