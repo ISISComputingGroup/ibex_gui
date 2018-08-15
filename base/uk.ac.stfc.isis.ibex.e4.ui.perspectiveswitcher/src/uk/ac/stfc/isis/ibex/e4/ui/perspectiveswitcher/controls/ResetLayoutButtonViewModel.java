@@ -7,6 +7,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+/**
+ * A view model class for setting the right colour to the ResetLayoutButton.
+ *
+ */
 public class ResetLayoutButtonViewModel extends ButtonViewModel {
 
     private static final Color RESET_COLOR = SWTResourceManager.getColor(250, 150, 150);

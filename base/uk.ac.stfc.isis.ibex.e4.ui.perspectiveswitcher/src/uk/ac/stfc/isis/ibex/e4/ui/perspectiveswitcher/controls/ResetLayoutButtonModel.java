@@ -7,6 +7,11 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The model class for the ResetLayoutButton.
+ * Remember for each perspective if the default layout was changed.
+ *
+ */
 public class ResetLayoutButtonModel extends ModelObject {
     private boolean changed = false;
     private MPerspective currentPerspective;

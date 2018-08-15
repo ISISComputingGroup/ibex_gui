@@ -72,7 +72,9 @@ public class CopyPerspectiveSnippetProcessor {
      * perspective in ResetLayoutButtonModel.
      *
      * @param broker
+     *            IEventBroker
      * @param perspective
+     *            The new current perspective
      */
     public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
 
@@ -102,7 +104,9 @@ public class CopyPerspectiveSnippetProcessor {
      * ResetLayoutButtonModel to changed.
      *
      * @param broker
+     *            IEventBroker
      * @param perspective
+     *            The new current perspective
      */
     public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
 
