@@ -32,7 +32,7 @@ public class ObservableMotionControl extends ModelAdapter {
 
 	private static final Long STOP_VALUE = 1L;
 	
-	private final SameTypeWriter<Long> stop = new SameTypeWriter<Long>();;
+	private final SameTypeWriter<Long> stop = new SameTypeWriter<Long>();
 
 	private SettableUpdatedValue<Boolean> canWrite = new SettableUpdatedValue<Boolean>();
 	

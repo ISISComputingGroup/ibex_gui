@@ -33,6 +33,12 @@ public class MotionControlModel extends ModelObject implements ControlModel {
 	private final ObservableMotionControl motionControl;
 	private static final String TEXT = "Stop All";
 	
+	/**
+	 * The model for the stop all motors button in the banner.
+	 * 
+	 * @param observables
+	 *                     The observables class associated with the motion control.
+	 */
 	public MotionControlModel(Observables observables) {
 		motionControl = new ObservableMotionControl(observables.stop);
 	}
