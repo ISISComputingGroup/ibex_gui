@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
 public class DaeViewModel extends Closer {
 	
 	private static final String DEFAULT_TITLE = "DAE Control Program";
-	private boolean isChanged = false;
+	
 	
     /** What tab is active in the DAE view. */
     enum ActiveTab {
@@ -164,25 +164,13 @@ public class DaeViewModel extends Closer {
         return detectorDiagnosticsViewModel;
     }
     
+    /**
+     * Returns the dae title.
+     * @return
+     *          The dae title.
+     */
     public UpdatedValue<String> title() {
     	return daeTitle;
     }
     
-    /**
-     * Saves if changes have been made in the experiment setup but haven't been applied.
-     * 
-     * @isChanged True if changes have been made in the experiment setup but haven't been applied.
-     */
-    public void setIsChanged(boolean isChanged) {
-        this.isChanged = isChanged;
-    }
-    
-    /**
-     * True if changes have been made in the experiment setup but haven't been applied.
-     * 
-     * @return whether or changes have been made in the experiment setup but haven't been applied.
-     */
-    public boolean getIsChanged() {
-        return isChanged;
-    }
 }

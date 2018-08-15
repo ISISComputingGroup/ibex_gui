@@ -62,28 +62,32 @@ public class ExperimentSetup {
 	private TimeChannelsPanel timeChannels;
 	private DataAcquisitionPanel dataAcquisition;
 	private PeriodsPanel periods;
+	private ExperimentSetupViewModel experimentSetupViewModel;
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
 	private final int timeToDisplayDialog = 2;
     private SendingChangesDialog sendingChanges;
 
     private PropertyChangeListener experimentalChangeListener;
+    private PropertyChangeListener resetChangeLabelsListener;
 
     private UpdatedValue<Boolean> modelIsRunningProperty;
+    
+    private Button btnSendChanges;
 
     private static final Display DISPLAY = Display.getCurrent();
     private static final int FIXED_WIDTH = 700;
     private static final int FIXED_HEIGHT = 600;
 	
-    PanelUtilities utils;
+    PanelViewModel panelViewModel;
     /**
      * Constructor.
      */
     public ExperimentSetup() {
         viewModel = DaeUI.getDefault().viewModel();
-        utils = new PanelUtilities(viewModel, DISPLAY);
+        experimentSetupViewModel = viewModel.experimentSetup();
+        panelViewModel = new PanelViewModel(this, DISPLAY, experimentSetupViewModel);
         updateIsChanged(false);
-        
     }
 
     /**
@@ -111,14 +115,14 @@ public class ExperimentSetup {
 		gridLayout.horizontalSpacing = 0;
         content.setLayout(gridLayout);
         
-        Button btnSendChanges = new Button(content, SWT.NONE);
+        btnSendChanges = new Button(content, SWT.NONE);
         btnSendChanges.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    applyChangesToUI();
                     viewModel.experimentSetup().updateDae();
                     sendingChanges.open();
+                    applyChangesToUI();
                 } catch (Exception err) {
                     // Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
                     IsisLog.getLogger(this.getClass()).error(err);
@@ -129,6 +133,7 @@ public class ExperimentSetup {
         });
         btnSendChanges.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         btnSendChanges.setText("Apply Changes");
+        
 		
         CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -140,7 +145,7 @@ public class ExperimentSetup {
 		Composite timeChannelsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setControl(timeChannelsComposite);
 		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, utils);
+		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmDataAcquisition = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setText("Data Acquisition");
@@ -148,7 +153,7 @@ public class ExperimentSetup {
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
 		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, utils);
+		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPeriods.setText("Periods");
@@ -156,7 +161,7 @@ public class ExperimentSetup {
 		Composite periodsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmPeriods.setControl(periodsComposite);
 		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		periods = new PeriodsPanel(periodsComposite, SWT.NONE, utils);
+		periods = new PeriodsPanel(periodsComposite, SWT.NONE, panelViewModel);
 		
 		tabFolder.setSelection(0);
         GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -164,14 +169,52 @@ public class ExperimentSetup {
         // disappearing
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
-        
+
         //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));
         
+        resetChangeLabelsListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        resetChangeLabels();
+                    }
+                });
+            }
+        };
+        
+        experimentSetupViewModel.addPropertyChangeListener("resetLayout", resetChangeLabelsListener);
+        
         bind(viewModel.experimentSetup());
         setModel(viewModel);
+        if (panelViewModel.getIsChanged().containsValue(true)) {
+            btnSendChanges.setEnabled(true);
+            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+        } else {
+            btnSendChanges.setEnabled(false);
+            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+        }
+        
+        tabFolder.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (tabFolder.getSelection().equals(tbtmPeriods)) {
+                    periods.addFirstTableListener();
+                    periods.ifTableValuesDifferentFromCachedValuesThenChangeLabel();
+                }
+            }
+        });
+        
+        resetChangeLabels();
 	}
+    
+    private void resetChangeLabels() {
+        addChangeListeners();
+        changeLabelsIfDifferentFromCachedValues();
+    }
 	
     /**
      * Binds this panel to a specific view model.
@@ -225,15 +268,25 @@ public class ExperimentSetup {
     }
     
     /**
-     * Gets rid of labels marking un-applied changes and tells viw model that the changes have been applied.
+     * Updates the listeners on the widgets, tells the viewModel that the changes have been applied and if the widgets contain the applied values
+     * then removes labels denoting a change not applied to the instrument.
      * 
      */
     private void applyChangesToUI() {
-        timeChannels.removeChangeLabels();
-        dataAcquisition.removeChangeLabels();
-        periods.removeChangeLabels();
-        utils.unlabelCells();
         updateIsChanged(false);
+        btnSendChanges.setEnabled(false);
+        updateChangeListeners();
+        changeLabelsIfDifferentFromCachedValues();
+    }
+    
+    /**
+     * A method to check if the widgets in the different panels contain the applied values and removes labels denoting a change not applied to the 
+     * instrument if the change has been applied.
+     */
+    public void changeLabelsIfDifferentFromCachedValues() {
+        timeChannels.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
+        dataAcquisition.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
+        periods.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
     }
     
     /**
@@ -242,6 +295,43 @@ public class ExperimentSetup {
      * @isChanged True if changes have been made in the experiment setup but haven't been applied.
      */
     private void updateIsChanged(boolean isChanged) {
-        viewModel.setIsChanged(isChanged);
+        panelViewModel.clearIsChanged();
+        viewModel.experimentSetup().setIsChanged(isChanged);
     }
+    
+    /**
+     *  Allows to enable or disable the "send change" button.
+     *  
+     * @param enable
+     *              True if the button should be enabled.
+     */
+    public void setSendChangeBtnEnableState(boolean enable) {
+        btnSendChanges.setEnabled(enable);
+        if (enable) {
+            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+        } else {
+            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+        }
+    }
+    
+    /**
+     * Adds the listeners used in the panels.
+     */
+    private void addChangeListeners() {
+        timeChannels.createInitialCachedValues();
+        timeChannels.addListeners();
+        dataAcquisition.createInitialCachedValues();
+        periods.createInitialCachedValues();
+        periods.addListeners();
+    }
+    
+    /**
+     * Updates the listeners used in the panels.
+     */
+    private void updateChangeListeners() {
+        timeChannels.updateListeners();
+        dataAcquisition.updateListeners();
+        periods.updateListeners();
+    }
+    
 }

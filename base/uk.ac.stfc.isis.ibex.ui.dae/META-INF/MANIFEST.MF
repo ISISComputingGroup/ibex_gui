@@ -24,3 +24,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae,
  uk.ac.stfc.isis.ibex.ui.dae.experimentsetup
+Import-Package: uk.ac.stfc.isis.ibex.instrument
