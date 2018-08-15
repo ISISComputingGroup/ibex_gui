@@ -4,6 +4,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
+/**
+ * Abstract class for a run control view model.
+ *
+ */
 public abstract class AbstractRunControlViewModel extends ErrorMessageProvider implements IRuncontrol {
 	
 	private Double lowLimit;
@@ -36,7 +40,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	
 	/**
      * Set the new low limit for run control.
-     * @param lowLimitText the new value
+     * @param lowLimit the new value
      */
 	@Override
 	public void setRunControlLowLimit(Double lowLimit) {
@@ -67,9 +71,9 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	 * Sets the low limit from a string.
 	 * @param lowLimit the limit as a string
 	 */
-	public void setRunControlLowLimitStr(String value) {
+	public void setRunControlLowLimitStr(String lowLimit) {
 		try {
-			setRunControlLowLimit(Double.valueOf(value));
+			setRunControlLowLimit(Double.valueOf(lowLimit));
 		} catch (NumberFormatException | NullPointerException e) {
 			setRunControlLowLimit(null);
 		}
@@ -77,7 +81,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 
     /**
      * Set the high limit for run control.
-     * @param highLimitText the new value
+     * @param highLimit the new value
      */
 	@Override
 	public void setRunControlHighLimit(Double highLimit) {
@@ -108,9 +112,9 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	 * Sets the high limit from a string.
 	 * @param highLimit the limit as a string
 	 */
-	public void setRunControlHighLimitStr(String value) {
+	public void setRunControlHighLimitStr(String highLimit) {
 		try {
-			setRunControlHighLimit(Double.valueOf(value));
+			setRunControlHighLimit(Double.valueOf(highLimit));
 		} catch (NumberFormatException | NullPointerException e) {
 			setRunControlHighLimit(null);
 		}

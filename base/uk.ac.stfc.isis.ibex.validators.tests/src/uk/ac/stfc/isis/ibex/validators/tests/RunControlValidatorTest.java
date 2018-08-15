@@ -56,6 +56,7 @@ public class RunControlValidatorTest {
      * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
      */
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void valid_limits() {
         checkPassedWithMessage(0., 10., RunControlValidator.NO_ERROR);
     }
@@ -65,6 +66,7 @@ public class RunControlValidatorTest {
      * .
      */
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void invalid_high_limit_lower() {
         checkFailedWithMessage(2.5, 1.0, RunControlValidator.LOW_LIMIT_LESS);
     }
@@ -74,6 +76,7 @@ public class RunControlValidatorTest {
      * .
      */
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void valid_limits_equal() {
         checkPassedWithMessage(5.0, 5.0, RunControlValidator.NO_ERROR);
     }

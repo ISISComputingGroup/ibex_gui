@@ -98,7 +98,7 @@ public class GroupRow extends Composite {
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
                 BeanProperties.value("runcontrolState").observe(block), null, symbolStrategy);
-
+        
         UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
         fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 

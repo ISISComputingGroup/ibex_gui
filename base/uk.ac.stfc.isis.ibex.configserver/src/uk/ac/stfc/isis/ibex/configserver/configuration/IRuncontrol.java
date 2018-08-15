@@ -10,40 +10,40 @@ public interface IRuncontrol {
      * 
      * @return whether run-control is enabled
      */
-    public Boolean getRunControlEnabled();
+    Boolean getRunControlEnabled();
 	
     /**
      * Sets whether run-control should be enabled.
      * 
-     * @param runcontrol whether run-control should be enabled
+     * @param enabled whether run-control should be enabled
      */
-    public void setRunControlEnabled(Boolean enabled);
+    void setRunControlEnabled(Boolean enabled);
     
     /**
      * Gets the low limit for run-control.
      * 
      * @return the low limit for run-control
      */
-    public Double getRunControlLowLimit();
+    Double getRunControlLowLimit();
 
     /**
      * Sets the low limit for run-control.
      * 
      * @param rclow the new low limit for run-control
      */
-    public void setRunControlLowLimit(Double rclow);
+    void setRunControlLowLimit(Double rclow);
 
     /**
      * Gets the high limit for run-control.
      * 
      * @return the high limit for run-control
      */
-    public Double getRunControlHighLimit();
+    Double getRunControlHighLimit();
 
     /**
      * Sets the high limit for run-control.
      * 
      * @param rchigh the new high limit for run-control
      */
-    public void setRunControlHighLimit(Double rchigh);
+    void setRunControlHighLimit(Double rchigh);
 }

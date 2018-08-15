@@ -32,7 +32,18 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 
     private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
-
+    
+    /**
+     * A class that creates the run control settings table.
+     * 
+     * @param parent
+     *              The parent to which the table belongs.
+     * @param style
+     *              The SWT style.
+     * @param tableStyle
+     *              The SWT table style.
+     *                  
+     */
     public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
         super(parent, style, DisplayBlock.class, tableStyle);
 

@@ -82,6 +82,9 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
     	}
     }
     
+    /**
+     * Sets the changes to the block.
+     */
     public void sendChanges() {
     	if (source != null) {
     		RunControlSetter setter = setters.get(source);
