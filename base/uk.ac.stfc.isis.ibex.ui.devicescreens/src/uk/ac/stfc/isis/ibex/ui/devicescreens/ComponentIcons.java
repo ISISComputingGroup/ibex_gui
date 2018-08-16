@@ -161,6 +161,8 @@ public final class ComponentIcons {
             	return "syringe_pump";
             case KEYENCE:
             	return "keyence";
+            case OSCILLOSCOPE:
+            	return "oscilloscope";
             default:
                 return "cog";
         }

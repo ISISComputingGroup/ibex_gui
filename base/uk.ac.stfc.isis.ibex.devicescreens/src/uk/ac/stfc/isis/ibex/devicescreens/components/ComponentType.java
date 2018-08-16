@@ -145,7 +145,9 @@ public enum ComponentType {
     /** Keyence micrometer. */
     KEYENCE,
 	/** Generic Power Supply. */
-    POWER_SUPPLY;
+    POWER_SUPPLY,
+    /** Oscilloscope */
+    OSCILLOSCOPE;
 
 
 	private Target target;

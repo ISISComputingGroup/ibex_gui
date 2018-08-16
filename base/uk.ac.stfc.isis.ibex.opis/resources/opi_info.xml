@@ -2496,7 +2496,7 @@
         <categories>
           <category>Oscilloscopes</category>
         </categories>
-        <type>UNKNOWN</type>
+        <type>OSCILLOSCOPE</type>
         <path>TDS3000_trace.opi</path>
         <description>The trace shown by a TDS 3000 series oscilloscope</description>
         <macros>
