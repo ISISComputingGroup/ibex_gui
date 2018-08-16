@@ -432,9 +432,8 @@
       <key>Moxa E1210</key>
       <value>
         <categories>
-          <category>Uncategorised devices</category>
         </categories>
-        <type>MOXA1210</type>
+        <type>MOXA_1210</type>
         <path>moxa1210.opi</path>
         <description>The OPI for a Moxa E1210 remote I/O.</description>
         <macros>
