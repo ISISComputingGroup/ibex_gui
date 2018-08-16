@@ -363,10 +363,10 @@ public class NicosModelTest {
         connectSuccessfully();
         
         when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(null));
-
+        
         model.updateScriptStatus();
         
-        assertEquals(NicosErrorState.NO_RESPONSE, model.getError());
+        assertEquals(NicosErrorState.CONNECTION_FAILED, model.getError());
     }
     
     @Test

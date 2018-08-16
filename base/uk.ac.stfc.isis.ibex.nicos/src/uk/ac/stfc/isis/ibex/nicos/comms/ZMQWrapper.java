@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * A class that wraps the specific ZMQ library to aid in testing.
  */
-public final class ZMQWrapper {
+public class ZMQWrapper {
 	
 	private final Logger logger = IsisLog.getLogger(getClass());
 

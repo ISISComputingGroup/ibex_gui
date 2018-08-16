@@ -275,10 +275,8 @@ public class NicosModel extends ModelObject {
      */
 	public void updateScriptStatus() {
 		SentMessageDetails<ReceiveScriptStatus> message = sendMessageToNicos(new GetScriptStatus());
-		
 		ReceiveScriptStatus scriptStatusSentMessageDetails = message.getResponse();
 		if (scriptStatusSentMessageDetails == null || !message.isSent()) {
-			setError(NicosErrorState.NO_RESPONSE);
 			disconnect();  //  We should always be able to get a response from this message. If we can't, NICOS is probably down.
 		} else {
             // Status is a tuple (list) of 2 items - execution status and line number.
