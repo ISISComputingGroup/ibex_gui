@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +30,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
-import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialogUtils;
 
 /**
  * Dialog for asking the user to select a multiple configurations or components.
@@ -41,11 +41,6 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      * select from.
      */
     protected final Collection<ConfigInfo> available;
-
-    /**
-     * A class containing utilities for selection dialogues.
-     */
-    private SelectionDialogUtils selectionDialogUtils = new SelectionDialogUtils();
 
     /**
      * Is the dialog to do with components? (as opposed to configs)
@@ -88,25 +83,25 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         this.includeCurrent = includeCurrent;
         this.extraListOptions = SWT.MULTI;
 	}
-
+	
 	/**
 	 * @return A collection of the configurations/components that the user has selected.
 	 */
 	public Collection<String> selectedConfigs() {
 		return selected;
 	}
-
+	
 	@Override
 	protected void okPressed() {
         selected = asString(items.getSelection());
 		super.okPressed();
 	}
-
+	
 	@Override
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, false);
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
 
         String[] names;
         if (includeCurrent) {
@@ -114,10 +109,10 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         } else {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
-        names = selectionDialogUtils.sortSelected(names);
+		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         setItems(names);
 	}
-
+	
     /**
      * @return A string corresponding to the type of item in the list.
      */

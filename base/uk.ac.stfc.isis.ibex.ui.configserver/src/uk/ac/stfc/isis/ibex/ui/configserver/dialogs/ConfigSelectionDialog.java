@@ -44,7 +44,7 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
         super(parentShell, title, available, isComponent, includeCurrent);
         this.extraListOptions = 0;
 	}
-
+	
 	/**
      * Get the name of the configuration/component that the user has chosen.
      * 
@@ -71,5 +71,4 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
 
         return singular;
     }
-
 }

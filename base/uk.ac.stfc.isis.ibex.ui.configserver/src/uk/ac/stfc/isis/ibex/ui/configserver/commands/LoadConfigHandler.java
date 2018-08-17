@@ -27,7 +27,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -65,7 +64,6 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
-                Configurations.getInstance().addRecent(config);
             } else {
                 new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
