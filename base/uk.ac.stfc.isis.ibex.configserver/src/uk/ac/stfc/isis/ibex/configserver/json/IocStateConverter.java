@@ -21,28 +21,28 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
-/**
- * Converts a JSON representation of the state of an IOC into a java object representation.
- */
 public class IocStateConverter extends Converter<Map<String, IocParameters>, Collection<IocState>> {
-	/**
-	 * Converts a JSON representation of the state of an IOC into a java object representation.
-	 * 
-	 * @param value the value to convert
-	 * 
-	 * @return a collection of converted values
-	 */
+	
 	@Override
 	public Collection<IocState> convert(Map<String, IocParameters> value) throws ConversionException {
-		return value.entrySet().stream()
-				.map(entry -> new IocState(entry.getKey(), entry.getValue().isRunning(), entry.getValue().getDescription()))
-				.collect(Collectors.toSet());
+		return Lists.newArrayList(Iterables.transform(value.entrySet(), new Function<Map.Entry<String, IocParameters>, IocState>() {
+			@Override
+			public IocState apply(Entry<String, IocParameters> entry) {
+				String name = entry.getKey();
+                IocParameters parameters = entry.getValue();
+                return new IocState(name, parameters.isRunning(), parameters.getDescription(), true);
+			}
+		}));
 	}
 }

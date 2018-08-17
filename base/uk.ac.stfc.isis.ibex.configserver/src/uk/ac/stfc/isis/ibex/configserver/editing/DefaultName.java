@@ -19,7 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,15 +30,21 @@ import java.util.regex.Pattern;
  * Provides a default name, appended with a number if needed, for adding or
  * copying items. Separator and whether or not to use brackets can be
  * configured.
+ *
  */
 public class DefaultName {
 
     private static final String NUMBER_REGEX = "(\\d+)";
+    private static final String OPENING_GROUP_REGEX = "?(";
+    private static final String CLOSING_GROUP_REGEX = ")?";
 
+	private final String name;
     private final String separator;
     private final String openingBracket;
     private final String closingBracket;
-	private final String nameRoot;
+    private final String openingBracketRegex;
+    private final String closingBracketRegex;
+	private final Pattern namePattern;
 	
     /**
      * Provides an object that gives default names such as NAME, NAME_1, NAME_2
@@ -60,17 +69,23 @@ public class DefaultName {
      *            True if brackets are desired
      */
     public DefaultName(String name, String separator, boolean brackets) {
+        this.name = name;
         this.separator = separator;
-        
+
         if (brackets) {
             openingBracket = "(";
             closingBracket = ")";
+            openingBracketRegex = "\\" + openingBracket;
+            closingBracketRegex = "\\" + closingBracket;
         } else {
             openingBracket = "";
             closingBracket = "";
+            openingBracketRegex = "";
+            closingBracketRegex = "";
         }
 
-        nameRoot = getNameRoot(name);
+        namePattern = Pattern.compile(getNameRoot(name) + OPENING_GROUP_REGEX + separator + openingBracketRegex
+                + NUMBER_REGEX + closingBracketRegex + CLOSING_GROUP_REGEX + "$");
 	}
 	
     /**
@@ -82,13 +97,34 @@ public class DefaultName {
      *          A unique name.
      */
 	public String getUnique(Collection<String> existingNames) {
-        Integer i = 1;
-        String proposedName = nameRoot;
-        while (existingNames.contains(proposedName)) {
-        	proposedName = String.format("%s%s%s%s%s", nameRoot, separator, openingBracket, i, closingBracket);
-        	i++;
-        }
-        return proposedName;
+		return uniqueName(existingNames);
+	}
+	
+	private String uniqueName(Collection<String> names) {
+		Set<Integer> taken = new HashSet<>();
+		for (String name : names) {
+            Matcher match = namePattern.matcher(name);
+			if (match.matches()) {
+                String number = match.group(2);
+				Integer count = number != null ? Integer.parseInt(number) : 0;
+				taken.add(count);
+			}
+		}
+		
+		if (taken.isEmpty() || !taken.contains(0)) {
+			return name;
+		}
+
+        return getNameRoot(name) + separator + openingBracket + nextAvailable(taken) + closingBracket;
+	}
+
+	private String nextAvailable(Set<Integer> taken) {
+		Integer i = 1;
+		while (taken.contains(i)) {
+			i++;
+		}
+		
+		return i.toString();
 	}
 
     /**
@@ -99,9 +135,45 @@ public class DefaultName {
      * @return The name without the suffix
      */
     private String getNameRoot(String name) {
-        Pattern pattern = Pattern.compile(
-        		String.format("%s(%s%s%s)$", separator, Pattern.quote(openingBracket), NUMBER_REGEX, Pattern.quote(closingBracket)));
+        Pattern pattern = Pattern
+                .compile("(" + separator + openingBracketRegex + NUMBER_REGEX + closingBracketRegex + ")" + "$");
         Matcher match = pattern.matcher(name);
-        return match.find() ? name.substring(0, match.start()) : name;
+        String nameRoot = name;
+        if (match.find()) {
+            nameRoot = replaceLast(name, match.group(1), "");
+        }
+        return nameRoot;
+    }
+    
+    /**
+     * Replaces last occurrence of the target by the replacement in the given word, assuming the word ends with the target.
+     * @param word
+     *              The word to act upon.
+     * @param target
+     *              The sequence to change.
+     * @param target
+     *              The replacement sequence.
+     * @return
+     *         The new word with the replaced last sequence.
+     */
+    private String replaceLast(String word, String target, String replacement) {
+        ArrayList<String> substrings = new ArrayList<String>();
+        boolean finished = false;
+        while (!finished) {
+            String substring = word.substring(0, word.lastIndexOf(target));
+            word = word.substring(word.lastIndexOf(target));
+            if (word.equals(target)) {
+                substring.replace(target, replacement);
+                substrings.add(substring);
+                finished = true;
+            } else {
+                substrings.add(substring);
+            }
+        }
+        word = "";
+        for (String string : substrings) {
+            word += string;
+        }
+        return word;
     }
 }

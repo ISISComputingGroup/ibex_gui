@@ -30,7 +30,6 @@
 package uk.ac.stfc.isis.ibex.configserver.recent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
@@ -38,27 +37,23 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
-
-
 /**
  * Class to manage the list of recently used configurations.
  *
  */
 public class RecentConfigList {
-    /** The configuration server object. */
 	private List<String> recent;
-	private static final int MRU_LENGTH = 6;
+	private static final int MRU_LENGTH = 4;
 	private static final String MRU_PREFS = "config-mru-slot-";
 	private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.configserver";
-
+	
 	/**
      * Constructor - loads the saved list from preferences.
      */
 	public RecentConfigList() {
 		load();
 	}
-
+	
 	/**
      * Add an item.
      * 
@@ -71,7 +66,7 @@ public class RecentConfigList {
 			if (current.equals(item)) {
 				if (!first) {
 					// Move to first in the list
-					recent.remove(current);
+					recent.remove(item);
 					recent.add(0, item);
 					save();
 				}
@@ -88,143 +83,13 @@ public class RecentConfigList {
 		}
 		save();
 	}
-
+	
 	/**
-	 * Allows to convert a list of configuration names to a collection of information on the configurations.
-	 * 
-	 * @param configNames
-	 *                 The list of configuration names.
-	 * @param configsInServer
-	 *                 The collection of information on the configurations in the server.
-	 * @return
-	 *                 The collection of information on the configurations passed to the method.
-	 */
-	public Collection<ConfigInfo> configNamesToConfigInfos(List<String> configNames, Collection<ConfigInfo> configsInServer) {
-        Collection<ConfigInfo> recentConfigs = new ArrayList<ConfigInfo>();
-        for (String configName : configNames) {
-            for (ConfigInfo config : configsInServer) {
-                if (config.name().equals(configName)) {
-                    recentConfigs.add(config);
-                }
-            }
-        }
-	    return recentConfigs;
-	}
-
-	/**
-	 * Gets the history of the passed configuration.
-	 * 
-	 * @param config
-	 *             The configuration whose history we want to know about.
-	 * @return
-	 *             The history.
-	 */
-	private Collection<String> getHistory(ConfigInfo config) {
-	    return config.getHistory();
-	}
-
-	/**
-	 * Gets the date at which the passed configuration was last modified. This is the last date in it's history.
-	 * 
-	 * @param config
-	 *             The configuration which we want to know about.
-	 * @return
-	 *             The time stamp of when the configuration was last modified.
-	 */
-	public String getLastModified(ConfigInfo config) {
-	    Collection<String> history = getHistory(config);
-	    String timestamp = "";
-	    if (!history.isEmpty()) {
-    	    for (String date : history) {
-    	            timestamp = date;
-    	    }
-	    }
-	    return timestamp;
-	}
-
-	/**
-     * Clears the list of recently used configuration names and time stamps of when they were last loaded.
-     */
-    public void clear() {
-        recent.clear();
-        save();
-    }
-
-    /**
-     * Returns the list of recently used configuration names without the current configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return
-     *          The list of recently used configuration names without the current configuration.
-     */
-    public List<String> getWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        List<String> recentWithoutCurrent = (List<String>) ConfigInfo.namesWithoutCurrent(configNamesToConfigInfos(recent, configsInServer));
-        return recentWithoutCurrent;
-    }
-
-    /**
-     * Returns the list of time stamps of the recently used configuration without that of the current configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return
-     *          The list of time stamps of the recently used configuration without that of the current configuration.
-     */
-    public List<String> getLastModifiedTimestampsWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        List<String> timestamps = new ArrayList<String>();
-        Collection<ConfigInfo> configsWithoutCurrent = configNamesToConfigInfos(getWithoutCurrent(configsInServer), configsInServer);
-        for (ConfigInfo config : configsWithoutCurrent) {
-            timestamps.add(getLastModified(config));
-        }
-        return timestamps;
-    }
-
-	/**
-	 * Returns the list of recently used configuration names.
-	 * 
-     * @return 
-     *          The list of recently used configuration names.
+     * @return Returns the list of recently used configuration names.
      */
 	public List<String> get() {
-	    return recent;
+		return recent;
 	}
-
-	/**
-     * Returns the list of time stamps of the recently used configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return
-     *          The list of time stamps of the recently used configuration.
-     */
-    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
-        List<String> timestamps = new ArrayList<String>();
-        Collection<ConfigInfo> configs = configNamesToConfigInfos(recent, configsInServer);
-        for (ConfigInfo config : configs) {
-            timestamps.add(getLastModified(config));
-        }
-        return timestamps;
-    }
-
-	/**
-     * Removes an item from list of recently used configuration names and time stamps of when they were last loaded.
-     * 
-     * @param item 
-     *              The item to remove.
-     */
-    public void remove(String item) {
-        String toBeDeleted = "";
-        for (String current : recent) {
-            if (current.equals(item)) {
-                toBeDeleted = current;
-            }
-        }
-        if (!toBeDeleted.isEmpty()) {
-            recent.remove(toBeDeleted);
-        }
-        save();
-    }
 
     /**
      * Save the list.
@@ -241,7 +106,7 @@ public class RecentConfigList {
 			e.printStackTrace();
 		}
 	}
-
+	
     /**
      * Load the list.
      */

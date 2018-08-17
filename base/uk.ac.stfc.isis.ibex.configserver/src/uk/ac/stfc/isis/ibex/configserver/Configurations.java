@@ -27,7 +27,6 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.configserver.internal.LoggingConfigurationObserver;
@@ -120,78 +119,30 @@ public class Configurations extends Closer implements BundleActivator {
 	public Editing edit() {
 		return editing;
 	}
-
+	
     /**
      * @return IOC information
      */
 	public IocControl iocControl() {
 		return iocControl;
 	}
-
+	
     /**
-     * Returns the names of recently used configurations.
-     * 
-     * @return the names of recently used configurations.
+     * @return the recently used configurations
      */
-	public List<String> getRecent() {
+	public List<String> recent() {
 		return recent.get();
 	}
-
-	/**
-     * Returns the names of recently used configurations without that of the current configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return 
-     *                  The names of recently used configurations without that of the current configuration.
-     */
-    public List<String> getRecentWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        return recent.getWithoutCurrent(configsInServer);
-    }
-
-    /**
-     * Returns the time stamp of when recently used configurations were last modified.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return 
-     *                  The names of recently used configurations.
-     */
-    public List<String> getLastModifiedTimestamps(Collection<ConfigInfo> configsInServer) {
-        return recent.getLastModifiedTimestamps(configsInServer);
-    }
-
-    /**
-     * Returns the time stamp of when recently used configurations were last modified without that of the current configuration.
-     * 
-     * @param configsInServer
-     *                 The collection of information on the configurations in the server.
-     * @return 
-     *                 The names of recently used configurations without that of the current configuration.
-     */
-    public List<String> getLastModifiedTimestampsWithoutCurrent(Collection<ConfigInfo> configsInServer) {
-        return recent.getLastModifiedTimestampsWithoutCurrent(configsInServer);
-    }
 
     /**
      * Add a configuration to the "recently used" list.
      * 
-     * @param configName
-     *                 The name to add.
+     * @param configName the name to add
      */
 	public void addRecent(String configName) {
 		recent.add(configName);
 	}
 	
-	/**
-     * Removes a configuration from the "recently used" list.
-     * 
-     * @param configName the name to add
-     */
-    public void removeRecent(String configName) {
-        recent.remove(configName);
-    }
-
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
