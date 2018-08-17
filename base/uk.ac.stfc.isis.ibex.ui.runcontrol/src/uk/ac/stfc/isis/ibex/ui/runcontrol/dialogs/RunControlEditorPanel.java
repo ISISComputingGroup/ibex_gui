@@ -147,7 +147,7 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreSingle.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.resetCurrentBlock();
+                viewModel.resetFromSource();
             }
         });
         btnRestoreSingle.setEnabled(false);
@@ -195,13 +195,12 @@ public class RunControlEditorPanel extends Composite {
     	
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSend),
                 BeanProperties.value("sendEnabled").observe(viewModel));
-    	
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtLowLimit),
-                BeanProperties.value("txtLowLimit").observe(viewModel));
+                BeanProperties.value(RunControlViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHighLimit),
-                BeanProperties.value("txtHighLimit").observe(viewModel));
+                BeanProperties.value(RunControlViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
-                BeanProperties.value("rcEnabled").observe(viewModel));
+                BeanProperties.value(RunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
     }
 	
     private void setAllEnabled(boolean enabled) {
@@ -219,7 +218,7 @@ public class RunControlEditorPanel extends Composite {
      *            The new block to examine.
      */
 	public void setBlock(DisplayBlock block) {
-        viewModel.setBlock(block);
+        viewModel.setSource(block);
 
 		if (block == null) {
 			name.setText("");

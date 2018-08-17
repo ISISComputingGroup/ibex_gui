@@ -32,7 +32,18 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 
     private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
-
+    
+    /**
+     * A class that creates the run control settings table.
+     * 
+     * @param parent
+     *              The parent to which the table belongs.
+     * @param style
+     *              The SWT style.
+     * @param tableStyle
+     *              The SWT table style.
+     *                  
+     */
     public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
         super(parent, style, tableStyle);
 
@@ -86,11 +97,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addEnabled() {
-        createColumn("Enabled", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("enabled"), Arrays.asList(rowDecorator)) {
+        createColumn("Enabled", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlEnabled"), Arrays.asList(rowDecorator)) {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getEnabled().toString();
+                            return setting.getRunControlEnabled().toString();
                         }
                         return "";
                     }
@@ -98,11 +109,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addLowLimit() {
-        createColumn("Low Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("lowLimit"), Arrays.asList(rowDecorator)) {
+        createColumn("Low Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlLowLimit"), Arrays.asList(rowDecorator)) {
                     @Override
 					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getLowLimit();
+                            return setting.getRunControlLowLimit().toString();
                         }
                         return "";
                     }
@@ -110,12 +121,12 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addHighLimit() {
-        createColumn("High Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("highLimit"),
+        createColumn("High Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlHighLimit"),
                 Arrays.asList(rowDecorator)) {
             @Override
 			public String stringFromRow(DisplayBlock setting) {
                 if (setting != null) {
-                    return setting.getHighLimit();
+                    return setting.getRunControlHighLimit().toString();
                 }
                 return "";
             }

@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
+package uk.ac.stfc.isis.ibex.validators;
 
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * SWT verifier that checks whether text input can be parsed as a double or not.
  */
-class NumericalVerifyListener implements VerifyListener {
+public class NumericalVerifyListener implements VerifyListener {
 
     /**
      * {@inheritDoc}
