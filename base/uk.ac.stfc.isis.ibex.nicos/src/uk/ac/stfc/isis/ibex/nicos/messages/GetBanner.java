@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Command that gets banner information from NICOS.
  */
-public class GetBanner extends NICOSMessage<String> {
+public class GetBanner extends NICOSMessage<String, ReceiveBannerMessage> {
 
     /**
      * Create the get banner command.

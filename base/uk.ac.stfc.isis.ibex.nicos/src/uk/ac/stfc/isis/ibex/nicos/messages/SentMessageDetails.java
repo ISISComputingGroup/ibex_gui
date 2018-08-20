@@ -24,23 +24,27 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 /**
  * Class to capture details about having sent a message. This is returned when a
  * message is sent to NICOS.
+ * 
+ * @param <T> The type of response to expect.
  */
-public final class SentMessageDetails {
+public final class SentMessageDetails<T> {
 
     private boolean isSent;
     private String failureReason;
-    private ReceiveMessage response;
+    private T response;
 
     /**
      * Creates the message details when the send fails.
      *
      * @param failureReason
      *            the failure reason
+     *            
+     * @param <T> The type of response to expect.
      * 
      * @return the failure send message details
      */
-    public static SentMessageDetails createSendFail(String failureReason) {
-        return new SentMessageDetails(false, failureReason, null);
+    public static <T> SentMessageDetails<T> createSendFail(String failureReason) {
+        return new SentMessageDetails<T>(false, failureReason, null);
     }
 
     /**
@@ -48,11 +52,13 @@ public final class SentMessageDetails {
      * 
      * @param received
      *            The message received from NICOS.
+     * 
+     * @param <T> The type of response to expect.
      *
      * @return the send message details
      */
-    public static SentMessageDetails createSendSuccess(ReceiveMessage received) {
-        return new SentMessageDetails(true, "", received);
+    public static <T> SentMessageDetails<T> createSendSuccess(T received) {
+        return new SentMessageDetails<T>(true, "", received);
     }
 
     /**
@@ -65,7 +71,7 @@ public final class SentMessageDetails {
      * @param response
      *            the message that was originally sent to NICOS.
      */
-    private SentMessageDetails(boolean isSent, String failureReason, ReceiveMessage response) {
+    private SentMessageDetails(boolean isSent, String failureReason, T response) {
         this.isSent = isSent;
         this.failureReason = failureReason;
         this.response = response;
@@ -74,7 +80,7 @@ public final class SentMessageDetails {
     /**
      * @return the message that was sent and it's response.
      */
-    public ReceiveMessage getResponse() {
+    public T getResponse() {
         return response;
     }
 
