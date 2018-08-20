@@ -20,18 +20,21 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
@@ -48,14 +51,26 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private CLabel banner;
 	
+    private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
+	
+    protected static final Font MESSAGE_FONT = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
+    private static final String DISCONNECTED_MESSAGE = "IBEX SERVER DISCONNECTED\nPlease talk to your point of contact";
+    private static final String CONNECTED_NO_GROUPS_MESSAGE = "IBEX SERVER CONNECTED:\nNo Groups Present";
+    
+    private enum ConnectionStatus {
+    	EMPTY(-1), DISCONNECTED(0), CONNECTED_NO_GOUPS(1);
+    	
+    	ConnectionStatus(int status) {
+    	}
+    }
+	
     private Menu contextMenu;
 	
 	private boolean showHiddenBlocks = false;
 	
-	private Collection<DisplayGroup> displayGroups;
-
-	private static final int GROUP_HEIGHT = 235;
+	private Optional<List<DisplayGroup>> displayGroups;
 	
+	private static final int MIN_GROUP_HEIGHT = 100;
     /**
      * Constructor for the groups panel.
      * 
@@ -68,14 +83,16 @@ public class GroupsPanel extends Composite {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL);
+		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL | SWT.V_SCROLL);
 		mainComposite = new Composite(scrolledComposite, SWT.NONE);
 		mainComposite.setLayout(new GridLayout(1, false));
 		scrolledComposite.setContent(mainComposite);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setMinHeight(125);
 		
 		configureMenu();
-		//Leave text blank
-		showBanner("");
+
+		showBanner(ConnectionStatus.EMPTY);
 
 	}
 
@@ -84,6 +101,21 @@ public class GroupsPanel extends Composite {
         contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
 		scrolledComposite.setMenu(contextMenu);
+	}
+	
+	private void selectBanner(final Optional<List<DisplayGroup>> groups) {
+		clear();
+		if (!groups.isPresent()) {
+			showBanner(ConnectionStatus.DISCONNECTED);
+			return;
+		} else if (groups.isPresent() && groups.get().isEmpty()) {
+			showBanner(ConnectionStatus.CONNECTED_NO_GOUPS);
+			return;
+		} else {
+			addGroups();
+			setRows();
+			layoutGroups();
+		}
 	}
 
     /**
@@ -108,10 +140,7 @@ public class GroupsPanel extends Composite {
 		
 		showHiddenBlocks = showHidden;
 
-		clear();
-		addGroups();
-		setRows();
-		layoutGroups();
+		selectBanner(displayGroups);
 	}
 	
 	/**
@@ -119,32 +148,37 @@ public class GroupsPanel extends Composite {
 	 * 
 	 * @param groups The new set of groups.
 	 */
-	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
-	    
+	public synchronized void updateGroups(final Optional<List<DisplayGroup>> groups) {
+		
 		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups, showHiddenBlocks);
 		
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
-				clear();
-				if (groups.isEmpty()) {
-					// Leave text blank
-					showBanner("");
-					return;
-				}
-				addGroups();
-				setRows();
-				layoutGroups();
+				makeBanner(groups);
+			}
+
+			private void makeBanner(final Optional<List<DisplayGroup>> groups) {
+				selectBanner(groups);
 			}
 		});
 	}
 
-	private void showBanner(String text) {
+	private void showBanner(ConnectionStatus status) {
 		banner = new CLabel(scrolledComposite, SWT.NONE);
-		banner.setLeftMargin(5);
+		banner.setLeftMargin(50);
+		banner.setFont(MESSAGE_FONT);		
 		scrolledComposite.setContent(banner);
 		banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		banner.setText(text);
+		banner.setAlignment(SWT.CENTER);
+		if (status == ConnectionStatus.EMPTY) {
+			banner.setText("");
+		} else if (status == ConnectionStatus.CONNECTED_NO_GOUPS) {
+			banner.setText(CONNECTED_NO_GROUPS_MESSAGE);
+		} else if (status == ConnectionStatus.DISCONNECTED) {
+			banner.setText(DISCONNECTED_MESSAGE);
+			banner.setForeground(RED);
+		}
 		banner.pack();
 	}
 
@@ -159,7 +193,7 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private void addGroups() {
-		for (DisplayGroup group : displayGroups) {
+		for (DisplayGroup group : displayGroups.orElseThrow(IllegalStateException::new)) {
 		    groups.add(groupWidget(group));
 		}
 	}
@@ -171,8 +205,7 @@ public class GroupsPanel extends Composite {
 	private Group groupWidget(DisplayGroup group) {
         Group groupWidget = new Group(mainComposite, SWT.NONE, group, this);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd.heightHint = GROUP_HEIGHT;
-		gd.minimumHeight = gd.heightHint;
+		gd.minimumHeight = MIN_GROUP_HEIGHT;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
         groupWidget.setMenu(contextMenu);

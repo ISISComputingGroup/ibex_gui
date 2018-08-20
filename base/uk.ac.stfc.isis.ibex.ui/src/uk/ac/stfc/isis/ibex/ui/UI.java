@@ -50,6 +50,11 @@ public class UI extends AbstractUIPlugin implements IStartup {
 	public UI() {
 	}
 	
+	/**
+	 * Switch perspectives.
+	 *
+	 * @param perspectiveID the perspective ID to switch to
+	 */
 	public void switchPerspective(final String perspectiveID) {
 		Display.getDefault().syncExec(new Runnable() {
 		    @Override
@@ -104,8 +109,11 @@ public class UI extends AbstractUIPlugin implements IStartup {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void earlyStartup() {
-        waiting = new WaitFor();
 	}
+
 }

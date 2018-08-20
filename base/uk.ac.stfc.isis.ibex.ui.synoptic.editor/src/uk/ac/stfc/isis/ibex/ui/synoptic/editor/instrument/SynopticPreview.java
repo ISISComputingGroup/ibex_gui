@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
  * Provides a preview of the final synoptic.
  * 
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 
@@ -80,6 +79,7 @@ public class SynopticPreview extends Dialog {
 	}
 
 	@Override
+	@SuppressWarnings("checkstyle:magicnumber")
 	protected Point getInitialSize() {
 		return new Point(1200, 500);
 	}

@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
@@ -49,23 +49,25 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         configs = new HashMap<String, Configuration>();
 	}	
 	
-    /**
-     * {@inheritDoc}
-     */
+	/**
+	 * Show the load configuration dialogue and if it is conflict free load it into the instrument.
+	 * 
+	 * @param shell the shell
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
+	public void safeExecute(Shell shell) {
         updateObservers();
         ConfigSelectionDialog dialog =
-                new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false, false);
+                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
             } else {
-                new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
+                new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-                safeExecute(event);
+                execute(shell);
             }
 		}
 	}

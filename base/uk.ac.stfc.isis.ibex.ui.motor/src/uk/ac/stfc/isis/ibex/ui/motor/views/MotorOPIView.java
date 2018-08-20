@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import org.apache.logging.log4j.Logger;
+import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -37,6 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 public class MotorOPIView extends OpiTargetView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
+	private String motorName;
     private static final Logger LOG = IsisLog.getLogger(MotorOPIView.class);
 	
     /**
@@ -49,16 +51,6 @@ public class MotorOPIView extends OpiTargetView {
 
     /** The ID for the view. */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView"; //$NON-NLS-1$
-	
-    /**
-     * Sets the motor name.
-     *
-     * @param motorName the new motor name
-     */
-	private void setMotorName(String motorName) {
-		macros().put("P", Instrument.getInstance().currentInstrument().pvPrefix());
-		macros().put("MM", motorName);		
-	}
 
 	@Override
 	protected Path opi() {
@@ -72,11 +64,19 @@ public class MotorOPIView extends OpiTargetView {
 	 * @param motorName Name of the motor being opened.
 	 */
     public void displayOpi(String title, String motorName) {
-    	setMotorName(motorName);
+    	this.motorName = motorName;
         try {
 			OpiTargetView.displayOpi(new OpiTarget(title, MOTOR_OPI), ID);
 		} catch (OPIViewCreationException e) {
 			LOG.error("Unable to create motor OPI");
 		}
     }
+
+	@Override
+	public MacrosInput macros() {
+		MacrosInput macros = super.macros();
+		macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
+		macros.put("MM", motorName);	
+		return macros;
+	}
 }

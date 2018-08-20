@@ -40,7 +40,6 @@ public class ComponentlessInstrument implements Synoptic {
 
 	@Override
     public SynopticDescription getDescription() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

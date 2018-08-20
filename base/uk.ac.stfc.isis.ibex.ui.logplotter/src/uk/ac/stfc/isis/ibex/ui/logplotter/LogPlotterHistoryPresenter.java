@@ -19,22 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
+import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
+import org.csstudio.trends.databrowser2.model.ModelItem;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -43,29 +46,22 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	
 	/**
-	 * @return An arraylist of all the current databrowsers.
+	 * @return A stream of all the current DataBrowserEditors.
 	 */
-	private ArrayList<DataBrowserEditor> getCurrentDataBrowsers() {
-		ArrayList<DataBrowserEditor> dataBrowserEditors = new ArrayList<>();
+	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
+		Stream<IEditorReference> editorRefs = Arrays.stream(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences());
 		
-		IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
-		
-		for (IEditorReference editorRef : editorRefs) {
-			IEditorPart editor = editorRef.getEditor(false);
-			if (editor instanceof DataBrowserEditor) {
-				dataBrowserEditors.add((DataBrowserEditor) editor);
-			}
-		}
-		return dataBrowserEditors;
+		return editorRefs.map(e -> e.getEditor(false))
+						 .filter(e -> e instanceof DataBrowserEditor)
+						 .map(e -> (DataBrowserEditor) e);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public ArrayList<String> getCurrentDisplays() {
-		ArrayList<String> editorNames = new ArrayList<>();
-		for (DataBrowserEditor editor : getCurrentDataBrowsers()) {
-			editorNames.add(editor.getTitle());
-		}
-		return editorNames;
+	public Stream<String> getDataBrowserTitles() {
+		return getCurrentDataBrowsers().map(e -> e.getTitle());
 	}
 	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
@@ -73,16 +69,22 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	        return;
 	    }
 		Model model = editor.getModel();
+		model.setSaveChanges(false);
+		model.setArchiveRescale(ArchiveRescale.NONE);
+		
 		// Add received items
 	    final double period = Preferences.getScanPeriod();
 	    try {
-	    	
-	    	AxisConfig axis = model.addAxis(displayName);
+	    	// Create axis
+			AxisConfig axis = new AxisConfig(displayName);
 			axis.setAutoScale(false);
-			
-	    	final PVItem item = new PVItemWithUnits(displayName, pvAddress, period, axis);
+			model.addAxis(axis);
+	    	
+			// Create trace
+	    	final PVItem item = new PVItem(pvAddress, period);
+	    	item.setDisplayName(displayName);
 			item.useDefaultArchiveDataSources();
-			
+
 			// Add item to new axes
 			item.setAxis(axis);
 			model.addItem(item);
@@ -93,10 +95,11 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    }
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void newDisplay(String pvAddress, final String displayName) {	
-		UI.getDefault().switchPerspective(Perspective.ID);
-		
+	public void newDisplay(String pvAddress, final String displayName) {		
 	    // Create new editor
 	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
 	    	@Override
@@ -108,22 +111,25 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    addPVToEditor(pvAddress, displayName, editor);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addToDisplay(String pvAddress, String display, String presenterName) {
-		UI.getDefault().switchPerspective(Perspective.ID);
+		List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
+				  .collect(Collectors.toList());
 		
-		DataBrowserEditor editor = null;
-		for (DataBrowserEditor e : getCurrentDataBrowsers()) {
-			if (e.getTitle().equals(presenterName)) {
-				editor = e;
-			}
-		}
-		
-		if (editor == null) {
+		if (editors.size() == 0) {
 			// Can't find the editor to add to, make a new one
 			newDisplay(pvAddress, display);
-		} else {	
+		} else {
+			DataBrowserEditor editor = editors.get(0);
 			addPVToEditor(pvAddress, display, editor);
+			
+			// Recolour the axes so that they match the traces
+			for (ModelItem trace : editor.getModel().getItems()) {
+				trace.getAxis().setColor(trace.getColor());
+			}
 		}
 	}
 

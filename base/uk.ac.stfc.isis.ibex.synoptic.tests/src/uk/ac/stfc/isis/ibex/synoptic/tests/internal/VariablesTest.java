@@ -82,19 +82,19 @@ public class VariablesTest {
         mockSwitchableObservable = mock(SwitchableObservable.class);
 
         closingWritableFactory = mock(WritableFactory.class);
-        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
+        when(closingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultWritable);
 
         switchingWritableFactory = mock(WritableFactory.class);
-        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
+        when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultWritable);
 
         closingObservableFactory = mock(ObservableFactory.class);
-        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
+        when(closingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
 
         switchingObservableFactory = mock(ObservableFactory.class);
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultSwitchableObservable);
     }
 
@@ -107,7 +107,7 @@ public class VariablesTest {
     public void WHEN_variables_is_initalised_THEN_synopticSetter_points_at_correct_pv() {
         // Arrange
         Writable expectedResult = mock(Writable.class);
-        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
+        when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + SET_DETAILS))).thenReturn(expectedResult);
 
         // Act
@@ -123,7 +123,7 @@ public class VariablesTest {
             WHEN_variables_is_initialised_THEN_synopticsDeleter_is_a_writable_converting_string_collection_to_json_string_on_correct_pv() throws IOException {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
-        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
+        when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + DELETE))).thenReturn(expectedDestination);
 
         Collection<String> inputValue = new ArrayList<String>();
@@ -161,7 +161,7 @@ public class VariablesTest {
         when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + NAMES))).thenReturn(mockSwitchableObservable);
 
         // Act
@@ -183,7 +183,7 @@ public class VariablesTest {
     @Test
     public void WHEN_variables_is_initialised_THEN_synopticsSchema_points_at_correct_pv() {
         // Arrange
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+        when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + SCHEMA))).thenReturn(mockSwitchableObservable);
 
         // Act
@@ -205,7 +205,7 @@ public class VariablesTest {
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         String synopticPV = "TEST";
-        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+        when(closingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC))).thenReturn(mockSwitchableObservable);
         variables = createVariables();
 

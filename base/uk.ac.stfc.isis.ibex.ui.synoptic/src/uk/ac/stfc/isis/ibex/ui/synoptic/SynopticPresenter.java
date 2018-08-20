@@ -88,7 +88,7 @@ public class SynopticPresenter extends ModelObject {
 			}
 		}
 	};
-
+	
 	/**
 	 * Observes for changes to the synoptic description. The description will be changed
 	 * either when the server sends an updated description for the selected synoptic.
@@ -106,7 +106,6 @@ public class SynopticPresenter extends ModelObject {
 		updateModel(); 
 		// Must be done after the navigator is initialised otherwise updateModel could
 		// trigger a nullPointer exception.
-		
 		descriptionObserver = new BaseObserver<SynopticDescription>() {
 	        @Override
 	        public void onValue(SynopticDescription value) {
@@ -129,7 +128,6 @@ public class SynopticPresenter extends ModelObject {
 	    
         ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
         observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
-
 	}
 
     private void updateModel() {

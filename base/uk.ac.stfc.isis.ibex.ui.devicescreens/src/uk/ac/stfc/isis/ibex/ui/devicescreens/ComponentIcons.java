@@ -66,6 +66,8 @@ public final class ComponentIcons {
                 return "jaws";
             case CHOPPER:
                 return "chopper";
+            case FERMI_CHOPPER:
+                return "fermi_chopper";
             case MONITOR:
                 return "monitor";
             case SAMPLESTACK:
@@ -80,6 +82,7 @@ public final class ComponentIcons {
             case TDK_LAMBDA_GENESYS:
             case CAEN:
             case IPS:
+            case POWER_SUPPLY:
                 return "powersupply";
             case BEAMSTOP:
                 return "beamstop";
@@ -154,6 +157,8 @@ public final class ComponentIcons {
             	return "dilution_fridge";
             case COUETTE:
             	return "couette";
+            case SYRINGE_PUMP:
+            	return "syringe_pump";
             case KEYENCE:
             	return "keyence";
             default:

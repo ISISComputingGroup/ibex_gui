@@ -23,9 +23,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -41,23 +42,9 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectio
 /**
  * Handler class for deleting synoptics.
  */
-public class DeleteSynopticHandler extends AbstractHandler {
+public class DeleteSynopticHandler extends SynopticEditorHandler {
 
     private static final String TITLE = "Delete Synoptics";
-    private static final Synoptic SYNOPTIC = Synoptic.getInstance();
-    private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-
-    /**
-     * This is an inner anonymous class inherited from SameTypeWriter with added
-     * functionality for disabling the command if the underlying PV cannot be
-     * written to.
-     */
-    protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
-        @Override
-        public void onCanWriteChanged(boolean canWrite) {
-            setBaseEnabled(canWrite);
-        }
-    };
 
     /**
      * Constructor that adds a listener to disable the handler if the
@@ -70,16 +57,16 @@ public class DeleteSynopticHandler extends AbstractHandler {
 
     private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics,
             Collection<String> configsUsingSynoptics) {
-        return MessageDialog.openQuestion(SHELL, "Confirm Delete Synoptics",
+        return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Synoptics",
                 "The following synoptics, " + inUseSynoptics + ", are respectively used in the configurations: "
                         + configsUsingSynoptics + ". Are you sure you want to delete them?");
     }
 
-    @Override
+    @Execute
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(SHELL, TITLE,
+        MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), TITLE,
                 SYNOPTIC.availableEditableSynoptics());
-        if (dialog.open() == Window.OK) {
+		if (dialog.open() == Window.OK) {
             ConfigServer server = Configurations.getInstance().server();
             Collection<ConfigInfo> existingConfigs = server.configsInfo().getValue();
             Collection<String> configsUsingSynoptic = new ArrayList<String>();
@@ -95,12 +82,12 @@ public class DeleteSynopticHandler extends AbstractHandler {
             }
             if (!configsUsingSynoptic.isEmpty()) {
                 if (deleteConfigSynopticConfirmDialog(inUseSynoptics, configsUsingSynoptic)) {
-                    try {
-                        synopticService.write(dialog.selectedSynoptics());
-                    } catch (IOException e) {
-                        throw new ExecutionException("Failed to write to PV", e);
-                    }
-                }
+			try {
+                SYNOPTIC.delete().write(dialog.selectedSynoptics());
+            } catch (IOException e) {
+                throw new ExecutionException("Failed to write to PV", e);
+            }
+		}
             } else {
                 try {
                     synopticService.write(dialog.selectedSynoptics());
@@ -110,6 +97,6 @@ public class DeleteSynopticHandler extends AbstractHandler {
             }
 
         }
-        return null;
-    }
+		return null;
+	}
 }

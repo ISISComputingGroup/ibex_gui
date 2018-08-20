@@ -51,7 +51,6 @@ import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 /**
  * Dialogue for saving a configuration.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
     /**
@@ -203,6 +202,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:magicnumber")
     protected Control createDialogArea(Composite parent) {
         setTitle(String.format("Save %s", getTypeName()));
         Composite container = (Composite) super.createDialogArea(parent);
@@ -254,19 +254,15 @@ public class SaveConfigDialog extends TitleAreaDialog {
             });
         }
 
-        txtName.addModifyListener(new ModifyListener() {
+        ModifyListener updateListener = new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent arg0) {
                 update();
             }
-        });
-
-        txtDesc.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent arg0) {
-                update();
-            }
-        });
+        };
+        
+        txtName.addModifyListener(updateListener);
+        txtDesc.addModifyListener(updateListener);
 
         txtName.setText(currentName);
         txtDesc.setText(currentDesc);

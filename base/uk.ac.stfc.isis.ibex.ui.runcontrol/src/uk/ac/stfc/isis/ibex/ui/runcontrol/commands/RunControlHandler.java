@@ -19,22 +19,41 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol.commands;
 
-import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
-public abstract class RunControlHandler extends AbstractHandler {
+/**
+ * Opens the edit run control dialog box.
+ */
+public class RunControlHandler {
 
-	protected static final ConfigServer CONFIGSERVER = Configurations.getInstance().server();
-	protected static final RunControlServer RUNCONTROLSERVER = RunControlActivator.getInstance().getServer();
+	private static final String TITLE = "Run-Control Settings";
+	private static final ConfigServer CONFIGSERVER = Configurations.getInstance().server();
 	
-	protected Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+	/**
+	 * Opens the edit run control dialog box.
+	 * @param shell The shell to open the dialog box from.
+	 */
+	@Execute
+	public void execute(Shell shell) {
+		RunControlServer rcServer = RunControlActivator.getInstance().getServer();
+		EditRunControlDialog dialog = new EditRunControlDialog(shell, TITLE, CONFIGSERVER, rcServer);
+		dialog.open();
 	}
-
+	
+	/**
+	 * Can only be executed if the blockserver is running.
+	 * @return True if we can read the current configuration.
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return CONFIGSERVER.currentConfig().isConnected();
+	}
 }

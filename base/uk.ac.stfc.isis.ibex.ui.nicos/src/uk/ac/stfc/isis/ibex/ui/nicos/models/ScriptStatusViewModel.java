@@ -1,9 +1,9 @@
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -23,6 +23,9 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final Image RESUME_ICON =
             ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/resume.png");
 
+    private static final Color HIGHLIGHT = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+    private static final Color HIGHLIGHT_PAUSED = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+
     private static final String PAUSE_TEXT = "Pause Script Execution";
     private static final String RESUME_TEXT = "Resume Script Execution";
 
@@ -37,6 +40,7 @@ public class ScriptStatusViewModel extends ModelObject {
 	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
 
     private boolean enableButtons = false;
+    private Color highlightColour = HIGHLIGHT;
 
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
@@ -54,20 +58,11 @@ public class ScriptStatusViewModel extends ModelObject {
 	public ScriptStatusViewModel(final NicosModel model) {
         this.model = model;
 		
-		model.addPropertyChangeListener("lineNumber", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setLineNumber(model.getLineNumber());
-			}
-		});
+		model.addPropertyChangeListener("lineNumber", e ->
+				setLineNumber(model.getLineNumber()));
 
-        model.addPropertyChangeListener("scriptStatus", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                setScriptStatus(model.getScriptStatus());
-            }
-        });
+        model.addPropertyChangeListener("scriptStatus", e ->
+                setScriptStatus(model.getScriptStatus()));
 	}
 
 	/**
@@ -97,21 +92,20 @@ public class ScriptStatusViewModel extends ModelObject {
         setEnableButtons(true);
         this.status = status;
         setStatusReadback(status);
+        setHighlightColour(HIGHLIGHT);
         switch (status) {
             case IDLEEXC:
             case IDLE:
             case STOPPING:
-                setToggleButtonIcon(PAUSE_ICON);
-                setToggleButtonText(PAUSE_TEXT);
+                setToggleButtonTextAndIcon(PAUSE_TEXT, PAUSE_ICON);
                 setEnableButtons(false);
                 break;
             case RUNNING:
-                setToggleButtonIcon(PAUSE_ICON);
-                setToggleButtonText(PAUSE_TEXT);
+                setToggleButtonTextAndIcon(PAUSE_TEXT, PAUSE_ICON);
                 break;
             case INBREAK:
-                setToggleButtonIcon(RESUME_ICON);
-                setToggleButtonText(RESUME_TEXT);
+                setToggleButtonTextAndIcon(RESUME_TEXT, RESUME_ICON);
+                setHighlightColour(HIGHLIGHT_PAUSED);
                 break;
             case INVALID:
             default:
@@ -128,15 +122,6 @@ public class ScriptStatusViewModel extends ModelObject {
 	public String getLineNumber() {
 		return lineNumberStr;
 	}
-    
-	/**
-	 * The icon for the pause/go button.
-	 * 
-	 * @param icon
-	 */
-    private void setToggleButtonIcon(Image icon) {
-        firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
-    }
 
     /**
      * @return The icon on the toggle pause button
@@ -145,13 +130,9 @@ public class ScriptStatusViewModel extends ModelObject {
         return toggleButtonIcon;
     }
     
-    /**
-     * The text for the pause/go button.
-     * 
-     * @param text
-     */
-    private void setToggleButtonText(String text) {
+    private void setToggleButtonTextAndIcon(String text, Image icon) {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
+        firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
 
     /**
@@ -215,5 +196,18 @@ public class ScriptStatusViewModel extends ModelObject {
      */
     public String getStatusReadback() {
         return statusReadback;
+    }
+
+    private void setHighlightColour(Color highlightColour) {
+        firePropertyChange("highlightColour", this.highlightColour, this.highlightColour = highlightColour);
+    }
+
+    /**
+     * The colour in which to highlight the currently executed line.
+     * 
+     * @return the colour
+     */
+    public Color getHighlightColour() {
+        return highlightColour;
     }
 }

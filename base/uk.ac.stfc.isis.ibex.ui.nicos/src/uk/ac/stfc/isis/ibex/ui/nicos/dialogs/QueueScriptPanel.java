@@ -23,13 +23,14 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Text;
+import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
  * The view for the dialog that queues a new script to send to the script
@@ -50,13 +51,14 @@ public class QueueScriptPanel extends Composite {
      * @param model
      *            the view model for queueing a script
      */
+    @SuppressWarnings("unchecked")
     public QueueScriptPanel(Composite parent, int style, QueueScriptViewModel model) {
 		super(parent, style);
         GridLayout gridLayout = new GridLayout(2, false);
         gridLayout.horizontalSpacing = 1;
         setLayout(gridLayout);
         
-        StyledText styledText = new StyledText(this, SWT.BORDER);
+        StyledText styledText = new NumberedStyledText(this, SWT.BORDER | SWT.V_SCROLL);
         styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
         
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(styledText),

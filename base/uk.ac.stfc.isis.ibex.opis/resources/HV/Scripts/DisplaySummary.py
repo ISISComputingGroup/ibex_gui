@@ -1,6 +1,5 @@
 from ChannelUtilities import get_summary_channels
-from OPIUtilities import get_cleared_group_widget, create_channel_widget_model
-
+from DisplayUtilities import get_cleared_group_widget, create_channel_widget_model
 
 def create_channels_summary(this_display, this_pvs):
     """
@@ -12,12 +11,10 @@ def create_channels_summary(this_display, this_pvs):
 
     Returns:
         None
-    """
+    """ 
     group = get_cleared_group_widget(this_display)
     for chan in get_summary_channels(this_pvs[0]):
         group.addChildToBottom(create_channel_widget_model(chan, True))
 
-
-if __name__ == "__main__":
-    # pv[0] = $(P)CAEN:CHANLIST
-    create_channels_summary(display, pvs)
+#The function that is called by CSS.
+create_channels_summary(display, pvs)

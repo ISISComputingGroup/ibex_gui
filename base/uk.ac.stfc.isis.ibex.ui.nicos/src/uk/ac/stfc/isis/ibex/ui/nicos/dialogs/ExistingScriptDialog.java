@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
+import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
  * The dialog for showing the details of a script that is on the NICOS queue.
@@ -40,16 +41,20 @@ public class ExistingScriptDialog extends Dialog {
      * {@inheritDoc}
      */
 	@Override
+	@SuppressWarnings("unchecked")
 	protected Control createDialogArea(Composite parent) {
+		new QueuedScriptToolbar(parent, script, false);
+		
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        StyledText styledText = new StyledText(container, SWT.BORDER | SWT.READ_ONLY);
+        StyledText codeText = new NumberedStyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL);
+        
         DataBindingContext bindingContext = new DataBindingContext();
         
-        bindingContext.bindValue(WidgetProperties.text().observe(styledText),
+        bindingContext.bindValue(WidgetProperties.text().observe(codeText),
                 BeanProperties.value("code").observe(script));
         
 		return container;
@@ -60,7 +65,6 @@ public class ExistingScriptDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 	}
 	

@@ -22,6 +22,9 @@ public class EmptyLogPlotterView extends ViewPart {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView";
 	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
@@ -37,9 +40,12 @@ public class EmptyLogPlotterView extends ViewPart {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setFocus() {
-		
+		// no action required
 	}
 
 }
