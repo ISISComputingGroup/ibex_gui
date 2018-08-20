@@ -48,6 +48,7 @@ public class TableView {
     private Table table;
     
 	@PostConstruct
+	@SuppressWarnings("checkstyle:magicnumber")
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(2, true));
 		SansSettings settings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM, ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);

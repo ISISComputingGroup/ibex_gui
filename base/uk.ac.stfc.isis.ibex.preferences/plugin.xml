@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier">
-      </initializer>
-   </extension>
-   <extension
          point="org.eclipse.ui.bindings">
          <key sequence="Ctrl+Alt+P"
          	schemeId="IBEX_key_scheme"

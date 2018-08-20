@@ -20,9 +20,8 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import java.util.HashSet;
+import java.util.Set;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
@@ -31,13 +30,21 @@ import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
  * 
  * Note: Can hold multiple Writables which will have the same value written to
  * them. This is NOT currently used in IBEX.
+ * 
+ * NOTE: implementations of this class MUST be explicitly threadsafe.
  *
  * @param <TIn> the type of data coming in
  * @param <TOut> the type of data to output
  */
 public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, TOut> {
 		
-	private final Collection<Writable<TOut>> writables = new CopyOnWriteArrayList<>();
+	private final Set<Writable<TOut>> writables = new HashSet<>();
+	
+	/**
+	 * Lock that protects all of this writer's operations. Use an explicit lock object
+	 * declared as protected so that subclasses can also use this lock.
+	 */
+	protected final Object writerLock = new Object();
 		
 	private TOut lastWritten;
 	private Exception lastError;
@@ -48,7 +55,9 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 	 * @return the last value that was written
 	 */
 	public TOut lastWritten() {
-		return lastWritten;
+		synchronized (writerLock) {
+			return lastWritten;
+		}
 	}
 	
 	/**
@@ -56,31 +65,38 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 	 * @return the last error
 	 */
 	public Exception lastError() {
-		return lastError;
+		synchronized (writerLock) {
+			return lastError;
+		}
 	}	
 	
 	@Override
     public boolean canWrite() {
-		return canWrite;
+		synchronized (writerLock) {
+			return canWrite;
+		}
 	}
 
 	@Override
 	public Subscription writeTo(Writable<TOut> writable) {
-		if (!writables.contains(writable)) {
-			writables.add(writable);
+		synchronized (writerLock) {
+			writables.add(writable);  // As a Set is used, duplicates will not be added.
+			return new Unsubscriber<Writable<TOut>>(writables, writable);
 		}
-		
-		return new Unsubscriber<Writable<TOut>>(writables, writable);
 	}
 
 	@Override
 	public void onError(Exception e) {
-		lastError = e;
+		synchronized (writerLock) {
+			lastError = e;
+		}
 	}
 
 	@Override
-	public void onCanWriteChanged(boolean canWrite) {		
-		this.canWrite = canWrite;
+	public void onCanWriteChanged(boolean canWrite) {
+		synchronized (writerLock) {
+			this.canWrite = canWrite;
+		}
 	}
 	
 	/**
@@ -89,9 +105,11 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 	 * @throws IOException if the write failed
 	 */
 	protected void writeToWritables(TOut value) throws IOException {
-		lastWritten = value;
-		for (Writable<TOut> writable : writables) {
-			writable.write(value);
+		synchronized (writerLock) {
+			lastWritten = value;
+			for (Writable<TOut> writable : writables) {
+				writable.write(value);
+			}
 		}
 	}
 	   
@@ -100,19 +118,23 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
      * @param value the value to write
      */
 	protected void uncheckedWriteToWritables(TOut value) {
-        lastWritten = value;
-        for (Writable<TOut> writable : writables) {
-            writable.uncheckedWrite(value);
-        }
+		synchronized (writerLock) {
+	        lastWritten = value;
+	        for (Writable<TOut> writable : writables) {
+	            writable.uncheckedWrite(value);
+	        }
+		}
     }
 	
 	@Override
     public void uncheckedWrite(TIn value) {
-	    try {
-	        write(value);
-	    } catch (IOException e) {
-	        // Rethrow the exception as an unchecked (runtime) exception
-	        throw new RuntimeException("Unchecked write failed.", e);
-	    }
+		synchronized (writerLock) {
+		    try {
+		        write(value);
+		    } catch (IOException e) {
+		        // Rethrow the exception as an unchecked (runtime) exception
+		        throw new RuntimeException("Unchecked write failed.", e);
+		    }
+		}
 	}
 }

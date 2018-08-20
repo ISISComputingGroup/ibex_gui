@@ -98,7 +98,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      *            The SWT table style.
      */
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
+		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 				
         initialise();
 	}
