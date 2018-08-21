@@ -133,7 +133,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>673</height>
+    <height>757</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -501,7 +501,7 @@ $(pv_value)</tooltip>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240" />
     </background_color>
     <border_color>
       <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
@@ -516,12 +516,11 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>696</height>
+    <height>786</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <NUMBER>1</NUMBER>
     </macros>
-    <name>Voltage </name>
+    <name>Voltage</name>
     <opi_file>TDS3000_trace_web_interface.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -534,9 +533,9 @@ $(pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>726</width>
-    <wuid>-3622cb5:1655c0e9d06:-7f88</wuid>
-    <x>260</x>
+    <width>912</width>
+    <wuid>-3622cb5:1655c0e9d06:-7cd8</wuid>
+    <x>276</x>
     <y>96</y>
   </widget>
 </display>

@@ -91,10 +91,9 @@
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>696</height>
+    <height>798</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <NUMBER>1</NUMBER>
     </macros>
     <name></name>
     <opi_file>TDS3000_trace_web_interface.opi</opi_file>
@@ -109,7 +108,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>721</width>
+    <width>846</width>
     <wuid>-3622cb5:1655c0e9d06:-7ec3</wuid>
     <x>0</x>
     <y>37</y>

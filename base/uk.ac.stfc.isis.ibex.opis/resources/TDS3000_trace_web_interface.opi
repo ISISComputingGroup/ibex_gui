@@ -47,7 +47,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>655</height>
+    <height>715</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -89,7 +89,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>685</width>
+    <width>853</width>
     <wuid>-3622cb5:1655c0e9d06:-7f3c</wuid>
     <x>0</x>
     <y>0</y>
@@ -111,7 +111,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>621</height>
+      <height>681</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -129,7 +129,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>683</width>
+      <width>851</width>
       <wuid>-3622cb5:1655c0e9d06:-7f3b</wuid>
       <x>1</x>
       <y>1</y>
@@ -147,7 +147,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>504</height>
+        <height>619</height>
         <name>Web Browser</name>
         <rules />
         <scale_options>
@@ -158,10 +158,10 @@
         <scripts />
         <show_toolbar>false</show_toolbar>
         <tooltip></tooltip>
-        <url>$(IP)/Image.png</url>
+        <url>$(SCOPE_IP)/Image.png</url>
         <visible>true</visible>
         <widget_type>Web Browser</widget_type>
-        <width>679</width>
+        <width>847</width>
         <wuid>-3622cb5:1655c0e9d06:-7f3a</wuid>
         <x>0</x>
         <y>0</y>
@@ -205,7 +205,7 @@
         <wrap_words>true</wrap_words>
         <wuid>-3622cb5:1655c0e9d06:-7f39</wuid>
         <x>6</x>
-        <y>510</y>
+        <y>630</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -226,7 +226,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>621</height>
+      <height>681</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -244,7 +244,7 @@
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>683</width>
+      <width>851</width>
       <wuid>-3622cb5:1655c0e9d06:-7f38</wuid>
       <x>1</x>
       <y>1</y>
@@ -262,7 +262,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>619</height>
+        <height>673</height>
         <name>Web Browser</name>
         <rules />
         <scale_options>
@@ -273,10 +273,10 @@
         <scripts />
         <show_toolbar>false</show_toolbar>
         <tooltip></tooltip>
-        <url>$(IP)/Data.html</url>
+        <url>$(SCOPE_IP)/Data.html</url>
         <visible>true</visible>
         <widget_type>Web Browser</widget_type>
-        <width>679</width>
+        <width>835</width>
         <wuid>-3622cb5:1655c0e9d06:-7f37</wuid>
         <x>0</x>
         <y>0</y>
