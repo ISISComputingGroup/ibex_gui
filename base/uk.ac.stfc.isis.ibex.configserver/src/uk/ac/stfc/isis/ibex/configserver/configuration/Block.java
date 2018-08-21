@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * JSON.
  */
 @SuppressWarnings("checkstyle:membername")
-public class Block extends ModelObject implements INamed {
+public class Block extends ModelObject implements IRuncontrol, INamed {
 
     /**
      * Default value to give to periodic scan.
@@ -46,8 +46,8 @@ public class Block extends ModelObject implements INamed {
 	private String component;
 
     private boolean runcontrol;
-    private float lowlimit;
-    private float highlimit;
+    private double lowlimit;
+    private double highlimit;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -83,8 +83,8 @@ public class Block extends ModelObject implements INamed {
      * @param logRate time between archive samples (seconds)
      * @param logDeadband deadband for the block to be archived
      */
-    public Block(String name, String pv, boolean visible, boolean local, String component, float lowLimit,
-            float highLimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
+    public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
+            double highLimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -240,7 +240,8 @@ public class Block extends ModelObject implements INamed {
      * 
      * @return whether run-control is enabled
      */
-    public boolean getRCEnabled() {
+    @Override
+	public Boolean getRunControlEnabled() {
         return runcontrol;
 	}
 	
@@ -249,8 +250,9 @@ public class Block extends ModelObject implements INamed {
      * 
      * @param runcontrol whether run-control should be enabled
      */
-    public void setRCEnabled(boolean runcontrol) {
-        firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
+    @Override
+	public void setRunControlEnabled(Boolean runcontrol) {
+        firePropertyChange("runControlEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
     /**
@@ -258,7 +260,8 @@ public class Block extends ModelObject implements INamed {
      * 
      * @return the low limit for run-control
      */
-    public float getRCLowLimit() {
+    @Override
+	public Double getRunControlLowLimit() {
         return lowlimit;
     }
 
@@ -267,8 +270,9 @@ public class Block extends ModelObject implements INamed {
      * 
      * @param rclow the new low limit for run-control
      */
-    public void setRCLowLimit(float rclow) {
-        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
+    @Override
+	public void setRunControlLowLimit(Double rclow) {
+        firePropertyChange("runControlLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
     /**
@@ -276,7 +280,8 @@ public class Block extends ModelObject implements INamed {
      * 
      * @return the high limit for run-control
      */
-    public float getRCHighLimit() {
+    @Override
+	public Double getRunControlHighLimit() {
         return highlimit;
     }
 
@@ -285,8 +290,9 @@ public class Block extends ModelObject implements INamed {
      * 
      * @param rchigh the new high limit for run-control
      */
-    public void setRCHighLimit(float rchigh) {
-        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
+    @Override
+	public void setRunControlHighLimit(Double rchigh) {
+        firePropertyChange("runControlHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 
     /**

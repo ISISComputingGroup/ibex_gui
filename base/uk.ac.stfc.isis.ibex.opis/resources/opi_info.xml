@@ -2462,6 +2462,25 @@
       </value>
     </entry>
     <entry>
+<<<<<<< HEAD
+=======
+      <key>NGPSPSU</key>
+      <value>
+        <categories>
+            <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ngpspsu.opi</path>
+        <description>The OPI for the NGPS power supply unit</description>
+        <macros>
+          <macro>
+            <name>NGPSPSU</name>
+            <description>The NGPSPSU PV prefix (e.g. NGPSPSU_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
       <key>Matplotlib viewer</key>
       <value>
         <categories>
@@ -2484,6 +2503,23 @@
           <macro>
             <name>KICKER</name>
             <description>The KICKER PV prefix (e.g. KICKER_01)</description>
+           </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
+      <key>TDS 3000 Trace</key>
+      <value>
+        <categories>
+          <category>Oscilloscopes</category>
+        </categories>
+        <type>OSCILLOSCOPE</type>
+        <path>TDS3000_trace.opi</path>
+        <description>The trace shown by a TDS 3000 series oscilloscope</description>
+        <macros>
+          <macro>
+            <name>IP</name>
+            <description>The IP address of the oscilloscope.</description>
           </macro>
         </macros>
       </value>
