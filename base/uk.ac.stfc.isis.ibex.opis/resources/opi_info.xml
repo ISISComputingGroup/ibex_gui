@@ -2495,10 +2495,12 @@
     <entry>
       <key>KICKER</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+            <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
         <path>kicker.opi</path>
-        <description>The OPI for the KICKER</description>
+        <description>The OPI for the KICKER power supply unit</description>
         <macros>
           <macro>
             <name>KICKER</name>
