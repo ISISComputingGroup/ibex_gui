@@ -16,7 +16,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.RecentConfigSelectionDialog;
 
-
 /**
  * Handler for loading recent configurations.
  */
@@ -36,13 +35,15 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
     @Override
     public void safeExecute(Shell shell) {
         updateObservers();
-        List<String> recentConfigs = Configurations.getInstance().getRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
-        List<String> timeStamps = Configurations.getInstance().getLastModifiedTimestampsOfRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
+        List<String> recentConfigs = Configurations.getInstance()
+                .getRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
+        List<String> timeStamps = Configurations.getInstance()
+                .getLastModifiedTimestampsOfRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
         createDialog(shell, recentConfigs, timeStamps);
     }
 
     private void createDialog(Shell shell, List<String> recentConfigs, List<String> timeStamps) {
-        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell, "Load Recent Configuration",
+        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell, "Load a Recent Configuration",
                 recentConfigs, timeStamps);
         if (dialog.open() == Window.OK) {
             checksForConflicts(shell, dialog.selectedConfig());
@@ -57,18 +58,18 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
             createsErrorMessage(shell, conflicts);
         }
     }
-    
+
     private void loadsConfig(String config) {
         configService.uncheckedWrite(config);
         Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
     }
-    
+
     private void createsErrorMessage(Shell shell, Map<String, Set<String>> conflicts) {
         new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
                 MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
         execute(shell);
     }
-    
+
     private void updateObservers() {
         for (String name : SERVER.configNames()) {
             if (!configs.containsKey(name)) {
@@ -104,9 +105,8 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
             }
             sb.append("\n");
         }
-        sb.append(
-                "Please rename or remove the duplicate block" + (multi ? "s" : "")
-                        + " before loading this configuration.");
+        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "")
+                + " before loading this configuration.");
         return sb.toString();
     }
 
