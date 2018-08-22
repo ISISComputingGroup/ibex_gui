@@ -106,6 +106,8 @@ public enum ComponentType {
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
     SCIMAG3D,
+    /** Muon Separator PSU component type. **/
+    SEPARATOR,
     /** Stress rig component type. */
     STRESS_RIG,
     /** Gas exchange system. */
@@ -140,7 +142,7 @@ public enum ComponentType {
     COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS,
-    /**Syringe pump*/
+    /**Syringe pump. */
     SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE;

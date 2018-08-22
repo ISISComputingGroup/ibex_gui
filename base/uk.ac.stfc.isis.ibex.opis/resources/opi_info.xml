@@ -1012,6 +1012,22 @@
         </macros>
       </value>
     </entry>
+    
+    <entry>
+      <key>Muon Separator PSU Overview</key>
+      <value>
+        <type>SEPARATOR</type>
+        <path>muon_overviews/separator_status.opi</path>
+        <description>The OPI for the Muon separator power supply.</description>
+        <macros>
+          <macro>
+            <name>SEPRTR</name>
+            <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    
     <entry>
       <key>Muon Front End Overview</key>
       <value>
