@@ -31,6 +31,11 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import org.eclipse.ui.IStartup;
 
+/**
+ * Allows to activate the config server plugin after the Workbench initialises and to give it 
+ * an opportunity to run code that can't be implemented using the normal contribution mechanisms. 
+ *
+ */
 public class Startup implements IStartup {
 	@Override
 	public void earlyStartup() {	

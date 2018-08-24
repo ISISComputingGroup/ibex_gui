@@ -19,7 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
+/**
+ * An enum representing a enabled/disabled state.
+ */
 public enum BinaryState {
+    /**
+     * Enabled state.
+     */
 	ENABLED,
+	/**
+     * disabled state.
+     */
 	DISABLED;
 }
