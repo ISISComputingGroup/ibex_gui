@@ -58,19 +58,21 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
 	
 	/**
      * Called after an instrument set is called. This will close any plots still open on instrument switching (given that this is not the first
-     * time an instrument is set).
+     * time an instrument is set and that the instrument name has changed).
      *
      * @param instrument the instrument switched to
      */
 	@Override
     public void postSetInstrument(InstrumentInfo instrument) {
         if (!Instrument.getInstance().isFirstConnection()) {
-            LogPlotterHistoryPresenter.closeCurrentDataBrowsers();
+            if (!Instrument.getInstance().switchingToSameInstrument()) {
+                LogPlotterHistoryPresenter.closeCurrentDataBrowsers();
+            }
         }
 	}
 	
     /**
-     * Connects the databrowser to the archive engine for the new instrument.
+     * Connects the data browser to the archive engine for the new instrument.
      * 
      * @param instrument instrument being switched to
      */

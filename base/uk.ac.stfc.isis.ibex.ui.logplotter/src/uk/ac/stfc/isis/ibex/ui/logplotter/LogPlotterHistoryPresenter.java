@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
  * The class that is responsible for displaying the log plotter.
  */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
-	
+    
 	/**
 	 * @return A stream of all the current DataBrowserEditors.
 	 */
@@ -56,7 +56,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	}
 	
 	/**
-	 * Returns a stream of all the current editors.
+	 * Returns a stream of all the current editors. Editors are taken from all windows instead of just the active window
+	 * as the active window is null if called from a non UI-thread (ie when switching instruments). 
 	 * 
 	 * @return
 	 *         A stream of all the current editors.
@@ -70,27 +71,21 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    
 	    Stream<IEditorReference> editorRefs = Arrays.stream(editors.toArray(new IEditorReference[editors.size()]));
 	    
-	    //Stream<IEditorReference> editorRefs = Arrays.stream(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences());
-        
         return editorRefs.map(e -> e.getEditor(false))
                          .filter(e -> e instanceof DataBrowserEditor);
 	}
 	
 	/**
-	 * Closes all the current data browsers.
+	 * Closes all the current data browsers. The call to close is done for all windows instead of just the active window
+     * as the active window is null if called from a non UI-thread (ie when switching instruments). 
 	 */
 	public static void closeCurrentDataBrowsers() {
-	    
 	    Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows())
                 .forEach(wd -> getCurrentEditors().forEach(db -> wd.getActivePage().closeEditor(db, false)));
             }
         });
-        //Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows())
-        //.forEach(wd -> getCurrentEditors().forEach(db -> wd.getActivePage().closeEditor(db, false)));
-	   //getCurrentEditors().forEach(db -> PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeEditor(db, false));
-	    
 	}
 	
 	/**
