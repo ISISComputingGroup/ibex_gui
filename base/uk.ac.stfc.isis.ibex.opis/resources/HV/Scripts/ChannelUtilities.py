@@ -1,7 +1,6 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
-
 def get_available_channels(crate_name_pvs, this_display,
                            get_string_from_pv=PVUtil.getString, log=ConsoleUtil.writeError):
     """
@@ -75,7 +74,7 @@ def _get_max(this_display, macro, default_value, upper_limit=None):
     
     try:
         max_value = int(max_value)
-    except TypeError:
+    except (TypeError, ValueError):
         max_value = default_value   
     
     if max_value is None:
@@ -135,4 +134,3 @@ def get_channel_pv_name(crate, slot, channel):
         The PV name for accessing the given channel
     """
     return crate + ":" + str(slot) + ":" + str(channel)
-   

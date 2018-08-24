@@ -140,10 +140,14 @@ public enum ComponentType {
     COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS,
+    /**Syringe pump.*/
+    SYRINGE_PUMP,
     /** Keyence micrometer. */
-    KEYENCE;
+    KEYENCE,
+	/** Generic Power Supply. */
+    POWER_SUPPLY;
 
-	
+
 	private Target target;
 
     /**

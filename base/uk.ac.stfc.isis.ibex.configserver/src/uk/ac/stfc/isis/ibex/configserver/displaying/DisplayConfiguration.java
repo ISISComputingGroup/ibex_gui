@@ -105,7 +105,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 * 
 	 * @return a copy of the group
 	 */
-	public Collection<DisplayGroup> groups() {
+	public List<DisplayGroup> groups() {
 		return new ArrayList<>(groups);
 	}
 	

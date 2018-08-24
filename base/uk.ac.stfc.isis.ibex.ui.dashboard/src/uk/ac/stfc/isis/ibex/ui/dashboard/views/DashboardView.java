@@ -97,7 +97,7 @@ public class DashboardView {
 		
 		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
         GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        monitorsLayoutGridData.widthHint = FIXED_WIDTH/2;
+        monitorsLayoutGridData.widthHint = FIXED_WIDTH / 2;
         monitors.setLayoutData(monitorsLayoutGridData);
 		
 		Label separator3 = new Label(dashboardControl, SWT.SEPARATOR | SWT.VERTICAL);

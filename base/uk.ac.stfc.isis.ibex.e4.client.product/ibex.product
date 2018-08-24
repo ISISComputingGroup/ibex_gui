@@ -21,17 +21,15 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
-
+   <windowImages i16="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
    <launcher name="ibex-client">
       <solaris/>
       <win useIco="true">
-         <ico path="/uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
+         <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
@@ -40,6 +38,9 @@
    <license>
         <text>
    &lt;div&gt;Icon made by &lt;a href=&quot;http://www.unocha.org&quot; title=&quot;OCHA&quot;&gt;OCHA&lt;/a&gt; from &lt;a href=&quot;http://www.flaticon.com&quot; title=&quot;Flaticon&quot;&gt;www.flaticon.com&lt;/a&gt; is licensed under &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot; title=&quot;Creative Commons BY 3.0&quot;&gt;CC BY 3.0&lt;/a&gt;&lt;/div&gt;
+Server scripting Icon at uk.ac.stfc.isis.ibex.ui.nicos\icons made by Smashicons from www.flaticon.com
+Open folder icon at uk.ac.stfc.isis.ibex.ui.nicos\icons made by Dave Gandy from www.flaticon.com
+Save icon at uk.ac.stfc.isis.ibex.ui.nicos\icons made by Dave Gandy from www.flaticon.com
          </text>
    </license>
 
@@ -75,17 +76,12 @@
       <plugin id="uk.ac.stfc.isis.ibex.e4.client" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.e4.product" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.e4.ui" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.beamstatus" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.blocks" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.dae" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.e4.ui.handlers" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.epics" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.epics.switching" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.experimentdetails" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.help" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.instrument" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.instrument.baton" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.log" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.logger" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.managermode" autoStart="false" startLevel="0" />
@@ -109,6 +105,7 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.dashboard" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.devicescreens" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.experimentdetails" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.graphing" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.help" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.ioccontrol" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.log" autoStart="false" startLevel="0" />
@@ -116,11 +113,9 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.mainmenu" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.motor" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.nicos" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.ui.perspectives" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.runcontrol" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.scriptgenerator" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.scripting" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.ui.statusbar" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.synoptic" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.synoptic.editor" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.targets" autoStart="false" startLevel="0" />

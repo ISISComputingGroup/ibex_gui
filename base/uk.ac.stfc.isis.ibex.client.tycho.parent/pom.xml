@@ -103,7 +103,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12.1</version>
+				<version>3.0.0</version>
 				<executions>
 					<execution>
 						<phase>verify</phase>
@@ -113,7 +113,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<sourceDirectory>src</sourceDirectory>
+					<sourceDirectories>
+						<sourceDirectory>src</sourceDirectory>
+					</sourceDirectories>
 					<!-- <consoleOutput>true</consoleOutput> -->
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
@@ -183,14 +185,13 @@
 		<module>../uk.ac.stfc.isis.ibex.opis</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.handlers</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.help</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.log</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
 		
@@ -204,7 +205,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.motor</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
-		<module>../uk.ac.stfc.isis.ibex.e4.ui.beamstatus</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
 		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
@@ -263,6 +263,7 @@
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 	</modules>
 </project>
 

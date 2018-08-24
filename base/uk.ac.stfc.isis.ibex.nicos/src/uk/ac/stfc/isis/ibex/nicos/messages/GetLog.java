@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Gets the latest messages from the Nicos console log.
  */
-public class GetLog extends NICOSMessage<String> {
+public class GetLog extends NICOSMessage<String, ReceiveLogMessage> {
 	
 	/**
      * Gets the last n log messages from Nicos.

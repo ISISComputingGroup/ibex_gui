@@ -76,6 +76,16 @@ public class BlocksMenu extends MenuManager {
 		}	
 	};
 	
+	private IAction createAddToPlotAction(String plotName) {
+		return new Action("Add to " + plotName + " plot") {
+			@Override
+			public void run() {
+				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+				pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plotName);
+			}
+		};
+	}
+	
     /**
      * The constructor, creates the menu for when the specific block is right-clicked on.
      * 
@@ -95,7 +105,7 @@ public class BlocksMenu extends MenuManager {
         // Allows the menu to be dynamic
         logSubMenu.setRemoveAllWhenShown(true);
         
-        final IAction newPresenter = new Action("New Plot") {
+        final IAction newPlotAction = new Action("New Plot") {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
@@ -106,16 +116,8 @@ public class BlocksMenu extends MenuManager {
         logSubMenu.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
-				logSubMenu.add(newPresenter);
-				for (final String plot : pvHistoryPresenter.getCurrentDisplays()) {
-					logSubMenu.add(new Action("Add to " + plot + " plot") {
-						@Override
-						public void run() {
-							BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);
-						}
-					});
-				}
+				logSubMenu.add(newPlotAction);
+				pvHistoryPresenter.getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
 			}
         });
 		

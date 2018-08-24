@@ -21,26 +21,86 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
+import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZMQException;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * A class that wraps the specific ZMQ library to aid in testing.
  */
 public class ZMQWrapper {
+	
+	private final Logger logger = IsisLog.getLogger(getClass());
 
     private Socket socket;
     private final Context context;
 
     private static final int RECEIVE_TIMEOUT = 500;
-
+    
+    private static final ZMQWrapper INSTANCE = new ZMQWrapper();
+    private static final Object ZMQ_COMMS_LOCK = new Object();
+    
     /**
-     * Create a ZMQWrapper to wrap the ZMQ library.
+     * Create a ZMQWrapper to wrap the ZMQ library. 
+     * 
+     * Private constructor - access via getInstance instead (this class is a singleton).
      */
-    public ZMQWrapper() {
+    private ZMQWrapper() {
         context = ZMQ.context(1);
+    }
+    
+    /**
+     * Get the instance of this singleton.
+     * @return the single instance of this ZMQ wrapper
+     */
+    public static synchronized ZMQWrapper getInstance() {
+    	return INSTANCE;
+    }
+    
+    /**
+     * Gets the lock used by this ZMQ session.
+     * 
+     * While this lock is held, it is guaranteed that no other threads will
+     * read or write to ZMQ.
+     * 
+     * It is an error not to acquire the lock before reading/writing to ZMQ. 
+     * The lock should be held for any group of reads/writes which must be kept together 
+     * (for example, a message to NICOS and it's response).
+     * 
+     * For example, you should not do:
+     * 
+     * synchronized(zmq.getLock()) {
+     *    zmq.send(...);
+     * }
+     * synchronized(zmq.getLock()) {
+     *    zmq.receiveString(...);
+     * }
+     * 
+     * As a different message might be read or written in between the read/write pair. Instead, do:
+     * 
+     * synchronized(zmq.getLock()) {
+     *     zmq.send(...);
+     *     zmq.receiveString(...);
+     * }
+     * 
+     * Which guarantees that the write and read will execute with no intermediate ZMQ operations.
+     * 
+     * @return The lock.
+     */
+    public Object getLock() {
+    	return ZMQ_COMMS_LOCK;
+    }
+    
+    private void checkCommsLockHeld() {
+    	if (!Thread.holdsLock(getLock())) {
+    		logger.error("The current thread does not hold the ZMQ comms lock. "
+    				+ "This is a programming error and may cause message interleaving. "
+    				+ "Attempting to continue anyway but some messages or their replies may not be correctly interpreted.");
+    	}
     }
 
     /**
@@ -52,6 +112,7 @@ public class ZMQWrapper {
      *             if cannot connect.
      */
     public void connect(String connectionUri) throws ZMQException {
+    	checkCommsLockHeld();
         socket = context.socket(ZMQ.REQ);
         socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
         socket.connect(connectionUri);
@@ -63,6 +124,7 @@ public class ZMQWrapper {
      * @return The string to receive.
      */
     public String receiveString() {
+    	checkCommsLockHeld();
         return socket.recvStr();
     }
 
@@ -75,6 +137,7 @@ public class ZMQWrapper {
      *            True if more data is to follow.
      */
     public void send(String data, Boolean more) {
+    	checkCommsLockHeld();
         if (more) {
             socket.sendMore(data);
         } else {
@@ -86,6 +149,7 @@ public class ZMQWrapper {
      * Disconnect from the ZMQ socket.
      */
     public void disconnect() {
+    	checkCommsLockHeld();
         socket.close();
     }
 }

@@ -54,7 +54,7 @@ public class Nicos extends Plugin {
      */
 	public Nicos() {
         instance = this;
-        ZMQSession session = new ZMQSession(new ZMQWrapper());
+        ZMQSession session = new ZMQSession(ZMQWrapper.getInstance());
         RepeatingJob connectionJob = new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
             
             @Override

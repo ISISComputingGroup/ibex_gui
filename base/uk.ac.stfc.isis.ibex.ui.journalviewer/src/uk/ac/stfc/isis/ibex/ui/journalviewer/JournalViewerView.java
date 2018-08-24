@@ -40,14 +40,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.PartAdapter;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -65,8 +61,6 @@ public class JournalViewerView {
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
 	
-	private static final int HEADER_FONT_SIZE = 16;
-	
     private Label lblError;
     private Label lblLastUpdate;
     
@@ -77,8 +71,6 @@ public class JournalViewerView {
     private Spinner spinnerPageNumber;
 
 	private DataboundTable<JournalRow> table;
-	
-	private EPartService partService;
 
 	/**
 	 * Create contents of the view part.
@@ -93,8 +85,6 @@ public class JournalViewerView {
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
-		
-		this.partService = partService;
 		
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		RowLayout rl = new RowLayout();
@@ -131,7 +121,7 @@ public class JournalViewerView {
 		}
 		
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
-		table = new DataboundTable<JournalRow>(parent, tableStyle, JournalRow.class, tableStyle) {
+		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
 			protected void addColumns() {
 				changeTableColumns();
