@@ -105,6 +105,8 @@ public class Instrument implements BundleActivator {
      * The local instrument information.
      */
     private final InstrumentInfo localhost = new LocalHostInstrumentInfo();
+    
+    private boolean firstConnect;
 
     /**
      * An observable for the instrument list.
@@ -135,6 +137,26 @@ public class Instrument implements BundleActivator {
     public Instrument() {
         instance = this;
         setInstrumentsObserver();
+        setFirstConnectionStatus(true);
+    }
+    
+    /**
+     * Allows to set if it is the first time an instrument been set.
+     * 
+     * @param firstConnect
+     *                      True if it is the first time that an instrument is set.
+     */
+    private void setFirstConnectionStatus(boolean firstConnect) {
+        this.firstConnect = firstConnect;
+    }
+    
+    /**
+     * Returns true if it is the first time that an instrument is set.
+     * @return
+     *          True if it is the first time that an instrument is set.
+     */
+    public boolean isFirstConnection() {
+        return firstConnect;
     }
 
     /**
@@ -253,6 +275,7 @@ public class Instrument implements BundleActivator {
         }).start();
 
         logNumberOfChannels();
+        setFirstConnectionStatus(false);
     }
 
     private void logNumberOfChannels() {
@@ -269,7 +292,7 @@ public class Instrument implements BundleActivator {
         LOG.debug("Changing to instrument " + instrumentInfo.hostName() + ", Number of connected channels = "
                 + Integer.toString(count));
     }
-
+    
     /**
      * @return The information about the current instrument.
      */
