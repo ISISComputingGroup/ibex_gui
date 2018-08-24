@@ -145,8 +145,9 @@ public enum ComponentType {
     /** Keyence micrometer. */
     KEYENCE,
 	/** Generic Power Supply. */
-    POWER_SUPPLY;
-
+    POWER_SUPPLY,
+	/** Moxa ioLogik e1210 Remote I/O. */
+	MOXA_1210;
 
 	private Target target;
 
