@@ -2475,6 +2475,12 @@
         <type>DAE</type>
         <path>live_view.opi</path>
         <description>The OPI for a live view of the detector</description>
+		<macros>
+			<macro>
+				<name>DET</name>
+				<description>Detector number (1 is first)</description>
+			</macro>
+		</macros>
       </value>
     </entry>
     <entry>
