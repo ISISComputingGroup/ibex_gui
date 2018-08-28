@@ -147,7 +147,7 @@ public enum ComponentType {
 	/** Generic Power Supply. */
     POWER_SUPPLY,
   /** Oscilloscope */
-    OSCILLOSCOPE;
+    OSCILLOSCOPE,
 	/** Moxa ioLogik e1210 Remote I/O. */
 	MOXA_1210;
 
