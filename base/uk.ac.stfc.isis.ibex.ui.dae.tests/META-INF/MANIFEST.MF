@@ -9,4 +9,5 @@ Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito;bundle-version="1.9.5"
 Import-Package: uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.model,
+ uk.ac.stfc.isis.ibex.ui.dae,
  uk.ac.stfc.isis.ibex.ui.dae.experimentsetup

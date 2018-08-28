@@ -261,19 +261,28 @@ public class AlarmSettingsTest {
         when(returnedInstrument.hostName()).thenReturn(hostName);
         return returnedInstrument;
     }
-
+    
+    /**
+     * Tests that the default rdb url is set correctly.
+     */
     @Test
     public void default_rdb_url_is_set_correctly() {
         // Assert
         assertEquals(DEFAULT_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that the default jms url is set correctly.
+     */
     @Test
     public void default_jms_url_is_set_correctly() {
         // Assert
         assertEquals(DEFAULT_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from local host to NDXLARMOR updates the rdb url.
+     */
     @Test
     public void switching_from_local_host_to_NDXLARMOR_updates_rdb_url() {
         // Act
@@ -282,7 +291,10 @@ public class AlarmSettingsTest {
         // Assert
         assertEquals(LARMOR_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from local host to NDXLARMOR updates the jms url.
+     */
     @Test
     public void switching_from_local_host_to_NDXLARMOR_updates_jms_url() {
         // Act
@@ -292,7 +304,9 @@ public class AlarmSettingsTest {
         assertEquals(LARMOR_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
-
+    /**
+     * Tests that switching from NDXLARMOR to NDXDEMO updates the rdb url.
+     */
     @Test
     public void switching_from_NDXLARMOR_to_NDXDEMO_updates_rdb_url() {
         // Act
@@ -302,7 +316,10 @@ public class AlarmSettingsTest {
         // Assert
         assertEquals(DEMO_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from NDXLARMOR to NDXDEMO updates the jms url.
+     */
     @Test
     public void switching_from_NDXLARMOR_to_NDXDEMO_updates_jms_url() {
         // Act
@@ -312,7 +329,10 @@ public class AlarmSettingsTest {
         // Assert
         assertEquals(DEMO_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from NDXLARMOR to local host updates the rdb url.
+     */
     @Test
     public void switching_from_NDXLARMOR_to_local_host_updates_rdb_url() {
         // Act
@@ -323,6 +343,9 @@ public class AlarmSettingsTest {
         assertEquals(DEFAULT_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from NDXLARMOR to local host updates the jms url.
+     */
     @Test
     public void switching_from_NDXLARMOR_to_local_host_updates_jms_url() {
         // Act
@@ -332,7 +355,10 @@ public class AlarmSettingsTest {
         // Assert
         assertEquals(DEFAULT_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from local host to NDWCUSTOM updates the rdb url.
+     */
     @Test
     public void switching_from_local_host_to_NDWCUSTOM_updates_rdb_url() {
         // Act
@@ -342,6 +368,9 @@ public class AlarmSettingsTest {
         assertEquals(CUSTOM_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to NDWCUSTOM updates the jms url.
+     */
     @Test
     public void switching_from_local_host_to_NDWCUSTOM_updates_jms_url() {
         // Act
@@ -351,6 +380,9 @@ public class AlarmSettingsTest {
         assertEquals(CUSTOM_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
+    /**
+     * Tests that switching from NDWCUSTOM to NDXLARMOR updates the rdb url.
+     */
     @Test
     public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_rdb_url() {
         // Act
@@ -361,6 +393,9 @@ public class AlarmSettingsTest {
         assertEquals(LARMOR_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from NDWCUSTOM to NDXLARMOR updates the jms url.
+     */
     @Test
     public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_jms_url() {
         // Act
@@ -371,6 +406,9 @@ public class AlarmSettingsTest {
         assertEquals(LARMOR_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
+    /**
+     * Tests that switching from lowercase ndxdemo to local host does not update the rdb url.
+     */
     @Test
     public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_rdb_url() {
         // Act
@@ -382,6 +420,9 @@ public class AlarmSettingsTest {
                 preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from lowercase ndxdemo to local host does not update the jms url.
+     */
     @Test
     public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_jms_url() {
         // Act
@@ -392,7 +433,10 @@ public class AlarmSettingsTest {
         assertEquals(DEFAULT_RDB_URL.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
                 preferences.get(Preferences.RDB_URL, null));
     }
-
+    
+    /**
+     * Tests that switching from local host to non ISIS instrument name updates the jms url.
+     */
     @Test
     public void switching_from_local_host_to_non_ISIS_instrument_name_updates_jms_url() {
         // Act
@@ -402,6 +446,9 @@ public class AlarmSettingsTest {
         assertEquals(NON_ISIS_INST_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to non ISIS instrument name updates the rdb url.
+     */
     @Test
     public void switching_from_local_host_to_non_ISIS_instrument_name_updates_rdb_url() {
         // Act
@@ -411,6 +458,9 @@ public class AlarmSettingsTest {
         assertEquals(NON_ISIS_INST_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to IP host name updates the jms url.
+     */
     @Test
     public void switching_from_local_host_to_IP_host_name_updates_jms_url() {
         // Act
@@ -420,6 +470,9 @@ public class AlarmSettingsTest {
         assertEquals(IP_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to IP host name updates the rdb url.
+     */
     @Test
     public void switching_from_local_host_to_IP_host_name_updates_rdb_url() {
         // Act
@@ -429,6 +482,9 @@ public class AlarmSettingsTest {
         assertEquals(IP_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to local host does not updates the jms url.
+     */
     @Test
     public void switching_from_local_host_to_local_host_causes_no_change_to_jms_url() {
         // Act
@@ -438,6 +494,9 @@ public class AlarmSettingsTest {
         assertEquals(LOCALHOST_JMS_URL, preferences.get(Preferences.JMS_URL, null));
     }
 
+    /**
+     * Tests that switching from local host to local host does not updates the rdb url.
+     */
     @Test
     public void switching_from_local_host_to_local_host_causes_no_change_to_rdb_url() {
         // Act
@@ -447,6 +506,9 @@ public class AlarmSettingsTest {
         assertEquals(LOCALHOST_RDB_URL, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching from larmor to larmor does not updates the jms url.
+     */
     @Test
     public void switching_from_larmor_to_larmor_causes_no_change_to_jms_url() {
         // Act
@@ -459,6 +521,9 @@ public class AlarmSettingsTest {
         assertEquals(expectedUrl, actualUrl);
     }
 
+    /**
+     * Tests that switching from larmor to larmor does not updates the rdb url.
+     */
     @Test
     public void switching_from_larmor_to_larmor_causes_no_change_to_rdb_url() {
         // Act
@@ -471,6 +536,9 @@ public class AlarmSettingsTest {
         assertEquals(expectedUrl, actualUrl);
     }
 
+    /**
+     * Tests that switching to instrument called jdbc does not updates the rdb url.
+     */
     @Test
     public void switching_to_instrument_called_jdbc_and_back_does_not_affect_rdb_url() {
         // Act
@@ -482,6 +550,9 @@ public class AlarmSettingsTest {
         assertEquals(expectedUrl, preferences.get(Preferences.RDB_URL, null));
     }
 
+    /**
+     * Tests that switching to instrument called faliover does not updates the jms url.
+     */
     @Test
     public void switching_to_instrument_called_failover_and_back_does_not_affect_jms_url() {
         // Act

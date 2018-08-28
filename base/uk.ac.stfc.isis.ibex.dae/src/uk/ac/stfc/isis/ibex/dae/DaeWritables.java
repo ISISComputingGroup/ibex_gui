@@ -88,9 +88,21 @@ public class DaeWritables {
      * web dashboard.
      */
     public final Writable<Long> displayTitle;
+    /**
+     * The settings for the DAE.
+     */
     public final Writable<String> daeSettings;
+    /**
+     * The hardware periods for the DAE.
+     */
     public final Writable<String> hardwarePeriods;
+    /**
+     * The update settings for the DAE.
+     */
     public final Writable<String> updateSettings;
+    /**
+     * The time channel settings for the DAE.
+     */
     public final Writable<String> timeChannelSettings;
 	
     /**

@@ -30,6 +30,10 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+/**
+ * Converts a JSON representation of a PV into a java object representation.
+ *
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PVsConverter extends Converter<String[][], Collection<PV>> {
 

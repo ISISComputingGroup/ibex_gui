@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 /**
  * Serialisable class to queue a script in Nicos.
  */
-public class QueueScript extends NICOSMessage<String> {
+public class QueueScript extends NICOSMessage<String, String> {
     
     /**
      * Constructor.
@@ -43,9 +43,9 @@ public class QueueScript extends NICOSMessage<String> {
     }
 
     @Override
-    public ReceiveMessage parseResponse(String response) throws ConversionException {
+    public String parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
-        return new ReceiveStringMessage(deserial.convert(response));
+        return deserial.convert(response);
     }
         
 }

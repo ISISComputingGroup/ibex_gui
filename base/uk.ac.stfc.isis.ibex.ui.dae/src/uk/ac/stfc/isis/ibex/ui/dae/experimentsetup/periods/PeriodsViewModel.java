@@ -99,7 +99,7 @@ public class PeriodsViewModel extends ModelObject {
 	}
 
     /**
-     * Sets which soruce the period settings are read from.
+     * Sets which source the period settings are read from.
      * 
      * @param source The period source.
      */

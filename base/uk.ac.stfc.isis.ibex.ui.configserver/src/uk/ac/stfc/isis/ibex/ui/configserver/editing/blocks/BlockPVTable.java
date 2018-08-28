@@ -84,7 +84,7 @@ public class BlockPVTable extends DataboundTable<PV> {
 		createColumn("Description", 6, new DataboundCellLabelProvider<PV>(observeProperty("description")) {
 			@Override
 			protected String stringFromRow(PV row) {
-				return row.getDescription();
+				return row.description();
 			}
 		});	
 	}
