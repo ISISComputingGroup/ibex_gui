@@ -58,7 +58,7 @@ public abstract class SynopticEditorHandler {
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for modifying the command if the underlying PV cannot be written to.
 	 */
-	protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>(){
+	protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
 		@Override
 		public synchronized void onCanWriteChanged(boolean canWrite) {
 			canExecute = canWrite;

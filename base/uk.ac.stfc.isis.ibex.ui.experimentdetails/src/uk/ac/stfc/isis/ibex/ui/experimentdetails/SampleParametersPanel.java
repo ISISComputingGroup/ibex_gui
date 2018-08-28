@@ -29,19 +29,18 @@ import javax.inject.Inject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 
 /**
- *
+ * The panel that shows sample parameters.
  */
 public class SampleParametersPanel {
 
     private ParametersTable sampleParameters;
-    private Label lblSampleParameters;
     private final ViewModel viewModel;
 
     /**
-     * @param parent
+     * Create the panel.
+     * @param parent The parent composite that this panel is within.
      */
     @Inject
     public SampleParametersPanel(Composite parent) {

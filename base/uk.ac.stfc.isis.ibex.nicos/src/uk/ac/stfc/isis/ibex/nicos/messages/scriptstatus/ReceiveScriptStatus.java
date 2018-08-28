@@ -20,15 +20,13 @@ package uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus;
 
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
-
 /**
  * The status of the NICOS server.
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
 @SuppressWarnings("checkstyle:membername")
-public class ReceiveScriptStatus implements ReceiveMessage {
+public class ReceiveScriptStatus {
 	/**
 	 * Tuple of two items (status code, line number).
 	 */

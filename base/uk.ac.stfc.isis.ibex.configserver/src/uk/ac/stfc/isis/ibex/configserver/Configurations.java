@@ -155,8 +155,7 @@ public class Configurations extends Closer implements BundleActivator {
     /**
      * Add a configuration to the "recently used" list.
      * 
-     * @param configName
-     *                 The name to add.
+     * @param configName the name to add
      */
 	public void addNameToRecentlyLoadedConfigList(String configName) {
 		recent.add(configName);

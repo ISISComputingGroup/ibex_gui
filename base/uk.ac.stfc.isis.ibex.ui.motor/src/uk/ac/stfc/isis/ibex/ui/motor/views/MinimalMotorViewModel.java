@@ -71,7 +71,7 @@ public class MinimalMotorViewModel extends ModelObject {
     	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				setPalette((MotorBackgroundPalette)evt.getNewValue());
+				setPalette((MotorBackgroundPalette) evt.getNewValue());
 			}
 		});
         setPalette(displayPrefsModel.getMotorBackgroundPalette());

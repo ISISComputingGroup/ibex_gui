@@ -51,7 +51,7 @@ public class Table extends DataboundTable<Row> {
      * @param tableStyle the style of the table
      */
 	public Table(Composite parent, int style, int tableStyle) {
-		super(parent, style, Row.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 		
 		initialise();
 	}

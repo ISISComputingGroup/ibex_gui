@@ -10,12 +10,19 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 
 /**
  * Class for accessing the perspectives in the application model.
  */
 public class PerspectivesProvider {
 
+    private ExperimentSetupViewModel experimentSetupViewModel;
+    private Shell shell;
     private final EPartService partService;
     private List<MPerspective> perspectives = new ArrayList<MPerspective>();
     private MPerspectiveStack perspectivesStack;
@@ -39,7 +46,8 @@ public class PerspectivesProvider {
         this.partService = partService;
         this.app = app;
         this.modelService = modelService;
-
+        experimentSetupViewModel = DaeUI.getDefault().viewModel().experimentSetup();
+        
         perspectives = new ArrayList<>();
         for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
             if (perspective.isVisible()) {
@@ -119,20 +127,45 @@ public class PerspectivesProvider {
         }
         return perspectives;
     }
-    
+
     /**
      * Switches to a given perspective by id.
      * @param id the id of the perspective to switch to
      */
     public void switchPerspective(String id) {
-    	partService.switchPerspective(id);
+        switchIfDaeIsNotCurrentPerspective(id);
     }
-    
-    /**
-     * Switches to a given perspective.
-     * @param perspective the the perspective to switch to
-     */
-    public void switchPerspective(MPerspective perspective) {
-    	partService.switchPerspective(perspective);
+
+    private void switchIfDaeIsNotCurrentPerspective(String id) {
+        for (MPerspective perspectiveInService : modelService.findElements(app, null, MPerspective.class, null)) {
+            if (isSelected(perspectiveInService)) {
+                if (perspectiveInService.getLabel().equals("DAE")) {
+                    showDialogOrSwitchPerspective(perspectiveInService, id);
+                } else {
+                    partService.switchPerspective(id);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void showDialogOrSwitchPerspective(MPerspective perspectiveInService, String id) {
+        if (experimentSetupViewModel.getIsChanged()) {
+            switchIfDialogConfirmed(perspectiveInService, id);
+        } else {
+            partService.switchPerspective(id);
+        }
+    }
+
+    private void switchIfDialogConfirmed(MPerspective perspectiveInService, String id) {
+        if (leaveWithoutApplyingDaeChangesDialog(perspectiveInService.getLabel(), shell)) {
+            partService.switchPerspective(id);
+        }
+    }
+
+    private boolean leaveWithoutApplyingDaeChangesDialog(String perspectiveName, Shell shell) {
+        return MessageDialog.openQuestion(shell, "Confirm Leaving " + perspectiveName + " Perspective",
+                "You have unapplied changes in the \"Experiment Setup\" tab, are you sure you want to leave "
+                + "the perspective? \n\nThese changes will remain but will not be applied.");
     }
 }

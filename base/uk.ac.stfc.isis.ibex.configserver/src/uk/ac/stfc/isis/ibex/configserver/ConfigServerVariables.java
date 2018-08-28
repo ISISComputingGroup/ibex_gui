@@ -147,6 +147,7 @@ public class ConfigServerVariables extends Closer {
         componentDetails =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
                         converters.toConfigList());
+
         configsInfo =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
         componentsInfo =

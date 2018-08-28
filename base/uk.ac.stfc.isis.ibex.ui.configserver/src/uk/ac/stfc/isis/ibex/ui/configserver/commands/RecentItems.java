@@ -52,20 +52,10 @@ public class RecentItems extends ContributionItem {
     
 	private static Configurations configs;
 
-	/**
-	 * The constructor for this class.
-	 */
 	public RecentItems() {
 		configs = Configurations.getInstance();
 	}
 
-	/**
-     * The constructor for this class.
-     * 
-     * @param id
-     *          The identifier for this contribution item, of <code>null</code> if none.
-     *
-     */
 	public RecentItems(String id) {
 		super(id);
 	}

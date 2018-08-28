@@ -20,56 +20,55 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
+/**
+ * Base implementation of the writable interface.
+ * 
+ * THREAD SAFETY NOTE:
+ *   All subclasses of this class are required to be thread-safe using explicit locking. Subclasses can share
+ *   this class' lock object.
+ */
 public abstract class BaseWritable<T> implements Writable<T> {
 
-	private final Collection<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArrayList<>();
+	private final Set<ConfigurableWriter<?, ?>> writers = new HashSet<>();
 
 	private boolean canWrite;
 	private Exception lastError;
 	
 	@Override
-	public Subscription subscribe(ConfigurableWriter<?, ?> writer) {
-		writer.onCanWriteChanged(canWrite);
-		writer.onError(lastError);
-		
-		if (!writers.contains(writer)) {
-			writers.add(writer);
-		}
-		
+	public synchronized Subscription subscribe(ConfigurableWriter<?, ?> writer) {
+		writer.onCanWriteChanged(canWrite());
+		writer.onError(lastError());
+		writers.add(writer); // As a set is used, duplicates won't be added.
 		return new Unsubscriber<ConfigurableWriter<?, ?>>(writers, writer);
 	}
 	
 	@Override
-    public boolean canWrite() {
+    public synchronized boolean canWrite() {
 		return canWrite;
 	}
 	
-	public Exception lastError() {
+	public synchronized Exception lastError() {
 		return lastError;
 	}
 	
-	protected void error(Exception e) {
+	protected synchronized void error(Exception e) {
 		lastError = e;
-		for (ConfigurableWriter<?, ?> writer : writers) {
-			writer.onError(e);
-		}
+		writers.forEach(writer -> writer.onError(e));
 	}
 	
-	protected void canWriteChanged(boolean canWrite) {
+	protected synchronized void canWriteChanged(boolean canWrite) {
 		this.canWrite = canWrite;
-		for (ConfigurableWriter<?, ?> writer : writers) {
-			writer.onCanWriteChanged(canWrite);
-		}
+		writers.forEach(writer -> writer.onCanWriteChanged(canWrite));
 	}
 	
 	@Override
-    public void uncheckedWrite(T value) {
+    public synchronized void uncheckedWrite(T value) {
 	    try {
 	        write(value);
 	    } catch (IOException e) {

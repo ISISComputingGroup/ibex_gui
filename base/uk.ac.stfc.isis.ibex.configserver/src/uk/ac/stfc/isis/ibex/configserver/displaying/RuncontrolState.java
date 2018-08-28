@@ -23,8 +23,20 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
  * Enum for the overall state of run-control.
  */
 public enum RuncontrolState {
+    /**
+     * The run control is disabled.
+     */
     DISABLED,
+    /**
+     * The run control is enabled and in range.
+     */
     ENABLED_IN_RANGE,
+    /**
+     * The run control is enabled but out of range.
+     */
     ENABLED_OUT_RANGE,
+    /**
+     * The run control is disconnected.
+     */
     DISCONNECTED
 }

@@ -39,7 +39,7 @@ public class ConfigInfo {
     private final String description;
     private final String pv;
     private String synoptic;
-    private List<String> history = new ArrayList<>();
+    private final List<String> history;
 
     /**
      * Constructor.
@@ -54,16 +54,14 @@ public class ConfigInfo {
      *            The default synoptic view for the config
      * @param history
      *            The history of the config.
-     *            
+     *  
      */
     public ConfigInfo(String name, String description, String pv, String synoptic, Collection<String> history) {
         this.name = name;
         this.description = description;
         this.pv = pv;
         this.synoptic = synoptic;
-        for (String date : history) {
-            this.history.add(date);
-        }
+        this.history = new ArrayList<>(history);
     }
 
     /**
@@ -92,13 +90,6 @@ public class ConfigInfo {
      */
     public String synoptic() {
         return synoptic;
-    }
-    
-    /**
-     * @return A collection of dates (as Strings) when the configuration was updated.
-     */
-    public Collection<String> getHistory() {
-        return new ArrayList<>(history);
     }
 
     /**
@@ -133,5 +124,13 @@ public class ConfigInfo {
                 return info.name();
             }
         }));
+    }
+    
+    
+    /**
+     * @return A collection of dates (as Strings) when the configuration was updated.
+     */
+    public Collection<String> getHistory() {
+        return Collections.unmodifiableList(history);
     }
 }

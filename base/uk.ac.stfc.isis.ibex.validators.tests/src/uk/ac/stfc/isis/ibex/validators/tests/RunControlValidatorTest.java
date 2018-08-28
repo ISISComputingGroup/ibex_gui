@@ -32,20 +32,20 @@ import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 @SuppressWarnings("checkstyle:methodname")
 public class RunControlValidatorTest {
 
-	private void checkPassedWithMessage(String lowLimit, String highLimit, String expected) {
+	private void checkPassedWithMessage(double lowLimit, double highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit, true);
         
         // Assert
         assertTrue(isValid);
         assertTrue(limitsValid.getErrorMessage().equals(expected));
 	}
 	
-	private void checkFailedWithMessage(String lowLimit, String highLimit, String expected) {
+	private void checkFailedWithMessage(double lowLimit, double highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit, true);
         
         // Assert
         assertFalse(isValid);
@@ -56,17 +56,9 @@ public class RunControlValidatorTest {
      * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
      */
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void valid_limits() {
-        checkPassedWithMessage("0.0", "10.0", RunControlValidator.NO_ERROR);
-    }
-
-    /**
-     * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
-     * .
-     */
-    @Test
-    public void invalid_low_limit_conversion() {
-        checkFailedWithMessage("a", "10.0", RunControlValidator.LOW_LIMIT_FLOAT);
+        checkPassedWithMessage(0., 10., RunControlValidator.NO_ERROR);
     }
     
     /**
@@ -74,35 +66,9 @@ public class RunControlValidatorTest {
      * .
      */
     @Test
-    public void invalid_high_limit_conversion() {
-        checkFailedWithMessage("15.0", "^", RunControlValidator.HIGH_LIMIT_FLOAT);
-    }
-
-    /**
-     * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
-     * .
-     */
-    @Test
-    public void invalid_low_limit_empty() {       
-        checkFailedWithMessage("", "1.0", RunControlValidator.LOW_LIMIT_EMPTY);
-    }
-    
-    /**
-     * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
-     * .
-     */
-    @Test
-    public void invalid_high_limit_empty() {        
-        checkFailedWithMessage("2.5", "", RunControlValidator.HIGH_LIMIT_EMPTY);
-    }
-    
-    /**
-     * Test method for {@link uk.ac.stfc.isis.ibex.validators.RunControlValidator#isValid(java.lang.String, java.lang.String)}.
-     * .
-     */
-    @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void invalid_high_limit_lower() {
-        checkFailedWithMessage("2.5", "1.0", RunControlValidator.LOW_LIMIT_LESS);
+        checkFailedWithMessage(2.5, 1.0, RunControlValidator.LOW_LIMIT_LESS);
     }
     
     /**
@@ -110,17 +76,8 @@ public class RunControlValidatorTest {
      * .
      */
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void valid_limits_equal() {
-        checkPassedWithMessage("5.0", "5.0", RunControlValidator.NO_ERROR);
-    }
-
-    @Test
-    public void null_limits_set_no_error() {
-        checkFailedWithMessage(null, null, RunControlValidator.NO_ERROR);
-    }
-
-    @Test
-    public void null_highlimit_set_no_error() {
-        checkFailedWithMessage("2.0", null, RunControlValidator.NO_ERROR);
+        checkPassedWithMessage(5.0, 5.0, RunControlValidator.NO_ERROR);
     }
 }

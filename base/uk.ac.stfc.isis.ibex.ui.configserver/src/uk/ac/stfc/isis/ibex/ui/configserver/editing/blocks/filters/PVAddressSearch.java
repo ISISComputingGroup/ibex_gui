@@ -41,13 +41,13 @@ public class PVAddressSearch extends ViewerFilter {
 		if (p.getAddress().matches(searchString)) {
 			return true;
 		}
-		if (p.getDescription().matches(searchString)) {
+		if (p.description().matches(searchString)) {
 			return true;
 		}
 		// Use uppercase checks to eliminate case sensitivity on the search - Story 600
 		String upSearch = searchString.toUpperCase();
 		String upadd = p.getAddress().toUpperCase();
-		String updesc = p.getDescription().toUpperCase();
+		String updesc = p.description().toUpperCase();
 		if (upadd.matches(upSearch) || updesc.matches(upSearch)) {
 			return true;
 		}

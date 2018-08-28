@@ -25,10 +25,24 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 
+/**
+ * An interface for displaying information from the configuration
+ * server.
+ */
 public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
+	/**
+	 * Current configuration details for presentation to the user.
+	 * 
+	 * @return 
+	 *         The current configuration details.
 	 */
 	ForwardingObservable<DisplayConfiguration> displayCurrentConfig();
+	
+	/**
+	 * Returns a collection of blocks whose value and run-control settings can be displayed in a GUI.
+	 * 
+	 * @return
+	 *         a collection of blocks whose value and run-control settings can be displayed in a GUI.
+	 */
 	Collection<DisplayBlock> getDisplayBlocks();
 }
