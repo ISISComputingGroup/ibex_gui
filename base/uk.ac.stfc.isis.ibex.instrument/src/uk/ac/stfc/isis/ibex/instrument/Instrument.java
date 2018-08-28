@@ -105,16 +105,6 @@ public class Instrument implements BundleActivator {
      * The local instrument information.
      */
     private final InstrumentInfo localhost = new LocalHostInstrumentInfo();
-    
-    /**
-     * True if it is the first time an instrument is set.
-     */
-    private boolean isFirstConnect;
-    
-    /**
-     * The name of the instrument switched from.
-     */
-    private String nameOfInstrumentSwitchedFrom;
 
     /**
      * An observable for the instrument list.
@@ -145,50 +135,8 @@ public class Instrument implements BundleActivator {
     public Instrument() {
         instance = this;
         setInstrumentsObserver();
-        setFirstConnectionStatus(true);
     }
-    
-    
-    /**
-     * Allows to set if it is the first time an instrument been set.
-     * 
-     * @param firstConnect
-     *                      True if it is the first time that an instrument is set.
-     */
-    private void setFirstConnectionStatus(boolean firstConnect) {
-        this.isFirstConnect = firstConnect;
-    }
-    
-    /**
-     * Returns true if it is the first time that an instrument is set.
-     * @return
-     *          True if it is the first time that an instrument is set.
-     */
-    public boolean isFirstConnection() {
-        return isFirstConnect;
-    }
-    
-    /**
-     * Sets the name of the instrument that we are switching from.
-     * This is updated after switching whereas instrumentInfo is updated before switching.
-     * 
-     * @param nameOfInstrumentSwitchedFrom
-     *                                      The name of the instrument that we are switching from.
-     */
-    private void updateNameOfInstrumentSwitchedFrom() {
-        nameOfInstrumentSwitchedFrom = instrumentInfo.name();
-    }
-    
-    /**
-     * Returns true if the user is switching to the same instrument.
-     * 
-     * @return
-     *          True if the user is switching to the same instrument.
-     */
-    public boolean switchingToSameInstrument() {
-        return currentInstrument().name().equals(nameOfInstrumentSwitchedFrom);
-    }
-    
+
     /**
      * Adds an observer to the instrument list observable.
      */
@@ -278,6 +226,7 @@ public class Instrument implements BundleActivator {
 	 * @param selectedInstrument Information on the new instrument.
 	 */
 	public void setInstrumentForAllPlugins(InstrumentInfo selectedInstrument) {
+
         if (this.instrumentInfo != selectedInstrument) {
             this.instrumentInfo = selectedInstrument;
         }
@@ -287,7 +236,7 @@ public class Instrument implements BundleActivator {
         }
 
         instrumentName.setValue(selectedInstrument.name());
-        
+
         final InstrumentInfo finalSelectedInstrument = selectedInstrument;
 
         /*
@@ -300,8 +249,6 @@ public class Instrument implements BundleActivator {
             @Override
             public void run() {
                 updateExtendingPlugins(finalSelectedInstrument);
-                setFirstConnectionStatus(false);
-                updateNameOfInstrumentSwitchedFrom();
             }
         }).start();
 
@@ -322,7 +269,7 @@ public class Instrument implements BundleActivator {
         LOG.debug("Changing to instrument " + instrumentInfo.hostName() + ", Number of connected channels = "
                 + Integer.toString(count));
     }
-    
+
     /**
      * @return The information about the current instrument.
      */
@@ -369,6 +316,7 @@ public class Instrument implements BundleActivator {
             }
 
         }
+
         for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
             try {
                 receiver.postSetInstrument(selectedInstrument);

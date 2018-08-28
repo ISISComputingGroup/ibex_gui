@@ -24,7 +24,6 @@ import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
 
@@ -64,11 +63,7 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      */
 	@Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        if (!Instrument.getInstance().isFirstConnection()) {
-            if (!Instrument.getInstance().switchingToSameInstrument()) {
-                LogPlotterHistoryPresenter.closeCurrentDataBrowsers();
-            }
-        }
+        LogPlotterHistoryPresenter.closeAllDataBrowsers();
 	}
 	
     /**
