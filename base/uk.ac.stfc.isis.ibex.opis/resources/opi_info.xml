@@ -2528,7 +2528,7 @@
       <value>
         <categories>
           <category>Power supplies</category>
-        </categories>
+        <!-- </categories> -->
         <type>POWER_SUPPLY</type>
         <path>kicker.opi</path>
         <description>The OPI for the KICKER power supply unit</description>
@@ -2545,5 +2545,5 @@
       </value>
     </entry>
     
-	</opis>
+    </opis>
 </descriptions>
