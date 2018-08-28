@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -35,19 +34,37 @@ import org.eclipse.swt.widgets.TableColumn;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeMode;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupTableViewer;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.PanelViewModel;
 
+/**
+ * A method to construct a time regime.
+ *
+ */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class TimeRegimeView extends Composite {
 	
 	private Table table;	
-	private TableViewer viewer;
+	private DaeExperimentSetupTableViewer viewer;
 	private Composite tableComposite;
 	private TableColumnLayout tableLayout;
 	private Label lblTimeRegime;
+	private PanelViewModel panelViewModel;
+	private String name;
 	
-	public TimeRegimeView(Composite parent, int style) {
+	/**
+     * Constructor for the time channel settings panel.
+     * 
+     * @param parent the parent composite.
+     * @param style the SWT style.
+     * @param panelViewModel The viewModel that helps manipulate the panels.
+     * @param name The table's name.
+     */
+	public TimeRegimeView(Composite parent, int style, PanelViewModel panelViewModel, String name) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
+		this.panelViewModel = panelViewModel;
+		this.name = name;
 		
 		lblTimeRegime = new Label(this, SWT.NONE);
 		lblTimeRegime.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
@@ -57,10 +74,20 @@ public class TimeRegimeView extends Composite {
 		setTable();
 	}
 	
+	/**
+	 * Sets a title to the table.
+	 * @param title
+	 *             The title.
+	 */
 	public void setTitle(String title) {
 		lblTimeRegime.setText(title);
 	}
 	
+	/**
+	 * Sets a model for the table.
+	 * @param model
+	 *             The model.
+	 */
 	public void setModel(TimeRegime model) {	
 		viewer.setInput(model.rows());
 	}
@@ -68,8 +95,7 @@ public class TimeRegimeView extends Composite {
 	private void createTableViewer() {
 		createTableLayout();
 
-		viewer = new TableViewer(tableComposite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		
+		viewer = new DaeExperimentSetupTableViewer(tableComposite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, panelViewModel, name);
 		TableViewerColumn from = addColumn("From", 25);
 		from.setEditingSupport(new FromEditingSupport(viewer, TimeRegimeRow.class));
 		
@@ -83,7 +109,7 @@ public class TimeRegimeView extends Composite {
 		mode.setEditingSupport(new TimeRegimeModeEditingSupport(viewer, TimeRegimeRow.class, TimeRegimeMode.class));
 		
 		viewer.setLabelProvider(new TimeRegimeLabelProvider());		
-		viewer.setContentProvider(ArrayContentProvider.getInstance());		
+		viewer.setContentProvider(ArrayContentProvider.getInstance());
 	}
 		
 	private void createTableLayout() {
@@ -104,13 +130,41 @@ public class TimeRegimeView extends Composite {
 		column.setText(name);
 		column.setResizable(false);
 		tableLayout.setColumnData(column, new ColumnWeightData(weight, 50, false));
-		
 		return viewerColumn;
 	}
 	
 	private void setTable() {
 		table = viewer.getTable();
 		table.setHeaderVisible(true);
-		table.setLinesVisible(true);		
+		table.setLinesVisible(true);
 	}
+	
+	/**
+     * Creates a cache of the applied values for the table.
+     */
+    public void resetCachedValues() {
+        panelViewModel.resetTableViewerCachedValues(viewer);
+    }
+    
+    /**
+     * Removes the listeners out dated when changes were applied.
+     */
+    public void removeListener() {
+        panelViewModel.removesTableViewersListeners(viewer);
+    }
+    
+    /**
+     * Creates a cache of the applied values for the different widgets.
+     */
+    public void createInitialCachedValues() {
+        panelViewModel.createInitialTableViewerCachedValues(viewer);
+    }
+    
+    /**
+     * Goes over every call and adds a label to a it if its value is different from the one applied on the instrument.
+     */
+    public void ifTableValueDifferentFromCachedValueThenChangeLabel() {
+        panelViewModel.ifTableViewerValuesDifferentFromCachedValueThenChangeLabel(viewer);
+    }
+
 }

@@ -399,7 +399,32 @@
           <macro>
             <name>MK2CHOPR</name>
             <description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>
-          </macro>
+					</macro>
+				</macros>
+			</value>
+    </entry>
+    <entry>
+        <key>Monitor</key>
+        <value>
+            <categories>
+                <category>Monitors</category>
+            </categories>
+            <type>MONITOR</type>
+            <path>monitor.opi</path>
+            <description>The OPI for a fixed monitor.</description>
+            <macros>
+                <macro>
+                    <name>M</name>
+                    <description>The monitor number (e.g. 1).</description>
+                </macro>
+                <macro>
+                    <name>MHVCHAN</name>
+                    <description>CAEN HV channel for the monitor (default: 0).</description>
+                </macro>
+                <macro>
+                    <name>MHVSLOT</name>
+                    <description>CAEN HV slot for the monitor (default: 0).</description>
+                </macro>
         </macros>
       </value>
     </entry>
@@ -424,6 +449,17 @@
           <macro>
             <name>MHVSLOT</name>
             <description>CAEN HV slot for the monitor (default: 0).</description>
+      <key>Moxa E1210</key>
+      <value>
+        <categories>
+        </categories>
+        <type>MOXA_1210</type>
+        <path>moxa1210.opi</path>
+        <description>The OPI for a Moxa E1210 remote I/O.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1210 PV prefix (e.g. MOXA1210_01).</description>
           </macro>
         </macros>
       </value>
@@ -1208,7 +1244,7 @@
         <path>fermi_chopper_lift.opi</path>
         <description>The OPI for the Fermi chopper lifter.</description>
         <macros>
-				</macros>
+        </macros>
       </value>
     </entry>
     <entry>

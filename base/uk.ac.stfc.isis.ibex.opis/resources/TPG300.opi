@@ -633,7 +633,7 @@ $(pv_value)</tooltip>
       <pv_value />
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>27</height>
+      <height>23</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -721,7 +721,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_0_update_mode>4</trace_0_update_mode>
       <trace_1_x_pv></trace_1_x_pv>
       <wuid>-36b0e15e:1632a56556c:-7ab9</wuid>
-      <transparent>false</transparent>
+      <transparent>true</transparent>
       <trace_1_update_mode>4</trace_1_update_mode>
       <axis_0_title_font>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
@@ -814,7 +814,32 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_log_scale>false</axis_0_log_scale>
       <trace_0_x_pv_value />
       <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-      <rules />
+      <rules>
+        <rule name="PressureA1_Visibility" prop_id="trace_0_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):PRESSURE_A1:VISIBLE.VAL</pv>
+        </rule>
+        <rule name="PressureA2_Visibility" prop_id="trace_1_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):PRESSURE_A2:VISIBLE.VAL</pv>
+        </rule>
+        <rule name="PressureB1_Visibility" prop_id="trace_2_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):PRESSURE_B1:VISIBLE.VAL</pv>
+        </rule>
+        <rule name="PressureB2_Visibility" prop_id="trace_3_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):PRESSURE_B2:VISIBLE.VAL</pv>
+        </rule>
+      </rules>
       <axis_1_visible>true</axis_1_visible>
       <trace_3_y_axis_index>1</trace_3_y_axis_index>
       <trace_0_update_delay>100</trace_0_update_delay>
