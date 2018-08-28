@@ -44,6 +44,14 @@ public class EditableGroup extends Group {
 	private final List<EditableBlock> blocksInGroup;
 	private final EditableConfiguration config;
 
+	/**
+	 * A constructor for an easily editable group.
+	 * 
+	 * @param configuration
+	 *                     The configuration to which the group belongs.
+	 * @param group
+	 *                     The group to edit.
+	 */
 	public EditableGroup(final EditableConfiguration configuration, Group group) {
 		super(group);
 
@@ -69,6 +77,13 @@ public class EditableGroup extends Group {
 		return DisplayUtils.renameGroup(super.getName());
 	}
 
+	/**
+	 * Allows to make a collection of blocks easier to edit.
+	 * @param blocks
+	 *             The collection of blocks to edit.
+	 * @return
+	 *             The blocks that are now easier to edit.
+	 */
 	public Collection<EditableBlock> makeEditable(Collection<Block> blocks) {
 		List<EditableBlock> editable = new ArrayList<>();
 		for (Block block : blocks) {
@@ -78,14 +93,29 @@ public class EditableGroup extends Group {
 		return editable;
 	}
 
+	/**
+	 * Returns a collection of blocks that are unselected.
+	 * @return
+	 *         A collection of blocks that are unselected.
+	 */
 	public Collection<EditableBlock> getUnselectedBlocks() {
 		return new ArrayList<>(config.getOtherBlocks());
 	}
 
+	/**
+     * Returns a collection of blocks that are selected.
+     * @return
+     *         A collection of blocks that are selected.
+     */
 	public Collection<EditableBlock> getSelectedBlocks() {
 		return new ArrayList<>(blocksInGroup);
 	}
 
+	/**
+	 * Selects or unselected blocks.
+	 * @param blocksToToggle
+	 *                     The blocks to be selected or unselected.
+	 */
 	public void toggleSelection(Collection<EditableBlock> blocksToToggle) {
 		Collection<EditableBlock> selectedBefore = getSelectedBlocks();
 		Collection<EditableBlock> unselectedBefore = getUnselectedBlocks();
@@ -106,6 +136,11 @@ public class EditableGroup extends Group {
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
 
+	/**
+	 * Moves a block up within the group.
+	 * @param blockName
+	 *                 The block to move up within the group.
+	 */
 	public void moveBlockUp(String blockName) {
 		EditableBlock blockToMoveUp = lookupBlockByName(blocksInGroup, blockName);
 		int blockToMoveUpIndex = blocksInGroup.indexOf(blockToMoveUp);
@@ -116,6 +151,11 @@ public class EditableGroup extends Group {
 		}
 	}
 
+	/**
+     * Moves a block down within the group.
+     * @param blockName
+     *                 The block to move down within the group.
+     */
 	public void moveBlockDown(String blockName) {
 		EditableBlock blockToMoveDown = lookupBlockByName(blocksInGroup, blockName);
 		int blockToMoveDownIndex = blocksInGroup.indexOf(blockToMoveDown);
@@ -131,6 +171,11 @@ public class EditableGroup extends Group {
 		return blockNames(blocksInGroup);
 	}
 
+	/**
+	 * Returns true if the group is editable (ie does not have a component).
+	 * @return
+	 *         True if the group is editable
+	 */
 	public boolean isEditable() {
 		return !hasComponent();
 	}

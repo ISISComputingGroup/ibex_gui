@@ -417,37 +417,53 @@
 						<name>M</name>
 						<description>The monitor number (e.g. 1).</description>
           </macro>
-					<macro>		
+					<macro>
 						<name>MHVCHAN</name>
-						<description>CAEN HV channel for the monitor (default: 0).</description>		
+						<description>CAEN HV channel for the monitor (default: 0).</description>
 					</macro>
-                    <macro>		
-						<name>MHVSLOT</name>		
-						<description>CAEN HV slot for the monitor (default: 0).</description>		
+                    <macro>
+						<name>MHVSLOT</name>
+						<description>CAEN HV slot for the monitor (default: 0).</description>
 					</macro>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Pinhole Selector</key>
-			<value>
-				<categories>
-					<category>Miscellaneous motion control</category>
-				</categories>
-				<type>PINHOLESELECTOR</type>
-				<path>pinhole_selector\pinhole_selector.opi</path>
-				<description>The OPI for the pinhole selector.</description>
-				<macros>
-					<macro>
-						<name>PH</name>
-						<description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
-					</macro>
-					<macro>
-						<name>MM</name>
-						<description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
-					</macro>
-				</macros>
-			</value>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Moxa E1210</key>
+      <value>
+        <categories>
+        </categories>
+        <type>MOXA_1210</type>
+        <path>moxa1210.opi</path>
+        <description>The OPI for a Moxa E1210 remote I/O.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1210 PV prefix (e.g. MOXA1210_01).</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Pinhole Selector</key>
+      <value>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+        <type>PINHOLESELECTOR</type>
+        <path>pinhole_selector\pinhole_selector.opi</path>
+        <description>The OPI for the pinhole selector.</description>
+        <macros>
+          <macro>
+            <name>PH</name>
+            <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+          </macro>
+          <macro>
+            <name>MM</name>
+            <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+          </macro>
+        </macros>
+      </value>
     </entry>
     <entry>
       <key>PGC</key>
@@ -2459,6 +2475,12 @@
         <type>DAE</type>
         <path>live_view.opi</path>
         <description>The OPI for a live view of the detector</description>
+		<macros>
+			<macro>
+				<name>DET</name>
+				<description>Detector number (1 is first)</description>
+			</macro>
+		</macros>
       </value>
     </entry>
     <entry>
@@ -2487,6 +2509,23 @@
         <path>matplotlib.opi</path>
         <description>The OPI for displaying plots created via matplotlib</description>
         <macros>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
+      <key>TDS 3000 Trace</key>
+      <value>
+        <categories>
+          <category>Oscilloscopes</category>
+        </categories>
+        <type>OSCILLOSCOPE</type>
+        <path>TDS3000_trace.opi</path>
+        <description>The trace shown by a TDS 3000 series oscilloscope</description>
+        <macros>
+          <macro>
+            <name>IP</name>
+            <description>The IP address of the oscilloscope.</description>
+          </macro>
         </macros>
       </value>
     </entry>

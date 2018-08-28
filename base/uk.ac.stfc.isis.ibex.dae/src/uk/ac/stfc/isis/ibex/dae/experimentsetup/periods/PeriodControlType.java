@@ -23,10 +23,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * An enum representing the period control type.
+ */
 public enum PeriodControlType {
+    /**
+     * The period is controlled via a PC.
+     */
     SOFTWARE("Software: PC controlled"),
+    /**
+     * The period is controlled by a DAE internal control.
+     */
     HARDWARE_DAE("Hardware: DAE internal control"),
+    /**
+     * The period is controlled by an external hardware signal.
+     */
     HARDWARE_EXTERNAL("Hardware: External signal control");
 
 	private String text;
@@ -39,10 +50,21 @@ public enum PeriodControlType {
 		}
 	}
 	
+	/**
+	 * The constructor for the period control type.
+	 * 
+	 * @param text
+	 *             The type.
+	 */
 	PeriodControlType(String text) {
 		this.text = text;
 	}
-	 
+	
+	/**
+	 * Returns a string representation of each possible period type.
+	 * @return
+	 *         A string representation of each possible period type.
+	 */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}
