@@ -2517,11 +2517,33 @@
         <description>The trace shown by a TDS 3000 series oscilloscope</description>
         <macros>
           <macro>
-            <name>IP</name>
-            <description>The IP address of the oscilloscope.</description>
+            <name>SCOPE_IP</name>
+            <description>The IP address of the Kicker oscilloscope.</description>
           </macro>
         </macros>
       </value>
+    </entry>    
+    <entry>        
+      <key>Kicker PSU</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>kicker.opi</path>
+        <description>The OPI for the KICKER power supply unit</description>
+        <macros>
+        <macro>
+            <name>KICKER</name>
+            <description>The KICKER PV prefix (e.g. KICKER_01).</description>
+        </macro>
+        <macro>
+            <name>SCOPE_IP</name>
+            <description>The IP address of the Kicker oscilloscope.</description>
+        </macro>
+        </macros>
+      </value>
     </entry>
+    
 	</opis>
 </descriptions>
