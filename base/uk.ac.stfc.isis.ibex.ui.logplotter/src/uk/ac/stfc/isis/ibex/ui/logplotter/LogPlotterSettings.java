@@ -56,13 +56,12 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
 	}
 	
 	/**
-     * Called after an instrument set is called. This will close any plots still open on instrument switching (given that this is not the first
-     * time an instrument is set and that the instrument name has changed).
+     * Called just before switching instruments. This will close any plots still open on instrument switching.
      *
      * @param instrument the instrument switched to
      */
 	@Override
-    public void postSetInstrument(InstrumentInfo instrument) {
+    public void preSetInstrument(InstrumentInfo instrument) {
         LogPlotterHistoryPresenter.closeAllDataBrowsers();
 	}
 	
