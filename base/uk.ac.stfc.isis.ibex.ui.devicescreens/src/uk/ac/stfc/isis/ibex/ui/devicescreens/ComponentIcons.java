@@ -161,8 +161,10 @@ public final class ComponentIcons {
             	return "syringe_pump";
             case KEYENCE:
             	return "keyence";
-			case MOXA_1210:
-				return "moxa_1210";
+            case OSCILLOSCOPE:
+            	return "oscilloscope";
+			      case MOXA_1210:
+				      return "moxa_1210";
             default:
                 return "cog";
         }

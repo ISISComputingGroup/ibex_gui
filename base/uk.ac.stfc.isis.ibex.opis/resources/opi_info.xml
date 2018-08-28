@@ -2506,5 +2506,22 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>TDS 3000 Trace</key>
+      <value>
+        <categories>
+          <category>Oscilloscopes</category>
+        </categories>
+        <type>OSCILLOSCOPE</type>
+        <path>TDS3000_trace.opi</path>
+        <description>The trace shown by a TDS 3000 series oscilloscope</description>
+        <macros>
+          <macro>
+            <name>IP</name>
+            <description>The IP address of the oscilloscope.</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
