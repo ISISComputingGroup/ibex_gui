@@ -44,19 +44,29 @@ if "%RELEASE%" == "YES" (
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
-if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
-if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
+if "%RELEASE%" == "YES" (
+    if "%IS_E4_DEPLOY%" == "YES" (
+        set INSTALLBASEDIR=%RELEASE_DIR%\Client_E4
+    ) else (
+        set INSTALLBASEDIR=%RELEASE_DIR%\Client
+    )
+    set INSTALLDIR=%INSTALLBASEDIR%
+)
 
 if not "%RELEASE%" == "YES" (
     if "%IS_E4_DEPLOY%" == "YES" (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
-        set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
     ) else (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-        set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
     )
-    
 ) 
+
+if "%IS_E4_DEPLOY%" == "YES" (
+    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+) else (
+    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+)
+
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
 if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
