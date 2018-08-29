@@ -1,4 +1,6 @@
 REM %~dp0 expands to directory where this file lives
+setlocal
+
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
@@ -6,7 +8,6 @@ set PYTHON=C:\Python27
 set PYTHON_HOME=C:\Python27
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 set GENIEPYTHONDIR=c:\Installers\genie_python
-
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
@@ -31,8 +32,8 @@ if "%EXIT%" == "YES" exit
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
-net use p: /d
-net use p: \\isis\inst$ /user:isis\IBEXbuilder %BUILDERPW%
+net use p: /d /yes
+net use p: \\isis\inst$
 
 python.exe purge_archive_client.py
 
