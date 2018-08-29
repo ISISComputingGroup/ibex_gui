@@ -9,6 +9,7 @@
 				</categories>
 				<type>ANALYSER</type>
 				<path>analyser.opi</path>
+				<description>The OPI for the analyser. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
