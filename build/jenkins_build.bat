@@ -37,10 +37,16 @@ net use p: \\isis\inst$
 
 python.exe purge_archive_client.py
 
+if "%IS_E4_DEPLOY%" == "YES" (
+    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+) else (
+    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+)
+
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
     set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
-    set RELEASE_VERSION=%GIT_BRANCH:~8%
+    set RELEASE_VERSION=%GIT_BRANCH:~8%    
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
@@ -52,16 +58,8 @@ if not "%RELEASE%" == "YES" (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
     ) else (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-    ) 
+    )
 ) 
-
-if "%IS_E4_DEPLOY%" == "YES" (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
-) else (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
-)
-
-set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
