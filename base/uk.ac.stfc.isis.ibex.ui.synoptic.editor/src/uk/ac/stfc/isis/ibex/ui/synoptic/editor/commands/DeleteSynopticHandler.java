@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
 /**
@@ -62,10 +63,18 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
                         + configsUsingSynoptics + ". Are you sure you want to delete them?");
     }
 
+    /**
+     * Runs dialog and tries to delete selected synoptic.
+     *
+     * @throws ExecutionException thrown when it can't find/write to PV.
+     *
+     * @return null.
+     */
     @Execute
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), TITLE,
-                SYNOPTIC.availableEditableSynoptics());
+    public Object execute(Shell shell) throws ExecutionException {
+
+        MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell, TITLE, SYNOPTIC.availableEditableSynoptics());
+
 		if (dialog.open() == Window.OK) {
             ConfigServer server = Configurations.getInstance().server();
             Collection<ConfigInfo> existingConfigs = server.configsInfo().getValue();
