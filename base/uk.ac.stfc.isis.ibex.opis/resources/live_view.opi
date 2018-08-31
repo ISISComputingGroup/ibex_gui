@@ -241,7 +241,7 @@
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>121</width>
+      <width>163</width>
       <wrap_words>true</wrap_words>
       <wuid>-52e8a533:1658078a6db:-7dc3</wuid>
       <x>18</x>
@@ -276,13 +276,13 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Highest count rate:</text>
+      <text>Highest pixel count rate:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>121</width>
+      <width>163</width>
       <wrap_words>true</wrap_words>
       <wuid>-52e8a533:1658078a6db:-7dc0</wuid>
       <x>18</x>
@@ -337,7 +337,7 @@ $(pv_value)</tooltip>
       <width>109</width>
       <wrap_words>false</wrap_words>
       <wuid>-52e8a533:1658078a6db:-7dbf</wuid>
-      <x>156</x>
+      <x>186</x>
       <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -389,7 +389,7 @@ $(pv_value)</tooltip>
       <width>109</width>
       <wrap_words>false</wrap_words>
       <wuid>-52e8a533:1658078a6db:-7dbe</wuid>
-      <x>156</x>
+      <x>186</x>
       <y>31</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -427,7 +427,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>121</width>
+      <width>163</width>
       <wrap_words>true</wrap_words>
       <wuid>-52e8a533:1658078a6db:-789a</wuid>
       <x>18</x>
@@ -482,7 +482,7 @@ $(pv_value)</tooltip>
       <width>109</width>
       <wrap_words>false</wrap_words>
       <wuid>-52e8a533:1658078a6db:-7899</wuid>
-      <x>156</x>
+      <x>186</x>
       <y>60</y>
     </widget>
   </widget>
