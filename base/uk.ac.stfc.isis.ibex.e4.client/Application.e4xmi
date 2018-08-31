@@ -569,7 +569,7 @@
   <commands xmi:id="_kcuRwHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.delete" commandName="Delete configuration" description="Delete an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kNSN8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit component" description="Select and edit an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
-  <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component " description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_bjIjUHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.waitfor" commandName="Wait for Instrument" description="Command indicating that the client is waiting for the instrument"/>
   <commands xmi:id="_QRQe4JojEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchinstruments" commandName="Switch Instruments"/>
   <commands xmi:id="_5YCA0JxFEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.managermode" commandName="Manager mode" description="Manager mode"/>
