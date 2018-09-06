@@ -33,7 +33,7 @@ public class NewSynopticHandler extends SynopticEditorHandler {
 	private static final String TITLE = "New Synoptic";
 	
 	@Execute
-	public Object execute(Shell shell) throws ExecutionException {	
+	public Object execute(Shell shell) throws ExecutionException {
 		openDialog(shell, new SynopticDescription(), TITLE, true);
 		return null;
 	}

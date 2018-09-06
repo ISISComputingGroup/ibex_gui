@@ -19,67 +19,35 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
+import java.util.Arrays;
+
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
 
 /**
  * This plugin creates an extension point for other plugins to hook into if they have a method for displaying historic PV data.
  */
 public class Presenter extends Plugin {	
-    private static Presenter instance;
-	private PVHistoryPresenter pvHistoryPresenter;
-
-	/**
-	 * Get the singleton instance of this class.
-	 * @return The instance of this class.
-	 */
-    public static Presenter getInstance() {
-    	return instance; 
-    }
-
-    /**
-     * Default constructor for the plugin.
-     */
-	public Presenter() {
-		instance = this;
-	}
+    private static final String EXTENSION_POINT_ID = "uk.ac.stfc.isis.ibex.ui.blocks.presentation";
 	
 	/**
 	 * Get the PV history presenter.
 	 * @return The PV history presenter.
 	 */
-	public PVHistoryPresenter pvHistoryPresenter() {
-		return pvHistoryPresenter;
-	}
-	
-	/**
-	 * Starts the plugin and finds all presenters that are extending the extension point.
-	 * @param bundleContext the context for this plugin
-	 */
-	public void start(BundleContext bundleContext) {
-		pvHistoryPresenter = locatePVHistoryPresenter();
-	}
-	
-	private PVHistoryPresenter locatePVHistoryPresenter() {
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.ui.blocks.presentation");
-		
-		if (elements.length == 0) {
-			return new NullPVHistoryPresenter();
-		}
-		
-		try {
-			final Object obj = elements[0].createExecutableExtension("class");
-			return (PVHistoryPresenter) obj;
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-		
-		return new NullPVHistoryPresenter();
+	public static PVHistoryPresenter pvHistoryPresenter() {
+		return Arrays.stream(Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID))
+			.map(element -> {
+				try {
+				    return element.createExecutableExtension("class");
+				} catch (CoreException e) {
+					return null;  // will be filtered out below
+				}
+			})
+			.filter(obj -> obj instanceof PVHistoryPresenter)
+			.map(obj -> (PVHistoryPresenter) obj)
+			.findFirst()
+			.orElseGet(NullPVHistoryPresenter::new);
 	}
 
 }

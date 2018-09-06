@@ -75,6 +75,10 @@ public class RunInformationPanel {
 	private Label monitorFrom;
 	private Label monitorTo;
 	private Label daeSimMode;
+	
+	private Label eventModeBufUsed;
+	private Label eventModeFileMB;
+	private Label eventModeDataRate;
 
 	private DataBindingContext bindingContext;
     private DaeViewModel viewModel;
@@ -526,6 +530,50 @@ public class RunInformationPanel {
 		monitorTo.setText("UNKNOWN");
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
+		
+		Group grpMemoryUsage = new Group(content, SWT.NONE);
+		GridLayout glGrpMemoryUsage = new GridLayout(6, false);
+		glGrpMemoryUsage.horizontalSpacing = 20;
+		grpMemoryUsage.setLayout(glGrpMemoryUsage);
+		grpMemoryUsage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpMemoryUsage.setText("Memory Usage");
+		
+		Label lblBufUsed = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblBufUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblBufUsed.widthHint = 110;
+		lblBufUsed.setLayoutData(gdLblBufUsed);
+		lblBufUsed.setText("Buffer Used Fraction:");
+		
+		eventModeBufUsed = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeBufUsed = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeBufUsed.widthHint = 65;
+		eventModeBufUsed.setLayoutData(gdeventModeBufUsed);
+		eventModeBufUsed.setText("UNKNOWN");
+		
+		Label lblFileMB = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblFileMB = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblFileMB.widthHint = 110;
+		lblFileMB.setLayoutData(gdLblFileMB);
+		lblFileMB.setText("Data Size (MB):");
+		
+		eventModeFileMB = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeFileMB = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeFileMB.widthHint = 65;
+		eventModeFileMB.setLayoutData(gdeventModeFileMB);
+		eventModeFileMB.setText("UNKNOWN");
+		
+		Label lblDataRate = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblDataRate = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblDataRate.widthHint = 110;
+		lblDataRate.setLayoutData(gdLblDataRate);
+		lblDataRate.setText("Data Rate (MB/s):");
+		
+		eventModeDataRate = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeDataRate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeDataRate.widthHint = 65;
+		eventModeDataRate.setLayoutData(gdeventModeDataRate);
+		eventModeDataRate.setText("UNKNOWN");
+		
 
         setModel(viewModel);
 	}
@@ -569,6 +617,9 @@ public class RunInformationPanel {
 		bindLabel(monitorFrom, viewModel.monitorFrom);
 		bindLabel(monitorTo, viewModel.monitorTo);
 		bindLabel(daeSimMode, viewModel.simMode);
+		bindLabel(eventModeBufUsed, viewModel.eventModeBufUsed);
+		bindLabel(eventModeFileMB, viewModel.eventModeFileMB);
+		bindLabel(eventModeDataRate, viewModel.eventModeDataRate);
 	}
 	
 	private void bindLabel(Label label, UpdatedValue<?> value) {
