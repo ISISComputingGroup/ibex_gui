@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+
 import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -32,7 +33,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
  * changed.
  */
 public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
-
+    
     /**
      * Current log plotter settings preference store.
      **/
@@ -54,8 +55,18 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
 	    this.preferences = preferences;
 	}
 	
+	/**
+     * Called just before switching instruments. This will close any plots still open on instrument switching.
+     *
+     * @param instrument the instrument switched to
+     */
+	@Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        LogPlotterHistoryPresenter.closeAllDataBrowsers();
+	}
+	
     /**
-     * Connect the databrowser to the archive engine for the new instrument.
+     * Connects the data browser to the archive engine for the new instrument.
      * 
      * @param instrument instrument being switched to
      */

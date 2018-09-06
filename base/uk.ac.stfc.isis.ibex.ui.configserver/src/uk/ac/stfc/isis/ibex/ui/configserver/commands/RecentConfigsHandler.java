@@ -1,25 +1,7 @@
-
-/*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
-
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,47 +14,61 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.RecentConfigSelectionDialog;
 
 /**
- * Handler for loading configurations.
+ * Handler for loading recent configurations.
  */
-public class LoadConfigHandler extends DisablingConfigHandler<String> {
+public class RecentConfigsHandler extends DisablingConfigHandler<String> {
 
     private Map<String, Configuration> configs;
-			
+
     /**
      * Instantiates the handler object and adds observers on the values of all
      * configurations available.
      */
-	public LoadConfigHandler() {
-		super(SERVER.load());
+    public RecentConfigsHandler() {
+        super(SERVER.load());
         configs = new HashMap<String, Configuration>();
-	}	
-	
-	/**
-	 * Show the load configuration dialogue and if it is conflict free load it into the instrument.
-	 * 
-	 * @param shell the shell
-	 */
-	@Override
-	public void safeExecute(Shell shell) {
+    }
+
+    @Override
+    public void safeExecute(Shell shell) {
         updateObservers();
-        ConfigSelectionDialog dialog =
-                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), false, false);
-		if (dialog.open() == Window.OK) {
-            String config = dialog.selectedConfig();
-            Map<String, Set<String>> conflicts = getConflicts(config);
-            if (conflicts.isEmpty()) {
-                configService.uncheckedWrite(config);
-                Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
-            } else {
-                new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
-                        MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-                execute(shell);
-            }
-		}
-	}
+        List<String> recentConfigs = Configurations.getInstance()
+                .getRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
+        List<String> timeStamps = Configurations.getInstance()
+                .getLastModifiedTimestampsOfRecentlyLoadedConfigurations(SERVER.configsInfo().getValue());
+        createDialog(shell, recentConfigs, timeStamps);
+    }
+
+    private void createDialog(Shell shell, List<String> recentConfigs, List<String> timeStamps) {
+        RecentConfigSelectionDialog dialog = new RecentConfigSelectionDialog(shell, "Load a Recent Configuration",
+                recentConfigs, timeStamps);
+        if (dialog.open() == Window.OK) {
+            checksForConflicts(shell, dialog.selectedConfig());
+        }
+    }
+
+    private void checksForConflicts(Shell shell, String config) {
+        Map<String, Set<String>> conflicts = getConflicts(config);
+        if (conflicts.isEmpty()) {
+            loadsConfig(config);
+        } else {
+            createsErrorMessage(shell, conflicts);
+        }
+    }
+
+    private void loadsConfig(String config) {
+        configService.uncheckedWrite(config);
+        Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
+    }
+
+    private void createsErrorMessage(Shell shell, Map<String, Set<String>> conflicts) {
+        new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
+                MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
+        execute(shell);
+    }
 
     private void updateObservers() {
         for (String name : SERVER.configNames()) {
@@ -109,9 +105,9 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
             }
             sb.append("\n");
         }
-        sb.append(
-                "Please rename or remove the duplicate block" + (multi ? "s" : "")
-                        + " before loading this configuration.");
+        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "")
+                + " before loading this configuration.");
         return sb.toString();
     }
+
 }
