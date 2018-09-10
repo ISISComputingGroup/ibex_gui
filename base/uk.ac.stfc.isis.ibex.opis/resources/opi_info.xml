@@ -1907,6 +1907,23 @@
 			</value>
 		</entry>
 		<entry>
+			<key>OSIRIS Jaws</key>
+			<value>
+				<categories>
+					<category>Jaws and slits</category>
+				</categories>
+				<type>JAWS</type>
+				<path>jaws/OSIRIS_jaws.opi</path>
+				<description>The OPI for an OSIRIS Jaw set.</description>
+				<macros>
+					<macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+          			</macro>
+				</macros>
+			</value>
+		</entry>		
+		<entry>
 			<key>Zoom FINS PLC</key>
 			<value>
 				<type>PLC</type>

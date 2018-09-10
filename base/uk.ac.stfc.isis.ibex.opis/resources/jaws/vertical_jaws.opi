@@ -189,7 +189,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Label_2</name>
+      <name>North_label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -235,7 +235,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update_1</name>
+      <name>North_update</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):JN</pv_name>
@@ -292,7 +292,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Text Input_10</name>
+      <name>North_input</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):JN:SP</pv_name>
@@ -339,7 +339,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Label_3</name>
+      <name>South_label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -385,7 +385,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update_1</name>
+      <name>South_update</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):JS</pv_name>
@@ -442,7 +442,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Text Input_1</name>
+      <name>South_input</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):JS:SP</pv_name>
@@ -545,7 +545,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Label_2</name>
+      <name>H_cent_label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -591,7 +591,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update_1</name>
+      <name>H_cent_update</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):VGAP</pv_name>
@@ -648,7 +648,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Text Input_10</name>
+      <name>H_cent_input</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):VGAP:SP</pv_name>
@@ -700,7 +700,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update_1</name>
+      <name>Vert_cent_update</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):VCENT</pv_name>
@@ -757,7 +757,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Text Input_10</name>
+      <name>Vert_cent_input</name>
       <precision>2</precision>
       <precision_from_pv>false</precision_from_pv>
       <pv_name>$(P)$(J):VCENT:SP</pv_name>
@@ -811,7 +811,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Label_2</name>
+      <name>Vert_cent_label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
