@@ -2529,5 +2529,18 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>Induction Furnace</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>FURNACE</type>
+        <path>induction_furnace.opi</path>
+        <description>The OPI for the GEM/POLARIS induction furnace</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
