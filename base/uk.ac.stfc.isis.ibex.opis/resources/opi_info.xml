@@ -1907,13 +1907,13 @@
 			</value>
 		</entry>
 		<entry>
-			<key>OSIRIS Jaws</key>
+			<key>Vertical Jaws</key>
 			<value>
 				<categories>
 					<category>Jaws and slits</category>
 				</categories>
 				<type>JAWS</type>
-				<path>jaws/OSIRIS_jaws.opi</path>
+				<path>jaws/vertical_jaws.opi</path>
 				<description>The OPI for an OSIRIS Jaw set.</description>
 				<macros>
 					<macro>
