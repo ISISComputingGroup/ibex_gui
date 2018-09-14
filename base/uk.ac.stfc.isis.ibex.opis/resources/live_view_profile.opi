@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <actions hook="false" hook_all="false" />
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <boy_version>5.1.0.201707071649</boy_version>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <grid_space>6</grid_space>
+  <height>600</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+    <DAE>$(P)DAE:AD$(DET)</DAE>
+  </macros>
+  <name></name>
+  <rules />
+  <scripts />
+  <show_close_button>true</show_close_button>
+  <show_edit_range>true</show_edit_range>
+  <show_grid>true</show_grid>
+  <show_ruler>true</show_ruler>
+  <snap_to_geometry>true</snap_to_geometry>
+  <widget_type>Display</widget_type>
+  <width>800</width>
+  <wuid>-5a680863:164a30e14bc:-7ffa</wuid>
+  <x>-1</x>
+  <y>-1</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>live_view.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>0</mode>
+        <description></description>
+      </action>
+    </actions>
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <fontdata fontName="Segoe UI" height="8" style="0" pixels="false" />
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <image></image>
+    <name>switch_graph_view</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>0</style>
+    <text>Default&#xD;
+  View</text>
+    <toggle_button>false</toggle_button>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>43</width>
+    <wuid>21f43339:165d7ba26c8:-6c81</wuid>
+    <x>750</x>
+    <y>525</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <fc>false</fc>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <height>481</height>
+    <lock_children>true</lock_children>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <name>intensity_and_profile_graphs</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <widget_type>Grouping Container</widget_type>
+    <width>709</width>
+    <wuid>21f43339:165d7ba26c8:-2e28</wuid>
+    <x>30</x>
+    <y>0</y>
+    <widget typeId="org.csstudio.opibuilder.widgets.intensityGraph" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <color_map>
+        <interpolate>true</interpolate>
+        <autoscale>true</autoscale>
+        <map>2</map>
+      </color_map>
+      <crop_bottom>0</crop_bottom>
+      <crop_left>0</crop_left>
+      <crop_right>0</crop_right>
+      <crop_top>0</crop_top>
+      <data_height>1024</data_height>
+      <data_width>1024</data_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <graph_area_height>327</graph_area_height>
+      <graph_area_width>440</graph_area_width>
+      <height>373</height>
+      <horizon_profile_x_pv_name>loc://hpx</horizon_profile_x_pv_name>
+      <horizon_profile_x_pv_value />
+      <horizon_profile_y_pv_name>loc://hpy</horizon_profile_y_pv_name>
+      <horizon_profile_y_pv_value />
+      <maximum>255.0</maximum>
+      <minimum>0.0</minimum>
+      <name>Intensity Graph</name>
+      <pixel_info_pv_name></pixel_info_pv_name>
+      <pixel_info_pv_value />
+      <pv_name>$(DAE):image1:ArrayData</pv_name>
+      <pv_value />
+      <rgb_mode>false</rgb_mode>
+      <roi_color>
+        <color red="0" green="255" blue="255" />
+      </roi_color>
+      <roi_count>0</roi_count>
+      <rules>
+        <rule name="Set data_width" prop_id="data_width" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize0_RBV</pv>
+        </rule>
+        <rule name="Set data_height" prop_id="data_height" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize1_RBV</pv>
+        </rule>
+        <rule name="Set x_max" prop_id="x_axis_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize0_RBV</pv>
+        </rule>
+        <rule name="Set y_max" prop_id="y_axis_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize1_RBV</pv>
+        </rule>
+        <rule name="Set max_colour" prop_id="maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):INTG:SPEC:MAX</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_ramp>true</show_ramp>
+      <single_line_profiling>true</single_line_profiling>
+      <tooltip>$(pv_name)</tooltip>
+      <vertial_profile_x_pv_value />
+      <vertial_profile_y_pv_value />
+      <vertical_profile_x_pv_name>loc://vpx</vertical_profile_x_pv_name>
+      <vertical_profile_y_pv_name>loc://vpy</vertical_profile_y_pv_name>
+      <visible>true</visible>
+      <widget_type>Intensity Graph</widget_type>
+      <width>535</width>
+      <wuid>-5a680863:164a30e14bc:-7ff5</wuid>
+      <x>174</x>
+      <x_axis_axis_color>
+        <color red="0" green="0" blue="0" />
+      </x_axis_axis_color>
+      <x_axis_axis_title></x_axis_axis_title>
+      <x_axis_major_tick_step_hint>50</x_axis_major_tick_step_hint>
+      <x_axis_maximum>100.0</x_axis_maximum>
+      <x_axis_minimum>0.0</x_axis_minimum>
+      <x_axis_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </x_axis_scale_font>
+      <x_axis_show_minor_ticks>true</x_axis_show_minor_ticks>
+      <x_axis_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </x_axis_title_font>
+      <x_axis_visible>true</x_axis_visible>
+      <y>0</y>
+      <y_axis_axis_color>
+        <color red="0" green="0" blue="0" />
+      </y_axis_axis_color>
+      <y_axis_axis_title></y_axis_axis_title>
+      <y_axis_major_tick_step_hint>50</y_axis_major_tick_step_hint>
+      <y_axis_maximum>100.0</y_axis_maximum>
+      <y_axis_minimum>0.0</y_axis_minimum>
+      <y_axis_scale_font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </y_axis_scale_font>
+      <y_axis_show_minor_ticks>true</y_axis_show_minor_ticks>
+      <y_axis_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </y_axis_title_font>
+      <y_axis_visible>true</y_axis_visible>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <axis_0_auto_scale>true</axis_0_auto_scale>
+      <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+      <axis_0_axis_color>
+        <color red="0" green="0" blue="0" />
+      </axis_0_axis_color>
+      <axis_0_axis_title>X Axis</axis_0_axis_title>
+      <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+      <axis_0_grid_color>
+        <color red="200" green="200" blue="200" />
+      </axis_0_grid_color>
+      <axis_0_log_scale>false</axis_0_log_scale>
+      <axis_0_maximum>100.0</axis_0_maximum>
+      <axis_0_minimum>0.0</axis_0_minimum>
+      <axis_0_scale_font>
+        <fontdata fontName="Segoe UI" height="9" style="0" pixels="false" />
+      </axis_0_scale_font>
+      <axis_0_scale_format></axis_0_scale_format>
+      <axis_0_show_grid>true</axis_0_show_grid>
+      <axis_0_time_format>0</axis_0_time_format>
+      <axis_0_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </axis_0_title_font>
+      <axis_0_visible>true</axis_0_visible>
+      <axis_1_auto_scale>false</axis_1_auto_scale>
+      <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+      <axis_1_axis_color>
+        <color red="0" green="0" blue="0" />
+      </axis_1_axis_color>
+      <axis_1_axis_title>Profile</axis_1_axis_title>
+      <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+      <axis_1_grid_color>
+        <color red="200" green="200" blue="200" />
+      </axis_1_grid_color>
+      <axis_1_log_scale>false</axis_1_log_scale>
+      <axis_1_maximum>1.0</axis_1_maximum>
+      <axis_1_minimum>0.0</axis_1_minimum>
+      <axis_1_scale_font>
+        <fontdata fontName="Segoe UI" height="9" style="0" pixels="false" />
+      </axis_1_scale_font>
+      <axis_1_scale_format></axis_1_scale_format>
+      <axis_1_show_grid>true</axis_1_show_grid>
+      <axis_1_time_format>0</axis_1_time_format>
+      <axis_1_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </axis_1_title_font>
+      <axis_1_visible>true</axis_1_visible>
+      <axis_count>2</axis_count>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="255" />
+      </foreground_color>
+      <height>109</height>
+      <name>XY Graph_1</name>
+      <plot_area_background_color>
+        <color red="255" green="255" blue="255" />
+      </plot_area_background_color>
+      <pv_name>$(trace_0_y_pv)</pv_name>
+      <pv_value />
+      <rules>
+        <rule name="Set x_max" prop_id="axis_0_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value></value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize0_RBV</pv>
+        </rule>
+        <rule name="Set y_max" prop_id="axis_1_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):INTG:SPEC:MAX</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_legend>false</show_legend>
+      <show_plot_area_border>false</show_plot_area_border>
+      <show_toolbar>false</show_toolbar>
+      <title></title>
+      <title_font>
+        <fontdata fontName="Arial" height="12" style="1" pixels="false" />
+      </title_font>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <trace_0_anti_alias>true</trace_0_anti_alias>
+      <trace_0_buffer_size>256</trace_0_buffer_size>
+      <trace_0_concatenate_data>false</trace_0_concatenate_data>
+      <trace_0_line_width>1</trace_0_line_width>
+      <trace_0_name>Trace 0</trace_0_name>
+      <trace_0_plot_mode>0</trace_0_plot_mode>
+      <trace_0_point_size>4</trace_0_point_size>
+      <trace_0_point_style>0</trace_0_point_style>
+      <trace_0_trace_color>
+        <color red="255" green="0" blue="0" />
+      </trace_0_trace_color>
+      <trace_0_trace_type>0</trace_0_trace_type>
+      <trace_0_update_delay>100</trace_0_update_delay>
+      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_visible>true</trace_0_visible>
+      <trace_0_x_axis_index>0</trace_0_x_axis_index>
+      <trace_0_x_pv>loc://hpx</trace_0_x_pv>
+      <trace_0_x_pv_value />
+      <trace_0_y_axis_index>1</trace_0_y_axis_index>
+      <trace_0_y_pv>loc://hpy</trace_0_y_pv>
+      <trace_0_y_pv_value />
+      <trace_count>1</trace_count>
+      <transparent>false</transparent>
+      <trigger_pv></trigger_pv>
+      <trigger_pv_value />
+      <visible>true</visible>
+      <widget_type>XY Graph</widget_type>
+      <width>493</width>
+      <wuid>21f43339:165d7ba26c8:-7b24</wuid>
+      <x>174</x>
+      <y>372</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <axis_0_auto_scale>true</axis_0_auto_scale>
+      <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+      <axis_0_axis_color>
+        <color red="0" green="0" blue="0" />
+      </axis_0_axis_color>
+      <axis_0_axis_title>Profile</axis_0_axis_title>
+      <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+      <axis_0_grid_color>
+        <color red="200" green="200" blue="200" />
+      </axis_0_grid_color>
+      <axis_0_log_scale>false</axis_0_log_scale>
+      <axis_0_maximum>1.0</axis_0_maximum>
+      <axis_0_minimum>0.0</axis_0_minimum>
+      <axis_0_scale_font>
+        <fontdata fontName="Segoe UI" height="9" style="0" pixels="false" />
+      </axis_0_scale_font>
+      <axis_0_scale_format></axis_0_scale_format>
+      <axis_0_show_grid>true</axis_0_show_grid>
+      <axis_0_time_format>0</axis_0_time_format>
+      <axis_0_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </axis_0_title_font>
+      <axis_0_visible>true</axis_0_visible>
+      <axis_1_auto_scale>true</axis_1_auto_scale>
+      <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+      <axis_1_axis_color>
+        <color red="0" green="0" blue="0" />
+      </axis_1_axis_color>
+      <axis_1_axis_title>Y Axis</axis_1_axis_title>
+      <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+      <axis_1_grid_color>
+        <color red="200" green="200" blue="200" />
+      </axis_1_grid_color>
+      <axis_1_log_scale>false</axis_1_log_scale>
+      <axis_1_maximum>100.0</axis_1_maximum>
+      <axis_1_minimum>0.0</axis_1_minimum>
+      <axis_1_scale_font>
+        <fontdata fontName="Segoe UI" height="9" style="0" pixels="false" />
+      </axis_1_scale_font>
+      <axis_1_scale_format></axis_1_scale_format>
+      <axis_1_show_grid>true</axis_1_show_grid>
+      <axis_1_time_format>0</axis_1_time_format>
+      <axis_1_title_font>
+        <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+      </axis_1_title_font>
+      <axis_1_visible>true</axis_1_visible>
+      <axis_count>2</axis_count>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="255" />
+      </foreground_color>
+      <height>373</height>
+      <name>XY Graph</name>
+      <plot_area_background_color>
+        <color red="255" green="255" blue="255" />
+      </plot_area_background_color>
+      <pv_name>$(trace_0_y_pv)</pv_name>
+      <pv_value />
+      <rules>
+        <rule name="Set y_max" prop_id="axis_1_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value></value>
+          </exp>
+          <pv trig="true">$(DAE):image1:ArraySize1_RBV</pv>
+        </rule>
+        <rule name="Set x_max" prop_id="axis_0_maximum" out_exp="true">
+          <exp bool_exp="true">
+            <value>pv0</value>
+          </exp>
+          <pv trig="true">$(DAE):INTG:SPEC:MAX</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_legend>false</show_legend>
+      <show_plot_area_border>false</show_plot_area_border>
+      <show_toolbar>false</show_toolbar>
+      <title></title>
+      <title_font>
+        <fontdata fontName="Arial" height="12" style="1" pixels="false" />
+      </title_font>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <trace_0_anti_alias>true</trace_0_anti_alias>
+      <trace_0_buffer_size>1024</trace_0_buffer_size>
+      <trace_0_concatenate_data>false</trace_0_concatenate_data>
+      <trace_0_line_width>1</trace_0_line_width>
+      <trace_0_name>Trace 0</trace_0_name>
+      <trace_0_plot_mode>0</trace_0_plot_mode>
+      <trace_0_point_size>4</trace_0_point_size>
+      <trace_0_point_style>0</trace_0_point_style>
+      <trace_0_trace_color>
+        <color red="255" green="0" blue="0" />
+      </trace_0_trace_color>
+      <trace_0_trace_type>0</trace_0_trace_type>
+      <trace_0_update_delay>100</trace_0_update_delay>
+      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_visible>true</trace_0_visible>
+      <trace_0_x_axis_index>0</trace_0_x_axis_index>
+      <trace_0_x_pv>loc://vpy</trace_0_x_pv>
+      <trace_0_x_pv_value />
+      <trace_0_y_axis_index>1</trace_0_y_axis_index>
+      <trace_0_y_pv>loc://vpx</trace_0_y_pv>
+      <trace_0_y_pv_value />
+      <trace_count>1</trace_count>
+      <transparent>false</transparent>
+      <trigger_pv></trigger_pv>
+      <trigger_pv_value />
+      <visible>true</visible>
+      <widget_type>XY Graph</widget_type>
+      <width>175</width>
+      <wuid>21f43339:165d7ba26c8:-7b10</wuid>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <group_name>statistics_and_options</group_name>
+    <height>115</height>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <name>Linking Container</name>
+    <opi_file>live_view_statistics_and_options.opi</opi_file>
+    <resize_behaviour>0</resize_behaviour>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Linking Container</widget_type>
+    <width>745</width>
+    <wuid>21f43339:165d7ba26c8:-2866</wuid>
+    <x>0</x>
+    <y>486</y>
+  </widget>
+</display>
