@@ -22,8 +22,8 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
- * Here we don't use the default Xml parser class is we need to check the keys in the OPI list. 
- * 
+ * Here we don't use the default Xml parser class in Descriptions.java as it uses
+ * a map and we need to check all keys in the OPI list. 
  *
  */
 public class XmlDuplicateCheck {
