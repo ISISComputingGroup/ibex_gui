@@ -2542,5 +2542,18 @@
         </macros>
       </value>
     </entry>
+    <entry>    
+      <key>Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
