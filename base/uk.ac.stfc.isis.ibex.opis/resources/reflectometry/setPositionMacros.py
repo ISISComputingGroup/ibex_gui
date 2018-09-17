@@ -1,4 +1,4 @@
-from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
+from org.csstudio.opibuilder.scriptUtil import PVUtil
 import json
 import zlib
 
@@ -36,7 +36,6 @@ value = PVUtil.getStringArray(pvs[0])
 value = "".join(chr(int(i)) for i in value[:-1])
 value = zlib.decompress(value.decode("hex"))
 params = json.loads(value)
-ConsoleUtil.writeInfo(str(params))
 
 pos = 1
 for pv, name in params.iteritems():
