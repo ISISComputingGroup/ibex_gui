@@ -2542,5 +2542,22 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>TOSCA sample positioning system</key>
+      <value>
+        <categories>
+          <category>Sample changers</category>
+        </categories>
+        <type>SAMPLECHANGER</type>
+        <path>tosca_sample_positioner.opi</path>
+        <description>The TOSCA sample positioning system.</description>
+        <macros>
+          <macro>
+            <name>MM</name>
+            <description>The sample positioner motor (e.g. MTR0101)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	</opis>
 </descriptions>
