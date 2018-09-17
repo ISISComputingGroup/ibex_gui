@@ -428,6 +428,31 @@
         </macros>
       </value>
     </entry>
+	<entry>
+	   <key>Beryllium Filter</key>
+	   <value>
+	      <categories>
+	         <category>Monitors</category>
+	      </categories>
+	      <type>MONITOR</type>
+	      <path>beryllium_filter.opi</path>
+	      <description>Display and control for the beryllium filter</description>
+	      <macros>
+	      	<macro>
+				<name>LAKESHORE218</name>
+            	<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>
+			</macro>
+			<macro>
+				<name>MOTION_SET_POINT</name>
+            	<description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+			</macro>
+			<macro>
+				<name>MOTOR</name>
+            	<description>The prefix of the Motor being used(e.g. MOT:MTR0101)</description>
+			</macro>
+	      </macros>
+	   </value>
+	</entry>
     <entry>
       <key>Moxa E1210</key>
       <value>
