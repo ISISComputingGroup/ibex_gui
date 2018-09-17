@@ -19,6 +19,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PARAM_ROOT>$(PV_ROOT)PARAM:</PARAM_ROOT>
+    <PREFIXED_PV>PARAM:$(PARAM_PV)</PREFIXED_PV>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -33,77 +34,6 @@
   <wuid>450885f3:157944e4d4b:-797d</wuid>
   <x>-1</x>
   <y>-1</y>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>3</border_style>
-    <border_width>1</border_width>
-    <confirm_message></confirm_message>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <format_type>0</format_type>
-    <height>25</height>
-    <horizontal_alignment>0</horizontal_alignment>
-    <limits_from_pv>false</limits_from_pv>
-    <maximum>1.7976931348623157E308</maximum>
-    <minimum>-1.7976931348623157E308</minimum>
-    <multiline_input>false</multiline_input>
-    <name>Text Input</name>
-    <precision>0</precision>
-    <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PARAM_ROOT)$(PARAM_PV):SP</pv_name>
-    <pv_value />
-    <rotation_angle>0.0</rotation_angle>
-    <rules>
-      <rule name="HighlightChange" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 1">
-          <value>
-            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
-          </value>
-        </exp>
-        <exp bool_exp="pv0 == 0">
-          <value>
-            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-          </value>
-        </exp>
-        <pv trig="true">$(PARAM_ROOT)$(PARAM_PV):CHANGED</pv>
-      </rule>
-    </rules>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <selector_type>0</selector_type>
-    <show_units>true</show_units>
-    <style>0</style>
-    <text></text>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>false</transparent>
-    <visible>true</visible>
-    <widget_type>Text Input</widget_type>
-    <width>85</width>
-    <wuid>-744b7940:165a9b5d31a:-6c34</wuid>
-    <x>110</x>
-    <y>6</y>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
@@ -137,7 +67,7 @@ $(pv_value)</tooltip>
     <name>Text Input</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PARAM_ROOT)$(PARAM_PV):SP:RBV</pv_name>
+    <pv_name>$(PV_ROOT)$(PREFIXED_PV):SP:RBV</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -158,7 +88,7 @@ $(pv_value)</tooltip>
     <widget_type>Text Input</widget_type>
     <width>85</width>
     <wuid>-744b7940:165a9b5d31a:-78fc</wuid>
-    <x>205</x>
+    <x>215</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -189,7 +119,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Button_1</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PARAM_ROOT)$(PARAM_PV):MOVE</pv_name>
+    <pv_name>$(PV_ROOT)$(PREFIXED_PV):MOVE</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -205,9 +135,9 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
-    <width>85</width>
+    <width>75</width>
     <wuid>-744b7940:165a9b5d31a:-7a6a</wuid>
-    <x>300</x>
+    <x>310</x>
     <y>5</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -249,5 +179,74 @@ $(pv_value)</tooltip>
     <wuid>-744b7940:165a9b5d31a:-67c9</wuid>
     <x>0</x>
     <y>9</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <buttons_on_left>false</buttons_on_left>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <format>0</format>
+    <height>25</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <horizontal_buttons_layout>false</horizontal_buttons_layout>
+    <limits_from_pv>false</limits_from_pv>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>-1.7976931348623157E308</minimum>
+    <name>Spinner_4</name>
+    <page_increment>1.0</page_increment>
+    <precision>3</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(PV_ROOT)$(PREFIXED_PV):SP</pv_name>
+    <pv_value />
+    <rules>
+      <rule name="HighlightChanged" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+          </value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGED</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_text>true</show_text>
+    <step_increment>0.001</step_increment>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Spinner</widget_type>
+    <width>95</width>
+    <wuid>-7f97b5e4:165e6b6475b:-7ada</wuid>
+    <x>110</x>
+    <y>6</y>
   </widget>
 </display>

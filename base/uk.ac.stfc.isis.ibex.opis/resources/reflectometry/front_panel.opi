@@ -169,7 +169,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>857</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -284,7 +284,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PARAM_NAME>Supermirror</PARAM_NAME>
-          <PARAM_PV>PARAM:SMANGL</PARAM_PV>
+          <PARAM_PV>SMANGL</PARAM_PV>
         </macros>
         <name>Linking Container_1</name>
         <opi_file>param_angle.opi</opi_file>
@@ -2467,7 +2467,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PARAM_NAME>Theta</PARAM_NAME>
-          <PARAM_PV>PARAM:THETA</PARAM_PV>
+          <PARAM_PV>THETA</PARAM_PV>
         </macros>
         <name>Linking Container</name>
         <opi_file>param_angle.opi</opi_file>
@@ -3349,11 +3349,11 @@ $(pv_value)</tooltip>
           <height>25</height>
           <horizontal_alignment>1</horizontal_alignment>
           <horizontal_buttons_layout>false</horizontal_buttons_layout>
-          <limits_from_pv>true</limits_from_pv>
+          <limits_from_pv>false</limits_from_pv>
           <maximum>1.7976931348623157E308</maximum>
           <minimum>-1.7976931348623157E308</minimum>
           <name>Spinner_4</name>
-          <page_increment>10.0</page_increment>
+          <page_increment>1.0</page_increment>
           <precision>3</precision>
           <precision_from_pv>true</precision_from_pv>
           <pv_name></pv_name>
@@ -3366,7 +3366,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_text>true</show_text>
-          <step_increment>0.01</step_increment>
+          <step_increment>0.001</step_increment>
           <tooltip>$(pv_name)
 $(pv_value)</tooltip>
           <transparent>false</transparent>
@@ -3741,7 +3741,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>857</width>
       <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
