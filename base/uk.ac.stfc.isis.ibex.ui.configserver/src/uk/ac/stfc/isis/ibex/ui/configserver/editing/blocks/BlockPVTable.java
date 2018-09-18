@@ -52,7 +52,7 @@ public class BlockPVTable extends DataboundTable<PV> {
      *            The SWT table style.
      */
 	public BlockPVTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, PV.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	
@@ -84,7 +84,7 @@ public class BlockPVTable extends DataboundTable<PV> {
 		createColumn("Description", 6, new DataboundCellLabelProvider<PV>(observeProperty("description")) {
 			@Override
 			protected String stringFromRow(PV row) {
-				return row.getDescription();
+				return row.description();
 			}
 		});	
 	}

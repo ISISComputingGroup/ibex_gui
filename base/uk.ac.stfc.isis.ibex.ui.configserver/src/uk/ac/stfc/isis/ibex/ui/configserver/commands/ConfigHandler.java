@@ -76,7 +76,9 @@ public abstract class ConfigHandler<T> {
 	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
-			canWriteChanged(canWrite);
+			synchronized (writerLock) {
+				canWriteChanged(canWrite);
+			}
 		};
 	};
 	

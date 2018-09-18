@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.dae.Dae;
-import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
@@ -45,7 +43,7 @@ public enum ComponentType {
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE", Dae.ID)),
+    DAE,
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
@@ -142,11 +140,16 @@ public enum ComponentType {
     COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS,
-    /**Syringe pump. */
+    /**Syringe pump.*/
     SYRINGE_PUMP,
     /** Keyence micrometer. */
-    KEYENCE;
-
+    KEYENCE,
+	/** Generic Power Supply. */
+    POWER_SUPPLY,
+  /** Oscilloscope. */
+    OSCILLOSCOPE,
+	/** Moxa ioLogik e1210 Remote I/O. */
+	MOXA_1210;
 
 	private Target target;
 

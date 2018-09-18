@@ -83,6 +83,7 @@ public final class ComponentIcons {
             case CAEN:
             case IPS:
             case SEPARATOR:
+            case POWER_SUPPLY:
                 return "powersupply";
             case BEAMSTOP:
                 return "beamstop";
@@ -161,6 +162,10 @@ public final class ComponentIcons {
             	return "syringe_pump";
             case KEYENCE:
             	return "keyence";
+            case OSCILLOSCOPE:
+            	return "oscilloscope";
+			      case MOXA_1210:
+				      return "moxa_1210";
             default:
                 return "cog";
         }

@@ -21,19 +21,44 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 
+/**
+ *  Extends a PV set to make it easier to edit.
+ *
+ */
 public class EditablePVSet extends PVSet {
 	private String description;
 	
+	/**
+	 * The constructor for a class that makes a PV set easier to edit.
+	 * @param other
+	 *             The PV set to edit.
+	 * @param description
+	 *             The PV set's description.
+	 */
 	public EditablePVSet(PVSet other, String description) {
 		super(other);
 		this.description = description;
 	}
 	
+	/**
+     * The constructor for a class that makes a PV set easier to edit.
+     * @param name
+     *             The editable PV set's name.
+     * @param editable
+     *              True if the PV set is editable.
+     * @param description
+     *             The editable PV set's description.
+     */
 	public EditablePVSet(String name, boolean editable, String description) {
 		super(name, editable);
 		this.description = description;
 	}
 	
+	/**
+	 * Returns the PV set's description.
+	 * @return
+	 *         The PV set's description.
+	 */
 	public String getDescription() {
 		return description;
 	}

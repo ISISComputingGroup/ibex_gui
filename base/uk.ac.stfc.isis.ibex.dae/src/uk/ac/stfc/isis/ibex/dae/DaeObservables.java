@@ -315,7 +315,7 @@ public class DaeObservables {
     public final ForwardingObservable<Double> eventModeDataRate;
 
     /**
-     * The default constructor for the class. Binds the observables to PVs.
+     * An observable on the data rate (MB/s).
      */
     public DaeObservables() {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(),

@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -22,13 +20,7 @@ public class OutputLogViewModel extends ModelObject {
      *            the NicosModel to observe
      */
 	public OutputLogViewModel(final NicosModel model) {
-		
-        model.addPropertyChangeListener("logEntries", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-                appendLog(model.getLogEntries());
-			}
-		});
+        model.addPropertyChangeListener("logEntries", e -> appendLog(model.getLogEntries()));
 	}
 	
     private void appendLog(List<NicosLogEntry> log) {

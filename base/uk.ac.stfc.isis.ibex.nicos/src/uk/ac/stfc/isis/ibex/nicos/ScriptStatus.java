@@ -21,8 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.nicos;
 
-import java.util.Arrays;
-
 /**
  * Contains possible run states for a script in NICOS.
  */

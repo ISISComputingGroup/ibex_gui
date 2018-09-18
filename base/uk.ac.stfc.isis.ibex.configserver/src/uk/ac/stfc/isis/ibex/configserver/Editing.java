@@ -22,13 +22,48 @@ package uk.ac.stfc.isis.ibex.configserver;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
+/**
+ * Public interface for editing the config server.
+ *
+ */
 public interface Editing {
 
+    /**
+     * Returns the current configuration as an editable configuration.
+     * 
+     * @return
+     *          The current configuration as an editable configuration.
+     */
 	ForwardingObservable<EditableConfiguration> currentConfig();
 	
+	/**
+     * Returns a blank configuration as an editable configuration.
+     * 
+     * @return
+     *          A blank configuration as an editable configuration.
+     */
 	ForwardingObservable<EditableConfiguration> blankConfig();
 	
+	/**
+     * Returns a given configuration as an editable configuration.
+     * 
+     * @param configName
+     *                  The desired configuration.
+     * 
+     * @return
+     *                  A given configuration as an editable configuration.
+     */
 	ForwardingObservable<EditableConfiguration> config(String configName);
 	
+	
+	/**
+    * Returns a given component as an editable component.
+    * 
+    * @param componentName
+    *                  The desired component.
+    * 
+    * @return
+    *                  A given component as an editable configuration.
+    */
 	ForwardingObservable<EditableConfiguration> component(String componentName);
 }

@@ -43,6 +43,7 @@ public class DaeViewModel extends Closer {
 	
 	private static final String DEFAULT_TITLE = "DAE Control Program";
 	
+	
     /** What tab is active in the DAE view. */
     enum ActiveTab {
         /** Detector diagnostics is active tab. */
@@ -163,7 +164,13 @@ public class DaeViewModel extends Closer {
         return detectorDiagnosticsViewModel;
     }
     
+    /**
+     * Returns the dae title.
+     * @return
+     *          The dae title.
+     */
     public UpdatedValue<String> title() {
     	return daeTitle;
     }
+    
 }
