@@ -1792,6 +1792,14 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Reflectometry Front Panel</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_overviews/riken_front_end_overview.opi</path>
+				<description>The OPI for the Riken front end. No properties required.</description>
+			</value>
+		</entry>
+		<entry>
 			<key>Riken Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
