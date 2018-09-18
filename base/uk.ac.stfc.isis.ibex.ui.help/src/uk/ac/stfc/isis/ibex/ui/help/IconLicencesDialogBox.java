@@ -19,6 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.help;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.function.Function;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -31,12 +39,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 /**
  * A dialog box that contains information about the IBEX client icon licences. 
  * 
  */
 public class IconLicencesDialogBox extends TitleAreaDialog {
 	
+	private static final String ICONLICENCES_FILE_PATH = "/resources/iconlicences.txt";
 	/** Dialog width. */
     public static final int WIDTH = 300;
     /** Dialog height. */
@@ -75,10 +87,23 @@ public class IconLicencesDialogBox extends TitleAreaDialog {
         GridData gdIconLicences= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdIconLicences.heightHint = 70;
         txtIconLicences.setLayoutData(gdIconLicences);
-        txtIconLicences.setText("Hello World!");
+        
+        Optional<String> textBoxContents = Optional.ofNullable(getClass().getResource(ICONLICENCES_FILE_PATH))
+        		.map(IconLicencesDialogBox::stringFromUrl)
+        		.flatMap(Function.identity());
+        
+		txtIconLicences.setText(textBoxContents.orElse(String.format("Can't read from file '%s'", ICONLICENCES_FILE_PATH)));
 
 		return container;
 	}	
+	
+	private static Optional<String> stringFromUrl(URL url) {
+		try {
+			return Optional.ofNullable(Resources.toString(url, Charsets.UTF_8));
+		} catch (IOException e) {
+			return Optional.empty();
+		}
+	}
 
 	@Override
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
