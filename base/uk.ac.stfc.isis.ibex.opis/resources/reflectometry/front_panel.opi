@@ -1111,6 +1111,46 @@ $(pv_value)</tooltip>
           <x>160</x>
           <y>123</y>
         </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>49</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_1</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <text>TODO</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>80</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-16c8e940:165f1448c04:-7e56</wuid>
+          <x>84</x>
+          <y>51</y>
+        </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -2684,6 +2724,46 @@ $(pv_value)</tooltip>
           <x>139</x>
           <y>105</y>
         </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>49</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <text>TODO</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>80</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-16c8e940:165f1448c04:-7e32</wuid>
+          <x>87</x>
+          <y>105</y>
+        </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -3533,6 +3613,46 @@ $(pv_value)</tooltip>
           <wuid>-744b7940:165a9b5d31a:-7927</wuid>
           <x>160</x>
           <y>123</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>49</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <text>TODO</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>80</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-16c8e940:165f1448c04:-7e3a</wuid>
+          <x>90</x>
+          <y>51</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -4651,7 +4771,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
     </on_color>
     <on_label>ON</on_label>
-    <pv_name></pv_name>
+    <pv_name>$(PV_ROOT)CS:MOT:MOVING</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -4672,7 +4792,15 @@ $(pv_value)</tooltip>
     <y>24</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+    </actions>
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
@@ -4696,7 +4824,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Action Button</name>
     <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
+    <pv_name>$(PV_ROOT)CS:MOT:STOP:ALL</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -4716,5 +4844,45 @@ $(pv_value)</tooltip>
     <wuid>-7f97b5e4:165e6b6475b:-4c96</wuid>
     <x>630</x>
     <y>19</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>Label_1</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <text>TODO</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Label</widget_type>
+    <width>80</width>
+    <wrap_words>false</wrap_words>
+    <wuid>-16c8e940:165f1448c04:-7e47</wuid>
+    <x>425</x>
+    <y>27</y>
   </widget>
 </display>
