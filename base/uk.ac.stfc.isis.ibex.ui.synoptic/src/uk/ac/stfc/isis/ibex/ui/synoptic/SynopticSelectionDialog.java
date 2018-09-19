@@ -40,7 +40,7 @@ public class SynopticSelectionDialog extends SelectionDialog {
 	private final Collection<SynopticInfo> available;
 
 	private SynopticInfo selectedSynoptic;
-	
+
 	/**
 	 * @param parentShell The shell to open the dialog from.
 	 * @param title The title of the dialog box.
@@ -53,7 +53,7 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		super(parentShell, title);
 		this.available = available;
 	}
-	
+
 	/**
 	 * Get the synoptic that the user has selected.
 	 * @return The synoptic that the user has selected.
@@ -61,14 +61,14 @@ public class SynopticSelectionDialog extends SelectionDialog {
 	public SynopticInfo selectedSynoptic() {
 		return selectedSynoptic;
 	}
-	
+
 	@Override
 	protected void okPressed() {
         selectedSynoptic = SynopticInfo.search(available, items.getSelection()[0].getText());
 		
 		super.okPressed();
 	}
-	
+
 	@Override
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
@@ -81,5 +81,5 @@ public class SynopticSelectionDialog extends SelectionDialog {
 
         setItems(names);
 	}
-	
+
 }

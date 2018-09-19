@@ -34,6 +34,10 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
+/**
+ * A class to enable displaying configurations to a GUI.
+ *
+ */
 public class DisplayConfiguration extends TransformingObservable<Configuration, DisplayConfiguration> implements
 		Displaying {
 
@@ -46,6 +50,16 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
 
+	/**
+	 * The constructor for a class to enable displaying configurations to a GUI.
+	 * 
+	 * @param config
+	 *                 The config to be displayed.
+	 * @param configServer
+	 *                 The config server to which the config belongs.
+	 * @param runControlServer
+	 *                 The run control server cotrolling the state of the config.
+	 */
 	public DisplayConfiguration(ClosableObservable<Configuration> config, ConfigServer configServer,
 			RunControlServer runControlServer) {
 		this.configServer = configServer;

@@ -31,7 +31,6 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
@@ -51,8 +50,6 @@ public class BlocksMenu extends MenuManager {
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private final IAction editBlockAction;
-
-	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -81,7 +78,7 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plotName);
+				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName);
 			}
 		};
 	}
@@ -109,7 +106,7 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
+				Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
 		
@@ -117,7 +114,7 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPlotAction);
-				pvHistoryPresenter.getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
+				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
 			}
         });
 		

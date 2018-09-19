@@ -21,14 +21,30 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import com.google.common.base.Strings;
 
+/**
+ * A class to access the state of the config server.
+ *
+ */
 public class ServerStatus {
 	
 	private String status;
 	
+	/**
+	 * Returns the status of the config server.
+	 * 
+	 * @return
+	 *         The status of the config server.
+	 */
 	public String status() {
 		return status;
 	}
 	
+	/**
+	 * Returns true if the config server is busy.
+	 * 
+	 * @return
+	 *         True if the config server is busy.
+	 */
 	public boolean isBusy() {
 		return !Strings.isNullOrEmpty(status);
 	}

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.dae.Dae;
-import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
@@ -45,7 +43,7 @@ public enum ComponentType {
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE", Dae.ID)),
+    DAE,
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
@@ -145,8 +143,13 @@ public enum ComponentType {
     /** Keyence micrometer. */
     KEYENCE,
 	/** Generic Power Supply. */
-    POWER_SUPPLY;
-
+    POWER_SUPPLY,
+  /** Oscilloscope */
+    OSCILLOSCOPE,
+	/** Moxa ioLogik e1210 Remote I/O. */
+	MOXA_1210,
+	/** Furnace temperature controller */
+	FURNACE;
 
 	private Target target;
 
