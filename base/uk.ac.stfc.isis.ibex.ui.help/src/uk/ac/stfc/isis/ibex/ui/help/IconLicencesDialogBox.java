@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.help;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -39,7 +37,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 /**
@@ -50,9 +47,9 @@ public class IconLicencesDialogBox extends TitleAreaDialog {
 	
 	private static final String ICONLICENCES_FILE_PATH = "/resources/iconlicences.txt";
 	/** Dialog width. */
-    public static final int WIDTH = 300;
+    public static final int WIDTH = 600;
     /** Dialog height. */
-    private static final int HEIGHT = 260;
+    private static final int HEIGHT = 500;
     
     /**
      * Construct a new about Ibex dialog box.
@@ -99,7 +96,7 @@ public class IconLicencesDialogBox extends TitleAreaDialog {
 	
 	private static Optional<String> stringFromUrl(URL url) {
 		try {
-			return Optional.ofNullable(Resources.toString(url, Charsets.UTF_8));
+			return Optional.ofNullable(Resources.toString(url, StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			return Optional.empty();
 		}

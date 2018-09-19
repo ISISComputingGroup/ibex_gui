@@ -1,5 +1,218 @@
-test 131
+----
 
-asdoihasidfoyha[odfh
+IBEX PERSPECTIVE
 
-sdfsdf
+(?) Reset icon at uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons
+
+Alarm icon at uk.ac.stfc.isis.ibex.ui.scripting/icons made by Google from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+(?) Beam status at uk.ac.stfc.isis.ibex.e4.ui.beamstatus/icons 
+
+DAE icon at uk.ac.stfc.isis.ibex.ui.dae/icons made by Freepik from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Device Screens at uk.ac.stfc.isis.ibex.ui.devicescreens/icons made by Freepik from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Experiment Details at icon uk.ac.stfc.isis.ibex.ui.experimentdetails/icons made by Freepik from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+(?) IOC Log (See below)
+
+(?) Journal Viewer at uk.ac.stfc.isis.ibex.e4.ui.journalviewer/icons/journal_viewer_32x24.png
+
+Log Plotter icon at uk.ac.stfc.isis.ibex.ui.logplotter/icons made by OCHA from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Motor icon at uk.ac.stfc.isis.ibex.ui.motor/icons made by Freepik from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Server Scripting Icon at uk.ac.stfc.isis.ibex.ui.nicos/icons made by Smashicons from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Scripting icon at uk.ac.stfc.isis.ibex.ui.scripting/icons made by Freepik from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Synoptic Perspective icon at uk.ac.stfc.isis.ibex.ui.synopticperspective/icons made by Icomoon from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+Web links icon at uk.ac.stfc.isis.ibex.ui.weblinks/icons made by Dave Gandy from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+---
+
+IOC Log
+
+(?) at uk.ac.stfc.isis.ibex.ui.log/icons
+(?) delete
+(?) log_32x24
+(?) log
+(?) search 
+
+---
+
+Log Plotter
+
+(?) uk.ac.stfc.isis.ibex.ui.logplotter/icons
+(?) databrowsing
+
+
+---
+
+Client Product
+
+e4.client.product
+
+(?)ibex.ico
+
+---
+
+Product
+
+e4.product
+
+(?)IBEX-icon-web*
+
+---
+
+Perspective Switcher
+
+e4.ui.perspectiveswitcher
+
+(?)reset
+
+---
+
+Alarm
+
+ui.alarm
+
+(?)alarm
+(?)refresh
+(?)alarm_bell_24x24
+(?)alarm_bell_32x24
+
+--
+
+Blocks
+
+(?) icons at uk.ac.stfc.isis.ibax.uk.blocks/icons
+(?) blocks
+(?) cube
+(?) dustbin
+(?) group
+(?) large_block
+(?) large_blocks
+(?) minus
+(?) plus
+(?) show
+
+---
+
+DAE Action Button Panel
+
+(?) icons at uk.ac.stfc.isis.ibex.ui.dae/icons
+(?) cancel
+(?) gauge
+(?) info
+(?) monitor
+(?) pause
+(?) play
+(?) plot
+(?) resume
+(?) save
+(?) server16_24x24
+(?) server16_34x24
+(?) setup
+(?) stop
+(?) store
+(?) undo
+(?) update
+(?) veto
+
+---
+
+Device Screen Components
+
+(?) at uk.ac.stfc.isis.ibex.ui.devicescreens/icons
+(?) checkbox
+(?) navigate_cross
+(?) screen_32x24
+
+(?) at uk.ac.stfc.isis.ibex.ui.devicescreens.icons/components
+(?) Multiple icons used for synoptic view
+
+---
+
+Experiment Details
+
+(?) at uk.ac.stfc.isis.ibex.ui.experimentdetails/icons
+(?) file148_24x24
+(?) text102_24x24
+(?) usertext
+
+---
+
+IOC Control
+
+(?) at uk.ac.stfc.isis.ibex.ui.ioccontrol/icons
+(?) Running.png
+(?) Stopped.png
+
+---
+
+Motor
+
+(?) at uk.ac.stfc.isis.ibex.ui.motor/icons
+(?) arrow_left_green
+(?) arrow_left_minimal
+(?) arrow_right_green
+(?) arrow_right_minimal
+(?) big_cog_16
+(?) big_cog
+(?) cog
+(?) home_minimal
+(?) house
+(?) lower_limit_minimal
+(?) lower_limit
+(?) upper_limit_minimal
+(?) upper_limit 
+
+---
+
+NICOS
+
+Open folder icon at uk.ac.stfc.isis.ibex.ui.nicos/icons made by Dave Gandy from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Save icon at uk.ac.stfc.isis.ibex.ui.nicos/icons made by Dave Gandy from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+(?) ui.nicos/icons
+(?) pause
+(?) play
+(?) resume
+(?) script_server_32x24
+(?) stop
+
+
+NICOS Test
+
+(?) hammer_32x24
+
+---
+
+Script Generator
+
+(?) ui.scriptgenerator/icons
+(?) hammer_32x24
+
+---
+
+Scripting
+
+(?) ui.scripting/icons
+(?) script_24x24
+(?) script_32x24
+(?) scripting
+
+UI
+
+(?) at uk.ac.stfc.isis.ibex.ui/icons
+Used in multiple places
+
+WaitPanel_Background
+move_down
+move_left
+move_right
+move_up
+warning_icons
+
