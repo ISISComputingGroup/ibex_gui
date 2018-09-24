@@ -142,16 +142,11 @@ public class NicosQueueContainer {
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
         scriptSendGrp.setLayout(ssgLayout);
-		        
-        final Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
-        btnCreateScript.setText("Create Script and Add to Queue");
-        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
         final Button btnDequeueScript = new Button(scriptSendGrp, SWT.NONE);
         btnDequeueScript.setText("Dequeue Selected Script");
         btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        btnCreateScript.addListener(SWT.Selection, e -> (new QueueScriptDialog(shell, queueScriptViewModel)).open());
         btnDequeueScript.addListener(SWT.Selection, e -> queueScriptViewModel.dequeueScript());
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDequeueScript), 

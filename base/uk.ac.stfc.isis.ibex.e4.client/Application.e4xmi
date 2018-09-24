@@ -389,8 +389,13 @@
           <children xsi:type="basic:PartStack" xmi:id="_sS4H4I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.34" containerData="50">
             <children xsi:type="basic:Part" xmi:id="_tKj90I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.currentscript" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosCurrentScriptContainer" label="Current script"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
-            <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosQueueContainer" label="Queue"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_4nYOAL_fEeiDbKUSQ9YQdA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.27" containerData="50" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_8lRm8L_fEeiDbKUSQ9YQdA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.35" containerData="50">
+              <children xsi:type="basic:Part" xmi:id="_9vcUAL_fEeiDbKUSQ9YQdA" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosAvailableScriptsView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosAvailableScriptsContainer" label="Available Scripts"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_xHrsEKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.14" containerData="50">
+              <children xsi:type="basic:Part" xmi:id="_yBrPIKj6EeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosQueueContainer" label="Queue"/>
+            </children>
           </children>
         </children>
       </children>
