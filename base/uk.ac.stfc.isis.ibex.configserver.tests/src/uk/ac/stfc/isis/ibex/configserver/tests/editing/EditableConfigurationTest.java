@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -177,7 +178,7 @@ public class EditableConfigurationTest {
         EditableConfiguration config = edit(config());
 
         // Assert
-        assertEquals(config.getBlockByName(GAPX.getName()).getName(), GAPX.getName());
+        assertEquals(config.getBlockByName(GAPX.getName()).get().getName(), GAPX.getName());
     }
 
     @Test
@@ -187,7 +188,7 @@ public class EditableConfigurationTest {
         EditableConfiguration config = edit(config());
 
         // Assert
-        assertNull(config.getBlockByName(GAPX.getName()));
+        assertEquals(Optional.empty(), config.getBlockByName(GAPX.getName()));
     }
     
     @Test
