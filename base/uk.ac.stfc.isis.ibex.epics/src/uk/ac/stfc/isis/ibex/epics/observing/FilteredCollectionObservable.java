@@ -19,15 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * The Class FilteredCollectionObservable is an observable on another observable
@@ -95,16 +94,9 @@ public class FilteredCollectionObservable<T extends INamed> extends
             ForwardingObservable<Collection<T>> observableToFilter,
             ForwardingObservable<Collection<String>> filterOut) {
         // Set up a converter that just generates a new ArrayList
-        Converter<Collection<T>, Collection<T>> converter = new Converter<Collection<T>, Collection<T>>() {
-
-            @Override
-            public Collection<T> apply(Collection<T> value) throws ConversionException {
-                return Lists.newArrayList(value);
-            }
-        };
+        Function<Collection<T>, Collection<T>> converter = ArrayList<T>::new;
 
         // Use the above converter in a converting observable
-
         ConvertingObservable<Collection<T>, Collection<T>> convertingObservable =
                 new ConvertingObservable<Collection<T>, Collection<T>>(observableToFilter, converter);
 

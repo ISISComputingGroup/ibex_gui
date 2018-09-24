@@ -19,17 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal;
 
+import java.util.function.Function;
+
 import javax.xml.bind.JAXBException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Parses an input XML into a Synoptic.
  */
-public class SynopticParser implements Converter<String, SynopticDescription> {
+public class SynopticParser implements Function<String, SynopticDescription> {
 
 	@Override
     public SynopticDescription apply(String value)

@@ -30,12 +30,11 @@ import com.google.common.collect.Lists;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 /**
  * Converts a JSON representation of an editable IOC into a java object representation.
  *
  */
-public class EditableIocsConverter implements Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
+public class EditableIocsConverter implements Function<Map<String, IocParameters>, Collection<EditableIoc>> {
 	
 	@Override
 	public Collection<EditableIoc> apply(Map<String, IocParameters> value) throws ConversionException {

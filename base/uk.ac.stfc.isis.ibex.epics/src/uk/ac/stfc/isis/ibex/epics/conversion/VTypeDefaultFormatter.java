@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.text.NumberFormat;
+import java.util.function.Function;
 
 import org.diirt.vtype.SimpleValueFormat;
 import org.diirt.vtype.VByteArray;
@@ -40,14 +41,14 @@ public class VTypeDefaultFormatter<T extends VType> {
     /**
      * Returns a converter for formatting the input and its units.
      */
-    public final Converter<T, String> withUnits = new WithUnits<T>();
+    public final Function<T, String> withUnits = new WithUnits<T>();
 
     /**
      * Returns a converter for formatting the input without units.
      */
-	public final Converter<T, String> noUnits = new NoUnits<T>();
+	public final Function<T, String> noUnits = new NoUnits<T>();
 	
-	private class WithUnits<R extends VType> implements Converter<R, String> {
+	private class WithUnits<R extends VType> implements Function<R, String> {
 		@Override
 		public String apply(VType value) throws ConversionException {	
 
@@ -60,7 +61,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 		}
 	}
 
-	private class NoUnits<R extends VType> implements Converter<R, String> {
+	private class NoUnits<R extends VType> implements Function<R, String> {
 		@Override
 		public String apply(VType value) throws ConversionException {	
 

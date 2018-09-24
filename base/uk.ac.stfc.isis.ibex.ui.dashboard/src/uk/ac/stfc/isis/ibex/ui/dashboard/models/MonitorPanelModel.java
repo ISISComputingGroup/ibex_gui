@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -97,13 +96,7 @@ public class MonitorPanelModel extends Closer {
     }
 
     private UpdatedValue<String> createMonitorCounts(DashboardObservables observables) {
-        ConvertingObservable<Integer, String> countsAsString = new ConvertingObservable<>(observables.dae.monitorCounts,
-                new Converter<Integer, String>() {
-                    @Override
-                    public String apply(Integer value) throws ConversionException {
-                        return value.toString();
-                    }
-                });
+        ConvertingObservable<Integer, String> countsAsString = new ConvertingObservable<Integer, String>(observables.dae.monitorCounts, val -> val.toString());
 
         return registerForClose(
                 new TextUpdatedObservableAdapter(new ForwardingObservable<>(countsAsString)));

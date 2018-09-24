@@ -20,12 +20,13 @@
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
-public class DateTimeFormatter implements Converter<String, String> {
+public class DateTimeFormatter implements Function<String, String> {
 		
 	private static final String ISO_PATTERN_NO_MILLIS_NO_OFFSET =  "yyyy-MM-dd'T'HH:mm:ss";
 	private static final String DATE_TIME_MILLIS =  "yyyy/MM/dd HH:mm:ss.SSS";

@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
@@ -124,8 +123,8 @@ public class JsonConverters implements Converters {
 		return new IocsParametersConverter().andThen(new IocStateConverter());
 	}
 	
-	private static <A, B> Converter<A, B> withFunction(final Function<A, B> function) {
-		return new Converter<A, B>() {
+	private static <A, B> Function<A, B> withFunction(final Function<A, B> function) {
+		return new Function<A, B>() {
 			@Override
 			public B apply(A value) throws ConversionException {
 				return function.apply(value);

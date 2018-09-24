@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
+import java.util.function.Function;
+
 import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
@@ -30,14 +32,13 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 /**
  * Converts a DeviceScreenDescription into a string in XML format.
  */
-public class DeviceScreenDescriptionToXmlConverter implements Converter<DeviceScreensDescription, String> {
+public class DeviceScreenDescriptionToXmlConverter implements Function<DeviceScreensDescription, String> {
 
     private final Observable<String> schema;
 

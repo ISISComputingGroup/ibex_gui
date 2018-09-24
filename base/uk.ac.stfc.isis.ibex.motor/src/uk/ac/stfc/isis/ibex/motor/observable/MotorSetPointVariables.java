@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.motor.observable;
 
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -31,7 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
 public class MotorSetPointVariables {
 
-	private static final Converter<Double, Boolean> TO_BOOLEAN = new Converter<Double, Boolean>() {
+	private static final Function<Double, Boolean> TO_BOOLEAN = new Function<Double, Boolean>() {
 		@Override
 		public Boolean apply(Double value) throws ConversionException {
 			return value != null && value == 0.0;

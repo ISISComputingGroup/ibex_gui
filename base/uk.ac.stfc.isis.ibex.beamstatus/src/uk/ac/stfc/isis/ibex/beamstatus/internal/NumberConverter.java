@@ -19,14 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts a number to it's string representation, giving UNKNOWN if the number
  * is null.
  */
-public class NumberConverter implements Converter<Number, String> {
+public class NumberConverter implements Function<Number, String> {
 
 	@Override
 	public String apply(Number value) throws ConversionException {

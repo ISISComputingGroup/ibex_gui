@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
-public class DefaultStringConverter implements Converter<String, Object> {
+import java.util.function.Function;
+
+public class DefaultStringConverter implements Function<String, Object> {
 
 	@Override
 	public Object apply(String value) throws ConversionException {		

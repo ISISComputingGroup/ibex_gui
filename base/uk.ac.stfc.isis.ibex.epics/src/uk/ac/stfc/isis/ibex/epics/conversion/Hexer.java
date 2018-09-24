@@ -19,9 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.util.function.Function;
+
 import org.apache.commons.codec.binary.Hex;
 
-public class Hexer implements Converter<byte[], char[]> {
+public class Hexer implements Function<byte[], char[]> {
 
 	@Override
 	public char[] apply(byte[] value) {

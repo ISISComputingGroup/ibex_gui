@@ -23,6 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.util.function.Function;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -30,8 +32,6 @@ import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
@@ -49,7 +49,7 @@ public class ConvertingObservableTest {
 	private TestableObservable<Integer> testObservable;	
 	private ConvertingObservable<Integer, String> convertObservable;
 	
-	private Converter<Integer, String> mockConverter;
+	private Function<Integer, String> mockConverter;
 	
 	@Captor
 	private ArgumentCaptor<Exception> exceptionCaptor;
@@ -64,7 +64,7 @@ public class ConvertingObservableTest {
 		
 		testObservable = new TestableObservable<>();
 
-		mockConverter = mock(Converter.class);
+		mockConverter = mock(Function.class);
 		when(mockConverter.apply(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
 		when(mockConverter.apply(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 		when(mockConverter.apply(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
@@ -72,7 +72,7 @@ public class ConvertingObservableTest {
         convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.addObserver(mockObserver);
 		
-		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
+		Function<Integer, String> mockConverterWithException = mock(Function.class);
 		when(mockConverterWithException.apply(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 	}
 	
@@ -143,7 +143,7 @@ public class ConvertingObservableTest {
 
         // Act
         ConvertingObservable<Integer, Integer> noConversionObservable =
-                new ConvertingObservable<>(testObservable, new DoNothingConverter<Integer>());
+                new ConvertingObservable<>(testObservable, Function.identity());
         Integer result = noConversionObservable.getValue();
 
         // Assert

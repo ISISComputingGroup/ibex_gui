@@ -28,14 +28,13 @@ import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts a JSON representation of a PV into a java object representation.
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class PVsConverter implements Converter<String[][], Collection<PV>> {
+public class PVsConverter implements Function<String[][], Collection<PV>> {
 
 	@Override
 	public Collection<PV> apply(String[][] value) throws ConversionException {

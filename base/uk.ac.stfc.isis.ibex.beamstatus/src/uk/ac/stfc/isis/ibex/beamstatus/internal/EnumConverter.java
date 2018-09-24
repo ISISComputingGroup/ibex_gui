@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts an enum to it's string representation, giving UNKNOWN if the enum is
@@ -29,7 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <E>
  *            The type of the enum to convert.
  */
-public class EnumConverter<E extends Enum<E>> implements Converter<E, String> {
+public class EnumConverter<E extends Enum<E>> implements Function<E, String> {
 	@Override
 	public String apply(E value) throws ConversionException {
 		if (value == null) {

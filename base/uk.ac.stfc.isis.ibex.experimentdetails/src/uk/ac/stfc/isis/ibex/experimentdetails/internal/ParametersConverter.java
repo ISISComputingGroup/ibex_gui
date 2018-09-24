@@ -22,11 +22,11 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
-public class ParametersConverter implements Converter<String, Collection<String>> {
+public class ParametersConverter implements Function<String, Collection<String>> {
 
 	@Override
 	public Collection<String> apply(String value) throws ConversionException {

@@ -19,11 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.util.function.Function;
+
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-public class ElapsedTimeFormatter implements Converter<Long, String> {
+public class ElapsedTimeFormatter implements Function<Long, String> {
 		
     private static final int ONE_SECOND_IN_MS = 1000;
 

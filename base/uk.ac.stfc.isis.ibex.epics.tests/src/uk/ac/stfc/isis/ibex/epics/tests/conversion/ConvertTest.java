@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 @SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ConvertTest {
@@ -78,7 +77,7 @@ public class ConvertTest {
 	@Test
 	public void convert_yes_to_boolean() throws ConversionException {
 		//Arrange
-		Converter<String, Boolean> converter = Convert.toBoolean();
+		Function<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
 		boolean result = converter.apply("YES");
@@ -90,7 +89,7 @@ public class ConvertTest {
 	@Test
 	public void convert_no_to_boolean() throws ConversionException {
 		//Arrange
-		Converter<String, Boolean> converter = Convert.toBoolean();
+		Function<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
 		boolean result = converter.apply("NO");

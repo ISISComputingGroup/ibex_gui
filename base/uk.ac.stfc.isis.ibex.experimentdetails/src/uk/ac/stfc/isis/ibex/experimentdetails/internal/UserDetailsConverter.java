@@ -22,11 +22,11 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
  * Converts JSON to UserDetails object.
  */
 public class UserDetailsConverter implements
-		Converter<String, Collection<UserDetails>> {
+		Function<String, Collection<UserDetails>> {
 	private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 
     /**
@@ -77,7 +77,7 @@ public class UserDetailsConverter implements
     
 	@Override
 	public Collection<UserDetails> apply(String value) {
-        Converter<String, IntermediateUserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(
+        Function<String, IntermediateUserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(
                 IntermediateUserDetails[].class, gson);
         // Convert to intermediate
         IntermediateUserDetails[] parsed = jsonConverter.apply(value);

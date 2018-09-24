@@ -26,14 +26,14 @@ import java.util.Locale;
 import java.util.function.Function;
 
 /**
- * Provides a series of converters for common PV types.
+ * Provides a series of Functions for common PV types.
  */
 public final class Convert {
 	
 	private Convert() { }
 	
     /**
-     * @return A converter from a String to a zipped and hexed byte array
+     * @return A Function from a String to a zipped and hexed byte array
      */
 	public static Function<String, byte[]> toZippedHex() {
 		return asBytes()
@@ -44,7 +44,7 @@ public final class Convert {
 	}
 
     /**
-     * @return A converter from a zipped and hexed byte array to a String
+     * @return A Function from a zipped and hexed byte array to a String
      */
 	public static Function<byte[], String> fromZippedHex() {
 		return fromBytes()
@@ -55,7 +55,7 @@ public final class Convert {
 	}
 
     /**
-     * @return A converter from a String to a hexed String
+     * @return A Function from a String to a hexed String
      */
 	public static Function<String, String> toHexString() {
 		return asBytes()
@@ -64,7 +64,7 @@ public final class Convert {
 	}
 
     /**
-     * @return A converter from a hexed String to a dehexed String
+     * @return A Function from a hexed String to a dehexed String
      */
 	public static Function<String, String> fromHexString() {
 		return asChars()
@@ -73,62 +73,52 @@ public final class Convert {
 	}
 
     /**
-     * @return A converter to compress a byte array
+     * @return A Function to compress a byte array
      */
-	public static Converter<byte[], byte[]> compress() {
+	public static Function<byte[], byte[]> compress() {
 		return new Compressor();
 	}
 
     /**
-     * @return A converter to decompress a byte array
+     * @return A Function to decompress a byte array
      */
-	public static Converter<byte[], byte[]> decompress() {
+	public static Function<byte[], byte[]> decompress() {
 		return new Decompressor();
 	}
 
     /**
-     * @return A converter to hex a byte array to a char array
+     * @return A Function to hex a byte array to a char array
      */
-	public static Converter<byte[], char[]> toHex() {
+	public static Function<byte[], char[]> toHex() {
 		return new Hexer();
 	}
 
     /**
-     * @return A converter to dehex a char array to a byte array
+     * @return A Function to dehex a char array to a byte array
      */
 	public static Function<char[], byte[]> deHex() {
 		return removeUnsetChars().andThen(new Dehexer());
 	}
 	
     /**
-     * @return A converter to remove white space from a char array
+     * @return A Function to remove white space from a char array
      */
-	public static Converter<char[], char[]> removeUnsetChars() {
-		return new Converter<char[], char[]>() {	
-			@Override
-			public char[] apply(char[] value) throws ConversionException {				
-				return new String(value).trim().toCharArray();
-			}
-		};
+	public static Function<char[], char[]> removeUnsetChars() {
+		return fromChars().andThen(trim()).andThen(asChars());
 	}
 
     /**
-     * @return A converter to remove white space from a String
+     * @return A Function to remove white space from a String
      */
-	public static Converter<String, String> trim() {
-		return new Converter<String, String>() {
-			@Override
-			public String apply(String value) throws ConversionException {
-				return value.trim();
-			}
-		};
+	public static Function<String, String> trim() {
+		return String::trim;
 	}
 
     /**
-     * @return A converter from a byte array to a String
+     * @return A Function from a byte array to a String
      */
-	public static Converter<byte[], String> fromBytes() {
-		return new Converter<byte[], String>() {
+	public static Function<byte[], String> fromBytes() {
+		return new Function<byte[], String>() {
 			@Override
 			public String apply(byte[] value) throws ConversionException {
 				try {
@@ -141,34 +131,24 @@ public final class Convert {
 	}	
 
     /**
-     * @return A converter from a char array to a String
+     * @return A Function from a char array to a String
      */
-	public static Converter<char[], String> fromChars() {
-		return new Converter<char[], String>() {
-			@Override
-			public String apply(char[] value) {
-				return new String(value);				
-			}
-		};
+	public static Function<char[], String> fromChars() {
+		return String::new;
 	}
 
     /**
-     * @return A converter from a String to an array of characters
+     * @return A Function from a String to an array of characters
      */
-	public static Converter<String, char[]> asChars() {
-		return new Converter<String, char[]>() {
-			@Override
-			public char[] apply(String value) {
-				return value.toCharArray();				
-			}
-		};
+	public static Function<String, char[]> asChars() {
+		return String::toCharArray;
 	}
 	
     /**
-     * @return A converter from a String to a byte array
+     * @return A Function from a String to a byte array
      */
-	public static Converter<String, byte[]> asBytes() {
-		return new Converter<String, byte[]>() {
+	public static Function<String, byte[]> asBytes() {
+		return new Function<String, byte[]>() {
 			@Override
 			public byte[] apply(String value) throws ConversionException {
 				try {
@@ -181,10 +161,10 @@ public final class Convert {
 	}
 
     /**
-     * @return A converter from a String to a boolean value
+     * @return A Function from a String to a boolean value
      */
-	public static Converter<String, Boolean> toBoolean() {
-		return new Converter<String, Boolean>() {
+	public static Function<String, Boolean> toBoolean() {
+		return new Function<String, Boolean>() {
 			@Override
 			public Boolean apply(String value) throws ConversionException {
 				String val = value.toLowerCase(Locale.ENGLISH);
@@ -194,7 +174,7 @@ public final class Convert {
 					case "no":
 						return false;
 					default:
-						throw new ConversionException("Could not pass boolean string: " + val);
+						throw new ConversionException("Could not parse boolean string: " + val);
 				}
 			}
 		};
@@ -203,15 +183,10 @@ public final class Convert {
     /**
      * @param <T>
      *            The array/collection type
-     * @return A converter from an array to a collection
+     * @return A Function from an array to a collection
      */
-	public static <T> Converter<T[], Collection<T>> toCollection() {
-		return new Converter<T[], Collection<T>>() {
-			@Override
-			public Collection<T> apply(T[] value) throws ConversionException {
-				return Arrays.asList(value);
-			}
-		};
+	public static <T> Function<T[], Collection<T>> toCollection() {
+		return Arrays::asList;
 	}
 
     /**
@@ -219,14 +194,9 @@ public final class Convert {
      *            The array to convert
      * @param <T>
      *            The array/collection type
-     * @return A converter from a collection to an array
+     * @return A Function from a collection to an array
      */
-	public static <T> Converter<Collection<T>, T[]> toArray(final T[] arrayOfType) {
-		return new Converter<Collection<T>, T[]>() {
-			@Override
-			public T[] apply(Collection<T> value) throws ConversionException {
-				return value.toArray(arrayOfType);
-			}
-		};
+	public static <T> Function<Collection<T>, T[]> toArray(final T[] arrayOfType) {
+		return value -> value.toArray(arrayOfType);
 	}
 }

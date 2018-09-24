@@ -21,9 +21,10 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.zip.Deflater;
 
-public class Compressor implements Converter<byte[], byte[]> {
+public class Compressor implements Function<byte[], byte[]> {
 		
     private static final int KB_IN_BYTES = 1024;
 

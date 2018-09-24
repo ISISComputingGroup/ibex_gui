@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.motor.observable;
 
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
@@ -41,7 +42,7 @@ import uk.ac.stfc.isis.ibex.motor.MotorEnable;
  */
 public class MotorVariables extends Closer {
 
-	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
+	private static final Function<Short, MotorDirection> TO_MOTOR_DIRECTION = new Function<Short, MotorDirection>() {
 		@Override
 		public MotorDirection apply(Short value) throws ConversionException {
 			if (value == null) {
@@ -52,7 +53,7 @@ public class MotorVariables extends Closer {
 		}
 	};
 
-	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
+	private static final Function<Short, Boolean> TO_BOOLEAN = new Function<Short, Boolean>() {
 		@Override
 		public Boolean apply(Short value) throws ConversionException {
 			if (value == null) {
@@ -63,7 +64,7 @@ public class MotorVariables extends Closer {
 		}
 	};
 
-	private static final Converter<String, String> CAPITALISE_FIRST_LETTER_ONLY = new Converter<String, String>() {
+	private static final Function<String, String> CAPITALISE_FIRST_LETTER_ONLY = new Function<String, String>() {
 		@Override
 		public String apply(String value) throws ConversionException {
 			if (value == null || value.length() == 0) {

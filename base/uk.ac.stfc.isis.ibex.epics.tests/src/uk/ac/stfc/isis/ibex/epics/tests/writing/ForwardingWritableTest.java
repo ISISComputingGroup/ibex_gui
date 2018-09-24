@@ -24,12 +24,12 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
@@ -42,13 +42,13 @@ public class ForwardingWritableTest {
     private static final String CONVERTED_VALUE = "456";
 
     private Writable<String> mockDestination;
-    private Converter<String, String> mockConverter;
+    private Function mockConverter;
 
     @Before
     public void setUp() {
         // Arrange
         mockDestination = mock(Writable.class);
-        mockConverter = mock(Converter.class);
+        mockConverter = mock(Function.class);
     }
 
     private ForwardingWritable<String, String> createWritable() {

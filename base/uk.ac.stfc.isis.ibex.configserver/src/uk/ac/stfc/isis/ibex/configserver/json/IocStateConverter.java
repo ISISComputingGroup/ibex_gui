@@ -21,17 +21,17 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts a JSON representation of the state of an IOC into a java object representation.
  */
-public class IocStateConverter implements Converter<Map<String, IocParameters>, Collection<IocState>> {
+public class IocStateConverter implements Function<Map<String, IocParameters>, Collection<IocState>> {
 	/**
 	 * Converts a JSON representation of the state of an IOC into a java object representation.
 	 * 

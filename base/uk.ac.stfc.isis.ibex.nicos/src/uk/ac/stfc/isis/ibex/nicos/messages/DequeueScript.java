@@ -45,7 +45,7 @@ public class DequeueScript extends NICOSMessage<String, String> {
     @Override
     public String parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
-        return eserial.apply(response);
+        return deserial.apply(response);
     }
         
 }

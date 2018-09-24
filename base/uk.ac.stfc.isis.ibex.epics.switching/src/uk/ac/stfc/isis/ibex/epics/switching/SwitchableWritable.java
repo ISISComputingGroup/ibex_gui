@@ -19,7 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -36,7 +37,7 @@ public class SwitchableWritable<T> extends ForwardingWritable<T, T> implements S
     private Writable<T> source;
 
     public SwitchableWritable(Writable<T> source) {
-        super(source, new DoNothingConverter<T>());
+        super(source, Function.identity());
         this.source = source;
     }
 

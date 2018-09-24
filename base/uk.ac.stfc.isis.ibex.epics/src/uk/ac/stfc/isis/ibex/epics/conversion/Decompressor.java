@@ -21,10 +21,11 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-public class Decompressor implements Converter<byte[], byte[]> {
+public class Decompressor implements Function<byte[], byte[]> {
 	
     private static final int KB_IN_BYTES = 1024;
 
