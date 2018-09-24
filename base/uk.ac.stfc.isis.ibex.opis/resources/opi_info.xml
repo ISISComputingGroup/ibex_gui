@@ -432,9 +432,9 @@
 	   <key>Beryllium Filter</key>
 	   <value>
 	      <categories>
-	         <category>Monitors</category>
+	         <category>Miscellaneous motion control</category>
 	      </categories>
-	      <type>MONITOR</type>
+	      <type>MOVINGMONITOR</type>
 	      <path>beryllium_filter.opi</path>
 	      <description>Display and control for the beryllium filter</description>
 	      <macros>
