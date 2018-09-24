@@ -22,11 +22,9 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 /**
  * The Class FilteredCollectionObservable is an observable on another observable
@@ -57,25 +55,17 @@ public class FilteredCollectionObservable<T extends INamed> extends
 			return Collections.emptyList();
 		}
 		
-		return Lists.newArrayList(Iterables.filter(value.first, filterByName(value.second)));
+		return value.first.stream()
+				.filter(filterByName(value.second))
+				.collect(Collectors.toList());
 	}
 
     private static <T1 extends INamed> Predicate<T1> filterByName(final Collection<String> namesToFilter) {
-        return new Predicate<T1>() {
-			@Override
-            public boolean apply(final T1 ioc) {
-				return !Iterables.any(namesToFilter, nameMatches(ioc));
-			}
-		};
+		return ioc -> namesToFilter.stream().anyMatch(nameMatches(ioc));
 	}
 
     private static Predicate<String> nameMatches(final INamed ioc) {
-		return new Predicate<String>() {
-			@Override
-			public boolean apply(String name) {
-				return ioc.getName().startsWith(name);
-			}
-		};
+		return name -> ioc.getName().startsWith(name);
     }
 
     /**
@@ -93,12 +83,9 @@ public class FilteredCollectionObservable<T extends INamed> extends
     public static <T extends INamed> ForwardingObservable<Collection<T>> createFilteredByNameObservable(
             ForwardingObservable<Collection<T>> observableToFilter,
             ForwardingObservable<Collection<String>> filterOut) {
-        // Set up a converter that just generates a new ArrayList
-        Function<Collection<T>, Collection<T>> converter = ArrayList<T>::new;
 
-        // Use the above converter in a converting observable
         ConvertingObservable<Collection<T>, Collection<T>> convertingObservable =
-                new ConvertingObservable<Collection<T>, Collection<T>>(observableToFilter, converter);
+                new ConvertingObservable<Collection<T>, Collection<T>>(observableToFilter, ArrayList<T>::new);
 
         ForwardingObservable<Collection<T>> iocs = new ForwardingObservable<>(convertingObservable);
 
