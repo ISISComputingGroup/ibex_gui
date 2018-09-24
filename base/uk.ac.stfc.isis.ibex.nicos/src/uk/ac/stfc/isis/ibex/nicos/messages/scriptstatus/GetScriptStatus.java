@@ -7,7 +7,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 /**
  * Gets the script status from the server.
  */
-public class GetScriptStatus extends NICOSMessage<Object> {
+public class GetScriptStatus extends NICOSMessage<Object, ReceiveScriptStatus> {
 	
 	/**
 	 * Gets the script status from the server.

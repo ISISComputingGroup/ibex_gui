@@ -26,7 +26,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public class ReceiveLoginMessage implements ReceiveMessage {
+public class ReceiveLoginMessage {
     // this is serialised from python
     @SuppressWarnings("checkstyle:membername")
     private Integer user_level;

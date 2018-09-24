@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Class to log in to Nicos.
  */
-public class Login extends NICOSMessage<Map<String, String>> {
+public class Login extends NICOSMessage<Map<String, String>, ReceiveLoginMessage> {
     /**
      * Creates the login command for NICOS.
      */
@@ -39,7 +39,7 @@ public class Login extends NICOSMessage<Map<String, String>> {
         command = "authenticate";
         Map<String, String> params = new HashMap<>();
         params.put("login", "ibex");
-        params.put("passwd", "a2eed0a7fcb214a497052435191b5264cca5b687");
+        params.put("passwd", "dECJ_2Fa");
         parameters = Arrays.asList(params);
     }
 

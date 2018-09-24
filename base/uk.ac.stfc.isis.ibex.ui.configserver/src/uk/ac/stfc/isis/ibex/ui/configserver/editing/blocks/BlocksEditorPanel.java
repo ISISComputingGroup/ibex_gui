@@ -28,16 +28,15 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -92,7 +91,7 @@ public class BlocksEditorPanel extends Composite {
         table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-            	if (viewModel.editEnabled(table.selectedRows())) {
+            	if (viewModel.getEditEnabled()) {
 	                if (e.keyCode == SWT.DEL) {
 	                    deleteSelected();
 	                //copies selected blocks if press "Ctrl + D".
@@ -176,17 +175,16 @@ public class BlocksEditorPanel extends Composite {
 				viewModel.setSelectedBlocks(selected);
 			}
 		});
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    EditableBlock block = table.firstSelectedRow();
-                    if (!block.hasComponent()) {
-                        openEditBlockDialog(block);
-                    }
+        table.viewer().addDoubleClickListener(new IDoubleClickListener() {
+		
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				EditableBlock block = table.firstSelectedRow();
+                if (!block.hasComponent()) {
+                    openEditBlockDialog(block);
                 }
-            }
-        });
+			}
+		});
         
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.enabled().observe(edit),
@@ -268,6 +266,9 @@ public class BlocksEditorPanel extends Composite {
         dialog.open();
     }
 
+    /**
+     * Show the mneumonic underlining to the user.
+     */
     public void showMnemonics() {
         Event event = new Event();
         event.keyCode = SWT.ALT;

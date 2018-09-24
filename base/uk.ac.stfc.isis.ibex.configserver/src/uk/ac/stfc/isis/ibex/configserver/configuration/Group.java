@@ -41,10 +41,26 @@ public class Group extends ModelObject {
 	private List<String> blocks = new ArrayList<>();
 	private String component;
 	
+	/**
+	 * The constructor for a group of blocks within a configuration.
+	 * 
+	 * @param name
+	 *             The group name.
+	 */
 	public Group(String name) {
 		this(name, Collections.<String>emptyList(), null);
 	}
 	
+	/**
+     * The constructor for a group of blocks within a configuration.
+     * 
+     * @param name
+     *             The group name.
+     * @param blocks
+     *             The blocks within the group.
+     * @param component
+     *             The component associated with the group.
+     */
 	public Group(String name, Collection<String> blocks, String component) {
 		this.name = name;
 		for (String block : blocks) {
@@ -53,26 +69,62 @@ public class Group extends ModelObject {
 		this.component = component;
 	}
 	
+	/**
+     * A copy constructor to build a group from another group.
+     * 
+     * @param other
+     *             The other group.
+     */
 	public Group(Group other) {
 		this(other.getName(), other.getBlocks(), other.component);
 	}
 
+	/**
+	 * Returns the group's name.
+	 * 
+	 * @return
+	 *         The group's name.
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+     * Sets the group's name.
+     * 
+     * @param name
+     *         The group's name.
+     */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 	
+	/**
+     * Returns the group's blocks.
+     * 
+     * @return
+     *         The group's blocks.
+     */
 	public Collection<String> getBlocks() {
 		return blocks;
 	}
 	
+	/**
+     * Returns the component associated with the group.
+     * 
+     * @return
+     *         The component associated with the group
+     */
 	public String getComponent() {
 		return component;
 	}
 	
+	/**
+	 * Returns true if the group has a component.
+	 * 
+	 * @return
+	 *         True if the group has a component.
+	 */
 	public boolean hasComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}

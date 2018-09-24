@@ -25,8 +25,8 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writer;
  * This class sets the run control on the blocks within the server.
  */
 public class RunControlSetter {
-    private Writer<String> lowLimitSetter;
-    private Writer<String> highLimitSetter;
+    private Writer<Double> lowLimitSetter;
+    private Writer<Double> highLimitSetter;
     private Writer<String> enabledSetter;
 
     /**
@@ -50,7 +50,7 @@ public class RunControlSetter {
      * @param limit
      *            The limit to set
      */
-    public void setLowLimit(String limit) {
+    public void setLowLimit(Double limit) {
         lowLimitSetter.uncheckedWrite(limit);
 	}
 	
@@ -60,7 +60,7 @@ public class RunControlSetter {
      * @param limit
      *            The high limit to set
      */
-    public void setHighLimit(String limit) {
+    public void setHighLimit(Double limit) {
         highLimitSetter.uncheckedWrite(limit);
 	}
 	

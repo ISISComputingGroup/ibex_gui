@@ -31,7 +31,10 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-
+/**
+ * Converts a JSON representation of an editable IOC into a java object representation.
+ *
+ */
 public class EditableIocsConverter implements Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
 	
 	@Override

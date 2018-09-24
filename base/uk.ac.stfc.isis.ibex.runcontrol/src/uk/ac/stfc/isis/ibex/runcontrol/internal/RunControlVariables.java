@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
@@ -40,13 +41,13 @@ public class RunControlVariables {
     public RunControlVariables() {
 	}
 	
-	public ForwardingObservable<String> blockRunControlLowLimit(String blockName) {
-        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+	public ForwardingObservable<Double> blockRunControlLowLimit(String blockName) {
+        return obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
-	public ForwardingObservable<String> blockRunControlHighLimit(String blockName) {
-        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+	public ForwardingObservable<Double> blockRunControlHighLimit(String blockName) {
+        return obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	
@@ -60,13 +61,13 @@ public class RunControlVariables {
                 InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));
 	}
 	
-	public Writable<String> blockRunControlLowLimitSetter(String blockName) {
-        return writeFactory.getSwitchableWritable(new StringChannel(),
+	public Writable<Double> blockRunControlLowLimitSetter(String blockName) {
+        return writeFactory.getSwitchableWritable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
-	public Writable<String> blockRunControlHighLimitSetter(String blockName) {
-        return writeFactory.getSwitchableWritable(new StringChannel(),
+	public Writable<Double> blockRunControlHighLimitSetter(String blockName) {
+        return writeFactory.getSwitchableWritable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	

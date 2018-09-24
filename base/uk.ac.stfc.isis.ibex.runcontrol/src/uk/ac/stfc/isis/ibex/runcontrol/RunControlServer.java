@@ -35,11 +35,11 @@ public class RunControlServer extends Closer {
 		this.variables = variables;
 	}
 	
-	public ForwardingObservable<String> blockRunControlLowLimit(String blockName) {
+	public ForwardingObservable<Double> blockRunControlLowLimit(String blockName) {
 		return variables.blockRunControlLowLimit(blockName);
 	}
 	
-	public ForwardingObservable<String> blockRunControlHighLimit(String blockName) {
+	public ForwardingObservable<Double> blockRunControlHighLimit(String blockName) {
 		return variables.blockRunControlHighLimit(blockName);
 	}
 	
@@ -51,13 +51,12 @@ public class RunControlServer extends Closer {
 		return variables.blockRunControlEnabled(blockName);
 	}
 
-	public Writer<String> blockRunControlLowLimitSetter(String blockName) {
+	public Writer<Double> blockRunControlLowLimitSetter(String blockName) {
 		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlLowLimitSetter(blockName)));
 	}
 	
-	public Writer<String> blockRunControlHighLimitSetter(String blockName) {
-        return registerForClose(
-                ClosableSameTypeWriter.newInstance(variables.blockRunControlHighLimitSetter(blockName)));
+	public Writer<Double> blockRunControlHighLimitSetter(String blockName) {
+        return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlHighLimitSetter(blockName)));
 	}
 	
 	public Writer<String> blockRunControlEnabledSetter(String blockName) {

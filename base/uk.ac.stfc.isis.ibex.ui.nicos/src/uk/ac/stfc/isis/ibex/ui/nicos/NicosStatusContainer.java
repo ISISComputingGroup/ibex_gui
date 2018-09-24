@@ -21,22 +21,15 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 public class NicosStatusContainer {
 	
 	private Label lblCurrentError;
-	private final DataBindingContext bindingContext;
-	private final NicosModel model;
-	
-	/**
-	 * Constructor.
-	 */
-	public NicosStatusContainer() {
-		bindingContext = new DataBindingContext();
-		model = Nicos.getDefault().getModel();
-	}
+	private final DataBindingContext bindingContext = new DataBindingContext();
+	private final NicosModel model = Nicos.getDefault().getModel();
 	
 	/**
 	 * Creates the view.
 	 * @param parent injected by eclipse
 	 */
 	@PostConstruct
+	@SuppressWarnings("unchecked")
 	public void createStatusContainer(Composite parent) {
 		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		parent.setLayout(new GridLayout(1, false));

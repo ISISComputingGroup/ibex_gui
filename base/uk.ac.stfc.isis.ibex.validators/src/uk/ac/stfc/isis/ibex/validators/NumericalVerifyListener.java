@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,29 +16,31 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.nicos.messages;
+package uk.ac.stfc.isis.ibex.validators;
+
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Text;
 
 /**
- * A string that has been received from NICOS.
+ * SWT verifier that checks whether text input can be parsed as a double or not.
  */
-public class ReceiveStringMessage implements ReceiveMessage {
-    private String response;
+public class NumericalVerifyListener implements VerifyListener {
 
     /**
-     * A constructor for a basic message.
-     * 
-     * @param response
-     *            The response from the message.
-     * 
+     * {@inheritDoc}
      */
-    public ReceiveStringMessage(String response) {
-        this.response = response;
+    @Override
+    public void verifyText(VerifyEvent e) {
+        String oldString = ((Text) e.getSource()).getText();
+        String newString = oldString.substring(0, e.start) + e.text + oldString.substring(e.end);
+        
+        try {
+            Double.parseDouble(newString);
+            e.doit = true;
+        } catch (NumberFormatException exception) {
+            e.doit = false;
+        }
     }
-
-    /**
-     * @return The response from NICOS.
-     */
-    public String getResponse() {
-        return response;
-    }
+    
 }

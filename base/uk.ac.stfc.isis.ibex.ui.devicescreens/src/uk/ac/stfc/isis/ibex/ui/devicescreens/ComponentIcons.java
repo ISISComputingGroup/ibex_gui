@@ -82,6 +82,7 @@ public final class ComponentIcons {
             case TDK_LAMBDA_GENESYS:
             case CAEN:
             case IPS:
+            case POWER_SUPPLY:
                 return "powersupply";
             case BEAMSTOP:
                 return "beamstop";
@@ -160,6 +161,12 @@ public final class ComponentIcons {
             	return "syringe_pump";
             case KEYENCE:
             	return "keyence";
+            case OSCILLOSCOPE:
+            	return "oscilloscope";
+            case MOXA_1210:
+                return "moxa_1210";
+            case FURNACE:
+                return "furnace";
             default:
                 return "cog";
         }

@@ -26,11 +26,22 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.NumberWithUnitsChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
+/**
+ * A class to lookup the channel type.
+ *
+ */
 public final class ChannelTypeLookup {
 
     private ChannelTypeLookup() {
     }
 
+    /**
+     * Returns a channel type for a given string.
+     * @param type
+     *              The channel type to be returned.
+     * @return
+     *              The relevant channel type.
+     */
     public static ChannelType<String> get(String type) {
 		switch (type.toUpperCase(Locale.ENGLISH)) {
 		case "AI":

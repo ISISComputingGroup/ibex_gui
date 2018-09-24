@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.nicos.ExecutionInstructionType;
  * Sends an instruction affecting the current script execution in the NICOS
  * server.
  */
-public class ExecutionInstruction extends NICOSMessage<Integer> {
+public class ExecutionInstruction extends NICOSMessage<Integer, ReceiveNullMessage> {
 
 
     /**
@@ -56,8 +56,8 @@ public class ExecutionInstruction extends NICOSMessage<Integer> {
      * @throws ConversionException
      */
     @Override
-    public ReceiveMessage parseResponse(String response) throws ConversionException {
-        return new JsonDeserialisingConverter<>(ReceiveNullMessage.class).apply(response);
+    public ReceiveNullMessage parseResponse(String response) throws ConversionException {
+        return new JsonDeserialisingConverter<ReceiveNullMessage>(ReceiveNullMessage.class).apply(response);
     }
 
     @Override

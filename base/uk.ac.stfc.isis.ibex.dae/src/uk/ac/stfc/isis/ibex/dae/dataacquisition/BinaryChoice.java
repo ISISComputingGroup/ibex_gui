@@ -23,11 +23,22 @@ package uk.ac.stfc.isis.ibex.dae.dataacquisition;
  * An enum representing a yes/no choice.
  */
 public enum BinaryChoice {
+    /**
+     * No choice.
+     */
     NO("No"),
+    /**
+     * Yes choice.
+     */
     YES("Yes");
 	
 	private String text;
 	
+	/**
+	 * The constructor for the binary choice.
+	 * @param text
+	 *             The choice.
+	 */
 	BinaryChoice(String text) {
 		this.text = text;
 	}

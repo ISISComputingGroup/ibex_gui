@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 /**
  * Serialisable class to dequeue a script in NICOS.
  */
-public class DequeueScript extends NICOSMessage<String> {
+public class DequeueScript extends NICOSMessage<String, String> {
     
     /**
      * Constructor.
@@ -43,9 +43,9 @@ public class DequeueScript extends NICOSMessage<String> {
     }
 
     @Override
-    public ReceiveMessage parseResponse(String response) throws ConversionException {
+    public String parseResponse(String response) throws ConversionException {
         JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
-        return new ReceiveStringMessage(deserial.apply(response));
+        return eserial.apply(response);
     }
         
 }
