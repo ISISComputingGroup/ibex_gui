@@ -2541,7 +2541,7 @@
         <macros>
           <macro>
             <name>KHLY2001</name>
-            <description>The Keithley_2001 PV prefix (e.g. KHLY2001_01)</description>
+            <description>The Keithley_2001 PV prefix (e.g. KHLY2001_01)</description>            
           </macro>
         </macros>
       </value>
