@@ -38,6 +38,8 @@ public enum ComponentType {
 	CHOPPER,
     /** Fermi Chopper component type. */
 	FERMI_CHOPPER,
+    /** T0 Chopper component type. */
+	T0_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
