@@ -236,7 +236,7 @@ public class RunInformationViewModel extends Closer {
         runStatus = new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(observables.runState)));
         rbNumber = adapt(observables.rbNumber);
         rawFrames = adapt(observables.rawFrames);
-        totalCurrent = adapt(observables.beamCurrent);
+        totalCurrent = adapt(observables.goodCurrent);
         countRate = adapt(observables.countRate);
         eventMode = adapt(observables.eventMode);
 

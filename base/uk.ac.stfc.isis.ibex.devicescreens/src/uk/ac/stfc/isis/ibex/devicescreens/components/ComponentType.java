@@ -144,10 +144,12 @@ public enum ComponentType {
     KEYENCE,
 	/** Generic Power Supply. */
     POWER_SUPPLY,
-  /** Oscilloscope */
+  /** Oscilloscope. */
     OSCILLOSCOPE,
 	/** Moxa ioLogik e1210 Remote I/O. */
-	MOXA_1210;
+	MOXA_1210,
+	/** Furnace temperature controller. */
+	FURNACE;
 
 	private Target target;
 
