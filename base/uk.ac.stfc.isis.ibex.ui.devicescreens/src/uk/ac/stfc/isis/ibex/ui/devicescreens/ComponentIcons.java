@@ -68,6 +68,8 @@ public final class ComponentIcons {
                 return "chopper";
             case FERMI_CHOPPER:
                 return "fermi_chopper";
+            case T0_CHOPPER:
+                return "t0_chopper";
             case MONITOR:
                 return "monitor";
             case SAMPLESTACK:
