@@ -1592,6 +1592,18 @@
               </macro>
             </macros>
           </value>
-    </entry>
+        </entry>
+        <entry>
+            <key>Reflectometry Front Panel</key>
+            <value>
+                <categories>
+                    <category>Miscellaneous motion control</category>
+                </categories>
+                <type>UNKNOWN</type>
+                <path>reflectometry/front_panel.opi</path>
+                <description>The OPI for the reflectometry information panel.</description>
+                <macros />
+            </value>
+        </entry>
     </opis>
 </descriptions>
