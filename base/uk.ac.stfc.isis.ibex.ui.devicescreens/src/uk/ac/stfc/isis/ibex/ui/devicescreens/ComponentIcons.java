@@ -84,7 +84,6 @@ public final class ComponentIcons {
             case TDK_LAMBDA_GENESYS:
             case CAEN:
             case IPS:
-            case SEPARATOR:
             case POWER_SUPPLY:
                 return "powersupply";
             case BEAMSTOP:
