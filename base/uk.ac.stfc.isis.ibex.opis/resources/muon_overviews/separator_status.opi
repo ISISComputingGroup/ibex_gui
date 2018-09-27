@@ -185,7 +185,7 @@
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
       <height>25</height>
-      <name>Stability_LED</name>
+      <name>stability</name>
       <off_color>
         <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
@@ -245,7 +245,7 @@ $(pv_value)</tooltip>
       <height>25</height>
       <name>power</name>
       <off_color>
-        <color red="255" green="100" blue="100" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
       <off_label>OFF</off_label>
       <on_color>
@@ -292,7 +292,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Voltage_Label</name>
+      <name>voltage</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -338,7 +338,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Voltage</name>
+      <name>voltage</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT):VOLT</pv_name>
@@ -385,7 +385,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Voltage_setpoint_Label</name>
+      <name>voltage_setpoint</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -394,7 +394,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Voltage Setpoint:</text>
+      <text>Voltage setpoint:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -426,7 +426,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Separator_power_Label</name>
+      <name>separator_power</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -472,7 +472,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Voltage_Setpoint_readback</name>
+      <name>voltage_setpoint_readback</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT):VOLT:SP</pv_name>
@@ -519,7 +519,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Current_Label</name>
+      <name>current</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -565,7 +565,7 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>Current</name>
+      <name>current</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT):CURR</pv_name>
@@ -612,7 +612,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Stability_Label</name>
+      <name>stability</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -663,7 +663,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Voltage_SP</name>
+      <name>voltage_setpoint_input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT):VOLT:SP</pv_name>
