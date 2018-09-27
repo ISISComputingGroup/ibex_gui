@@ -1605,22 +1605,5 @@
                 <macros />
             </value>
         </entry>
-        <entry>
-            <key>Muon Separator PSU</key>
-            <value>
-                <type>POWER_SUPPLY</type>
-                <path>muon_overviews/separator_status.opi</path>
-                <categories>
-                    <category>Power supplies</category>
-                </categories>
-                <description>The OPI for the Muon separator PSU.</description>
-                <macros>
-                    <macro>
-                        <name>SEPRTR</name>
-                        <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
-                    </macro>
-                </macros>
-            </value>
-        </entry>
     </opis>
 </descriptions>
