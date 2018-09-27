@@ -106,8 +106,6 @@ public enum ComponentType {
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
     SCIMAG3D,
-    /** Muon Separator PSU component type. **/
-    SEPARATOR,
     /** Stress rig component type. */
     STRESS_RIG,
     /** Gas exchange system. */
@@ -148,7 +146,7 @@ public enum ComponentType {
     KEYENCE,
 	/** Generic Power Supply. */
     POWER_SUPPLY,
-  /** Oscilloscope. */
+    /** Oscilloscope. */
     OSCILLOSCOPE,
 	/** Moxa ioLogik e1210 Remote I/O. */
 	MOXA_1210,
