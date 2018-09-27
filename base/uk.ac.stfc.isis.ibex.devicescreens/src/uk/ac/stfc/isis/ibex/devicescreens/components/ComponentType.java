@@ -144,7 +144,7 @@ public enum ComponentType {
     SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE,
-	/** Generic Power Supply. */
+    /** Generic Power Supply. */
     POWER_SUPPLY,
     /** Oscilloscope. */
     OSCILLOSCOPE,
