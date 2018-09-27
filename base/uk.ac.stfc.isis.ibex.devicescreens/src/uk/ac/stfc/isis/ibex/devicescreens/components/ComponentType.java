@@ -149,9 +149,9 @@ public enum ComponentType {
     /** Oscilloscope. */
     OSCILLOSCOPE,
 	/** Moxa ioLogik e1210 Remote I/O. */
-	MOXA_1210,
-	/** Furnace temperature controller. */
-	FURNACE;
+    MOXA_1210,
+    /** Furnace temperature controller. */
+    FURNACE;
 
 	private Target target;
 
