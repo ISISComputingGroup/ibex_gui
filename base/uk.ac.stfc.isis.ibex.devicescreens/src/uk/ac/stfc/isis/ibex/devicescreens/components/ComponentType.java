@@ -38,6 +38,8 @@ public enum ComponentType {
 	CHOPPER,
     /** Fermi Chopper component type. */
 	FERMI_CHOPPER,
+    /** T0 Chopper component type. */
+	T0_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
@@ -149,7 +151,9 @@ public enum ComponentType {
   /** Oscilloscope. */
     OSCILLOSCOPE,
 	/** Moxa ioLogik e1210 Remote I/O. */
-	MOXA_1210;
+	MOXA_1210,
+	/** Furnace temperature controller. */
+	FURNACE;
 
 	private Target target;
 
