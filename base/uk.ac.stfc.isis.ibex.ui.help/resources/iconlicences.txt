@@ -115,7 +115,7 @@ save designed by Freepik at www.flaticon.com
 pause designed by Hanan at www.flaticon.com
 play designed by Hanan at www.flaticon.com
 resume designed by Freepik at www.flaticon.com
-script_server_32x24 designed by Picol at www.flaticon.com
+script_server_32x24 designed by Smashicons at www.flaticon.com
 stop designed by Hanan at www.flaticon.com
 
 
@@ -123,9 +123,9 @@ stop designed by Hanan at www.flaticon.com
 Scripting
 
 ->ui.scripting/icons
-script_24x24 designed by Freepik at www.flaticon.com
-script_32x24 designed by Freepik at www.flaticon.com
-scripting designed by Freepik at www.flaticon.com
+script_24x24 designed by Smashicons at www.flaticon.com
+script_32x24 designed by Smashicons at www.flaticon.com
+scripting designed by Smashicons at www.flaticon.com
 
 
 
