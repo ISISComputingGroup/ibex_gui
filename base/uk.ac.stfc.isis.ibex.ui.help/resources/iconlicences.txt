@@ -50,8 +50,8 @@ veto designed by Freepik at www.flaticon.com
 Device Screens
 
 ->ui.devicescreens/icons
-checkbox designed by Eleonor Wang at www.flaticon.com
-navigate_cross designed by Eleonor Wang at www.flaticon.com
+checkbox designed by Smashicons at www.flaticon.com
+navigate_cross designed by Smashicons at www.flaticon.com
 screen_32x24 designed by Freepik at www.flaticon.com
 
 Device Screen Components
