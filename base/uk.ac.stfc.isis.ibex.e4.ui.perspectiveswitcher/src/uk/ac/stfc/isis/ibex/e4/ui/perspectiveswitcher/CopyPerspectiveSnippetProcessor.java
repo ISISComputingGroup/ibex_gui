@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -15,6 +17,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -27,6 +30,7 @@ public class CopyPerspectiveSnippetProcessor {
 
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
+    private IEventBroker broker;
 
     /**
      * Clone each snippet that is a perspective and add the cloned perspective
@@ -45,28 +49,33 @@ public class CopyPerspectiveSnippetProcessor {
     public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
+        this.broker = broker;
 
         // Only do this when no other children, or the restored workspace state
         // will be overwritten.
         if (!perspectiveStack.getChildren().isEmpty()) {
             return;
         }
-
-        // clone each snippet that is a perspective and add the cloned
-        // perspective into the main PerspectiveStack
-        boolean isFirst = true;
-        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
-                perspectiveStack.getChildren().add(perspective);
-                if (isFirst) {
-                    perspectiveStack.setSelectedElement(perspective);
-                    isFirst = false;
-                }
-            }
-            subscribeChangedElement(broker, perspective);
-            subscribeSelectedPerspective(broker, perspective);
-        }
+        
+        PerspectiveLayoutLoader loader = new PerspectiveLayoutLoader(app, modelService);
+        
+        perspectivesProvider.snippetIds()
+        	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))
+            .map(loader::load)
+            .forEach(this::addPerspective);
+        
         ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
+    }
+    
+    private void addPerspective(MPerspective perspective) {
+    	perspectiveStack.getChildren().add(perspective);
+    	if (perspectiveStack.getChildren().size() == 1) {
+    		// If it is the only perspective added so far, then select it.
+    		perspectiveStack.setSelectedElement(perspective);
+    	}
+    	
+    	subscribeChangedElement(broker, perspective);
+    	subscribeSelectedPerspective(broker, perspective);
     }
 
     /**

@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -118,14 +119,10 @@ public class PerspectivesProvider {
      * 
      * @return The list of perspectives
      */
-    public List<MPerspective> getInitialPerspectives() {
-        List<MPerspective> perspectives = new ArrayList<MPerspective>();
-        for (MUIElement snippet : app.getSnippets()) {
-            if (snippet instanceof MPerspective) {
-                perspectives.add((MPerspective) modelService.cloneSnippet(app, snippet.getElementId(), null));
-            }
-        }
-        return perspectives;
+    public Stream<String> snippetIds() {
+        return app.getSnippets().stream()
+        		.filter(snippet -> snippet instanceof MPerspective)
+        		.map(snippet -> snippet.getElementId());
     }
 
     /**

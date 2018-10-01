@@ -5,7 +5,11 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.jface;bundle-version="3.11.1",
  org.eclipse.core.runtime;bundle-version="3.11.1",
- javax.inject
+ javax.inject,
+ org.eclipse.e4.core.di.annotations,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.model.workbench,
+ uk.ac.stfc.isis.ibex.logger
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.wb.swt
