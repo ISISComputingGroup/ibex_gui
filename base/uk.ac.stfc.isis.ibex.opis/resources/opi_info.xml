@@ -1079,7 +1079,7 @@
             <key>Live View</key>
             <value>
                 <type>DAE</type>
-                <path>live_view.opi</path>
+                <path>live_view/live_view.opi</path>
                 <description>The OPI for a live view of the detector</description>
                 <macros>
                     <macro>
