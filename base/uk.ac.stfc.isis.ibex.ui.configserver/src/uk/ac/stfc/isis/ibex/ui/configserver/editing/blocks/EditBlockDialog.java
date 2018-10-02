@@ -2,8 +2,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -19,8 +20,6 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
@@ -30,7 +29,6 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	EditableConfiguration config;
 	EditableBlock block;
-    RunControlServer runControl;
     
 	BlockDetailsPanel blockDetailsPanel;
 	BlockDetailsViewModel blockDetailsViewModel;
@@ -43,21 +41,30 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	Button okButton;
 	
-	List<ErrorMessageProvider> viewModels = new ArrayList<>();
+	private final List<ErrorMessageProvider> viewModels;
 	
 	private PropertyChangeListener errorListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            for (ErrorMessageProvider model : viewModels) {
-                ErrorMessage error = model.getError();
-                if (error.isError()) {
-                    setErrorMessage(error.getMessage());
-                    setOkEnabled(false);
-                    return;
-				}
-			}
-            setOkEnabled(true);
-            setErrorMessage(null);
+            Optional<String> error = viewModels.stream()
+            		.filter(model -> model.getError().isError())
+            		.map(model -> model.getError().getMessage())
+            		.findFirst();
+            
+            setOkEnabled(!error.isPresent());
+            setErrorMessage(error.orElse(null));
+        }
+    };
+
+    private PropertyChangeListener warningListener = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Optional<String> warning = viewModels.stream()
+            		.filter(model -> model.getWarning().isWarning())
+            		.map(model -> model.getWarning().getMessage())
+            		.findFirst();
+            
+            setMessage(warning.orElse(null));
         }
     };
 
@@ -74,17 +81,16 @@ public class EditBlockDialog extends TitleAreaDialog {
         this.block = block;
 
         blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
-		viewModels.add(blockLogSettingsViewModel);
-		
         blockRunControlViewModel = new BlockRunControlViewModel(this.block);
-		viewModels.add(blockRunControlViewModel);
-		
         blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
-		viewModels.add(blockDetailsViewModel);
+		
+		viewModels = Arrays.asList(blockLogSettingsViewModel, blockRunControlViewModel, blockDetailsViewModel);
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
+			provider.addPropertyChangeListener("warning", warningListener);
         }
+
 	}
 	
     @Override

@@ -41,15 +41,15 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
@@ -59,6 +59,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public abstract class DataboundTable<TRow> extends Composite {
 
+	private ColumnComparator<TRow> comparator = new ColumnComparator<TRow>();
+	
     private static final int DEFAULT_FONT_HEIGHT = 10;
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
 
@@ -69,20 +71,16 @@ public abstract class DataboundTable<TRow> extends Composite {
 	private Composite tableComposite;
 	private ObservableListContentProvider contentProvider = new ObservableListContentProvider();
 	
-	private Class<TRow> rowType;
-	
     /**
      * Instantiates a new databound table.
      *
      * @param parent the parent
      * @param style the style
-     * @param rowType the row type
      * @param tableStyle the table style
      */
-	public DataboundTable(Composite parent, int style, Class<TRow> rowType, int tableStyle) {
+	public DataboundTable(Composite parent, int style, int tableStyle) {
 		super(parent, style);
 		this.tableStyle = tableStyle | SWT.BORDER;
-		this.rowType = rowType;
 
 		// GridLayout is used so that the table can be excluded from a view
 		// using the exclude property that is not present on other layouts
@@ -97,7 +95,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tableComposite.setLayout(tableColumnLayout);
 		
-		viewer = createViewer();		
+		viewer = createViewer();
+
 		table = viewer.getTable();
 	}
 	
@@ -110,11 +109,10 @@ public abstract class DataboundTable<TRow> extends Composite {
      * 
      * @param parent the parent
      * @param style the style
-     * @param rowType the row type
      * @wbp.parser.constructor
      */
-	public DataboundTable(Composite parent, int style, Class<TRow> rowType) {
-		this(parent, style, rowType, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
+	public DataboundTable(Composite parent, int style) {
+		this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
 	}
 
     /**
@@ -124,7 +122,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
 	public void setRows(Collection<TRow> rows) {
 		if (!table.isDisposed()) {
-			viewer.setInput(new WritableList(rows, rowType.getClass()));
+			viewer.setInput(new WritableList<TRow>(rows, null));
 		}
 	}
 	
@@ -153,7 +151,10 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param index the new selection index
      */
 	public void setSelectionIndex(int index) {
-		table.setSelection(index);
+		table.select(index);
+		// Forces the viewer to refresh the selection and call events
+		IStructuredSelection selected = viewer.getStructuredSelection();
+		viewer.setSelection(selected);
 	}
 	
     /**
@@ -217,7 +218,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param isExcluded true for included; false otherwise
      */
 	public void setExcluded(boolean isExcluded) {
-		GridData gridData = (GridData) tableComposite().getLayoutData();
+		GridData gridData = (GridData) tableComposite.getLayoutData();
 		gridData.exclude = isExcluded;	
 	}
 	
@@ -274,6 +275,8 @@ public abstract class DataboundTable<TRow> extends Composite {
      * Completes the setup of the table.
      */
 	public void initialise() {
+		viewer.setComparator(comparator());
+		
 		addColumns();
 		
 		viewer.setContentProvider(contentProvider);	
@@ -301,24 +304,6 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
 	public Table table() { 
 		return table;
-	}
-
-    /**
-     * Table is wrapped in a composite to allow TableColumnLayout to work.
-     * 
-     * @return table composite
-     */
-	protected Composite tableComposite() { 
-		return tableComposite;
-	}
-	
-    /**
-     * Table column layout.
-     *
-     * @return the table column layout
-     */
-	protected TableColumnLayout tableColumnLayout() {
-		return tableColumnLayout;
 	}
 	
     /**
@@ -382,9 +367,24 @@ public abstract class DataboundTable<TRow> extends Composite {
 		TableColumn col = viewCol.getColumn();
 		col.setText(title);
 		col.setResizable(true);
-		
+		col.addSelectionListener(getColumnSelectionAdapter(col, table.getColumnCount() - 1));
 		return viewCol;
 	}
+	
+	private SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
+        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	ColumnComparator<TRow> comparator = comparator();
+                comparator.setColumn(index);
+                int dir = comparator.getDirection();
+                viewer.getTable().setSortDirection(dir);
+                viewer.getTable().setSortColumn(column);
+                viewer.refresh();
+            }
+        };
+        return selectionAdapter;
+    }
 	
     /**
      * Creates a new resizeable column in the table at the end of the column
@@ -392,10 +392,11 @@ public abstract class DataboundTable<TRow> extends Composite {
      *
      * @param title the title of the column
      * @param widthWeighting the width weighting
+     * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-	protected TableViewerColumn createColumn(String title, int widthWeighting) {
-		return createColumn(title, widthWeighting, true);
+	protected TableViewerColumn createColumn(String title, int widthWeighting, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
+		return createColumn(title, widthWeighting, true, cellProvider);
 	}
 	
     /**
@@ -405,14 +406,16 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param title the title of the column
      * @param widthWeighting the width weighting
      * @param resizable whether the column is resizable
+     * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
+	public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
 		TableViewerColumn tableColumn = createColumn(title);
         TableColumn col = tableColumn.getColumn();
-		tableColumnLayout().setColumnData(col,
+		tableColumnLayout.setColumnData(col,
                 new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
         col.setResizable(resizable);
+        tableColumn.setLabelProvider(cellProvider);
 		return tableColumn;
 	}
 	
@@ -423,26 +426,20 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @return the observable map
      */
 	public IObservableMap observeProperty(String propertyName) {
-		return BeanProperties.value(rowType, propertyName).observeDetail(contentProvider.getKnownElements());
+		return BeanProperties.value(propertyName).observeDetail(contentProvider.getKnownElements());
 	}	
 
     @Override
     public void addKeyListener(KeyListener listener) {
         viewer.getTable().addKeyListener(listener);
     }
-
+    
     /**
-     * Gets the item at a point.
-     *
-     * @param pt the point
-     * @return the item at point
+     * Get the comparator for the columns. Tables can override to provide their own.
+     * @return The comparator for the table.
      */
-    public TRow getItemAtPoint(Point pt) {
-        TableItem item = table.getItem(pt);
-        if (item == null) {
-            return null;
-        }
-        return firstSelectedRow();
-    }
+	protected ColumnComparator<TRow> comparator() {
+		return comparator;
+	}
 }
 

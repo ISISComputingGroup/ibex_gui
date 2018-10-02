@@ -19,8 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -33,73 +35,102 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
  */
 public class ConfigInfo {
 
-	private final String name;
-	private final String description;
-	private final String pv;
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param name The config name
-	 * @param description The config description
-	 * @param pv The dynamic PV for the config
-	 */
-	public ConfigInfo(String name, String description, String pv) {
-		this.name = name;
-		this.description = description;
-		this.pv = pv;
-	}
-	
+    private final String name;
+    private final String description;
+    private final String pv;
+    private String synoptic;
+    private final List<String> history;
+
+    /**
+     * Constructor.
+     * 
+     * @param name
+     *            The config name
+     * @param description
+     *            The config description
+     * @param pv
+     *            The dynamic PV for the config
+     * @param synoptic
+     *            The default synoptic view for the config
+     * @param history
+     *            The history of the config.
+     *  
+     */
+    public ConfigInfo(String name, String description, String pv, String synoptic, Collection<String> history) {
+        this.name = name;
+        this.description = description;
+        this.pv = pv;
+        this.synoptic = synoptic;
+        this.history = new ArrayList<>(history);
+    }
+
     /**
      * @return The name of the config
      */
-	public String name() {
-		return name;
-	}
-	
+    public String name() {
+        return name;
+    }
+
     /**
      * @return The description of the config
      */
-	public String description() {
-		return description;
-	}
-	
+    public String description() {
+        return description;
+    }
+
     /**
      * @return The dynamic PV of the config
      */
-	public String pv() {
-		return pv;
-	}
-	
-	/**
+    public String pv() {
+        return pv;
+    }
+
+    /**
+     * @return The default synoptic view for the config
+     */
+    public String synoptic() {
+        return synoptic;
+    }
+
+    /**
      * Returns just the names of all config info objects passed in excluding
      * that of the current config.
      * 
-     * @param infos The list of ConfigInfos
+     * @param infos
+     *            The list of ConfigInfos
      * @return The list of config names without that of the current config
      */
-	public static Collection<String> namesWithoutCurrent(Collection<ConfigInfo> infos) {
-		Collection<String> filteredNames = names(infos);
-		filteredNames.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
-		return filteredNames;
-	}
-	
-	/**
-	 * Reduces a list of ConfigInfo objects to a list of their names only.
-	 * 
-	 * @param infos The list of ConfigInfos
-	 * @return The list of config names
-	 */
-	public static Collection<String> names(Collection<ConfigInfo> infos) {
-		if (infos == null) {
-			return Collections.emptyList();
-		}
-		
-		return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
-			@Override
-			public String apply(ConfigInfo info) {
-				return info.name();
-			}	
-		}));		
-	}
+    public static Collection<String> namesWithoutCurrent(Collection<ConfigInfo> infos) {
+        Collection<String> filteredNames = names(infos);
+        filteredNames.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
+        return filteredNames;
+    }
+
+    /**
+     * Reduces a list of ConfigInfo objects to a list of their names only.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The list of config names
+     */
+    public static Collection<String> names(Collection<ConfigInfo> infos) {
+        if (infos == null) {
+            return Collections.emptyList();
+        }
+
+        return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
+            @Override
+            public String apply(ConfigInfo info) {
+                return info.name();
+            }
+        }));
+    }
+    
+    
+    /**
+     * @return A collection of dates (as Strings) when the configuration was updated.
+     */
+    public Collection<String> getHistory() {
+        return Collections.unmodifiableList(history);
+    }
 }

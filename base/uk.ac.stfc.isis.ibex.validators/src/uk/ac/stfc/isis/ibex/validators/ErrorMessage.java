@@ -18,28 +18,72 @@
 
 package uk.ac.stfc.isis.ibex.validators;
 
+/**
+ * Error message class.
+ *
+ */
 public class ErrorMessage {
 	private String message;
 	private boolean error;
-	
+
+	/**
+     * Creator for an empty error message (ie when no error exists).
+     *
+     */
 	public ErrorMessage() {
 		error = false;
 	}
 	
+	/**
+     * Creator for an error message.
+     *
+     *@param error
+     *              true if there is an error.
+     *
+     *@param message
+     *                  the error message.
+     */
 	public ErrorMessage(boolean error, String message) {
 		this.error = error;
 		this.message = message;
 	}
-	
+
+	/**
+     * Allows to get the error message.
+     *
+     * @return
+     *          the error message.
+     */
 	public String getMessage() {
 		return message;
 	}
+
+	/**
+     * Class used to set an error message..
+     *
+     * @param message
+     *                  the error message to set.
+     */
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	/**
+     * Check if there is an error.
+     *
+     * @return
+     *          true if there is an error, false otherwise.
+     */
 	public boolean isError() {
 		return error;
 	}
+
+	/**
+	    *Class to set the existence of an error.
+	    *
+	    * @param inError
+	    *                  true if there is an error.
+	    */
 	public void setError(boolean inError) {
 		this.error = inError;
 	}

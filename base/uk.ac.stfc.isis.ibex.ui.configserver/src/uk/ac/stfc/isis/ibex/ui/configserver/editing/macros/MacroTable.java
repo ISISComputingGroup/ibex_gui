@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -46,7 +45,7 @@ public class MacroTable extends DataboundTable<Macro> {
      *            The SWT style of the inner table object.
      */
 	public MacroTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, Macro.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	}
@@ -65,40 +64,36 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void name() {
-		TableViewerColumn desc = createColumn("Macro name", 6);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+		createColumn("Macro name", 6, new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getName();
 			}
 		});
 	}
 	
 	private void value() {
-		TableViewerColumn desc = createColumn("Value", 5);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
+		createColumn("Value", 5, new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
 			@Override
-			protected String valueFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getValue();
 			}
 		});
 	}
 	
 	private void description() {
-		TableViewerColumn desc = createColumn("Description", 8);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
+		createColumn("Description", 8, new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
 			@Override
-			protected String valueFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getDescription();
 			}
 		});	
 	}
 	
 	private void pattern() {
-		TableViewerColumn desc = createColumn("Pattern", 8);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
+		createColumn("Pattern", 8, new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
 			@Override
-			protected String valueFromRow(Macro row) {
+			protected String stringFromRow(Macro row) {
 				return row.getPattern();
 			}
 		});	

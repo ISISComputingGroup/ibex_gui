@@ -23,9 +23,16 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -35,9 +42,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
@@ -46,46 +55,97 @@ import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
  * The panel that holds all information about setting up the experiment. Further
  * information is held in child panels.
  */
-public class ExperimentSetup extends Composite {
+public class ExperimentSetup {
 
-	private ExperimentSetupViewModel viewModel;
+    private DaeViewModel viewModel;
 	
 	private TimeChannelsPanel timeChannels;
 	private DataAcquisitionPanel dataAcquisition;
 	private PeriodsPanel periods;
+	private ExperimentSetupViewModel experimentSetupViewModel;
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
 	private final int timeToDisplayDialog = 2;
-	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
+    private SendingChangesDialog sendingChanges;
+
+    private PropertyChangeListener experimentalChangeListener;
+    private PropertyChangeListener resetChangeLabelsListener;
+
+    private UpdatedValue<Boolean> modelIsRunningProperty;
+    
+    private Button btnSendChanges;
+
+    private static final Display DISPLAY = Display.getCurrent();
+    private static final int FIXED_WIDTH = 700;
+    private static final int FIXED_HEIGHT = 600;
 	
+    PanelViewModel panelViewModel;
     /**
-     * The constructor for the panel.
-     * 
-     * @param parent
-     *            The parent composite which this panel belongs to.
-     * @param style
-     *            The SWT style flags for this panel.
+     * Constructor.
      */
+    public ExperimentSetup() {
+        viewModel = DaeUI.getDefault().viewModel();
+        experimentSetupViewModel = viewModel.experimentSetup();
+        panelViewModel = new PanelViewModel(this, DISPLAY, experimentSetupViewModel);
+        updateIsChanged(false);
+    }
+
+    /**
+     * Creates the controls for the experimental setup part.
+     *
+     * @param parent the parent
+     */
+    @PostConstruct
     @SuppressWarnings("checkstyle:magicnumber")
-	public ExperimentSetup(Composite parent, int style) {
-		super(parent, SWT.NONE);
+    public void createPart(final Composite parent) {
+
+        sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        Composite content = new Composite(scrolled, SWT.NONE);
+        
 		GridLayout gridLayout = new GridLayout(1, false);
-        gridLayout.marginHeight = 0;
-        gridLayout.verticalSpacing = 5;
         gridLayout.marginWidth = 0;
+        gridLayout.marginTop = 0;
+		gridLayout.marginBottom = 10;
 		gridLayout.horizontalSpacing = 0;
-		setLayout(gridLayout);
+        content.setLayout(gridLayout);
+        
+        btnSendChanges = new Button(content, SWT.NONE);
+        btnSendChanges.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    viewModel.experimentSetup().updateDae();
+                    sendingChanges.open();
+                    applyChangesToUI();
+                } catch (Exception err) {
+                    // Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
+                    IsisLog.getLogger(this.getClass()).error(err);
+                    MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
+                            "Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
+                }
+            }
+        });
+        btnSendChanges.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        btnSendChanges.setText("Apply Changes");
+        
 		
-		CTabFolder tabFolder = new CTabFolder(this, SWT.BORDER);
+        CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		
+        scrolled.setContent(content);
+        
 		CTabItem tbtmTimeChannels = new CTabItem(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setText("Time Channels");
 		
 		Composite timeChannelsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setControl(timeChannelsComposite);
 		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE);
+		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmDataAcquisition = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setText("Data Acquisition");
@@ -93,7 +153,7 @@ public class ExperimentSetup extends Composite {
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
 		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE);
+		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPeriods.setText("Periods");
@@ -101,7 +161,7 @@ public class ExperimentSetup extends Composite {
 		Composite periodsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmPeriods.setControl(periodsComposite);
 		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		periods = new PeriodsPanel(periodsComposite, SWT.NONE);
+		periods = new PeriodsPanel(periodsComposite, SWT.NONE, panelViewModel);
 		
 		tabFolder.setSelection(0);
         GridData tabFolderGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -110,28 +170,51 @@ public class ExperimentSetup extends Composite {
         tabFolderGridData.minimumHeight = tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
         tabFolder.setLayoutData(tabFolderGridData);
 
-        Button btnSendChanges = new Button(this, SWT.NONE);
-        btnSendChanges.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            	try {
-            		viewModel.updateDae();
-            		sendingChanges.open();
-        		} catch (Exception err) {
-        			// Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
-        			IsisLog.getLogger(this.getClass()).error(err);
-        			MessageDialog.openError(getShell(), "Internal IBEX Error", 
-        					"Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
-        		}
-            }
-        });
-        btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnSendChanges.setText("Apply Changes");
-        
         //Bind the send changes button to the begin action so that it is only available when write enabled and in SETUP
         RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSendChanges), BeanProperties.value("canExecute").observe(rsvm.actions().begin));
+        
+        resetChangeLabelsListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        resetChangeLabels();
+                    }
+                });
+            }
+        };
+        
+        experimentSetupViewModel.addPropertyChangeListener("resetLayout", resetChangeLabelsListener);
+        
+        bind(viewModel.experimentSetup());
+        setModel(viewModel);
+        if (panelViewModel.getIsChanged().containsValue(true)) {
+            btnSendChanges.setEnabled(true);
+            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+        } else {
+            btnSendChanges.setEnabled(false);
+            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+        }
+        
+        tabFolder.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (tabFolder.getSelection().equals(tbtmPeriods)) {
+                    periods.addFirstTableListener();
+                    periods.ifTableValuesDifferentFromCachedValuesThenChangeLabel();
+                }
+            }
+        });
+        
+        resetChangeLabels();
 	}
+    
+    private void resetChangeLabels() {
+        addChangeListeners();
+        changeLabelsIfDifferentFromCachedValues();
+    }
 	
     /**
      * Binds this panel to a specific view model.
@@ -139,9 +222,7 @@ public class ExperimentSetup extends Composite {
      * @param viewModel
      *            The view model to bind the panel information to.
      */
-	public void bind(final ExperimentSetupViewModel viewModel) {
-		this.viewModel = viewModel;
-		
+    private void bind(final ExperimentSetupViewModel viewModel) {
 		timeChannels.setModel(viewModel.timeChannels());
 		dataAcquisition.setModel(viewModel.daeSettings());
 		periods.setModel(viewModel.periodSettings());
@@ -157,4 +238,100 @@ public class ExperimentSetup extends Composite {
         Utils.recursiveSetEnabled(dataAcquisition, enabled);
         Utils.recursiveSetEnabled(periods, enabled);
     }
+
+    /**
+     * Sets the model for the DAE view.
+     *
+     * @param viewModel
+     *            the new model
+     */
+    public void setModel(final DaeViewModel viewModel) {
+
+        experimentalChangeListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                configureExperimentSetupForRunState(viewModel.isRunning().getValue());
+            }
+        };
+        modelIsRunningProperty = viewModel.isRunning();
+        modelIsRunningProperty.addPropertyChangeListener(experimentalChangeListener, true);
+
+    }
+
+    private void configureExperimentSetupForRunState(final Boolean isRunning) {
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                setChildrenEnabled(isRunning != null && !isRunning);
+            }
+        });
+    }
+    
+    /**
+     * Updates the listeners on the widgets, tells the viewModel that the changes have been applied and if the widgets contain the applied values
+     * then removes labels denoting a change not applied to the instrument.
+     * 
+     */
+    private void applyChangesToUI() {
+        updateIsChanged(false);
+        btnSendChanges.setEnabled(false);
+        updateChangeListeners();
+        changeLabelsIfDifferentFromCachedValues();
+    }
+    
+    /**
+     * A method to check if the widgets in the different panels contain the applied values and removes labels denoting a change not applied to the 
+     * instrument if the change has been applied.
+     */
+    public void changeLabelsIfDifferentFromCachedValues() {
+        timeChannels.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
+        dataAcquisition.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
+        periods.ifWidgetValueDifferentFromCachedValueThenChangeLabel();
+    }
+    
+    /**
+     * Tells the viewModel if changes have been made in the experiment setup but haven't been applied.
+     * 
+     * @isChanged True if changes have been made in the experiment setup but haven't been applied.
+     */
+    private void updateIsChanged(boolean isChanged) {
+        panelViewModel.clearIsChanged();
+        viewModel.experimentSetup().setIsChanged(isChanged);
+    }
+    
+    /**
+     *  Allows to enable or disable the "send change" button.
+     *  
+     * @param enable
+     *              True if the button should be enabled.
+     */
+    public void setSendChangeBtnEnableState(boolean enable) {
+        btnSendChanges.setEnabled(enable);
+        if (enable) {
+            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+        } else {
+            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+        }
+    }
+    
+    /**
+     * Adds the listeners used in the panels.
+     */
+    private void addChangeListeners() {
+        timeChannels.createInitialCachedValues();
+        timeChannels.addListeners();
+        dataAcquisition.createInitialCachedValues();
+        periods.createInitialCachedValues();
+        periods.addListeners();
+    }
+    
+    /**
+     * Updates the listeners used in the panels.
+     */
+    private void updateChangeListeners() {
+        timeChannels.updateListeners();
+        dataAcquisition.updateListeners();
+        periods.updateListeners();
+    }
+    
 }

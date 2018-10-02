@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.FilteredCollectionObservable;
@@ -341,4 +342,55 @@ public class ConfigServer extends Closer {
     public ComponentDependenciesModel getDependenciesModel() {
         return dependenciesModel;
     }
+    
+    /**
+     * If a user chooses to save a configuration as a component or not then the way the config is saved will change.
+     * The following method calls or other methods that apply similar logic to choose the way a config will be saved.
+     * 
+     * @param config
+     *               The config in which the save is being made.
+     * @param isCurrent
+     *                  True if the config being saved is the current config.
+     * @param doAsComponent
+     *                  True if the config being saved is to be saved to a component.
+     * @param switchConfigOnSaveAs
+     *                  True if the config should be switched on save as.
+     * @param calledSwitchConfigOnSaveAs
+     *                  True if the dialog to switch config on save as has been called.
+     */
+    public void ifDoAsComponentChooseSave(EditableConfiguration config, boolean isCurrent, boolean doAsComponent, 
+            boolean switchConfigOnSaveAs, boolean calledSwitchConfigOnSaveAs) {      
+        if (doAsComponent) {
+            saveAsComponent().uncheckedWrite(config.asComponent());
+        } else {
+            ifIsCurrentConfigChooseSave(config, isCurrent, switchConfigOnSaveAs, calledSwitchConfigOnSaveAs);
+        }
+    }
+    
+    private void ifIsCurrentConfigChooseSave(EditableConfiguration config, boolean isCurrent, boolean switchConfigOnSaveAs, boolean calledSwitchConfigOnSaveAs) {
+        if (isCurrent) {
+            ifCalledSwitchConfigOnSaveAsChooseSave(config, switchConfigOnSaveAs, calledSwitchConfigOnSaveAs);
+        } else {
+            switchConfigOnSaveAs(config, switchConfigOnSaveAs);
+        }
+    }
+    
+    private void ifCalledSwitchConfigOnSaveAsChooseSave(EditableConfiguration config, boolean switchConfigOnSaveAs, boolean calledSwitchConfigOnSaveAs) {
+        if (calledSwitchConfigOnSaveAs) {
+            switchConfigOnSaveAs(config, switchConfigOnSaveAs);
+        } else {
+            setCurrentConfig().uncheckedWrite(config.asConfiguration());
+            Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
+        }
+    }
+    
+    private void switchConfigOnSaveAs(EditableConfiguration config, boolean switchConfigOnSaveAs) {
+        if (switchConfigOnSaveAs) {
+            setCurrentConfig().uncheckedWrite(config.asConfiguration());
+            Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
+        } else {
+            saveAs().uncheckedWrite(config.asConfiguration());
+        }
+    }
+    
 }

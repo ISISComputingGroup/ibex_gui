@@ -30,10 +30,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
 public enum UpdateTypes {
-    UNKNOWN,
     COPY_COMPONENT,
     MOVE_COMPONENT,
-    EDIT_PROPERTY,
-    ADD_TARGET,
     EDIT_TARGET
 }

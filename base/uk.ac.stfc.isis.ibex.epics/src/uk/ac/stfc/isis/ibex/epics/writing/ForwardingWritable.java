@@ -44,7 +44,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		public void write(TIn value) throws IOException {
             TOut tranformedValue = transform(value);
             if (tranformedValue != null) {
-                writeToWritables(tranformedValue);
+            	writeToWritables(tranformedValue);
             }
 		}
 		

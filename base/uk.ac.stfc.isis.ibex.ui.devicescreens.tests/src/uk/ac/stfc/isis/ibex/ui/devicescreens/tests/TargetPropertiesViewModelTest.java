@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +54,7 @@ public class TargetPropertiesViewModelTest {
 
         EditDeviceScreensDescriptionViewModel model = mock(EditDeviceScreensDescriptionViewModel.class);
         when(model.getTargetScreen()).thenReturn(desc);
-        
+
         viewModel = new TargetPropertiesViewModel(model);
     }
 
@@ -80,7 +81,7 @@ public class TargetPropertiesViewModelTest {
     @Test
     public void WHEN_no_available_properties_THEN_table_and_text_box_are_disabled() {
         // Act
-        viewModel.setPropeties(new ArrayList<PropertyDescription>());
+        viewModel.setProperties(new ArrayList<PropertyDescription>());
 
         // Assert
         assertEquals(false, viewModel.getTableEnabled());
@@ -92,10 +93,34 @@ public class TargetPropertiesViewModelTest {
         // Act
         viewModel.setTableSelection(property1);
         viewModel.setValueText("Hello");
+        viewModel.setDescriptionText("Hello again.");
 
         // Assert
         assertEquals("Hello", viewModel.getValueText());
         assertEquals("Hello", property1.getValue());
+        assertEquals("Hello again.", viewModel.getDescriptionText());
     }
+
+    @Test
+    public void WHEN_set_properties_to_empty_THEN_value_changes_on_target() {
+        // Act
+        viewModel.setProperties(new ArrayList<PropertyDescription>());
+        
+
+        // Assert
+        assertEquals("", viewModel.getValueText());
+        assertEquals("", viewModel.getDescriptionText());
+    }
+
+    @Test
+    public void WHEN_set_properties_THEN_value_changes_on_target() {
+        // Act
+        viewModel.setProperties(Arrays.asList(property1));
+
+        // Assert
+        assertEquals(propertyValue1, viewModel.getValueText());
+        assertEquals(propertyDescription1, viewModel.getDescriptionText());
+    }
+
 }
 //CHECKSTYLE:ON

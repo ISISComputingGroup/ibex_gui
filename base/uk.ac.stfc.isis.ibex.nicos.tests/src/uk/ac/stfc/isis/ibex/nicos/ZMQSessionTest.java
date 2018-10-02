@@ -22,14 +22,22 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -37,8 +45,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 
 public class ZMQSessionTest {
 
@@ -49,6 +56,7 @@ public class ZMQSessionTest {
 
     @Before
     public void setUp() {
+    	Mockito.when(zmq.getLock()).thenReturn(new Object());
         session = new ZMQSession(zmq);
     }
 
@@ -64,7 +72,7 @@ public class ZMQSessionTest {
         assertEquals("tcp://" + hostName + ":1301", uri.getValue());
     }
 
-    private SendMessageDetails sendBlankMessage(int numberOfParts) {
+    private <T> SentMessageDetails<T> sendBlankMessage(int numberOfParts) {
         ArrayList<String> parts = new ArrayList<>();
         for (int i=0; i<numberOfParts; i++) {
             parts.add("");
@@ -121,7 +129,7 @@ public class ZMQSessionTest {
     public void GIVEN_message_failing_to_send_WHEN_message_sent_THEN_fail_message_returned() {
         String failedMessage = "FAIL";
         doThrow(new ZMQException(failedMessage, 0)).when(zmq).send(anyString(), anyBoolean());
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(failedMessage, resp.getFailureReason());
@@ -131,7 +139,7 @@ public class ZMQSessionTest {
     public void GIVEN_message_failing_to_convert_WHEN_message_sent_THEN_failed_to_convert_message_returned()
             throws ConversionException {
         doThrow(new ConversionException("")).when(mockMessage).getMulti();
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.FAILED_TO_CONVERT, resp.getFailureReason());
@@ -147,7 +155,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_null_responses_from_server_WHEN_message_sent_THEN_no_data_received_message() {
         when(zmq.receiveString()).thenReturn(null);
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
@@ -156,7 +164,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_empty_responses_from_server_WHEN_message_sent_THEN_no_data_received_message() {
         when(zmq.receiveString()).thenReturn("");
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
@@ -193,10 +201,10 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_parsable_message_from_server_WHEN_message_sent_THEN_successful_message_returned()
             throws ConversionException {
-        ReceiveMessage recieved = mock(ReceiveMessage.class);
+        String recieved = new String();
         when(zmq.receiveString()).thenReturn("ok");
         when(mockMessage.parseResponse(anyString())).thenReturn(recieved);
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(true, resp.isSent());
         assertEquals(recieved, resp.getResponse());
@@ -207,7 +215,7 @@ public class ZMQSessionTest {
             throws ConversionException {
         when(zmq.receiveString()).thenReturn("ok");
         doThrow(new ConversionException("")).when(mockMessage).parseResponse(anyString());
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.UNEXPECTED_RESPONSE, resp.getFailureReason());
@@ -217,7 +225,7 @@ public class ZMQSessionTest {
     public void GIVEN_not_ok_status_from_server_WHEN_message_sent_THEN_server_response_returned() {
         String serverResponse = "BAD RESPONSE";
         when(zmq.receiveString()).thenReturn("not_ok").thenReturn("").thenReturn(serverResponse);
-        SendMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(serverResponse, resp.getFailureReason());

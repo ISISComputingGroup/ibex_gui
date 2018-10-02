@@ -19,37 +19,27 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
-
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * The Class TargetPropertyTable.
  * 
  * A table of properties for a target. These are the macros set on an OPI.
  */
-public class TargetPropertyTable extends Composite {
-
-    private static final int TABLE_HEIGHT = 150;
-	
-	private SynopticViewModel synopticViewModel;
-    private Table table;
+public class TargetPropertyTable extends DataboundTable<Property> {
 	
     /**
      * Instantiates a new target property table.
@@ -58,121 +48,54 @@ public class TargetPropertyTable extends Composite {
      * @param instrument the synoptic model for the instrument
      */
     public TargetPropertyTable(Composite parent, final SynopticViewModel instrument) {
-		super(parent, SWT.NONE);
+    	super(parent, SWT.NONE, SWT.FULL_SELECTION);
+		initialise();
 		
-		this.synopticViewModel = instrument;
-		
-        instrument.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
+		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
             @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                showPropertyList(instrument.getSingleSelectedComp());
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.EDIT_TARGET) {
+                	setRows(instrument.getProperties());
+                }
             }
-		});
-		
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
+        });
+        
+        addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
-			public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_PROPERTY || updateType == UpdateTypes.ADD_TARGET
-                        || updateType == UpdateTypes.EDIT_TARGET) {
-					
-					int selected;
-					
-					switch (updateType) {
-						case EDIT_PROPERTY:
-                            selected = table.getSelectionIndex();
-							break;
-						default:
-							selected = -1;
-							break;
-					}
-                    showPropertyList(instrument.getSingleSelectedComp());
-                    table.setSelection(selected);
-				}
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				instrument.setSelectedProperty((Property) selection.getFirstElement());
+			}
+		});
+	}
+
+	@Override
+	protected void addColumns() {
+		createColumn("Key", 1, new DataboundCellLabelProvider<Property>(observeProperty("key")) {
+			@Override
+			protected String stringFromRow(Property row) {
+				return row.getKey();
 			}
 		});
 		
-		GridLayout compositeLayout = new GridLayout(1, false);
-		compositeLayout.marginHeight = 0;
-		compositeLayout.marginWidth = 0;
+		TableViewerColumn value = createColumn("Value", 1, new DataboundCellLabelProvider<Property>(observeProperty("value")) {
+			@Override
+			protected String stringFromRow(Property row) {
+				return row.getValue();
+			}
+		});
 		
-		setLayout(compositeLayout);
-		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		createControls(this);
-        table.setEnabled(false);
+		value.setEditingSupport(new StringEditingSupport<Property>(viewer(), Property.class) {
+
+			@Override
+			protected String valueFromRow(Property row) {
+				return row.getValue();
+			}
+
+			@Override
+			protected void setValueForRow(Property row, String value) {
+				row.setValue(value);
+			}
+		});
 	}
-	
-    /**
-     * Creates the controls in the composite.
-     *
-     * @param parent the parent
-     */
-	public void createControls(Composite parent) {
-	    
-	    Composite controlComposite = new Composite(parent, SWT.NONE);
-        GridLayout glControlComposite = new GridLayout(1, false);
-        glControlComposite.marginHeight = 0;
-        glControlComposite.marginWidth = 0;
-        controlComposite.setLayout(glControlComposite);
-	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-        table = new Table(controlComposite, SWT.BORDER | SWT.FULL_SELECTION);
-        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gdTable.minimumHeight = TABLE_HEIGHT;
-        table.setLayoutData(gdTable);
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-
-        TableColumn keyColumn = new TableColumn(table, SWT.NULL);
-        keyColumn.setText("Name");
-        TableColumn valueColumn = new TableColumn(table, SWT.NULL);
-        valueColumn.setText("Value");
-
-        table.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.setSelectedProperty(getSelectedProperty());
-            }
-        });
-	}
-	
-    /**
-     * Show the property list for target. This is the property values set which
-     * correspond to macro names in the OPI for the selected target.
-     * 
-     * @param component selected component
-     */
-	public void showPropertyList(ComponentDescription component) {
-        table.removeAll();
-
-        if (synopticViewModel.getSingleSelectedComp() != null) {
-            List<String> opiPropertyKeys = synopticViewModel.getPropertyKeys(component.target().name());
-            for (String propertyKey : opiPropertyKeys) {
-                TableItem item = new TableItem(table, SWT.NULL);
-                Property componentProperty = getPropertyFromKey(propertyKey);
-                item.setText(0, componentProperty.key());
-                item.setText(1, componentProperty.value());
-            }
-
-            table.setEnabled(opiPropertyKeys.size() > 0);
-        } else {
-            table.setEnabled(false);
-        }
-
-        table.getColumn(0).pack();
-        table.getColumn(1).pack();
-	}
-	
-    private Property getSelectedProperty() {
-        String selectedProperty = table.getItem(table.getSelectionIndex()).getText(0);
-
-        return getPropertyFromKey(selectedProperty);
-
-    }
-
-    private Property getPropertyFromKey(String key) {
-        ComponentDescription component = synopticViewModel.getSingleSelectedComp();
-
-        return component.target().getProperty(key, new Property(key, ""));
-    }
 }

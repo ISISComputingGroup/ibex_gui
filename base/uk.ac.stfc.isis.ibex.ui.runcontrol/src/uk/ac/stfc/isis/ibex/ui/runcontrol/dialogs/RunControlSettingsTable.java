@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
 import java.util.Arrays;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
@@ -33,9 +32,20 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 
     private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
-
+    
+    /**
+     * A class that creates the run control settings table.
+     * 
+     * @param parent
+     *              The parent to which the table belongs.
+     * @param style
+     *              The SWT style.
+     * @param tableStyle
+     *              The SWT table style.
+     *                  
+     */
     public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, DisplayBlock.class, tableStyle);
+        super(parent, style, tableStyle);
 
         initialise();
     }
@@ -51,11 +61,9 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addName() {
-        TableViewerColumn name = createColumn("Name", 4);
-        name.setLabelProvider(
-                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("name"), Arrays.asList(rowDecorator)) {
+        createColumn("Name", 4, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("name"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(DisplayBlock setting) {
+					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
                             return setting.getName();
                         }
@@ -65,11 +73,9 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addValue() {
-        TableViewerColumn name = createColumn("Value", 2);
-        name.setLabelProvider(
-                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("value"), Arrays.asList(rowDecorator)) {
+        createColumn("Value", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("value"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(DisplayBlock setting) {
+					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
                             return setting.getValue();
                         }
@@ -79,11 +85,9 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addInRange() {
-        TableViewerColumn name = createColumn("In Range", 2);
-        name.setLabelProvider(
-                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("inRange"), Arrays.asList(rowDecorator)) {
+        createColumn("In Range", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("inRange"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(DisplayBlock setting) {
+					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
                             return setting.getInRange().toString();
                         }
@@ -93,13 +97,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addEnabled() {
-        TableViewerColumn enabled = createColumn("Enabled", 2);
-        enabled.setLabelProvider(
-                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("enabled"), Arrays.asList(rowDecorator)) {
+        createColumn("Enabled", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlEnabled"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(DisplayBlock setting) {
+					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getEnabled().toString();
+                            return setting.getRunControlEnabled().toString();
                         }
                         return "";
                     }
@@ -107,13 +109,11 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addLowLimit() {
-        TableViewerColumn name = createColumn("Low Limit", 2);
-        name.setLabelProvider(
-                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("lowLimit"), Arrays.asList(rowDecorator)) {
+        createColumn("Low Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlLowLimit"), Arrays.asList(rowDecorator)) {
                     @Override
-                    protected String valueFromRow(DisplayBlock setting) {
+					public String stringFromRow(DisplayBlock setting) {
                         if (setting != null) {
-                            return setting.getLowLimit();
+                            return setting.getRunControlLowLimit().toString();
                         }
                         return "";
                     }
@@ -121,13 +121,12 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
     }
 
     private void addHighLimit() {
-        TableViewerColumn name = createColumn("High Limit", 2);
-        name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("highLimit"),
+        createColumn("High Limit", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("runControlHighLimit"),
                 Arrays.asList(rowDecorator)) {
             @Override
-            protected String valueFromRow(DisplayBlock setting) {
+			public String stringFromRow(DisplayBlock setting) {
                 if (setting != null) {
-                    return setting.getHighLimit();
+                    return setting.getRunControlHighLimit().toString();
                 }
                 return "";
             }

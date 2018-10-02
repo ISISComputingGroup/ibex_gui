@@ -289,6 +289,6 @@ public class JsonConvertersTest {
         Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.convert(bannerJsonBroken));
+        new ArrayList<BannerItem>(conv.convert(bannerJsonBroken));
     }
 }

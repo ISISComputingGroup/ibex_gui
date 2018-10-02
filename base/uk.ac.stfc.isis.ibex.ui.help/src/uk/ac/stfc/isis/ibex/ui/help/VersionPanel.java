@@ -70,7 +70,7 @@ public class VersionPanel extends Composite {
         clientVersion = new Label(this, SWT.NONE);
         clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
-        final String versionText = Platform.getBundle(versionBundleId).getVersion().toString();
+        final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
         clientVersion.setText(versionText);
 
         Label lblPvPrefix = new Label(this, SWT.NONE);
@@ -80,8 +80,8 @@ public class VersionPanel extends Composite {
         clientPvPrefix = new Label(this, SWT.NONE);
         clientPvPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
-        final String PvPrefix = Help.getInstance().getPvPrefix();
-        clientPvPrefix.setText(PvPrefix);
+        final String pvPrefix = Help.getInstance().getPvPrefix();
+        clientPvPrefix.setText(pvPrefix);
 
 		Label lblServerVersion = new Label(this, SWT.NONE);
 		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

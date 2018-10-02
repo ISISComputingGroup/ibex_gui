@@ -234,9 +234,9 @@ $(trace_0_y_pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>217</width>
+    <width>180</width>
     <x>390</x>
-    <name>Controls</name>
+    <name>Source Status</name>
     <y>390</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -274,10 +274,10 @@ $(trace_0_y_pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>49</width>
-      <x>0</x>
+      <width>77</width>
+      <x>6</x>
       <name>OutputLabel</name>
-      <y>6</y>
+      <y>5</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -326,7 +326,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>60</x>
+      <x>90</x>
       <name>OutputOnRBV</name>
       <data_type>0</data_type>
       <y>3</y>
@@ -340,62 +340,6 @@ $(pv_value)</tooltip>
       </font>
       <off_label>OFF</off_label>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>3c70a182:156ea885a6f:-7276</wuid>
-      <pv_value />
-      <text>On/Off</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT):OUTPUT:MODE:SP</pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>90</width>
-      <x>90</x>
-      <name>OutputOnSP</name>
-      <y>2</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="EXECUTE_PYTHONSCRIPT">
-          <path></path>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-rbv = display.getWidget("OutputOnRBV").getPV().getValue().getValue()
-sp_pv = widget.getPV()
-on = "On"
-off = "Off"
-if rbv == on:
-      	sp_pv.setValue(off)
-else:
-      	sp_pv.setValue(on)]]></scriptText>
-          <embedded>true</embedded>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
@@ -405,7 +349,7 @@ else:
       <wuid>-79c83fe2:15988060656:-7a46</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Reset:</text>
+      <text>Source Mode:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -424,7 +368,7 @@ else:
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>49</width>
+      <width>83</width>
       <x>0</x>
       <name>ResetLabel</name>
       <y>36</y>
@@ -437,51 +381,55 @@ else:
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-79c83fe2:15988060656:-7a38</wuid>
+      <wuid>3572d0fe:1648dcc8f25:-5484</wuid>
+      <transparent>true</transparent>
       <pv_value />
-      <text>Reset</text>
+      <auto_size>false</auto_size>
+      <text>######</text>
+      <rotation_angle>0.0</rotation_angle>
       <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <show_units>true</show_units>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RESET</pv_name>
+      <pv_name>$(PV_ROOT):SOURCE:MODE</pv_name>
+      <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <widget_type>Button</widget_type>
-      <width>90</width>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Update</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <wrap_words>false</wrap_words>
+      <format_type>0</format_type>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>60</width>
       <x>90</x>
-      <name>ResetSP</name>
-      <y>32</y>
+      <name>SourceModeRBV</name>
+      <y>36</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="EXECUTE_PYTHONSCRIPT">
-          <path></path>
-          <scriptText><![CDATA[widget.getPV().setValue(1)]]></scriptText>
-          <embedded>true</embedded>
-          <description></description>
-        </action>
-      </actions>
+      <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
   </widget>

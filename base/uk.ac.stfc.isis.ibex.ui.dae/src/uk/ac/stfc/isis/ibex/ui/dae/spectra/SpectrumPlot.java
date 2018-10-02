@@ -42,7 +42,6 @@ import uk.ac.stfc.isis.ibex.ui.Utils;
 /**
  * A single spectrum plot UI component.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SpectrumPlot extends Canvas {
 
     /** Logger. */
@@ -54,6 +53,8 @@ public class SpectrumPlot extends Canvas {
      */
     private static final int DAE_SPECTRUM_BUFFER_SIZE = 8000;
 
+    private static final int UPDATE_DELAY = 1000;
+    
     private XYGraph plot;
 	private Trace trace;
 	private CircularBufferDataProvider traceDataProvider;	
@@ -103,7 +104,7 @@ public class SpectrumPlot extends Canvas {
 		
 		traceDataProvider = new CircularBufferDataProvider(false);
         traceDataProvider.setBufferSize(DAE_SPECTRUM_BUFFER_SIZE);
-		traceDataProvider.setUpdateDelay(1000);
+		traceDataProvider.setUpdateDelay(UPDATE_DELAY);
         traceDataProvider.setConcatenate_data(false);
         traceDataProvider.setUpdateMode(UpdateMode.X_OR_Y);
 

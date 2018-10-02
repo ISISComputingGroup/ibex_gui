@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -29,12 +28,21 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Table showing the IOCs that could be added to a configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	private IocPVNameFilter filter;
 	
+	/**
+	 * Constructor for table.
+	 * @param parent The parent composite.
+	 * @param style The style of the viewer.
+	 * @param tableStyle The style of the table.
+	 */
 	public IocAvailablePVsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, AvailablePV.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	
@@ -54,20 +62,18 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	}
 	
 	private void name() {
-		TableViewerColumn desc = createColumn("Name", 8);
-		desc.setLabelProvider(new DataboundCellLabelProvider<AvailablePV>(observeProperty("name")) {
+		createColumn("Name", 8, new DataboundCellLabelProvider<AvailablePV>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(AvailablePV row) {
+			protected String stringFromRow(AvailablePV row) {
 				return row.getName();
 			}
 		});	
 	}
 	
 	private void description() {
-		TableViewerColumn desc = createColumn("Description", 6);
-		desc.setLabelProvider(new DataboundCellLabelProvider<AvailablePV>(observeProperty("description")) {
+		createColumn("Description", 6, new DataboundCellLabelProvider<AvailablePV>(observeProperty("description")) {
 			@Override
-			protected String valueFromRow(AvailablePV row) {
+			protected String stringFromRow(AvailablePV row) {
 				return row.getDescription();
 			}
 		});	

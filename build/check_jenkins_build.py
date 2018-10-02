@@ -28,7 +28,7 @@ running = False
 for proc in psutil.process_iter():
 	try:
 		if proc.pid == exe.pid:
-			print "It is running!"
+			print("It is running!")
 			running = True
 			break
 	except:

@@ -19,9 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -45,29 +46,37 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 		super(SERVER.saveAs());
 	}
 
-    /**
-     * {@inheritDoc}
-     */
+	
+	/**
+	 * Open the new config dialogue.
+	 *
+	 * @param shell the shell
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
+    public void safeExecute(Shell shell) {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsBlankConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), configurationViewModels);
+            openDialog(shell, config.getValue(), configurationViewModels);
 		}
 	}
 	
-    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+    private void openDialog(Shell shell, EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
         config.setIsComponent(false);
         EditConfigDialog editDialog =
-                new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels, false);
+                new EditConfigDialog(shell, TITLE, SUB_TITLE, config, true, configurationViewModels, false);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
             } else {
-                SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
+                if (editDialog.switchConfigOnSaveAs()) {
+                    SERVER.setCurrentConfig().uncheckedWrite(editDialog.getConfig());
+                    Configurations.getInstance().addNameToRecentlyLoadedConfigList(editDialog.getConfig().getName());
+                } else {
+                    SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
+                }
             }
         }
 	}

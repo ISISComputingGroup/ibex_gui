@@ -22,9 +22,19 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -37,6 +47,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.zeromq.ZMQException;
@@ -53,11 +64,12 @@ import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveBannerMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLogMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })  // Mockito doesn't handle generic types nicely.
 public class NicosModelTest {
     private ZMQSession zmqSession = mock(ZMQSession.class);
     private RepeatingJob connJob = mock(RepeatingJob.class);
@@ -75,15 +87,14 @@ public class NicosModelTest {
 
     private ReceiveBannerMessage bannerResponse = mock(ReceiveBannerMessage.class);
     private ReceiveLoginMessage loginResponse = mock(ReceiveLoginMessage.class);
-    private NICOSMessage sendMessage = mock(NICOSMessage.class);
 
-    private Answer incrementalLog = new Answer() {
+    private Answer<List<NicosLogEntry>> incrementalLog = new Answer<List<NicosLogEntry>>() {
         // Simulate responses to requests for log entries with
         // increasing volume
         private int count = 0;
 
         @Override
-        public Object answer(InvocationOnMock invocation) {
+        public List<NicosLogEntry> answer(InvocationOnMock invocation) {
             int lastEntryTime = 1050;
             int n = (int) Math.pow(10, count);
             count++;
@@ -93,8 +104,9 @@ public class NicosModelTest {
 
     @Before
     public void setUp() {
+    	
         model = new NicosModel(zmqSession, connJob, 0);
-
+        
         model.addPropertyChangeListener("connectionStatus", connectionStatusListener);
         model.addPropertyChangeListener("connectionErrorMessage", connectionErrorListener);
 
@@ -110,7 +122,7 @@ public class NicosModelTest {
         when(bannerResponse.serializerValid()).thenReturn(true);
 
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
     }
 
     /**
@@ -119,7 +131,7 @@ public class NicosModelTest {
     private void connectSuccessfully() {
         createBannerResponse();
         when(zmqSession.sendMessage(isA(Login.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
     }
@@ -147,41 +159,11 @@ public class NicosModelTest {
     }
 
     @Test
-    public void GIVEN_no_connection_WHEN_get_connection_status_THEN_status_is_unconnected() {
-
-        ConnectionStatus result = model.getConnectionStatus();
-
-        assertEquals("Connection status", ConnectionStatus.DISCONNECTED, result);
-    }
-    
-    @Test
-    public void GIVEN_no_connection_WHEN_get_connection_error_message_THEN_message_is_blank() {
-
-        String result = model.getConnectionErrorMessage();
-
-        assertEquals("Connection status", "", result);
-    }
-
-    @Test
-    public void GIVEN_failing_session_connection_WHEN_connect_first_called_THEN_first_status_is_connecting() {
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
-
-        model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(0).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.CONNECTING, connectionStatus);
-    }
-
-    @Test
     public void GIVEN_failing_session_connection_WHEN_connect_called_THEN_final_status_is_failed() {
         doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.FAILED, connectionStatus);
+        assertEquals("Connection status", NicosErrorState.CONNECTION_FAILED, model.getError());
     }
 
     @Test
@@ -190,35 +172,28 @@ public class NicosModelTest {
         doThrow(new ZMQException(failureMessage, 1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
 
-        Object connectionError = propertyChangeArgument.getValue().getNewValue();
-        assertEquals("Connection status", failureMessage, connectionError);
+        assertEquals("Connection status", NicosErrorState.CONNECTION_FAILED, model.getError());
     }
 
     @Test
     public void GIVEN_failing_banner_message_WHEN_connect_called_THEN_final_status_is_failed() {
-        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.FAILED, connectionStatus);
+        
+        assertEquals("Connection status", NicosErrorState.CONNECTION_FAILED, model.getError());
     }
 
     @Test
     public void GIVEN_failing_banner_message_WHEN_connect_called_THEN_final_error_message_is_failure() {
         String failureMessage = "FAILED";
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendFail(failureMessage));
+                .thenReturn(SentMessageDetails.createSendFail(failureMessage));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
 
-        String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
-
-        assertTrue(connectionError.equals(failureMessage));
+        assertTrue(model.getError().equals(NicosErrorState.CONNECTION_FAILED));
     }
 
     @Test
@@ -226,14 +201,10 @@ public class NicosModelTest {
         when(bannerResponse.protocolValid()).thenReturn(false);
         when(bannerResponse.serializerValid()).thenReturn(true);
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
-
-        String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
-
-        assertTrue(connectionError.equals(NicosModel.INVALID_PROTOCOL));
+        assertTrue(model.getError().equals(NicosErrorState.INVALID_PROTOCOL));
     }
 
     @Test
@@ -241,50 +212,38 @@ public class NicosModelTest {
         when(bannerResponse.protocolValid()).thenReturn(true);
         when(bannerResponse.serializerValid()).thenReturn(false);
         when(zmqSession.sendMessage(isA(GetBanner.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(bannerResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(bannerResponse));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
 
-        String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
-
-        assertTrue(connectionError.equals(NicosModel.INVALID_SERIALISER));
+        assertTrue(model.getError().equals(NicosErrorState.INVALID_SERIALISER));
     }
 
     @Test
     public void GIVEN_failing_login_connection_WHEN_connect_called_THEN_final_status_is_failed() {
         createBannerResponse();
-        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
 
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.FAILED, connectionStatus);
+        assertEquals("Connection status", NicosErrorState.FAILED_LOGIN, model.getError());
     }
 
     @Test
     public void GIVEN_failing_login_connection_WHEN_connect_called_THEN_final_error_message_is_login_failure_message() {
         createBannerResponse();
         String failureMessage = "FAILED";
-        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SendMessageDetails.createSendFail(failureMessage));
+        when(zmqSession.sendMessage(isA(Login.class))).thenReturn(SentMessageDetails.createSendFail(failureMessage));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(connectionErrorListener).propertyChange(propertyChangeArgument.capture());
 
-        String connectionError = (String) propertyChangeArgument.getValue().getNewValue();
-
-        assertTrue(connectionError.startsWith(NicosModel.FAILED_LOGIN_MESSAGE));
-        assertTrue(connectionError.contains(failureMessage));
+        assertTrue(model.getError().equals(NicosErrorState.FAILED_LOGIN));
     }
     
     @Test
     public void GIVEN_successful_connection_WHEN_connect_called_THEN_final_status_is_connected() {
         connectSuccessfully();
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.CONNECTED, connectionStatus);
+        assertEquals("Connection status", NicosErrorState.NO_ERROR, model.getError());
     }
     
     @Test
@@ -309,10 +268,10 @@ public class NicosModelTest {
     }
 
     @Test
-    public void WHEN_connect_called_THEN_banner_mesage_sent() {
+    public void WHEN_connect_called_THEN_banner_message_sent() {
         connectSuccessfully();
 
-        ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
+		ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
         verify(zmqSession, times(2)).sendMessage(message.capture());
         assertThat(message.getAllValues().get(0), instanceOf(GetBanner.class));
     }
@@ -322,12 +281,12 @@ public class NicosModelTest {
         doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(zmqSession, never()).sendMessage(sendMessage);
+        verify(zmqSession, never()).sendMessage(Mockito.any());
     }
 
     @Test
     public void GIVEN_banner_failed_WHEN_connect_called_THEN_login_not_called() {
-        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(GetBanner.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
         ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
@@ -350,28 +309,6 @@ public class NicosModelTest {
     }
 
     @Test
-    public void GIVEN_successful_connection_WHEN_connect_created_THEN_first_status_is_connecting() {
-        connectSuccessfully();
-
-        verify(connectionStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object connectionStatus = propertyChangeArgument.getAllValues().get(0).getNewValue();
-        assertEquals("Connection status", ConnectionStatus.CONNECTING, connectionStatus);
-    }
-
-    @Test
-    public void GIVEN_successful_connection_WHEN_subsequent_failed_connection_THEN_connection_job_resumed() {
-        connectSuccessfully();
-
-        doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
-        model.connect(new InstrumentInfo("", "", "TEST"));
-
-        ArgumentCaptor<Boolean> running = ArgumentCaptor.forClass(Boolean.class);
-        verify(connJob, times(2)).setRunning(running.capture());
-        assertEquals(true, running.getAllValues().get(1));
-    }
-
-    @Test
     public void GIVEN_successful_connection_WHEN_disconnected_THEN_connection_job_resumed() {
         connectSuccessfully();
 
@@ -386,9 +323,9 @@ public class NicosModelTest {
     public void WHEN_disconnect_THEN_status_is_disconnected() {
         model.disconnect();
 
-        ConnectionStatus result = model.getConnectionStatus();
+        NicosErrorState result = model.getError();
 
-        assertEquals("Connection status", ConnectionStatus.DISCONNECTED, result);
+        assertEquals("Connection status", NicosErrorState.CONNECTION_FAILED, result);
     }
 
     @Test
@@ -399,69 +336,20 @@ public class NicosModelTest {
     }
 
     @Test
-    public void WHEN_model_created_THEN_script_status_is_none() {
-        assertEquals(ScriptSendStatus.NONE, model.getScriptSendStatus());
-    }
-
-    @Test
-    public void GIVEN_successful_connection_WHEN_script_sent_THEN_first_status_is_sending() {
-        connectSuccessfully();
-        when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
-
-        model.sendScript(new QueuedScript());
-
-        verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object scriptStatus = propertyChangeArgument.getAllValues().get(0).getNewValue();
-        assertEquals(ScriptSendStatus.SENDING, scriptStatus);
-    }
-
-    @Test
-    public void GIVEN_successful_connection_WHEN_script_successfully_sent_THEN_final_status_is_sent() {
-        connectSuccessfully();
-        when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
-
-        model.sendScript(new QueuedScript());
-
-        verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object scriptStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals(ScriptSendStatus.SENT, scriptStatus);
-    }
-
-    @Test
-    public void GIVEN_successful_connection_WHEN_script_unsuccessfully_sent_THEN_final_status_is_failed() {
-        connectSuccessfully();
-
-        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
-        model.sendScript(new QueuedScript());
-
-        verify(scriptStatusListener, times(2)).propertyChange(propertyChangeArgument.capture());
-
-        Object scriptStatus = propertyChangeArgument.getAllValues().get(1).getNewValue();
-        assertEquals(ScriptSendStatus.SEND_ERROR, scriptStatus);
-    }
-
-    @Test
     public void GIVEN_successful_connection_WHEN_script_unsuccessfully_sent_THEN_final_error_status_is_script_failed() {
         connectSuccessfully();
 
-        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SendMessageDetails.createSendFail("FAILED"));
+        when(zmqSession.sendMessage(isA(QueueScript.class))).thenReturn(SentMessageDetails.createSendFail("FAILED"));
         model.sendScript(new QueuedScript());
 
-        verify(scriptErrorListener).propertyChange(propertyChangeArgument.capture());
-
-        Object scriptError = propertyChangeArgument.getValue().getNewValue();
-        assertEquals(NicosModel.SCRIPT_SEND_FAIL_MESSAGE, scriptError);
+        assertEquals(NicosErrorState.SCRIPT_SEND_FAIL, model.getError());
     }
 
     @Test
     public void GIVEN_successful_connection_WHEN_script_sent_THEN_queue_script_message_sent() {
         connectSuccessfully();
         when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SendMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(""));
 
         model.sendScript(new QueuedScript());
 
@@ -474,12 +362,11 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_but_no_reply_WHEN_get_script_status_THEN_connection_fail() {
         connectSuccessfully();
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(null));
-
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(null));
+        
         model.updateScriptStatus();
         
-        assertEquals(ConnectionStatus.FAILED, model.getConnectionStatus());
-        assertEquals(NicosModel.NO_RESPONSE, model.getConnectionErrorMessage());
+        assertEquals(NicosErrorState.CONNECTION_FAILED, model.getError());
     }
     
     @Test
@@ -492,7 +379,7 @@ public class NicosModelTest {
         
         response.status = Arrays.asList(0, linenum);
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -510,7 +397,7 @@ public class NicosModelTest {
         response.status = Arrays.asList(0, 0);
         response.script = script;
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -533,7 +420,7 @@ public class NicosModelTest {
         response.script = "";
         response.requests = Arrays.asList(queuedScript);
         
-        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         model.updateScriptStatus();
         
@@ -546,7 +433,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         when(response.getEntries()).thenReturn(createNEntries(1, 1));
         List<NicosLogEntry> expected = createNEntries(1, 1);
@@ -565,7 +452,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         when(response.getEntries()).thenReturn(createNEntries(1, 1));
         model.updateLogEntries();
@@ -589,7 +476,7 @@ public class NicosModelTest {
         connectSuccessfully();
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
         // Receive an initial message with timestamp to compare against
         Date initialDate = new Date(1000);
@@ -605,7 +492,7 @@ public class NicosModelTest {
         model.updateLogEntries();
 
         // Assert
-        // Response should be requested 3 times with increasing volume
+        // Response should be requested 2 times with increasing volume
         verify(response, times(3)).getEntries();
 
         // initial entry was at timestamp 1000;
@@ -619,10 +506,10 @@ public class NicosModelTest {
     public void GIVEN_entry_volume_greater_than_threshold_WHEN_updating_log_THEN_model_throws_away_excess() {
         // Arrange
         connectSuccessfully();
-        int threshold = 100;
+        int threshold = 1000;
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
-        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SendMessageDetails.createSendSuccess(response));
+        when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
 
 
         // Act

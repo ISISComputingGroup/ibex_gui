@@ -27,10 +27,16 @@ import org.eclipse.swt.widgets.Button;
 
 /**
  * A cell provider that puts a button within a table cell.
+ * 
+ * @param <T> the type of the data in the row
  */
-public class ButtonCellLabelProvider extends ControlCellLabelProvider<Button> {
+public abstract class ButtonCellLabelProvider<T> extends ControlCellLabelProvider<Button, T> {
 	
-	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
+    /**
+     * 
+     * @param attributeMaps A map of the attributes that this cell will observe.
+     */
+	protected ButtonCellLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}
 

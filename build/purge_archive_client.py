@@ -10,7 +10,7 @@ for d in glob.glob(path):
                     dir_list.append(d)
 
 for d in dir_list:
-    print "Deleting ",d
+    print("Deleting ",d)
     shutil.rmtree(d)
 
 
@@ -18,5 +18,5 @@ for d in dir_list:
 #        for file in filenames :
 #            curpath = os.path.join(dirpath, file)
 #            if os.path.isfile(curpath) :
-#                print curpath
+#                print(curpath)
 #				os.remove(curpath)

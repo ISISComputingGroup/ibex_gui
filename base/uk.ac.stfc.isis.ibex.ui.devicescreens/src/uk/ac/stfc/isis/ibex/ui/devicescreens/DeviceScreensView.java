@@ -22,10 +22,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
@@ -33,27 +34,18 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescription
 /**
  * A view for the current available device screens.
  */
-public class DeviceScreensView extends ViewPart {
+public class DeviceScreensView {
 
     /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
 
-    /**
-     * Default constructor.
-     */
-    public DeviceScreensView() {
-    }
-
-    @Override
+    @PostConstruct
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
         new DeviceScreenListPanel(parent, SWT.NONE,
                 new ViewDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel()));
     }
 
-    @Override
-    public void setFocus() {
-    }
 }

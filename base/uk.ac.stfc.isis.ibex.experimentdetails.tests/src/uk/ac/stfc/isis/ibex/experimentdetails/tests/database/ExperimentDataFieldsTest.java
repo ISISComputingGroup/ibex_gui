@@ -51,6 +51,6 @@ public class ExperimentDataFieldsTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void experiment_table_does_not_contain_name() {
         // Act
-		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.NAME);	
+		ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.NAME);	
 	}
 }

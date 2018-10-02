@@ -23,11 +23,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
 import java.util.Collection;
 
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -48,7 +46,7 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
      *            The SWT table style.
      */
     public AvailableIocsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, EditableIoc.class, tableStyle | SWT.BORDER);
+        super(parent, style, tableStyle | SWT.BORDER);
         initialise();
     }
 
@@ -64,20 +62,18 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     private void name() {
-        TableViewerColumn desc = createColumn("Name", 1);
-        desc.setLabelProvider(new DataboundCellLabelProvider<Ioc>(observeProperty("name")) {
+        createColumn("Name", 1, new DataboundCellLabelProvider<EditableIoc>(observeProperty("name")) {
             @Override
-            protected String valueFromRow(Ioc row) {
+			protected String stringFromRow(EditableIoc row) {
                 return row.getName();
             }
         });
     }
 
     private void description() {
-        TableViewerColumn desc = createColumn("Description", 2);
-        desc.setLabelProvider(new DataboundCellLabelProvider<EditableIoc>(observeProperty("description")) {
+        createColumn("Description", 2, new DataboundCellLabelProvider<EditableIoc>(observeProperty("description")) {
             @Override
-            protected String valueFromRow(EditableIoc row) {
+			protected String stringFromRow(EditableIoc row) {
                 return row.getDescription();
             }
         });

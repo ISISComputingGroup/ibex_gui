@@ -35,9 +35,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class TargetPropertiesView extends Composite {
-
-	private SynopticViewModel synopticViewModel;
-
     /**
      * Creates a new instance of the target properties view.
      * 
@@ -49,33 +46,19 @@ public class TargetPropertiesView extends Composite {
 		
         setLayout(new GridLayout(2, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		this.synopticViewModel = synopticViewModel;
 		
-		createControls(this);
-	}
-	
-    private void createControls(Composite parent) {
-        Label lblProperties = new Label(parent, SWT.NONE);
+        Label lblProperties = new Label(this, SWT.NONE);
         lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblProperties.setText("Properties");
 
-        TargetPropertyTable properties = new TargetPropertyTable(parent, synopticViewModel);
-        properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        properties.showPropertyList(synopticViewModel.getSingleSelectedComp());
+        TargetPropertyTable properties = new TargetPropertyTable(this, synopticViewModel);
+        properties.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        Label lblValue = new Label(parent, SWT.NONE);
-        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblValue.setText("Value");
-
-        TargetPropertyValue value = new TargetPropertyValue(parent, synopticViewModel);
-        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        Label lblPropertyDescription = new Label(parent, SWT.NONE);
+        Label lblPropertyDescription = new Label(this, SWT.NONE);
         lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPropertyDescription.setText("Description");
 
-        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(parent,
+        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(this,
                 synopticViewModel);
         GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdPropertyDescription.heightHint = 70;

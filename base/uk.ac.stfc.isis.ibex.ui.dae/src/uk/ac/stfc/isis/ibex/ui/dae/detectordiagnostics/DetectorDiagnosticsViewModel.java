@@ -392,7 +392,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
      * @param isEnabled the new diagnostics enabled
      */
     @Override
-    public void setDiagnosticsEnabled(boolean isEnabled) {
+    public void setDiagnosticsViewEnabled(boolean isEnabled) {
         firePropertyChangeOnGuiThread("diagnosticsEnabled", this.diagnosticsEnabled, this.diagnosticsEnabled = isEnabled);
     }
     
@@ -448,12 +448,15 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
 
     /**
-     * Set whether to show the detector diagnostics.
+     * Set whether the diagnostics panel should be enabled (communicate with server) or disabled.
      * 
-     * @param isShown true to show; false otherwise
+     * @param enabled true to enable; false otherwise
      */
-    public void setVisible(boolean isShown) {
-        detectorDiagnosticsModel.setDetectorDiagnosticsEnabled(isShown);
+    public synchronized void setDiagnosticsEnabledOnServer(boolean enabled) {
+    	// The model might be null if the method is triggered before initialisation has finished.
+    	if (detectorDiagnosticsModel != null) {
+    		detectorDiagnosticsModel.setDetectorDiagnosticsEnabled(enabled);
+    	}
     }
 
 }

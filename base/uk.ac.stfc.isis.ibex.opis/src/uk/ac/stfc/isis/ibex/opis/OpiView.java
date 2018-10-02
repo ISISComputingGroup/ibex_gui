@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.opis;
 import java.util.LinkedHashMap;
 
 import org.apache.logging.log4j.Logger;
+import org.csstudio.opibuilder.runmode.OPIView;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
@@ -31,11 +32,25 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * The Class OpiView to show an OPI.
  */
-public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
+public abstract class OpiView extends OPIView {
 
     private static final Logger LOG = IsisLog.getLogger(OpiView.class);
-
-    private MacrosInput macros = new MacrosInput(new LinkedHashMap<String, String>(), false);
+    
+    /**
+     * Default constructor, but also registers this view in the OPI view model so that it
+     * can be reloaded when the instrument changes.
+     */
+    public OpiView() {
+    	OpiViewModel.addView(this);
+    }
+    
+    /**
+     * Utility method for generating a blank set of macros.
+     * @return a new, empty set of macros
+     */
+    public MacrosInput emptyMacrosInput() {
+    	return new MacrosInput(new LinkedHashMap<String, String>(), true);
+    }
 
     /**
      * Initialise OPI from a path.
@@ -44,21 +59,19 @@ public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
      */
     public void initialiseOPI() throws OPIViewCreationException {
         try {
-            final RunnerInput input = new RunnerInput(opi(), null, macros);
+            final RunnerInput input = new RunnerInput(opi(), null, macros());
             setOPIInput(input);
         } catch (PartInitException e) {
             LOG.catching(e);
         }
     }
-
+    
     /**
      * Macros that the OPI has.
      *
      * @return the macros for input to the OPI
      */
-    protected MacrosInput macros() {
-        return macros;
-    }
+    protected abstract MacrosInput macros();
 
     /**
      * Get the OPI path.

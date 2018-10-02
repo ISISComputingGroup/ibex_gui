@@ -51,7 +51,7 @@ public class Activator extends AbstractUIPlugin {
      * The constructor.
      */
 	public Activator() {
-		LoggerHandler.setModel(IsisLog.getLoggerModel());
+		ConsoleLogHandler.setModel(IsisLog.getLoggerModel());
 	}
 
 	/*

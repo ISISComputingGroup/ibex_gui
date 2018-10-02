@@ -19,21 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.runinformation;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class RunInformationPanel extends Composite {
+public class RunInformationPanel {
 
 	private Label instrument;
 	private Label runStatus;
@@ -71,14 +75,42 @@ public class RunInformationPanel extends Composite {
 	private Label monitorFrom;
 	private Label monitorTo;
 	private Label daeSimMode;
+	
+	private Label eventModeBufUsed;
+	private Label eventModeFileMB;
+	private Label eventModeDataRate;
 
 	private DataBindingContext bindingContext;
+    private DaeViewModel viewModel;
+    
+    private static final int FIXED_WIDTH = 725;
+    private static final int FIXED_HEIGHT = 375;
 
-	public RunInformationPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(1, false));
+    /**
+     * The constructor.
+     */
+    public RunInformationPanel() {
+        this.viewModel = DaeUI.getDefault().viewModel();
+    }
+
+    /**
+     * Instantiates this viewpart.
+     * 
+     * @param parent The parent composite obtained from the eclipse context
+     */
+    @PostConstruct
+    public void createPart(Composite parent) {
+        
+        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        scrolled.setExpandHorizontal(true);
+        scrolled.setExpandVertical(true);
+        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+        
+        Composite content = new Composite(scrolled, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
+        scrolled.setContent(content);
 		
-		Group grpSetup = new Group(this, SWT.NONE);
+        Group grpSetup = new Group(content, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSetup.setText("Setup");
 		GridLayout glGrpSetup = new GridLayout(6, false);
@@ -304,7 +336,7 @@ public class RunInformationPanel extends Composite {
 		Label lblDaeSimMode = new Label(grpSetup, SWT.RIGHT);
 		GridData gdLblDaeSimMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdLblDaeSimMode.widthHint = 110;
-		lblDaeSimMode.setLayoutData(gdLblIsisCycle);
+		lblDaeSimMode.setLayoutData(gdLblDaeSimMode);
 		lblDaeSimMode.setText("Simulated DAE:");
 		
 		daeSimMode = new Label(grpSetup, SWT.NONE);
@@ -313,8 +345,7 @@ public class RunInformationPanel extends Composite {
 		daeSimMode.setLayoutData(gdDaeSimMode);
 		daeSimMode.setText("UNKNOWN");
 		
-		
-		Group titleGroup = new Group(this, SWT.NONE);
+        Group titleGroup = new Group(content, SWT.NONE);
 		titleGroup.setLayout(new GridLayout(2, false));
 		titleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
@@ -338,7 +369,7 @@ public class RunInformationPanel extends Composite {
 		users.setLayoutData(gdUsers);
 		users.setText("UNKNOWN");
 		
-		Group grpPeriods = new Group(this, SWT.NONE);
+        Group grpPeriods = new Group(content, SWT.NONE);
 		GridLayout glGrpPeriods = new GridLayout(6, false);
 		glGrpPeriods.horizontalSpacing = 20;
 		grpPeriods.setLayout(glGrpPeriods);
@@ -431,7 +462,7 @@ public class RunInformationPanel extends Composite {
 		new Label(grpPeriods, SWT.NONE);
 		new Label(grpPeriods, SWT.NONE);
 		
-		Group grpMonitor = new Group(this, SWT.NONE);
+        Group grpMonitor = new Group(content, SWT.NONE);
 		GridLayout glGrpMonitor = new GridLayout(6, false);
 		glGrpMonitor.horizontalSpacing = 20;
 		grpMonitor.setLayout(glGrpMonitor);
@@ -499,6 +530,52 @@ public class RunInformationPanel extends Composite {
 		monitorTo.setText("UNKNOWN");
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);
+		
+		Group grpMemoryUsage = new Group(content, SWT.NONE);
+		GridLayout glGrpMemoryUsage = new GridLayout(6, false);
+		glGrpMemoryUsage.horizontalSpacing = 20;
+		grpMemoryUsage.setLayout(glGrpMemoryUsage);
+		grpMemoryUsage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpMemoryUsage.setText("Memory Usage");
+		
+		Label lblBufUsed = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblBufUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblBufUsed.widthHint = 110;
+		lblBufUsed.setLayoutData(gdLblBufUsed);
+		lblBufUsed.setText("Buffer Used Fraction:");
+		
+		eventModeBufUsed = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeBufUsed = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeBufUsed.widthHint = 65;
+		eventModeBufUsed.setLayoutData(gdeventModeBufUsed);
+		eventModeBufUsed.setText("UNKNOWN");
+		
+		Label lblFileMB = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblFileMB = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblFileMB.widthHint = 110;
+		lblFileMB.setLayoutData(gdLblFileMB);
+		lblFileMB.setText("Data Size (MB):");
+		
+		eventModeFileMB = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeFileMB = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeFileMB.widthHint = 65;
+		eventModeFileMB.setLayoutData(gdeventModeFileMB);
+		eventModeFileMB.setText("UNKNOWN");
+		
+		Label lblDataRate = new Label(grpMemoryUsage, SWT.RIGHT);
+		GridData gdLblDataRate = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblDataRate.widthHint = 110;
+		lblDataRate.setLayoutData(gdLblDataRate);
+		lblDataRate.setText("Data Rate (MB/s):");
+		
+		eventModeDataRate = new Label(grpMemoryUsage, SWT.NONE);
+		GridData gdeventModeDataRate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdeventModeDataRate.widthHint = 65;
+		eventModeDataRate.setLayoutData(gdeventModeDataRate);
+		eventModeDataRate.setText("UNKNOWN");
+		
+
+        setModel(viewModel);
 	}
 	
 	public void setModel(DaeViewModel viewModel) {
@@ -533,13 +610,16 @@ public class RunInformationPanel extends Composite {
 		bindLabel(periodGoodFrames, viewModel.periodGoodFrames);
 		bindLabel(periodRawFrames, viewModel.periodRawFrames);
 		bindLabel(periodSequence, viewModel.periodSequence);
-		bindLabel(periodDuration, viewModel.periodSequence);
+		bindLabel(periodDuration, viewModel.periodDuration);
 		bindLabel(monitorSpectrum, viewModel.monitorSpectrum);
 		bindLabel(monitorCounts, viewModel.monitorCounts);
 		bindLabel(npRatio, viewModel.npRatio);
 		bindLabel(monitorFrom, viewModel.monitorFrom);
 		bindLabel(monitorTo, viewModel.monitorTo);
 		bindLabel(daeSimMode, viewModel.simMode);
+		bindLabel(eventModeBufUsed, viewModel.eventModeBufUsed);
+		bindLabel(eventModeFileMB, viewModel.eventModeFileMB);
+		bindLabel(eventModeDataRate, viewModel.eventModeDataRate);
 	}
 	
 	private void bindLabel(Label label, UpdatedValue<?> value) {

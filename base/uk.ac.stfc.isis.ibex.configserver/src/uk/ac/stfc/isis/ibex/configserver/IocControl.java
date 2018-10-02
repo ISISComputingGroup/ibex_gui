@@ -25,13 +25,24 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * A class enabling control of and IOC.
+ *
+ */
 public class IocControl {
 
     private final UpdatedObservableAdapter<Collection<IocState>> iocs;
 	private final SetCommand<Collection<String>> start;
 	private final SetCommand<Collection<String>> stop;
 	private final SetCommand<Collection<String>> restart;
-
+	
+	/**
+	 * The constructor for a class enabling control of and IOC.
+	 * 
+	 * @param server
+	 *             The config server in which the IOC is running.
+	 *
+	 */
 	public IocControl(ConfigServer server) {
 		this.iocs = new UpdatedObservableAdapter<>(server.iocStates());
 		
@@ -40,18 +51,42 @@ public class IocControl {
 		restart = server.restartIoc();
 	}
 	
+	/**
+	 * Returns a collection of iocs on the config server.
+	 * 
+	 * @return
+	 *         A collection of iocs on the config server.
+	 */
     public UpdatedValue<Collection<IocState>> iocs() {
 		return iocs;
 	}
 	
+    /**
+     * Returns a command to start an IOC.
+     * 
+     * @return
+     *          A  command to start an IOC.
+     */
 	public SetCommand<Collection<String>> startIoc() {
 		return start;
 	}
 
+	/**
+     * Returns a command to stop an IOC.
+     * 
+     * @return
+     *          A  command to stop an IOC.
+     */
 	public SetCommand<Collection<String>> stopIoc() {
 		return stop;
 	}
 	
+	/**
+     * Returns a command to restart an IOC.
+     * 
+     * @return
+     *          A  command to restart an IOC.
+     */
 	public SetCommand<Collection<String>> restartIoc() {
 		return restart;
 	}

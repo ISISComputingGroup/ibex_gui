@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQException;
@@ -30,8 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
-import uk.ac.stfc.isis.ibex.nicos.messages.SendMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 
 /**
  * Used to send and receive messages to NICOS via ZMQ.
@@ -81,7 +81,9 @@ public class ZMQSession {
      */
     public void connect(InstrumentInfo instrument) throws ZMQException {
         String connectionString = createConnectionURI(instrument);
-        zmq.connect(connectionString);
+        synchronized (zmq.getLock()) {
+        	zmq.connect(connectionString);
+        }
         LOG.info("Connected to NICOS at " + connectionString);
     }
 
@@ -110,22 +112,28 @@ public class ZMQSession {
      * 
      * @param message
      *            The message to send.
+     * @param <TSEND> 
+     *            The type of message parameters to send.
+     * @param <TRESP> 
+     *            The type of message response to expect.       
      * @return The response.
      */
-    public SendMessageDetails sendMessage(NICOSMessage<?> message) {
-        try {
-            sendMultipleMessages(message.getMulti());
-        } catch (ZMQException e) {
-            LOG.warn("Failed to send message " + message.toString());
-            return SendMessageDetails.createSendFail(e.getMessage());
-        } catch (ConversionException e) {
-            LOG.warn("Failed to convert message " + message.toString());
-            return SendMessageDetails.createSendFail(FAILED_TO_CONVERT);
-        }
-        return getServerResponse(message);
+    public <TSEND, TRESP> SentMessageDetails<TRESP> sendMessage(NICOSMessage<TSEND, TRESP> message) {
+    	synchronized (zmq.getLock()) {
+	        try {
+	        	sendMultipleMessages(message.getMulti());
+	        } catch (ZMQException e) {
+	            LOG.warn("Failed to send message " + message.toString() + ". Exception was: " + e.getMessage());
+	            return SentMessageDetails.createSendFail(e.getMessage());
+	        } catch (ConversionException e) {
+	            LOG.warn("Failed to convert message " + message.toString());
+	            return SentMessageDetails.createSendFail(FAILED_TO_CONVERT);
+	        }
+	        return getServerResponse(message);
+    	}
     }
 
-    private SendMessageDetails getServerResponse(NICOSMessage<?> sentMessage) {
+    private <TSEND, TRESP> SentMessageDetails<TRESP> getServerResponse(NICOSMessage<TSEND, TRESP> sentMessage) {
         String status = zmq.receiveString();
 
         // NICOS protocol leaves the second package empty for future expansion
@@ -133,23 +141,23 @@ public class ZMQSession {
         zmq.receiveString();
 
         String resp = zmq.receiveString();
-
-        if (status == null | resp == null | status == "") {
+        
+        if (status == null | resp == null | Objects.equals(status, "")) {
             LOG.warn("No response from server after sending " + sentMessage.toString());
-            return SendMessageDetails.createSendFail(NO_DATA_RECEIVED);
+            return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
-
+        
         if (status.equals("ok")) {
             try {
-                ReceiveMessage received = sentMessage.parseResponse(resp);
-                return SendMessageDetails.createSendSuccess(received);
+                TRESP received = sentMessage.parseResponse(resp);
+                return SentMessageDetails.<TRESP>createSendSuccess(received);
             } catch (ConversionException e) {
                 LOG.warn("Unexpected response from server: " + resp);
-                return SendMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
+                return SentMessageDetails.createSendFail(UNEXPECTED_RESPONSE);
             }
         } else {
-            LOG.warn("Error received from server " + resp);
-            return SendMessageDetails.createSendFail(resp);
+            LOG.warn("Error received from server " + resp + ", status was " + status);
+            return SentMessageDetails.createSendFail(resp);
         }
     }
 
@@ -157,6 +165,9 @@ public class ZMQSession {
      * Disconnect from the ZMQ socket.
      */
     public void disconnect() {
-        zmq.disconnect();
+    	// Using the lock here means that the server will properly finish it's last message before disconnecting.
+    	synchronized (zmq.getLock()) {
+    		zmq.disconnect();
+    	}
     }
 }

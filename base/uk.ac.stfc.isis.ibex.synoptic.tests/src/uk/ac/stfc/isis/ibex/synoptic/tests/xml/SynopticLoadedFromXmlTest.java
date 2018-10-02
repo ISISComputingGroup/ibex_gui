@@ -125,8 +125,8 @@ public class SynopticLoadedFromXmlTest extends FileReadingTest {
 	@Test
 	public void component_target_propety_is_a_key_value_pair() {
 		Property property = firstComponent().target().getProperties().get(0);
-		assertThat(property.key(), is("M"));
-		assertThat(property.value(), is("1"));
+		assertThat(property.getKey(), is("M"));
+		assertThat(property.getValue(), is("1"));
 	}
 	
 	private ComponentDescription firstComponent() {

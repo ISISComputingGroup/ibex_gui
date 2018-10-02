@@ -7,7 +7,7 @@ INCORRECT_ARGS = 1
 NO_BUILD_PROPERTIES = 2
 ICONS_NOT_INCLUDED = 3
 
-exceptions = ["ibex.client.product", "ibex.example"]
+exceptions = ["ibex.client.product", "ibex.example", "uk.ac.stfc.isis.ibex.e4.client.product"]
 
 # Walks only a certain number of levels through the directory
 def walklevel(some_dir, level=1):
@@ -46,10 +46,10 @@ def main(build_root_path):
             if check_in_exceptions(root):
                 continue
             if "build.properties" not in files:
-                print "NO BUILD PROPERTIES FOUND IN SAME FOLDER AS ICONS: " + str(root)
+                print("NO BUILD PROPERTIES FOUND IN SAME FOLDER AS ICONS: " + str(root))
                 return NO_BUILD_PROPERTIES
             if not check_icons_in_build_properties(root):
-                print "ICONS FOLDER NOT INCLUDED IN BUILD PROPERTIES: " + str(root)
+                print("ICONS FOLDER NOT INCLUDED IN BUILD PROPERTIES: " + str(root))
                 return ICONS_NOT_INCLUDED
     return SUCCESS
 

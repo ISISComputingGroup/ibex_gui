@@ -21,9 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -34,19 +32,15 @@ import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 /**
  * Handler for manager mode being selected in the main menu.
  */
-public class ManagerModeHandler extends AbstractHandler {
+public class ManagerModeHandler {
 
     /**
      * Execution event for the manager mode dialog being opened.
      * 
-     * @param event
-     *            the execution event
      * @return null
-     * @throws ExecutionException
-     *             if there was an error
      */
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Execute
+    public Object execute() {
 
         displayDialog();
 

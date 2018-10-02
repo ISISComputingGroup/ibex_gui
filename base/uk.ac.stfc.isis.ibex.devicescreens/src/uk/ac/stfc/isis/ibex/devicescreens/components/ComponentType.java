@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.dae.Dae;
-import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
@@ -38,16 +36,22 @@ public enum ComponentType {
 	JAWS,
     /** Chopper component type. */
 	CHOPPER,
+    /** Fermi Chopper component type. */
+	FERMI_CHOPPER,
+    /** T0 Chopper component type. */
+	T0_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE", Dae.ID)),
+    DAE,
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
 	CAEN,
+    /** IPS component type. */
+	IPS,
     /** CCD100 component type. */
     CCD100,
     /** Kepco component type. */
@@ -55,7 +59,9 @@ public enum ComponentType {
     /** Lambda Genesys component type. */
     TDK_LAMBDA_GENESYS,
     /** Beamstop component type. */
-	BEAMSTOP, 
+    BEAMSTOP, 
+    /** Motion set points for one to three set points. */
+    MOTION_SET_POINTS_FEW,
     /** Moving monitor component type. */
 	MOVINGMONITOR,
     /** Rotating bench component type. */
@@ -133,9 +139,20 @@ public enum ComponentType {
     /** Couette cell.*/
     COUETTE,
     /** Motion setpoints.*/
-    MOTION_SET_POINTS;
+    MOTION_SET_POINTS,
+    /**Syringe pump.*/
+    SYRINGE_PUMP,
+    /** Keyence micrometer. */
+    KEYENCE,
+	/** Generic Power Supply. */
+    POWER_SUPPLY,
+  /** Oscilloscope. */
+    OSCILLOSCOPE,
+	/** Moxa ioLogik e1210 Remote I/O. */
+	MOXA_1210,
+	/** Furnace temperature controller. */
+	FURNACE;
 
-	
 	private Target target;
 
     /**

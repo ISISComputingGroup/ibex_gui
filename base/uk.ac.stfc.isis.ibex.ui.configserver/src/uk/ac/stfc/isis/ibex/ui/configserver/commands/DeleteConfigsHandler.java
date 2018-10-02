@@ -21,9 +21,10 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.Collection;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -38,15 +39,20 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 		super(SERVER.deleteConfigs());
 	}
 	
-    /**
-     * {@inheritDoc}
-     */
+	/**
+	 * Open the delete configs dialogue.
+	 *
+	 * @param shell the shell
+	 */
 	@Override
-    public void safeExecute(ExecutionEvent event) {
-        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations",
+	public void safeExecute(Shell shell) {
+        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell, "Delete Configurations",
                 SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
 		    configService.uncheckedWrite((dialog.selectedConfigs()));
+		    for (String item : dialog.selectedConfigs()) {
+		        Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
+		    }
 		}
 	}
 }

@@ -25,26 +25,22 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
- *
+ * A panel that contains buttons that provide control over the current NICOS script.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosControlButtonPanel extends Composite {
 
     DataBindingContext bindingContext = new DataBindingContext();
 
-    private Label lblStatusReadback;
     private Button btnStop;
     private Button btnTogglePause;
     private ScriptStatusViewModel statusModel;
@@ -65,27 +61,27 @@ public class NicosControlButtonPanel extends Composite {
 
         this.statusModel = statusModel;
 
-        GridLayout gridLayout = new GridLayout(3, true);
+        GridLayout gridLayout = new GridLayout(2, true);
         gridLayout.marginHeight = 10;
         gridLayout.marginWidth = 10;
         setLayout(gridLayout);
-
-        lblStatusReadback = new Label(this, SWT.NONE);
-        lblStatusReadback.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         btnTogglePause = new Button(this, SWT.CENTER);
         btnTogglePause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnTogglePause.setText("Pause");
         btnTogglePause.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/pause.png"));
+        btnTogglePause.setToolTipText("Pause script after the current operation completes.");
 
         btnStop = new Button(this, SWT.CENTER);
         btnStop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnStop.setText("Stop Script Execution");
+        btnStop.setText("Stop All Scripts and Empty Queue");
         btnStop.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/stop.png"));
+        btnStop.setToolTipText("Abort current script and empty the queue. Equivalent to resetting NICOS.");
 
         bind();
     }
 
+    @SuppressWarnings("unchecked")
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(btnTogglePause),
                 BeanProperties.value("toggleButtonText").observe(statusModel));
@@ -95,21 +91,8 @@ public class NicosControlButtonPanel extends Composite {
                 BeanProperties.value("enableButtons").observe(statusModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblStatusReadback),
-                BeanProperties.value("statusReadback").observe(statusModel));
         
-        btnTogglePause.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                statusModel.toggleExecution();
-            }
-        });
-
-        btnStop.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                statusModel.stopExecution();
-            }
-        });
+        btnTogglePause.addListener(SWT.Selection, e -> statusModel.toggleExecution());
+        btnStop.addListener(SWT.Selection, e -> statusModel.stopExecution());
     }
 }

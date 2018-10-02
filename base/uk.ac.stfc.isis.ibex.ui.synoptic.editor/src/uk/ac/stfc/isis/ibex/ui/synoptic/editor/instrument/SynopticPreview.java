@@ -38,10 +38,17 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
  * Provides a preview of the final synoptic.
  * 
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 
+	/**
+	 * The synoptic preview creator.
+	 * 
+	 * @param parent
+	 *             The shell in which the preview is created.
+	 * @param instrumentDescription
+	 *             A description of the devices present in the current synoptic on the instrument. 
+	 */
 	public SynopticPreview(Shell parent,
 			SynopticDescription instrumentDescription) {
 		super(parent);
@@ -59,7 +66,7 @@ public class SynopticPreview extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new FillLayout());
 		SynopticPanel instrument = new SynopticPanel(container,
-				SWT.NONE);
+				SWT.NONE, true);
 		instrument.setComponents(model.instrument().components(), model.instrument().showBeam());
 
 		return instrument;
@@ -72,6 +79,7 @@ public class SynopticPreview extends Dialog {
 	}
 
 	@Override
+	@SuppressWarnings("checkstyle:magicnumber")
 	protected Point getInitialSize() {
 		return new Point(1200, 500);
 	}

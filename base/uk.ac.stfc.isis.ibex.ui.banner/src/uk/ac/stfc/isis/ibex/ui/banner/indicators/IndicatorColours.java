@@ -26,7 +26,8 @@ public final class IndicatorColours {
 	public static final Color RED = SWTResourceManager.getColor(255, 0, 0);	
 	public static final Color GREEN = SWTResourceManager.getColor(75, 150, 75);
 	public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
-    public static final Color DEFAULT = SWTResourceManager.getColor(255, 0, 255);
+    public static final Color PURPLE = SWTResourceManager.getColor(255, 0, 255);
+    public static final Color ORANGE = SWTResourceManager.getColor(255, 120, 50);
 
     private IndicatorColours() {
     }

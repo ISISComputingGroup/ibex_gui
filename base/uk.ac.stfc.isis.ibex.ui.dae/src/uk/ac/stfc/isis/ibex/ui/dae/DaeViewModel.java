@@ -43,6 +43,7 @@ public class DaeViewModel extends Closer {
 	
 	private static final String DEFAULT_TITLE = "DAE Control Program";
 	
+	
     /** What tab is active in the DAE view. */
     enum ActiveTab {
         /** Detector diagnostics is active tab. */
@@ -157,32 +158,19 @@ public class DaeViewModel extends Closer {
 	}
 
     /**
-     * Set the active tab.
-     * 
-     * @param activeTab
-     *            the active tab
-     */
-    public void setActiveTab(ActiveTab activeTab) {
-        switch (activeTab) {
-            case DETECTOR_DIAGNOSTICS:
-                detectorDiagnosticsViewModel.setVisible(true);
-                break;
-            case OTHER:
-                detectorDiagnosticsViewModel.setVisible(false);
-                break;
-            default:
-                throw new IllegalStateException("Active tab not understood in DAE View Model.");
-        }
-    }
-
-    /**
      * @return the detector diagnostics view model
      */
     public DetectorDiagnosticsViewModel detectorDiagnostics() {
         return detectorDiagnosticsViewModel;
     }
     
+    /**
+     * Returns the dae title.
+     * @return
+     *          The dae title.
+     */
     public UpdatedValue<String> title() {
     	return daeTitle;
     }
+    
 }

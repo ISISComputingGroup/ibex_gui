@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
@@ -31,17 +30,25 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableItem;
 
+import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
+
 /**
  * A cell provider that puts any type of control into a table's cell.
  *
  * @param <T> the type of control to put in the cell
+ * @param <TRow> the type of the data in the row
  */
-public abstract class ControlCellLabelProvider<T extends Control> extends ObservableMapCellLabelProvider {
+public abstract class ControlCellLabelProvider<T extends Control, TRow> extends SortableObservableMapCellLabelProvider<TRow> {
 	
 	private final Map<ViewerCell, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
-	protected ControlCellLabelProvider(IObservableMap[] attributeMaps) {
+	/**
+	 * Constructor for the control cell label provider.
+	 * 
+	 * @param attributeMaps A map of the attributes that this cell will observe.
+	 */
+	protected ControlCellLabelProvider(IObservableMap attributeMaps) {
 		super(attributeMaps);
 	}
 	
