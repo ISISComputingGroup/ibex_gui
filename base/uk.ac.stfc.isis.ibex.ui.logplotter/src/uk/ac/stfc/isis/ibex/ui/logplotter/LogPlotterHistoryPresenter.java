@@ -54,6 +54,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	 */
 	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
 	    return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())  // clone to avoid potential ConcurrentModificationException
+	    		.filter(window -> window != null)
 	    		.map(window -> window.getActivePage().getEditorReferences())
 	    		.flatMap(Arrays::stream)
 	    		.map(editorReference -> editorReference.getEditor(false))

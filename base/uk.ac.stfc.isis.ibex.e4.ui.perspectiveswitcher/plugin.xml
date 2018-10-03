@@ -4,5 +4,10 @@
    <extension-point id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" name="Perspective switcher" schema="schema/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.exsd"/>
    <extension id="MainAppModel" point="org.eclipse.e4.workbench.model">
        <processor beforefragment="false" class="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.CopyPerspectiveSnippetProcessor"/>
+       <processor
+             apply="always"
+             beforefragment="true"
+             class="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.ForceMainMenuProcessor">
+       </processor>
    </extension>
 </plugin>

@@ -49,10 +49,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
 	    super.initialize(configurer);
         this.configurer = configurer;
-
-        // set save and restore to false here to avoid restoring
-        // window layout restored in ApplicationWorkbenchWindowAdvisor
-        configurer.setSaveAndRestore(false);
 	}
 	
 	@Override

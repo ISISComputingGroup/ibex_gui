@@ -1,7 +1,9 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client;singleton:=true
+Bundle-ManifestVersion: 2
 Bundle-Name: IBEX
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: ISIS
 Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dashboard;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.beamstatus;bundle-version="1.0.0",
@@ -29,8 +31,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.nicos;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.journalviewer;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0"
-Bundle-ManifestVersion: 2
+ uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0",
+ org.eclipse.e4.ui.model.workbench;bundle-version="1.2.0.v20160229-1459"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Vendor: ISIS
-
