@@ -3,10 +3,10 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -49,14 +49,16 @@ public class PerspectivesProvider {
         this.modelService = modelService;
         experimentSetupViewModel = DaeUI.getDefault().viewModel().experimentSetup();
         
-        perspectives = new ArrayList<>();
-        for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
-            if (perspective.isVisible()) {
-                perspectives.add(perspective);
-            }
-        }
+        perspectives = modelService.findElements(app, null, MPerspective.class, null)
+        		.stream()
+        		.filter(MPerspective::isVisible)
+        		.collect(Collectors.toList());
 
-        this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+        this.perspectivesStack = modelService
+        		.findElements(app, null, MPerspectiveStack.class, null)
+        		.stream()
+        		.findFirst()
+        		.orElseThrow(() -> new IllegalStateException("No perspective stack found with name = " + MAIN_PERSPECTIVE_STACK_ID));
     }
 
     /**
@@ -64,11 +66,11 @@ public class PerspectivesProvider {
      * 
      * @return The list of perspectives
      */
-    public List<MPerspective> getPerspectives() {
-        return perspectives;
+    public Stream<MPerspective> getPerspectives() {
+        return perspectives.stream();
     }
 
-    private boolean matchPerspectivesById(MPerspective p, String id) {
+    public static boolean matchPerspectivesById(MPerspective p, String id) {
         // The 2nd condition is because E4 has a bug that creates orphan
         // perspectives with IDs of the form ...perspective.alarms.<Alarms>
         return p.getElementId().equals(id) || p.getElementId().equals(id + "." + p.getLabel());
@@ -83,13 +85,10 @@ public class PerspectivesProvider {
      * @return The perspective corresponding to the given ID
      */
     public MPerspective getPerspective(String elementId) {
-
-        for (MPerspective perspective : perspectives) {
-            if (matchPerspectivesById(perspective, elementId)) {
-                return perspective;
-            }
-        }
-        throw new NoSuchElementException();
+    	return getPerspectives()
+    			.filter(perspective -> matchPerspectivesById(perspective, elementId))
+    			.findFirst()
+    			.orElseThrow(NoSuchElementException::new);
     }
 
     /**

@@ -3,12 +3,8 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.apache.logging.log4j.Logger;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.internal.workbench.E4XMIResourceFactory;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -43,13 +39,7 @@ public class SavePerspectiveLayout {
     @Execute
     public void execute(MApplication app, EPartService partService, EModelService modelService, MWindow window) {
     	PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
-        for (MPerspective perspective : provider.getPerspectives()) {
-        	try {
-        	    savePerspective(modelService, window, perspective);
-        	} catch (RuntimeException e) {
-        		LOG.error(String.format("Runtime error when attempting to save perspective %s", perspective.getElementId()), e);
-        	}
-        }
+        provider.getPerspectives().forEach(perspective -> savePerspective(modelService, window, perspective));
     }
     
     
@@ -77,9 +67,14 @@ public class SavePerspectiveLayout {
 
         try (FileOutputStream outputStream = new FileOutputStream(file)) {
             resource.save(outputStream, null);
-            LOG.info(String.format("Saved perspective '%s' to file at '%s'", perspectiveId, file.toString()));
+            LOG.info(String.format(
+            		"Saved perspective '%s' to file at '%s'", perspectiveId, file.toString()));
         } catch (IOException ex) {
-        	LOG.error(String.format("Unable to save perspective '%s' to file at '%s'", perspectiveId, file.toString()), ex);
+        	LOG.error(String.format(
+        			"Unable to save perspective '%s' to file at '%s'", perspectiveId, file.toString()), ex);
+        } catch (RuntimeException ex) {
+        	LOG.error(String.format(
+        			"Runtime error when attempting to save perspective '%s' to file at '%s'", perspectiveId, file.toString()), ex);
         }
     }
 }

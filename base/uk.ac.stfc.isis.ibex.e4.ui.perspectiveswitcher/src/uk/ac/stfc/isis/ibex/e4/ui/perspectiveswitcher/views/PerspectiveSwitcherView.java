@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -67,9 +67,9 @@ public class PerspectiveSwitcherView {
 	}
 
 	private void addPerspectiveShortcuts(Composite parent) {
-		List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
-		
-		Collections.sort(perspectives, (MPerspective p1, MPerspective p2) -> p1.getLabel().compareTo(p2.getLabel()));
+		List<MPerspective> perspectives = perspectivesProvider.getPerspectives()
+				.sorted((p1, p2) -> p1.getLabel().compareTo(p2.getLabel()))
+				.collect(Collectors.toList());
 
 		for (final MPerspective perspective : perspectives) {
 			final PerspectiveButtonViewModel model;

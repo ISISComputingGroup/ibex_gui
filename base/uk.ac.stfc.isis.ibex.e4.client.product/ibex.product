@@ -11,7 +11,7 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>--launcher.XXMaxPermSize
+      <programArgs>-clearPersistedState --launcher.XXMaxPermSize
 256M
       </programArgs>
       <vmArgs>-Xms40m
