@@ -33,7 +33,7 @@ public class ForceMainMenuProcessor {
 		MTrimmedWindow window = (MTrimmedWindow) modelService.find(MAIN_WINDOW_ID, app);
 		
 		if (window == null) {
-			LOG.info("No window - cannot run processor");
+			LOG.error("No window - this is likely to cause problems...");
 			return;
 		}
 		
@@ -41,9 +41,6 @@ public class ForceMainMenuProcessor {
 	    	LOG.info("Main menu was null, replacing it with an empty main menu.");
 	        window.setMainMenu(createEmptyMainMenu());
 	        
-	        if (window.getMainMenu() == null) {
-	        	LOG.error("Main menu was still null after replacement.");
-	        }
 	    }
 	}
 	

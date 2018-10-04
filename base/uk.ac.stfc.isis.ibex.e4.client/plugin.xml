@@ -1,38 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="uk.ac.stfc.isis.ibex.e4.product.application"
-            name="IBEX">
-         <property
-               name="appName"
-               value="IBEX">
-         </property>
-         <property
-               name="applicationXMI"
-               value="uk.ac.stfc.isis.ibex.e4.client/Application.e4xmi">
-         </property>
-         <property
-               name="aboutImage"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
-         </property>
-         <property
-               name="windowImages"
-               value="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
-         </property>
-         <property
-               name="applicationCSS"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.client/default.css">
-         </property>
-      </product>
-   </extension>
    <extension
          id="uk.ac.stfc.isis.ibex.e4.client.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
-            uri="mainmenu.e4xmi">
+            uri="platform:/plugin/uk.ac.stfc.isis.ibex.e4.client/MainMenu.e4xmi">
       </fragment>
    </extension>
    <extension
@@ -57,7 +29,10 @@
                name="appName"
                value="IBEX">
          </property>
+         <property
+               name="applicationXMI"
+               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.client/Application.e4xmi">
+         </property>
       </product>
    </extension>
-
 </plugin>

@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -48,14 +49,11 @@ public class PerspectivesProvider {
         this.modelService = modelService;
         experimentSetupViewModel = DaeUI.getDefault().viewModel().experimentSetup();
         
-        perspectives = new ArrayList<>();
-        for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
-            if (perspective.isVisible()) {
-                perspectives.add(perspective);
-            }
-        }
+        perspectives = modelService.findElements(app, null, MPerspective.class, null).stream()
+        		.filter(MPerspective::isVisible)
+        		.collect(Collectors.toList());
 
-        this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+        this.perspectivesStack = getTopLevelStack();
     }
 
     /**

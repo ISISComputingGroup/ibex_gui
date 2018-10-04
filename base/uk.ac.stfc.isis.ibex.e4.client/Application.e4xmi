@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2jV5MGGNEeeR5ozUwT3tEw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.application">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_X1-d4GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow.0" iconURI="">
-    <persistedState key="coolBarVisible" value="false"/>
-    <persistedState key="perspectiveBarVisible" value="false"/>
-    <persistedState key="isRestored" value="false"/>
     <tags>shellMaximized</tags>
-    <tags>topLevel</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_YXsD0GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0" selectedElement="_Zam5YGGWEee2EOm7UkHWHg"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RIjKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="40" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Instrument status"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_RgW1RojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" containerData="60" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks"/>
@@ -534,7 +530,7 @@
   <commands xmi:id="_5dJv8Kj_Eeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.ioc.startStop" commandName="Start/Stop IOC" description="Bring up Start/Stop IOC dialog" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
   <commands xmi:id="_OEEDYKkdEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.runcontrol" commandName="View Run Control" description="View the run control settings"/>
   <commands xmi:id="_BQbKEKkjEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.exit" commandName="Exit IBEX Client"/>
-  <commands xmi:id="_hj--kKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="User manual" description="About IBEX"/>
+  <commands xmi:id="_hj--kKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="About IBEX" description="About IBEX"/>
   <commands xmi:id="_w0psQKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.usermanual" commandName="User Manual " description="User Manual"/>
   <commands xmi:id="_5pQ8gKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.consolelog" commandName="Console Log" description="Console Log"/>
   <commands xmi:id="_UJcx8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchperspetives" commandName="Switch Perspetives" description="Switch Perspetives">

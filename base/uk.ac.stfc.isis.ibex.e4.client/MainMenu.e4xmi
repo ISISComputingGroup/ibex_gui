@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_17tX4Me0EeihnI5fHM4Jeg">
+  <imports xsi:type="commands:Command" xmi:id="_17tX4ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.recent" commandName="Load a recent configuration" description="Select and load one of the last 5 configurations used"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX4se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.edit" commandName="Edit a synoptic" description="Select and edit an existing synoptic">
+    <category href="Application.e4xmi#_Vi3ZEKjiEeeauN8XvomWPw"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX48e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.colours.alternative" commandName="Alternative Colour Scheme" description="Switch to Alternative Colour Scheme"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX5Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.exit" commandName="Exit IBEX Client"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX5ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.edit" commandName="Edit configuration" description="Select and edit an existing configuration">
+    <category href="Application.e4xmi#_La_dMHtbEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX5se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component">
+    <category href="Application.e4xmi#_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX58e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.delete" commandName="Delete synoptic" description="Delete an existing synoptic">
+    <category href="Application.e4xmi#_Vi3ZEKjiEeeauN8XvomWPw"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX6Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.managermode" commandName="Manager mode" description="Manager mode"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX6ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component">
+    <category href="Application.e4xmi#_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX6se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit component" description="Select and edit an existing component">
+    <category href="Application.e4xmi#_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX68e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.synoptic.new" commandName="New synoptic" description="Create a new synoptic">
+    <category href="Application.e4xmi#_Vi3ZEKjiEeeauN8XvomWPw"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX7Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.colours.standard" commandName="Standard Colour Scheme" description="Switch to Standard Colour Scheme"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX7ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="About IBEX" description="About IBEX"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX7se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.load" commandName="Load configuration" description="Select and load a new configuration into the instrument">
+    <category href="Application.e4xmi#_La_dMHtbEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX78e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.delete" commandName="Delete configuration" description="Delete an existing configuration">
+    <category href="Application.e4xmi#_La_dMHtbEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX8Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.runcontrol" commandName="View Run Control" description="View the run control settings"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX8ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.consolelog" commandName="Console Log" description="Console Log"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX8se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchinstruments" commandName="Switch Instruments"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX88e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.command.usermanual" commandName="User Manual " description="User Manual"/>
+  <imports xsi:type="commands:Command" xmi:id="_17tX9Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration">
+    <category href="Application.e4xmi#_La_dMHtbEeeIzM7lvAxMoQ"/>
+  </imports>
+  <imports xsi:type="commands:Command" xmi:id="_17tX9ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.ioc.startStop" commandName="Start/Stop IOC" description="Bring up Start/Stop IOC dialog">
+    <category href="Application.e4xmi#_MKzh4KkAEeelm7I_usJ7RQ"/>
+  </imports>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_17tX9se0EeihnI5fHM4Jeg" featurename="mainMenu" parentElementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow.0">
+    <elements xsi:type="menu:Menu" xmi:id="_17tX98e0EeihnI5fHM4Jeg" elementId="org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_17tX-Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ibex" label="IBEX" mnemonics="">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tX-ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.switchinstrument" label="Switch instrument" command="_17tX8se0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tX-se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.managermode" label="Manager mode" command="_17tX6Me0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tX-8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.exit" label="Exit IBEX Client" tooltip="Exits the IBEX client" command="_17tX5Me0EeihnI5fHM4Jeg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tX_Me0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="Configuration" mnemonics="C">
+        <children xsi:type="menu:DynamicMenuContribution" xmi:id="_17tX_ce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.0" label="View or Edit Current Configuration (set by menu item)" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler"/>
+        <children xsi:type="menu:Menu" xmi:id="_17tX_se0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.configurations" label="Configurations" mnemonics="f">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tX_8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.config.new" label="New" tooltip="Open a dialogue to create a new configuration" mnemonics="N" command="_17tX9Me0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYAMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.config.load" label="Load" tooltip="Select and load a new configuration into the instrument" mnemonics="L" command="_17tX7se0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYAce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.config.edit" label="Edit" tooltip="Select and edit an existing configuration" mnemonics="E" command="_17tX5ce0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYAse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.config.delete" label="Delete" tooltip="Select and delete a configuration" mnemonics="D" command="_17tX78e0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYA8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.config.recent" label="Recent" tooltip="Load a recent configuration" mnemonics="R" command="_17tX4ce0EeihnI5fHM4Jeg"/>
+        </children>
+        <children xsi:type="menu:Menu" xmi:id="_17tYBMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components" mnemonics="p">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYBce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.new" label="New" tooltip="Create a new component" mnemonics="N" command="_17tX5se0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYBse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.edit" label="Edit" tooltip="Edit and existing component" mnemonics="E" command="_17tX6se0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYB8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.delete" label="Delete" tooltip="Delete an existing component" mnemonics="D" command="_17tX6ce0EeihnI5fHM4Jeg"/>
+        </children>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYCMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYCce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.new" label="New" tooltip="Open a dialogue to create a new synoptic" mnemonics="N" command="_17tX68e0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYCse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.edit" label="Edit" tooltip="Select and edit an existing synoptic" mnemonics="E" command="_17tX4se0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYC8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.delete" label="Delete" tooltip="Select and delete a synoptic" mnemonics="D" command="_17tX58e0EeihnI5fHM4Jeg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYDMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ioc" label="IOC" mnemonics="">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYDce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs" command="_17tX9ce0EeihnI5fHM4Jeg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYDse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.run-control" label="Run-Control" mnemonics="">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYD8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.viewrun-controlsettings" label="View run-control settings" command="_17tX8Me0EeihnI5fHM4Jeg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYEMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.preferences" label="Preferences" mnemonics="">
+        <children xsi:type="menu:Menu" xmi:id="_17tYEce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.coloursettings" label="Colour settings">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYEse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.standard" label="Standard colour scheme" tooltip="Switch to standard colour scheme" selected="true" type="Radio" command="_17tX7Me0EeihnI5fHM4Jeg"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYE8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.alternative" label="Alternative colour scheme 1" tooltip="Switch to alternative colour scheme 1" type="Radio" command="_17tX48e0EeihnI5fHM4Jeg"/>
+        </children>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYFMe0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.help" label="Help" mnemonics="">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYFce0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About" tooltip="All about IBEX" command="_17tX7ce0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYFse0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.usermanual" label="User manual" tooltip="IBEX User Manual" command="_17tX88e0EeihnI5fHM4Jeg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_17tYF8e0EeihnI5fHM4Jeg" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.consolelogdialog" label="Console log" tooltip="Console Log" command="_17tX8ce0EeihnI5fHM4Jeg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_17tYGMe0EeihnI5fHM4Jeg" elementId="org.eclipse.ui.run" toBeRendered="false" visible="false" label="&amp;Run"/>
+      <children xsi:type="menu:Menu" xmi:id="_17tYGce0EeihnI5fHM4Jeg" elementId="edit" toBeRendered="false" visible="false" label="Edit"/>
+      <children xsi:type="menu:Menu" xmi:id="_17tYGse0EeihnI5fHM4Jeg" elementId="window" toBeRendered="false" visible="false" label="Window"/>
+      <children xsi:type="menu:Menu" xmi:id="_17tYG8e0EeihnI5fHM4Jeg" elementId="css" toBeRendered="false" visible="false" label="&amp;CS-Studio"/>
+      <children xsi:type="menu:Menu" xmi:id="_17tYHMe0EeihnI5fHM4Jeg" elementId="file" toBeRendered="false" visible="false" label="&amp;File"/>
+      <children xsi:type="menu:MenuSeparator" xmi:id="_17tYHce0EeihnI5fHM4Jeg" elementId="navigate" toBeRendered="false" visible="false"/>
+      <children xsi:type="menu:Menu" xmi:id="_17tYHse0EeihnI5fHM4Jeg" elementId="help" toBeRendered="false" visible="false" label="Help"/>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

@@ -6,7 +6,7 @@
        <processor beforefragment="false" class="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.CopyPerspectiveSnippetProcessor"/>
        <processor
              apply="always"
-             beforefragment="true"
+             beforefragment="false"
              class="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.ForceMainMenuProcessor">
        </processor>
    </extension>
