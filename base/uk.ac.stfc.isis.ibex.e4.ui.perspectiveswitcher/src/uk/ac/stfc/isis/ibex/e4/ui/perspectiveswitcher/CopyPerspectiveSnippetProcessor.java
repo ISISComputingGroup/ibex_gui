@@ -14,7 +14,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.DefaultLayoutButtonModel;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -66,7 +66,7 @@ public class CopyPerspectiveSnippetProcessor {
             subscribeChangedElement(broker, perspective);
             subscribeSelectedPerspective(broker, perspective);
         }
-        ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
+        DefaultLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
     }
 
     /**
@@ -93,7 +93,7 @@ public class CopyPerspectiveSnippetProcessor {
                     return;
                 }
 
-                ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
+                DefaultLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
 
             }
         };
@@ -134,7 +134,7 @@ public class CopyPerspectiveSnippetProcessor {
                     return;
                 }
 
-                ResetLayoutButtonModel.getInstance().setChanged(true);
+                DefaultLayoutButtonModel.getInstance().setChanged(true);
             }
         };
 

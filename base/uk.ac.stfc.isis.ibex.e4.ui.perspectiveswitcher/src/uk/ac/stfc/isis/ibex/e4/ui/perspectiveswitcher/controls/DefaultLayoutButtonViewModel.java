@@ -11,15 +11,15 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * A view model class for setting the right colour to the ResetLayoutButton.
  *
  */
-public class ResetLayoutButtonViewModel extends ButtonViewModel {
+public class DefaultLayoutButtonViewModel extends ButtonViewModel {
 
     private static final Color RESET_COLOR = SWTResourceManager.getColor(250, 150, 150);
 
     /**
      * Initiate a new reset layout button view model.
      */
-    public ResetLayoutButtonViewModel() {
-        ResetLayoutButtonModel.getInstance().addPropertyChangeListener("layoutModified", new PropertyChangeListener() {
+    public DefaultLayoutButtonViewModel() {
+        DefaultLayoutButtonModel.getInstance().addPropertyChangeListener("layoutModified", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
@@ -46,7 +46,7 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
     @Override
     protected void setFocus(boolean inFocus) {
         this.inFocus = inFocus;
-        if (ResetLayoutButtonModel.getInstance().isChanged()) {
+        if (DefaultLayoutButtonModel.getInstance().isChanged()) {
             setColor(inFocus ? FOCUSSED : RESET_COLOR);
         } else {
             setColor(inFocus ? FOCUSSED : DEFOCUSSED);

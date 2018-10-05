@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -32,7 +33,11 @@ public class PerspectiveResetAdapter extends SelectionAdapter {
      */
     public void resetPerspective() {
         MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+        
+        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        
+		activePage.resetPerspective();
+
         perspectiveStack.getSelectedElement().setVisible(true);
         perspectiveStack.setVisible(true);
     }

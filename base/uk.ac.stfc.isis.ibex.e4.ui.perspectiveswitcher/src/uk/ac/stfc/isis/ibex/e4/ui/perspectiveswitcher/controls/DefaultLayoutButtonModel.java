@@ -12,21 +12,21 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Remember for each perspective if the default layout was changed.
  *
  */
-public class ResetLayoutButtonModel extends ModelObject {
+public class DefaultLayoutButtonModel extends ModelObject {
     private boolean changed = false;
     private MPerspective currentPerspective;
     private Set<MPerspective> changedPerspectives = new HashSet<MPerspective>();
 
-    private static ResetLayoutButtonModel instance = null;
+    private static DefaultLayoutButtonModel instance = null;
 
     /**
      * Get the instance of this singleton.
      *
      * @return The instance of this singleton.
      */
-    public static ResetLayoutButtonModel getInstance() {
+    public static DefaultLayoutButtonModel getInstance() {
         if (instance == null) {
-            instance = new ResetLayoutButtonModel();
+            instance = new DefaultLayoutButtonModel();
         }
         return instance;
     }

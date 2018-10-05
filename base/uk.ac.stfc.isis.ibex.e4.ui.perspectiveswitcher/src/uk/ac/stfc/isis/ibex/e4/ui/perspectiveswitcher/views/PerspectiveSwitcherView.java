@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.DefaultLayoutButton;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -101,6 +101,6 @@ public class PerspectiveSwitcherView {
 	}
 
 	private void addResetCurrentPerspectiveShortcut(Composite parent) {
-		new ResetLayoutButton(parent, perspectivesProvider);
+		new DefaultLayoutButton(parent, perspectivesProvider);
 	}
 }
