@@ -26,7 +26,12 @@
                 <type>CHOPPER</type>
                 <path>Mk3Chopper/multiple_choppers.opi</path>
                 <description>The OPI for the Mk3 chopper. No properties required.</description>
-                <macros />
+                <macros>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
+                </macros>
                 <categories>
                     <category>Choppers</category>
                 </categories>
@@ -760,6 +765,10 @@
                     <macro>
                         <name>NUMBER</name>
                         <description>The chopper number (e.g. CH1).</description>
+                    </macro>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
                     </macro>
                 </macros>
                 <categories>
