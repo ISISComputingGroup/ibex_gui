@@ -87,7 +87,7 @@ public class NicosCurrentScriptContainer {
         lblCurrentScriptName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         new Label(currentScriptExecutingContainer, SWT.NONE);
         bindingContext.bindValue(WidgetProperties.text().observe(lblCurrentScriptName),
-                BeanProperties.value("currentScriptName").observe(scriptStatusViewModel));
+                BeanProperties.value("scriptName").observe(scriptStatusViewModel));
 
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
