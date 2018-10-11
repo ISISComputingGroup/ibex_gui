@@ -41,9 +41,9 @@ public class BlockTest {
         assertEquals(visible, block.getIsVisible());
         assertEquals(local, block.getIsLocal());
         assertEquals(component, block.getComponent());
-        assertEquals(lowLimit, block.getRCLowLimit(), 0);
-        assertEquals(highLimit, block.getRCHighLimit(), 0);
-        assertEquals(runcontrol, block.getRCEnabled());
+        assertEquals(lowLimit, block.getRunControlLowLimit(), 0);
+        assertEquals(highLimit, block.getRunControlHighLimit(), 0);
+        assertEquals(runcontrol, block.getRunControlEnabled());
         assertEquals(logPeriodic, block.getLogPeriodic());
         assertEquals(logRate, block.getLogRate());
         assertEquals(logDeadband, block.getLogDeadband(), 0);

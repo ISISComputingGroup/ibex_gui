@@ -26,8 +26,20 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
  * Used to reflect alarm & connection status of a block in the GUI.
  */
 public enum BlockState {
+    /**
+     * The default block state.
+     */
     DEFAULT,
+    /**
+     * The block is in a minor alarm state.
+     */
     MINOR_ALARM,
+    /**
+     * The block is in a major alarm state.
+     */
     MAJOR_ALARM,
+    /**
+     * The block is disconnected.
+     */
     DISCONNECTED
 }

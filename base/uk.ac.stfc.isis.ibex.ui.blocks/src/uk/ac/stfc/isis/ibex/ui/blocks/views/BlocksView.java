@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.views;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -48,7 +48,9 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
  */
 public class BlocksView {
 
-    /**
+    
+
+	/**
      * The default constructor.
      */
 	public BlocksView() {
@@ -58,7 +60,10 @@ public class BlocksView {
      * The view ID.
      */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-
+	
+	/**
+	 * The part service currently in use.
+	 */
 	@Inject
 	public static EPartService partService;
 	
@@ -71,7 +76,7 @@ public class BlocksView {
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
-			setGroups(value.groups());
+			setGroups(Optional.of(value.groups()));
 		}
 
 		@Override
@@ -86,17 +91,17 @@ public class BlocksView {
 			}
 		}
 
-		private void setGroups(Collection<DisplayGroup> newGroups) {
+		private void setGroups(Optional<List<DisplayGroup>> newGroups) {
 			if (groups != null) {
 				groups.updateGroups(newGroups);
 			}
 		}
 		
 		private void setUnknownConfiguration() {
-			setGroups(Collections.<DisplayGroup>emptyList());
+			setGroups(Optional.empty());
 		}		
-	};	
-
+	};
+	
 	/**
 	 * Create the controls within the blocks view.
 	 * 
@@ -128,8 +133,6 @@ public class BlocksView {
      */
     @PreDestroy
 	public void dispose() {
-		if (configSubscription != null) {
-			configSubscription.removeObserver();
-		}
+    	configSubscription.removeObserver();
 	}
 }

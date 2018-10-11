@@ -33,7 +33,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private boolean isEditable = true;
 	
 	public IocPVSetsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, EditablePVSet.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	}

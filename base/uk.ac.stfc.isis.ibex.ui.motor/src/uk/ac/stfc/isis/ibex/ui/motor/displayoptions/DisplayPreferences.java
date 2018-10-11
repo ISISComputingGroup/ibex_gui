@@ -90,6 +90,6 @@ public final class DisplayPreferences extends ModelObject {
      */
     public void setMotorBackgroundPalette(ColourOption paletteKey) {
         MotorBackgroundPalette newMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
-        firePropertyChange("motorBackgroundPalette", currentMotorBackgroundPalette, currentMotorBackgroundPalette=newMotorBackgroundPalette);
+        firePropertyChange("motorBackgroundPalette", currentMotorBackgroundPalette, currentMotorBackgroundPalette = newMotorBackgroundPalette);
     }
 }

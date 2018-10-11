@@ -26,8 +26,8 @@ import org.eclipse.swt.graphics.Image;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabelProvider {
-
+public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabelProvider  {
+    
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;
@@ -37,7 +37,7 @@ public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabe
 	public String getColumnText(Object element, int columnIndex) {
 		TimeRegimeRow row = (TimeRegimeRow) element;
 		switch (columnIndex) {
-			case 0: 
+			case 0:
 				return Double.toString(row.getFrom());
 			case 1:
 				return Double.toString(row.getTo());

@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.banner.motion;
 import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
  * An observable used to control the motors.
@@ -30,7 +32,9 @@ public class ObservableMotionControl extends ModelAdapter {
 
 	private static final Long STOP_VALUE = 1L;
 	
-	private final SameTypeWriter<Long> stop = new SameTypeWriter<>();
+	private final SameTypeWriter<Long> stop = new SameTypeWriter<Long>();
+
+	private SettableUpdatedValue<Boolean> canWrite = new SettableUpdatedValue<Boolean>();
 	
     /**
      * Constructor for the observable.
@@ -40,6 +44,12 @@ public class ObservableMotionControl extends ModelAdapter {
      */
 	public ObservableMotionControl(Writable<Long> stop) {
 		this.stop.writeTo(stop);
+		stop.subscribe(new SameTypeWriter<Long>() {
+			@Override
+			public void onCanWriteChanged(boolean canwrite) {
+				ObservableMotionControl.this.canWrite.setValue(canwrite);
+			}
+		});
 	}
 
     /**
@@ -47,5 +57,13 @@ public class ObservableMotionControl extends ModelAdapter {
      */
 	public void stop() {
 	    stop.uncheckedWrite(STOP_VALUE);
+	}
+
+	/**
+	 * Whether this writable can be written to at present.
+	 * @return an updated value wrapping whether you can write to this writable
+	 */
+	public UpdatedValue<Boolean> canWrite() {
+		return canWrite;
 	}
 }

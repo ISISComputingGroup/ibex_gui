@@ -1,8 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -62,27 +59,12 @@ public class ScriptStatusViewModel extends ModelObject {
 	public ScriptStatusViewModel(final NicosModel model) {
         this.model = model;
 		
-		model.addPropertyChangeListener("lineNumber", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setLineNumber(model.getLineNumber());
-			}
-		});
+		model.addPropertyChangeListener("lineNumber", e ->
+				setLineNumber(model.getLineNumber()));
 
-        model.addPropertyChangeListener("scriptStatus", new PropertyChangeListener() {
+        model.addPropertyChangeListener("scriptStatus", e ->
+                setScriptStatus(model.getScriptStatus()));
 
-            @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                setScriptStatus(model.getScriptStatus());
-            }
-        });
-        model.addPropertyChangeListener("scriptName", new PropertyChangeListener() {
-
-        	@Override
-        	public void propertyChange(PropertyChangeEvent evt) {
-        		setScriptName(model.getScriptName());
-        	}
-        });
 	}
 
 	/**
@@ -144,17 +126,14 @@ public class ScriptStatusViewModel extends ModelObject {
             case IDLEEXC:
             case IDLE:
             case STOPPING:
-                setToggleButtonIcon(PAUSE_ICON);
-                setToggleButtonText(PAUSE_TEXT);
+                setToggleButtonTextAndIcon(PAUSE_TEXT, PAUSE_ICON);
                 setEnableButtons(false);
                 break;
             case RUNNING:
-                setToggleButtonIcon(PAUSE_ICON);
-                setToggleButtonText(PAUSE_TEXT);
+                setToggleButtonTextAndIcon(PAUSE_TEXT, PAUSE_ICON);
                 break;
             case INBREAK:
-                setToggleButtonIcon(RESUME_ICON);
-                setToggleButtonText(RESUME_TEXT);
+                setToggleButtonTextAndIcon(RESUME_TEXT, RESUME_ICON);
                 setHighlightColour(HIGHLIGHT_PAUSED);
                 break;
             case INVALID:
@@ -165,13 +144,13 @@ public class ScriptStatusViewModel extends ModelObject {
     }
 
 	/**
-	 * The icon for the pause/go button.
+	 * A formatted string representation of the line number to display on the user interface.
 	 * 
-	 * @param icon
+	 * @return a formatted string representation of the line number to display on the user interface
 	 */
-    private void setToggleButtonIcon(Image icon) {
-        firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
-    }
+	public String getLineNumber() {
+		return lineNumberStr;
+	}
 
     /**
      * @return The icon on the toggle pause button
@@ -180,13 +159,9 @@ public class ScriptStatusViewModel extends ModelObject {
         return toggleButtonIcon;
     }
     
-    /**
-     * The text for the pause/go button.
-     * 
-     * @param text
-     */
-    private void setToggleButtonText(String text) {
+    private void setToggleButtonTextAndIcon(String text, Image icon) {
         firePropertyChange("toggleButtonText", toggleButtonText, toggleButtonText = text);
+        firePropertyChange("toggleButtonIcon", toggleButtonIcon, toggleButtonIcon = icon);
     }
 
     /**

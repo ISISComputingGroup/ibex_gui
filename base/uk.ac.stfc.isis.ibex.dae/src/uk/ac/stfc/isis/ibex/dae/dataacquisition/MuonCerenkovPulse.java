@@ -19,7 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
+/**
+ * An enum representing the type of muon cerenkov pulse.
+ */
 public enum MuonCerenkovPulse {
+    /**
+     * First type.
+     */
 	FIRST,
+	/**
+	 * Second type.
+	 */
 	SECOND
 }

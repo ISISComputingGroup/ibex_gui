@@ -19,10 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * Sets the current motor background palette to the alternative colourblind-friendly scheme.

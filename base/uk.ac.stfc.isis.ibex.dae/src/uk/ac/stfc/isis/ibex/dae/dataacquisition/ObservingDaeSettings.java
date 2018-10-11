@@ -26,10 +26,21 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * An observer for the DAE settings.
+ */
 public class ObservingDaeSettings extends XmlBackedDaeSettings implements Closable {
 
 	private final SettingsGateway gateway;
 
+	/**
+	 * A constructor for the class that observes the DAE settings.
+	 * 
+	 * @param settingsSource
+	 *                         The source of the settings.
+	 * @param settingsDestination
+	 *                         The settings destination.
+	 */
 	public ObservingDaeSettings(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 
 		gateway = new SettingsGateway(settingsSource, settingsDestination) {	

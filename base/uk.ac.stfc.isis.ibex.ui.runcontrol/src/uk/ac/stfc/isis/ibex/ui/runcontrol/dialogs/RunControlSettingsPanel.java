@@ -47,8 +47,8 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunControlSettingsPanel extends Composite {
-	private RunControlSettingsTable table;
-	private RunControlEditorPanel editor;
+	private final RunControlSettingsTable table;
+	private final RunControlEditorPanel editor;
 	private final ConfigServer configServer;
     private UpdatedValue<Configuration> config;
 
@@ -79,27 +79,28 @@ public class RunControlSettingsPanel extends Composite {
 		
 		this.configServer = configServer;
         config = new UpdatedObservableAdapter<Configuration>(this.configServer.currentConfig());
-        config.addPropertyChangeListener(updateTable, true);
-		
+        
         setLayout(new GridLayout(2, false));
 
         table = new RunControlSettingsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
-		table.addSelectionChangedListener(new ISelectionChangedListener() {
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, viewModel);
+        
+        config.addPropertyChangeListener(updateTable, true);
+        table.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
                 editor.setBlock(table.firstSelectedRow());
             }
         });
-        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		
-        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, viewModel);
 	}
 
 	private void setBlocks() {
-		Collection<DisplayBlock> settings = Configurations.getInstance().display().getDisplayBlocks();
+		final Collection<DisplayBlock> settings = Configurations.getInstance().display().getDisplayBlocks();
 		if (settings != null) {
 			table.setRows(settings);
 		}

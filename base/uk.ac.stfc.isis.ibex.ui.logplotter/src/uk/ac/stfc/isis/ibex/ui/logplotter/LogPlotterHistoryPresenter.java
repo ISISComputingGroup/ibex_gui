@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +35,7 @@ import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.IEditorReference;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
@@ -47,23 +46,42 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	
 	/**
-	 * @return A stream of all the current DataBrowserEditors.
+	 * Returns a stream of all the current data browsers. Editors are taken from all windows instead of just the active window
+	 * as the active window is null if called from a non UI-thread (ie when switching instruments). 
+	 * 
+	 * @return
+	 *         A stream of all the current data browser editors.
 	 */
-	private Stream<DataBrowserEditor> getCurrentDataBrowsers() {
-		Stream<IEditorReference> editorRefs = Arrays.stream(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences());
-		
-		return editorRefs.map(e -> e.getEditor(false))
-						 .filter(e -> e instanceof DataBrowserEditor)
-						 .map(e -> (DataBrowserEditor) e);
+	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
+	    return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())  // clone to avoid potential ConcurrentModificationException
+	    		.map(window -> window.getActivePage().getEditorReferences())
+	    		.flatMap(Arrays::stream)
+	    		.map(editorReference -> editorReference.getEditor(false))
+	    		.filter(editor -> editor instanceof DataBrowserEditor)
+	    		.map(editor -> (DataBrowserEditor) editor);
+	}
+	
+	/**
+	 * Closes all the current data browsers.
+	 */
+	public static void closeAllDataBrowsers() {
+        getCurrentDataBrowsers().forEach(editor -> closeDataBrowser(editor));
+	}
+	
+	/**
+	 * Closes the given data browser editor. Runs asynchronously on the GUI thread.
+	 * @param dataBrowser the editor to close
+	 */
+	private static void closeDataBrowser(final DataBrowserEditor dataBrowser) {
+		Display.getDefault().asyncExec(() -> dataBrowser.getEditorSite().getWorkbenchWindow().getActivePage().closeEditor(dataBrowser, false));
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ArrayList<String> getCurrentDisplays() {
-		return getCurrentDataBrowsers().map(e -> e.getTitle())
-									   .collect(Collectors.toCollection(ArrayList::new));
+	public Stream<String> getDataBrowserTitles() {
+		return getCurrentDataBrowsers().map(e -> e.getTitle());
 	}
 	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
@@ -111,6 +129,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    });
 	    
 	    addPVToEditor(pvAddress, displayName, editor);
+	    
 	}
 
 	/**
@@ -127,7 +146,6 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		} else {
 			DataBrowserEditor editor = editors.get(0);
 			addPVToEditor(pvAddress, display, editor);
-			
 			// Recolour the axes so that they match the traces
 			for (ModelItem trace : editor.getModel().getItems()) {
 				trace.getAxis().setColor(trace.getColor());
