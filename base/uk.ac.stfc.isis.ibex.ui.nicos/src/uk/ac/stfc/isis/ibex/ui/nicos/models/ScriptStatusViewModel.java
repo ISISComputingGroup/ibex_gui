@@ -64,6 +64,9 @@ public class ScriptStatusViewModel extends ModelObject {
 
         model.addPropertyChangeListener("scriptStatus", e ->
                 setScriptStatus(model.getScriptStatus()));
+        
+        model.addPropertyChangeListener("scriptName", e ->
+        		setScriptName(model.getScriptName()));
 
 	}
 
@@ -142,15 +145,6 @@ public class ScriptStatusViewModel extends ModelObject {
         }
     
     }
-
-	/**
-	 * A formatted string representation of the line number to display on the user interface.
-	 * 
-	 * @return a formatted string representation of the line number to display on the user interface
-	 */
-	public String getLineNumber() {
-		return lineNumberStr;
-	}
 
     /**
      * @return The icon on the toggle pause button

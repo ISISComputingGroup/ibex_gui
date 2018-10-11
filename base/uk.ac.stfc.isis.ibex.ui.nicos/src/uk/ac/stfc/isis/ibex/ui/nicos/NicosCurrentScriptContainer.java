@@ -16,7 +16,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
@@ -85,9 +84,8 @@ public class NicosCurrentScriptContainer {
         
         Label lblCurrentScriptName = new Label(currentScriptExecutingContainer, SWT.NONE);
         lblCurrentScriptName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        new Label(currentScriptExecutingContainer, SWT.NONE);
         bindingContext.bindValue(WidgetProperties.text().observe(lblCurrentScriptName),
-                BeanProperties.value("currentScriptName").observe(scriptStatusViewModel));
+                BeanProperties.value("scriptName").observe(scriptStatusViewModel));
 
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
