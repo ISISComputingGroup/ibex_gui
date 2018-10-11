@@ -76,6 +76,7 @@ public class NicosModel extends ModelObject {
     private final ZMQSession session;
     private RepeatingJob connectionJob;
 	private int lineNumber;
+	private String scriptName;
     private ScriptStatus scriptStatus;
 	private String currentlyExecutingScript;
 	private RepeatingJob updateStatusJob;
@@ -284,7 +285,8 @@ public class NicosModel extends ModelObject {
             // Status is a tuple (list) of 2 items - execution status and line number.
             setScriptStatus(ScriptStatus.getByValue(scriptStatusSentMessageDetails.status.get(0)));
             setLineNumber(scriptStatusSentMessageDetails.status.get(1));
-			setCurrentlyExecutingScript(scriptStatusSentMessageDetails.script);
+            setCurrentlyExecutingScript(scriptStatusSentMessageDetails.script);
+			setScriptName(scriptStatusSentMessageDetails.scriptname);
 			setQueuedScripts(scriptStatusSentMessageDetails.requests);
 		}
 	}
@@ -363,6 +365,42 @@ public class NicosModel extends ModelObject {
 	}
 	
 	/**
+	 * Sets the name of the currently executing script.
+	 * 
+	 * @param scriptName of the current running script
+	 */
+	private void setScriptName(String scriptName) {
+		firePropertyChange("scriptName", this.scriptName, this.scriptName = scriptName);
+	}
+   
+	/**
+	 * A formatted string representation of the current running script name to display on the user interface.
+	 * 
+	 * @return a formatted string representation of the current script name to display on the user interface
+	 */
+	public String getScriptName() {
+		return scriptName;
+	}
+	
+	/**
+	 * Sets the currently executing script text.
+	 * 
+	 * @param script the current script
+	 */
+	private void setCurrentlyExecutingScript(String script) {
+		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
+	}
+	
+	/**
+	 * The currently executing script text.
+	 * 
+	 * @return the script
+	 */
+	public String getCurrentlyExecutingScript() {
+		return currentlyExecutingScript;
+    }
+	
+	/**
 	 * Set the list of scripts in the nicos queue.
 	 * 
 	 * @param newQueuedScripts the new list of scripts
@@ -397,19 +435,6 @@ public class NicosModel extends ModelObject {
     public ScriptStatus getScriptStatus() {
         return scriptStatus;
     }
-
-	private void setCurrentlyExecutingScript(String script) {
-		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
-	}
-	
-	/**
-	 * The currently executing script.
-	 * 
-	 * @return the script
-	 */
-	public String getCurrentlyExecutingScript() {
-		return currentlyExecutingScript;
-	}
 	
     /**
      * Dequeue script.

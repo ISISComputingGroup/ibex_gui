@@ -47,6 +47,7 @@ public class ScriptStatusViewModel extends ModelObject {
 
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
+    private String scriptNameStr = "";
     private String toggleButtonText = "";
     private String statusReadback = "";
     private Image toggleButtonIcon = PAUSE_ICON;
@@ -75,6 +76,13 @@ public class ScriptStatusViewModel extends ModelObject {
                 setScriptStatus(model.getScriptStatus());
             }
         });
+        model.addPropertyChangeListener("scriptName", new PropertyChangeListener() {
+
+        	@Override
+        	public void propertyChange(PropertyChangeEvent evt) {
+        		setScriptName(model.getScriptName());
+        	}
+        });
 	}
 
 	/**
@@ -92,6 +100,33 @@ public class ScriptStatusViewModel extends ModelObject {
 		}
 		
 		firePropertyChange("lineNumber", lineNumberStr, lineNumberStr = line);
+	}
+	
+	/**
+	 * A formatted string representation of the line number to display on the user interface.
+	 * 
+	 * @return a formatted string representation of the line number to display on the user interface
+	 */
+	public String getLineNumber() {
+		return lineNumberStr;
+	}
+	
+	/**
+	 * Sets the name of the currently executing script.
+	 * 
+	 * @param scriptName of the current running script
+	 */
+	private void setScriptName(String scriptName) {
+		firePropertyChange("scriptName", scriptNameStr, scriptNameStr = scriptName);
+	}
+    
+	/**
+	 * A formatted string representation of the current running script name to display on the user interface.
+	 * 
+	 * @return a formatted string representation of the current script name to display on the user interface
+	 */
+	public String getScriptName() {
+		return scriptNameStr;
 	}
 	
     /**
@@ -129,15 +164,6 @@ public class ScriptStatusViewModel extends ModelObject {
     
     }
 
-	/**
-	 * A formatted string representation of the line number to display on the user interface.
-	 * 
-	 * @return a formatted string representation of the line number to display on the user interface
-	 */
-	public String getLineNumber() {
-		return lineNumberStr;
-	}
-    
 	/**
 	 * The icon for the pause/go button.
 	 * 
