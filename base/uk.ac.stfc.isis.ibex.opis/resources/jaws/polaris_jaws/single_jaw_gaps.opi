@@ -56,17 +56,7 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Jaws $(NUMBER) Gaps</name>
-    <rules>
-      <rule name="Jaws moving highlight" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==0 || pv1==0">
-          <value>
-            <color name="ISIS_Motor_Moving" red="0" green="255" blue="0" />
-          </value>
-        </exp>
-        <pv trig="true">$(P)MOT:JAWS$(NUMBER):VGAP:DMOV</pv>
-        <pv trig="true">$(P)MOT:JAWS$(NUMBER):HGAP:DMOV</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -359,7 +349,16 @@
       <pv_name>$(P)MOT:JAWS$(NUMBER):HGAP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules />
+      <rules>
+        <rule name="Jaws moving highlight" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Motor_Moving" red="0" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):HGAP:DMOV</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -370,7 +369,7 @@
       <text>######</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
@@ -411,7 +410,16 @@ $(pv_value)</tooltip>
       <pv_name>$(P)MOT:JAWS$(NUMBER):VGAP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules />
+      <rules>
+        <rule name="Jaws moving highlight" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Motor_Moving" red="0" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):VGAP:DMOV</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -422,7 +430,7 @@ $(pv_value)</tooltip>
       <text>######</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
@@ -474,7 +482,7 @@ $(pv_value)</tooltip>
       <text>######</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
@@ -526,7 +534,7 @@ $(pv_value)</tooltip>
       <text>######</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
