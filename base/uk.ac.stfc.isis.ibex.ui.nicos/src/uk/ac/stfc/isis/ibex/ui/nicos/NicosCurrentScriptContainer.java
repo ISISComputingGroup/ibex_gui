@@ -83,8 +83,6 @@ public class NicosCurrentScriptContainer {
         lblCombinedScriptInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lblCombinedScriptInfo), 
         		BeanProperties.value("combinedScriptInfo").observe(scriptStatusViewModel));
-        new Label(currentScriptExecutingContainer, SWT.NONE);
-        new Label(currentScriptExecutingContainer, SWT.NONE);
         
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
@@ -97,8 +95,6 @@ public class NicosCurrentScriptContainer {
         model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
         scriptStatusViewModel.addPropertyChangeListener("highlightColour", highlightListener);
 
-       
-        
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
         controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
