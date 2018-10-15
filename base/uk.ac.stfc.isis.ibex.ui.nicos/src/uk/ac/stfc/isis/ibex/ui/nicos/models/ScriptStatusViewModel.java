@@ -36,8 +36,8 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final ExecutionInstruction RESUME_INSTRUCTION =
             new ExecutionInstruction(ExecutionInstructionType.CONTINUE, null);
 
-	private static final String NOT_EXECUTING = "Execution finished.";
-	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
+	private static final String NOT_EXECUTING = "Execution finished";
+	private static final String LINE_NUMBER_FORMAT = "Executing line %d";
 
     private boolean enableButtons = false;
     private Color highlightColour = HIGHLIGHT;
@@ -45,6 +45,7 @@ public class ScriptStatusViewModel extends ModelObject {
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
     private String scriptNameStr = "";
+    private String combinedScriptInfoStr = "";
     private String toggleButtonText = "";
     private String statusReadback = "";
     private Image toggleButtonIcon = PAUSE_ICON;
@@ -60,16 +61,48 @@ public class ScriptStatusViewModel extends ModelObject {
         this.model = model;
 		
 		model.addPropertyChangeListener("lineNumber", e ->
-				setLineNumber(model.getLineNumber()));
-
-        model.addPropertyChangeListener("scriptStatus", e ->
-                setScriptStatus(model.getScriptStatus()));
-        
-        model.addPropertyChangeListener("scriptName", e ->
-        		setScriptName(model.getScriptName()));
-
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
+		
+		model.addPropertyChangeListener("scriptStatus", e ->
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
+		
+		model.addPropertyChangeListener("scriptName", e ->
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
 	}
 
+	
+	/**
+	 * Combine the script information with current line number, executing status and name into a single string.
+	 * 
+	 * @param lineNumber 
+	 * 				The line number, or -1 for a script that is not executing
+	 * @param status
+	 * 				The run state of the script server.
+	 * @param scriptName 
+	 * 				The name of the running script.
+	 * 
+	 */
+	private void setCombinedScriptInfo(int lineNumber, ScriptStatus status, String scriptName) {
+		setLineNumber(lineNumber);
+		setScriptStatus(status);
+		setScriptName(scriptName);
+		
+		String combinedScriptInfo = lineNumberStr + " (" + status.getDesc() + ") : " + scriptNameStr;
+		
+		firePropertyChange("combinedScriptInfo", combinedScriptInfoStr, combinedScriptInfoStr = combinedScriptInfo);
+	}
+	
+	/**
+	 * A formatted string with combined script information with current line number, executing status and name
+	 * that will be displayed on the GUI.
+	 * 
+	 * @return String
+	 * 				The combined script information with current line number, executing status and name.
+	 */
+	public String getCombinedScriptInfo() {
+		return combinedScriptInfoStr;
+	}
+	
 	/**
 	 * Sets the line number of the currently executing script.
 	 * 
@@ -99,7 +132,8 @@ public class ScriptStatusViewModel extends ModelObject {
 	/**
 	 * Sets the name of the currently executing script.
 	 * 
-	 * @param scriptName of the current running script
+	 * @param scriptName 
+	 * 				The name of the running script.
 	 */
 	private void setScriptName(String scriptName) {
 		firePropertyChange("scriptName", scriptNameStr, scriptNameStr = scriptName);
