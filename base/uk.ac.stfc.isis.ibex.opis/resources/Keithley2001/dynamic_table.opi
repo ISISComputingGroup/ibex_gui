@@ -51,7 +51,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>331</height>
+    <height>313</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -69,7 +69,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>406</width>
+    <width>301</width>
     <wuid>-6643a849:165ecb978be:-78fc</wuid>
     <x>6</x>
     <y>6</y>
@@ -109,7 +109,7 @@
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>319</width>
+      <width>250</width>
       <wuid>-6643a849:165ecb978be:-77da</wuid>
       <x>0</x>
       <y>6</y>
@@ -151,48 +151,7 @@
         <width>61</width>
         <wrap_words>true</wrap_words>
         <wuid>-6643a849:165ecb978be:-77d9</wuid>
-        <x>0</x>
-        <y>6</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
-        <background_color>
-          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Header4_NEW</opifont.name>
-        </font>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <horizontal_alignment>1</horizontal_alignment>
-        <name>Label</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <text>MEASUREMENT</text>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <transparent>true</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>91</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-6643a849:165ecb978be:-77d8</wuid>
-        <x>96</x>
+        <x>6</x>
         <y>6</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -244,7 +203,7 @@ $(pv_value)</tooltip>
         <width>67</width>
         <wrap_words>false</wrap_words>
         <wuid>-6643a849:165ecb978be:-77d7</wuid>
-        <x>222</x>
+        <x>168</x>
         <y>6</y>
       </widget>
     </widget>
@@ -281,7 +240,7 @@ $(pv_value)</tooltip>
       <line_width>1</line_width>
       <name>Polyline</name>
       <points>
-        <point x="399" y="36" />
+        <point x="297" y="36" />
         <point x="0" y="36" />
       </points>
       <pv_name></pv_name>
@@ -299,7 +258,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Polyline</widget_type>
-      <width>400</width>
+      <width>298</width>
       <wuid>-6643a849:165ecb978be:-750c</wuid>
       <x>0</x>
       <y>36</y>
@@ -322,7 +281,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>01</CHAN>
@@ -340,7 +299,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>301</width>
       <wuid>-6643a849:165ecb978be:-749a</wuid>
       <x>0</x>
       <y>48</y>
@@ -363,7 +322,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>02</CHAN>
@@ -381,62 +340,10 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>301</width>
       <wuid>-6643a849:165ecb978be:-7218</wuid>
       <x>0</x>
       <y>81</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <auto_size>false</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Header4_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <format_type>0</format_type>
-      <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
-      <name>Text Update</name>
-      <precision>0</precision>
-      <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
-      <pv_value />
-      <rotation_angle>0.0</rotation_angle>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_units>true</show_units>
-      <text>UNIT</text>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>true</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Text Update</widget_type>
-      <width>67</width>
-      <wrap_words>false</wrap_words>
-      <wuid>-6643a849:165ecb978be:-77d6</wuid>
-      <x>318</x>
-      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -456,7 +363,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>03</CHAN>
@@ -474,7 +381,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>301</width>
       <wuid>-6643a849:165ecb978be:-6e16</wuid>
       <x>0</x>
       <y>114</y>
@@ -497,7 +404,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>04</CHAN>
@@ -515,7 +422,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>251</width>
       <wuid>-6643a849:165ecb978be:-6df8</wuid>
       <x>0</x>
       <y>147</y>
@@ -538,7 +445,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>06</CHAN>
@@ -556,7 +463,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>251</width>
       <wuid>-6643a849:165ecb978be:-6deb</wuid>
       <x>0</x>
       <y>180</y>
@@ -579,7 +486,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>07</CHAN>
@@ -597,7 +504,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>251</width>
       <wuid>-6643a849:165ecb978be:-6dde</wuid>
       <x>0</x>
       <y>213</y>
@@ -620,7 +527,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>08</CHAN>
@@ -638,7 +545,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>251</width>
       <wuid>-6643a849:165ecb978be:-6db7</wuid>
       <x>0</x>
       <y>246</y>
@@ -661,7 +568,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>34</height>
+      <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <CHAN>09</CHAN>
@@ -679,7 +586,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>403</width>
+      <width>251</width>
       <wuid>-6643a849:165ecb978be:-6daa</wuid>
       <x>0</x>
       <y>279</y>

@@ -1632,18 +1632,18 @@
             </value>
         </entry>
         <entry>
-        <key>KEITHLEY_2001</key>
+        <key>Keithley 2001</key>
         <value>
             <categories>
                 <category>Multimeters</category>
             </categories>
-            <type>MULTIMETERS</type>
-            <path>keithley_2001.opi</path>
+            <type>KEITHLEY</type>
+            <path>Keithley2001/keithley2001.opi</path>
             <description>The OPI for the Keithley_2001</description>
             <macros>
                 <macro>
                     <name>KHLY2001</name>
-                    <description>The Keithley_2001 PV prefix (e.g. KHLY2001_01)</description>            
+                    <description>The Keithley 2001 PV prefix (e.g. KHLY2001_01)</description>            
                 </macro>
             </macros>
         </value>
