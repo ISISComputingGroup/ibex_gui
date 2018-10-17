@@ -26,7 +26,12 @@
                 <type>CHOPPER</type>
                 <path>Mk3Chopper/multiple_choppers.opi</path>
                 <description>The OPI for the Mk3 chopper. No properties required.</description>
-                <macros />
+                <macros>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
+                </macros>
                 <categories>
                     <category>Choppers</category>
                 </categories>
@@ -761,6 +766,10 @@
                         <name>NUMBER</name>
                         <description>The chopper number (e.g. CH1).</description>
                     </macro>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
                 </macros>
                 <categories>
                     <category>Choppers</category>
@@ -1079,7 +1088,7 @@
             <key>Live View</key>
             <value>
                 <type>DAE</type>
-                <path>live_view.opi</path>
+                <path>live_view/live_view.opi</path>
                 <description>The OPI for a live view of the detector</description>
                 <macros>
                     <macro>
@@ -1606,8 +1615,25 @@
             </value>
         </entry>
         <entry>
-          <key>KEITHLEY_2001</key>
-          <value>
+            <key>Muon Separator PSU</key>
+            <value>
+                <type>POWER_SUPPLY</type>
+                <path>muon_overviews/separator_status.opi</path>
+                <categories>
+                    <category>Power supplies</category>
+                </categories>
+                <description>The OPI for the Muon separator PSU.</description>
+                <macros>
+                    <macro>
+                        <name>SEPRTR</name>
+                        <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
+                    </macro>
+                </macros>
+            </value>
+        </entry>
+        <entry>
+        <key>KEITHLEY_2001</key>
+        <value>
             <categories>
                 <category>Multimeters</category>
             </categories>
@@ -1615,12 +1641,12 @@
             <path>keithley_2001.opi</path>
             <description>The OPI for the Keithley_2001</description>
             <macros>
-              <macro>
-                <name>KHLY2001</name>
-                <description>The Keithley_2001 PV prefix (e.g. KHLY2001_01)</description>            
-              </macro>
+                <macro>
+                    <name>KHLY2001</name>
+                    <description>The Keithley_2001 PV prefix (e.g. KHLY2001_01)</description>            
+                </macro>
             </macros>
-            </value>
+        </value>
         </entry>
     </opis>
 </descriptions>
