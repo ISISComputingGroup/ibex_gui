@@ -263,7 +263,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
      * @return does the block belong to a component
      */
     public boolean hasComponent() {
-        return block.hasComponent();
+        return block.inComponent();
     }
 
     /**

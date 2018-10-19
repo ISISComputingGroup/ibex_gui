@@ -153,7 +153,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
         this.ioc = ioc;
         iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
         boolean enabled = ioc != null && ioc.isEditable();
-		setEnabled(enabled);
+		//setEnabled(enabled);
 		btnAdd.setEnabled(enabled);
 		details.setEnabled(enabled);
         details.setPVs(ioc.getAvailablePVs());

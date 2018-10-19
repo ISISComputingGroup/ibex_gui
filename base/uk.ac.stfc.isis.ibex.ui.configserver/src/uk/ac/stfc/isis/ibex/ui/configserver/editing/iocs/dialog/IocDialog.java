@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -93,14 +92,10 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         editIocPanel.setIOC(tempIoc);
 
-        this.setTitle("Edit IOC: " + tempIoc.getName());
+        String titlePrefix = readOnly ? "View" : "Edit"; 
+        this.setTitle(titlePrefix + " IOC: " + tempIoc.getName());
 
         content.layout();
-
-        if (readOnly) {
-            disableControls(this.editIocPanel);
-            this.setTitle("View IOC: " + tempIoc.getName());
-        }
 
         return editIocPanel;
     }
@@ -139,39 +134,5 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     protected void okPressed() {
         tempIoc.saveIoc();
         super.okPressed();
-    }
-
-    /**
-     * Disables a control and all its descendant elements, but re-enables the
-     * ancestors of Tabfolders contained within to allow their navigation.
-     * 
-     * @param control
-     *            The top control of all content to be disabled
-     */
-    private void disableControls(Control control) {
-        if (control instanceof TabFolder) {
-            enableAncestors(control);
-        } else {
-            control.setEnabled(false);
-        }
-        if (control instanceof Composite) {
-            Composite comp = (Composite) control;
-            for (Control c : comp.getChildren()) {
-                disableControls(c);
-            }
-        }
-    }
-
-    /**
-     * Recursively enables the ancestor tree of a given control.
-     * 
-     * @param control
-     *            The control whose parents should be enabled.
-     */
-    private void enableAncestors(Control control) {
-        control.setEnabled(true);
-        if (!(control.getParent() instanceof Shell)) {
-            enableAncestors(control.getParent());
-        }
     }
 }
