@@ -35,7 +35,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -48,7 +48,7 @@
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <height>31</height>
     <lock_children>false</lock_children>
@@ -68,7 +68,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>300</width>
+    <width>277</width>
     <wuid>-6643a849:165ecb978be:-7a5f</wuid>
     <x>0</x>
     <y>0</y>
@@ -98,7 +98,7 @@
           <exp bool_exp="pvInt0 == 1">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PVROOT)CHAN:$(CHAN):ACTIVE</pv>
+          <pv trig="true">$(PV_ROOT)CHAN:$(CHAN):ACTIVE</pv>
         </rule>
       </rules>
       <scale_options>
@@ -189,7 +189,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PVROOT)CHAN:$(CHAN):READ</pv_name>
+      <pv_name>$(PV_ROOT)CHAN:$(CHAN):READ</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -197,7 +197,7 @@
           <exp bool_exp="pvInt0 == 0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PVROOT)CHAN:$(CHAN):ACTIVE</pv>
+          <pv trig="true">$(PV_ROOT)CHAN:$(CHAN):ACTIVE</pv>
         </rule>
       </rules>
       <scale_options>
