@@ -7,7 +7,6 @@ import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.Waiting;
-import uk.ac.stfc.isis.ibex.ui.WaitingInfo;
 
 public class WaitForDaeChanges extends Waiting {
 	
@@ -23,7 +22,6 @@ public class WaitForDaeChanges extends Waiting {
 			public void propertyChange(PropertyChangeEvent evt) {
 				Boolean isInTransition = inTransition.getValue();
 				if (isInTransition != null) {
-					System.out.println("Iswaiting = " + isInTransition.booleanValue());
 					setIsWaiting(isInTransition);
 				}
 			}
@@ -33,11 +31,6 @@ public class WaitForDaeChanges extends Waiting {
 	@Override
 	public boolean isWaiting() {
 		return isWaiting;
-	}
-
-	@Override
-	public WaitingInfo getDetails() {
-		return new WaitingInfo("aaa");
 	}
 	
 	private void setIsWaiting(Boolean status) {
