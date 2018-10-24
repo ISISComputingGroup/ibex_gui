@@ -89,31 +89,54 @@
         <exp bool_exp="true">
           <value>pv0</value>
         </exp>
-        <pv trig="true">$(DAE):image1:ArraySize0_RBV</pv>
+        <pv trig="true">$(DAE):roi1:SizeX_RBV</pv>
       </rule>
       <rule name="Set data_height" prop_id="data_height" out_exp="true">
         <exp bool_exp="true">
           <value>pv0</value>
         </exp>
-        <pv trig="true">$(DAE):image1:ArraySize1_RBV</pv>
+        <pv trig="true">$(DAE):roi1:SizeY_RBV</pv>
       </rule>
       <rule name="Set x_max" prop_id="x_axis_maximum" out_exp="true">
         <exp bool_exp="true">
-          <value>pv0</value>
+          <value>pv0+pv1</value>
         </exp>
-        <pv trig="true">$(DAE):image1:ArraySize0_RBV</pv>
+        <pv trig="true">$(DAE):roi1:MinX_RBV</pv>
+        <pv trig="true">$(DAE):roi1:SizeX_RBV</pv>
       </rule>
       <rule name="Set y_max" prop_id="y_axis_maximum" out_exp="true">
         <exp bool_exp="true">
-          <value>pv0</value>
+          <value>pv0+pv1</value>
         </exp>
-        <pv trig="true">$(DAE):image1:ArraySize1_RBV</pv>
+        <pv trig="true">$(DAE):roi1:MinY_RBV</pv>
+        <pv trig="true">$(DAE):roi1:SizeY_RBV</pv>
       </rule>
       <rule name="Set max_colour" prop_id="maximum" out_exp="true">
         <exp bool_exp="true">
           <value>pv0</value>
         </exp>
-        <pv trig="true">$(DAE):INTG:SPEC:MAX</pv>
+        <pv trig="true">$(DAE):stats1:MaxValue_RBV</pv>
+      </rule>
+      <rule name="Set min_colour" prop_id="minimum" out_exp="true">
+        <exp bool_exp="false">
+          <value>pv0</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0.0</value>
+        </exp>
+        <pv trig="true">$(DAE):stats1:MinValue_RBV</pv>
+      </rule>
+      <rule name="Set x_min" prop_id="x_axis_minimum" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0</value>
+        </exp>
+        <pv trig="true">$(DAE):roi1:MinX_RBV</pv>
+      </rule>
+      <rule name="Set y_min" prop_id="y_axis_minimum" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0</value>
+        </exp>
+        <pv trig="true">$(DAE):roi1:MinY_RBV</pv>
       </rule>
     </rules>
     <scale_options>
