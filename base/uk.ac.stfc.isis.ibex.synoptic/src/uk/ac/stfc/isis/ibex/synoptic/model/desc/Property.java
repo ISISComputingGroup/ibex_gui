@@ -43,6 +43,13 @@ public class Property extends ModelObject {
 	public Property() {
 	}
 	
+	/**
+	 * Clones an existing property.
+	 */
+	public Property(Property other) {
+		this(other.key, other.value);
+	}
+	
     /**
      * Instantiates a new property.
      *
