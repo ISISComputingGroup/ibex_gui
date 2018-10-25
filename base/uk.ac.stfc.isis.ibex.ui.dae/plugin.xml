@@ -7,4 +7,10 @@
             class="uk.ac.stfc.isis.ibex.ui.dae.OnInstrumentSwitch">
       </InstrumentInfoReceiver>
    </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.wait">
+      <wait
+            class="uk.ac.stfc.isis.ibex.ui.dae.WaitForDaeChanges">
+      </wait>
+   </extension>
 </plugin>

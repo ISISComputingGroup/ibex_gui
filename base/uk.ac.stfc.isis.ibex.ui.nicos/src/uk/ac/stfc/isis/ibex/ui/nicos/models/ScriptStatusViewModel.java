@@ -36,14 +36,16 @@ public class ScriptStatusViewModel extends ModelObject {
     private static final ExecutionInstruction RESUME_INSTRUCTION =
             new ExecutionInstruction(ExecutionInstructionType.CONTINUE, null);
 
-	private static final String NOT_EXECUTING = "Execution finished.";
-	private static final String LINE_NUMBER_FORMAT = "Executing line %d.";
+	private static final String NOT_EXECUTING = "Execution finished";
+	private static final String LINE_NUMBER_FORMAT = "Executing line %d";
 
     private boolean enableButtons = false;
     private Color highlightColour = HIGHLIGHT;
 
     private ScriptStatus status = ScriptStatus.IDLE;
     private String lineNumberStr = "";
+    private String scriptNameStr = "";
+    private String combinedScriptInfoStr = "";
     private String toggleButtonText = "";
     private String statusReadback = "";
     private Image toggleButtonIcon = PAUSE_ICON;
@@ -59,12 +61,48 @@ public class ScriptStatusViewModel extends ModelObject {
         this.model = model;
 		
 		model.addPropertyChangeListener("lineNumber", e ->
-				setLineNumber(model.getLineNumber()));
-
-        model.addPropertyChangeListener("scriptStatus", e ->
-                setScriptStatus(model.getScriptStatus()));
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
+		
+		model.addPropertyChangeListener("scriptStatus", e ->
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
+		
+		model.addPropertyChangeListener("scriptName", e ->
+				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
 	}
 
+	
+	/**
+	 * Combine the script information with current line number, executing status and name into a single string.
+	 * 
+	 * @param lineNumber 
+	 * 				The line number, or -1 for a script that is not executing
+	 * @param status
+	 * 				The run state of the script server.
+	 * @param scriptName 
+	 * 				The name of the running script.
+	 * 
+	 */
+	private void setCombinedScriptInfo(int lineNumber, ScriptStatus status, String scriptName) {
+		setLineNumber(lineNumber);
+		setScriptStatus(status);
+		setScriptName(scriptName);
+		
+		String combinedScriptInfo = lineNumberStr + " (" + status.getDesc() + ") : " + scriptNameStr;
+		
+		firePropertyChange("combinedScriptInfo", combinedScriptInfoStr, combinedScriptInfoStr = combinedScriptInfo);
+	}
+	
+	/**
+	 * A formatted string with combined script information with current line number, executing status and name
+	 * that will be displayed on the GUI.
+	 * 
+	 * @return String
+	 * 				The combined script information with current line number, executing status and name.
+	 */
+	public String getCombinedScriptInfo() {
+		return combinedScriptInfoStr;
+	}
+	
 	/**
 	 * Sets the line number of the currently executing script.
 	 * 
@@ -80,6 +118,34 @@ public class ScriptStatusViewModel extends ModelObject {
 		}
 		
 		firePropertyChange("lineNumber", lineNumberStr, lineNumberStr = line);
+	}
+	
+	/**
+	 * A formatted string representation of the line number to display on the user interface.
+	 * 
+	 * @return a formatted string representation of the line number to display on the user interface
+	 */
+	public String getLineNumber() {
+		return lineNumberStr;
+	}
+	
+	/**
+	 * Sets the name of the currently executing script.
+	 * 
+	 * @param scriptName 
+	 * 				The name of the running script.
+	 */
+	private void setScriptName(String scriptName) {
+		firePropertyChange("scriptName", scriptNameStr, scriptNameStr = scriptName);
+	}
+    
+	/**
+	 * A formatted string representation of the current running script name to display on the user interface.
+	 * 
+	 * @return a formatted string representation of the current script name to display on the user interface
+	 */
+	public String getScriptName() {
+		return scriptNameStr;
 	}
 	
     /**
@@ -113,15 +179,6 @@ public class ScriptStatusViewModel extends ModelObject {
         }
     
     }
-
-	/**
-	 * A formatted string representation of the line number to display on the user interface.
-	 * 
-	 * @return a formatted string representation of the line number to display on the user interface
-	 */
-	public String getLineNumber() {
-		return lineNumberStr;
-	}
 
     /**
      * @return The icon on the toggle pause button
