@@ -18,7 +18,8 @@
 
    <includes
          id="org.eclipse.e4.tools.spies.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="both"/>
 
    <plugin
          id="org.eclipse.jdt.core"
