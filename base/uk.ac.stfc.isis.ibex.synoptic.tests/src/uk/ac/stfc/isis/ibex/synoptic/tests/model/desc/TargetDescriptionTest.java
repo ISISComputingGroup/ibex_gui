@@ -133,7 +133,7 @@ public class TargetDescriptionTest {
     	TargetDescription copied = new TargetDescription(source);
     	
         // Act (should not affect property of source).
-        copied.getProperties().get(0).setValue("COPIED");
+        copied.getProperties().get(0).setValue(copiedPropertyValue);
 
         // Assert
         assertEquals(source.getProperties().get(0).getValue(), sourcePropertyValue);
