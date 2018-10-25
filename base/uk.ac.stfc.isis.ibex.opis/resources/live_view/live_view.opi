@@ -48,7 +48,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>505</height>
+    <height>535</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -102,10 +102,10 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>775</width>
+    <width>799</width>
     <wuid>5b5fdf8f:166a5e61fa8:-77b9</wuid>
-    <x>9</x>
-    <y>6</y>
+    <x>0</x>
+    <y>0</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -124,7 +124,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>476</height>
+      <height>506</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -140,9 +140,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>773</width>
+      <width>797</width>
       <wuid>5b5fdf8f:166a5e61fa8:-77b8</wuid>
       <x>1</x>
       <y>1</y>
@@ -178,9 +178,9 @@
         <foreground_color>
           <color red="0" green="0" blue="0" />
         </foreground_color>
-        <graph_area_height>387</graph_area_height>
-        <graph_area_width>596</graph_area_width>
-        <height>433</height>
+        <graph_area_height>447</graph_area_height>
+        <graph_area_width>680</graph_area_width>
+        <height>493</height>
         <horizon_profile_x_pv_name></horizon_profile_x_pv_name>
         <horizon_profile_x_pv_value />
         <horizon_profile_y_pv_name></horizon_profile_y_pv_name>
@@ -268,7 +268,7 @@
         <vertical_profile_y_pv_name></vertical_profile_y_pv_name>
         <visible>true</visible>
         <widget_type>Intensity Graph</widget_type>
-        <width>691</width>
+        <width>775</width>
         <wuid>5b5fdf8f:166a5e61fa8:-72f5</wuid>
         <x>12</x>
         <x_axis_axis_color>
@@ -322,7 +322,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>476</height>
+      <height>506</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -338,9 +338,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>773</width>
+      <width>797</width>
       <wuid>5b5fdf8f:166a5e61fa8:-77b6</wuid>
       <x>1</x>
       <y>1</y>
@@ -376,9 +376,9 @@
         <foreground_color>
           <color red="0" green="0" blue="0" />
         </foreground_color>
-        <graph_area_height>291</graph_area_height>
-        <graph_area_width>458</graph_area_width>
-        <height>337</height>
+        <graph_area_height>333</graph_area_height>
+        <graph_area_width>524</graph_area_width>
+        <height>379</height>
         <horizon_profile_x_pv_name>loc://hpx</horizon_profile_x_pv_name>
         <horizon_profile_x_pv_value />
         <horizon_profile_y_pv_name>loc://hpy</horizon_profile_y_pv_name>
@@ -466,7 +466,7 @@
         <vertical_profile_y_pv_name>loc://vpy</vertical_profile_y_pv_name>
         <visible>true</visible>
         <widget_type>Intensity Graph</widget_type>
-        <width>553</width>
+        <width>619</width>
         <wuid>5b5fdf8f:166a5e61fa8:-725b</wuid>
         <x>162</x>
         <x_axis_axis_color>
@@ -646,10 +646,10 @@ $(pv_value)</tooltip>
         <trigger_pv_value />
         <visible>true</visible>
         <widget_type>XY Graph</widget_type>
-        <width>511</width>
+        <width>571</width>
         <wuid>5b5fdf8f:166a5e61fa8:-725a</wuid>
-        <x>156</x>
-        <y>354</y>
+        <x>162</x>
+        <y>396</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -716,7 +716,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color red="0" green="0" blue="255" />
         </foreground_color>
-        <height>337</height>
+        <height>379</height>
         <name>XY Graph_Side</name>
         <plot_area_background_color>
           <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -820,7 +820,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>476</height>
+      <height>506</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -838,7 +838,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>773</width>
+      <width>797</width>
       <wuid>5b5fdf8f:166a5e61fa8:-77b4</wuid>
       <x>1</x>
       <y>1</y>
@@ -3651,10 +3651,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>775</width>
+    <width>799</width>
     <wuid>5b5fdf8f:166a5e61fa8:-72bb</wuid>
-    <x>9</x>
-    <y>522</y>
+    <x>0</x>
+    <y>534</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
