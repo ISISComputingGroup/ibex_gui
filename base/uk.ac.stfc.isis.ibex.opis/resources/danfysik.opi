@@ -455,7 +455,7 @@ $(pv_value)</tooltip>
       <alarm_pulsing>false</alarm_pulsing>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+        <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
       </background_color>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <border_color>
