@@ -28,7 +28,7 @@ public enum ScriptStatus {
     /**
      * Nothing started, last script raised exception.
      */
-    IDLEEXC(-2, "Idle (last script failed)"),
+    IDLEEXC(-2, "Idle - last script failed"),
 
     /**
      * Nothing started.
