@@ -122,6 +122,23 @@ public class TargetDescriptionTest {
         assertEquals(TargetType.OPI, source.type());
         assertEquals(TargetType.COMPONENT, copied.type());
     }
+    
+    @Test
+    public void copied_object_has_macros_that_are_not_linked_to_source_object() {
+    	final String sourcePropertyValue = "SOURCE";
+    	final String copiedPropertyValue = "COPIED";
+    	
+    	// Arrange
+    	source.getProperties().get(0).setValue(sourcePropertyValue);
+    	TargetDescription copied = new TargetDescription(source);
+    	
+        // Act (should not affect property of source).
+        copied.getProperties().get(0).setValue(copiedPropertyValue);
+
+        // Assert
+        assertEquals(source.getProperties().get(0).getValue(), sourcePropertyValue);
+        assertEquals(copied.getProperties().get(0).getValue(), copiedPropertyValue);
+    }
 
     @Test
     public void copied_object_has_same_properties_as_source_object_with_no_name_changes() {
