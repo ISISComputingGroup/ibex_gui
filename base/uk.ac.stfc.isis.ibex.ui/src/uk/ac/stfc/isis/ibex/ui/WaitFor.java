@@ -19,13 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -38,12 +37,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
 
 /**
  * The Class WaitFor which is a handler which will show and hide the wait for the server dialogue.
  */
 public class WaitFor {
+	
+	private static final Logger LOG = IsisLog.getLogger(WaitFor.class);
 	
 	private WaitForDialog dialog;	
 		
@@ -80,26 +83,21 @@ public class WaitFor {
 			try {
 				Waiting waiter = (Waiting) element.createExecutableExtension("class");	
 				waiters.add(waiter);
-				waiter.addPropertyChangeListener("isWaiting", showWaitDialogListener(waiter));
+				waiter.addPropertyChangeListener("isWaiting", evt -> updateWait());
 			} catch (CoreException e) {
-				e.printStackTrace();
+				LoggerUtils.logErrorWithStackTrace(LOG, 
+						String.format("Error while configuring WaitFor: %s", e.getMessage()), e);
 			}
 		}
 	}
-
+	
 	/**
-	 * Show wait dialog listener, which will trigger the wait dialogue if the listener changes.
-	 *
-	 * @param waiter the waiter
-	 * @return the property change listener
+	 * Updates whether the waiting dialog should be displayed or not, based on whether any
+	 * waiters are in a waiting state.
 	 */
-	private PropertyChangeListener showWaitDialogListener(final Waiting waiter) {
-		return new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				Display.getDefault().asyncExec(handleWait(waiter));
-			}
-		};
+	private void updateWait() {
+		boolean shouldDisplayDialog = waiters.stream().anyMatch(Waiting::isWaiting);
+		Display.getDefault().asyncExec(shouldDisplayDialog ? this::doWait : this::stopWait);
 	}
 	
 	/**
@@ -131,30 +129,10 @@ public class WaitFor {
 	/**
 	 * Gets the registered extensions.
 	 *
-	 * @return the registered
+	 * @return the registered configuration elements (i.e. the plugins which implement this extension point).
 	 */
 	private IConfigurationElement[] getRegistered() {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		return registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.ui.wait");		
-	}
-
-	/**
-	 * Handle waiting status change in a waiter.
-	 *
-	 * @param waiter the waiter that has changed
-	 * @return the runnable to use to either stop the wait or show the dialogue
-	 */
-	private Runnable handleWait(final Waiting waiter) {
-		return new Runnable() {
-			@Override
-            public void run() {
-				boolean isWaiting = waiter.isWaiting();
-				if (isWaiting) {
-					doWait();
-				} else {
-					stopWait();
-				}						
-			}
-		};
 	}
 }
