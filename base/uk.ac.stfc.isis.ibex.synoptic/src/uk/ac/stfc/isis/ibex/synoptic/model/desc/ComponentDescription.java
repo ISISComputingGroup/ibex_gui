@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -98,10 +99,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
         this.type = other.type;
         this.target = other.target != null ? new TargetDescription(other.target) : null;
 
-        this.pvs = new ArrayList<>();
-        for (PV pv : other.pvs) {
-            this.pvs.add(new PV(pv));
-        }
+        this.pvs = other.pvs().stream().map(PV::new).collect(Collectors.toList());
 
         this.components = new ArrayList<>();
         for (ComponentDescription cd : other.components) {
