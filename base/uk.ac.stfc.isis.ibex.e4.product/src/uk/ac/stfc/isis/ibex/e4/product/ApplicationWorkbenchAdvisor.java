@@ -26,40 +26,47 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
-
-    org.eclipse.ui.application.IWorkbenchConfigurer configurer;
 	
 	private static final String DIALOG_BOX_TITLE = "Close the application?";
 	private static final String DIALOG_QUESTION = "Are you sure you want to close this application?";
 	
+	/**
+	 * Override the workbench window advisor from an E3 one to an E4 one.
+	 * 
+	 * Leaving it as an E3 one causes extra menus to appear from CS-Studio.
+	 * 
+	 * @return the E4 Application Workbench Window Advisor.
+	 */
     @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         return new ApplicationWorkbenchWindowAdvisor(configurer);
     }
 
+    /**
+     * Gets the initial perspective to display.
+     * 
+     * @return null, this causes eclipse to not display a default perspective as we handle this ourselves.
+     */
 	@Override
     public String getInitialWindowPerspectiveId() {
 		return null;
 	}
 	
 	@Override
-	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
-	    super.initialize(configurer);
-        this.configurer = configurer;
+	public void preStartup() {
+		getWorkbenchConfigurer().setSaveAndRestore(false);
 	}
 	
+	/**
+	 * Tasks to do before shutdown.
+	 * 
+	 * @return true to actually perform the shutdown, false otherwise.
+	 */
 	@Override
 	public boolean preShutdown() {
-		Instrument.getInstance().setInitial();
-		
-        // set save and restore true here to make sure we save settings
-        // these are actually restored in ApplicationWorkbenchWindowAdvisor
-        configurer.setSaveAndRestore(true);
-
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+        getWorkbenchConfigurer().setSaveAndRestore(false);
 		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}
 }
