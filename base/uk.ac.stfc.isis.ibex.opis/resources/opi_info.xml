@@ -26,7 +26,12 @@
                 <type>CHOPPER</type>
                 <path>Mk3Chopper/multiple_choppers.opi</path>
                 <description>The OPI for the Mk3 chopper. No properties required.</description>
-                <macros />
+                <macros>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
+                </macros>
                 <categories>
                     <category>Choppers</category>
                 </categories>
@@ -761,6 +766,10 @@
                         <name>NUMBER</name>
                         <description>The chopper number (e.g. CH1).</description>
                     </macro>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
                 </macros>
                 <categories>
                     <category>Choppers</category>
@@ -1079,7 +1088,7 @@
             <key>Live View</key>
             <value>
                 <type>DAE</type>
-                <path>live_view.opi</path>
+                <path>live_view/live_view.opi</path>
                 <description>The OPI for a live view of the detector</description>
                 <macros>
                     <macro>
@@ -1605,5 +1614,35 @@
                 <macros />
             </value>
         </entry>
+        <entry>
+            <key>Muon Separator PSU</key>
+            <value>
+                <type>POWER_SUPPLY</type>
+                <path>muon_overviews/separator_status.opi</path>
+                <categories>
+                    <category>Power supplies</category>
+                </categories>
+                <description>The OPI for the Muon separator PSU.</description>
+                <macros>
+                    <macro>
+                        <name>SEPRTR</name>
+                        <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
+                    </macro>
+                </macros>
+            </value>
+        </entry>
+        <entry>        
+      <key>Induction Furnace</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>FURNACE</type>
+        <path>induction_furnace.opi</path>
+        <description>The OPI for the GEM/POLARIS induction furnace</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
     </opis>
 </descriptions>

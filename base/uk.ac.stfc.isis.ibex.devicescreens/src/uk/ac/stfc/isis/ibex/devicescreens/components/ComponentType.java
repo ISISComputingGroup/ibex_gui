@@ -144,14 +144,14 @@ public enum ComponentType {
     SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE,
-	/** Generic Power Supply. */
+    /** Generic Power Supply. */
     POWER_SUPPLY,
-  /** Oscilloscope. */
+    /** Oscilloscope. */
     OSCILLOSCOPE,
-	/** Moxa ioLogik e1210 Remote I/O. */
-	MOXA_1210,
-	/** Furnace temperature controller. */
-	FURNACE;
+    /** Moxa ioLogik e1210 Remote I/O. */
+    MOXA_1210,
+    /** Furnace temperature controller. */
+    FURNACE;
 
 	private Target target;
 

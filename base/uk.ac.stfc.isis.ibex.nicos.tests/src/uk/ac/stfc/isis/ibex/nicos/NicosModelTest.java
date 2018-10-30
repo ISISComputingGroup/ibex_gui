@@ -405,6 +405,24 @@ public class NicosModelTest {
     }
     
     @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_script_name_extracted() {
+    	connectSuccessfully();
+    	
+    	ReceiveScriptStatus response = new ReceiveScriptStatus();
+    	
+        response.status = Arrays.asList(0, 0);
+        response.script = "Contents of script";
+    	response.scriptname = "My Script";
+    	
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals("My Script", model.getScriptName());
+    	
+    }
+    
+    @Test
     public void GIVEN_successful_connection_WHEN_get_script_status_THEN_queued_scripts_extracted() {
         connectSuccessfully();
         
