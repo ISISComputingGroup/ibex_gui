@@ -1,0 +1,213 @@
+
+
+Perspective Switcher ->uk.ac.stfc.isis.ibex.ui.perspectiveswitcher/icons
+
+reset icon designed by Freepik at www.flaticon.com 
+
+
+
+Scripting ->uk.ac.stfc.isis.ibex.ui.scripting/icons
+
+alarm icon designed by Freepik from www.flaticon.com
+
+
+
+Beam Status ->uk.ac.stfc.isis.ibex.ui.beamstatus/icons
+
+status_24x24 designed by Freepik from www.flaticon.com
+status_32x24 designed by Freepik from www.flaticon.com
+
+
+
+DAE ->uk.ac.stfc.isis.ibex.ui.dae/icons
+
+server16_24x24 designed by Freepik from www.flaticon.com
+server16_32x24 designed by Freepik from www.flaticon.com
+cancel designed by Eleonor Wang at www.flaticon.com
+gauge designed by Freepik at www.flaticon.com
+info designed by Freepik at www.flaticon.com
+monitor designed by Freepik at www.flaticon.com
+pause designed by Hanan at www.flaticon.com
+play designed by Hanan at www.flaticon.com
+plot designed by Freepik at www.flaticon.com
+resume designed by Freepik at www.flaticon.com
+save designed by Freepik at www.flaticon.com
+server16_24x24 designed by Freepik at www.flaticon.com
+server16_34x24 designed by Freepik at www.flaticon.com
+setup designed by Hanan at www.flaticon.com
+stop designed by Hanan at www.flaticon.com
+store designed by Picol at www.flaticon.com
+undo designed by Freepik at www.flaticon.com
+update designed by Freepik at www.flaticon.com
+veto designed by Freepik at www.flaticon.com
+
+
+
+Device Screens ->uk.ac.stfc.isis.ibex.ui.devicescreens/icons
+
+checkbox designed by Smashicons at www.flaticon.com
+navigate_cross designed by Smashicons at www.flaticon.com
+screen_32x24 designed by Freepik at www.flaticon.com
+
+Device Screen Components ->uk.ac.stfc.isis.ibex.ui.devicescreens.icons/components
+
+Synoptic components created designed by ISIS Computing Group
+
+
+
+Experiment Details ->uk.ac.stfc.isis.ibex.ui.experimentdetails/icons
+
+file148_32x24 designed by Freepik at www.flaticon.com
+file148_24x24 designed by Freepik at www.flaticon.com
+text102_24x24 designed by Freepik at www.flaticon.com
+usertext designed by Hanan designed by www.flaticon.com
+
+
+
+Journal Viewer ->uk.ac.stfc.isis.ibex.ui.journalviewer/icons
+
+journal_viewer_32x24.png designed by Freepik at www.flaticon.com
+
+
+
+Log Plotter ->uk.ac.stfc.isis.ibex.ui.logplotter/icons
+
+databrowsing designed by Freepik at www.flaticon.com
+stocks2_24x24 designed by Freepik at www.flaticon.com
+stocks2_32x24 designed by Freepik at www.flaticon.com
+
+
+
+Motor ->uk.ac.stfc.isis.ibex.ui.motor/icons
+
+gears6_24x24 designed by Freepik at www.flaticon.com
+gears6_32x24 designed by Freepik at www.flaticon.com
+arrow_left_green designed by Picol at www.flaticon.com
+arrow_left_minimal designed by Picol at www.flaticon.com
+arrow_right_green designed by Picol at www.flaticon.com
+arrow_right_minimal designed by Picol at www.flaticon.com
+big_cog_16 designed by Picol at www.flaticon.com
+big_cog designed by Picol at www.flaticon.com
+cog designed by Picol at www.flaticon.com
+home_minimal designed by Freepik at www.flaticon.com
+house designed by Freepik at www.flaticon.com
+lower_limit_minimal designed by Picol at www.flaticon.com
+lower_limit designed by Picol at www.flaticon.com
+upper_limit_minimal designed by Picol at www.flaticon.com
+upper_limit designed by Picol at www.flaticon.com
+
+
+
+NICOS ->uk.ac.stfc.isis.ibex.ui.nicos/icons
+
+open designed by Freepik at www.flaticon.com
+save designed by Freepik at www.flaticon.com
+pause designed by Hanan at www.flaticon.com
+play designed by Hanan at www.flaticon.com
+resume designed by Freepik at www.flaticon.com
+script_server_32x24 designed by Smashicons at www.flaticon.com
+stop designed by Hanan at www.flaticon.com
+
+
+
+Scripting ->uk.ac.stfc.isis.ibex.ui.scripting/icons
+
+script_24x24 designed by Smashicons at www.flaticon.com
+script_32x24 designed by Smashicons at www.flaticon.com
+scripting designed by Smashicons at www.flaticon.com
+
+
+
+Synoptic Perspective ->uk.ac.stfc.isis.ibex.ui.synoptic/icons
+
+tick designed by Eleonor Wang at www.flaticon.come
+earth3_24x24 designed by Freepik at www.flaticon.com
+earth16_24x24 designed by Freepik at www.flaticon.com
+earth16_32x24 designed by Freepik at www.flaticon.com
+navigate_left designed by Hanan at www.flaticon.come
+navigate_right designed by Hanan at www.flaticon.come
+navigate_up designed by Hanan at www.flaticon.come
+
+Synoptic Editor ->uk.ac.stfc.isis.ibex.ui.synoptic.editor/icons
+
+edit designed by Freepik at www.flaticon.com
+pencil43_24x24 designed by Freepik at www.flaticon.com
+settings4_24x24 designed by Freepik at www.flaticon.com
+settings_32x24 designed by Freepik at www.flaticon.com
+
+
+
+IOC Log ->uk.ac.stfc.isis.ibex.ui.log/icons
+
+delete designed by Eleonor Wang at www.flaticon.com
+log_32x24 designed by Freepik at www.flaticon.com
+log designed by Freepik at www.flaticon.com
+search designed by Hanan at www.flaticon.com
+
+
+
+Client Product ->uk.ac.stfc.isis.ibex.e4.client.product/icons
+
+ico designed by ISIS Computing Goup
+
+
+
+Product ->uk.ac.stfc.isis.ibex.e4.product/icons
+
+IBEX-icon-web16,24,32,48,64 designed by ISIS Computing Group
+
+
+
+Alarm ->uk.ac.stfc.isis.ibex.ui.alarm/icons
+
+alarm designed by Freepik at www.flaticon.com
+refresh designed by Freepik at www.flaticon.com
+alarm_bell_24x24 designed by Freepik at www.flaticon.com
+alarm_bell_32x24 designed by Freepick at www.flaticon.com
+
+--
+
+Blocks ->uk.ac.stfc.isis.ibex.ibex.uk.blocks/icons
+
+blocks design by Freepik at www.flaticon.com 
+cube design by Freepik at www.flaticon.com 
+dustbin design by Freepik at www.flaticon.com 
+group design by Freepik at www.flaticon.com 
+large_block design by Freepik at www.flaticon.com 
+large_blocks design by Freepik at www.flaticon.com 
+minus design by Freepik at www.flaticon.com 
+plus design by Freepik at www.flaticon.com 
+show design by Freepik at www.flaticon.com 
+
+
+
+IOC Control ->uk.ac.stfc.isis.ibex.ui.ioccontrol/icons
+
+Running.png designed by ISIS Computing Group
+Stopped.png designed by ISIS Computing Group
+
+
+
+Script Generator ->uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons
+
+hammer_32x24 designed by Freepik at www.flaticon.com
+
+
+
+UI ->uk.ac.stfc.isis.ibex.ui/icons
+
+WaitPanel_Background designed by ISIS Computing Group
+move_down designed by Freepik at www.flaticon.com
+move_left designed by Freepik at www.flaticon.com
+move_right designed by Freepik at www.flaticon.com
+move_up designed by Freepik at www.flaticon.com
+warning_icons designed by Freepik at www.flaticon.com
+
+
+
+Web Links
+
+->ui.weblinks/icons
+external1_24x24 designed by Freepik at www.flaticon.com
+external1_32x24 designed by Freepik at www.flaticon.com
+info designed by Freepik at www.flaticon.com
