@@ -65,10 +65,7 @@ public class ExperimentSetup {
 	private ExperimentSetupViewModel experimentSetupViewModel;
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
-	private final int timeToDisplayDialog = 2;
-    private SendingChangesDialog sendingChanges;
-
-    private PropertyChangeListener experimentalChangeListener;
+	private PropertyChangeListener experimentalChangeListener;
     private PropertyChangeListener resetChangeLabelsListener;
 
     private UpdatedValue<Boolean> modelIsRunningProperty;
@@ -98,8 +95,6 @@ public class ExperimentSetup {
     @PostConstruct
     @SuppressWarnings("checkstyle:magicnumber")
     public void createPart(final Composite parent) {
-
-        sendingChanges = new SendingChangesDialog(parent.getShell(), timeToDisplayDialog);
         
         ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         scrolled.setExpandHorizontal(true);
@@ -121,7 +116,6 @@ public class ExperimentSetup {
             public void widgetSelected(SelectionEvent e) {
                 try {
                     viewModel.experimentSetup().updateDae();
-                    sendingChanges.open();
                     applyChangesToUI();
                 } catch (Exception err) {
                     // Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.

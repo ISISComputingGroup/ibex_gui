@@ -17,23 +17,34 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui;
+package uk.ac.stfc.isis.ibex.ui.help;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.swt.widgets.Shell;
 
-public class WaitingInfo extends ModelObject {
-
-	private String reason;
-
-	public WaitingInfo(String reason) {
-		this.reason = reason;
+/*
+ * The handler for opening the icon licences information panel. 
+ */
+public class IconLicencesHandler {
+	
+	/**
+	 * Opens the 'Icon Licences' dialog window in help menu.
+	 * @param shell The shell to open 'Icon Licences' window in help menu.
+	 */
+	@Execute
+	public void execute(Shell shell) {
+		IconLicencesDialogBox dialog = new IconLicencesDialogBox(shell);
+		dialog.open();
 	}
 	
-	public String getReason() {
-		return reason;
+	/**
+	 * Help menu option always available (not instrument dependent).
+	 * @return True
+	 */
+	@CanExecute
+	public boolean canExecute() {
+		return true;
 	}
-	
-	public void setReason(String reason) {
-		firePropertyChange("reason", this.reason, this.reason = reason);
-	}
+
 }

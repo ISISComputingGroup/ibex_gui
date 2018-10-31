@@ -157,7 +157,7 @@ public class TimeChannelsPanel extends Composite {
         viewModelListeners.put("timeChannelFile", new PropertyChangeListener() {        
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText());
+                Display.getDefault().asyncExec(() -> timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText()));
             }
         });
         
