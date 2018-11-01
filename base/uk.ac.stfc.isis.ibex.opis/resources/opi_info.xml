@@ -1644,5 +1644,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+		<key>Vertical Jaws</key>
+		<value>
+			<categories>
+				<category>Jaws and slits</category>
+			</categories>
+			<type>JAWS</type>
+			<path>jaws/vertical_jaws.opi</path>
+			<description>The OPI for an OSIRIS Jaw set.</description>
+			<macros>
+				<macro>
+					<name>J</name>
+					<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>		
     </opis>
 </descriptions>
