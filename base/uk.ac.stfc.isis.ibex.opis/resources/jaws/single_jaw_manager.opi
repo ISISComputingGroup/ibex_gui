@@ -1297,7 +1297,16 @@ $(pv_value)</tooltip>
       <pv_name>$(P)MOT:JAWS$(NUMBER):HCENT</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules />
+      <rules>
+        <rule name="Jaws moving highlight" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Motor_Moving" red="0" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):HCENT:DMOV</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
