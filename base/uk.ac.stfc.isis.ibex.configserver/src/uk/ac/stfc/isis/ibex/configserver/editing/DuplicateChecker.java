@@ -75,7 +75,7 @@ public class DuplicateChecker {
     private void addConfigBlocks() {
         allBlocks = new HashMap<String, Set<String>>();
         for (Block block : baseConfig.getBlocks()) {
-            if (!block.hasComponent()) {
+            if (!block.inComponent()) {
                 String name = block.getName().toUpperCase();
                 Set<String> source = new HashSet<>();
                 source.add(baseConfig.getName() + " (base configuration)");

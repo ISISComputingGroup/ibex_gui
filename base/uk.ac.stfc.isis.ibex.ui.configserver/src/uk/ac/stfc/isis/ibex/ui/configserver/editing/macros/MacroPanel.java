@@ -46,8 +46,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	private Collection<Macro> displayMacros;
 	private IocMacroDetailsPanel details;
 	
-	private boolean canEditMacros;
-	
     /**
      * Constructor for the Macro panel.
      * 
@@ -61,7 +59,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		details = new IocMacroDetailsPanel(this, SWT.NONE);
-		details.setEnabled(false);
 	}
 	
     /**
@@ -75,11 +72,10 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
      *            Whether the macros can be edited.
      */
 	public void setMacros(final Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
-		this.canEditMacros = canEdit;
 		this.displayMacros = makeDisplayMacroList(setMacros, availableMacros);
 		
 		displayMacros = sortMacroCollectionByName(displayMacros);
-		details.setMacros(displayMacros, canEditMacros);
+		details.setMacros(displayMacros, canEdit);
 	}
 
 	@Override

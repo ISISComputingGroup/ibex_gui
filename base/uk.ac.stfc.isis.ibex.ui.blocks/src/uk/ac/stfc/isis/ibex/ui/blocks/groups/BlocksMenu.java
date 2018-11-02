@@ -121,7 +121,7 @@ public class BlocksMenu extends MenuManager {
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
 
         String editBlockLabel = EDIT_BLOCK_PREFIX;
-        if (this.block.hasComponent()) {
+        if (this.block.inComponent()) {
             editBlockLabel += COMPONENT_SUFFIX;
         } else {
             editBlockLabel += CONFIGURATION_SUFFIX;

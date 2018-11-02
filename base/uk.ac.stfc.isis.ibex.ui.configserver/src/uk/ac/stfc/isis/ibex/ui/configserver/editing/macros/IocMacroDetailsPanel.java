@@ -79,12 +79,9 @@ public class IocMacroDetailsPanel extends Composite {
      */
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
+		setLayout(new GridLayout(1, false));
 		
-        Composite cmpTable = new Composite(this, SWT.NONE);
-        cmpTable.setLayout(new GridLayout(1, false));
-
-        displayMacrosTable = new MacroTable(cmpTable, SWT.NONE, SWT.FULL_SELECTION);
+        displayMacrosTable = new MacroTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
@@ -95,13 +92,13 @@ public class IocMacroDetailsPanel extends Composite {
                 if (selection.size() > 0) {
                     Macro macro = (Macro) selection.getFirstElement();
                     name.setText(macro.getName());
-                    setMacro(macro, true);
+                    setSelectedMacro(macro);
                     value.setFocus();
                 }
             }
         });
 
-        Composite cmpSelectedPv = new Composite(cmpTable, SWT.NONE);
+        Composite cmpSelectedPv = new Composite(this, SWT.NONE);
         cmpSelectedPv.setLayout(new GridLayout(3, false));
         cmpSelectedPv.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
@@ -167,8 +164,7 @@ public class IocMacroDetailsPanel extends Composite {
 		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
 		valueStrategy.setBeforeSetValidator(valueValidator);
 		
-		setValueEditable(false);
-		setEnabled(canEdit);
+		setValueEditable(canEdit);
 		
 		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
 				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
@@ -183,13 +179,11 @@ public class IocMacroDetailsPanel extends Composite {
 	 * Set a new selected macro.
 	 * 
 	 * @param macro The macro to set
-	 * @param canEdit If the macro is editable
 	 */
-	public void setMacro(Macro macro, boolean canEdit) {		
+	public void setSelectedMacro(Macro macro) {		
 		this.macro = macro;
 		
 		valueValidator.setMacro(macro);
-		setValueEditable(canEdit);
 
         // Remove binding to previous macro
         macroBindingContext.dispose();
@@ -197,12 +191,6 @@ public class IocMacroDetailsPanel extends Composite {
 
         macroBindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value),
                 BeanProperties.value("value").observe(macro), valueStrategy, null);
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		displayMacrosTable.setEnabled(enabled);
 	}
 	
 	private void setValueEditable(boolean enabled) {

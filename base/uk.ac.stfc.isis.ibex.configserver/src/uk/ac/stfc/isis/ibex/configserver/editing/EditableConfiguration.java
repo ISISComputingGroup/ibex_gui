@@ -167,7 +167,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Block block : config.getBlocks()) {
             EditableBlock eb = new EditableBlock(block);
             allBlocks.add(eb);
-            if (!block.hasComponent()) {
+            if (!block.inComponent()) {
                 makeBlockAvailable(eb);
             }
             addRenameListener(eb);
