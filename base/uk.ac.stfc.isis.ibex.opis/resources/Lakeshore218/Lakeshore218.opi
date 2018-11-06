@@ -137,7 +137,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <border_width>1</border_width>
     <enabled>true</enabled>
     <foreground_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <height>511</height>
     <horizontal_tabs>true</horizontal_tabs>
@@ -289,7 +289,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <axis_count>2</axis_count>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_alarm_sensitive>false</border_alarm_sensitive>
         <border_color>
@@ -305,7 +305,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <height>471</height>
         <name>XY Graph_1</name>
         <plot_area_background_color>
-          <color red="255" green="255" blue="255" />
+          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
         </plot_area_background_color>
         <pv_name></pv_name>
         <pv_value />
@@ -588,7 +588,7 @@ $(trace_0_y_pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-1ef363dc:166d4c4e76f:-79de</wuid>
@@ -597,27 +597,27 @@ $(trace_0_y_pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
         </border_color>
-        <border_style>0</border_style>
+        <border_style>13</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>113</height>
+        <height>145</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Linking Container</name>
-        <opi_file>../uk.ac.stfc.isis.ibex.opis/resources/Lakeshore218_graph_options.opi</opi_file>
+        <name>Enable/Disable Plotted Temperatures</name>
+        <opi_file>Lakeshore218_graph_options.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -629,7 +629,7 @@ $(trace_0_y_pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>182</width>
+        <width>235</width>
         <wuid>-1ef363dc:166d4c4e76f:-4c8d</wuid>
         <x>6</x>
         <y>6</y>
@@ -638,7 +638,7 @@ $(trace_0_y_pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -669,7 +669,7 @@ $(trace_0_y_pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-1ef363dc:166d4c4e76f:-79da</wuid>
@@ -678,7 +678,7 @@ $(trace_0_y_pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
@@ -687,13 +687,13 @@ $(trace_0_y_pv_value)</tooltip>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>193</height>
+        <height>205</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
