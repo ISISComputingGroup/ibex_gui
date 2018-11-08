@@ -151,8 +151,10 @@ public enum ComponentType {
     /** Moxa ioLogik e1210 Remote I/O. */
     MOXA_1210,
     /** Furnace temperature controller. */
-    FURNACE;
-
+    FURNACE,
+	/** Water bath position valve. */
+	WATER_BATH_VALVE;
+	
 	private Target target;
 
     /**

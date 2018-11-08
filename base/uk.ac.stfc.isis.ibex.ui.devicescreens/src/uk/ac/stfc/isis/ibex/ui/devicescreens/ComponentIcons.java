@@ -169,6 +169,8 @@ public final class ComponentIcons {
                 return "moxa_1210";
             case FURNACE:
                 return "furnace";
+            case WATER_BATH_VALVE:
+            	return "water_bath_valve";
             default:
                 return "cog";
         }
