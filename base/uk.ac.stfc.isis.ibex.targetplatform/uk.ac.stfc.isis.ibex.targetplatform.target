@@ -25,18 +25,18 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.py4j.feature.feature.group" version="0.10.8.1-bnd-BaEoUg"/>
-<repository location="https://eclipse.py4j.org/"/>
+<repository location="http://eclipse.py4j.org/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.201804041854"/>
-<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201804041845"/>
-<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201804041845"/>
-<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201804041854"/>
-<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201804041845"/>
-<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201804041845"/>
-<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.201804041854"/>
-<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201804041854"/>
-<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201804041854"/>
+<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.201810181418"/>
+<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201810181418"/>
+<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201810181418"/>
+<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201810181418"/>
+<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201810181418"/>
+<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201810181418"/>
+<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.201810181418"/>
+<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201810181418"/>
+<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201810181418"/>
 <repository location="http://download.controlsystemstudio.org/updates/4.5"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
