@@ -18,11 +18,11 @@
 
    <includes
          id="uk.ac.stfc.isis.ibex.feature.css"
-         version="0.0.0"/>
+         version="1.0.0.qualifier"/>
 
    <includes
          id="uk.ac.stfc.isis.ibex.feature.spies"
-         version="0.0.0"/>
+         version="1.0.0.qualifier"/>
 
    <plugin
          id="uk.ac.stfc.isis.ibex.e4.client"
