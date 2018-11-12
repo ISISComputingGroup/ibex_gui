@@ -262,7 +262,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <axis_0_title_font>
           <opifont.name fontName="Arial" height="9" style="1" pixels="false">ISIS_Header4</opifont.name>
         </axis_0_title_font>
-        <axis_0_visible>false</axis_0_visible>
+        <axis_0_visible>true</axis_0_visible>
         <axis_1_auto_scale>true</axis_1_auto_scale>
         <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
         <axis_1_axis_color>
@@ -287,7 +287,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         </axis_1_title_font>
         <axis_1_visible>true</axis_1_visible>
         <axis_count>2</axis_count>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
@@ -302,7 +302,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <foreground_color>
           <color red="0" green="0" blue="255" />
         </foreground_color>
-        <height>471</height>
+        <height>463</height>
         <name>Temperature Graph</name>
         <plot_area_background_color>
           <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -367,15 +367,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <scripts />
         <show_legend>true</show_legend>
         <show_plot_area_border>false</show_plot_area_border>
-        <show_toolbar>true</show_toolbar>
+        <show_toolbar>false</show_toolbar>
         <title></title>
         <title_font>
           <fontdata fontName="Arial" height="12" style="1" pixels="false" />
         </title_font>
         <tooltip>$(trace_0_y_pv)
 $(trace_0_y_pv_value)</tooltip>
-        <trace_0_anti_alias>true</trace_0_anti_alias>
-        <trace_0_buffer_size>100</trace_0_buffer_size>
+        <trace_0_anti_alias>false</trace_0_anti_alias>
+        <trace_0_buffer_size>1000</trace_0_buffer_size>
         <trace_0_concatenate_data>true</trace_0_concatenate_data>
         <trace_0_line_width>1</trace_0_line_width>
         <trace_0_name>TEMP1</trace_0_name>
@@ -396,7 +396,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_0_y_pv>$(PV_ROOT):TEMP1</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_1_anti_alias>true</trace_1_anti_alias>
-        <trace_1_buffer_size>100</trace_1_buffer_size>
+        <trace_1_buffer_size>1000</trace_1_buffer_size>
         <trace_1_concatenate_data>true</trace_1_concatenate_data>
         <trace_1_line_width>1</trace_1_line_width>
         <trace_1_name>TEMP2</trace_1_name>
@@ -417,8 +417,8 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_1_y_pv>$(PV_ROOT):TEMP2</trace_1_y_pv>
         <trace_1_y_pv_value />
         <trace_2_anti_alias>true</trace_2_anti_alias>
-        <trace_2_buffer_size>100</trace_2_buffer_size>
-        <trace_2_concatenate_data>false</trace_2_concatenate_data>
+        <trace_2_buffer_size>1000</trace_2_buffer_size>
+        <trace_2_concatenate_data>true</trace_2_concatenate_data>
         <trace_2_line_width>1</trace_2_line_width>
         <trace_2_name>TEMP3</trace_2_name>
         <trace_2_plot_mode>0</trace_2_plot_mode>
@@ -438,7 +438,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_2_y_pv>$(PV_ROOT):TEMP3</trace_2_y_pv>
         <trace_2_y_pv_value />
         <trace_3_anti_alias>true</trace_3_anti_alias>
-        <trace_3_buffer_size>100</trace_3_buffer_size>
+        <trace_3_buffer_size>1000</trace_3_buffer_size>
         <trace_3_concatenate_data>true</trace_3_concatenate_data>
         <trace_3_line_width>1</trace_3_line_width>
         <trace_3_name>TEMP4</trace_3_name>
@@ -459,7 +459,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_3_y_pv>$(PV_ROOT):TEMP4</trace_3_y_pv>
         <trace_3_y_pv_value />
         <trace_4_anti_alias>true</trace_4_anti_alias>
-        <trace_4_buffer_size>100</trace_4_buffer_size>
+        <trace_4_buffer_size>1000</trace_4_buffer_size>
         <trace_4_concatenate_data>true</trace_4_concatenate_data>
         <trace_4_line_width>1</trace_4_line_width>
         <trace_4_name>TEMP5</trace_4_name>
@@ -480,7 +480,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_4_y_pv>$(PV_ROOT):TEMP5</trace_4_y_pv>
         <trace_4_y_pv_value />
         <trace_5_anti_alias>true</trace_5_anti_alias>
-        <trace_5_buffer_size>100</trace_5_buffer_size>
+        <trace_5_buffer_size>1000</trace_5_buffer_size>
         <trace_5_concatenate_data>true</trace_5_concatenate_data>
         <trace_5_line_width>1</trace_5_line_width>
         <trace_5_name>TEMP6</trace_5_name>
@@ -501,7 +501,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_5_y_pv>$(PV_ROOT):TEMP6</trace_5_y_pv>
         <trace_5_y_pv_value />
         <trace_6_anti_alias>false</trace_6_anti_alias>
-        <trace_6_buffer_size>100</trace_6_buffer_size>
+        <trace_6_buffer_size>1000</trace_6_buffer_size>
         <trace_6_concatenate_data>true</trace_6_concatenate_data>
         <trace_6_line_width>1</trace_6_line_width>
         <trace_6_name>TEMP7</trace_6_name>
@@ -522,7 +522,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_6_y_pv>$(PV_ROOT):TEMP7</trace_6_y_pv>
         <trace_6_y_pv_value />
         <trace_7_anti_alias>true</trace_7_anti_alias>
-        <trace_7_buffer_size>100</trace_7_buffer_size>
+        <trace_7_buffer_size>1000</trace_7_buffer_size>
         <trace_7_concatenate_data>true</trace_7_concatenate_data>
         <trace_7_line_width>1</trace_7_line_width>
         <trace_7_name>TEMP8</trace_7_name>
@@ -548,9 +548,9 @@ $(trace_0_y_pv_value)</tooltip>
         <trigger_pv_value />
         <visible>true</visible>
         <widget_type>XY Graph</widget_type>
-        <width>773</width>
+        <width>763</width>
         <wuid>-1ef363dc:166d4c4e76f:-79ab</wuid>
-        <x>6</x>
+        <x>12</x>
         <y>6</y>
       </widget>
     </widget>
