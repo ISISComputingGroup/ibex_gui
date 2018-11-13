@@ -307,19 +307,6 @@
             </value>
         </entry>
         <entry>
-            <key>Julabo FL300</key>
-            <value>
-                <type>JULABO</type>
-                <path>JulaboFL300.opi</path>
-                <description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Water baths</category>
-                    <category>Temperature controllers</category>
-                </categories>
-            </value>
-        </entry>
-        <entry>
             <key>Single Stage</key>
             <value>
                 <type>SINGLESTAGE</type>
