@@ -39,6 +39,6 @@ public class EditableBlock extends Block {
 	 * @return True if the block can be edited.
 	 */
 	public boolean isEditable() {
-		return !hasComponent();
+		return !inComponent();
 	}
 }

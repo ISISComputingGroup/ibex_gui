@@ -65,7 +65,7 @@ public class DuplicateCheckerTest {
         Block block = mock(Block.class);
         when(block.getName()).thenReturn(name);
         when(block.getComponent()).thenReturn(component);
-        when(block.hasComponent()).thenReturn(component.isEmpty() ? false : component.length() > 0);
+        when(block.inComponent()).thenReturn(component.isEmpty() ? false : component.length() > 0);
         return block;
     }
 

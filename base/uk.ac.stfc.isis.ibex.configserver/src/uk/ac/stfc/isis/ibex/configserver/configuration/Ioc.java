@@ -80,6 +80,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 		this.autostart = other.getAutostart();
 		this.simlevel = other.getSimLevel();
 		this.restart = other.getRestart();
+		this.component = other.getComponent();
 		
 		for (PVSet set : other.getPvSets()) {
 			pvsets.add(new PVSet(set));
@@ -225,7 +226,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
     /**
      * @return Whether this block is part of a component.
      */
-	public boolean hasComponent() {
+	public boolean inComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}
 	
