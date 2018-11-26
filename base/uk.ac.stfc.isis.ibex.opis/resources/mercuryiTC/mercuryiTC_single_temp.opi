@@ -37,7 +37,7 @@
     <actions hook="false" hook_all="false" />
     <active_tab>0</active_tab>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -46,7 +46,7 @@
     <border_width>1</border_width>
     <enabled>true</enabled>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <height>487</height>
     <horizontal_tabs>true</horizontal_tabs>
@@ -63,7 +63,7 @@
     </scale_options>
     <scripts />
     <tab_0_background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_0_background_color>
     <tab_0_enabled>true</tab_0_enabled>
     <tab_0_font>
@@ -75,7 +75,7 @@
     <tab_0_icon_path></tab_0_icon_path>
     <tab_0_title>Current Values</tab_0_title>
     <tab_1_background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_1_background_color>
     <tab_1_enabled>true</tab_1_enabled>
     <tab_1_font>
@@ -199,7 +199,7 @@
         <foreground_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
-        <height>397</height>
+        <height>391</height>
         <name></name>
         <plot_area_background_color>
           <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
