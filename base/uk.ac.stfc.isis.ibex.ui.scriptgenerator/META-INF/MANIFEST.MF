@@ -13,4 +13,5 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
  org.eclipse.jface,
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ javax.annotation;bundle-version="1.2.0"
