@@ -61,7 +61,11 @@
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="enablement_of_PID_Settings.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(PV_ROOT):PID:AUTO</pv>
+      </path>
+    </scripts>
     <tab_0_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_0_background_color>
@@ -85,7 +89,7 @@
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_1_foreground_color>
     <tab_1_icon_path></tab_1_icon_path>
-    <tab_1_title>Control</tab_1_title>
+    <tab_1_title>Settings</tab_1_title>
     <tab_count>2</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
@@ -97,7 +101,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -852,7 +856,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Heater Output:</text>
+          <text>Heater output:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -869,7 +873,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -889,7 +893,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Control</name>
+      <name>Settings</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1084,7 +1088,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Temperature:</text>
+          <text>Setpoint:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1243,7 +1247,7 @@ $(pv_value)</tooltip>
           <width>73</width>
           <wrap_words>true</wrap_words>
           <wuid>4fdc1aa2:158de06471b:-7587</wuid>
-          <x>-2</x>
+          <x>3</x>
           <y>108</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1284,7 +1288,7 @@ $(pv_value)</tooltip>
           <width>73</width>
           <wrap_words>true</wrap_words>
           <wuid>4fdc1aa2:158de06471b:-741b</wuid>
-          <x>-2</x>
+          <x>3</x>
           <y>89</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1432,7 +1436,16 @@ $(pv_value)</tooltip>
           <pv_name>$(PV_ROOT):P:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="Rule" prop_id="background_color" out_exp="false">
+              <exp bool_exp="pv0=&quot;OFF&quot;">
+                <value>
+                  <color name="Dark Gray Border" red="190" green="190" blue="190" />
+                </value>
+              </exp>
+              <pv trig="true">$(PV_ROOT):PID:AUTO</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -1543,7 +1556,7 @@ $(pv_value)</tooltip>
           <width>73</width>
           <wrap_words>true</wrap_words>
           <wuid>4fdc1aa2:158de06471b:-75ab</wuid>
-          <x>-2</x>
+          <x>3</x>
           <y>72</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1575,7 +1588,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>PID Control:</text>
+          <text>Auto PID:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1584,7 +1597,7 @@ $(pv_value)</tooltip>
           <width>73</width>
           <wrap_words>true</wrap_words>
           <wuid>42a2523d:1674fc14987:-7e2b</wuid>
-          <x>6</x>
+          <x>3</x>
           <y>40</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1615,7 +1628,7 @@ $(pv_value)</tooltip>
           <name>Output_text_1</name>
           <precision>3</precision>
           <precision_from_pv>false</precision_from_pv>
-          <pv_name>$(PV_ROOT):FLOW:STAT:SP:RBV</pv_name>
+          <pv_name>$(PV_ROOT):PID:AUTO</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1664,7 +1677,7 @@ $(pv_value)</tooltip>
           <horizontal>true</horizontal>
           <items_from_pv>true</items_from_pv>
           <name>Choice Button</name>
-          <pv_name>$(PV_ROOT):FLOW:STAT:SP</pv_name>
+          <pv_name>$(PV_ROOT):PID:AUTO:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -1816,7 +1829,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>42a2523d:1674fc14987:-7f59</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>102</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1909,7 +1922,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>42a2523d:1674fc14987:-7f57</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>132</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2002,7 +2015,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>42a2523d:1674fc14987:-7f55</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>192</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2034,7 +2047,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Output Setpoint:</text>
+          <text>Setpoint:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2095,7 +2108,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>-7d8c0c3:160fede6a8a:-7e30</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>5</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -2261,7 +2274,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>-7d8c0c3:160fede6a8a:-7f99</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>162</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2334,7 +2347,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Heater Control:</text>
+          <text>Heater control:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2395,7 +2408,7 @@ $(pv_value)</tooltip>
           <width>57</width>
           <wrap_words>false</wrap_words>
           <wuid>42a2523d:1674fc14987:-7e46</wuid>
-          <x>107</x>
+          <x>114</x>
           <y>35</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
@@ -2514,7 +2527,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Gas Control:</text>
+          <text>Gas control:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2572,10 +2585,10 @@ $(pv_value)</tooltip>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Text Update</widget_type>
-          <width>49</width>
+          <width>61</width>
           <wrap_words>false</wrap_words>
           <wuid>42a2523d:1674fc14987:-7e4a</wuid>
-          <x>96</x>
+          <x>90</x>
           <y>5</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
@@ -2727,10 +2740,10 @@ $(pv_value)</tooltip>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Text Update</widget_type>
-          <width>49</width>
+          <width>61</width>
           <wrap_words>false</wrap_words>
           <wuid>-7d8c0c3:160fede6a8a:-7e7b</wuid>
-          <x>96</x>
+          <x>90</x>
           <y>32</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
