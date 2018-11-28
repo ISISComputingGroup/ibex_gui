@@ -16,10 +16,6 @@
       [Enter License Description here.]
    </license>
 
-   <includes
-         id="org.csstudio.core.utility.feature"
-         version="0.0.0"/>
-
    <plugin
          id="org.csstudio.logging"
          download-size="0"
@@ -289,7 +285,7 @@
          id="org.apache.batik.css"
          download-size="0"
          install-size="0"
-         version="1.7.0.201011041433"
+         version="1.7.0"
          unpack="false"/>
 
    <plugin
@@ -1108,7 +1104,7 @@
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
-         version="1.7.0.201011041433"
+         version="1.7.0"
          unpack="false"/>
 
 </feature>
