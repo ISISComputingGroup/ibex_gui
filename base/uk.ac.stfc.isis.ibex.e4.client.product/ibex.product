@@ -14,12 +14,8 @@
       <programArgs>--launcher.XXMaxPermSize
 256M
       </programArgs>
-      <vmArgs>-Xms40m
+      <vmArgs>-Xms40m 
 -Xmx512m
---add-modules=ALL-SYSTEM
---add-modules java.se.ee
---add-modules java.xml.bind
---add-opens=java.base/java.lang=ALL-UNNAMED
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

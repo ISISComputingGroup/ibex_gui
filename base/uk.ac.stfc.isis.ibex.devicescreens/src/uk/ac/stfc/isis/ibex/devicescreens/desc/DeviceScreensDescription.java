@@ -28,8 +28,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.xml.sax.SAXException;
-
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
@@ -111,9 +109,6 @@ public class DeviceScreensDescription {
         try {
             return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
-            e.printStackTrace();
-            return e.toString();
-        } catch (SAXException e) {
             e.printStackTrace();
             return e.toString();
         }

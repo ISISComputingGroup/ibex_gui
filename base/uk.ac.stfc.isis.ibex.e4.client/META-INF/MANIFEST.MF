@@ -31,6 +31,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.journalviewer;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-10
 Bundle-Vendor: ISIS
 

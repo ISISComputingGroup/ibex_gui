@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.model.workbench,
  org.csstudio.trends.databrowser2;bundle-version="4.2.4",
  uk.ac.stfc.isis.ibex.logger
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.eclipse.wb.swt

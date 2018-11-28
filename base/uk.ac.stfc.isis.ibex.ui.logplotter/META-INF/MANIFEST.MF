@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.diirt.datasource;bundle-version="3.1.7",
  org.diirt.vtype;bundle-version="3.1.7",
  org.eclipse.ui.workbench
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-10
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.logplotter
 Import-Package: com.google.common.base,

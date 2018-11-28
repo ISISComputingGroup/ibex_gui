@@ -59,7 +59,7 @@ public final class XMLUtil {
      */
     @SuppressWarnings("unchecked")
     public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(clazz);
+        JAXBContext context = JAXBContext.newInstance(XMLUtil.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
         return (T) unmarshaller.unmarshal(xml);
@@ -98,7 +98,7 @@ public final class XMLUtil {
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
-            throws JAXBException, SAXException {
+            throws JAXBException {
         
         return XMLUtil.toXml(toConvert, clazz, null);
     }
@@ -122,15 +122,19 @@ public final class XMLUtil {
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
-            throws JAXBException, SAXException {
+            throws JAXBException {
         Schema schema = null; // Null means no validation
         
         if (!Strings.isNullOrEmpty(rawSchema)) {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
+            try {
+            	schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
+            } catch (SAXException e) {
+                throw new JAXBException(e.getMessage(), e);
+            }
         }
         
-        JAXBContext context = JAXBContext.newInstance(clazz);
+        JAXBContext context = JAXBContext.newInstance(XMLUtil.class);
         Marshaller marshaller = context.createMarshaller();
         StringWriter writer = new StringWriter();
         marshaller.setSchema(schema);
