@@ -59,7 +59,7 @@ public final class XMLUtil {
      */
     @SuppressWarnings("unchecked")
     public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(XMLUtil.class);
+        JAXBContext context = JAXBContext.newInstance(clazz);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
         return (T) unmarshaller.unmarshal(xml);
