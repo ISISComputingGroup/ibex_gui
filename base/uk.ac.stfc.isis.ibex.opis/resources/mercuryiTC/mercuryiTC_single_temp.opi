@@ -62,7 +62,7 @@
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts>
-      <path pathString="enablement_of_settings.py" checkConnect="true" sfe="false" seoe="false">
+      <path pathString="enablement_of_controls.py" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">$(PV_ROOT):PID:AUTO</pv>
         <pv trig="true">$(PV_ROOT):FLOW:STAT:SP:RBV</pv>
         <pv trig="true">$(PV_ROOT):HEATER:STAT:SP:RBV</pv>

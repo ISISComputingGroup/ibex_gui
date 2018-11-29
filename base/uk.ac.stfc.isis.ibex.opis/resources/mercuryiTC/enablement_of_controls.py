@@ -1,11 +1,18 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
+# Get values from input PVs specified in "Attach Script" dialogue box for OPI
+
 auto_pid_pv = pvs[0].getValue().value
 auto_gas_pv = pvs[1].getValue().value
 auto_heater_pv = pvs[2].getValue().value
 
 
+# Define list of widgets whose properties are to be controlled
+
 pid_controls = [display.getWidget("P_setpoint"), display.getWidget("I_setpoint"), display.getWidget("D_setpoint")]
+
+
+# Set properties according to value of PV
 
 if auto_pid_pv == "ON":
     for control in pid_controls:
@@ -17,6 +24,8 @@ elif auto_pid_pv == "OFF":
         control.setPropertyValue("enabled", "true")
         control.setPropertyValue("transparent", "false")
 
+
+# -------------------------------------------------------
 
 gas_controls = [display.getWidget("Flow_setpoint")]
 
@@ -30,6 +39,8 @@ elif auto_gas_pv == "Manual":
         control.setPropertyValue("enabled", "true")
         control.setPropertyValue("transparent", "false")
 
+
+# -------------------------------------------------------
 
 heater_controls = [display.getWidget("Output_setpoint")]
 
