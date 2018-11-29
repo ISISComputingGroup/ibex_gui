@@ -17,4 +17,5 @@ Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.instrument.pv
 Bundle-Activator: uk.ac.stfc.isis.ibex.instrument.Instrument
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.instrument
 

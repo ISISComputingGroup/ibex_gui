@@ -11,3 +11,4 @@ Import-Package: uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.dae,
  uk.ac.stfc.isis.ibex.ui.dae.experimentsetup
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dae.tests

@@ -15,3 +15,4 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator;bundle-version="1.0.0",
  org.eclipse.jface,
  org.eclipse.ui.workbench,
  javax.annotation;bundle-version="1.2.0"
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scriptgenerator

@@ -8,3 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-10
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito;bundle-version="1.9.5",
  uk.ac.stfc.isis.ibex.ui
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.tests

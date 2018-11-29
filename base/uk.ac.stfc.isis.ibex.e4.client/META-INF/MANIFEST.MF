@@ -33,4 +33,5 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Bundle-Vendor: ISIS
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.client
 

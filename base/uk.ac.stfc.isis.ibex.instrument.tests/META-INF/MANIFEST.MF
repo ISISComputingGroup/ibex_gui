@@ -9,3 +9,4 @@ Require-Bundle: org.junit,
  org.mockito;bundle-version="1.9.5",
  uk.ac.stfc.isis.ibex.instrument
 Import-Package: uk.ac.stfc.isis.ibex.instrument.pv
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.instrument.tests

@@ -16,3 +16,4 @@ Bundle-ClassPath: .,
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.logger
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.databases

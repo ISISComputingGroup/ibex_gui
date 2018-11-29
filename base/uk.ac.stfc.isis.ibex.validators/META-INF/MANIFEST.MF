@@ -14,3 +14,4 @@ Import-Package: org.apache.logging.log4j,
  org.eclipse.core.databinding.validation,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.logger
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.validators

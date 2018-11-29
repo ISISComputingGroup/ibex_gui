@@ -31,3 +31,4 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.motor.displayoptions,
  uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .
 Import-Package: org.eclipse.e4.ui.di
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.motor

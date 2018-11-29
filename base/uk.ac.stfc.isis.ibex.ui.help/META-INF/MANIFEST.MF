@@ -15,3 +15,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.ui.help
 Import-Package: com.google.common.io
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.help

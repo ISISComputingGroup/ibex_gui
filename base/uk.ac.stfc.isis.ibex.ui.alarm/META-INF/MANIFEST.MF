@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.ui.alarm
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.alarm

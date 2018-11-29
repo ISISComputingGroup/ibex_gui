@@ -42,3 +42,4 @@ Export-Package: uk.ac.stfc.isis.ibex.configserver;
 Import-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.validators
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.configserver

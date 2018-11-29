@@ -14,3 +14,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-10
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.banner,
  uk.ac.stfc.isis.ibex.banner.motion
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.banner

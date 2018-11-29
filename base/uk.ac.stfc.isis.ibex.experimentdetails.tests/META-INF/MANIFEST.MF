@@ -9,3 +9,4 @@ Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito;bundle-version="1.9.5"
 Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.experimentdetails
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.experimentdetails.tests

@@ -8,3 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-10
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito;bundle-version="1.9.5"
 Import-Package: uk.ac.stfc.isis.ibex.synoptic.model.desc
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests

@@ -26,3 +26,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.eclipse.wb.swt
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.beamstatus

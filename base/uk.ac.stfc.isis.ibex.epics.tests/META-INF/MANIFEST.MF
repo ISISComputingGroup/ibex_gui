@@ -9,3 +9,4 @@ Require-Bundle: org.mockito,
  org.junit,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.instrument
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics.tests

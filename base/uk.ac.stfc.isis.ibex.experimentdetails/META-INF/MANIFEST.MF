@@ -22,3 +22,4 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.logger
 Bundle-ClassPath: .
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.experimentdetails

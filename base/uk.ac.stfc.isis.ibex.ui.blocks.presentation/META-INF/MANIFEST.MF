@@ -18,3 +18,4 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.blocks.presentation
 Import-Package: uk.ac.stfc.isis.ibex.configserver.configuration
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.blocks.presentation

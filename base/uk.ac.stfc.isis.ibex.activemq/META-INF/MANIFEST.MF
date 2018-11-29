@@ -18,3 +18,4 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
 Bundle-ClassPath: .,
  lib/activemq-all-5.15.4.jar
 Import-Package: org.apache.logging.log4j
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.activemq

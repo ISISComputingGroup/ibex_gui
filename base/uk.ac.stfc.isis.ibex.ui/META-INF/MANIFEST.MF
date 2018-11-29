@@ -32,3 +32,4 @@ Bundle-ClassPath: lib/opal-1.0.0.jar,
  .
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.UI
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui

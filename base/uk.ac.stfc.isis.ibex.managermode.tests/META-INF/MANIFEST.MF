@@ -11,3 +11,4 @@ Import-Package: junit.framework,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.managermode
 Bundle-RequiredExecutionEnvironment: JavaSE-10
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.managermode.tests

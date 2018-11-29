@@ -28,3 +28,4 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.ui.configserver.commands
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.synoptic.editor

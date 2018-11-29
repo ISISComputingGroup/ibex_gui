@@ -12,3 +12,4 @@ Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.scriptgenerator.estimate,
  uk.ac.stfc.isis.ibex.scriptgenerator.row,
  uk.ac.stfc.isis.ibex.scriptgenerator.settings
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.scriptgenerator

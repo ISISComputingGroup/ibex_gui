@@ -26,3 +26,4 @@ Export-Package: uk.ac.stfc.isis.ibex.synoptic,
  uk.ac.stfc.isis.ibex.synoptic.model.desc,
  uk.ac.stfc.isis.ibex.synoptic.model.targets,
  uk.ac.stfc.isis.ibex.synoptic.navigation
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.synoptic

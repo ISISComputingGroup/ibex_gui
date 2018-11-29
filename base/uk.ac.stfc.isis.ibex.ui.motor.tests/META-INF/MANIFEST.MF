@@ -9,3 +9,4 @@ Require-Bundle: org.junit,
  org.mockito;bundle-version="1.9.5"
 Import-Package: org.eclipse.swt.graphics,
  uk.ac.stfc.isis.ibex.motor
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.motor.tests

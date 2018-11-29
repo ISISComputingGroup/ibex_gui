@@ -21,3 +21,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Import-Package: org.apache.logging.log4j
 Export-Package: uk.ac.stfc.isis.ibex.ui.devicescreens
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.devicescreens

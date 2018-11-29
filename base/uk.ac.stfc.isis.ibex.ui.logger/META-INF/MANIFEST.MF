@@ -15,3 +15,4 @@ Import-Package: org.eclipse.core.databinding,
  org.eclipse.e4.core.di.annotations,
  org.eclipse.jface.databinding.swt,
  uk.ac.stfc.isis.ibex.logger
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.logger

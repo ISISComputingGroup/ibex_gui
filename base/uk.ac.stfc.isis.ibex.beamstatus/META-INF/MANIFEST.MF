@@ -14,3 +14,4 @@ Require-Bundle: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.beamstatus
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.beamstatus

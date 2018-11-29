@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.ui,
  javax.annotation;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-10
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.journalviewer

@@ -20,3 +20,4 @@ Import-Package: uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.widgets.models
 Export-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol
 Bundle-ClassPath: .
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.ioccontrol

@@ -7,4 +7,5 @@ Fragment-Host: uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Require-Bundle: org.mockito;bundle-version="1.9.5",
  org.junit;bundle-version="4.10.0"
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.synoptic.tests
 
