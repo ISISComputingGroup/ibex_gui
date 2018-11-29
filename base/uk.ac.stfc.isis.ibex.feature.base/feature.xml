@@ -18,11 +18,19 @@
 
    <includes
          id="uk.ac.stfc.isis.ibex.feature.css"
-         version="1.0.0.qualifier"/>
+         version="0.0.0"/>
 
    <includes
          id="uk.ac.stfc.isis.ibex.feature.spies"
-         version="1.0.0.qualifier"/>
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.e4.rcp"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.rcp"
+         version="0.0.0"/>
 
    <plugin
          id="uk.ac.stfc.isis.ibex.e4.client"
@@ -789,5 +797,12 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.apache.felix.scr"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
