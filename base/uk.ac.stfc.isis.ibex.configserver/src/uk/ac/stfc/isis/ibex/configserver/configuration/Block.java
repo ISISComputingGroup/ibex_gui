@@ -309,7 +309,7 @@ public class Block extends ModelObject implements IRuncontrol, INamed {
      * 
      * @return whether the block belongs to a component
      */
-	public boolean hasComponent() {
+	public boolean inComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}
 	

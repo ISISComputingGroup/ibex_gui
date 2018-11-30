@@ -180,7 +180,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				EditableBlock block = table.firstSelectedRow();
-                if (!block.hasComponent()) {
+                if (!block.inComponent()) {
                     openEditBlockDialog(block);
                 }
 			}

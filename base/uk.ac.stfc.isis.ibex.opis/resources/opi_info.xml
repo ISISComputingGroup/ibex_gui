@@ -307,19 +307,6 @@
             </value>
         </entry>
         <entry>
-            <key>Julabo FL300</key>
-            <value>
-                <type>JULABO</type>
-                <path>JulaboFL300.opi</path>
-                <description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Water baths</category>
-                    <category>Temperature controllers</category>
-                </categories>
-            </value>
-        </entry>
-        <entry>
             <key>Single Stage</key>
             <value>
                 <type>SINGLESTAGE</type>
@@ -1644,5 +1631,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+		<key>Vertical Jaws</key>
+		<value>
+			<categories>
+				<category>Jaws and slits</category>
+			</categories>
+			<type>JAWS</type>
+			<path>jaws/vertical_jaws.opi</path>
+			<description>The OPI for an OSIRIS Jaw set.</description>
+			<macros>
+				<macro>
+					<name>J</name>
+					<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>		
     </opis>
 </descriptions>

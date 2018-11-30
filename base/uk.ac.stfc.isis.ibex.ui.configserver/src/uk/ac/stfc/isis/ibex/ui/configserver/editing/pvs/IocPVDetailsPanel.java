@@ -129,7 +129,6 @@ public class IocPVDetailsPanel extends Composite {
 			return;
 		}
 		
-        setEnabled(ioc.isEditable());
         setTextEnabled(ioc.isEditable());
 		
 		bindingContext = new DataBindingContext();
@@ -141,12 +140,6 @@ public class IocPVDetailsPanel extends Composite {
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
 		
 		updateAvailablePVs();
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		availablePVTable.setEnabled(enabled);
 	}
 	
 	private void setTextEnabled(boolean enabled) {
