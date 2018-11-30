@@ -24,7 +24,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  org.diirt.datasource,
  org.csstudio.platform.libs.jdbc,
  uk.ac.stfc.isis.ibex.e4.ui,
- org.eclipse.equinox.registry
+ org.eclipse.equinox.registry,
+ javax.xml.bind;bundle-version="2.2.0"
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

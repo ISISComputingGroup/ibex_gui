@@ -40,7 +40,9 @@ import com.google.common.base.Strings;
  * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
-    
+	
+	private static final String JAXB_CONTEXT_CLASS_PATH = "javax/xml/bind/JAXBContext.class";
+	
     private XMLUtil() {
     }
 
@@ -59,10 +61,45 @@ public final class XMLUtil {
      */
     @SuppressWarnings("unchecked")
     public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(clazz);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        return (T) unmarshaller.unmarshal(xml);
+        JAXBContext context = getJaxbContext(clazz);
+    	Unmarshaller unmarshaller = context.createUnmarshaller();
+	    return (T) unmarshaller.unmarshal(xml);
+    }
+    
+    /**
+     * Gets a JAXBContext, given a class which JAXB should marshal/unmarshal XML to.
+     * 
+     * This method performs a check on the provided class' classloader, to check it is
+     * loading javax.xml.bind from the right place. If this check isn't done the error
+     * will just occur further down the call stack and be harder to diagnose.
+     * 
+     * @param clazz the clazz on which to base this JAXB context.
+     * @return the JAXBContext
+     * @throws JAXBException if an error was thrown by JAXB or the provided class did not
+     * pass the classloader check.
+     */
+    private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
+    	String javaxXmlPath = clazz.getClassLoader().getResource(JAXB_CONTEXT_CLASS_PATH).toString();
+    	
+    	if (javaxXmlPath.contains("jrt:/")) {
+    		// This is a really tricky bug - if you hit this condition, it's because the class calling
+    		// this method has loaded javax.xml.bind from core java instead of getting it from the
+    		// explicit dependency plugin. This will cause issues later on with more obscure error messages
+    		// if you remove this condition.
+    		//
+    		// Steps to fix this issue are:
+    		// - Find the offending class (reported below)
+    		// - Find the plugin in which it is defined
+    		// - In the plugin folder look in META-INF/MANIFEST.MF
+    		// - Under the "dependencies" tab, check that you depend on "javax.xml.bind" explicitly.
+    		// - If you still get issues, move javax.xml.bind above any other packages in the dependency list
+    		throw new JAXBException(String.format("Class '%s' is using classloader '%s', which loads '%s' from core java (path: '%s').\n"
+    				+ "This will no longer be supported in java 11 onwards, so should not be used.\n"
+    				+ "Additionally it will cause a class cast exception when attempting to load a JAXB context.",
+    				clazz.getName(), clazz.getClassLoader(), JAXB_CONTEXT_CLASS_PATH, javaxXmlPath));
+    	}
+    	
+    	return JAXBContext.newInstance(clazz);
     }
 
     /**
@@ -134,7 +171,7 @@ public final class XMLUtil {
             }
         }
         
-        JAXBContext context = JAXBContext.newInstance(XMLUtil.class);
+        JAXBContext context = getJaxbContext(clazz);
         Marshaller marshaller = context.createMarshaller();
         StringWriter writer = new StringWriter();
         marshaller.setSchema(schema);
