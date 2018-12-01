@@ -13,6 +13,7 @@
    <launcherArgs>
       <programArgs>--launcher.XXMaxPermSize
 256M
+-clearPersistedState
       </programArgs>
       <vmArgs>-Xms40m 
 -Xmx512m
