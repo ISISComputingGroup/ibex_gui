@@ -32,9 +32,12 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
@@ -42,6 +45,8 @@ import com.google.common.base.Strings;
 public final class XMLUtil {
 	
 	private static final String JAXB_CONTEXT_CLASS_PATH = "javax/xml/bind/JAXBContext.class";
+	
+	private static final Logger LOG = IsisLog.getLogger(XMLUtil.class);
 	
     private XMLUtil() {
     }
@@ -79,9 +84,9 @@ public final class XMLUtil {
      * pass the classloader check.
      */
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-    	String javaxXmlPath = clazz.getClassLoader().getResource(JAXB_CONTEXT_CLASS_PATH).toString();
-    	
-    	if (javaxXmlPath.contains("jrt:/")) {
+    	try {
+    	    return JAXBContext.newInstance(clazz);
+    	} catch (JAXBException e) {
     		// This is a really tricky bug - if you hit this condition, it's because the class calling
     		// this method has loaded javax.xml.bind from core java instead of getting it from the
     		// explicit dependency plugin. This will cause issues later on with more obscure error messages
@@ -93,13 +98,14 @@ public final class XMLUtil {
     		// - In the plugin folder look in META-INF/MANIFEST.MF
     		// - Under the "dependencies" tab, check that you depend on "javax.xml.bind" explicitly.
     		// - If you still get issues, move javax.xml.bind above any other packages in the dependency list
-    		throw new JAXBException(String.format("Class '%s' is using classloader '%s', which loads '%s' from core java (path: '%s').\n"
-    				+ "This will no longer be supported in java 11 onwards, so should not be used.\n"
-    				+ "Additionally it will cause a class cast exception when attempting to load a JAXB context.",
-    				clazz.getName(), clazz.getClassLoader(), JAXB_CONTEXT_CLASS_PATH, javaxXmlPath));
+    		ClassLoader classLoader = clazz.getClassLoader();
+    		String javaxXmlPath = classLoader.getResource(JAXB_CONTEXT_CLASS_PATH).toString();
+    		
+    		LOG.error("Exception thrown when JAXBContext was being initialized.");
+    		LOG.error(String.format("Called from: '%s', using classloader '%s'", clazz.getName(), classLoader));
+    		LOG.error(String.format("Classloader '%s' loads class '%s' from '%s'", classLoader, JAXB_CONTEXT_CLASS_PATH, javaxXmlPath));
+    		throw e;
     	}
-    	
-    	return JAXBContext.newInstance(clazz);
     }
 
     /**

@@ -15,7 +15,6 @@ Bundle-ClassPath: .,
  .,
  resources/
 Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
- javax.xml;bundle-version="1.3.4",
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
