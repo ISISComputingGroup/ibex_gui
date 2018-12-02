@@ -4,9 +4,8 @@ Bundle-Name: Instrument
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.instrument;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-10
-Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
- org.eclipse.ui,
- uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
+Require-Bundle: org.eclipse.ui,
+ uk.ac.stfc.isis.ibex.epics,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,

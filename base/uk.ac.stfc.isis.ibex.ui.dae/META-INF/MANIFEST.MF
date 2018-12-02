@@ -4,7 +4,8 @@ Bundle-Name: Dae
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.dae;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.dae.DaeUI
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets,
@@ -20,11 +21,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.core.contexts,
  org.eclipse.swt,
- uk.ac.stfc.isis.ibex.validators,
- javax.annotation;bundle-version="1.2.0"
+ uk.ac.stfc.isis.ibex.validators
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae,
  uk.ac.stfc.isis.ibex.ui.dae.experimentsetup
-Import-Package: uk.ac.stfc.isis.ibex.instrument
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dae

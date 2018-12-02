@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.managermode.PasswordHasher;
 /**
  *
  */
-public class ManagerModeModelTests {
+public class ManagerModeModelTest {
 
     private ManagerModeModel model;
 

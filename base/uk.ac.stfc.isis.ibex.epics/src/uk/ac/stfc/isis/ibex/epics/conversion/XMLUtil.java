@@ -91,25 +91,22 @@ public final class XMLUtil {
     	List<ClassLoader> classloaders = List.of(
     			clazz.getClassLoader(),
     			XMLUtil.class.getClassLoader(),
-    			JAXBContext.class.getClassLoader(),
-    			Thread.currentThread().getContextClassLoader(), 
-    			ClassLoader.getPlatformClassLoader(), 
-    			ClassLoader.getSystemClassLoader()
+    			Thread.currentThread().getContextClassLoader()
     	);
     	
-    	Map<ClassLoader, Throwable> errors = new HashMap<>();
+    	Map<String, Throwable> errors = new HashMap<>();
     	
     	for (ClassLoader classloader : classloaders) {
     		try {
         		return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), classloader);
-        	} catch (JAXBException | RuntimeException | NoClassDefFoundError e) {
-        		errors.put(classloader, e);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used classloader %s", classloader), e);
         	}
     	}
     	
-    	for (Map.Entry<ClassLoader, Throwable> entry : errors.entrySet()) {
+    	for (var entry : errors.entrySet()) {
     		LoggerUtils.logErrorWithStackTrace(LOG, 
-    				String.format("Attempted to use classloader %s, got exception: %s", entry.getKey(), entry.getValue().getMessage()), entry.getValue());
+    				String.format("%s, got exception: %s", entry.getKey(), entry.getValue().getMessage()), entry.getValue());
     		
     		if (entry.getValue().getCause() != null) {
     			LoggerUtils.logErrorWithStackTrace(LOG, "Caused by: " + entry.getValue().getCause().getMessage(), entry.getValue().getCause());

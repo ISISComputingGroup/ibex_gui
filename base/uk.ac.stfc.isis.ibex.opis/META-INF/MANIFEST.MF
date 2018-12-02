@@ -5,17 +5,8 @@ Bundle-Name: Opis
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.opis;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.opis.Opi
-Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
- javax.persistence;bundle-version="1.0.0",
- javax.activation;bundle-version="1.1.0",
- org.eclipse.persistence.moxy;bundle-version="2.7.3",
- org.eclipse.persistence.asm;bundle-version="6.2.0",
- org.eclipse.persistence.antlr;bundle-version="3.5.2",
- org.eclipse.persistence.core;bundle-version="2.7.3",
- org.eclipse.persistence.jpa;bundle-version="2.7.3",
- org.eclipse.persistence.sdo;bundle-version="2.7.3",
+Require-Bundle: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  org.csstudio.opibuilder;bundle-version="5.1.0";visibility:=reexport,
- uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
@@ -26,5 +17,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-10
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.opis,
  uk.ac.stfc.isis.ibex.opis.desc
-Bundle-ClassPath: .
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.opis

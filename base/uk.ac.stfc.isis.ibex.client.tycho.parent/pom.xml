@@ -32,6 +32,9 @@
 				<extensions>true</extensions>
 			</plugin>
 
+			<!-- 
+			We are not using JACOCO at the moment.
+			
             <plugin>
               <groupId>org.jacoco</groupId>
               <artifactId>jacoco-maven-plugin</artifactId>
@@ -52,6 +55,7 @@
                 </execution>
               </executions>
             </plugin>
+            -->
             
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
