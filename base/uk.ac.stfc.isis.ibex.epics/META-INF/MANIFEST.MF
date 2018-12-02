@@ -15,6 +15,8 @@ Bundle-ClassPath: .,
  .,
  resources/
 Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
+ javax.activation;bundle-version="1.1.0",
+ javax.persistence;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
@@ -25,7 +27,14 @@ Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
  org.diirt.datasource,
  org.csstudio.platform.libs.jdbc,
  uk.ac.stfc.isis.ibex.e4.ui,
- org.eclipse.equinox.registry
+ org.eclipse.equinox.registry,
+ org.eclipse.persistence.moxy;bundle-version="2.7.3",
+ org.eclipse.persistence.asm;bundle-version="6.2.0",
+ org.eclipse.persistence.antlr;bundle-version="3.5.2",
+ org.eclipse.persistence.jpa;bundle-version="2.7.3",
+ org.eclipse.persistence.jpa.jpql;bundle-version="2.7.3",
+ org.eclipse.persistence.sdo;bundle-version="2.7.3",
+ commonj.sdo;bundle-version="2.1.1"
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,
@@ -33,4 +42,5 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.pv,
  uk.ac.stfc.isis.ibex.epics.writing
 Import-Package: uk.ac.stfc.isis.ibex.epics.observing
+DynamicImport-Package: org.eclipse.persistence.internal.*,org.eclipse.persistence.internal.jaxb.*
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics

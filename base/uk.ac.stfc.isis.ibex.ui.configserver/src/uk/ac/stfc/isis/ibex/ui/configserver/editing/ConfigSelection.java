@@ -56,7 +56,7 @@ public class ConfigSelection extends ModelObject {
 		}
 		
 		Configuration newSelection = available.get(config);
-		if (newSelection.equals(config)) {
+		if (newSelection.equals(selected)) {
 			return;
 		}
 		

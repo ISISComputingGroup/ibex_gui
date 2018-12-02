@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -32,21 +31,16 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import org.eclipse.persistence.jaxb.JAXBContextFactory;
 
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
-	
-	private static final String JAXB_CONTEXT_CLASS_PATH = "javax/xml/bind/JAXBContext.class";
-	
-	private static final Logger LOG = IsisLog.getLogger(XMLUtil.class);
 	
     private XMLUtil() {
     }
@@ -84,28 +78,11 @@ public final class XMLUtil {
      * pass the classloader check.
      */
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-    	try {
-    	    return JAXBContext.newInstance(clazz);
-    	} catch (JAXBException e) {
-    		// This is a really tricky bug - if you hit this condition, it's because the class calling
-    		// this method has loaded javax.xml.bind from core java instead of getting it from the
-    		// explicit dependency plugin. This will cause issues later on with more obscure error messages
-    		// if you remove this condition.
-    		//
-    		// Steps to fix this issue are:
-    		// - Find the offending class (reported below)
-    		// - Find the plugin in which it is defined
-    		// - In the plugin folder look in META-INF/MANIFEST.MF
-    		// - Under the "dependencies" tab, check that you depend on "javax.xml.bind" explicitly.
-    		// - If you still get issues, move javax.xml.bind above any other packages in the dependency list
-    		ClassLoader classLoader = clazz.getClassLoader();
-    		String javaxXmlPath = classLoader.getResource(JAXB_CONTEXT_CLASS_PATH).toString();
-    		
-    		LOG.error("Exception thrown when JAXBContext was being initialized.");
-    		LOG.error(String.format("Called from: '%s', using classloader '%s'", clazz.getName(), classLoader));
-    		LOG.error(String.format("Classloader '%s' loads class '%s' from '%s'", classLoader, JAXB_CONTEXT_CLASS_PATH, javaxXmlPath));
-    		throw e;
-    	}
+    	System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
+    	
+    	return JAXBContext.newInstance(clazz);
+    	
+    	// return JAXBContextFactory.createContext(new Class[] {clazz}, java.util.Collections.emptyMap());
     }
 
     /**
