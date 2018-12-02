@@ -48,7 +48,7 @@ public final class LoggerUtils {
      * @param e
      *            The exception whose stack trace will be printed
      */
-    public static void logErrorWithStackTrace(Logger log, String message, Exception e) {
+    public static void logErrorWithStackTrace(Logger log, String message, Throwable e) {
         log.error(message + "\n    " + e.getMessage() + "\n    Stack Trace:\n    "
                 + Joiner.on("\n    ").join(e.getStackTrace()));
     }

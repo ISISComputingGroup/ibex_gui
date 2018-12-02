@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
-@XmlRootElement(name = "devices")
+@XmlRootElement(name = "devices", namespace="")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 

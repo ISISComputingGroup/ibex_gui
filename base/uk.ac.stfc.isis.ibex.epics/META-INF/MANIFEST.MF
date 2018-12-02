@@ -14,9 +14,9 @@ Bundle-ClassPath: .,
  lib/commons-codec-1.11.jar,
  .,
  resources/
-Require-Bundle: javax.xml.bind;bundle-version="2.2.0",
+Import-Package: uk.ac.stfc.isis.ibex.epics.observing
+Require-Bundle: javax.xml.bind;bundle-version="2.2.12",
  javax.activation;bundle-version="1.1.0",
- javax.persistence;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
@@ -41,6 +41,5 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.pv,
  uk.ac.stfc.isis.ibex.epics.writing
-Import-Package: uk.ac.stfc.isis.ibex.epics.observing
-DynamicImport-Package: org.eclipse.persistence.internal.*,org.eclipse.persistence.internal.jaxb.*
+ 
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics

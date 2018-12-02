@@ -22,6 +22,11 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -31,18 +36,23 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.apache.logging.log4j.Logger;
+import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
-import org.eclipse.persistence.jaxb.JAXBContextFactory;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
 	
-    private XMLUtil() {
+    private static final Logger LOG = IsisLog.getLogger(XMLUtil.class);
+
+	private XMLUtil() {
     }
 
     /**
@@ -68,21 +78,45 @@ public final class XMLUtil {
     /**
      * Gets a JAXBContext, given a class which JAXB should marshal/unmarshal XML to.
      * 
-     * This method performs a check on the provided class' classloader, to check it is
-     * loading javax.xml.bind from the right place. If this check isn't done the error
-     * will just occur further down the call stack and be harder to diagnose.
-     * 
      * @param clazz the clazz on which to base this JAXB context.
      * @return the JAXBContext
      * @throws JAXBException if an error was thrown by JAXB or the provided class did not
      * pass the classloader check.
      */
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-    	System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
+    	// Nuclear approach - depending on where this gets called from
+    	// we need different classloaders to be used. Try them all until
+    	// one doesn't error. This is hacky but it's the best way I've found
+    	// to get around JAXB's limitations so far.
+    	List<ClassLoader> classloaders = List.of(
+    			clazz.getClassLoader(),
+    			XMLUtil.class.getClassLoader(),
+    			JAXBContext.class.getClassLoader(),
+    			Thread.currentThread().getContextClassLoader(), 
+    			ClassLoader.getPlatformClassLoader(), 
+    			ClassLoader.getSystemClassLoader()
+    	);
     	
-    	return JAXBContext.newInstance(clazz);
+    	Map<ClassLoader, Throwable> errors = new HashMap<>();
     	
-    	// return JAXBContextFactory.createContext(new Class[] {clazz}, java.util.Collections.emptyMap());
+    	for (ClassLoader classloader : classloaders) {
+    		try {
+        		return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), classloader);
+        	} catch (JAXBException | RuntimeException | NoClassDefFoundError e) {
+        		errors.put(classloader, e);
+        	}
+    	}
+    	
+    	for (Map.Entry<ClassLoader, Throwable> entry : errors.entrySet()) {
+    		LoggerUtils.logErrorWithStackTrace(LOG, 
+    				String.format("Attempted to use classloader %s, got exception: %s", entry.getKey(), entry.getValue().getMessage()), entry.getValue());
+    		
+    		if (entry.getValue().getCause() != null) {
+    			LoggerUtils.logErrorWithStackTrace(LOG, "Caused by: " + entry.getValue().getCause().getMessage(), entry.getValue().getCause());
+    		}
+    	}
+    	
+    	throw new JAXBException("Failed to get a JAXBContext using any classloader");
     }
 
     /**
