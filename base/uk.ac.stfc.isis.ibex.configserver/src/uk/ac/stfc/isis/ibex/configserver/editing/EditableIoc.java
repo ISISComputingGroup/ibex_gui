@@ -143,7 +143,7 @@ public class EditableIoc extends Ioc {
      * @return Whether the IOC is editable
      */
 	public boolean isEditable() {
-		return !hasComponent();
+		return !inComponent();
 	}
 	
     /**

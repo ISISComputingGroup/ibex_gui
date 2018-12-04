@@ -62,7 +62,7 @@ public class ComponentFilteredConfiguration extends Configuration {
         return Lists.newArrayList(Iterables.filter(iocs, new Predicate<Ioc>() {
 			@Override
 			public boolean apply(Ioc ioc) {
-				return !ioc.hasComponent();
+				return !ioc.inComponent();
 			}
 		}));
 	}
@@ -79,7 +79,7 @@ public class ComponentFilteredConfiguration extends Configuration {
         return Lists.newArrayList(Iterables.filter(blocks, new Predicate<Block>() {
 			@Override
 			public boolean apply(Block block) {
-				return !block.hasComponent();
+				return !block.inComponent();
 			}
 		}));
 	}

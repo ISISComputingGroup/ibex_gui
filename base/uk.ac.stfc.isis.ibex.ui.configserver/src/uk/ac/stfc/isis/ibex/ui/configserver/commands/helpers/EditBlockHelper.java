@@ -106,7 +106,7 @@ public class EditBlockHelper {
             Block block = config.getValue().getBlockByName(blockName);
             if (block == null) {
                 result.setError("Cannot find block in current configuration or its components.");
-            } else if (block.hasComponent()) {
+            } else if (block.inComponent()) {
                 configurationViewModels.setModelAsComponent(block.getComponent());
                 UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.getConfigModel();
                 if (Awaited.returnedValue(editableComponent, 1)) {
