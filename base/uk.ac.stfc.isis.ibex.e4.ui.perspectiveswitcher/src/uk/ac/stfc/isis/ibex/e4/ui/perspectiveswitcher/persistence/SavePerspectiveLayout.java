@@ -1,8 +1,11 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence;
 
+import com.google.common.collect.Streams;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -23,6 +26,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 @SuppressWarnings("restriction")
 public class SavePerspectiveLayout {
 	
+	
 	private static final Logger LOG = IsisLog.getLogger(SavePerspectiveLayout.class);
 	
 	/**
@@ -40,10 +44,33 @@ public class SavePerspectiveLayout {
     public void execute(MApplication app, EPartService partService, EModelService modelService, MWindow window) {
     	PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
         provider.getPerspectives().forEach(perspective -> savePerspective(modelService, window, perspective));
+        
+        saveSharedState(modelService, app);
+        
     }
     
     
-    /**
+    private void saveSharedState(EModelService modelService, MApplication app) {
+    	Resource resource = E4ResourceUtils.getEmptyResource();
+    	resource.setTrackingModification(false);
+    	
+    	MWindow mainWindow = PersistenceUtils.findMainWindow(app, modelService)
+    			.orElseThrow(() -> new RuntimeException("Couldn't find main window."));
+    	
+//    	resource.getContents().addAll(
+//    		mainWindow.getSharedElements().stream()
+//	    		// .map(element -> modelService.cloneElement(element, null))
+//	    		.map(EObject.class::cast)
+//	    		.collect(Collectors.toList())
+//    	);
+    	
+    	resource.getContents().add((EObject) app);
+    	
+    	writeFile(PersistenceUtils.getSharedStateFile(), resource);
+	}
+
+
+	/**
      * Saves a provided perspective to file.
      * @param modelService - the eclipse model service
      * @param window - the eclipse window
@@ -63,18 +90,21 @@ public class SavePerspectiveLayout {
         // add the cloned model element to the resource so that it may be stored
         resource.getContents().add((EObject) clonedPerspective);
 
-        File file = FilenameProvider.getPath(perspectiveId).toFile();
-
-        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+        writeFile(PersistenceUtils.getFileForPersistence(perspectiveId), resource);
+    }
+    
+    private void writeFile(File file, Resource resource) {
+    	
+    	try (FileOutputStream outputStream = new FileOutputStream(file)) {
             resource.save(outputStream, null);
             LOG.info(String.format(
-            		"Saved perspective '%s' to file at '%s'", perspectiveId, file.toString()));
+            		"Saved state to file at '%s'", file.toString()));
         } catch (IOException ex) {
         	LOG.error(String.format(
-        			"Unable to save perspective '%s' to file at '%s'", perspectiveId, file.toString()), ex);
+        			"Unable to save state to file at '%s'", file.toString()), ex);
         } catch (RuntimeException ex) {
         	LOG.error(String.format(
-        			"Runtime error when attempting to save perspective '%s' to file at '%s'", perspectiveId, file.toString()), ex);
+        			"Runtime error when attempting to save state to file at '%s'", file.toString()), ex);
         }
     }
 }

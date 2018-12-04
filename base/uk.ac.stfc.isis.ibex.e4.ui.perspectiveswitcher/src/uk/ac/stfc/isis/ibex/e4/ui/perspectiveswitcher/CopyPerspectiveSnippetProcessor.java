@@ -17,6 +17,7 @@ import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SharedStateLoader;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -58,11 +59,12 @@ public class CopyPerspectiveSnippetProcessor {
         
         Display.getDefault().syncExec(new Runnable() {
         	public void run() {
-        		PerspectiveLayoutLoader loader = new PerspectiveLayoutLoader(app, modelService);
+        		
+        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService);
                 
                 perspectivesProvider.snippetIds()
                 	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))
-                    .map(loader::load)
+                    .map(perspectiveLoader::load)
                     .forEach(CopyPerspectiveSnippetProcessor.this::addPerspective);
                 
                 ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
