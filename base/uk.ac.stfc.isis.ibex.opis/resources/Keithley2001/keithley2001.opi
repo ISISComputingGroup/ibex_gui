@@ -518,8 +518,8 @@ $(pv_value)</tooltip>
       <scripts />
       <show_units>true</show_units>
       <text>Your device is in an error state.  &#xD;
-Resetting the IOC may &#xD;
-fix this problem.</text>
+Resetting the IOC may fix this &#xD;
+problem.</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>true</transparent>
