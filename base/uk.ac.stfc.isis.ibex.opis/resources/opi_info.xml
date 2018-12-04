@@ -307,19 +307,6 @@
             </value>
         </entry>
         <entry>
-            <key>Julabo FL300</key>
-            <value>
-                <type>JULABO</type>
-                <path>JulaboFL300.opi</path>
-                <description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Water baths</category>
-                    <category>Temperature controllers</category>
-                </categories>
-            </value>
-        </entry>
-        <entry>
             <key>Single Stage</key>
             <value>
                 <type>SINGLESTAGE</type>
@@ -1632,34 +1619,51 @@
             </value>
         </entry>
         <entry>        
-			<key>Induction Furnace</key>
-		    <value>
-			    <categories>
-			    	<category>Temperature controllers</category>
-			    </categories>
-			    <type>FURNACE</type>
-			    <path>induction_furnace.opi</path>
-			    <description>The OPI for the GEM/POLARIS induction furnace</description
-			    <macros>
-			    </macros>
-		    </value>
-	    </entry>
-	    <entry>
-	    	<key>Keithley 2001</key>
-	        <value>
-	            <type>Multimeters</type>
-	            <path>Keithley2001/keithley2001.opi</path>
-	            <categories>
-	                <category>Multimeters</category>
-	            </categories>
-	            <description>The OPI for the Keithley 2001 multimeter.</description>
-	            <macros>
-	                <macro>
-	                    <name>KHLY2001</name>
-	                    <description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
-	                </macro>
-	            </macros>
-	        </value>
-	    </entry>
+      <key>Induction Furnace</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>FURNACE</type>
+        <path>induction_furnace.opi</path>
+        <description>The OPI for the GEM/POLARIS induction furnace</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+		<key>Vertical Jaws</key>
+		<value>
+			<categories>
+				<category>Jaws and slits</category>
+			</categories>
+			<type>JAWS</type>
+			<path>jaws/vertical_jaws.opi</path>
+			<description>The OPI for an OSIRIS Jaw set.</description>
+			<macros>
+				<macro>
+					<name>J</name>
+					<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
+	<entry>
+	    <key>Keithley 2001</key>
+		<value>
+			<categories>
+				<category>Multimeter</category>
+			</categories>
+			<type>KEITHLEY</type>
+			<path>Keithley2001/keithley2001.opi</path>
+			<description>The OPI for the Keithley 2001 multimeter.</description>
+			<macros>
+				<macro>
+					<name>KHLY2001</name>
+					<description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
     </opis>
 </descriptions>
