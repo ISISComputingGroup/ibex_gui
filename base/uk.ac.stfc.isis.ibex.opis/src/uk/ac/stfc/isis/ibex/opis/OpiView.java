@@ -60,7 +60,7 @@ public abstract class OpiView extends OPIView {
     public void initialiseOPI() throws OPIViewCreationException {
         try {
             final RunnerInput input = new RunnerInput(opi(), null, macros());
-            setOPIInput(input);
+            setOPIInput(input, true);
         } catch (PartInitException e) {
             LOG.catching(e);
         }

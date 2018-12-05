@@ -5,22 +5,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
-
 import org.apache.logging.log4j.Logger;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.descriptor.basic.MBasicFactory;
+import org.eclipse.e4.ui.model.application.descriptor.basic.MPartDescriptor;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
-import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.emf.ecore.resource.Resource;
-
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -33,15 +32,24 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  */
 @SuppressWarnings("restriction")
 public class PerspectiveLayoutLoader {
-	
+
 	private static final Logger LOG = IsisLog.getLogger(PerspectiveLayoutLoader.class);
 	
 	private final MApplication app;
 	private final EModelService modelService;
+	private final MWindow mainWindow;
+	private final EPartService partService;
+	
+	private final EPlaceholderResolver placeholderResolver;
 
-	public PerspectiveLayoutLoader(MApplication app, EModelService modelService) {
+	public PerspectiveLayoutLoader(MApplication app, EModelService modelService, EPartService partService, EPlaceholderResolver placeholderResolver) {
 		this.app = app;
 		this.modelService = modelService;
+		this.mainWindow = PersistenceUtils.findMainWindow(app, modelService)
+				.orElseThrow(() -> new RuntimeException("Can't find main window"));
+		
+		this.placeholderResolver = placeholderResolver;
+		this.partService = partService;
 	}
 	
     public MPerspective load(String id) {
@@ -51,7 +59,6 @@ public class PerspectiveLayoutLoader {
     
     private Optional<MPerspective> loadLayoutFromSaveFile(String id) {
 	    Resource resource = E4ResourceUtils.getEmptyResource();
-	    resource.setTrackingModification(false);
 	    
 	    try (FileInputStream inputStream = new FileInputStream(PersistenceUtils.getFileForPersistence(id))) { 
 	    	resource.load(inputStream, null);
@@ -61,31 +68,57 @@ public class PerspectiveLayoutLoader {
 	    	resource.getWarnings().forEach(d -> LOG.info("Diagnostic warning from resource: " + d.getMessage()));
 	    	
 	    	MPerspective perspective = resource.getContents().stream()
-	    			.filter(obj -> obj instanceof MPerspective)
-	    			.map(obj -> (MPerspective) obj)
+	    			.filter(MPerspective.class::isInstance)
+	    			.map(MPerspective.class::cast)
 	    			.findFirst()
 	    			.orElseThrow(() -> new RuntimeException("No perspectives in save file"));
 	    	
-	    	List<MPlaceholder> placeholders = getPlaceholdersRecursive(perspective);
-	    	LOG.info("hello");
-	    	for (MPlaceholder x : placeholders) {
-	    		LOG.info(x);
-	    		LOG.info(x.getElementId());
+	    	for (MPlaceholder placeholder : getPlaceholdersRecursive(perspective)) {
 	    		
-//	    		MUIElement actual = Optional.ofNullable(modelService.find(x.getElementId(), app))
-//	    				.orElse(modelService.find(x.getElementId(), PersistenceUtils.findMainWindow(app, modelService).get()));
+	    		String phid = placeholder.getElementId();
+	    		if (phid.contains(":")) {
+	    			placeholder.setElementId(phid.substring(0, phid.indexOf(":")));
+	    		}
 	    		
-	    		MUIElement actual = PersistenceUtils.findMainWindow(app, modelService)
-	    			.map(MWindow::getSharedElements)
-	    			.map(List::stream)
-	    			.orElse(Stream.empty())
-	    			.filter(elem -> elem.getElementId().equals(x.getElementId()))
-	    			.findAny()
-	    			.orElseThrow(() -> new RuntimeException("Could not reverse placeholder reference"));
+	    		try {
+	    		    placeholderResolver.resolvePlaceholderRef(placeholder, mainWindow);
+	    		} catch (RuntimeException e) {
+	    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId());
+	    		}
 	    		
-	    		LOG.info(actual);
+//	    		if (placeholder.getRef() == null) {
+//		    		try {
+//		    			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
+//		    			
+//		    			descriptor.setContributionURI(placeholder.getContributorURI());
+//		    			descriptor.setContributorURI("platform:/plugin/uk.ac.stfc.isis.ibex.e4.client");
+//		    			descriptor.setElementId(placeholder.getElementId());
+//		    			descriptor.setLabel(placeholder.getElementId());
+//		    			descriptor.setAllowMultiple(true);
+//		    			
+//		    			MPart createdElement = modelService.createPart(descriptor);
+//		    			mainWindow.getSharedElements().add(createdElement);
+//		    			partService.showPart(createdElement, PartState.CREATE);
+//		    			placeholder.setRef(createdElement);
+//		    			
+//		    		} catch (RuntimeException e) {
+//		    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId() + " using classloader: " + e.getMessage());
+//		    			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+//		    		}
+//	    		}
 	    		
-	    		x.setRef(actual);
+	    		if (placeholder.getRef() == null) {
+		    		LOG.info("Couldn't resolve placeholder '" + placeholder.getElementId() + "'. Deleting it from restored model.");
+		    		placeholder.setToBeRendered(false);
+		    		placeholder.setVisible(true);
+		    		
+		    		MElementContainer<MUIElement> parent = placeholder.getParent();
+		    		List<MUIElement> children = parent.getChildren();
+		    		
+		    		if (children.stream().filter(MUIElement::isToBeRendered).count() == 0) {
+		    			parent.setToBeRendered(false);
+		    		}
+	    		}
 	    	}
 	    	
 	    	return Optional.of(perspective);
@@ -96,6 +129,11 @@ public class PerspectiveLayoutLoader {
     	} 	
     }
     
+    /**
+     * Recursive descent down containers to find all placeholders from a given parent.
+     * @param container the root container
+     * @return a list of all of the placeholders
+     */
     @SuppressWarnings("rawtypes")
     private List<MPlaceholder> getPlaceholdersRecursive(MElementContainer container) {
     	List<MPlaceholder> placeholders = new ArrayList<>();
@@ -113,11 +151,12 @@ public class PerspectiveLayoutLoader {
     
     private MPerspective loadDefaultLayout(String id) {
     	return app.getSnippets().stream()
-    			.filter(snippet -> snippet instanceof MPerspective)
-    			.map(snippet -> (MPerspective) snippet)
+    			.filter(MPerspective.class::isInstance)
+    			.map(MPerspective.class::cast)
     			.filter(snippet -> PerspectivesProvider.matchPerspectivesById(snippet, id))
     			.findFirst()
-    			.map(snippet -> (MPerspective) modelService.cloneSnippet(app, snippet.getElementId(), null))  // TODO: is this line needed?
+    			.map(snippet -> modelService.cloneSnippet(app, snippet.getElementId(), null))
+    			.map(MPerspective.class::cast)
     			.orElseThrow(() -> defaultLayoutNotFoundError(id));
     }
     

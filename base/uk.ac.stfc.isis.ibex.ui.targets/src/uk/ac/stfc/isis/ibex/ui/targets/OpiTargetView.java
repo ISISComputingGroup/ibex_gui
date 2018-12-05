@@ -36,6 +36,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
@@ -159,7 +160,7 @@ public abstract class OpiTargetView extends OpiView {
             openOPIs.add(view);
             openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
         } catch (PartInitException e) {
-            LOG.catching(e);
+            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
         } catch (OPIViewCreationException e) {
             workbenchPage.hideView(view);
             throw e;

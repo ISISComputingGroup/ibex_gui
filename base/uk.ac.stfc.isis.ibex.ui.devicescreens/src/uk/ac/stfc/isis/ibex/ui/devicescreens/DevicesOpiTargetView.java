@@ -54,5 +54,9 @@ public class DevicesOpiTargetView extends OpiTargetView {
                             + ", target is blank. Edit the device screens and select a target, then try again.");
         }
     }
+    
+    public void init() {
+    	
+    }
 
 }

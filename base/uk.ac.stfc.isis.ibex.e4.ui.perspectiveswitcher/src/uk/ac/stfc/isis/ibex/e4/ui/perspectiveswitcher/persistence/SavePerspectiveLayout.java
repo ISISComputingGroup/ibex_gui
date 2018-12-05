@@ -44,31 +44,7 @@ public class SavePerspectiveLayout {
     public void execute(MApplication app, EPartService partService, EModelService modelService, MWindow window) {
     	PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
         provider.getPerspectives().forEach(perspective -> savePerspective(modelService, window, perspective));
-        
-        saveSharedState(modelService, app);
-        
     }
-    
-    
-    private void saveSharedState(EModelService modelService, MApplication app) {
-    	Resource resource = E4ResourceUtils.getEmptyResource();
-    	resource.setTrackingModification(false);
-    	
-    	MWindow mainWindow = PersistenceUtils.findMainWindow(app, modelService)
-    			.orElseThrow(() -> new RuntimeException("Couldn't find main window."));
-    	
-//    	resource.getContents().addAll(
-//    		mainWindow.getSharedElements().stream()
-//	    		// .map(element -> modelService.cloneElement(element, null))
-//	    		.map(EObject.class::cast)
-//	    		.collect(Collectors.toList())
-//    	);
-    	
-    	resource.getContents().add((EObject) app);
-    	
-    	writeFile(PersistenceUtils.getSharedStateFile(), resource);
-	}
-
 
 	/**
      * Saves a provided perspective to file.

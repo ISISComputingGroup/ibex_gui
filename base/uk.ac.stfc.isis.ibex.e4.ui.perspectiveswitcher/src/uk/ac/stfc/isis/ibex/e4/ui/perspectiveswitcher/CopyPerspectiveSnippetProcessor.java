@@ -11,13 +11,13 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SharedStateLoader;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -46,7 +46,7 @@ public class CopyPerspectiveSnippetProcessor {
      *            The IEventBroker used.           
      */
     @Execute
-    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
+    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker, EPlaceholderResolver placeholderResolver) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
         this.broker = broker;
@@ -60,7 +60,7 @@ public class CopyPerspectiveSnippetProcessor {
         Display.getDefault().syncExec(new Runnable() {
         	public void run() {
         		
-        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService);
+        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService, partService, placeholderResolver);
                 
                 perspectivesProvider.snippetIds()
                 	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))
