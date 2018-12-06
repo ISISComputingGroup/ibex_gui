@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.ui.PlatformUI;

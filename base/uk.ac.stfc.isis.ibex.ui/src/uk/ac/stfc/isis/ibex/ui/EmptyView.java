@@ -4,6 +4,9 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * A completely empty view, used as a placeholder if restoring a view fails.
+ */
 public class EmptyView {
 
     /**

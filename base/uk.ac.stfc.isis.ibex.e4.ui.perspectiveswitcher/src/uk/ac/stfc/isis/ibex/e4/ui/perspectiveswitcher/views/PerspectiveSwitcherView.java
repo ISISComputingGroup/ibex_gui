@@ -110,6 +110,6 @@ public class PerspectiveSwitcherView {
 	}
 	
 	private void addLoadLayoutButton(Composite parent) {
-		new LoadLayoutButton(parent, perspectivesProvider);
+		new LoadLayoutButton(parent);
 	}
 }

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.ui.EmptyView;
 
 /**
  * This class is responsible for loading an MPerspective instance given a perspective ID.
@@ -92,9 +93,11 @@ public class PerspectiveLayoutLoader {
 		    		try {
 		    			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
 		    			
-		    			descriptor.setContributionURI("bundleclass://uk.ac.stfc.isis.ibex.ui/uk.ac.stfc.isis.ibex.ui.EmptyView");
-		    			descriptor.setContributorURI("platform:/plugin/uk.ac.stfc.isis.ibex.ui");
-		    			descriptor.setElementId("uk.ac.stfc.isis.ibex.ui.EmptyView");
+		    			String emptyViewPackage = EmptyView.class.getPackage().getName();
+		    			
+		    			descriptor.setContributionURI(String.format("bundleclass://%s/%s.EmptyView", emptyViewPackage, emptyViewPackage, EmptyView.class.getSimpleName()));
+		    			descriptor.setContributorURI(String.format("platform:/plugin/%s", emptyViewPackage));
+		    			descriptor.setElementId(EmptyView.ID);
 		    			descriptor.setLabel("Empty view");
 		    			descriptor.setAllowMultiple(true);
 		    			

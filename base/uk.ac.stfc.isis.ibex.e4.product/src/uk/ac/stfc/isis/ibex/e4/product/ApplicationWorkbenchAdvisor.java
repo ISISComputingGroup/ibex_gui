@@ -49,21 +49,21 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
 	    super.initialize(configurer);
         this.configurer = configurer;
-
-        // set save and restore to false here to avoid restoring
-        // window layout restored in ApplicationWorkbenchWindowAdvisor
         configurer.setSaveAndRestore(false);
+        System.setProperty("SHUTDOWN_WITHOUT_PROMPT", Boolean.FALSE.toString());
 	}
 	
 	@Override
 	public boolean preShutdown() {
 		Instrument.getInstance().setInitial();
-		
-        // set save and restore true here to make sure we save settings
-        // these are actually restored in ApplicationWorkbenchWindowAdvisor
-        configurer.setSaveAndRestore(true);
+        configurer.setSaveAndRestore(false);
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		
+		if (Boolean.getBoolean("SHUTDOWN_WITHOUT_PROMPT")) {
+			return true;
+		}
+		
 		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}
 }

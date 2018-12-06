@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
-import javax.inject.Inject;
-
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -10,9 +8,9 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SavePerspectiveLayout;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Reset Layout button. Sits apart from the Perspective Buttons.
@@ -45,8 +43,11 @@ public class SaveLayoutButton extends Button {
         adapter = new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent event) {
-        		IsisLog.getLogger(getClass()).info(String.format("%s %s %s %s", app, partService, modelService, window));
-        		new SavePerspectiveLayout().execute(app, partService, modelService, window);
+        		try {
+        			new SavePerspectiveLayout().execute(app, partService, modelService, window);
+        		} catch (RuntimeException e) {
+        			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+        		}
         	}
 		};
     }

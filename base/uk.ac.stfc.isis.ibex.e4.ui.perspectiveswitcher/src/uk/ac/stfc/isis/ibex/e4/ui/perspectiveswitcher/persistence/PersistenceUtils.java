@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
