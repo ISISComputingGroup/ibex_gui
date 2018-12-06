@@ -104,13 +104,15 @@
   <handlers xmi:id="_A4TZQKkIEeeR15ll_ruI0A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.colours.standard" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.displayoptions.StandardColourSchemeHandler" command="_J1L8EKkFEeeR15ll_ruI0A"/>
   <handlers xmi:id="_Zp_q4KkAEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.ioc.startStop" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlHandler" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>
   <handlers xmi:id="_MEkQ0KkdEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.runcontrol" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.runcontrol/uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler" command="_OEEDYKkdEeePZ9uSg3-JRA"/>
-  <handlers xmi:id="_EDXy0KkjEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.exit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SavePerspectiveLayout" command="_BQbKEKkjEeePZ9uSg3-JRA"/>
+  <handlers xmi:id="_EDXy0KkjEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.exit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.mainmenu/uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler" command="_BQbKEKkjEeePZ9uSg3-JRA"/>
   <handlers xmi:id="_Q7_cIKkEEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.about" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.AboutHandler" command="_hj--kKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_v5ccsKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.usermanual" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.ManualHandler" command="_w0psQKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_37kgEKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.consolelogdialog" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.logger/uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_JRFiEJlbEeiJWOfXjwtf9A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
+  <handlers xmi:id="_3BmuEPk6EeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.savelayout" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SavePerspectiveLayout" command="_9lhuEPk6EeieluT83Nr0_w"/>
+  <handlers xmi:id="_Eh3OEPk7EeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.loadlayout" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader" command="_ABASAPk7EeieluT83Nr0_w"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
@@ -594,6 +596,8 @@
     <tags>type:user</tags>
   </commands>
   <commands xmi:id="_oZBHMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" commandName="Icon Licence" description="View IBEX gui icon licences"/>
+  <commands xmi:id="_9lhuEPk6EeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.savelayout" commandName="Save layout"/>
+  <commands xmi:id="_ABASAPk7EeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.loadlayout" commandName="Load layout"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

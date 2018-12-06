@@ -49,16 +49,19 @@ public class PerspectivesProvider {
         this.modelService = modelService;
         experimentSetupViewModel = DaeUI.getDefault().viewModel().experimentSetup();
         
-        perspectives = modelService.findElements(app, null, MPerspective.class, null)
-        		.stream()
+        perspectives = findElements(MPerspective.class)
         		.filter(MPerspective::isVisible)
         		.collect(Collectors.toList());
 
-        this.perspectivesStack = modelService
-        		.findElements(app, null, MPerspectiveStack.class, null)
-        		.stream()
+        this.perspectivesStack = findElements(MPerspectiveStack.class)
         		.findFirst()
         		.orElseThrow(() -> new IllegalStateException("No perspective stack found with name = " + MAIN_PERSPECTIVE_STACK_ID));
+    }
+    
+    private <T> Stream<T> findElements(Class<T> clazz) {
+    	return modelService
+        		.findElements(app, null, clazz, null)
+        		.stream();
     }
 
     /**

@@ -9,6 +9,7 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -22,9 +23,12 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.LoadLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.SaveLayoutButton;
+
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -35,17 +39,11 @@ public class PerspectiveSwitcherView {
 
 	private PerspectivesProvider perspectivesProvider;
 
-	@Inject
-	private EModelService modelService;
-
-	@Inject
-	private MApplication app;
-
-	@Inject
-	private EPartService partService;
-
-	@Inject
-	private IEventBroker broker;
+	@Inject private EModelService modelService;
+	@Inject private MApplication app;
+	@Inject private EPartService partService;
+	@Inject private IEventBroker broker;
+	@Inject private MWindow window;
 
 	/**
 	 * Create and initialise the controls within the view.
@@ -62,6 +60,9 @@ public class PerspectiveSwitcherView {
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
 		addResetCurrentPerspectiveShortcut(composite);
+		addSaveLayoutButton(composite);
+		addLoadLayoutButton(composite);
+		
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
 	}
@@ -102,5 +103,13 @@ public class PerspectiveSwitcherView {
 
 	private void addResetCurrentPerspectiveShortcut(Composite parent) {
 		new ResetLayoutButton(parent, perspectivesProvider);
+	}
+	
+	private void addSaveLayoutButton(Composite parent) {
+		new SaveLayoutButton(parent, app, partService, modelService, window);
+	}
+	
+	private void addLoadLayoutButton(Composite parent) {
+		new LoadLayoutButton(parent, perspectivesProvider);
 	}
 }

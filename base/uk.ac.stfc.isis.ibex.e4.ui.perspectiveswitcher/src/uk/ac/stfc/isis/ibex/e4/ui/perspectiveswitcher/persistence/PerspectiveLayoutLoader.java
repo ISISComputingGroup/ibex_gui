@@ -14,11 +14,13 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
+import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
 import org.eclipse.emf.ecore.resource.Resource;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -86,26 +88,25 @@ public class PerspectiveLayoutLoader {
 	    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId());
 	    		}
 	    		
-//	    		if (placeholder.getRef() == null) {
-//		    		try {
-//		    			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
-//		    			
-//		    			descriptor.setContributionURI(placeholder.getContributorURI());
-//		    			descriptor.setContributorURI("platform:/plugin/uk.ac.stfc.isis.ibex.e4.client");
-//		    			descriptor.setElementId(placeholder.getElementId());
-//		    			descriptor.setLabel(placeholder.getElementId());
-//		    			descriptor.setAllowMultiple(true);
-//		    			
-//		    			MPart createdElement = modelService.createPart(descriptor);
-//		    			mainWindow.getSharedElements().add(createdElement);
-//		    			partService.showPart(createdElement, PartState.CREATE);
-//		    			placeholder.setRef(createdElement);
-//		    			
-//		    		} catch (RuntimeException e) {
-//		    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId() + " using classloader: " + e.getMessage());
-//		    			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-//		    		}
-//	    		}
+	    		if (placeholder.getRef() == null) {
+		    		try {
+		    			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
+		    			
+		    			descriptor.setContributionURI("bundleclass://uk.ac.stfc.isis.ibex.ui/uk.ac.stfc.isis.ibex.ui.EmptyView");
+		    			descriptor.setContributorURI("platform:/plugin/uk.ac.stfc.isis.ibex.ui");
+		    			descriptor.setElementId("uk.ac.stfc.isis.ibex.ui.EmptyView");
+		    			descriptor.setLabel("Empty view");
+		    			descriptor.setAllowMultiple(true);
+		    			
+		    			MPart createdElement = modelService.createPart(descriptor);
+		    			mainWindow.getSharedElements().add(createdElement);
+		    			placeholder.setRef(createdElement);
+		    			
+		    		} catch (RuntimeException e) {
+		    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId() + " using classloader: " + e.getMessage());
+		    			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		    		}
+	    		}
 	    		
 	    		if (placeholder.getRef() == null) {
 		    		LOG.info("Couldn't resolve placeholder '" + placeholder.getElementId() + "'. Deleting it from restored model.");
