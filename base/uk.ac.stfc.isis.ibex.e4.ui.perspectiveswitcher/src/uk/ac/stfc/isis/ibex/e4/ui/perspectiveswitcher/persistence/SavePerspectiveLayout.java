@@ -14,9 +14,18 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.managermode.ClientManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.EnterManagerModeDialog;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ExitManagerModeDialog;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.TemporaryAuthenticationDialog;
 
 /**
  * This class is responsible for saving perspective layouts to file.
@@ -39,8 +48,30 @@ public class SavePerspectiveLayout {
 	 */
     @Execute
     public void execute(MApplication app, EPartService partService, EModelService modelService, MWindow window) {
-    	PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
-        provider.getPerspectives().forEach(perspective -> savePerspective(app, modelService, window, perspective));
+    	Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+    	IManagerModeModel model = new ClientManagerModeModel();
+    	
+    	new TemporaryAuthenticationDialog(shell, model).open();
+
+        boolean isAuthenticated;
+        
+        try {
+        	isAuthenticated = model.isAuthenticated();
+        } catch (Exception e) {
+			isAuthenticated = false;
+			displayError(shell, e.getMessage());
+		}
+        
+    	if (isAuthenticated) {
+	    	PerspectivesProvider provider = new PerspectivesProvider(app, partService, modelService);
+	        provider.getPerspectives().forEach(perspective -> savePerspective(app, modelService, window, perspective));
+    	}
+    }
+    
+    private static void displayError(Shell shell, String message) {
+        MessageDialog error = new MessageDialog(shell, "Error", null,
+                message, MessageDialog.ERROR, new String[] {"OK"}, 0);
+        error.open();
     }
     
     /**

@@ -27,7 +27,9 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  com.google.guava,
  org.eclipse.core.runtime;bundle-version="3.14.0",
- uk.ac.stfc.isis.ibex.ui
+ uk.ac.stfc.isis.ibex.ui,
+ uk.ac.stfc.isis.ibex.managermode,
+ uk.ac.stfc.isis.ibex.ui.mainmenu
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher

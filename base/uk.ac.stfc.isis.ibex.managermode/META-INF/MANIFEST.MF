@@ -14,3 +14,5 @@ Import-Package: org.eclipse.swt.graphics,
  uk.ac.stfc.isis.ibex.model
 Export-Package: uk.ac.stfc.isis.ibex.managermode
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: uk.ac.stfc.isis.ibex.logger,
+ org.eclipse.ui;bundle-version="3.109.100"

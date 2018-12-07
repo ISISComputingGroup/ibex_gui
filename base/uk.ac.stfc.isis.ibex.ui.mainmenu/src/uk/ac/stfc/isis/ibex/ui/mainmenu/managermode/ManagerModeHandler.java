@@ -21,13 +21,15 @@
  */
 package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 
+import java.io.IOException;
+
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
-import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 
 /**
  * Handler for manager mode being selected in the main menu.
@@ -55,12 +57,12 @@ public class ManagerModeHandler {
     private void displayDialog() {
 
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-        ManagerModeModel model = ManagerModeModel.getInstance();
+        IManagerModeModel model = new ManagerModeModel();
 
         boolean managerMode;
         try {
-            managerMode = model.isInManagerMode();
-        } catch (ManagerModePvNotConnectedException exception) {
+            managerMode = model.isAuthenticated();
+        } catch (IOException exception) {
             displayError(shell, exception.getMessage());
             return;
         }

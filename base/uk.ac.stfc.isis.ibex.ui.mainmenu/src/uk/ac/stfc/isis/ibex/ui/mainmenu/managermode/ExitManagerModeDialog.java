@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
 
 /**
  *
@@ -45,7 +45,7 @@ public class ExitManagerModeDialog extends TitleAreaDialog {
 
     private Composite upperDialogArea;
 
-    private final ManagerModeModel model;
+    private final IManagerModeModel model;
 
     /**
      * Constructor.
@@ -55,7 +55,7 @@ public class ExitManagerModeDialog extends TitleAreaDialog {
      * @param model
      *            the view model
      */
-    protected ExitManagerModeDialog(Shell parentShell, ManagerModeModel model) {
+    protected ExitManagerModeDialog(Shell parentShell, IManagerModeModel model) {
         super(parentShell);
         upperDialogArea = (Composite) super.createDialogArea(parentShell);
         upperDialogArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -80,7 +80,7 @@ public class ExitManagerModeDialog extends TitleAreaDialog {
 
     @Override
     protected void okPressed() {
-        model.logout();
+        model.deauthenticate();
         super.okPressed();
     }
 

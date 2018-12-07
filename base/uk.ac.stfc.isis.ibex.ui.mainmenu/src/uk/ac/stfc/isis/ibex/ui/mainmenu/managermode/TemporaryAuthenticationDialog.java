@@ -42,10 +42,10 @@ import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EnterManagerModeDialog extends TitleAreaDialog {
+public class TemporaryAuthenticationDialog extends TitleAreaDialog {
 
-    private static final String WINDOW_TITLE = "Manager mode";
-    private static final String AREA_TITLE = "Enter manager mode";
+    private static final String WINDOW_TITLE = "Authentication";
+    private static final String AREA_TITLE = "Authenticate to perform this action";
 
     private Composite upperDialogArea;
 
@@ -61,7 +61,7 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
      * @param model
      *            the view model
      */
-    protected EnterManagerModeDialog(Shell parentShell, IManagerModeModel model) {
+    public TemporaryAuthenticationDialog(Shell parentShell, IManagerModeModel model) {
         super(parentShell);
         upperDialogArea = (Composite) super.createDialogArea(parentShell);
         upperDialogArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

@@ -39,9 +39,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * Model for the manager mode.
  */
-public final class ManagerModeModel extends ModelObject {
-
-    private static ManagerModeModel instance;
+public final class ManagerModeModel extends ModelObject implements IManagerModeModel {
 
     private final PasswordHasher passwordHasher;
 
@@ -61,9 +59,9 @@ public final class ManagerModeModel extends ModelObject {
     private ManagerModeObservable managerModePv;
 
     /**
-     * Private constructor, use ManagerModeModel.getInstance() instead.
+     * Constructor using the default password.
      */
-    private ManagerModeModel() {
+    public ManagerModeModel() {
         setupPV();
         addObserver();
         passwordHasher = new PasswordHasher();
@@ -72,37 +70,11 @@ public final class ManagerModeModel extends ModelObject {
     /**
      * Constructor only used for testing.
      */
-    private ManagerModeModel(PasswordHasher hasher, Writable<String> writable,
+    public ManagerModeModel(PasswordHasher hasher, Writable<String> writable,
             ForwardingObservable<Boolean> observable) {
         managerPvWritable = writable;
         managerModePv = new ManagerModeObservable(observable);
         passwordHasher = hasher;
-    }
-
-    /**
-     * Gets the singleton instance of this class.
-     * 
-     * @return the singleton instance of this class
-     */
-    public static ManagerModeModel getInstance() {
-        if (instance == null) {
-            instance = new ManagerModeModel();
-        }
-        return instance;
-    }
-
-    /**
-     * Used in unit tests to make sure there is a consistent start state for all
-     * tests.
-     * 
-     * @param hasher an injected password hasher for unit tests
-     * @param writable an injected writable for unit tests
-     * @param observable an injected observable for unit tests
-     * @return an instance of the manager mode model with the given dependencies injected
-     */
-    public static ManagerModeModel getTestableInstance(PasswordHasher hasher, Writable<String> writable,
-            ForwardingObservable<Boolean> observable) {
-        return new ManagerModeModel(hasher, writable, observable);
     }
 
     /**
@@ -113,7 +85,7 @@ public final class ManagerModeModel extends ModelObject {
      * @throws FailedLoginException
      *             if the password was incorrect
      */
-    public void login(String password) throws FailedLoginException {
+    public void authenticate(String password) throws FailedLoginException {
         this.password = password;
         validate();
         try {
@@ -126,7 +98,7 @@ public final class ManagerModeModel extends ModelObject {
     /**
      * Exits manager mode.
      */
-    public void logout() {
+    public void deauthenticate() {
         this.password = "";
         this.passwordValid = false;
         try {
@@ -165,14 +137,6 @@ public final class ManagerModeModel extends ModelObject {
 
     }
 
-    /**
-     * Gets the manager mode observable.
-     * @return the manager mode observable
-     */
-    public ManagerModeObservable getManagerModeObservable() {
-        return managerModePv;
-    }
-
     private void addObserver() {
         new ManagerModeObserver(managerModePv.observable) {
 
@@ -203,7 +167,7 @@ public final class ManagerModeModel extends ModelObject {
      * @return true if the instrument is in manager mode, false otherwise
      * @throws ManagerModePvNotConnectedException if the manager mode pv is not connected
      */
-    public boolean isInManagerMode() throws ManagerModePvNotConnectedException {
+    public boolean isAuthenticated() throws IOException {
         if (inManagerMode == null) {
             try {
                 // PV doesn't have time to connect before this is called the
@@ -212,10 +176,12 @@ public final class ManagerModeModel extends ModelObject {
             } catch (InterruptedException e) {
                 //Do nothing.
             }
+            
             if (inManagerMode == null) {
-                throw new ManagerModePvNotConnectedException("Manager mode PV not connected. Please try again in a few moments.");
+                throw new IOException("Manager mode PV not connected. Please try again in a few moments.");
             }
         }
+        
         return inManagerMode.booleanValue();
     }
 
