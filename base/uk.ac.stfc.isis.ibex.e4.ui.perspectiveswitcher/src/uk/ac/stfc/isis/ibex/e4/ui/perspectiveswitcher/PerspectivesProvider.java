@@ -1,18 +1,15 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,7 +24,7 @@ public class PerspectivesProvider {
     private ExperimentSetupViewModel experimentSetupViewModel;
     private Shell shell;
     private final EPartService partService;
-    private List<MPerspective> perspectives = new ArrayList<MPerspective>();
+    private final List<MPerspective> perspectives;
     private MPerspectiveStack perspectivesStack;
     private MApplication app;
     private EModelService modelService;
@@ -60,6 +57,12 @@ public class PerspectivesProvider {
         		.orElseThrow(() -> new IllegalStateException("No perspective stack found with name = " + MAIN_PERSPECTIVE_STACK_ID));
     }
     
+    /**
+     * Find elements of a given type, clazz, in the application model.
+     * 
+     * @param clazz the type to search for.
+     * @return a stream of matching elements.
+     */
     private <T> Stream<T> findElements(Class<T> clazz) {
     	return modelService
         		.findElements(app, null, clazz, null)
@@ -75,6 +78,14 @@ public class PerspectivesProvider {
         return perspectives.stream();
     }
 
+    /**
+     * Matches perspectives by ID - also matching orphaned perspectives created
+     * due to an eclipse bug.
+     * 
+     * @param p the perspective to match
+     * @param id the ID to match
+     * @return whether the perspective matches the given ID
+     */
     public static boolean matchPerspectivesById(MPerspective p, String id) {
         // The 2nd condition is because E4 has a bug that creates orphan
         // perspectives with IDs of the form ...perspective.alarms.<Alarms>

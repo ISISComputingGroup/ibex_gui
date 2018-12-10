@@ -10,22 +10,17 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.descriptor.basic.MBasicFactory;
 import org.eclipse.e4.ui.model.application.descriptor.basic.MPartDescriptor;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
 import org.eclipse.emf.ecore.resource.Resource;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-import uk.ac.stfc.isis.ibex.ui.EmptyView;
+import uk.ac.stfc.isis.ibex.ui.UnrestorableView;
 
 /**
  * This class is responsible for loading an MPerspective instance given a perspective ID.
@@ -41,27 +36,46 @@ public class PerspectiveLayoutLoader {
 	private final MApplication app;
 	private final EModelService modelService;
 	private final MWindow mainWindow;
-	private final EPartService partService;
 	
 	private final EPlaceholderResolver placeholderResolver;
 
-	public PerspectiveLayoutLoader(MApplication app, EModelService modelService, EPartService partService, EPlaceholderResolver placeholderResolver) {
+	/**
+	 * A PerspectiveLayoutLoader is responsible for taking a perspective ID and turning it into an
+	 * MPerspective object.
+	 * 
+	 * @param app - the application instance
+	 * @param modelService - the model service
+	 * @param placeholderResolver - the placeholder resolver to use
+	 */
+	public PerspectiveLayoutLoader(MApplication app, EModelService modelService, EPlaceholderResolver placeholderResolver) {
 		this.app = app;
 		this.modelService = modelService;
 		this.mainWindow = PersistenceUtils.findMainWindow(app, modelService)
-				.orElseThrow(() -> new RuntimeException("Can't find main window"));
+				.orElseThrow(() -> new IllegalStateException("Can't find main window"));
 		
 		this.placeholderResolver = placeholderResolver;
-		this.partService = partService;
 	}
 	
+	/**
+	 * Loads a perspective with a given ID. Attempts to use a save file first. If that fails,
+	 * load the default layout.
+	 * 
+	 * @param id the ID of the perspective to load
+	 * @return an MPerspective describing the loaded perspective
+	 */
     public MPerspective load(String id) {
     	LOG.info("Loading perspective layout for " + id);
     	return loadLayoutFromSaveFile(id).orElseGet(() -> loadDefaultLayout(id));
     }
     
+    /**
+     * Loads a perspective with a given ID from a save file.
+     * 
+     * @param id the ID of the perspective that should be loaded
+     * @return an Optional containing the perspective if it was loaded, an empty optional otherwise.
+     */
     private Optional<MPerspective> loadLayoutFromSaveFile(String id) {
-	    Resource resource = E4ResourceUtils.getEmptyResource();
+	    Resource resource = PersistenceUtils.getEmptyResource();
 	    
 	    try (FileInputStream inputStream = new FileInputStream(PersistenceUtils.getFileForPersistence(id))) { 
 	    	resource.load(inputStream, null);
@@ -70,62 +84,16 @@ public class PerspectiveLayoutLoader {
 	    	resource.getErrors().forEach(d -> LOG.info("Diagnostic error from resource: " + d.getMessage()));
 	    	resource.getWarnings().forEach(d -> LOG.info("Diagnostic warning from resource: " + d.getMessage()));
 	    	
-	    	MPerspective perspective = resource.getContents().stream()
+	    	Optional<MPerspective> perspective = resource.getContents().stream()
 	    			.filter(MPerspective.class::isInstance)
 	    			.map(MPerspective.class::cast)
-	    			.findFirst()
-	    			.orElseThrow(() -> new RuntimeException("No perspectives in save file"));
+	    			.findFirst();
 	    	
-	    	for (MPlaceholder placeholder : getPlaceholdersRecursive(perspective)) {
-	    		
-	    		String phid = placeholder.getElementId();
-	    		if (phid.contains(":")) {
-	    			placeholder.setElementId(phid.substring(0, phid.indexOf(":")));
-	    		}
-	    		
-	    		try {
-	    		    placeholderResolver.resolvePlaceholderRef(placeholder, mainWindow);
-	    		} catch (RuntimeException e) {
-	    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId());
-	    		}
-	    		
-	    		if (placeholder.getRef() == null) {
-		    		try {
-		    			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
-		    			
-		    			String emptyViewPackage = EmptyView.class.getPackage().getName();
-		    			
-		    			descriptor.setContributionURI(String.format("bundleclass://%s/%s.EmptyView", emptyViewPackage, emptyViewPackage, EmptyView.class.getSimpleName()));
-		    			descriptor.setContributorURI(String.format("platform:/plugin/%s", emptyViewPackage));
-		    			descriptor.setElementId(EmptyView.ID);
-		    			descriptor.setLabel("Empty view");
-		    			descriptor.setAllowMultiple(true);
-		    			
-		    			MPart createdElement = modelService.createPart(descriptor);
-		    			mainWindow.getSharedElements().add(createdElement);
-		    			placeholder.setRef(createdElement);
-		    			
-		    		} catch (RuntimeException e) {
-		    			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId() + " using classloader: " + e.getMessage());
-		    			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-		    		}
-	    		}
-	    		
-	    		if (placeholder.getRef() == null) {
-		    		LOG.info("Couldn't resolve placeholder '" + placeholder.getElementId() + "'. Deleting it from restored model.");
-		    		placeholder.setToBeRendered(false);
-		    		placeholder.setVisible(true);
-		    		
-		    		MElementContainer<MUIElement> parent = placeholder.getParent();
-		    		List<MUIElement> children = parent.getChildren();
-		    		
-		    		if (children.stream().filter(MUIElement::isToBeRendered).count() == 0) {
-		    			parent.setToBeRendered(false);
-		    		}
-	    		}
-	    	}
+	    	perspective
+		    	.map(this::getPlaceholdersRecursive)
+		    	.ifPresent(placeholders -> placeholders.forEach(this::resolvePlaceholderReference));
 	    	
-	    	return Optional.of(perspective);
+	    	return perspective;
 	    	
 	    } catch (RuntimeException | IOException err) {
     		LoggerUtils.logErrorWithStackTrace(LOG, "No valid save file for perspective " + id + ", falling back to default layout", err);
@@ -151,6 +119,53 @@ public class PerspectiveLayoutLoader {
     		}
     	}
     	return placeholders;
+    }
+    
+    /**
+     * Fill in the reference of a placeholder using shared parts if available.
+     * 
+     * Falls back to an empty view otherwise.
+     * 
+     * @param placeholder - the placeholder to resolve.
+     */
+    private void resolvePlaceholderReference(MPlaceholder placeholder) {
+    	try {
+		    placeholderResolver.resolvePlaceholderRef(placeholder, mainWindow);
+		} catch (RuntimeException e) {
+			LOG.info("Couldn't resolve placeholder reference " + placeholder.getElementId());
+		}
+    	
+    	if (placeholder.getRef() == null) {
+    		pointPlaceholderAtEmptyView(placeholder);
+    	}
+    }
+    
+    /**
+     * Force a given placeholder to point at an empty view. This is the fallback
+     * if we couldn't resolve a placeholder reference.
+     * 
+     * @param placeholder the placeholder to set to an empty view.
+     */
+    private void pointPlaceholderAtEmptyView(MPlaceholder placeholder) {
+    	try {
+			MPartDescriptor descriptor = MBasicFactory.INSTANCE.createPartDescriptor();
+			
+			String emptyViewPackage = UnrestorableView.class.getPackage().getName();
+			
+			descriptor.setContributionURI(String.format("bundleclass://%s/%s.%s", emptyViewPackage, emptyViewPackage, UnrestorableView.class.getSimpleName()));
+			descriptor.setContributorURI(String.format("platform:/plugin/%s", emptyViewPackage));
+			descriptor.setElementId(UnrestorableView.ID);
+			descriptor.setLabel("Unrestorable view");
+			descriptor.setAllowMultiple(true);
+			
+			MPart createdElement = modelService.createPart(descriptor);
+			mainWindow.getSharedElements().add(createdElement);
+			placeholder.setRef(createdElement);
+			
+		} catch (RuntimeException e) {
+			LOG.info("Couldn't point placeholder " + placeholder.getElementId() + " at empty view: " + e.getMessage());
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
     }
     
     private MPerspective loadDefaultLayout(String id) {

@@ -22,9 +22,6 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.managermode.ClientManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
-import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
-import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.EnterManagerModeDialog;
-import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ExitManagerModeDialog;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.TemporaryAuthenticationDialog;
 
 /**
@@ -51,7 +48,7 @@ public class SavePerspectiveLayout {
     	Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     	IManagerModeModel model = new ClientManagerModeModel();
     	
-    	new TemporaryAuthenticationDialog(shell, model).open();
+    	new TemporaryAuthenticationDialog(shell, model, "Please authenticate to save layouts.").open();
 
         boolean isAuthenticated;
         
@@ -93,7 +90,7 @@ public class SavePerspectiveLayout {
     	
     	final String perspectiveId = perspective.getElementId();
 
-        Resource resource = E4ResourceUtils.getEmptyResource();
+        Resource resource = PersistenceUtils.getEmptyResource();
 
         // You must clone the perspective as snippet, otherwise the running
         // application would break, because the saving process of the resource
@@ -106,6 +103,11 @@ public class SavePerspectiveLayout {
         writeFile(PersistenceUtils.getFileForPersistence(perspectiveId), resource);
     }
     
+    /**
+     * Writes the provided E4 Resource to file.
+     * @param file - the file to write to
+     * @param resource - the resource to write
+     */
     private void writeFile(File file, Resource resource) {
     	
     	try (FileOutputStream outputStream = new FileOutputStream(file)) {

@@ -45,13 +45,14 @@ import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
 public class TemporaryAuthenticationDialog extends TitleAreaDialog {
 
     private static final String WINDOW_TITLE = "Authentication";
-    private static final String AREA_TITLE = "Authenticate to perform this action";
 
     private Composite upperDialogArea;
 
     private final IManagerModeModel model;
 
     private Text passwordEntryField;
+    
+    private final String areaTitle;
 
     /**
      * Constructor.
@@ -61,11 +62,11 @@ public class TemporaryAuthenticationDialog extends TitleAreaDialog {
      * @param model
      *            the view model
      */
-    public TemporaryAuthenticationDialog(Shell parentShell, IManagerModeModel model) {
+    public TemporaryAuthenticationDialog(Shell parentShell, IManagerModeModel model, String areaTitle) {
         super(parentShell);
         upperDialogArea = (Composite) super.createDialogArea(parentShell);
         upperDialogArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
+        this.areaTitle = areaTitle;
         this.model = model;
 
     }
@@ -98,7 +99,7 @@ public class TemporaryAuthenticationDialog extends TitleAreaDialog {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        setTitle(AREA_TITLE);
+        setTitle(areaTitle);
 
         Composite container = (Composite) super.createDialogArea(parent);
         Group group = new Group(container, SWT.NONE);

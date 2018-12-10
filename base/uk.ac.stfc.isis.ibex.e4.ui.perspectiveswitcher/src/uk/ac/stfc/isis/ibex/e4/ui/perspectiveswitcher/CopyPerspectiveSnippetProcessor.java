@@ -60,7 +60,7 @@ public class CopyPerspectiveSnippetProcessor {
         Display.getDefault().syncExec(new Runnable() {
         	public void run() {
         		
-        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService, partService, placeholderResolver);
+        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService, placeholderResolver);
                 
                 perspectivesProvider.snippetIds()
                 	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))

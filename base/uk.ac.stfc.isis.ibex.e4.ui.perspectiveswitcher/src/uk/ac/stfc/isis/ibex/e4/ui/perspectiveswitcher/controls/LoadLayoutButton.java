@@ -15,6 +15,13 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 public class LoadLayoutButton extends Button {
 
     private final SelectionAdapter adapter;
+    
+    private static final String RESTART_GUI_TITLE = "Close user interface and load layout?";
+    
+    private static final String RESTART_GUI_PROMPT = "Loading a layout requires the user interface to restart. "
+			+ "This will terminate scripts which are running in the client's scripting console "
+			+ "(scripts in the script server will be unaffected). \n\n"
+			+ "Would you like to restart now to load a layout?";
 
     /**
      * Constructor.
@@ -32,9 +39,8 @@ public class LoadLayoutButton extends Button {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		boolean loadAndRestart = MessageDialog.openQuestion(
-        				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-        				"Close user interface and load layout?", 
-        				"Loading a layout requires the user interface to restart. This will terminate running scripts. \n\nWould you like to restart now to load a layout?");
+        				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+        				RESTART_GUI_TITLE, RESTART_GUI_PROMPT);
         		
         		if (loadAndRestart) {
 	        		IsisLog.getLogger(getClass()).info("User interface restarting to load a layout.");

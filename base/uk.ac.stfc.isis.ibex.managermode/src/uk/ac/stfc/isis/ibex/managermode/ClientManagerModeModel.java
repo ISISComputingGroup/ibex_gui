@@ -10,7 +10,8 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
- * A model for 
+ * A client-side authentication model, providing temporary authentication
+ * for certain client-side actions (such as saving layouts).
  */
 public class ClientManagerModeModel implements IManagerModeModel {
 
