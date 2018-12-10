@@ -58,7 +58,7 @@ public final class ComponentIcons {
     private static Image icon(String fileName) {
     	try {
     		ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/componentsfesfsdfd/" + fileName);
-    	}catch (Exception e){
+    	} catch (Exception e) {
         	IsisLog.getLogger(ComponentIcons.class).error("AAAAAHHHHH: " + e.getMessage());
         }
     	return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
