@@ -26,9 +26,6 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewMo
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.LoadLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.SaveLayoutButton;
-
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -59,8 +56,6 @@ public class PerspectiveSwitcherView {
 
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
-		addResetCurrentPerspectiveShortcut(composite);
-		addSaveLayoutButton(composite);
 		addLoadLayoutButton(composite);
 		
 		addSeparator(composite);
@@ -99,14 +94,6 @@ public class PerspectiveSwitcherView {
 	private void addSeparator(Composite parent) {
 		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	}
-
-	private void addResetCurrentPerspectiveShortcut(Composite parent) {
-		new ResetLayoutButton(parent, perspectivesProvider);
-	}
-	
-	private void addSaveLayoutButton(Composite parent) {
-		new SaveLayoutButton(parent, app, partService, modelService, window);
 	}
 	
 	private void addLoadLayoutButton(Composite parent) {

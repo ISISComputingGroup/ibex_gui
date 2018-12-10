@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -50,12 +49,6 @@ public class CopyPerspectiveSnippetProcessor {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
         this.broker = broker;
-
-        // Only do this when no other children, or the restored workspace state
-        // will be overwritten.
-//        if (!perspectiveStack.getChildren().isEmpty()) {
-//            return;
-//        }
         
         Display.getDefault().syncExec(new Runnable() {
         	public void run() {
@@ -66,8 +59,6 @@ public class CopyPerspectiveSnippetProcessor {
                 	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))
                     .map(perspectiveLoader::load)
                     .forEach(CopyPerspectiveSnippetProcessor.this::addPerspective);
-                
-                ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
         	}
         });
     }
@@ -107,8 +98,6 @@ public class CopyPerspectiveSnippetProcessor {
                     return;
                 }
 
-                ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
-
             }
         };
 
@@ -147,8 +136,6 @@ public class CopyPerspectiveSnippetProcessor {
                     alreadyCalled = true;
                     return;
                 }
-
-                ResetLayoutButtonModel.getInstance().setChanged(true);
             }
         };
 

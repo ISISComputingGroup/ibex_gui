@@ -16,6 +16,8 @@ public class LoadLayoutButton extends Button {
 
     private final SelectionAdapter adapter;
     
+    private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
+    
     private static final String RESTART_GUI_TITLE = "Close user interface and load layout?";
     
     private static final String RESTART_GUI_PROMPT = "Loading a layout requires the user interface to restart. "
@@ -32,8 +34,9 @@ public class LoadLayoutButton extends Button {
      *            PerspectivesProvider
      */
     public LoadLayoutButton(Composite parent) {
-        super(parent, ResetLayoutButton.RESET_PERSPECTIVE_URI, "Sets the layout of the current perspective back to its default",
+        super(parent, RESET_PERSPECTIVE_URI, "Loads the last saved perspective layout from file",
                 new ButtonViewModel());
+        
         model.setText("Load Layout");
         adapter = new SelectionAdapter() {
         	@Override

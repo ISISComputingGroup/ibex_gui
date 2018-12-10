@@ -40,6 +40,8 @@
           <children xsi:type="menu:HandledMenuItem" xmi:id="_kIsJQGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.standard" label="Standard colour scheme" tooltip="Switch to standard colour scheme" selected="true" type="Radio" command="_J1L8EKkFEeeR15ll_ruI0A"/>
           <children xsi:type="menu:HandledMenuItem" xmi:id="_lr4aUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.alternative" label="Alternative colour scheme 1" tooltip="Switch to alternative colour scheme 1" type="Radio" command="_aKnSYKkFEeeR15ll_ruI0A"/>
         </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Gi7SkPyLEeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.saveperspectivelayouts" label="Save perspective layouts" tooltip="Saves the layouts of all perspectives to file (requires authentication)" command="_33OTIPyKEeieluT83Nr0_w"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_P-RLoPyLEeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.resettodefaultlayout" label="Reset to default layout" tooltip="Resets the current perspective to the default layout" command="_NufGcJZmEeilnu5vNzjU3w"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_EQzKoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.help" label="Help" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_n7iv0GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About" tooltip="All about IBEX" command="_hj--kKkDEeeNUPQOsQF40g"/>
@@ -111,6 +113,7 @@
   <handlers xmi:id="_JRFiEJlbEeiJWOfXjwtf9A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
+  <handlers xmi:id="_1LHSMPyKEeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.savelayouts" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.SavePerspectiveLayout" command="_33OTIPyKEeieluT83Nr0_w"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
@@ -594,6 +597,7 @@
     <tags>type:user</tags>
   </commands>
   <commands xmi:id="_oZBHMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" commandName="Icon Licence" description="View IBEX gui icon licences"/>
+  <commands xmi:id="_33OTIPyKEeieluT83Nr0_w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.savelayouts" commandName="Save Layout" description="Save layouts of all perspectives"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
