@@ -18,12 +18,10 @@ public class LoadLayoutButton extends Button {
     
     private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
     
-    private static final String RESTART_GUI_TITLE = "Close user interface and load layout?";
+    private static final String RESTART_GUI_TITLE = "Load Layout";
     
-    private static final String RESTART_GUI_PROMPT = "Loading a layout requires the user interface to restart. "
-			+ "This will terminate scripts which are running in the client's scripting console "
-			+ "(scripts in the script server will be unaffected). \n\n"
-			+ "Would you like to restart now to load a layout?";
+    private static final String RESTART_GUI_PROMPT = "Would you like to restart the user interface now and load the last saved layout?"
+			+ "\n\nWarning: this will terminate scripts which are currently running in the client.";
 
     /**
      * Constructor.
@@ -34,7 +32,7 @@ public class LoadLayoutButton extends Button {
      *            PerspectivesProvider
      */
     public LoadLayoutButton(Composite parent) {
-        super(parent, RESET_PERSPECTIVE_URI, "Loads the last saved perspective layout from file",
+        super(parent, RESET_PERSPECTIVE_URI, "Loads the last saved user interface layout",
                 new ButtonViewModel());
         
         model.setText("Load Layout");
