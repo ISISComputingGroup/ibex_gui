@@ -176,20 +176,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_1_foreground_color>
     <tab_1_icon_path></tab_1_icon_path>
-    <tab_1_title>Graph Options</tab_1_title>
-    <tab_2_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </tab_2_background_color>
-    <tab_2_enabled>true</tab_2_enabled>
-    <tab_2_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_TabTitle_NEW</opifont.name>
-    </tab_2_font>
-    <tab_2_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </tab_2_foreground_color>
-    <tab_2_icon_path></tab_2_icon_path>
-    <tab_2_title>Temperatures and Sensors</tab_2_title>
-    <tab_count>3</tab_count>
+    <tab_1_title>Temperatures and Sensors</tab_1_title>
+    <tab_count>2</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
@@ -548,52 +536,11 @@ $(trace_0_y_pv_value)</tooltip>
         <trigger_pv_value />
         <visible>true</visible>
         <widget_type>XY Graph</widget_type>
-        <width>763</width>
+        <width>649</width>
         <wuid>-1ef363dc:166d4c4e76f:-79ab</wuid>
         <x>12</x>
         <y>6</y>
       </widget>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fc>false</fc>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
-      </font>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <height>482</height>
-      <lock_children>false</lock_children>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-      </macros>
-      <name>Graph Options</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <visible>false</visible>
-      <widget_type>Grouping Container</widget_type>
-      <width>785</width>
-      <wuid>-1ef363dc:166d4c4e76f:-79de</wuid>
-      <x>1</x>
-      <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
@@ -612,11 +559,11 @@ $(trace_0_y_pv_value)</tooltip>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>141</height>
+        <height>256</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Enable/Disable Plotted Temperatures</name>
+        <name>Plot</name>
         <opi_file>Lakeshore218_graph_options.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
@@ -629,10 +576,10 @@ $(trace_0_y_pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>210</width>
-        <wuid>-1ef363dc:166d4c4e76f:-4c8d</wuid>
-        <x>6</x>
-        <y>6</y>
+        <width>103</width>
+        <wuid>18016d9c:1679c996832:-7f2d</wuid>
+        <x>654</x>
+        <y>90</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">

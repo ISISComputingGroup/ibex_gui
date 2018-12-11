@@ -264,8 +264,8 @@ $(pv_value)</tooltip>
     <widget_type>Check Box</widget_type>
     <width>90</width>
     <wuid>-1ef363dc:166d4c4e76f:-6b91</wuid>
-    <x>94</x>
-    <y>5</y>
+    <x>5</x>
+    <y>125</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.checkbox" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -311,8 +311,8 @@ $(pv_value)</tooltip>
     <widget_type>Check Box</widget_type>
     <width>90</width>
     <wuid>-1ef363dc:166d4c4e76f:-6b90</wuid>
-    <x>94</x>
-    <y>35</y>
+    <x>5</x>
+    <y>155</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.checkbox" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -358,8 +358,8 @@ $(pv_value)</tooltip>
     <widget_type>Check Box</widget_type>
     <width>90</width>
     <wuid>-1ef363dc:166d4c4e76f:-6b8f</wuid>
-    <x>94</x>
-    <y>95</y>
+    <x>5</x>
+    <y>215</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.checkbox" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -405,7 +405,7 @@ $(pv_value)</tooltip>
     <widget_type>Check Box</widget_type>
     <width>90</width>
     <wuid>-1ef363dc:166d4c4e76f:-6b8e</wuid>
-    <x>94</x>
-    <y>65</y>
+    <x>5</x>
+    <y>185</y>
   </widget>
 </display>
