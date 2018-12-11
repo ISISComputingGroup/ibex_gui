@@ -1619,6 +1619,7 @@
             </value>
         </entry>
         <entry>        
+
       <key>Induction Furnace</key>
       <value>
         <categories>
@@ -1648,5 +1649,21 @@
 			</macros>
 		</value>
 	</entry>		
+    <entry>
+      <key>KNR1050</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>knr1050.opi</path>
+        <description>The OPI for the KNR1050</description>
+        <macros>
+          <macro>
+            <name>KNR1050</name>
+            <description>The KNR1050 PV prefix (e.g. KNR1050_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+  </opis>
     </opis>
 </descriptions>
