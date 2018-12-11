@@ -40,7 +40,6 @@ public class PerspectiveSwitcherView {
 	@Inject private MApplication app;
 	@Inject private EPartService partService;
 	@Inject private IEventBroker broker;
-	@Inject private MWindow window;
 
 	/**
 	 * Create and initialise the controls within the view.

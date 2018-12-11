@@ -21,7 +21,7 @@ public class LoadLayoutButton extends Button {
     private static final String RESTART_GUI_TITLE = "Load Layout";
     
     private static final String RESTART_GUI_PROMPT = "Would you like to restart the user interface now and load the last saved layout?"
-			+ "\n\nWarning: this will terminate scripts which are currently running in the client.";
+			+ "\n\nWarning: this will terminate scripts which are currently running in the client. Scripts running in the script server will be unaffected.";
 
     /**
      * Constructor.
@@ -35,7 +35,7 @@ public class LoadLayoutButton extends Button {
         super(parent, RESET_PERSPECTIVE_URI, "Loads the last saved user interface layout",
                 new ButtonViewModel());
         
-        model.setText("Load Layout");
+        model.setText("Reload Saved Layout");
         adapter = new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
