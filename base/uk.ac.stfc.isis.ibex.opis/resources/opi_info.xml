@@ -307,19 +307,6 @@
             </value>
         </entry>
         <entry>
-            <key>Julabo FL300</key>
-            <value>
-                <type>JULABO</type>
-                <path>JulaboFL300.opi</path>
-                <description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Water baths</category>
-                    <category>Temperature controllers</category>
-                </categories>
-            </value>
-        </entry>
-        <entry>
             <key>Single Stage</key>
             <value>
                 <type>SINGLESTAGE</type>
@@ -1632,6 +1619,7 @@
             </value>
         </entry>
         <entry>        
+
       <key>Induction Furnace</key>
       <value>
         <categories>
@@ -1661,5 +1649,21 @@
 			</macros>
 		</value>
 	</entry>		
+    <entry>
+      <key>KNR1050</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>knr1050.opi</path>
+        <description>The OPI for the KNR1050</description>
+        <macros>
+          <macro>
+            <name>KNR1050</name>
+            <description>The KNR1050 PV prefix (e.g. KNR1050_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+  </opis>
     </opis>
 </descriptions>
