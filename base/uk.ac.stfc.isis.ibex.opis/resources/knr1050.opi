@@ -330,8 +330,8 @@
       <width>120</width>
       <wrap_words>true</wrap_words>
       <wuid>7c003c01:16765602bed:-7c5f</wuid>
-      <x>6</x>
-      <y>88</y>
+      <x>9</x>
+      <y>105</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -371,8 +371,8 @@
       <width>120</width>
       <wrap_words>true</wrap_words>
       <wuid>7c003c01:16765602bed:-7c6b</wuid>
-      <x>6</x>
-      <y>24</y>
+      <x>10</x>
+      <y>35</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -412,8 +412,8 @@
       <width>120</width>
       <wrap_words>true</wrap_words>
       <wuid>7c003c01:16765602bed:-7811</wuid>
-      <x>6</x>
-      <y>123</y>
+      <x>9</x>
+      <y>145</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -502,54 +502,8 @@ $(pv_value)</tooltip>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>7c003c01:16765602bed:-77e3</wuid>
-      <x>141</x>
-      <y>120</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-      </background_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>28</height>
-      <horizontal>true</horizontal>
-      <items_from_pv>true</items_from_pv>
-      <name>ChoiceBtn toggle mode</name>
-      <pv_name>$(PV_ROOT)TOGGLE:REMOTE:SP</pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <selected_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </selected_color>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Choice Button</widget_type>
-      <width>139</width>
-      <wuid>7c003c01:16765602bed:-77c2</wuid>
-      <x>141</x>
-      <y>16</y>
+      <x>144</x>
+      <y>145</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
@@ -579,7 +533,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button stop pump</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(PV_ROOT)_STOP_PUMP:SP</pv_name>
+      <pv_name>$(PV_ROOT)PUMP:STOP:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -597,8 +551,8 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>67</width>
       <wuid>-6cfdb2e0:167a2ef00fb:-7a9b</wuid>
-      <x>141</x>
-      <y>84</y>
+      <x>144</x>
+      <y>100</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
@@ -628,7 +582,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button start pump</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(PV_ROOT)_RAMP:SP</pv_name>
+      <pv_name>$(PV_ROOT)PUMP:START:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -646,8 +600,8 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>67</width>
       <wuid>-6cfdb2e0:167a2ef00fb:-7f5f</wuid>
-      <x>213</x>
-      <y>84</y>
+      <x>216</x>
+      <y>100</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -687,8 +641,8 @@ $(pv_value)</tooltip>
       <width>120</width>
       <wrap_words>true</wrap_words>
       <wuid>-6cfdb2e0:167a2ef00fb:-7a7b</wuid>
-      <x>6</x>
-      <y>54</y>
+      <x>9</x>
+      <y>70</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -739,8 +693,107 @@ $(pv_value)</tooltip>
       <width>85</width>
       <wrap_words>false</wrap_words>
       <wuid>-6cfdb2e0:167a2ef00fb:-7a71</wuid>
-      <x>141</x>
-      <y>54</y>
+      <x>144</x>
+      <y>70</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description>Local mode</description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>28</height>
+      <image></image>
+      <name>Button remote mode</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)LOCAL_MODE:SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>Local</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>67</width>
+      <wuid>49fd0cf8:167a76866d5:-7fbf</wuid>
+      <x>144</x>
+      <y>30</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description>Remote mode</description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>28</height>
+      <image></image>
+      <name>Button remote mode sp</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)REMOTE_MODE:SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>Remote&#xD;
+</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>67</width>
+      <wuid>49fd0cf8:167a76866d5:-7fbe</wuid>
+      <x>216</x>
+      <y>30</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
