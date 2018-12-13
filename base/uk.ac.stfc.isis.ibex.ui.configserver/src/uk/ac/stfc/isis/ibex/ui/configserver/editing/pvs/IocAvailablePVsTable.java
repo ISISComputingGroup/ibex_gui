@@ -28,12 +28,21 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Table showing the IOCs that could be added to a configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	private IocPVNameFilter filter;
 	
+	/**
+	 * Constructor for table.
+	 * @param parent The parent composite.
+	 * @param style The style of the viewer.
+	 * @param tableStyle The style of the table.
+	 */
 	public IocAvailablePVsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, AvailablePV.class, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	

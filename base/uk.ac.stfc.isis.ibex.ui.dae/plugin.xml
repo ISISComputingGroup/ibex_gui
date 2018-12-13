@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.dae.OnInstrumentSwitch">
+      </InstrumentInfoReceiver>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.wait">
+      <wait
+            class="uk.ac.stfc.isis.ibex.ui.dae.WaitForDaeChanges">
+      </wait>
+   </extension>
 </plugin>

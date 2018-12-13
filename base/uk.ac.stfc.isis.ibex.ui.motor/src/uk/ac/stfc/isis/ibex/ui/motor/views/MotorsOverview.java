@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,8 +35,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
  * Holds the table of motors.

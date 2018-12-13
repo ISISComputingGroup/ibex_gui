@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="242">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="247">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20171217-2215"/>
-<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.python.pydev.feature.feature.group" version="5.2.0.201608171824"/>
@@ -42,6 +38,14 @@
 <unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201804041854"/>
 <unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201804041854"/>
 <repository location="http://download.controlsystemstudio.org/updates/4.5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.py4j.feature.feature.group" version="0.10.7.bnd-R6cnNQ"/>
+<repository location="https://dl.bintray.com/py4j/py4j-eclipse/0.10.7/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20181023-1826"/>
+<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 </location>
 </locations>
 <environment>

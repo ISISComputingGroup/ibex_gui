@@ -26,17 +26,17 @@ public enum NicosErrorState {
     /**
      * Error for when the protocol received from the server is unrecognised.
      */
-    INVALID_PROTOCOL("NICOS protocol is invalid"),
+    INVALID_PROTOCOL("Script server protocol is invalid"),
 
     /**
      * Error for when the serialiser received from the server is unrecognised.
      */
-    INVALID_SERIALISER("NICOS serialiser is invalid"),
+    INVALID_SERIALISER("Script server serialiser is invalid"),
 
     /**
      * Error for when the connection to nicos throws an exception.
      */
-    CONNECTION_FAILED("The connection to NICOS failed"),
+    CONNECTION_FAILED("The connection to the script server failed"),
     
     /**
      * Error for when a response was expected but none was received.

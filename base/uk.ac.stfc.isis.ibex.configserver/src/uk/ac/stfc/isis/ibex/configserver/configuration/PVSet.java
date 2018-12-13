@@ -21,28 +21,64 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A class to represent a set of PVs.
+ *
+ */
 public class PVSet extends ModelObject {
 	private String name;
 	private boolean enabled;
 	
+	/**
+	 * A copy constructor for class that represents a set of PVs.
+	 * 
+	 * @param other
+	 *             The PV set to be copied.
+	 */
 	public PVSet(PVSet other) {
 		this.name = other.name;
 		this.enabled = other.enabled;
 	}
-	
+	/**
+	 * A constructor for class that represents a set of PVs.
+	 * 
+	 * @param name
+	 *             The PV set name.
+	 *             
+	 * @param enabled
+	 *             True if the PV set is enabled.
+	 */
 	public PVSet(String name, boolean enabled) {
 		this.name = name;
 		this.enabled = enabled;
 	}
 
+	/**
+	 * Returns the PV set name.
+	 * 
+	 * @return
+	 *         The PV set name.
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+     * Returns true if the PV set is enabled.
+     * 
+     * @return
+     *         True if the PV set is enabled.
+     */
 	public boolean getEnabled() {
 		return enabled;
 	}
 	
+	/**
+     * Sets whether or not the PV set is enabled.
+     * 
+     * @param enabled
+     *                  True if the PV set is to be enabled.
+     */
 	public void setEnabled(boolean enabled) {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 	}

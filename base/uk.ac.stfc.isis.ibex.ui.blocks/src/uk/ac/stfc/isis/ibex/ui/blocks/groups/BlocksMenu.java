@@ -31,7 +31,6 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
@@ -51,8 +50,6 @@ public class BlocksMenu extends MenuManager {
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private final IAction editBlockAction;
-
-	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -76,6 +73,16 @@ public class BlocksMenu extends MenuManager {
 		}	
 	};
 	
+	private IAction createAddToPlotAction(String plotName) {
+		return new Action("Add to " + plotName + " plot") {
+			@Override
+			public void run() {
+				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName);
+			}
+		};
+	}
+	
     /**
      * The constructor, creates the menu for when the specific block is right-clicked on.
      * 
@@ -95,34 +102,26 @@ public class BlocksMenu extends MenuManager {
         // Allows the menu to be dynamic
         logSubMenu.setRemoveAllWhenShown(true);
         
-        final IAction newPresenter = new Action("New Plot") {
+        final IAction newPlotAction = new Action("New Plot") {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				pvHistoryPresenter.newDisplay(block.blockServerAlias(), block.getName());
+				Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
 		
         logSubMenu.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
-				logSubMenu.add(newPresenter);
-				for (final String plot : pvHistoryPresenter.getCurrentDisplays()) {
-					logSubMenu.add(new Action("Add to " + plot + " plot") {
-						@Override
-						public void run() {
-							BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-							pvHistoryPresenter.addToDisplay(block.blockServerAlias(), block.getName(), plot);
-						}
-					});
-				}
+				logSubMenu.add(newPlotAction);
+				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
 			}
         });
 		
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
 
         String editBlockLabel = EDIT_BLOCK_PREFIX;
-        if (this.block.hasComponent()) {
+        if (this.block.inComponent()) {
             editBlockLabel += COMPONENT_SUFFIX;
         } else {
             editBlockLabel += CONFIGURATION_SUFFIX;

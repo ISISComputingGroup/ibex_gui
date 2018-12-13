@@ -111,9 +111,9 @@ public class EditableConfigurationTest {
 	    	assertEquals(exp.getPV(), act.getPV());
 	    	assertEquals(exp.getIsLocal(), act.getIsLocal());
 	    	assertEquals(exp.getIsVisible(), act.getIsVisible());
-            assertEquals(exp.getRCLowLimit(), act.getRCLowLimit(), FLOAT_ASSERT_DELTA);
-            assertEquals(exp.getRCHighLimit(), act.getRCHighLimit(), FLOAT_ASSERT_DELTA);
-            assertEquals(exp.getRCEnabled(), act.getRCEnabled());
+            assertEquals(exp.getRunControlLowLimit(), act.getRunControlLowLimit(), FLOAT_ASSERT_DELTA);
+            assertEquals(exp.getRunControlHighLimit(), act.getRunControlHighLimit(), FLOAT_ASSERT_DELTA);
+            assertEquals(exp.getRunControlEnabled(), act.getRunControlEnabled());
             assertEquals(exp.getLogPeriodic(), act.getLogPeriodic());
             assertEquals(exp.getLogDeadband(), act.getLogDeadband(), FLOAT_ASSERT_DELTA);
             assertEquals(exp.getLogRate(), act.getLogRate());

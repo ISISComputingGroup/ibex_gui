@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.configserver.internal.LoggingConfigurationObserver;
@@ -119,30 +120,56 @@ public class Configurations extends Closer implements BundleActivator {
 	public Editing edit() {
 		return editing;
 	}
-	
+
     /**
      * @return IOC information
      */
 	public IocControl iocControl() {
 		return iocControl;
 	}
-	
-    /**
-     * @return the recently used configurations
+
+	/**
+     * Returns the names of recently used configurations without that of the current configuration.
+     * 
+     * @param configsInServer
+     *                 The collection of information on the configurations in the server.
+     * @return 
+     *                  The names of recently used configurations without that of the current configuration.
      */
-	public List<String> recent() {
-		return recent.get();
-	}
+    public List<String> getRecentlyLoadedConfigurations(Collection<ConfigInfo> configsInServer) {
+        return recent.getNamesOfRecentlyLoadedConfigs(configsInServer);
+    }
+
+    /**
+     * Returns the time stamp of when recently used configurations were last modified without that of the current configuration.
+     * 
+     * @param configsInServer
+     *                 The collection of information on the configurations in the server.
+     * @return 
+     *                 The names of recently used configurations without that of the current configuration.
+     */
+    public List<String> getLastModifiedTimestampsOfRecentlyLoadedConfigurations(Collection<ConfigInfo> configsInServer) {
+        return recent.getLastModifiedTimestamps(configsInServer);
+    }
 
     /**
      * Add a configuration to the "recently used" list.
      * 
      * @param configName the name to add
      */
-	public void addRecent(String configName) {
+	public void addNameToRecentlyLoadedConfigList(String configName) {
 		recent.add(configName);
 	}
 	
+	/**
+     * Removes a configuration from the "recently used" list.
+     * 
+     * @param configName the name to add
+     */
+    public void removeNameFromRecentlyLoadedConfigList(String configName) {
+        recent.remove(configName);
+    }
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.dae.Dae;
-import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
@@ -40,12 +38,14 @@ public enum ComponentType {
 	CHOPPER,
     /** Fermi Chopper component type. */
 	FERMI_CHOPPER,
+    /** T0 Chopper component type. */
+	T0_CHOPPER,
     /** Monitor component type. */
 	MONITOR,
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE", Dae.ID)),
+    DAE,
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
@@ -140,12 +140,18 @@ public enum ComponentType {
     COUETTE,
     /** Motion setpoints.*/
     MOTION_SET_POINTS,
-    /**Syringe pump*/
+    /**Syringe pump.*/
     SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE,
     /** Generic Power Supply. */
-    POWER_SUPPLY;
+    POWER_SUPPLY,
+    /** Oscilloscope. */
+    OSCILLOSCOPE,
+    /** Moxa ioLogik e1210 Remote I/O. */
+    MOXA_1210,
+    /** Furnace temperature controller. */
+    FURNACE;
 
 	
 	private Target target;

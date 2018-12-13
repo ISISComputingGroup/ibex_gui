@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosCurrentScriptContainer {
-	
+
     private Label lblCurrentScriptStatus;
     private StyledText txtCurrentScript;
     private final NicosModel model;
@@ -70,9 +70,19 @@ public class NicosCurrentScriptContainer {
      * @param parent injected by eclipse
      */
 	@PostConstruct
+	@SuppressWarnings("unchecked")
     public void createCurrentScriptContainer(Composite parent) {
         parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         parent.setLayout(new GridLayout(1, false));
+           
+        Composite currentScriptExecutingContainer = new Composite(parent, SWT.NONE);
+        currentScriptExecutingContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+        currentScriptExecutingContainer.setLayout(new GridLayout(3, false));
+
+        Label lblCombinedScriptInfo = new Label(currentScriptExecutingContainer, SWT.NONE);
+        lblCombinedScriptInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblCombinedScriptInfo), 
+        		BeanProperties.value("combinedScriptInfo").observe(scriptStatusViewModel));
         
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
@@ -80,23 +90,11 @@ public class NicosCurrentScriptContainer {
         
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
-
+ 
         model.addPropertyChangeListener("lineNumber", highlightListener);
         model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
         scriptStatusViewModel.addPropertyChangeListener("highlightColour", highlightListener);
 
-        Composite currentScriptInfoContainer = new Composite(parent, SWT.NONE);
-        currentScriptInfoContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-        currentScriptInfoContainer.setLayout(new GridLayout(2, false));
-        
-        lblCurrentScriptStatus = new Label(currentScriptInfoContainer, SWT.NONE);
-        lblCurrentScriptStatus.setText("Current script status: ");
-        
-        Label lineNumberIndicator = new Label(currentScriptInfoContainer, SWT.NONE);
-        lineNumberIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lineNumberIndicator),
-                BeanProperties.value("lineNumber").observe(scriptStatusViewModel));
-        
         NicosControlButtonPanel controlPanel =
                 new NicosControlButtonPanel(parent, SWT.NONE, scriptStatusViewModel);
         controlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

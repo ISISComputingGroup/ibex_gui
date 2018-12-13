@@ -75,10 +75,6 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	private void setInitialInterpreterCommands() {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				"org.python.pydev.debug");
-		String commands = pydevDebugPreferenceStore.getDefaultString(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS);
-		if (commands == null || commands.contains(Commands.GENIE_INITIALISATION)) {
-			return;
-		}
 
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
 				Commands.GENIE_INITIALISATION);

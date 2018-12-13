@@ -19,32 +19,37 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 
 /**
  * The class responsible for creating the block editor panel.
@@ -86,18 +91,22 @@ public class BlocksEditorPanel extends Composite {
         table.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.keyCode == SWT.DEL) {
-                    deleteSelected();
-                //copies selected blocks if press "Ctrl + D".
-                } else if (e.character == 0x4) {
-                    copySelected();
-                //adds new block if press "Ctrl + A".
-                } else if (e.character == 0x01) {
-                    addNew();
-                //edits first selected block if press "Ctrl +E".
-                } else if (e.character == 0x5 && editEnabled(Arrays.asList(table.firstSelectedRow()))) {
-                    openEditBlockDialog(table.firstSelectedRow());
+            	if (viewModel.getEditEnabled()) {
+	                if (e.keyCode == SWT.DEL) {
+	                    deleteSelected();
+	                //copies selected blocks if press "Ctrl + D".
+	                } else if (e.character == 0x4) {
+	                    copySelected();
+	                //edits first selected block if press "Ctrl +E". 
+	                } else if (e.character == 0x5) {
+                        openEditBlockDialog(table.firstSelectedRow());
+                    }
                 }
+	                
+	            //adds new block if press "Ctrl + A".
+	            if (e.character == 0x01) {
+	            	addNew();
+	            }              
             }
         });
 		
@@ -114,28 +123,27 @@ public class BlocksEditorPanel extends Composite {
 		gd_add.widthHint = 110;
 		
 		add.setLayoutData(gd_add);
-		add.setText("Add Block");	
+		add.setText("&Add Block");
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 addNew();
 			}
 		});
-
+		
         copy = new Button(composite, SWT.NONE);
         GridData gd_copy = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_copy.widthHint = 110;
         
         copy.setLayoutData(gd_copy);
-        copy.setText("Copy Block");
-        copy.setEnabled(false);
+        copy.setText("&Duplicate Block");
         copy.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) { 
                 copySelected();
             }
         });
-
+        
 		edit = new Button(composite, SWT.NONE);
 		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_edit.widthHint = 110;
@@ -146,11 +154,9 @@ public class BlocksEditorPanel extends Composite {
                 openEditBlockDialog(table.firstSelectedRow());
 			}
 		});
-		edit.setText("Edit Block");
-		edit.setEnabled(false);
+		edit.setText("&Edit Block");
 		
 		remove = new Button(composite, SWT.NONE);
-		remove.setEnabled(false);
 		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_remove.widthHint = 110;
 		remove.setLayoutData(gd_remove);
@@ -166,22 +172,29 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				List<EditableBlock> selected = table.selectedRows();
-				setSelectedBlocks(selected);
+				viewModel.setSelectedBlocks(selected);
 			}
 		});
-
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    EditableBlock block = table.firstSelectedRow();
-                    if (!block.hasComponent()) {
-                        openEditBlockDialog(block);
-                    }
+        table.viewer().addDoubleClickListener(new IDoubleClickListener() {
+		
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				EditableBlock block = table.firstSelectedRow();
+                if (!block.inComponent()) {
+                    openEditBlockDialog(block);
                 }
-            }
-        });
+			}
+		});
         
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.enabled().observe(edit),
+                BeanProperties.value("editEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(copy),
+                BeanProperties.value("copyDeleteEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(remove),
+                BeanProperties.value("copyDeleteEnabled").observe(viewModel));
+        
+        viewModel.setSelectedBlocks(new ArrayList<>());
 	}
 	
 	/**
@@ -192,29 +205,31 @@ public class BlocksEditorPanel extends Composite {
 	public void setConfig(EditableConfiguration config) {	
 		this.config = config;
 		
-		add.setEnabled(true);
+		config.addPropertyChangeListener("blocks", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				setBlocks(config);
+			}
+		});
+		
 		setBlocks(config);
 	}
 	
 	private void copySelected() {
-	    if (!table.selectedRows().isEmpty()) {
-    	    for (Block block : table.selectedRows()) {
-                EditableBlock added = new EditableBlock(block);
-                added.setName(viewModel.getUniqueName(added.getName()));
+	    for (Block block : table.selectedRows()) {
+	        EditableBlock added = new EditableBlock(block);
+	        added.setName(viewModel.getUniqueName(added.getName()));
                 
-                try {
-                    config.addNewBlock(added);
-                } catch (DuplicateBlockNameException e1) {
-                    MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
-                            "Failed to add block " + added.getName() + ":\nBlock with this name already exists.",
-                            MessageDialog.ERROR, new String[] {"OK"}, 0);
-                    error.open();
-                }
-                setBlocks(config);
-                setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
-                table.setSelected(added);
-    	    }
-	    } 
+	        try {
+	            config.addNewBlock(added);
+	        } catch (DuplicateBlockNameException e1) {
+	            MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
+	                    "Failed to add block " + added.getName() + ":\nBlock with this name already exists.",
+	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
+	            error.open();
+	        }
+	        table.setSelected(added);
+	    }
 	}
 
 	private void addNew() {
@@ -222,8 +237,6 @@ public class BlocksEditorPanel extends Composite {
         EditableBlock added = blockFactory.createNewBlock();
         EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
         dialog.open();
-        setBlocks(config);
-        setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
         table.setSelected(added);
 	}
 	
@@ -232,69 +245,37 @@ public class BlocksEditorPanel extends Composite {
 		table.refresh();
 	}
 
-	private void setSelectedBlocks(List<EditableBlock> selected) {
-		if (selected.size() > 1) {
-			edit.setEnabled(false);
-		} else {
-			edit.setEnabled(editEnabled(selected));
-		}
-		remove.setEnabled(editEnabled(selected));
-		copy.setEnabled(editEnabled(selected));
-	}
-
-	private boolean editEnabled(List<EditableBlock> blocks) {
-		boolean output = true;
-		for (EditableBlock block : blocks) {
-			output &= block != null && block.isEditable();
-		}
-		return output;
-	}
-
 	private void deleteSelected() {
-		List<EditableBlock> toRemove = table.selectedRows();
-		String dialogTitle = "Delete Block";
-		String dialogText = "Do you really want to delete the block";
-		
-		if (toRemove.size() == 1) {
-			dialogText += " " + toRemove.get(0).getName() + "?";
-		} else {
-			dialogTitle = "Delete Blocks";
-			dialogText += "s " + blockNamesToString(toRemove) + "?";
-		}
-				
-		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
-		dialog.setText(dialogTitle);
-		dialog.setMessage(dialogText);
-		int returnCode = dialog.open();
+    	List<EditableBlock> toRemove = table.selectedRows();
+    	
+    	DeleteTableItemHelper<EditableBlock> helper = new DeleteTableItemHelper<>();
+        int returnCode = helper.createDeleteDialog("Block", toRemove);
 		
 		if (returnCode == SWT.OK) {
 			int index = table.getSelectionIndex();
 			config.removeBlocks(toRemove);
-			setBlocks(config);
-		
+			
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);
-			setSelectedBlocks(table.selectedRows());
 		}
-	}
-
-	private String blockNamesToString(List<EditableBlock> blocks) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < blocks.size(); i++) {
-			EditableBlock block = blocks.get(i);
-			sb.append(block.getName());
-			if (i == blocks.size() - 2) {
-				sb.append(" and ");
-			} else if (i != blocks.size() - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
 	}
 
     private void openEditBlockDialog(EditableBlock toEdit) {
         EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
         dialog.open();
+    }
+
+    /**
+     * Show the mneumonic underlining to the user.
+     */
+    public void showMnemonics() {
+        Event event = new Event();
+        event.keyCode = SWT.ALT;
+        event.type = SWT.KeyDown;
+        Display.getCurrent().post(event);
+        event.type = SWT.KeyUp;
+        Display.getCurrent().post(event);
+
     }
 }

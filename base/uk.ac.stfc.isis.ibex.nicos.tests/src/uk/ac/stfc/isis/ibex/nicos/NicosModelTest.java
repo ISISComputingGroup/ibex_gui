@@ -22,9 +22,19 @@
 package uk.ac.stfc.isis.ibex.nicos;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -37,6 +47,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.zeromq.ZMQException;
@@ -58,6 +69,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })  // Mockito doesn't handle generic types nicely.
 public class NicosModelTest {
     private ZMQSession zmqSession = mock(ZMQSession.class);
     private RepeatingJob connJob = mock(RepeatingJob.class);
@@ -75,15 +87,14 @@ public class NicosModelTest {
 
     private ReceiveBannerMessage bannerResponse = mock(ReceiveBannerMessage.class);
     private ReceiveLoginMessage loginResponse = mock(ReceiveLoginMessage.class);
-    private NICOSMessage sendMessage = mock(NICOSMessage.class);
 
-    private Answer incrementalLog = new Answer() {
+    private Answer<List<NicosLogEntry>> incrementalLog = new Answer<List<NicosLogEntry>>() {
         // Simulate responses to requests for log entries with
         // increasing volume
         private int count = 0;
 
         @Override
-        public Object answer(InvocationOnMock invocation) {
+        public List<NicosLogEntry> answer(InvocationOnMock invocation) {
             int lastEntryTime = 1050;
             int n = (int) Math.pow(10, count);
             count++;
@@ -93,8 +104,9 @@ public class NicosModelTest {
 
     @Before
     public void setUp() {
+    	
         model = new NicosModel(zmqSession, connJob, 0);
-
+        
         model.addPropertyChangeListener("connectionStatus", connectionStatusListener);
         model.addPropertyChangeListener("connectionErrorMessage", connectionErrorListener);
 
@@ -256,10 +268,10 @@ public class NicosModelTest {
     }
 
     @Test
-    public void WHEN_connect_called_THEN_banner_mesage_sent() {
+    public void WHEN_connect_called_THEN_banner_message_sent() {
         connectSuccessfully();
 
-        ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
+		ArgumentCaptor<NICOSMessage> message = ArgumentCaptor.forClass(NICOSMessage.class);
         verify(zmqSession, times(2)).sendMessage(message.capture());
         assertThat(message.getAllValues().get(0), instanceOf(GetBanner.class));
     }
@@ -269,7 +281,7 @@ public class NicosModelTest {
         doThrow(new ZMQException(1)).when(zmqSession).connect(any(InstrumentInfo.class));
 
         model.connect(new InstrumentInfo("", "", "TEST"));
-        verify(zmqSession, never()).sendMessage(sendMessage);
+        verify(zmqSession, never()).sendMessage(Mockito.any());
     }
 
     @Test
@@ -337,7 +349,7 @@ public class NicosModelTest {
     public void GIVEN_successful_connection_WHEN_script_sent_THEN_queue_script_message_sent() {
         connectSuccessfully();
         when(zmqSession.sendMessage(isA(QueueScript.class)))
-                .thenReturn(SentMessageDetails.createSendSuccess(loginResponse));
+                .thenReturn(SentMessageDetails.createSendSuccess(""));
 
         model.sendScript(new QueuedScript());
 
@@ -351,10 +363,10 @@ public class NicosModelTest {
         connectSuccessfully();
         
         when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(null));
-
+        
         model.updateScriptStatus();
         
-        assertEquals(NicosErrorState.NO_RESPONSE, model.getError());
+        assertEquals(NicosErrorState.CONNECTION_FAILED, model.getError());
     }
     
     @Test
@@ -390,6 +402,24 @@ public class NicosModelTest {
         model.updateScriptStatus();
         
         assertEquals(script, model.getCurrentlyExecutingScript());
+    }
+    
+    @Test
+    public void GIVEN_successful_connection_WHEN_get_script_status_THEN_script_name_extracted() {
+    	connectSuccessfully();
+    	
+    	ReceiveScriptStatus response = new ReceiveScriptStatus();
+    	
+        response.status = Arrays.asList(0, 0);
+        response.script = "Contents of script";
+    	response.scriptname = "My Script";
+    	
+        when(zmqSession.sendMessage(isA(GetScriptStatus.class))).thenReturn(SentMessageDetails.createSendSuccess(response));
+
+        model.updateScriptStatus();
+        
+        assertEquals("My Script", model.getScriptName());
+    	
     }
     
     @Test
@@ -481,11 +511,11 @@ public class NicosModelTest {
 
         // Assert
         // Response should be requested 2 times with increasing volume
-        verify(response, times(2)).getEntries();
+        verify(response, times(3)).getEntries();
 
         // initial entry was at timestamp 1000;
         // 50 new entries from timestamp 1001 - 1050
-        int expected = 11;
+        int expected = 50;
         int actual = model.getLogEntries().size();
         assertEquals(expected, actual);
     }
@@ -494,7 +524,7 @@ public class NicosModelTest {
     public void GIVEN_entry_volume_greater_than_threshold_WHEN_updating_log_THEN_model_throws_away_excess() {
         // Arrange
         connectSuccessfully();
-        int threshold = 10;
+        int threshold = 1000;
 
         ReceiveLogMessage response = mock(ReceiveLogMessage.class);
         when(zmqSession.sendMessage(isA(GetLog.class))).thenReturn(SentMessageDetails.createSendSuccess(response));

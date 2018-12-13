@@ -73,6 +73,9 @@ class CheckOpiFormat(unittest.TestCase):
     def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
         self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
 
+    def test_GIVEN_an_opi_file_with_xygraph_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
+        self._assert_colour_correct("background_color", "xyGraph", ["ISIS_Textbox_Background"])
+
     def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground(self):
         self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
 
@@ -132,10 +135,10 @@ class CheckOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
-    def test_GIVEN_plot_area_THEN_it_has_correct_background_colour(self):
+    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
         errors = check_plot_area_backgrounds(self.xml_root)
         if len(errors):
-            message = "\n".join(["Plot on line {} with name '{}' has incorrect background colour"
+            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
                                 .format(*error) for error in errors])
             self.fail(message)
 

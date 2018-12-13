@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ *  A class to represent PVs.
+ *
+ */
 public class PV extends ModelObject {
 	
 	private String address;
@@ -28,6 +32,18 @@ public class PV extends ModelObject {
 	private String description;
 	private String iocName;
 	
+	/**
+	 * The constructor to represent PVs.
+	 * 
+	 * @param address
+	 *                 The PV address.
+	 * @param type
+	 *                 The PV type.
+	 * @param description
+	 *                 The description of the PV.
+	 * @param iocName
+	 *                 The name of the IOC to which the PV is associated.
+	 */
 	public PV(String address, String type, String description, String iocName) {
 		this.address = address;
 		this.type = type;
@@ -35,26 +51,52 @@ public class PV extends ModelObject {
 		this.iocName = iocName;
 	}
 
+	/**
+     * Returns the PV address.
+     * 
+     * @return 
+     *          The PV address.
+     */
 	public String getAddress() {
 		return address;
 	}
-
+	
+	/**
+     * Sets the PV address.
+     * 
+     * @param address
+     *                 The PV address.
+     */
 	public void setAddress(String address) {
 		firePropertyChange("address", this.address, this.address = address);
 	}
 	
+	/**
+     * Returns the PV type.
+     * 
+     * @return 
+     *          The PV type.
+     */
 	public String type() {
 		return type;
 	}
 
+	/**
+     * Returns the PV description.
+     * 
+     * @return 
+     *          The PV description.
+     */
 	public String description() {
 		return description;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
+	/**
+     * Returns the name of the IOC to which the PV is associated.
+     * 
+     * @return 
+     *          The name of the IOC to which the PV is associated.
+     */
 	public String iocName() {
 		return iocName;
 	}

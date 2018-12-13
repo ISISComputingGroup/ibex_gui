@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
-
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -24,6 +23,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 public class GroupRow extends Composite {
 	
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+    private static final int NAME_WIDTH = 100;
     private static final int VALUE_WIDTH = 75;
     private static final int VALUE_HEIGHT = 17;
     private static final int VALUE_WIDTH_MARGIN = 4;
@@ -51,9 +51,11 @@ public class GroupRow extends Composite {
         this.setBackground(WHITE);
         this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        lblName =
-                labelMaker(this, SWT.NONE, block.getName() + ": ", block.getDescription(), null);
-        lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        lblName = labelMaker(this, SWT.NONE, block.getName() + ": ", block.getDescription());
+        GridData gdLblName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+        gdLblName.widthHint = NAME_WIDTH;
+        lblName.setLayoutData(gdLblName);
+        
 
         // additional container to hold value label to draw a border around it
         Composite valueContainer = new Composite(this, SWT.CENTER);
@@ -70,15 +72,14 @@ public class GroupRow extends Composite {
         valueContainer.setLayoutData(gdValueContainer);
 
         lblValue =
-                labelMaker(valueContainer, SWT.RIGHT, block.getValue(), block.getDescription(),
-                        null);
+                labelMaker(valueContainer, SWT.RIGHT, block.getValue(), block.getDescription());
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;
         lblValue.setLayoutData(gdValue);
         lblValue.setVisible(true);
         valueContainer.pack();
 
-        lblStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
+        lblStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status");
         FontDescriptor boldDescriptor = FontDescriptor.createFrom(lblStatus.getFont()).setStyle(SWT.BOLD);
         Font boldFont = boldDescriptor.createFont(lblStatus.getDisplay());
         lblStatus.setFont(boldFont);
@@ -92,14 +93,14 @@ public class GroupRow extends Composite {
                 BeanProperties.value("value").observe(block));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblStatus),
-                BeanProperties.value("enabled").observe(block));
+                BeanProperties.value("runControlEnabled").observe(block));
 
         UpdateValueStrategy symbolStrategy = new UpdateValueStrategy();
         symbolStrategy.setConverter(new RunControlSymbolConverter());
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
                 BeanProperties.value("runcontrolState").observe(block), null, symbolStrategy);
-
+        
         UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
         fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 
@@ -127,7 +128,7 @@ public class GroupRow extends Composite {
 		lblStatus.setMenu(menu);
 	}
 
-    private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
+    private Label labelMaker(Composite composite, int style, String text, String description) {
         Label label = new Label(composite, style);
         if (text != null) {
             label.setText(text);
@@ -135,13 +136,7 @@ public class GroupRow extends Composite {
 
         label.setBackground(WHITE);
 
-        if (toolTip != null) {
-            label.setToolTipText(toolTip);
-        }
-
-        if (font != null) {
-            label.setFont(font);
-        }
+        label.setToolTipText(text + System.lineSeparator() + description);
 
         return label;
     }

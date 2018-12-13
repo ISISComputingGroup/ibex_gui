@@ -138,6 +138,11 @@ public class DaeObservables {
      * states.
      */
     public final ForwardingObservable<Boolean> inStateTransition;
+    
+    /**
+     * An observable on whether the DAE is currently changing settings (wiring tables, TCB settings, etc.).
+     */
+    public final ForwardingObservable<Boolean> currentlyChangingSettings;
 
     /**
      * An observable for the DAE settings data.
@@ -315,7 +320,7 @@ public class DaeObservables {
     public final ForwardingObservable<Double> eventModeDataRate;
 
     /**
-     * The default constructor for the class. Binds the observables to PVs.
+     * An observable on the data rate (MB/s).
      */
     public DaeObservables() {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(),
@@ -346,6 +351,8 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("NUMPERIODS")));
         inStateTransition = obsFactory.getSwitchableObservable(new BooleanChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("STATETRANS")));
+        currentlyChangingSettings = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("STATE:CHANGING")));
         daeSettings = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("DAESETTINGS")));
         hardwarePeriods = obsFactory.getSwitchableObservable(new CharWaveformChannel(),

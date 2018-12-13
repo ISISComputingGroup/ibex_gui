@@ -40,12 +40,9 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
-import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
-import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
@@ -206,13 +203,7 @@ public class SynopticPresenter extends ModelObject {
             }
             return;
         }
-
-        if (target instanceof PerspectiveTarget) {
-            // Perspective targets don't update the navigator.
-            switchPerspective((PerspectiveTarget) target);
-            return;
-        }
-
+        
         navigator.setCurrentTarget(targets.get(target.name()));
     }
 
@@ -262,10 +253,6 @@ public class SynopticPresenter extends ModelObject {
     private void displayGroupTarget(GroupedComponentTarget currentTarget) {
 		GroupedComponentTarget target = currentTarget;
 		setComponents(target.components());
-	}
-
-    private void switchPerspective(PerspectiveTarget target) {
-        UI.getDefault().switchPerspective(target.getId());
 	}
 
 	/**

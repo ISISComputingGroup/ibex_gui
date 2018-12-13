@@ -21,13 +21,24 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
+/**
+ * A block that may be editable.
+ */
 public class EditableBlock extends Block {
 
+	/**
+	 * Create a block that may be editable from a read only one.
+	 * @param other The original block.
+	 */
 	public EditableBlock(Block other) {
 		super(other);
 	}
 
+	/**
+	 * Get whether the block is editable.
+	 * @return True if the block can be edited.
+	 */
 	public boolean isEditable() {
-		return !hasComponent();
+		return !inComponent();
 	}
 }

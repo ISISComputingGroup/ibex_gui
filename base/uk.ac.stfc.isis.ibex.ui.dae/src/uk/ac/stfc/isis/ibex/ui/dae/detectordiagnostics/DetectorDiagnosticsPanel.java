@@ -29,7 +29,10 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.IPartListener;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
@@ -46,10 +49,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewModelBinding;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
-
-import org.eclipse.e4.core.contexts.Active;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.IPartListener;
+import uk.ac.stfc.isis.ibex.validators.NumericalVerifyListener;
  
 
 /**

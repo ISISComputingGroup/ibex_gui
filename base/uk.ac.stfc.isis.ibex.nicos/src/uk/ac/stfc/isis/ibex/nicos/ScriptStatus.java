@@ -21,8 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.nicos;
 
-import java.util.Arrays;
-
 /**
  * Contains possible run states for a script in NICOS.
  */
@@ -30,7 +28,7 @@ public enum ScriptStatus {
     /**
      * Nothing started, last script raised exception.
      */
-    IDLEEXC(-2, "Idle (last script failed)"),
+    IDLEEXC(-2, "Idle - last script failed"),
 
     /**
      * Nothing started.

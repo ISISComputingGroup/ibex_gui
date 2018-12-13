@@ -83,20 +83,20 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         this.includeCurrent = includeCurrent;
         this.extraListOptions = SWT.MULTI;
 	}
-	
+
 	/**
 	 * @return A collection of the configurations/components that the user has selected.
 	 */
 	public Collection<String> selectedConfigs() {
 		return selected;
 	}
-	
+
 	@Override
 	protected void okPressed() {
         selected = asString(items.getSelection());
 		super.okPressed();
 	}
-	
+
 	@Override
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
@@ -112,7 +112,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         setItems(names);
 	}
-	
+
     /**
      * @return A string corresponding to the type of item in the list.
      */

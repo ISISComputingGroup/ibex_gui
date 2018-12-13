@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
