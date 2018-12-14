@@ -169,6 +169,8 @@ public final class ComponentIcons {
                 return "moxa_1210";
             case FURNACE:
                 return "furnace";
+            case DH2000:
+                return "DH2000";
             default:
                 return "cog";
         }
