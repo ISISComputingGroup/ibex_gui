@@ -1664,5 +1664,22 @@
         </macros>
       </value>
     </entry>
+	<entry>
+      <key>TTIPLP</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiplp.opi</path>
+        <description>The OPI for the TTIPLP</description>
+        <macros>
+          <macro>
+            <name>TTIPLP</name>
+            <description>The TTIPLP PV prefix (e.g. TTIPLP_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
