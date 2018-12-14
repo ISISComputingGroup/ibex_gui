@@ -463,10 +463,10 @@
         <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </state_color_1>
       <state_color_2>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </state_color_2>
       <state_color_3>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </state_color_3>
       <state_color_4>
         <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
