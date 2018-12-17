@@ -679,7 +679,7 @@
             <key>Lakeshore 218</key>
             <value>
                 <type>LAKESHORE</type>
-                <path>Lakeshore218.opi</path>
+                <path>Lakeshore218/Lakeshore218.opi</path>
                 <description>The OPI for the Lakeshore 218 temperature controller.</description>
                 <macros>
                     <macro>
