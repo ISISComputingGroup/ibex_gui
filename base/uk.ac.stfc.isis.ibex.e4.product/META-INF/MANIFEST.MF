@@ -7,6 +7,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.core.resources,
- uk.ac.stfc.isis.ibex.logger
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

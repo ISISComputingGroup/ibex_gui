@@ -18,6 +18,10 @@ public final class PersistenceUtils {
 	
 	private static final E4XMIResourceFactory RESOURCE_FACTORY = new E4XMIResourceFactory();
 	private static final String MAIN_WINDOW_ID = "uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow.0";
+	
+	private static final String LAYOUTS_SAVE_FOLDER = Paths.get(System.getProperty("user.home"), "ibex-gui", "perspective_layouts").toString();
+	
+	public static final String SHUTDOWN_WITHOUT_PROMPT_KEY = "SHUTDOWN_WITHOUT_PROMPT";
 
     /**
      * Returns a path to an eclipse perspective layout file corresponding to a given
@@ -27,9 +31,9 @@ public final class PersistenceUtils {
      * @return the path to the file where this perspective's settings will be saved
      */
     public static File getFileForPersistence(String perspectiveId) {
-    	// TODO: make directory if not exist
-    	// TODO: configure save path as eclipse preference
-        return Paths.get(System.getProperty("user.home"), "ibex-gui", "perspective_layouts", String.format("%s.xml", perspectiveId)).toFile();
+    	// Ensure directory exists.
+    	new File(LAYOUTS_SAVE_FOLDER).mkdirs();
+        return Paths.get(LAYOUTS_SAVE_FOLDER, String.format("%s.xml", perspectiveId)).toFile();
     }
     
     /**

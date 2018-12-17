@@ -6,6 +6,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PersistenceUtils;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
@@ -45,7 +46,7 @@ public class LoadLayoutButton extends Button {
         		
         		if (loadAndRestart) {
 	        		IsisLog.getLogger(getClass()).info("User interface restarting to load a layout.");
-	        		System.setProperty("SHUTDOWN_WITHOUT_PROMPT", Boolean.TRUE.toString());
+	        		System.setProperty(PersistenceUtils.SHUTDOWN_WITHOUT_PROMPT_KEY, Boolean.TRUE.toString());
 	        		PlatformUI.getWorkbench().restart();
         		}
         	}

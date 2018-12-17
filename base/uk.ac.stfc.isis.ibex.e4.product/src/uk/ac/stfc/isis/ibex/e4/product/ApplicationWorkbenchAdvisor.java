@@ -25,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PersistenceUtils;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
@@ -50,7 +50,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	    super.initialize(configurer);
         this.configurer = configurer;
         configurer.setSaveAndRestore(false);
-        System.setProperty("SHUTDOWN_WITHOUT_PROMPT", Boolean.FALSE.toString());
+        System.setProperty(PersistenceUtils.SHUTDOWN_WITHOUT_PROMPT_KEY, Boolean.FALSE.toString());
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		
-		if (Boolean.getBoolean("SHUTDOWN_WITHOUT_PROMPT")) {
+		if (Boolean.getBoolean(PersistenceUtils.SHUTDOWN_WITHOUT_PROMPT_KEY)) {
 			return true;
 		}
 		
