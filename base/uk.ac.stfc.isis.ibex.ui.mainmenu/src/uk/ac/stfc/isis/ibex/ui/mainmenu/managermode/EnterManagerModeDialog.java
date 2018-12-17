@@ -21,37 +21,13 @@
  */
 package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 
-import javax.security.auth.login.FailedLoginException;
-
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-
 import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
 
 /**
- *
+ * A dialog to prompt the user to enter manager mode.
  */
-@SuppressWarnings("checkstyle:magicnumber")
-public class EnterManagerModeDialog extends TitleAreaDialog {
-
-    private static final String WINDOW_TITLE = "Manager mode";
-    private static final String AREA_TITLE = "Enter manager mode";
-
-    private Composite upperDialogArea;
-
-    private final IManagerModeModel model;
-
-    private Text passwordEntryField;
+public class EnterManagerModeDialog extends ManagerModeDialog {
 
     /**
      * Constructor.
@@ -62,62 +38,31 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
      *            the view model
      */
     protected EnterManagerModeDialog(Shell parentShell, IManagerModeModel model) {
-        super(parentShell);
-        upperDialogArea = (Composite) super.createDialogArea(parentShell);
-        upperDialogArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-        this.model = model;
-
+        super(parentShell, model);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void configureShell(Shell shell) {
-        super.configureShell(shell);
-        shell.setText(WINDOW_TITLE);
-
-        shell.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-
+    public String getAreaTitle() {
+    	return "Enter manager mode";
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Point getInitialSize() {
-        return new Point(400, 200);
+    public String getWindowTitle() {
+    	return "Manager mode";
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void okPressed() {
-
-        try {
-            model.authenticate(passwordEntryField.getText());
-            super.okPressed();
-        } catch (FailedLoginException ex) {
-            displayError(this.getShell(), ex.getMessage());
-        }
-
-    }
-
-    @Override
-    protected Control createDialogArea(Composite parent) {
-        setTitle(AREA_TITLE);
-
-        Composite container = (Composite) super.createDialogArea(parent);
-        Group group = new Group(container, SWT.NONE);
-        group.setLayout(new GridLayout(2, true));
-
-        Label passwordEntryLabel = new Label(group, SWT.LEFT);
-        passwordEntryLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-        passwordEntryLabel.setText("Please enter the manager password:");
-
-        passwordEntryField = new Text(group, SWT.PASSWORD | SWT.BORDER);
-        passwordEntryField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        return container;
-    }
-
-    private static void displayError(Shell shell, String message) {
-        MessageDialog error = new MessageDialog(shell, "Error", null,
-                message, MessageDialog.ERROR, new String[] {"OK"}, 0);
-        error.open();
-    }
+    public String getQuestion() {
+    	return "Please enter the manager password:";
+    };
 
 }

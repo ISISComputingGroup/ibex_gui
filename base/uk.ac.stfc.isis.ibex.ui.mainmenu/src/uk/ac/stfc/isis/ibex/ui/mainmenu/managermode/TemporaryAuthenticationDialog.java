@@ -21,36 +21,13 @@
  */
 package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 
-import javax.security.auth.login.FailedLoginException;
-
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-
 import uk.ac.stfc.isis.ibex.managermode.IManagerModeModel;
 
 /**
- *
+ * A dialog to ask the user to temporarily authenticate (for example, to save layouts).
  */
-@SuppressWarnings("checkstyle:magicnumber")
-public class TemporaryAuthenticationDialog extends TitleAreaDialog {
-
-    private static final String WINDOW_TITLE = "Authentication";
-
-    private Composite upperDialogArea;
-
-    private final IManagerModeModel model;
-
-    private Text passwordEntryField;
+public class TemporaryAuthenticationDialog extends ManagerModeDialog {
     
     private final String areaTitle;
 
@@ -61,64 +38,37 @@ public class TemporaryAuthenticationDialog extends TitleAreaDialog {
      *            the parent shell
      * @param model
      *            the view model
+     * @param areaTitle
+     * 			  the title of the dialog area
      */
     public TemporaryAuthenticationDialog(Shell parentShell, IManagerModeModel model, String areaTitle) {
-        super(parentShell);
-        upperDialogArea = (Composite) super.createDialogArea(parentShell);
-        upperDialogArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        super(parentShell, model);
         this.areaTitle = areaTitle;
-        this.model = model;
 
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void configureShell(Shell shell) {
-        super.configureShell(shell);
-        shell.setText(WINDOW_TITLE);
-
-        shell.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-
+    public String getAreaTitle() {
+    	return areaTitle;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Point getInitialSize() {
-        return new Point(400, 200);
+    public String getWindowTitle() {
+    	return "Authentication";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void okPressed() {
-
-        try {
-            model.authenticate(passwordEntryField.getText());
-            super.okPressed();
-        } catch (FailedLoginException ex) {
-            displayError(this.getShell(), ex.getMessage());
-        }
-
-    }
-
-    @Override
-    protected Control createDialogArea(Composite parent) {
-        setTitle(areaTitle);
-
-        Composite container = (Composite) super.createDialogArea(parent);
-        Group group = new Group(container, SWT.NONE);
-        group.setLayout(new GridLayout(2, true));
-
-        Label passwordEntryLabel = new Label(group, SWT.LEFT);
-        passwordEntryLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-        passwordEntryLabel.setText("Please enter the manager password:");
-
-        passwordEntryField = new Text(group, SWT.PASSWORD | SWT.BORDER);
-        passwordEntryField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        return container;
-    }
-
-    private static void displayError(Shell shell, String message) {
-        MessageDialog error = new MessageDialog(shell, "Error", null,
-                message, MessageDialog.ERROR, new String[] {"OK"}, 0);
-        error.open();
+    public String getQuestion() {
+    	return "Please enter the manager password:";
     }
 
 }
