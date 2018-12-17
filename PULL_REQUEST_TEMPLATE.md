@@ -28,6 +28,7 @@
 - [ ] Is the code of an acceptable quality?
 - [ ] Do the changes function as described and is it robust?
 - [ ] Have the changes been documented in the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev)?
+- [ ] If any perspective layouts have been changed, has an upgrade script been written for [persisted layouts](https://github.com/ISISComputingGroup/IBEX_developers_manual/wiki/GUI_Layout_persistence)?
 
 ### Final Steps
 - [ ] Reviewer has moved the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev) entry for this ticket in the "Changes merged into master" section
