@@ -15,7 +15,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
