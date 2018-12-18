@@ -20,37 +20,50 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.weblinks;
+package uk.ac.stfc.isis.ibex.ui.dae;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
-/**
- * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
- */
-public class WebLinksOpiTargetView extends OpiView {
-    /**
+public class SpectraOpiTargetView extends OpiTargetView {
+	/**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksOpiTargetView";
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView";
+    
+    private static final int NUMBER_OF_PLOTS = 4;
 
     /**
      * File name of the web links OPI.
      */
-    private static final String WEB_LINKS_OPI = "weblinks.opi";
+    private static final String OPI_FILE = "spectra_plots.opi";
+    
+    private final Collection<SpectraPlotConfiguration> plotConfigurations;
+    
+    public SpectraOpiTargetView() {
+    	plotConfigurations = IntStream.range(0, NUMBER_OF_PLOTS)
+    		.mapToObj(SpectraPlotConfiguration::new)
+    		.collect(Collectors.toList());
+	}
 
     /**
      * {@inheritDoc}
      */
 	@Override
 	protected Path opi() throws OPIViewCreationException {
-		return Opi.getDefault().opiProvider().pathFromName(WEB_LINKS_OPI);
+		return Opi.getDefault().opiProvider().pathFromName(OPI_FILE);
 	}
 	
 	/**
@@ -68,15 +81,33 @@ public class WebLinksOpiTargetView extends OpiView {
 		super.init(site);
 		try {
 			initialiseOPI();
+			new Thread(this::initializeMacrosAfterDelay).start();
 		} catch (OPIViewCreationException e) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 			throw new PartInitException(e.getMessage(), e);
 		}
 	}
+	
+	public void initializeMacrosAfterDelay() {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			return;
+		}
+		plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
+	}
 
 	@Override
-	protected MacrosInput macros() {
+	public MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
-		macros.put("INST", Instrument.getInstance().currentInstrument().name());
+		macros.put("P", Instrument.getInstance().getPvPrefix());
+		macros.put("NAME", "Spectra Plot");
+		
+		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecNumMacro().getKey(), conf.getSpecNumMacro().getValue()));
+		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecPeriodsMacro().getKey(), conf.getSpecPeriodsMacro().getValue()));
+		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecModeMacro().getKey(), conf.getSpecModeMacro().getValue()));
+		
 		return macros;
 	}
+    
 }
