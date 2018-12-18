@@ -442,6 +442,11 @@ public class NicosModel extends ModelObject {
         sendMessageToNicos(message);
     }
     
+    /**
+     * Update the content of a script in the queue.
+     * 
+     * @param script The script to update
+     */
     public void updateScript(QueuedScript script) {
         UpdateScript message = new UpdateScript(script);
         sendMessageToNicos(message);

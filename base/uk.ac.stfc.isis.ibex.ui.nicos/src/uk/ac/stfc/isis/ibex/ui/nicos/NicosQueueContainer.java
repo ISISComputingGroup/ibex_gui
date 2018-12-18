@@ -89,7 +89,7 @@ public class NicosQueueContainer {
         
         Label lblQueuedScriptsSubLabel = new Label(parent, SWT.NONE);
         lblQueuedScriptsSubLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
-        lblQueuedScriptsSubLabel.setText("(double-click name to see contents)");
+        lblQueuedScriptsSubLabel.setText("(double-click name to view / edit contents)");
         lblQueuedScriptsSubLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
         DataboundTable<QueuedScript> queuedScriptsViewer = new DataboundTable<QueuedScript>(parent, SWT.NONE, SWT.V_SCROLL) {
