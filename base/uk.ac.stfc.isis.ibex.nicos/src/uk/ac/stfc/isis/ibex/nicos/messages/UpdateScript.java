@@ -39,7 +39,7 @@ public class UpdateScript extends NICOSMessage<String, String> {
      */
     public UpdateScript(QueuedScript script) {
         this.command = "update";
-        this.parameters = Arrays.asList(script.getCode(), "reason", script.reqid);
+        this.parameters = Arrays.asList(script.getCode(), "Updated via IBEX client", script.reqid);
     }
 
     @Override
