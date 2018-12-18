@@ -24,7 +24,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
-import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.ExistingScriptDialog;
+import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.EditScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
@@ -116,7 +116,7 @@ public class NicosQueueContainer {
         queuedScriptsViewer.viewer().setInput(BeanProperties.list("queuedScripts").observe(model));
 
         queuedScriptsViewer.viewer().addDoubleClickListener(e ->
-				(new ExistingScriptDialog(shell, queuedScriptsViewer.firstSelectedRow())).open());
+				(new EditScriptDialog(shell, queueScriptViewModel)).open());
         
         queuedScriptsViewer.addSelectionChangedListener(e ->
                 queueScriptViewModel.setSelectedScript(queuedScriptsViewer.firstSelectedRow()));
