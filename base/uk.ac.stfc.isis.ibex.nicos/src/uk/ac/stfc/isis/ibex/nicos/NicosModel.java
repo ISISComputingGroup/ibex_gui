@@ -53,6 +53,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveNullMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SendReorderedQueue;
 import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.UpdateScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.GetScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.ReceiveScriptStatus;
@@ -438,6 +439,11 @@ public class NicosModel extends ModelObject {
      */
     public void dequeueScript(String reqid) {
         DequeueScript message = new DequeueScript(reqid);
+        sendMessageToNicos(message);
+    }
+    
+    public void updateScript(QueuedScript script) {
+        UpdateScript message = new UpdateScript(script);
         sendMessageToNicos(message);
     }
     

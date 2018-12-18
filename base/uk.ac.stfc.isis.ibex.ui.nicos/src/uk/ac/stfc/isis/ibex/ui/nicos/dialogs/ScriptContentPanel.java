@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
-import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
@@ -38,7 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
  * server.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EditScriptPanel extends Composite {
+public class ScriptContentPanel extends Composite {
 
     private DataBindingContext bindingContext = new DataBindingContext();
 	
@@ -51,9 +50,11 @@ public class EditScriptPanel extends Composite {
      *            The SWT style of this panel.
      * @param script
      *            the view model for queueing a script
+     * @param editableName
+     *            whether the name of this script is editable
      */
     @SuppressWarnings("unchecked")
-    public EditScriptPanel(Composite parent, int style, QueuedScript script) {
+    public ScriptContentPanel(Composite parent, int style, QueuedScript script, boolean editableName) {
 		super(parent, style);
         GridLayout gridLayout = new GridLayout(2, false);
         gridLayout.horizontalSpacing = 1;
@@ -73,6 +74,7 @@ public class EditScriptPanel extends Composite {
         GridData textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         textGridData.horizontalIndent = 5;
         scriptName.setLayoutData(textGridData);
+        scriptName.setEnabled(editableName);
                 bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(scriptName),
         		BeanProperties.value("name").observe(script));
 	}

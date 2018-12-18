@@ -81,6 +81,10 @@ public class QueueScriptViewModel extends ModelObject {
     public void dequeueScript() {
         model.dequeueScript(selectedScript.reqid);
     }
+    
+    public void updateScript(QueuedScript script) {
+    	model.updateScript(script);
+    }
 
     /**
      * Move selected script position in queue according to supplied direction. 

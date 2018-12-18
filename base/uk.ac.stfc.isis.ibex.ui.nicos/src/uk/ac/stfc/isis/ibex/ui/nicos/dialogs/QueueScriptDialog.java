@@ -41,10 +41,10 @@ public class QueueScriptDialog extends ScriptDialog {
      * @param parentShell
      *            The shell that this dialog is created from.
      * @param model
-     *            the model for queueing a script
+     *            the model for modifying the script queue
      */
     public QueueScriptDialog(Shell parentShell, QueueScriptViewModel model) {
-		super(parentShell, model);
+		super(parentShell, model, true);
         this.script = model.getScript();
 	}
 
