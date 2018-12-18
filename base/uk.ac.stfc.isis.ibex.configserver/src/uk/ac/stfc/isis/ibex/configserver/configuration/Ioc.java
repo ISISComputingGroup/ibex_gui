@@ -45,13 +45,13 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      * The IOC will be started along with the config and restarted when the
      * block server restarts.
      */
-	private boolean autostart;
+	private boolean autostart = true;
 
     /**
      * If the IOC is terminated unexpectedly, and autostart is also true, the
      * IOC will be restarted.
      */
-	private boolean restart;
+	private boolean restart = true;
 
 	private SimLevel simlevel = SimLevel.NONE;
 	private Collection<PVSet> pvsets = new ArrayList<PVSet>();
