@@ -23,7 +23,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dae.IDae;
-import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -126,16 +125,6 @@ public class DaeViewModel extends Closer {
      */
 	public ExperimentSetupViewModel experimentSetup() {
 		return experimentSetup;
-	}
-	
-    /**
-     * Get a list of updating spectrums from the model.
-     * 
-     * @return A list, each item is an updating spectrum to be displayed.
-     *         Currently 4 spectra are contained within the list.
-     */
-	public List<? extends UpdatableSpectrum> spectra() {
-		return model.spectra().spectra();
 	}
 	
     /**
