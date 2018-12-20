@@ -1664,10 +1664,12 @@
 		</value>
 	</entry>				
     <entry>
-      <key>KNR1050</key>
+      <key>Knauer HPLC 1050 Pump</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+            <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
         <path>knr1050.opi</path>
         <description>The OPI for the KNR1050</description>
         <macros>
