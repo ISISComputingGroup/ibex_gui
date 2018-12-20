@@ -151,7 +151,9 @@ public enum ComponentType {
     /** Moxa ioLogik e1210 Remote I/O. */
     MOXA_1210,
     /** Furnace temperature controller. */
-    FURNACE;
+    FURNACE,
+    /** Ocean Optics DH2000 shutter control. */
+    DH2000;
 
 	private Target target;
 

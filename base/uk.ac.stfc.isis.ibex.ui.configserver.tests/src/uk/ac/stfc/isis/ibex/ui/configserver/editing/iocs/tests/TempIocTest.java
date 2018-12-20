@@ -66,7 +66,7 @@ public class TempIocTest {
     @Test
     public void GIVEN_blank_temp_ioc_THEN_contains_default_auto_start() {
         // Arrange
-        boolean expected = false;
+        boolean expected = true;
         boolean actual = blankTempIoc.getAutostart();
 
         // Assert
@@ -76,7 +76,7 @@ public class TempIocTest {
     @Test
     public void GIVEN_blank_temp_ioc_THEN_contains_default_auto_restart() {
         // Arrange
-        boolean expected = false;
+        boolean expected = true;
         boolean actual = blankTempIoc.getAutostart();
 
         // Assert
