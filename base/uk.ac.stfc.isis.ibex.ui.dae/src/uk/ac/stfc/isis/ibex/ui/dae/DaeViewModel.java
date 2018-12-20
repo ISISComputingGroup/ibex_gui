@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae;
 
-import java.util.List;
-
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
@@ -51,8 +49,6 @@ public class DaeViewModel extends Closer {
         /** Tab which we are not interested is active. */
         OTHER;
     }
-
-	private IDae model;
 	
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
@@ -71,8 +67,6 @@ public class DaeViewModel extends Closer {
      *            A IDae model object that holds information about the DAE.
      */
 	public void bind(IDae model) {
-		this.model = model;
-		
 		runSummary.bind(model);
 		experimentSetup.setModel(model.experimentSetup());
 		

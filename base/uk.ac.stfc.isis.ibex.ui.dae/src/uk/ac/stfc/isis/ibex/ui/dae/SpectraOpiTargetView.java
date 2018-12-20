@@ -81,19 +81,14 @@ public class SpectraOpiTargetView extends OpiTargetView {
 		super.init(site);
 		try {
 			initialiseOPI();
-			new Thread(this::initializeMacrosAfterDelay).start();
+			this.initializeMacros();
 		} catch (OPIViewCreationException e) {
 			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 			throw new PartInitException(e.getMessage(), e);
 		}
 	}
 	
-	public void initializeMacrosAfterDelay() {
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			return;
-		}
+	public void initializeMacros() {
 		plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
 	}
 
