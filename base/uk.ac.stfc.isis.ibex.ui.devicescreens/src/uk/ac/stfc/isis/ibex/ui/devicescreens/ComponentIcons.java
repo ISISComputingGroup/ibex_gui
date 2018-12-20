@@ -171,6 +171,8 @@ public final class ComponentIcons {
                 return "furnace";
             case DH2000:
                 return "DH2000";
+            case PUMP:
+                return "pump";
             default:
                 return "cog";
         }
