@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView"
+            class="uk.ac.stfc.isis.ibex.ui.dae.spectraplots.SpectraOpiTargetView"
             id="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView"
             name="name"
             restorable="true">

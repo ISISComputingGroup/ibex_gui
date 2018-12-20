@@ -20,7 +20,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.dae;
+package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -98,9 +98,7 @@ public class SpectraOpiTargetView extends OpiTargetView {
 		macros.put("P", Instrument.getInstance().getPvPrefix());
 		macros.put("NAME", "Spectra Plot");
 		
-		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecNumMacro().getKey(), conf.getSpecNumMacro().getValue()));
-		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecPeriodsMacro().getKey(), conf.getSpecPeriodsMacro().getValue()));
-		plotConfigurations.stream().forEach(conf -> macros.put(conf.getSpecModeMacro().getKey(), conf.getSpecModeMacro().getValue()));
+		plotConfigurations.stream().forEach(conf -> macros.getMacrosMap().putAll(conf.getMacros()));
 		
 		return macros;
 	}
