@@ -1669,7 +1669,7 @@
         <categories>
             <category>Gas and liquid handling systems</category>
         </categories>
-        <type>SYRINGE_PUMP</type>
+        <type>PUMP</type>
         <path>knr1050.opi</path>
         <description>The OPI for the KNR1050</description>
         <macros>

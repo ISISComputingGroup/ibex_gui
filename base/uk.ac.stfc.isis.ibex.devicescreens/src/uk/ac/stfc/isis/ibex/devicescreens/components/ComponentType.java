@@ -153,7 +153,9 @@ public enum ComponentType {
     /** Furnace temperature controller. */
     FURNACE,
     /** Ocean Optics DH2000 shutter control. */
-    DH2000;
+    DH2000,
+    /** Generic Pump. */
+    PUMP;
 
 	private Target target;
 
