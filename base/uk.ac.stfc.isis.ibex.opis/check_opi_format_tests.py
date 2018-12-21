@@ -10,43 +10,51 @@ from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
 from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 
+WIDGET_XML = '<widget typeId="org.csstudio.opibuilder.widgets.{type}" version="1.0">{widget_internals}</widget>'
 
-def make_widget_with_colour(widget, colour_type, colour_name=None):
+LABEL_WITH_TEXT_XML = WIDGET_XML.format(type='Label', widget_internals='<text>{text}</text>')
+
+LABEL_WITH_FONT_XML = WIDGET_XML.format(type='Label', widget_internals='<font>' \
+          '<opifont.name fontName="{font_name}" height="18" style="1">{font_text}</opifont.name>' \
+          '</font>')
+
+GROUP_CONTAINER_XML = WIDGET_XML.format(type='groupingContainer', widget_internals='<name>{name}</name>{containing_widget}')
+
+
+def get_xml_for_widget_with_colour(widget, colour_type, colour_name=None):
     colour_str = '<color {} red="0" green="255" blue="0" />'
     colour_str = colour_str.format("" if colour_name is None else 'name="{}"'.format(colour_name))
 
-    xml = '<widget typeId="org.csstudio.opibuilder.widgets.{widget}">' \
-          '<{colour_type}>' \
+    return WIDGET_XML.format(type=widget, widget_internals='<{colour_type}>' \
           '{colour_str}' \
-          '</{colour_type}>' \
-          '</widget>'.format(widget=widget, colour_type=colour_type, colour_str=colour_str)
+          '</{colour_type}>').format(colour_type=colour_type, colour_str=colour_str)
 
-    return etree.fromstring(xml)
+
+def make_widget_with_colour(widget, colour_type, colour_name=None):
+    return etree.fromstring(get_xml_for_widget_with_colour(widget, colour_type, colour_name))
 
 
 def make_label_in_grouping_container(text):
-    xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-          '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-          '<text>{}</text>' \
-          '</widget>' \
-          '</widget>'.format(text)
-    return etree.fromstring(xml)
+    return etree.fromstring(GROUP_CONTAINER_XML.format(name="", containing_widget=LABEL_WITH_TEXT_XML.format(text=text)))
 
 
 def make_label_outside_grouping_container(text):
-    xml = '<widget typeId="org.csstudio.opibuilder.widgets.notAgroupingContainer" version="1.0">' \
-          '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-          '<text>{}</text>' \
-          '</widget>' \
-          '</widget>'.format(text)
+    xml = WIDGET_XML.format(type='notAgroupingContainer', widget_internals=LABEL_WITH_TEXT_XML.format(text=text))
     return etree.fromstring(xml)
 
 
-def make_grouping_container(text):
-    xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-          '<name>{}</name>' \
-          '</widget>'.format(text)
+def make_grouping_container(name):
+    return etree.fromstring(GROUP_CONTAINER_XML.format(name=name, containing_widget=""))
+
+
+def make_grouping_container_in_tabbed_container(grouping_colour):
+    xml = '<widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">{}</widget>' \
+        .format(GROUP_CONTAINER_XML.format(name="", containing_widget=""))
     return etree.fromstring(xml)
+
+
+def make_label_with_font(font_name, font_text):
+    return etree.fromstring(LABEL_WITH_FONT_XML.format(font_name=font_name, font_text=font_text))
 
 
 class TestCheckOpiFormatMethods(unittest.TestCase):
@@ -108,12 +116,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors(self):
         # Arrange
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-              '<font>' \
-              '<opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>' \
-              '</font>' \
-              '</widget>'
-        root = etree.fromstring(xml)
+        root = make_label_with_font("Segoe UI", "ISIS_Header1_NEW")
 
         # Act
         errors = get_incorrect_fonts(root)
@@ -123,12 +126,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_label_tag_with_a_valid_font_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
         # Arrange
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-              '<font>' \
-              '<opifont.name fontName="ISIS_VALID_FONT" height="18" style="1">MADE UP FONT</opifont.name>' \
-              '</font>' \
-              '</widget>'
-        root = etree.fromstring(xml)
+        root = make_label_with_font("ISIS_VALID_FONT", "MADE UP FONT")
 
         # Act
         errors = get_incorrect_fonts(root)
@@ -138,12 +136,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_error(self):
         # Arrange
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
-              '<font>' \
-              '<opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name>' \
-              '</font>' \
-              '</widget>'
-        root = etree.fromstring(xml)
+        root = make_label_with_font("Segoe UI", "MADE UP FONT")
 
         # Act
         errors = get_incorrect_fonts(root)
@@ -153,7 +146,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors(self):
         # Arrange
-
         xml = '<plot_area_background_color>' \
               '<color name="ISIS_Something_valid" red="255" green="255" blue="255" />' \
               '</plot_area_background_color>'
@@ -167,7 +159,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_plot_area_with_an_invalid_background_colour_is_parsed_it_causes_one_error(self):
         # Arrange
-
         xml = '<plot_area_background_color>' \
               '<color name="not_anything_valid" red="255" green="255" blue="255" />' \
               '</plot_area_background_color>'
@@ -280,11 +271,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
     def test_that_if_a_push_button_is_defined_within_a_grouping_container_it_causes_no_errors(self):
         # Arrange
-
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
-              '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
-              '</widget>' \
-              '</widget>'
+        xml = WIDGET_XML.format(type="groupingContainer", widget_internals=WIDGET_XML.format(type='NativeButton', widget_internals=''))
         root = etree.fromstring(xml)
 
         # Act
@@ -296,8 +283,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_a_push_button_is_defined_outside_a_grouping_container_it_causes_one_error(self):
         # Arrange
 
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
-              '</widget>'
+        xml = WIDGET_XML.format(type='NativeButton', widget_internals='')
         root = etree.fromstring(xml)
 
         # Act
@@ -445,15 +431,14 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         trace0 = "trace1"
         trace1 = "trace2"
         trace2 = "trace3"
-        xml = """<widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+        xml = WIDGET_XML.format(type='xyGraph', widget_internals="""
                     <trace_0_buffer_size>{point0}</trace_0_buffer_size>
                     <trace_0_name>{trace0}</trace_0_name>
                     <trace_1_buffer_size>{point1}</trace_1_buffer_size>
                     <trace_1_name>{trace1}</trace_1_name>
                     <trace_2_buffer_size>{point2}</trace_2_buffer_size>
                     <trace_2_name>{trace2}</trace_2_name>
-                </widget>
-              """.format(point0=point0, point1=point1, point2=point2, trace0=trace0, trace1=trace1, trace2=trace2)
+              """.format(point0=point0, point1=point1, point2=point2, trace0=trace0, trace1=trace1, trace2=trace2))
         root = etree.fromstring(xml)
 
         # Act
@@ -515,6 +500,16 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         errors = get_traces_with_different_buffer_sizes(root)
 
         # Assert
+        assert_that(errors, has_length(0))
+
+    def test_GIVEN_a_colourless_grouping_container_inside_a_tabbed_container_THEN_no_error(self):
+        # This is a CSS bug where colours are not propagated through tabbed containers correctly
+        widget, colour_type = "groupingContainer", "background_color"
+        grouping_container = get_xml_for_widget_with_colour(widget, colour_type, None)
+        tabbed_container = etree.fromstring(WIDGET_XML.format(type="tab", widget_internals=grouping_container))
+
+        errors = check_any_isis_colour(tabbed_container, widget, colour_type)
+
         assert_that(errors, has_length(0))
 
 if __name__ == '__main__':
