@@ -155,8 +155,12 @@ public enum ComponentType {
 	/** Generic Multimeter. */
     MULTIMETER,
 	/** Generic Keithley Multimeter. **/
-    KEITHLEY;
-
+    KEITHLEY,
+    /** Ocean Optics DH2000 shutter control. */
+    DH2000,
+    /** Generic Pump. */
+    PUMP;
+	
 	private Target target;
 
     /**

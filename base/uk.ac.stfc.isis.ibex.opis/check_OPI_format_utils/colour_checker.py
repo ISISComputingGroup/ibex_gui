@@ -14,8 +14,11 @@ def check_colour(root, widget, colour_type, conditions):
     """
     xpath = WIDGET_XPATH.format(widget)
 
-    xpath = "//{}/{}/color[not(@name) or ({})]".format(xpath, colour_type, " and ".join(conditions))
+    # Bug in CSS where colours are not properly propagated to grouping containers in tabbed containers
+    parent = "*[not(self::{})]".format(WIDGET_XPATH.format('tab')) if widget == "groupingContainer" else ""
 
+    xpath = "/{}/{}/{}/color[not(@name) or ({})]".format(parent, xpath, colour_type, " and ".join(conditions))
+    
     return [(error.sourceline, get_text_of_widget(error.getparent().getparent())) for error in root.xpath(xpath)]
 
 

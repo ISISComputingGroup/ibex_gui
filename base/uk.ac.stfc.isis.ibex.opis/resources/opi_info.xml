@@ -679,7 +679,7 @@
             <key>Lakeshore 218</key>
             <value>
                 <type>LAKESHORE</type>
-                <path>Lakeshore218.opi</path>
+                <path>Lakeshore218/Lakeshore218.opi</path>
                 <description>The OPI for the Lakeshore 218 temperature controller.</description>
                 <macros>
                     <macro>
@@ -1619,6 +1619,7 @@
             </value>
             </entry>
         <entry>        
+
       <key>Induction Furnace</key>
       <value>
         <categories>
@@ -1665,5 +1666,54 @@
 			</macros>
 		</value>
 	</entry>
-    </opis>
+    <entry>
+		<key>DH-2000 Light source shutter</key>
+		<value>
+			<type>DH2000</type>
+			<path>dh2000.opi</path>
+			<description>The OPI for the Ocean Optics DH2000 shutter.</description>
+			<macros>
+				<macro>
+					<name>DH2000</name>
+					<description>The Ocean optics DH-2000 PV prefix (e.g. DH2000_01).</description>
+				</macro>
+			</macros>
+		</value>
+	</entry>				
+    <entry>
+      <key>Knauer HPLC 1050 Pump</key>
+      <value>
+        <categories>
+            <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
+        <path>knr1050.opi</path>
+        <description>The OPI for the KNR1050</description>
+        <macros>
+          <macro>
+            <name>KNR1050</name>
+            <description>The KNR1050 PV prefix (e.g. KNR1050_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>TTIPLP</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiplp.opi</path>
+        <description>The OPI for the TTIPLP</description>
+        <macros>
+          <macro>
+            <name>TTIPLP</name>
+            <description>The TTIPLP PV prefix (e.g. TTIPLP_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+  </opis>
+  
 </descriptions>

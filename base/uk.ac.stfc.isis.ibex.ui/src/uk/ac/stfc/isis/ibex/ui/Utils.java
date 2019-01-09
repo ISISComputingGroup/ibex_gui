@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
@@ -35,6 +36,16 @@ public final class Utils {
 
     /** The mu unicode character. */
     public static final String MU = "\u03BC";
+
+    /**
+     * An update strategy for inverting an observed boolean value.
+     */
+    public static final UpdateValueStrategy NOT_CONVERTER = new UpdateValueStrategy() {
+        @Override
+        public Object convert(Object value) {
+            return !(Boolean) value;
+        }
+    };
 
     private Utils() {
 
