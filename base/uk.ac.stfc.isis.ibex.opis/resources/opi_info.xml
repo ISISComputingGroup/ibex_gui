@@ -1617,7 +1617,7 @@
                     </macro>
                 </macros>
             </value>
-        </entry>
+            </entry>
         <entry>        
 
       <key>Induction Furnace</key>
@@ -1650,6 +1650,23 @@
 		</value>
 	</entry>
 	<entry>
+	    <key>Keithley 2001</key>
+		<value>
+			<categories>
+				<category>Multimeter</category>
+			</categories>
+			<type>KEITHLEY</type>
+			<path>Keithley2001/keithley2001.opi</path>
+			<description>The OPI for the Keithley 2001 multimeter.</description>
+			<macros>
+				<macro>
+					<name>KHLY2001</name>
+					<description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
+    <entry>
 		<key>DH-2000 Light source shutter</key>
 		<value>
 			<type>DH2000</type>

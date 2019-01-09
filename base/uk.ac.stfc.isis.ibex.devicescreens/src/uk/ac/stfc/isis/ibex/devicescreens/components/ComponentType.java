@@ -152,11 +152,15 @@ public enum ComponentType {
     MOXA_1210,
     /** Furnace temperature controller. */
     FURNACE,
+	/** Generic Multimeter. */
+    MULTIMETER,
+	/** Generic Keithley Multimeter. **/
+    KEITHLEY,
     /** Ocean Optics DH2000 shutter control. */
     DH2000,
     /** Generic Pump. */
     PUMP;
-
+	
 	private Target target;
 
     /**

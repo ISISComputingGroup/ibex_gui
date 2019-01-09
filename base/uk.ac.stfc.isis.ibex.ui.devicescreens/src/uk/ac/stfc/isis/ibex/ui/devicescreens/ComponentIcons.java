@@ -137,9 +137,11 @@ public final class ComponentIcons {
                 return "pixelman";
             case NEOCERA:
                 return "neocera";
+            case KEITHLEY:
+            case KHLY2700:
             case KHLY2400:
                 return "keithley2400";
-            case KHLY2700:
+            case MULTIMETER:
                 return "multimeter";
             case ROT_SAMPLE_CHANGER:
                 return "rotating_sample_changer";
