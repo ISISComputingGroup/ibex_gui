@@ -386,13 +386,43 @@
         <entry>
             <key>Moxa E1210</key>
             <value>
-                <type>MOXA_1210</type>
+                <type>MOXA_12XX</type>
                 <path>moxa1210.opi</path>
                 <description>The OPI for a Moxa E1210 remote I/O.</description>
                 <macros>
                     <macro>
                         <name>MOXA1210</name>
-                        <description>The Moxa E1210 PV prefix (e.g. MOXA1210_01).</description>
+                        <description>The Moxa E1210 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories />
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1240</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1240.opi</path>
+                <description>The OPI for a Moxa E1240 Volt/Current logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1240 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories />
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1262</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1262.opi</path>
+                <description>The OPI for a Moxa E1262 Temperature logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1262 PV prefix (e.g. MOXA12XX_01).</description>
                     </macro>
                 </macros>
                 <categories />
