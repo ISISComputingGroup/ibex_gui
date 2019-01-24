@@ -138,7 +138,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>DIs</name>
+    <name>Temperatures</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
