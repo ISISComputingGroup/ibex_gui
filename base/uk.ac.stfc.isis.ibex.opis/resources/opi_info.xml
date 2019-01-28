@@ -1714,6 +1714,23 @@
         </macros>
       </value>
     </entry>
+    <entry>
+        <key>Astrium</key>
+        <value>
+            <type>CHOPPER</type>
+            <path>astrium_choppers/astrium_choppers.opi</path>
+            <description>The OPI for the Astrium chopper</description>
+            <macros>
+                <macro>
+                    <name>ASTRIUM</name>
+                    <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
+                </macro>
+            </macros>
+            <categories>
+                <category>Choppers</category>
+            </categories>
+        </value>
+    </entry>
   </opis>
   
 </descriptions>
