@@ -148,8 +148,8 @@ public enum ComponentType {
     POWER_SUPPLY,
     /** Oscilloscope. */
     OSCILLOSCOPE,
-    /** Moxa ioLogik e1210 Remote I/O. */
-    MOXA_1210,
+    /** Moxa ioLogik e12XX Remote I/O. */
+    MOXA_12XX,
     /** Furnace temperature controller. */
     FURNACE,
 	/** Generic Multimeter. */
