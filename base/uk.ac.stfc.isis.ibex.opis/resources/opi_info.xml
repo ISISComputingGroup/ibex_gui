@@ -410,7 +410,9 @@
                         <description>The Moxa E1240 PV prefix (e.g. MOXA12XX_01).</description>
                     </macro>
                 </macros>
-                <categories />
+                <categories>
+                <category>Multimeters</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -425,7 +427,9 @@
                         <description>The Moxa E1262 PV prefix (e.g. MOXA12XX_01).</description>
                     </macro>
                 </macros>
-                <categories />
+                <categories>
+                <category>Temperature controllers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -1683,7 +1687,7 @@
 	    <key>Keithley 2001</key>
 		<value>
 			<categories>
-				<category>Multimeter</category>
+				<category>Multimeters</category>
 			</categories>
 			<type>KEITHLEY</type>
 			<path>Keithley2001/keithley2001.opi</path>
