@@ -172,7 +172,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>661</width>
+    <width>619</width>
     <wuid>1a3f5bca:1687651dcc1:-72de</wuid>
     <x>6</x>
     <y>78</y>
@@ -212,7 +212,7 @@
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>659</width>
+      <width>617</width>
       <wuid>1a3f5bca:1687651dcc1:-72dd</wuid>
       <x>1</x>
       <y>1</y>
@@ -234,7 +234,7 @@
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>272</height>
+        <height>290</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PV_ROOT>$(P)$(ASTRIUM):CH1</PV_ROOT>
@@ -294,7 +294,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>659</width>
+      <width>617</width>
       <wuid>1a3f5bca:1687651dcc1:-72d9</wuid>
       <x>1</x>
       <y>1</y>
@@ -357,7 +357,7 @@
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>272</height>
+        <height>290</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PV_ROOT>$(P)$(ASTRIUM):CH2</PV_ROOT>
@@ -435,7 +435,7 @@ $(pv_value)</tooltip>
     <widget_type>Action Button</widget_type>
     <width>90</width>
     <wuid>1a3f5bca:1687651dcc1:-6fa0</wuid>
-    <x>577</x>
+    <x>535</x>
     <y>420</y>
   </widget>
 </display>
