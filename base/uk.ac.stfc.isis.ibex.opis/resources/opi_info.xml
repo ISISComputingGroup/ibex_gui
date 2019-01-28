@@ -1699,8 +1699,10 @@
     <entry>
       <key>JSCO4180</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+	    <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
         <path>jsco4180.opi</path>
         <description>The OPI for the JSCO4180</description>
         <macros>
