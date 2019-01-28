@@ -210,7 +210,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>659</width>
       <wuid>1a3f5bca:1687651dcc1:-72dd</wuid>
@@ -292,7 +292,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>659</width>
       <wuid>1a3f5bca:1687651dcc1:-72d9</wuid>
@@ -413,11 +413,11 @@
     <pv_name>$(PV_ROOT):CALIB</pv_name>
     <pv_value />
     <rules>
-      <rule name="Rule" prop_id="enabled" out_exp="false">
+      <rule name="Disable" prop_id="enabled" out_exp="false">
         <exp bool_exp="pv0==1">
           <value>false</value>
         </exp>
-        <pv trig="true">$(PV_ROOT):CALIB.DISA</pv>
+        <pv trig="true">$(PV_ROOT):CALIB_DISABLED</pv>
       </rule>
     </rules>
     <scale_options>
