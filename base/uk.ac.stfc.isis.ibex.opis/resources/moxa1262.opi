@@ -181,7 +181,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH0:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH0:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -229,7 +229,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH1:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH1:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -277,7 +277,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH2:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH2:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -325,7 +325,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH3:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH3:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -373,7 +373,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH4:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH4:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -421,7 +421,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH5:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH5:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -469,7 +469,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH6:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH6:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -517,7 +517,7 @@
           <exp bool_exp="pv0 == 0">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH7:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH7:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -936,7 +936,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH0:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH0:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -944,7 +944,7 @@
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH0:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH0:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -995,7 +995,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH1:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH1:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1003,7 +1003,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH1:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH1:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1054,7 +1054,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH2:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH2:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1062,7 +1062,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH2:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH2:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1113,7 +1113,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH3:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH3:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1121,7 +1121,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH3:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH3:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1172,7 +1172,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH4:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH4:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1180,7 +1180,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH4:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH4:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1231,7 +1231,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH5:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH5:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1239,7 +1239,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH5:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH5:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1290,7 +1290,7 @@ $(pv_value)</tooltip>
       <name>Text Update_2</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH6:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH6:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1298,7 +1298,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH6:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH6:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1349,7 +1349,7 @@ $(pv_value)</tooltip>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH7:TEMP:RBV:NAME</pv_name>
+      <pv_name>$(PV_ROOT):CH7:TEMP:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1357,7 +1357,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH7:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH7:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1408,7 +1408,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH0:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH0:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1416,7 +1416,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH0:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH0:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1467,7 +1467,7 @@ $(pv_value)</tooltip>
       <name>Text Update_9</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH1:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH1:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1475,7 +1475,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH1:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH1:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1526,7 +1526,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH2:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH2:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1534,7 +1534,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH2:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH2:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1585,7 +1585,7 @@ $(pv_value)</tooltip>
       <name>Text Update_9</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH3:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH3:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1593,7 +1593,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH3:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH3:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1644,7 +1644,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH4:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH4:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1652,7 +1652,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH4:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH4:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1703,7 +1703,7 @@ $(pv_value)</tooltip>
       <name>Text Update_9</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH5:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH5:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1711,7 +1711,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH5:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH5:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1762,7 +1762,7 @@ $(pv_value)</tooltip>
       <name>Text Update_10</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH6:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH6:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1770,7 +1770,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH6:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH6:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
@@ -1821,7 +1821,7 @@ $(pv_value)</tooltip>
       <name>Text Update_11</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):CH7:TEMP:RBV</pv_name>
+      <pv_name>$(PV_ROOT):CH7:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
@@ -1829,7 +1829,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CH7:TEMP:RBV:STAT</pv>
+          <pv trig="true">$(PV_ROOT):CH7:TEMP:STAT</pv>
         </rule>
       </rules>
       <scale_options>
