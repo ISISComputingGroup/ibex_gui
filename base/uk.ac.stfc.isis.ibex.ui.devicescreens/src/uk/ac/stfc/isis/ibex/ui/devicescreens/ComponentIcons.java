@@ -22,7 +22,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Given a component type, returns an icon appropriate for that type.
@@ -56,11 +55,6 @@ public final class ComponentIcons {
     }
 
     private static Image icon(String fileName) {
-    	try {
-    		ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/componentsfesfsdfd/" + fileName);
-    	} catch (Exception e) {
-        	IsisLog.getLogger(ComponentIcons.class).error("AAAAAHHHHH: " + e.getMessage());
-        }
     	return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
     }
 
