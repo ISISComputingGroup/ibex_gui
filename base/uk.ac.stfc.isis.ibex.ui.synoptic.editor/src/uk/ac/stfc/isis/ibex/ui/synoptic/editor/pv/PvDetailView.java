@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * Composite that shows the options to set the PV details, and allows
@@ -163,19 +164,13 @@ public class PvDetailView extends Composite {
 	}
 	
     private void bind(PvDetailViewModel model) {
-        UpdateValueStrategy notConverter = new UpdateValueStrategy() {
-            @Override
-            public Object convert(Object value) {
-                return !(Boolean) value;
-            }
-        };
 
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.visible().observe(selectionComposite),
                 BeanProperties.value("selectionVisible").observe(model));
         bindingContext.bindValue(WidgetProperties.visible().observe(noSelectionComposite),
-                BeanProperties.value("selectionVisible").observe(model), null, notConverter);
+                BeanProperties.value("selectionVisible").observe(model), null, Utils.NOT_CONVERTER);
         bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify),
                 BeanProperties.value("pvName").observe(model));
         bindingContext.bindValue(SWTObservables.observeText(txtAddress, SWT.Modify),

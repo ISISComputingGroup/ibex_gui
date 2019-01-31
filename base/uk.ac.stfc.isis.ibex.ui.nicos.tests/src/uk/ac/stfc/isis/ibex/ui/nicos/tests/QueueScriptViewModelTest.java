@@ -183,5 +183,31 @@ public class QueueScriptViewModelTest {
 		// Act / Assert
 		assertTrue(vm.getDequeueButtonEnabled());
 	}
+	
+	@Test
+	public void test_GIVEN_script_exists_in_queue_THEN_update_button_is_enabled() {
+		// Arrange
+		QueueScriptViewModel vm = new QueueScriptViewModel(model);
+		
+		// Act
+		vm.setSelectedScript(script1);
+		
+		// Assert
+		assertTrue(vm.getUpdateButtonEnabled());
+	}
+
+	@Test
+	public void test_GIVEN_script_does_not_exist_in_queue_THEN_update_button_is_disabled() {
+		// Arrange
+		List<QueuedScript> scripts = Arrays.asList(script2, script3);
+		when(model.getQueuedScripts()).thenReturn(scripts);
+		QueueScriptViewModel vm = new QueueScriptViewModel(model);
+		
+		// Act
+		vm.setSelectedScript(script1);
+
+		// Assert
+		assertFalse(vm.getUpdateButtonEnabled());
+	}
 
 }

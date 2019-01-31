@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -20,36 +19,33 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
+package uk.ac.stfc.isis.ibex.nicos.messages;
 
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
+import java.util.Arrays;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 /**
- * A filter for filtering/searching by instrument name. This should be case
- * insensitive, and the search text should match to any part of the instrument
- * name.
- * 
+ * Serialisable class to queue a script in Nicos.
  */
-public class InstrumentNameSearch extends ViewerFilter {
-    private String searchString = "";
-
+public class UpdateScript extends NICOSMessage<String, String> {
+    
     /**
-     * Sets the text to search for.
-     * @param s the text to search for
+     * Constructor.
+     * 
+     * @param script The script to queue.
      */
-    public void setSearchText(String s) {
-        searchString = s;
+    public UpdateScript(QueuedScript script) {
+        this.command = "update";
+        this.parameters = Arrays.asList(script.getCode(), "Updated via IBEX client", script.reqid);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public boolean select(Viewer viewer, Object parentElement, Object element) {
-        InstrumentInfo instrument = (InstrumentInfo) element;
-        return searchString == null || instrument.name().toUpperCase().contains(searchString.toUpperCase());
+    public String parseResponse(String response) throws ConversionException {
+        JsonDeserialisingConverter<String> deserial = new JsonDeserialisingConverter<>(String.class);
+        return deserial.convert(response);
     }
+        
 }

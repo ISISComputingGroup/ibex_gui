@@ -143,9 +143,11 @@ public final class ComponentIcons {
                 return "pixelman";
             case NEOCERA:
                 return "neocera";
+            case KEITHLEY:
+            case KHLY2700:
             case KHLY2400:
                 return "keithley2400";
-            case KHLY2700:
+            case MULTIMETER:
                 return "multimeter";
             case ROT_SAMPLE_CHANGER:
                 return "rotating_sample_changer";
@@ -171,10 +173,14 @@ public final class ComponentIcons {
             	return "keyence";
             case OSCILLOSCOPE:
             	return "oscilloscope";
-            case MOXA_1210:
-                return "moxa_1210";
+            case MOXA_12XX:
+                return "moxa_12XX";
             case FURNACE:
                 return "furnace";
+            case DH2000:
+                return "DH2000";
+            case PUMP:
+                return "pump";
             case WATER_BATH_VALVE:
             	return "water_bath_valve";
             default:
