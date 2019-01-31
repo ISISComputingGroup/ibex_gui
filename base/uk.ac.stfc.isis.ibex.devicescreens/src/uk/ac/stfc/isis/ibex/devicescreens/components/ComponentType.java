@@ -159,7 +159,9 @@ public enum ComponentType {
     /** Ocean Optics DH2000 shutter control. */
     DH2000,
     /** Generic Pump. */
-    PUMP;
+    PUMP,
+	/** Water bath position valve. */
+	WATER_BATH_VALVE;
 	
 	private Target target;
 

@@ -1765,6 +1765,24 @@
             </categories>
         </value>
     </entry>
+    <entry>
+      <key>Water bath valve</key>
+      <value>
+        <type>WATER_BATH_VALVE</type>
+        <path>water_bath_valve.opi</path>
+        <description>The OPI for the Julabo water bath valve selector.</description>
+        <macros>
+          <macro>
+            <name>WBVALVE</name>
+            <description>The water bath valve PV prefix (e.g. WBVALVE_01).</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Water baths</category>
+		  <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
   
 </descriptions>

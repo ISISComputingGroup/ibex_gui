@@ -55,7 +55,7 @@ public final class ComponentIcons {
     }
 
     private static Image icon(String fileName) {
-        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
+    	return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
     }
 
     private static String getIconNameForType(ComponentType componentType) {
@@ -175,6 +175,8 @@ public final class ComponentIcons {
                 return "DH2000";
             case PUMP:
                 return "pump";
+            case WATER_BATH_VALVE:
+            	return "water_bath_valve";
             default:
                 return "cog";
         }
