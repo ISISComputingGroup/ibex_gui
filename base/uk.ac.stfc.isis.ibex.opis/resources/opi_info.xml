@@ -1752,7 +1752,7 @@
         <key>Astrium</key>
         <value>
             <type>CHOPPER</type>
-            <path>astrium_choppers/astrium_choppers.opi</path>
+            <path>astrium_chopper/astrium_chopper.opi</path>
             <description>The OPI for the Astrium chopper</description>
             <macros>
                 <macro>
