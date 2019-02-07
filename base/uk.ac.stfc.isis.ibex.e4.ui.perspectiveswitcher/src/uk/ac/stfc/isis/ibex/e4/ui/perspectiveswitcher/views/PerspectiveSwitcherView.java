@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -9,6 +9,7 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -22,9 +23,9 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.LoadLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -35,17 +36,10 @@ public class PerspectiveSwitcherView {
 
 	private PerspectivesProvider perspectivesProvider;
 
-	@Inject
-	private EModelService modelService;
-
-	@Inject
-	private MApplication app;
-
-	@Inject
-	private EPartService partService;
-
-	@Inject
-	private IEventBroker broker;
+	@Inject private EModelService modelService;
+	@Inject private MApplication app;
+	@Inject private EPartService partService;
+	@Inject private IEventBroker broker;
 
 	/**
 	 * Create and initialise the controls within the view.
@@ -61,15 +55,16 @@ public class PerspectiveSwitcherView {
 
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
-		addResetCurrentPerspectiveShortcut(composite);
+		addLoadLayoutButton(composite);
+		
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
 	}
 
 	private void addPerspectiveShortcuts(Composite parent) {
-		List<MPerspective> perspectives = perspectivesProvider.getPerspectives();
-		
-		Collections.sort(perspectives, (MPerspective p1, MPerspective p2) -> p1.getLabel().compareTo(p2.getLabel()));
+		List<MPerspective> perspectives = perspectivesProvider.getPerspectives()
+				.sorted((p1, p2) -> p1.getLabel().compareTo(p2.getLabel()))
+				.collect(Collectors.toList());
 
 		for (final MPerspective perspective : perspectives) {
 			final PerspectiveButtonViewModel model;
@@ -99,8 +94,8 @@ public class PerspectiveSwitcherView {
 		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	}
-
-	private void addResetCurrentPerspectiveShortcut(Composite parent) {
-		new ResetLayoutButton(parent, perspectivesProvider);
+	
+	private void addLoadLayoutButton(Composite parent) {
+		new LoadLayoutButton(parent);
 	}
 }

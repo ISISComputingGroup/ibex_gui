@@ -11,10 +11,12 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPlaceholderResolver;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.persistence.PerspectiveLayoutLoader;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -27,6 +29,7 @@ public class CopyPerspectiveSnippetProcessor {
 
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
+    private IEventBroker broker;
 
     /**
      * Clone each snippet that is a perspective and add the cloned perspective
@@ -42,31 +45,33 @@ public class CopyPerspectiveSnippetProcessor {
      *            The IEventBroker used.           
      */
     @Execute
-    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
+    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker, EPlaceholderResolver placeholderResolver) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
-
-        // Only do this when no other children, or the restored workspace state
-        // will be overwritten.
-        if (!perspectiveStack.getChildren().isEmpty()) {
-            return;
-        }
-
-        // clone each snippet that is a perspective and add the cloned
-        // perspective into the main PerspectiveStack
-        boolean isFirst = true;
-        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
-                perspectiveStack.getChildren().add(perspective);
-                if (isFirst) {
-                    perspectiveStack.setSelectedElement(perspective);
-                    isFirst = false;
-                }
-            }
-            subscribeChangedElement(broker, perspective);
-            subscribeSelectedPerspective(broker, perspective);
-        }
-        ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
+        this.broker = broker;
+        
+        Display.getDefault().syncExec(new Runnable() {
+        	public void run() {
+        		
+        		PerspectiveLayoutLoader perspectiveLoader = new PerspectiveLayoutLoader(app, modelService, placeholderResolver);
+                
+                perspectivesProvider.snippetIds()
+                	.filter(id -> !PreferenceSupplier.perspectivesToHide().contains(id))
+                    .map(perspectiveLoader::load)
+                    .forEach(CopyPerspectiveSnippetProcessor.this::addPerspective);
+        	}
+        });
+    }
+    
+    private void addPerspective(MPerspective perspective) {
+    	perspectiveStack.getChildren().add(perspective);
+    	if (perspectiveStack.getChildren().size() == 1) {
+    		// If it is the only perspective added so far, then select it.
+    		perspectiveStack.setSelectedElement(perspective);
+    	}
+    	
+    	subscribeChangedElement(broker, perspective);
+    	subscribeSelectedPerspective(broker, perspective);
     }
 
     /**
@@ -92,8 +97,6 @@ public class CopyPerspectiveSnippetProcessor {
                 if (!(element instanceof MPerspective)) {
                     return;
                 }
-
-                ResetLayoutButtonModel.getInstance().setCurrentPerspective((MPerspective) element);
 
             }
         };
@@ -133,8 +136,6 @@ public class CopyPerspectiveSnippetProcessor {
                     alreadyCalled = true;
                     return;
                 }
-
-                ResetLayoutButtonModel.getInstance().setChanged(true);
             }
         };
 

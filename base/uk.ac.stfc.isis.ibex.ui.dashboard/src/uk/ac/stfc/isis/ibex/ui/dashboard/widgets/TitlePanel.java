@@ -88,6 +88,9 @@ public class TitlePanel extends Composite {
                 new UpdateValueStrategy().setConverter(new Converter(String.class, String.class) {
             @Override
             public Object convert(Object fromObject) {
+            	if (fromObject == null) {
+            		return null;
+            	}
                 String in = (String) fromObject;
                 return in.replaceAll("&", "&&");
             }

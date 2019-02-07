@@ -1,11 +1,11 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -24,7 +24,7 @@ public class PerspectivesProvider {
     private ExperimentSetupViewModel experimentSetupViewModel;
     private Shell shell;
     private final EPartService partService;
-    private List<MPerspective> perspectives = new ArrayList<MPerspective>();
+    private final List<MPerspective> perspectives;
     private MPerspectiveStack perspectivesStack;
     private MApplication app;
     private EModelService modelService;
@@ -48,14 +48,25 @@ public class PerspectivesProvider {
         this.modelService = modelService;
         experimentSetupViewModel = DaeUI.getDefault().viewModel().experimentSetup();
         
-        perspectives = new ArrayList<>();
-        for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
-            if (perspective.isVisible()) {
-                perspectives.add(perspective);
-            }
-        }
+        perspectives = findElements(MPerspective.class)
+        		.filter(MPerspective::isVisible)
+        		.collect(Collectors.toList());
 
-        this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+        this.perspectivesStack = findElements(MPerspectiveStack.class)
+        		.findFirst()
+        		.orElseThrow(() -> new IllegalStateException("No perspective stack found with name = " + MAIN_PERSPECTIVE_STACK_ID));
+    }
+    
+    /**
+     * Find elements of a given type, clazz, in the application model.
+     * 
+     * @param clazz the type to search for.
+     * @return a stream of matching elements.
+     */
+    private <T> Stream<T> findElements(Class<T> clazz) {
+    	return modelService
+        		.findElements(app, null, clazz, null)
+        		.stream();
     }
 
     /**
@@ -63,11 +74,19 @@ public class PerspectivesProvider {
      * 
      * @return The list of perspectives
      */
-    public List<MPerspective> getPerspectives() {
-        return perspectives;
+    public Stream<MPerspective> getPerspectives() {
+        return perspectives.stream();
     }
 
-    private boolean matchPerspectivesById(MPerspective p, String id) {
+    /**
+     * Matches perspectives by ID - also matching orphaned perspectives created
+     * due to an eclipse bug.
+     * 
+     * @param p the perspective to match
+     * @param id the ID to match
+     * @return whether the perspective matches the given ID
+     */
+    public static boolean matchPerspectivesById(MPerspective p, String id) {
         // The 2nd condition is because E4 has a bug that creates orphan
         // perspectives with IDs of the form ...perspective.alarms.<Alarms>
         return p.getElementId().equals(id) || p.getElementId().equals(id + "." + p.getLabel());
@@ -82,13 +101,10 @@ public class PerspectivesProvider {
      * @return The perspective corresponding to the given ID
      */
     public MPerspective getPerspective(String elementId) {
-
-        for (MPerspective perspective : perspectives) {
-            if (matchPerspectivesById(perspective, elementId)) {
-                return perspective;
-            }
-        }
-        throw new NoSuchElementException();
+    	return getPerspectives()
+    			.filter(perspective -> matchPerspectivesById(perspective, elementId))
+    			.findFirst()
+    			.orElseThrow(NoSuchElementException::new);
     }
 
     /**
@@ -118,14 +134,10 @@ public class PerspectivesProvider {
      * 
      * @return The list of perspectives
      */
-    public List<MPerspective> getInitialPerspectives() {
-        List<MPerspective> perspectives = new ArrayList<MPerspective>();
-        for (MUIElement snippet : app.getSnippets()) {
-            if (snippet instanceof MPerspective) {
-                perspectives.add((MPerspective) modelService.cloneSnippet(app, snippet.getElementId(), null));
-            }
-        }
-        return perspectives;
+    public Stream<String> snippetIds() {
+        return app.getSnippets().stream()
+        		.filter(snippet -> snippet instanceof MPerspective)
+        		.map(snippet -> snippet.getElementId());
     }
 
     /**

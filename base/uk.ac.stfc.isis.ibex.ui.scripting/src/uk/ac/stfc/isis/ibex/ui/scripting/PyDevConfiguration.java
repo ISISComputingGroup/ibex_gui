@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import java.util.Collections;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
 import org.python.pydev.plugin.PydevPlugin;
@@ -40,7 +41,7 @@ public final class PyDevConfiguration {
 	 * Configure PyDev.
 	 */
 	public static void configure() {
-		IInterpreterManager iMan = PydevPlugin.getPythonInterpreterManager(true);
+		IInterpreterManager iMan = InterpreterManagersAPI.getPythonInterpreterManager(true);
 		NullProgressMonitor monitor = new NullProgressMonitor();
 		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
 				monitor, false);
