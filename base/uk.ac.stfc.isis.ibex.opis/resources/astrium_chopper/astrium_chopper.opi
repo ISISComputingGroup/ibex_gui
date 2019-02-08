@@ -155,7 +155,7 @@
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_0_foreground_color>
     <tab_0_icon_path></tab_0_icon_path>
-    <tab_0_title>Chopper 1</tab_0_title>
+    <tab_0_title>Disk 1</tab_0_title>
     <tab_1_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_1_background_color>
@@ -167,7 +167,7 @@
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_1_foreground_color>
     <tab_1_icon_path></tab_1_icon_path>
-    <tab_1_title>Chopper 2</tab_1_title>
+    <tab_1_title>Disk 2</tab_1_title>
     <tab_count>2</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
@@ -199,7 +199,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Chopper 1</name>
+      <name>Disk 1</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -234,7 +234,7 @@
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>290</height>
+        <height>1</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PV_ROOT>$(P)$(ASTRIUM):CH1</PV_ROOT>
@@ -252,10 +252,51 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>596</width>
+        <width>1</width>
         <wuid>1a3f5bca:1687651dcc1:-6fe6</wuid>
         <x>6</x>
         <y>12</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>290</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CHANNEL>CH1</CHANNEL>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box</name>
+        <opi_file>single_disk.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>596</width>
+        <wuid>51485ffa:168a89237c7:-7ecc</wuid>
+        <x>6</x>
+        <y>6</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -281,7 +322,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Chopper 2</name>
+      <name>Disk 2</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -357,7 +398,7 @@
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>290</height>
+        <height>1</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <PV_ROOT>$(P)$(ASTRIUM):CH2</PV_ROOT>
@@ -375,10 +416,51 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>596</width>
+        <width>1</width>
         <wuid>1a3f5bca:1687651dcc1:-7013</wuid>
         <x>6</x>
         <y>12</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>290</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CHANNEL>CH2</CHANNEL>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box</name>
+        <opi_file>single_disk.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>596</width>
+        <wuid>51485ffa:168a89237c7:-7e80</wuid>
+        <x>6</x>
+        <y>6</y>
       </widget>
     </widget>
   </widget>

@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(ASTRIUM)$(CHANNEL)</PV_ROOT>
+    <DISK_ROOT>$(P)$(ASTRIUM):$(CHANNEL)</DISK_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -142,7 +142,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):FREQ:SP:RBV</pv_name>
+      <pv_name>$(DISK_ROOT):FREQ:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -235,7 +235,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):PHASE:SP:RBV</pv_name>
+      <pv_name>$(DISK_ROOT):PHASE:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -292,7 +292,7 @@ $(pv_value)</tooltip>
       <name>Text Input_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):PHASE:SP</pv_name>
+      <pv_name>$(DISK_ROOT):PHASE:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -344,7 +344,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(PV_ROOT):BRAKE</pv_name>
+      <pv_name>$(DISK_ROOT):BRAKE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -398,7 +398,7 @@ $(pv_value)</tooltip>
       <name>Text Input_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):FREQ:SP</pv_name>
+      <pv_name>$(DISK_ROOT):FREQ:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -532,7 +532,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):FREQ</pv_name>
+      <pv_name>$(DISK_ROOT):FREQ</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -625,7 +625,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):PHASE</pv_name>
+      <pv_name>$(DISK_ROOT):PHASE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -718,7 +718,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):STATE</pv_name>
+      <pv_name>$(DISK_ROOT):STATE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -811,7 +811,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):VETO</pv_name>
+      <pv_name>$(DISK_ROOT):VETO</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1109,7 +1109,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):MON:WATER:FLOW</pv_name>
+      <pv_name>$(DISK_ROOT):MON:WATER:FLOW</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1161,7 +1161,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):MON:WATER:TEMP</pv_name>
+      <pv_name>$(DISK_ROOT):MON:WATER:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1213,7 +1213,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):MON:MOTOR:TEMP</pv_name>
+      <pv_name>$(DISK_ROOT):MON:MOTOR:TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1265,7 +1265,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):MON:VIBR</pv_name>
+      <pv_name>$(DISK_ROOT):MON:VIBR</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1317,7 +1317,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):MON:PRES</pv_name>
+      <pv_name>$(DISK_ROOT):MON:PRES</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1368,8 +1368,8 @@ $(pv_value)</tooltip>
         <exp bool_exp="pv0 != pv1">
           <value>true</value>
         </exp>
-        <pv trig="true">$(PV_ROOT):FREQ:SP</pv>
-        <pv trig="true">$(PV_ROOT):FREQ:SP_ACTUAL</pv>
+        <pv trig="true">$(DISK_ROOT):FREQ:SP</pv>
+        <pv trig="true">$(DISK_ROOT):FREQ:SP_ACTUAL</pv>
       </rule>
     </rules>
     <scale_options>
