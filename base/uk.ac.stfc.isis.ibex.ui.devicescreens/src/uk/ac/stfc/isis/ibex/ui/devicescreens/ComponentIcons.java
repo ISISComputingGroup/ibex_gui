@@ -177,6 +177,8 @@ public final class ComponentIcons {
                 return "pump";
             case WATER_BATH_VALVE:
             	return "water_bath_valve";
+            case FILM_FABRICATION:
+            	return "film_fabrication";
             default:
                 return "cog";
         }
