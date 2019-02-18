@@ -37,6 +37,9 @@ public abstract class Observables extends ModelAdapter {
     protected final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING);
 
     protected static final String BEAM_CURRENT = "BEAM:CURR";
+    protected static final String BEAM_ENERGY = "BEAM:ENERGY";
+    protected static final String BUNCH_LENGTH = "BUNCH:LEN";
+    protected static final String EXTRACT_DELAY = "EXTRACT:DELAY";
     protected static final String FREQ = "FREQ";
 
     /**
