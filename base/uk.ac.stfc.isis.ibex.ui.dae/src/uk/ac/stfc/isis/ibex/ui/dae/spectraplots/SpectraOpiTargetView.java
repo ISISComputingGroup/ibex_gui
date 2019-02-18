@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 public class SpectraOpiTargetView extends OpiTargetView {
-	/**
+    /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView";
@@ -53,54 +53,54 @@ public class SpectraOpiTargetView extends OpiTargetView {
     private final Collection<SpectraPlotConfiguration> plotConfigurations;
     
     public SpectraOpiTargetView() {
-    	plotConfigurations = IntStream.range(0, NUMBER_OF_PLOTS)
-    		.mapToObj(SpectraPlotConfiguration::new)
-    		.collect(Collectors.toList());
-	}
+        plotConfigurations = IntStream.range(0, NUMBER_OF_PLOTS)
+            .mapToObj(SpectraPlotConfiguration::new)
+            .collect(Collectors.toList());
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	protected Path opi() throws OPIViewCreationException {
-		return Opi.getDefault().opiProvider().pathFromName(OPI_FILE);
-	}
-	
-	/**
-	 * Override toolbars to not exist (they appear in the dashboard which looks weird).
-	 */
-	@Override
-	public void createToolbarButtons() {
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void init(IViewSite site) throws PartInitException {
-		super.init(site);
-		try {
-			initialiseOPI();
-			this.initializeMacros();
-		} catch (OPIViewCreationException e) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
-			throw new PartInitException(e.getMessage(), e);
-		}
-	}
-	
-	public void initializeMacros() {
-		plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
-	}
+    @Override
+    protected Path opi() throws OPIViewCreationException {
+        return Opi.getDefault().opiProvider().pathFromName(OPI_FILE);
+    }
+    
+    /**
+     * Override toolbars to not exist (they appear in the dashboard which looks weird).
+     */
+    @Override
+    public void createToolbarButtons() {
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init(IViewSite site) throws PartInitException {
+        super.init(site);
+        try {
+            initialiseOPI();
+            this.initializeMacros();
+        } catch (OPIViewCreationException e) {
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+            throw new PartInitException(e.getMessage(), e);
+        }
+    }
+    
+    public void initializeMacros() {
+        plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
+    }
 
-	@Override
-	public MacrosInput macros() {
-		MacrosInput macros = emptyMacrosInput();
-		macros.put("P", Instrument.getInstance().getPvPrefix());
-		macros.put("NAME", "Spectra Plot");
-		
-		plotConfigurations.stream().forEach(conf -> macros.getMacrosMap().putAll(conf.getMacros()));
-		
-		return macros;
-	}
+    @Override
+    public MacrosInput macros() {
+        MacrosInput macros = emptyMacrosInput();
+        macros.put("P", Instrument.getInstance().getPvPrefix());
+        macros.put("NAME", "Spectra Plot");
+        
+        plotConfigurations.stream().forEach(conf -> macros.getMacrosMap().putAll(conf.getMacros()));
+        
+        return macros;
+    }
     
 }
