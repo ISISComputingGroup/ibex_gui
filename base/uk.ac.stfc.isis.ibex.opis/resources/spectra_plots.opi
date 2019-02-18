@@ -79,8 +79,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <widget_type>Linking Container</widget_type>
     <width>385</width>
     <wuid>-319bcfc0:167c0ae4efd:-7cdc</wuid>
-    <x>6</x>
-    <y>6</y>
+    <x>5</x>
+    <y>1</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -120,8 +120,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <widget_type>Linking Container</widget_type>
     <width>385</width>
     <wuid>-319bcfc0:167c0ae4efd:-7cc4</wuid>
-    <x>408</x>
-    <y>6</y>
+    <x>407</x>
+    <y>1</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -161,8 +161,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <widget_type>Linking Container</widget_type>
     <width>385</width>
     <wuid>-319bcfc0:167c0ae4efd:-7caf</wuid>
-    <x>6</x>
-    <y>282</y>
+    <x>5</x>
+    <y>277</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -202,7 +202,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <widget_type>Linking Container</widget_type>
     <width>385</width>
     <wuid>-319bcfc0:167c0ae4efd:-7c9a</wuid>
-    <x>408</x>
-    <y>282</y>
+    <x>407</x>
+    <y>277</y>
   </widget>
 </display>
