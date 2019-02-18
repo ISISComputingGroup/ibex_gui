@@ -59,7 +59,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>283</height>
+    <height>313</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>0</NUMBER>
@@ -100,7 +100,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>283</height>
+    <height>313</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>1</NUMBER>
@@ -141,7 +141,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>283</height>
+    <height>313</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>2</NUMBER>
@@ -182,7 +182,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>283</height>
+    <height>313</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>3</NUMBER>

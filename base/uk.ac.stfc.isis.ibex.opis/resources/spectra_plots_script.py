@@ -25,10 +25,13 @@ def main():
 
     if modePv.isConnected() and PVUtil.getString(modePv).lower() == "counts":
         mode = "YC"
+        axis_title = "Counts"
     else:
         mode = "Y"
+        axis_title = "Counts/us"
         
     widget.setPropertyValue("trace_0_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
     widget.setPropertyValue("trace_0_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
+    widget.setPropertyValue("axis_1_axis_title", axis_title)
 
 main()
