@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.preferences;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,7 +132,7 @@ public class PreferenceSupplier {
 	public List<String> perspectivesToHide() {
 		String preferencesString = getString(PERSPECTIVES_TO_HIDE, DEFAULT_PERSPECTIVES_TO_HIDE);
 		if (preferencesString == null || preferencesString.isEmpty()) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 		return Arrays.asList(preferencesString.split(",")).stream().map(String::trim).collect(Collectors.toList());
 	}

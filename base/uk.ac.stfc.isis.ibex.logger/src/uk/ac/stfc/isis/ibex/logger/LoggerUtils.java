@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.logger;
 
+import java.util.Objects;
+
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Joiner;
@@ -35,7 +37,7 @@ public final class LoggerUtils {
     }
     
     private static final String EXTRA_DEBUG_ENV_VAR = "IBEX_GUI_EXTRA_DEBUG";
-    private static final boolean EXTRA_DEBUG = "1".equals(System.getenv(EXTRA_DEBUG_ENV_VAR));
+    private static final boolean EXTRA_DEBUG = Objects.equals("1", System.getenv(EXTRA_DEBUG_ENV_VAR));
 
     /**
      * Sends an error to the log along with the stack trace of an exception
