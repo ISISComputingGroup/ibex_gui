@@ -84,6 +84,7 @@ public final class XMLUtil {
      * pass the classloader check.
      */
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
+    	
     	// Nuclear approach - depending on where this gets called from
     	// we need different classloaders to be used. Try them all until
     	// one doesn't error. This is hacky but it's the best way I've found
@@ -91,16 +92,38 @@ public final class XMLUtil {
     	List<ClassLoader> classloaders = List.of(
     			clazz.getClassLoader(),
     			XMLUtil.class.getClassLoader(),
-    			Thread.currentThread().getContextClassLoader()
+    			JAXBContextFactory.class.getClassLoader(),
+    			Thread.currentThread().getContextClassLoader(),
+    			ClassLoader.getPlatformClassLoader(),
+    			ClassLoader.getSystemClassLoader()
     	);
     	
     	Map<String, Throwable> errors = new HashMap<>();
     	
     	for (ClassLoader classloader : classloaders) {
+    		LOG.info(String.format("Classloader %s loads JAXBContext from %s", classloader, classloader.getResource("javax/xml/bind/JAXBContext.class")));
     		try {
         		return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), classloader);
         	} catch (Exception | NoClassDefFoundError e) {
         		errors.put(String.format("used classloader %s", classloader), e);
+        	}
+    		
+    		try {
+        		return JAXBContextFactory.createContext(new Class[] {clazz}, null);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used raw class moxy %s", clazz), e);
+        	}
+    		
+    		try {
+        		return JAXBContext.newInstance(clazz);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used raw class %s", clazz), e);
+        	}
+    		
+    		try {
+        		return JAXBContext.newInstance(clazz.getPackageName(), classloader);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used package name %s with classloader %s", clazz.getPackageName(), classloader), e);
         	}
     	}
     	

@@ -62,6 +62,28 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
+				<!--workaround eclipse bug 532302: set EE to JavASE-11 to make sure we resolve Import-Package: javax.annoation against bundle javax.annotation 
+          (as opposed to system package from bundle's BREE JavaSE-1.8) 
+          see https://bugs.eclipse.org/bugs/show_bug.cgi?id=541403 -->
+					<!-- <executionEnvironment>JavaSE-11</executionEnvironment> -->
+					
+					<!-- 
+					<dependency-resolution>
+		 				<extraRequirements>
+		 					<requirement>
+								<type>eclipse-plugin</type>
+								<id>javax.annotation</id>
+		 						<versionRange>0.0.0</versionRange>
+		 					</requirement>
+		 					<requirement>
+								<type>eclipse-plugin</type>
+								<id>javax.xml.bind</id>
+		 						<versionRange>0.0.0</versionRange>
+		 					</requirement>
+		 				</extraRequirements>
+		 			</dependency-resolution>
+		 			-->
+					
 					<environments>
 						<environment>
 							<os>win32</os>
@@ -101,6 +123,7 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<compilerArgument>-err:-forbidden</compilerArgument>
+					
 				</configuration>
 				<dependencies>
                   <dependency>
