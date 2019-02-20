@@ -40,7 +40,23 @@ public class SynchrotronObservables extends Observables {
      */
     public final UpdatedValue<String> beamFrequency;
 
-    private static final PVAddress SYNC_PV = PVAddress.startWith("AC").append("SYNCH");
+    /**
+     * An updating value giving the beam energy of the synchrotron.
+     */
+    public final UpdatedValue<String> beamEnergy;
+
+    /**
+     * An updating value giving the bunch length of the synchrotron.
+     */
+    public final UpdatedValue<String> bunchLength;
+
+    /**
+     * An updating value giving the extract delay of the synchrotron.
+     */
+    public final UpdatedValue<String> extractDelay;
+
+    private static final PVAddress AC_PV = PVAddress.startWith("AC");
+    private static final PVAddress SYNC_PV = AC_PV.append("SYNCH");
 
     /**
      * Constructor to register the synchrotron observables.
@@ -50,5 +66,11 @@ public class SynchrotronObservables extends Observables {
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC_PV.endWith(BEAM_CURRENT)));
         beamFrequency = adaptNumber(
                 obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC_PV.endWith(FREQ)));
+        beamEnergy = adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), AC_PV.endWith(BEAM_ENERGY)));
+        bunchLength = adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), AC_PV.endWith(BUNCH_LENGTH)));
+        extractDelay = adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), AC_PV.endWith(EXTRACT_DELAY)));
     }
 }
