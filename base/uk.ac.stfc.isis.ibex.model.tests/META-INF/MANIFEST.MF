@@ -4,6 +4,6 @@ Bundle-Name: Model Tests
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.model.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit;bundle-version="4.11.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.model.tests

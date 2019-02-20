@@ -23,6 +23,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.di,
  uk.ac.stfc.isis.ibex.synoptic,
  uk.ac.stfc.isis.ibex.logger
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.configserver

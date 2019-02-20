@@ -7,10 +7,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.2.0</tycho.version>
+		<tycho.version>1.3.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
 		<photon-repo.url>http://download.eclipse.org/releases/photon</photon-repo.url>
-		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.9</photon-updates-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.10</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -31,58 +31,12 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-
-			<!-- 
-			We are not using JACOCO at the moment.
-			
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.2</version>
-              <executions>
-                <execution>
-                  <id>pre-unit-test</id>
-                  <goals>
-                    <goal>prepare-agent</goal>
-                  </goals>
-                </execution>
-                <execution>
-                  <id>post-unit-test</id>
-                  <phase>test</phase>
-                  <goals>
-                    <goal>report</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-            -->
             
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-				<!--workaround eclipse bug 532302: set EE to JavASE-11 to make sure we resolve Import-Package: javax.annoation against bundle javax.annotation 
-          (as opposed to system package from bundle's BREE JavaSE-1.8) 
-          see https://bugs.eclipse.org/bugs/show_bug.cgi?id=541403 -->
-					<!-- <executionEnvironment>JavaSE-11</executionEnvironment> -->
-					
-					<!-- 
-					<dependency-resolution>
-		 				<extraRequirements>
-		 					<requirement>
-								<type>eclipse-plugin</type>
-								<id>javax.annotation</id>
-		 						<versionRange>0.0.0</versionRange>
-		 					</requirement>
-		 					<requirement>
-								<type>eclipse-plugin</type>
-								<id>javax.xml.bind</id>
-		 						<versionRange>0.0.0</versionRange>
-		 					</requirement>
-		 				</extraRequirements>
-		 			</dependency-resolution>
-		 			-->
 					
 					<environments>
 						<environment>
@@ -125,23 +79,6 @@
 					<compilerArgument>-err:-forbidden</compilerArgument>
 					
 				</configuration>
-				<dependencies>
-                  <dependency>
-					<groupId>org.eclipse.jdt</groupId>
-					<artifactId>org.eclipse.jdt.core</artifactId>
-					<version>3.15.0</version>
-				  </dependency>
-				  <dependency>
-					<groupId>org.eclipse.jdt</groupId>
-					<artifactId>org.eclipse.jdt.compiler.apt</artifactId>
-					<version>1.3.200</version>
-				  </dependency>
-				  <dependency>
-					<groupId>org.eclipse.jdt</groupId>
-					<artifactId>org.eclipse.jdt.compiler.tool</artifactId>
-					<version>1.2.300</version>
-				  </dependency>
-				</dependencies>
 			</plugin>
 
 			<!-- Run CheckStyle checks as part of the build. -->

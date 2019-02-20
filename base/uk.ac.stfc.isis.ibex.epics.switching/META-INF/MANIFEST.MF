@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.workbench,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.epics.switching
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics.switching

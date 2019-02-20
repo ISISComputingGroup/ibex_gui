@@ -33,7 +33,7 @@
 <repository location="https://dl.bintray.com/py4j/py4j-eclipse/0.10.7/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20181023-1826"/>
+<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20181211-1535"/>
 <repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">

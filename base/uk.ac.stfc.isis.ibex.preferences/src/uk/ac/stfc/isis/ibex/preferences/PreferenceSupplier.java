@@ -132,9 +132,9 @@ public class PreferenceSupplier {
 	public List<String> perspectivesToHide() {
 		String preferencesString = getString(PERSPECTIVES_TO_HIDE, DEFAULT_PERSPECTIVES_TO_HIDE);
 		if (preferencesString == null || preferencesString.isEmpty()) {
-			return Collections.<String>emptyList();
+			return Collections.emptyList();
 		}
-		return Arrays.asList(preferencesString.split(",")).stream().map(s -> s.trim()).collect(Collectors.toList());
+		return Arrays.asList(preferencesString.split(",")).stream().map(String::trim).collect(Collectors.toList());
 	}
 	
 	/**

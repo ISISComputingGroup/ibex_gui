@@ -22,6 +22,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.swt,
  javax.annotation;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard.views
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dashboard

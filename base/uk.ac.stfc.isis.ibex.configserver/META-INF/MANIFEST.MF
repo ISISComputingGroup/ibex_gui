@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.alarm,
  org.diirt.vtype;bundle-version="3.1.5",
  com.google.guava
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;
   uses:="uk.ac.stfc.isis.ibex.epics.pv,

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Scriptgenerator
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.scriptgenerator;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",

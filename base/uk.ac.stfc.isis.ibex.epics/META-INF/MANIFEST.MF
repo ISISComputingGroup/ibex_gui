@@ -4,7 +4,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Epics
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
  lib/joda-time-2.10-javadoc.jar,
  lib/joda-time-2.10-sources.jar,

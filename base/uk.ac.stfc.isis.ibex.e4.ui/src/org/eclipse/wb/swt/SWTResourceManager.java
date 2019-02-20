@@ -156,7 +156,7 @@ public class SWTResourceManager {
 	 * @return the {@link Image} stored in the file at the specified path
 	 */
 	public static Image getImage(Class<?> clazz, String path) {
-		String key = clazz.getName() + '|' + path;
+		String key = String.format("%s%s%s", clazz.getName(), '|', path);
 		Image image = m_imageMap.get(key);
 		if (image == null) {
 			try {

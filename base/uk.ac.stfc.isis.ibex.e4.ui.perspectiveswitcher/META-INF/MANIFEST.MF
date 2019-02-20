@@ -24,6 +24,6 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dae
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher

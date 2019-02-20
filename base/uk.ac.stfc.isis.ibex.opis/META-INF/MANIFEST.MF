@@ -13,7 +13,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  org.apache.commons.io,
  uk.ac.stfc.isis.ibex.instrument,
  commonj.sdo;bundle-version="2.1.1"
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.opis,
  uk.ac.stfc.isis.ibex.opis.desc
