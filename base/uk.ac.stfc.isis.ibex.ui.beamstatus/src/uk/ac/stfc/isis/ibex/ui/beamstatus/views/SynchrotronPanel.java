@@ -37,9 +37,9 @@ import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
 public class SynchrotronPanel extends Composite {
     private final Label beamCurrent;
     private final Label beamFrequency;
-	private final Label beamEnergy;
-	private final Label bunchLength;
-	private final Label extractDelay;
+    private final Label beamEnergy;
+    private final Label bunchLength;
+    private final Label extractDelay;
 
     /**
      * The constructor.

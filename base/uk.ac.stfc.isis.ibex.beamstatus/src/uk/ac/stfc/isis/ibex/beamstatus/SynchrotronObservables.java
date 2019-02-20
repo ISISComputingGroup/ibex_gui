@@ -48,12 +48,12 @@ public class SynchrotronObservables extends Observables {
     /**
      * An updating value giving the bunch length of the synchrotron.
      */
-	public final UpdatedValue<String> bunchLength;
+    public final UpdatedValue<String> bunchLength;
 
-	/**
+    /**
      * An updating value giving the extract delay of the synchrotron.
      */
-	public final UpdatedValue<String> extractDelay;
+    public final UpdatedValue<String> extractDelay;
 
     private static final PVAddress AC_PV = PVAddress.startWith("AC");
     private static final PVAddress SYNC_PV = AC_PV.append("SYNCH");
