@@ -148,13 +148,21 @@ public enum ComponentType {
     POWER_SUPPLY,
     /** Oscilloscope. */
     OSCILLOSCOPE,
-    /** Moxa ioLogik e1210 Remote I/O. */
-    MOXA_1210,
+    /** Moxa ioLogik e12XX Remote I/O. */
+    MOXA_12XX,
     /** Furnace temperature controller. */
     FURNACE,
+	/** Generic Multimeter. */
+    MULTIMETER,
+	/** Generic Keithley Multimeter. **/
+    KEITHLEY,
     /** Ocean Optics DH2000 shutter control. */
-    DH2000;
-
+    DH2000,
+    /** Generic Pump. */
+    PUMP,
+	/** Water bath position valve. */
+	WATER_BATH_VALVE;
+	
 	private Target target;
 
     /**

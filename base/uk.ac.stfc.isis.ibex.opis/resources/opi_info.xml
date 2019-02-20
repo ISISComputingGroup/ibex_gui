@@ -386,16 +386,50 @@
         <entry>
             <key>Moxa E1210</key>
             <value>
-                <type>MOXA_1210</type>
+                <type>MOXA_12XX</type>
                 <path>moxa1210.opi</path>
                 <description>The OPI for a Moxa E1210 remote I/O.</description>
                 <macros>
                     <macro>
                         <name>MOXA1210</name>
-                        <description>The Moxa E1210 PV prefix (e.g. MOXA1210_01).</description>
+                        <description>The Moxa E1210 PV prefix (e.g. MOXA12XX_01).</description>
                     </macro>
                 </macros>
                 <categories />
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1240</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1240.opi</path>
+                <description>The OPI for a Moxa E1240 Volt/Current logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1240 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories>
+                <category>Multimeters</category>
+                </categories>
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1262</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1262.opi</path>
+                <description>The OPI for a Moxa E1262 Temperature logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1262 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories>
+                <category>Temperature controllers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -1650,6 +1684,23 @@
 		</value>
 	</entry>
 	<entry>
+	    <key>Keithley 2001</key>
+		<value>
+			<categories>
+				<category>Multimeters</category>
+			</categories>
+			<type>KEITHLEY</type>
+			<path>Keithley2001/keithley2001.opi</path>
+			<description>The OPI for the Keithley 2001 multimeter.</description>
+			<macros>
+				<macro>
+					<name>KHLY2001</name>
+					<description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
+    <entry>
 		<key>DH-2000 Light source shutter</key>
 		<value>
 			<type>DH2000</type>
@@ -1664,10 +1715,12 @@
 		</value>
 	</entry>				
     <entry>
-      <key>KNR1050</key>
+      <key>Knauer HPLC 1050 Pump</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+            <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
         <path>knr1050.opi</path>
         <description>The OPI for the KNR1050</description>
         <macros>
@@ -1718,6 +1771,41 @@
             <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+        <key>Astrium</key>
+        <value>
+            <type>CHOPPER</type>
+            <path>astrium_chopper/astrium_chopper.opi</path>
+            <description>The OPI for the Astrium chopper</description>
+            <macros>
+                <macro>
+                    <name>ASTRIUM</name>
+                    <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
+                </macro>
+            </macros>
+            <categories>
+                <category>Choppers</category>
+            </categories>
+        </value>
+    </entry>
+    <entry>
+      <key>Water bath valve</key>
+      <value>
+        <type>WATER_BATH_VALVE</type>
+        <path>water_bath_valve.opi</path>
+        <description>The OPI for the Julabo water bath valve selector.</description>
+        <macros>
+          <macro>
+            <name>WBVALVE</name>
+            <description>The water bath valve PV prefix (e.g. WBVALVE_01).</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Water baths</category>
+		  <category>Gas and liquid handling systems</category>
+        </categories>
       </value>
     </entry>
   </opis>

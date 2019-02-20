@@ -19,16 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos.dialogs;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control; 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -37,14 +31,9 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 /**
  * The dialog for queueing a new script to send to the script server.
  */
-public class QueueScriptDialog extends Dialog {
+public class QueueScriptDialog extends ScriptDialog {
 
-	private static final Point INITIAL_SIZE = new Point(950, 800);
-	
-	private QueueScriptPanel creator;
     private Button queueBtn;
-
-    private QueueScriptViewModel model;
 
 	/**
      * The constructor for this class.
@@ -52,42 +41,30 @@ public class QueueScriptDialog extends Dialog {
      * @param parentShell
      *            The shell that this dialog is created from.
      * @param model
-     *            the model for queueing a script
+     *            the model for modifying the script queue
      */
     public QueueScriptDialog(Shell parentShell, QueueScriptViewModel model) {
-		super(parentShell);
-		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
-        this.model = model;
-	}
-    
-	@Override
-	protected Control createDialogArea(Composite parent) {
-        new QueuedScriptToolbar(parent, model.getScript(), true);
-	    
-        creator = new QueueScriptPanel(parent, SWT.NONE, model);
-        creator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		return creator;
+		super(parentShell, model, true);
+        this.script = model.getScript();
 	}
 
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
         queueBtn = createButton(parent, IDialogConstants.OK_ID, "Queue", false);
         queueBtn.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
-
         queueBtn.addListener(SWT.Selection, e -> model.queueScript());
-		
-		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
+		super.createButtonsForButtonBar(parent);
 	}	
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
         shell.setText("Queue Script");
-	}
-	
-	@Override
-	protected Point getInitialSize() {
-		return INITIAL_SIZE;
 	}
 }
