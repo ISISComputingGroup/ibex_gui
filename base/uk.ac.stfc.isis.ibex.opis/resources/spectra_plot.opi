@@ -97,7 +97,7 @@
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <height>331</height>
+    <height>439</height>
     <name>Spectra plot</name>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
@@ -153,7 +153,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trigger_pv_value />
     <visible>true</visible>
     <widget_type>XY Graph</widget_type>
-    <width>955</width>
+    <width>1005</width>
     <wuid>4d7a784b:165b353e7d6:-699e</wuid>
     <x>4</x>
     <y>18</y>
@@ -171,7 +171,7 @@ $(trace_0_y_pv_value)</tooltip>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      <opifont.name fontName="Segoe UI" height="11" style="1" pixels="false">Header 3</opifont.name>
     </font>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -193,7 +193,7 @@ $(trace_0_y_pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>69</width>
+    <width>73</width>
     <wrap_words>true</wrap_words>
     <wuid>4d7a784b:165b353e7d6:-6968</wuid>
     <x>6</x>
@@ -212,7 +212,7 @@ $(trace_0_y_pv_value)</tooltip>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      <opifont.name fontName="Segoe UI" height="11" style="1" pixels="false">Header 3</opifont.name>
     </font>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -234,7 +234,7 @@ $(trace_0_y_pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>69</width>
+    <width>67</width>
     <wrap_words>true</wrap_words>
     <wuid>4d7a784b:165b353e7d6:-6967</wuid>
     <x>198</x>
@@ -253,7 +253,7 @@ $(trace_0_y_pv_value)</tooltip>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      <opifont.name fontName="Segoe UI" height="11" style="1" pixels="false">Header 3</opifont.name>
     </font>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -275,7 +275,7 @@ $(trace_0_y_pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>69</width>
+    <width>75</width>
     <wrap_words>true</wrap_words>
     <wuid>-319bcfc0:167c0ae4efd:-7feb</wuid>
     <x>382</x>
