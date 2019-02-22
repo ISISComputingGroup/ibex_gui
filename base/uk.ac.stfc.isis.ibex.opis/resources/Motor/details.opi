@@ -6740,7 +6740,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <height>32</height>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <name>Label_8</name>
       <rules />
       <scale_options>
@@ -6800,7 +6800,7 @@ $(pv_value)</tooltip>
       <width>45</width>
       <wrap_words>true</wrap_words>
       <wuid>152f697f:16915c86179:-7f41</wuid>
-      <x>132</x>
+      <x>138</x>
       <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -6849,7 +6849,7 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>49</width>
       <wuid>152f697f:16915c86179:-7efa</wuid>
-      <x>186</x>
+      <x>192</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -6898,7 +6898,7 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>49</width>
       <wuid>152f697f:16915c86179:-7ed9</wuid>
-      <x>186</x>
+      <x>192</x>
       <y>20</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
