@@ -1,6 +1,4 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
-import time
-print("start {}".format(time.time()))
 
 pvInt0 = PVUtil.getLong(pvs[0])
 pvInt1 = PVUtil.getLong(pvs[1])
@@ -37,4 +35,3 @@ def main():
     widget.setPropertyValue("axis_1_axis_title", axis_title)
 
 main()
-print("end {}".format(time.time()))
