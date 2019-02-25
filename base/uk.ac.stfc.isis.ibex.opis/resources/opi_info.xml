@@ -1651,7 +1651,7 @@
                     </macro>
                 </macros>
             </value>
-            </entry>
+        </entry>
         <entry>        
 
       <key>Induction Furnace</key>
@@ -1744,6 +1744,31 @@
           <macro>
             <name>TTIPLP</name>
             <description>The TTIPLP PV prefix (e.g. TTIPLP_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
+      <key>Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+          </macro>
+          <macro>
+            <name>PERIOD_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
           </macro>
         </macros>
       </value>
