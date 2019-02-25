@@ -1783,11 +1783,11 @@
       </value>
     </entry>
     <entry>
-      <key>KNRK6</key>
+      <key>Knauer Electric Valve Drive K-6</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
-        <path>knrk6.opi</path>
+        <type>PUMP</type>
+        <path>knrk6/knrk6.opi</path>
         <description>The OPI for the KNRK6</description>
         <macros>
           <macro>
