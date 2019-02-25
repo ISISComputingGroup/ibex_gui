@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -36,21 +37,19 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Holds data coming from the PVs and is databound to the UI panel.
  */
 public class DetectorDiagnosticsViewModel extends ModelObject implements IDetectorDiagnosticsViewModelBinding {
-    
-    private static DetectorDiagnosticsViewModel instance;
-    private DataBindingContext bindingContext = new DataBindingContext();
+    private final DataBindingContext bindingContext;
     
     private DetectorDiagnosticsModel detectorDiagnosticsModel;
     
     private List<SpectrumInformation> spectra = new ArrayList<>();
 
-    private List<Integer> integralsList;
+    private List<Integer> integralsList = Collections.emptyList();
 
-    private List<Integer> maxSpecBinCount;
+    private List<Integer> maxSpecBinCount = Collections.emptyList();
 
-    private List<Double> countRatesList;
+    private List<Double> countRatesList = Collections.emptyList();
 
-    private List<Integer> spectrumNumbersList;
+    private List<Integer> spectrumNumbersList = Collections.emptyList();
 
     private Integer maxFrames;
     private Double integralTimeRangeTo;
@@ -79,14 +78,10 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     /**
-     * Instance of this singleton.
-     * @return this singleton
+     * Constructor for this class.
      */
-    public static synchronized DetectorDiagnosticsViewModel getInstance() {
-        if (instance == null) {
-            instance = new DetectorDiagnosticsViewModel();
-        }
-        return instance;
+    public DetectorDiagnosticsViewModel(DataBindingContext bindingContext) {
+    	this.bindingContext = bindingContext;
     }
     
     /**
@@ -177,7 +172,6 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
         
     }
     
-
     /**
      * Update the number of spectra that should be displayed.
      * 

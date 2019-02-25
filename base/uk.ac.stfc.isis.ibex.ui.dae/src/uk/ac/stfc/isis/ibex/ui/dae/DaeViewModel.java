@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae;
 
+import org.eclipse.core.databinding.DataBindingContext;
+
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
@@ -53,7 +55,7 @@ public class DaeViewModel extends Closer {
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
 	private RunInformationViewModel runInformation = registerForClose(new RunInformationViewModel(Dae.getInstance().observables()));
-	private DetectorDiagnosticsViewModel detectorDiagnosticsViewModel = DetectorDiagnosticsViewModel.getInstance();
+	private DetectorDiagnosticsViewModel detectorDiagnosticsViewModel = new DetectorDiagnosticsViewModel(new DataBindingContext());
 	
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;

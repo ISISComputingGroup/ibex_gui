@@ -161,7 +161,7 @@ public class DetectorDiagnosticsPanel {
         errorLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 
         DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(content, SWT.NONE, SWT.NONE);
-        table.bind();
+        table.bind(model);
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         table.setLayoutData(layout);
