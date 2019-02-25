@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -38,6 +37,9 @@ import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
 public class SynchrotronPanel extends Composite {
     private final Label beamCurrent;
     private final Label beamFrequency;
+    private final Label beamEnergy;
+    private final Label bunchLength;
+    private final Label extractDelay;
 
     /**
      * The constructor.
@@ -49,31 +51,32 @@ public class SynchrotronPanel extends Composite {
         super(parent, style);
         setLayout(new GridLayout(2, false));
 
-        Label lblBeamCurrent = new Label(this, SWT.NONE);
-        lblBeamCurrent.setText("Beam Current");
-        lblBeamCurrent.setAlignment(SWT.RIGHT);
-
-        beamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
-        beamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        Label lblBeamFrequency = new Label(this, SWT.NONE);
-        lblBeamFrequency.setText("Beam Frequency");
-
-        beamFrequency = new Label(this, SWT.BORDER | SWT.RIGHT);
-        beamFrequency.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        beamCurrent = createRow("Beam Current");
+        beamFrequency = createRow("Beam Frequency");
+        beamEnergy = createRow("Beam Energy");
+        bunchLength = createRow("Bunch Length");
+        extractDelay = createRow("Extract Delay");
 
         if (BeamStatus.getInstance() != null) {
             bind(BeamStatus.getInstance().synchrotron());
         }
     }
+    
+    private Label createRow(String name) {
+    	new Label(this, SWT.NONE).setText(name);
+
+        Label display = new Label(this, SWT.BORDER | SWT.RIGHT);
+        display.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        return display;
+    }
 
     private void bind(SynchrotronObservables sync) {
-        ISWTObservableValue currentProperty = WidgetProperties.text().observe(beamCurrent);
-        ISWTObservableValue frequencyProperty = WidgetProperties.text().observe(beamFrequency);
-        
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(currentProperty, BeanProperties.value("value").observe(sync.beamCurrent));
-        bindingContext.bindValue(frequencyProperty, BeanProperties.value("value").observe(sync.beamFrequency));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent), BeanProperties.value("value").observe(sync.beamCurrent));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency), BeanProperties.value("value").observe(sync.beamFrequency));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamEnergy), BeanProperties.value("value").observe(sync.beamEnergy));
+        bindingContext.bindValue(WidgetProperties.text().observe(bunchLength), BeanProperties.value("value").observe(sync.bunchLength));
+        bindingContext.bindValue(WidgetProperties.text().observe(extractDelay), BeanProperties.value("value").observe(sync.extractDelay));
     }
 
 }
