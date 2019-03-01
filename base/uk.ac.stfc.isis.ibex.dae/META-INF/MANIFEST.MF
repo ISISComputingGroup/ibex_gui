@@ -25,6 +25,5 @@ Export-Package: uk.ac.stfc.isis.ibex.dae,
  uk.ac.stfc.isis.ibex.dae.experimentsetup,
  uk.ac.stfc.isis.ibex.dae.experimentsetup.periods,
  uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels,
- uk.ac.stfc.isis.ibex.dae.spectra,
  uk.ac.stfc.isis.ibex.dae.updatesettings
 Bundle-ClassPath: .

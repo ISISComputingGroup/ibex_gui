@@ -49,7 +49,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>565</height>
+    <height>619</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -216,7 +216,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -298,7 +298,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -338,7 +338,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>2</EURO_NUM>
@@ -380,7 +380,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -420,7 +420,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>3</EURO_NUM>
@@ -462,7 +462,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -502,7 +502,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>4</EURO_NUM>
@@ -544,7 +544,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -584,7 +584,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>5</EURO_NUM>
@@ -626,7 +626,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -666,7 +666,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>6</EURO_NUM>
@@ -708,7 +708,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>536</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -748,7 +748,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>548</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>7</EURO_NUM>
