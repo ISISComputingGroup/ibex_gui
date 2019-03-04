@@ -619,6 +619,7 @@
                 </macros>
                 <categories>
                     <category>Miscellaneous motion control</category>
+		            <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -805,7 +806,8 @@
                 <description>The OPI for the analyser. No properties required.</description>
                 <macros />
                 <categories>
-                    <category>Monitors</category>
+                   <category>Monitors</category>
+		           <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -1173,7 +1175,9 @@
                 <path>polariser.opi</path>
                 <description>The OPI for the polariser. No properties required.</description>
                 <macros />
-                <categories />
+                <categories>
+                    <category>Polarisers and Analysers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -1795,6 +1799,9 @@
             <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
           </macro>
         </macros>
+        <categories>
+		  <category>Polarisers and Analysers</category>
+        </categories>
       </value>
     </entry>
   </opis>
