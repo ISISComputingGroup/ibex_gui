@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
+import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
 /**
@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
  * server.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class QueueScriptPanel extends Composite {
+public class ScriptContentPanel extends Composite {
 
     private DataBindingContext bindingContext = new DataBindingContext();
 	
@@ -48,11 +48,13 @@ public class QueueScriptPanel extends Composite {
      *            The composite that this panel belongs to.
      * @param style
      *            The SWT style of this panel.
-     * @param model
+     * @param script
      *            the view model for queueing a script
+     * @param editableName
+     *            whether the name of this script is editable
      */
     @SuppressWarnings("unchecked")
-    public QueueScriptPanel(Composite parent, int style, QueueScriptViewModel model) {
+    public ScriptContentPanel(Composite parent, int style, QueuedScript script, boolean editableName) {
 		super(parent, style);
         GridLayout gridLayout = new GridLayout(2, false);
         gridLayout.horizontalSpacing = 1;
@@ -62,7 +64,7 @@ public class QueueScriptPanel extends Composite {
         styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
         
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(styledText),
-                BeanProperties.value("code").observe(model.getScript()));
+                BeanProperties.value("code").observe(script));
         
         Label lblScriptName = new Label(this, SWT.NONE);
         lblScriptName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -72,7 +74,8 @@ public class QueueScriptPanel extends Composite {
         GridData textGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         textGridData.horizontalIndent = 5;
         scriptName.setLayoutData(textGridData);
+        scriptName.setEnabled(editableName);
                 bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(scriptName),
-        		BeanProperties.value("name").observe(model.getScript()));
+        		BeanProperties.value("name").observe(script));
 	}
 }

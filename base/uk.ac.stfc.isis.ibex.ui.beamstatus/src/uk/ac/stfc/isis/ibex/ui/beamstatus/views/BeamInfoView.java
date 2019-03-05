@@ -51,7 +51,7 @@ public class BeamInfoView {
         xpndtmSynchrotron.setText("Synchrotron");
         SynchrotronPanel sync = new SynchrotronPanel(expandBar, SWT.NONE);
         xpndtmSynchrotron.setControl(sync);
-        xpndtmSynchrotron.setHeight(60);
+        xpndtmSynchrotron.setHeight(130);
 
         ExpandItem xpndtmTargetStation1 = new ExpandItem(expandBar, SWT.NONE);
         xpndtmTargetStation1.setExpanded(true);

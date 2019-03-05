@@ -34,31 +34,22 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * 
  */
 public class InstrumentNameSearch extends ViewerFilter {
-    private String searchString = ".*";
+    private String searchString = "";
 
+    /**
+     * Sets the text to search for.
+     * @param s the text to search for
+     */
     public void setSearchText(String s) {
-        // ensure that the value can be used for matching
-        searchString = ".*" + s + ".*";
+        searchString = s;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean select(Viewer viewer, Object parentElement, Object element) {
-        if (searchString == null || searchString.length() == 0) {
-            return true;
-        }
-
         InstrumentInfo instrument = (InstrumentInfo) element;
-        if (instrument.name().matches(searchString)) {
-            return true;
-        }
-
-        // Use uppercase checks to eliminate case sensitivity on the search
-        String upSearch = searchString.toUpperCase();
-        String upName = instrument.name().toUpperCase();
-        if (upName.matches(upSearch)) {
-            return true;
-        }
-
-        return false;
+        return searchString == null || instrument.name().toUpperCase().contains(searchString.toUpperCase());
     }
 }
