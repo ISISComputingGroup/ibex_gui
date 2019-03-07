@@ -94,12 +94,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		gdBtnRemove.widthHint = 70;
 		btnRemove.setLayoutData(gdBtnRemove);
 		btnRemove.setText("Remove");
-		btnRemove.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-                removeSelectedPV();
-			}
-		});
+		btnRemove.addListener(SWT.Selection, e -> removeSelectedPV());
 		btnRemove.setEnabled(false);
 		
 		btnAdd.addSelectionListener(new SelectionAdapter() {

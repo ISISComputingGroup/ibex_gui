@@ -123,7 +123,6 @@ public class IocPVDetailsPanel extends Composite {
 		}
 		
 		if (pv == null) {
-			setEnabled(false);
 			setTextEnabled(false);
 	
 			return;
