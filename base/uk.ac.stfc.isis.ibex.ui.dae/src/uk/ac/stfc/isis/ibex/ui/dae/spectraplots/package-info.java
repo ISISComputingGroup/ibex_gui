@@ -1,5 +1,5 @@
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the classes needed for managing DAE spectra.
+ * The front end classes for the DAE view.
  */
-package uk.ac.stfc.isis.ibex.dae.spectra;
+package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
