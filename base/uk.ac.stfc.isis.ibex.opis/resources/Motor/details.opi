@@ -6618,21 +6618,18 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Power</name>
-    <rules>
-      <rule name="Visible" prop_id="visible" out_exp="false">
-        <exp bool_exp="!pvs[0].isConnected()">
-          <value>false</value>
-        </exp>
-        <pv trig="false">$(M)_ON_STATUS</pv>
-        <pv trig="true">$(M).STAT</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="checkOnOffPresent.py" checkConnect="false" sfe="false" seoe="false">
+        <pv trig="false">$(M)_ON_STATUS</pv>
+        <pv trig="true">$(M).STAT</pv>
+      </path>
+    </scripts>
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
