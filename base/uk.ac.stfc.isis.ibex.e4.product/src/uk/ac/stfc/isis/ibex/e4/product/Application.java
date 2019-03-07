@@ -30,11 +30,22 @@ import org.eclipse.ui.PlatformUI;
  */
 public class Application implements IApplication {
 
+	private void printJMXData(){
+		try {
+		    String url = sun.management.ConnectorAddressLink.importRemoteFrom(0)
+		            .get("sun.management.JMXConnectorServer.0.remoteAddress");
+		    System.out.println(url);
+		} catch (Exception e) {
+			System.out.println("Failed to get JMX port: " + e.getMessage());
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
 	 */
 	@Override
     public Object start(IApplicationContext context) {
+		printJMXData();
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
