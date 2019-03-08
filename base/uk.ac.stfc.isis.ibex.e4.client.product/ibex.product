@@ -17,10 +17,6 @@
       <vmArgs>-Xms40m
 -Xmx512m
 -Dpython.console.encoding=UTF-8
--Dcom.sun.management.jmxremote.port=0
--Dcom.sun.management.jmxremote.ssl=false
--Dcom.sun.management.jmxremote.authenticate=false
--Dcom.sun.management.jmxremote.hostname=localhost
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
