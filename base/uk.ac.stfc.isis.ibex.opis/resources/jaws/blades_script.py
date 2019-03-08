@@ -48,6 +48,9 @@ class UpdateJaws(Runnable):
 
     def run(self):
         while True:
+            if not display.isActive():
+                return
+
             self.get_pvs()
 
             north_height, south_height = self.calc_pair_height((self.north, self.south), self.max_y, background_height)
