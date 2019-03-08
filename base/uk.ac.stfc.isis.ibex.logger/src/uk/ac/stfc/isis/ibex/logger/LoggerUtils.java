@@ -53,7 +53,7 @@ public final class LoggerUtils {
                 + Joiner.on("\n    ").join(e.getStackTrace()));
         
         if (e.getCause() != null) {
-        	logErrorWithStackTrace(log, "Caused by: " + e.getMessage(), e);
+        	logErrorWithStackTrace(log, "Caused by: " + e.getMessage(), e.getCause());
         }
     }
     
