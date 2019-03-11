@@ -619,6 +619,7 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
+		            <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -805,7 +806,8 @@
         <description>The OPI for the analyser. No properties required.</description>
         <macros/>
         <categories>
-          <category>Monitors</category>
+                   <category>Monitors</category>
+		           <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -1172,8 +1174,10 @@
         <type>POLARISER</type>
         <path>polariser.opi</path>
         <description>The OPI for the polariser. No properties required.</description>
-        <macros/>
-        <categories/>
+                <macros />
+                <categories>
+                    <category>Polarisers and Analysers</category>
+                </categories>
       </value>
     </entry>
     <entry>
@@ -1651,7 +1655,7 @@
           </macro>
         </macros>
       </value>
-    </entry>
+        </entry>
     <entry>
       <key>Induction Furnace</key>
       <value>
@@ -1747,6 +1751,31 @@
         </macros>
       </value>
     </entry>
+    <entry>        
+      <key>Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+          </macro>
+          <macro>
+            <name>PERIOD_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>Astrium</key>
       <value>
@@ -1779,6 +1808,23 @@
         <categories>
           <category>Water baths</category>
           <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mezei spin flipper</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>mezflipper.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+          </macro>
+        </macros>
+        <categories>
+		  <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
