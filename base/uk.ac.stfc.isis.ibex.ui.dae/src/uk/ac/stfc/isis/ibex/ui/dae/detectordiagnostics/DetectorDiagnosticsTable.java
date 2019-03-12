@@ -61,10 +61,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     /**
      * Binds this table to the underlying data.
      */
-    public void bind() {
-        
-        final DetectorDiagnosticsViewModel model = DetectorDiagnosticsViewModel.getInstance(); 
-        
+    public void bind(DetectorDiagnosticsViewModel model) {
         (new DataBindingContext()).bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model)); 
         
         model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
