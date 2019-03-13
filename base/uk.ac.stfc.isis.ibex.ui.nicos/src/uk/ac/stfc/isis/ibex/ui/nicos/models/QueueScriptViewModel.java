@@ -21,8 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +43,7 @@ public class QueueScriptViewModel extends ModelObject {
     private Boolean upButtonEnabled = false;
     private Boolean downButtonEnabled = false;
     private Boolean dequeueButtonEnabled = false;
+    private Boolean updateButtonEnabled = false;
     
     /**
      * Constructor.
@@ -80,6 +79,15 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public void dequeueScript() {
         model.dequeueScript(selectedScript.reqid);
+    }
+    
+    /**
+     * Update the content of a script in the queue.
+     * 
+     * @param script The script to update
+     */
+    public void updateScript(QueuedScript script) {
+    	model.updateScript(script);
     }
 
     /**
@@ -126,6 +134,7 @@ public class QueueScriptViewModel extends ModelObject {
         updateDownButtonEnabled();
         updateUpButtonEnabled();
         updateDequeueButtonEnabled();
+        updateUpdateButtonEnabled();
     }
     
     /**
@@ -208,6 +217,31 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public boolean getDequeueButtonEnabled() {
         return dequeueButtonEnabled;
+    }
+    
+    private void updateUpdateButtonEnabled() {
+        firePropertyChange("updateButtonEnabled", updateButtonEnabled, updateButtonEnabled = isScriptInQueue());
+    }
+    
+    /**
+     * Get enabled state of Update button.
+     * 
+     * @return enabled state of Update button
+     */
+    public Boolean getUpdateButtonEnabled() {
+    	return this.updateButtonEnabled;
+    }
+    
+    private Boolean isScriptInQueue() {
+    	if (this.selectedScript == null) {
+    		return false;
+    	}
+    	for (QueuedScript script : model.getQueuedScripts()) {
+    		if (script.reqid.equals(this.selectedScript.reqid)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     /**

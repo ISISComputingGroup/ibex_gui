@@ -38,6 +38,7 @@ import org.diirt.vtype.VType;
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * A class for observing a PV via PVManager.
@@ -97,7 +98,8 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 				            }
 						} catch (RuntimeException e) {
 							// Ensure errors get logged not swallowed silently (if they propagate up to this level)
-							IsisLog.getLogger(PVManagerObservable.this.getClass()).error(e.getMessage(), e);
+							LoggerUtils.logErrorWithStackTrace(
+									IsisLog.getLogger(PVManagerObservable.this.getClass()), e.getMessage(), e);
 						}
 					}
 			    };

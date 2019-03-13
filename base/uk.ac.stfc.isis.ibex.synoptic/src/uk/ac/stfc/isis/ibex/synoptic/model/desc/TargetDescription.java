@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -41,7 +42,7 @@ public class TargetDescription {
 	
 	@XmlElementWrapper(name = "properties")
 	@XmlElement(name = "property", type = Property.class)
-	private ArrayList<Property> properties = new ArrayList<>();
+	private List<Property> properties = new ArrayList<>();
 	
     /**
      * Default constructor, required due to existence of copy constructor.
@@ -69,7 +70,7 @@ public class TargetDescription {
     public TargetDescription(TargetDescription other) {
         this.name = other.name;
         this.type = other.type;
-        this.properties = new ArrayList<>(other.getProperties());
+        this.properties = other.getProperties().stream().map(Property::new).collect(Collectors.toList());
     }
 
     /**

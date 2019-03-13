@@ -49,7 +49,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>531</height>
+    <height>619</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -194,7 +194,7 @@
     <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>793</width>
+    <width>781</width>
     <wuid>4fbad31a:1436c3e166f:-6fb0</wuid>
     <x>6</x>
     <y>84</y>
@@ -216,7 +216,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -234,14 +234,14 @@
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -256,14 +256,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>1</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -274,7 +274,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>6892be24:156313795e2:-7d1e</wuid>
         <x>0</x>
         <y>0</y>
@@ -298,7 +298,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -316,14 +316,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -338,14 +338,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>2</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -356,7 +356,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>6892be24:156313795e2:-560e</wuid>
         <x>0</x>
         <y>0</y>
@@ -380,7 +380,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -398,14 +398,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -420,14 +420,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>3</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -438,7 +438,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>6892be24:156313795e2:-55a2</wuid>
         <x>0</x>
         <y>0</y>
@@ -462,7 +462,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -480,14 +480,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6fac</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -502,14 +502,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>4</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -520,7 +520,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>-53236bab:15635d9faea:-7f38</wuid>
         <x>0</x>
         <y>0</y>
@@ -529,7 +529,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -544,7 +544,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -562,14 +562,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>-53236bab:15635d9faea:-7edb</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -584,14 +584,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>5</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -602,7 +602,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>-53236bab:15635d9faea:-7eca</wuid>
         <x>0</x>
         <y>0</y>
@@ -611,7 +611,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -626,7 +626,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -644,14 +644,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>-53236bab:15635d9faea:-7eda</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -666,14 +666,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>6</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -684,7 +684,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>-53236bab:15635d9faea:-7e65</wuid>
         <x>0</x>
         <y>0</y>
@@ -693,7 +693,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -708,7 +708,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>502</height>
+      <height>590</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -726,14 +726,14 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>779</width>
       <wuid>-53236bab:15635d9faea:-7ed9</wuid>
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
           <color red="0" green="128" blue="255" />
@@ -748,14 +748,14 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>495</height>
+        <height>536</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>7</EURO_NUM>
         </macros>
         <name>Linking Container</name>
         <opi_file>Eurotherm_single.opi</opi_file>
-        <resize_behaviour>0</resize_behaviour>
+        <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -766,7 +766,7 @@
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>787</width>
+        <width>776</width>
         <wuid>-53236bab:15635d9faea:-7dfc</wuid>
         <x>0</x>
         <y>0</y>
@@ -808,7 +808,7 @@
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>787</width>
+    <width>781</width>
     <wrap_words>true</wrap_words>
     <wuid>4fdc1aa2:158de06471b:-7a02</wuid>
     <x>6</x>
@@ -849,7 +849,7 @@
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>787</width>
+    <width>781</width>
     <wrap_words>true</wrap_words>
     <wuid>4fdc1aa2:158de06471b:-7a01</wuid>
     <x>6</x>

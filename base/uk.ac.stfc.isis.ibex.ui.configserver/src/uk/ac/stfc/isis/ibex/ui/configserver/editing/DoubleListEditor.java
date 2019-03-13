@@ -28,8 +28,6 @@ import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -46,7 +44,7 @@ import org.eclipse.wb.swt.ResourceManager;
  * The double list editor control.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
-public class DoubleListEditor extends Composite {
+public class DoubleListEditor<T> extends Composite {
 	private final Button select;
 	private final Button unselect;
 	private final Button btnUp;
@@ -56,11 +54,11 @@ public class DoubleListEditor extends Composite {
 	private List selectedList;
 	private List unselectedList;
 	
-	private final IListChangeListener clearSelectedItems;
-	private final IListChangeListener clearUnselectedItems;
+	private final IListChangeListener<T> clearSelectedItems;
+	private final IListChangeListener<T> clearUnselectedItems;
 		
-	private final IObservableList selectedItems;
-	private final IObservableList unselectedItems;
+	private final IObservableList<T> selectedItems;
+	private final IObservableList<T> unselectedItems;
 	private Label lblAvailable;
 	private Label lblSelected;
 	
@@ -106,7 +104,7 @@ public class DoubleListEditor extends Composite {
 		gd_btnUp.exclude = !orderable;
 		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-		btnUp.setEnabled(true);
+		btnUp.setEnabled(false);
 		if (!orderable) {
 			new Label(this, SWT.NONE);
 		}
@@ -122,104 +120,81 @@ public class DoubleListEditor extends Composite {
 		gd_btnDown.exclude = !orderable;
 		btnDown.setLayoutData(gd_btnDown);
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
-		btnDown.setEnabled(true);
+		btnDown.setEnabled(false);
 		
 		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.multipleSelection().observe(unselectedViewer);
 
-        selectedList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                // Bit of a hack as actual selecting behaviour is done on
-                // listener, to improve use a DoubleListEditorViewModel
-                unselect.setSelection(true);
-                unselect.notifyListeners(SWT.Selection, new Event());
-            }
-        });
-
-        unselectedList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                // Bit of a hack as actual selecting behaviour is done on
-                // listener, to improve use a DoubleListEditorViewModel
-                select.setSelection(true);
-                select.notifyListeners(SWT.Selection, new Event());
-            }
-        });
+        selectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(unselect));
+        unselectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(select));
 
 		// Allow only one list to have a selection
-		clearSelectedItems = new IListChangeListener() {	
+		clearUnselectedItems = new IListChangeListener<T>() {	
 			@Override
-			public void handleListChange(ListChangeEvent arg0) {
-				selectedItems.removeListChangeListener(clearUnselectedItems);
-				selectedItems.clear();
-				selectedItems.addListChangeListener(clearUnselectedItems);
-			}
-		};
-		
-		clearUnselectedItems = new IListChangeListener() {	
-			@Override
-			public void handleListChange(ListChangeEvent arg0) {
+			public void handleListChange(ListChangeEvent<? extends T> arg0) {
 				unselectedItems.removeListChangeListener(clearSelectedItems);
 				unselectedItems.clear();
 				unselectedItems.addListChangeListener(clearSelectedItems);
 			}
 		};
 				
-		selectedItems.addListChangeListener(new IListChangeListener() {
-			@Override
-			public void handleListChange(ListChangeEvent arg0) {
-				unselect.setEnabled(!selectedItems.isEmpty());
-			}
-		});
-		
+		selectedItems.addListChangeListener(e -> unselect.setEnabled(!selectedItems.isEmpty()));
 		selectedItems.addListChangeListener(clearUnselectedItems);
 		
-		unselectedItems.addListChangeListener(new IListChangeListener() {
+		clearSelectedItems = new IListChangeListener<T>() {	
 			@Override
-			public void handleListChange(ListChangeEvent arg0) {
-				select.setEnabled(!unselectedItems.isEmpty());
+			public void handleListChange(ListChangeEvent<? extends T> arg0) {
+				selectedItems.removeListChangeListener(clearUnselectedItems);
+				selectedItems.clear();
+				selectedItems.addListChangeListener(clearUnselectedItems);
 			}
-		});
+		};
 		
+		unselectedItems.addListChangeListener(e -> select.setEnabled(!unselectedItems.isEmpty()));
 		unselectedItems.addListChangeListener(clearSelectedItems);
 		
-		btnUp.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (selectedList.getSelectionIndex() > 0) {
-					int selectIndex = selectedList.getSelectionIndex();
-					String selected = selectedList.getItem(selectIndex);
-					String temp = selectedList.getItem(selectIndex - 1);
-					selectedList.setItem(selectIndex, temp);
-					selectedList.setItem(selectIndex - 1, selected);
-					selectedList.setSelection(selectIndex - 1);
-				}
-			}
-		});
+		//Can not reorder if no selection or selected the top or bottom item
+		selectedItems.addListChangeListener(e -> setUpDownEnabled(selectedList.getSelectionIndex()));
 		
-		btnDown.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1) {
-					int selectIndex = selectedList.getSelectionIndex();
-					String selected = selectedList.getItem(selectIndex);
-					String temp = selectedList.getItem(selectIndex + 1);
-					selectedList.setItem(selectIndex + 1, selected);
-					selectedList.setItem(selectIndex, temp);
-					selectedList.setSelection(selectIndex + 1);
-				}
-			}
-		});
+		btnUp.addListener(SWT.Selection, e -> swapSelectedItems(true));	
+		btnDown.addListener(SWT.Selection, e -> swapSelectedItems(false));	
 	}
-	 
+	
+	private void listDoubleClick(Button selectButton) {
+        // Bit of a hack as actual selecting behaviour is done on the 
+        // listener, This effectively just clicks the appropriate button 
+		// when an item is double clicked, to improve use a DoubleListEditorViewModel
+        unselect.setSelection(true);
+        unselect.notifyListeners(SWT.Selection, new Event());
+	}
+	
+	/**
+	 * Swaps an item in the selected list with the item before or after it.
+	 * @param withPrevious True to swap with previous item, false to swap with next.
+	 */
+	private void swapSelectedItems(boolean withPrevious) {
+		int selectIndex = selectedList.getSelectionIndex();
+		int swappingIndex = withPrevious ? selectIndex - 1 : selectIndex + 1;
+		String selected = selectedList.getItem(selectIndex);
+		String temp = selectedList.getItem(swappingIndex);
+		selectedList.setItem(swappingIndex, selected);
+		selectedList.setItem(selectIndex, temp);
+		selectedList.select(swappingIndex);
+		setUpDownEnabled(swappingIndex);
+	}
+	
+	private void setUpDownEnabled(int selectionIndex) {
+		btnUp.setEnabled(selectionIndex != -1 && selectionIndex > 0);
+		btnDown.setEnabled(selectionIndex != -1 && selectionIndex < selectedList.getItemCount() - 1);
+	}
+	
     /**
      * Binds data to the list-viewers.
      * 
      * @param unselected the contents of the unselected list-viewer
      * @param selected the contents of the unselected list-viewer
      */
-	public void bind(IObservableList unselected, IObservableList selected) {		
+	public void bind(IObservableList<T> unselected, IObservableList<T> selected) {		
 		selectedViewer.setInput(selected);
 		unselectedViewer.setInput(unselected);
 	}
@@ -227,14 +202,14 @@ public class DoubleListEditor extends Composite {
     /**
      * @return the selected items
      */
-	public IObservableList selectedItems() {
+	public IObservableList<T> selectedItems() {
 		return selectedItems;
 	}
 	
     /**
      * @return the unselected items
      */
-	public IObservableList unselectedItems() {
+	public IObservableList<T> unselectedItems() {
 		return unselectedItems;
 	}
 	

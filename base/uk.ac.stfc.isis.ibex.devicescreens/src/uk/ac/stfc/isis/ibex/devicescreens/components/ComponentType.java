@@ -144,15 +144,25 @@ public enum ComponentType {
     SYRINGE_PUMP,
     /** Keyence micrometer. */
     KEYENCE,
-	/** Generic Power Supply. */
+    /** Generic Power Supply. */
     POWER_SUPPLY,
-  /** Oscilloscope. */
+    /** Oscilloscope. */
     OSCILLOSCOPE,
-	/** Moxa ioLogik e1210 Remote I/O. */
-	MOXA_1210,
-	/** Furnace temperature controller. */
-	FURNACE;
-
+    /** Moxa ioLogik e12XX Remote I/O. */
+    MOXA_12XX,
+    /** Furnace temperature controller. */
+    FURNACE,
+	/** Generic Multimeter. */
+    MULTIMETER,
+	/** Generic Keithley Multimeter. **/
+    KEITHLEY,
+    /** Ocean Optics DH2000 shutter control. */
+    DH2000,
+    /** Generic Pump. */
+    PUMP,
+	/** Water bath position valve. */
+	WATER_BATH_VALVE;
+	
 	private Target target;
 
     /**

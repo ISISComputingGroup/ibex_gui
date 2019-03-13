@@ -26,7 +26,12 @@
                 <type>CHOPPER</type>
                 <path>Mk3Chopper/multiple_choppers.opi</path>
                 <description>The OPI for the Mk3 chopper. No properties required.</description>
-                <macros />
+                <macros>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
+                </macros>
                 <categories>
                     <category>Choppers</category>
                 </categories>
@@ -302,19 +307,6 @@
             </value>
         </entry>
         <entry>
-            <key>Julabo FL300</key>
-            <value>
-                <type>JULABO</type>
-                <path>JulaboFL300.opi</path>
-                <description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Water baths</category>
-                    <category>Temperature controllers</category>
-                </categories>
-            </value>
-        </entry>
-        <entry>
             <key>Single Stage</key>
             <value>
                 <type>SINGLESTAGE</type>
@@ -394,16 +386,50 @@
         <entry>
             <key>Moxa E1210</key>
             <value>
-                <type>MOXA_1210</type>
+                <type>MOXA_12XX</type>
                 <path>moxa1210.opi</path>
                 <description>The OPI for a Moxa E1210 remote I/O.</description>
                 <macros>
                     <macro>
                         <name>MOXA1210</name>
-                        <description>The Moxa E1210 PV prefix (e.g. MOXA1210_01).</description>
+                        <description>The Moxa E1210 PV prefix (e.g. MOXA12XX_01).</description>
                     </macro>
                 </macros>
                 <categories />
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1240</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1240.opi</path>
+                <description>The OPI for a Moxa E1240 Volt/Current logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1240 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories>
+                <category>Multimeters</category>
+                </categories>
+            </value>
+        </entry>
+        <entry>
+            <key>Moxa E1262</key>
+            <value>
+                <type>MOXA_12XX</type>
+                <path>moxa1262.opi</path>
+                <description>The OPI for a Moxa E1262 Temperature logger.</description>
+                <macros>
+                    <macro>
+                        <name>MOXA1210</name>
+                        <description>The Moxa E1262 PV prefix (e.g. MOXA12XX_01).</description>
+                    </macro>
+                </macros>
+                <categories>
+                <category>Temperature controllers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -593,6 +619,7 @@
                 </macros>
                 <categories>
                     <category>Miscellaneous motion control</category>
+		            <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -687,7 +714,7 @@
             <key>Lakeshore 218</key>
             <value>
                 <type>LAKESHORE</type>
-                <path>Lakeshore218.opi</path>
+                <path>Lakeshore218/Lakeshore218.opi</path>
                 <description>The OPI for the Lakeshore 218 temperature controller.</description>
                 <macros>
                     <macro>
@@ -761,6 +788,10 @@
                         <name>NUMBER</name>
                         <description>The chopper number (e.g. CH1).</description>
                     </macro>
+                    <macro>
+                        <name>INST_PREFIX</name>
+                        <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+                    </macro>
                 </macros>
                 <categories>
                     <category>Choppers</category>
@@ -776,6 +807,7 @@
                 <macros />
                 <categories>
                     <category>Monitors</category>
+		           <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -1143,7 +1175,9 @@
                 <path>polariser.opi</path>
                 <description>The OPI for the polariser. No properties required.</description>
                 <macros />
-                <categories />
+                <categories>
+                    <category>Polarisers and Analysers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -1605,5 +1639,213 @@
                 <macros />
             </value>
         </entry>
-    </opis>
+        <entry>
+            <key>Muon Separator PSU</key>
+            <value>
+                <type>POWER_SUPPLY</type>
+                <path>muon_overviews/separator_status.opi</path>
+                <categories>
+                    <category>Power supplies</category>
+                </categories>
+                <description>The OPI for the Muon separator PSU.</description>
+                <macros>
+                    <macro>
+                        <name>SEPRTR</name>
+                        <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
+                    </macro>
+                </macros>
+            </value>
+        </entry>
+        <entry>        
+
+      <key>Induction Furnace</key>
+      <value>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>FURNACE</type>
+        <path>induction_furnace.opi</path>
+        <description>The OPI for the GEM/POLARIS induction furnace</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+		<key>Vertical Jaws</key>
+		<value>
+			<categories>
+				<category>Jaws and slits</category>
+			</categories>
+			<type>JAWS</type>
+			<path>jaws/vertical_jaws.opi</path>
+			<description>The OPI for an OSIRIS Jaw set.</description>
+			<macros>
+				<macro>
+					<name>J</name>
+					<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
+	<entry>
+	    <key>Keithley 2001</key>
+		<value>
+			<categories>
+				<category>Multimeters</category>
+			</categories>
+			<type>KEITHLEY</type>
+			<path>Keithley2001/keithley2001.opi</path>
+			<description>The OPI for the Keithley 2001 multimeter.</description>
+			<macros>
+				<macro>
+					<name>KHLY2001</name>
+					<description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
+         			</macro>
+			</macros>
+		</value>
+	</entry>
+    <entry>
+		<key>DH-2000 Light source shutter</key>
+		<value>
+			<type>DH2000</type>
+			<path>dh2000.opi</path>
+			<description>The OPI for the Ocean Optics DH2000 shutter.</description>
+			<macros>
+				<macro>
+					<name>DH2000</name>
+					<description>The Ocean optics DH-2000 PV prefix (e.g. DH2000_01).</description>
+				</macro>
+			</macros>
+		</value>
+	</entry>				
+    <entry>
+      <key>Knauer HPLC 1050 Pump</key>
+      <value>
+        <categories>
+            <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
+        <path>knr1050.opi</path>
+        <description>The OPI for the KNR1050</description>
+        <macros>
+          <macro>
+            <name>KNR1050</name>
+            <description>The KNR1050 PV prefix (e.g. KNR1050_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>TTIPLP</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiplp.opi</path>
+        <description>The OPI for the TTIPLP</description>
+        <macros>
+          <macro>
+            <name>TTIPLP</name>
+            <description>The TTIPLP PV prefix (e.g. TTIPLP_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>        
+      <key>Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+          </macro>
+          <macro>
+            <name>PERIOD_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+        <key>Astrium</key>
+        <value>
+            <type>CHOPPER</type>
+            <path>astrium_chopper/astrium_chopper.opi</path>
+            <description>The OPI for the Astrium chopper</description>
+            <macros>
+                <macro>
+                    <name>ASTRIUM</name>
+                    <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
+                </macro>
+            </macros>
+            <categories>
+                <category>Choppers</category>
+            </categories>
+        </value>
+    </entry>
+    <entry>
+      <key>Water bath valve</key>
+      <value>
+        <type>WATER_BATH_VALVE</type>
+        <path>water_bath_valve.opi</path>
+        <description>The OPI for the Julabo water bath valve selector.</description>
+        <macros>
+          <macro>
+            <name>WBVALVE</name>
+            <description>The water bath valve PV prefix (e.g. WBVALVE_01).</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Water baths</category>
+		  <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mezei spin flipper</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>mezflipper.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+          </macro>
+        </macros>
+        <categories>
+		  <category>Polarisers and Analysers</category>
+        </categories>
+      </value>
+    </entry>
+        <entry>
+      <key>JASCO PU-4180 Pump</key>
+      <value>
+	    <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
+        <path>jsco4180.opi</path>
+        <description>The OPI for the JSCO4180</description>
+        <macros>
+          <macro>
+            <name>JSCO4180</name>
+            <description>The JSCO4180 PV prefix (e.g. JSCO4180_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+  </opis>
+  
 </descriptions>

@@ -36,6 +36,11 @@ public class ReceiveScriptStatus {
      * The currently executing script.
      */
     public String script;
+    
+    /**
+     * The currently executing script name.
+     */
+    public String scriptname;
 
     /**
      * The scripts on the queue.

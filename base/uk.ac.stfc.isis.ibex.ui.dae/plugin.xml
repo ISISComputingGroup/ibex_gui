@@ -7,4 +7,19 @@
             class="uk.ac.stfc.isis.ibex.ui.dae.OnInstrumentSwitch">
       </InstrumentInfoReceiver>
    </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.wait">
+      <wait
+            class="uk.ac.stfc.isis.ibex.ui.dae.WaitForDaeChanges">
+      </wait>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.dae.spectraplots.SpectraOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView"
+            name="name"
+            restorable="true">
+      </view>
+   </extension>
 </plugin>

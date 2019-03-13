@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Panel containing controls to add/remove components to/from a configuration.
  */
 public class ComponentEditorPanel extends Composite {
-	private DoubleListEditor editor;
+	private DoubleListEditor<Configuration> editor;
 	private EditableComponents components;
 
     /**
@@ -60,7 +60,7 @@ public class ComponentEditorPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		editor = new DoubleListEditor(this, SWT.NONE, "name", false);
+		editor = new DoubleListEditor<Configuration>(this, SWT.NONE, "name", false);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
@@ -72,8 +72,8 @@ public class ComponentEditorPanel extends Composite {
     public void setConfig(final EditableConfiguration config) {
 
 		components = config.getEditableComponents();
-		IObservableList selected = BeanProperties.list("selected").observe(components);
-		IObservableList unselected = BeanProperties.list("unselected").observe(components);
+		IObservableList<Configuration> selected = BeanProperties.list("selected").observe(components);
+		IObservableList<Configuration> unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
 
         final DuplicateChecker duplicateChecker = new DuplicateChecker();

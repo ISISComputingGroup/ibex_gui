@@ -45,6 +45,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_n7iv0GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About" tooltip="All about IBEX" command="_hj--kKkDEeeNUPQOsQF40g"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_okwE4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.usermanual" label="User manual" tooltip="IBEX User Manual" command="_w0psQKkDEeeNUPQOsQF40g"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ptAtcGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.consolelogdialog" label="Console log" tooltip="Console Log" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_WF7KULs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.iconlicences" label="Icon Licences" tooltip="Icon Licences" command="_oZBHMLs4EeiDDI01_3WoHA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_pNvIsH3WEee2jZQhjWIQ1g" elementId="org.eclipse.ui.run" toBeRendered="false" visible="false" label="&amp;Run"/>
       <children xsi:type="menu:Menu" xmi:id="_6uLgoH3WEee2jZQhjWIQ1g" elementId="edit" toBeRendered="false" visible="false" label="Edit"/>
@@ -109,6 +110,7 @@
   <handlers xmi:id="_37kgEKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.consolelogdialog" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.logger/uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_JRFiEJlbEeiJWOfXjwtf9A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
+  <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
@@ -271,7 +273,7 @@
         <children xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.runsummary" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary" label="Run Summary"/>
         <children xsi:type="basic:Part" xmi:id="_QGpWsJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.experimentsetup" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup" label="Experiment Setup"/>
         <children xsi:type="basic:Part" xmi:id="_q1_uMJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.runinformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel" label="Run Information"/>
-        <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.spectraplots" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.spectra.SpectraPlotsPanel" label="Spectra Plots"/>
+        <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
         <children xsi:type="basic:Part" xmi:id="_aWGE4J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.detectordiagnostics" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel" label="Detector Diagnostics"/>
         <children xsi:type="basic:Part" xmi:id="_lWyjcJ7fEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.vetos" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel" label="Vetos"/>
       </children>
@@ -591,6 +593,7 @@
   <commands xmi:id="_NufGcJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.command.resetperspectives" commandName="Reset Perspectives" description="Reset Perspectives">
     <tags>type:user</tags>
   </commands>
+  <commands xmi:id="_oZBHMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" commandName="Icon Licence" description="View IBEX gui icon licences"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
