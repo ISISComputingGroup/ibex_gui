@@ -619,6 +619,7 @@
                 </macros>
                 <categories>
                     <category>Miscellaneous motion control</category>
+		            <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -806,6 +807,7 @@
                 <macros />
                 <categories>
                     <category>Monitors</category>
+		           <category>Polarisers and Analysers</category>
                 </categories>
             </value>
         </entry>
@@ -1173,7 +1175,9 @@
                 <path>polariser.opi</path>
                 <description>The OPI for the polariser. No properties required.</description>
                 <macros />
-                <categories />
+                <categories>
+                    <category>Polarisers and Analysers</category>
+                </categories>
             </value>
         </entry>
         <entry>
@@ -1806,6 +1810,40 @@
           <category>Water baths</category>
 		  <category>Gas and liquid handling systems</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mezei spin flipper</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>mezflipper.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+          </macro>
+        </macros>
+        <categories>
+		  <category>Polarisers and Analysers</category>
+        </categories>
+      </value>
+    </entry>
+        <entry>
+      <key>JASCO PU-4180 Pump</key>
+      <value>
+	    <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
+        <path>jsco4180.opi</path>
+        <description>The OPI for the JSCO4180</description>
+        <macros>
+          <macro>
+            <name>JSCO4180</name>
+            <description>The JSCO4180 PV prefix (e.g. JSCO4180_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
