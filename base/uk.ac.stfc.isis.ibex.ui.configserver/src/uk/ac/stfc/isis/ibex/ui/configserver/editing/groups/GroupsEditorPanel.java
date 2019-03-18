@@ -183,8 +183,10 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex()).ifPresent(
-						g -> {g.moveBlockUp(blocksEditor.selectedItem());
-							  blocksEditor.refreshViewer();});		
+						g -> {
+								g.moveBlockUp(blocksEditor.selectedItem());
+								blocksEditor.refreshViewer();
+							 });		
 			}
 		});
 		
@@ -192,8 +194,10 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex()).ifPresent(
-						g -> {g.moveBlockDown(blocksEditor.selectedItem());
-							  blocksEditor.refreshViewer();});
+						g -> {
+								g.moveBlockDown(blocksEditor.selectedItem());
+								blocksEditor.refreshViewer(); 
+							 });
 			}
 		});
 		

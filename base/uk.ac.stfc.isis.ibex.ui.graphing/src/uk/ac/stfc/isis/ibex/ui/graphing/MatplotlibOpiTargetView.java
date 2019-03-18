@@ -65,6 +65,8 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
 
     /**
      * Display the OPI for a given target.
+     * 
+     * @param url the url for the graph.
      *
      * @throws OPIViewCreationException when opi can not be created
      */

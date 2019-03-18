@@ -79,6 +79,8 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     
     /**
      * Constructor for this class.
+     * 
+     * @param bindingContext the binding context to bind values with.
      */
     public DetectorDiagnosticsViewModel(DataBindingContext bindingContext) {
     	this.bindingContext = bindingContext;

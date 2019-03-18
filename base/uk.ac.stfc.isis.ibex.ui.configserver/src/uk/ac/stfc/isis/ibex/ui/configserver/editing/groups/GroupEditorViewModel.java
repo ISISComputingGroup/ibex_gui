@@ -143,12 +143,13 @@ public class GroupEditorViewModel {
      */
     public String componentDetail(int selectionIndex) {
         return getSelectedGroup(selectionIndex).map(g -> {
-        	if (g.isEditable()) {
-        		return "";
-        	} else {
-        		String componentName = g.getComponent() != null ? g.getComponent() : "unknown";
-        		return "contributed by " + componentName;
-        	}}).orElse("");
+	        	if (g.isEditable()) {
+	        		return "";
+	        	} else {
+	        		String componentName = g.getComponent() != null ? g.getComponent() : "unknown";
+	        		return "contributed by " + componentName;
+	        	}
+        	}).orElse("");
     }
 
 }
