@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
 import org.python.pydev.debug.newconsole.PydevConsoleConstants;
@@ -31,7 +32,6 @@ import org.python.pydev.debug.newconsole.PydevConsoleFactory;
 import org.python.pydev.debug.newconsole.PydevConsoleInterpreter;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
-import org.python.pydev.plugin.PydevPlugin;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -88,7 +88,8 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 *             can throw several different exceptions
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
-		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
+		IInterpreterManager manager = InterpreterManagersAPI.getPythonInterpreterManager();
+		
 		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
 				monitor, false);
 
