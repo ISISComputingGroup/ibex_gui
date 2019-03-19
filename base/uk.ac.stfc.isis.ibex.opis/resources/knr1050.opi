@@ -299,7 +299,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>6ddea6d1:1699171c738:-7e0d</wuid>
@@ -3573,7 +3573,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>6ddea6d1:1699171c738:-7e0c</wuid>
