@@ -44,10 +44,6 @@
 		<repository location="http://download.eclipse.org/eclipse/updates/4.8"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20181211-1535"/>
-		<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://download.controlsystemstudio.org/updates/4.6"/>
 		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201901242116"/>
 		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201901242116"/>
@@ -58,6 +54,10 @@
 		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201901242116"/>
 		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.201901242116"/>
 		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201901242116"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20190227-1016"/>
+		<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 	</location>
 </locations>
 <environment>
