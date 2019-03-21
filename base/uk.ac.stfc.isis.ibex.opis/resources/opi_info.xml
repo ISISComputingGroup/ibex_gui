@@ -1829,6 +1829,23 @@
       </value>
     </entry>
     <entry>
+      <key>JASCO PU-4180 Pump</key>
+      <value>
+	    <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <type>PUMP</type>
+        <path>jsco4180.opi</path>
+        <description>The OPI for the JSCO4180</description>
+        <macros>
+          <macro>
+            <name>JSCO4180</name>
+            <description>The JSCO4180 PV prefix (e.g. JSCO4180_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Knauer Electric Valve Drive K-6</key>
       <value>
         <categories/>
