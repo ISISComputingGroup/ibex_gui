@@ -274,7 +274,7 @@
               <value>0.0</value>
             </exp>
             <pv trig="true">$(PVROOT)AD:stats1:MinValue_RBV</pv>
-            <pv trig="true">1</pv>
+            <pv trig="true">loc://ngemminaszero(1)</pv>
           </rule>
           <rule name="Set x_min" prop_id="x_axis_minimum" out_exp="true">
             <exp bool_exp="true">
@@ -415,9 +415,9 @@
         <graph_area_height>333</graph_area_height>
         <graph_area_width>524</graph_area_width>
         <height>379</height>
-        <horizon_profile_x_pv_name>loc://hpx</horizon_profile_x_pv_name>
+        <horizon_profile_x_pv_name>loc://ngemhpx</horizon_profile_x_pv_name>
         <horizon_profile_x_pv_value />
-        <horizon_profile_y_pv_name>loc://hpy</horizon_profile_y_pv_name>
+        <horizon_profile_y_pv_name>loc://ngemhpy</horizon_profile_y_pv_name>
         <horizon_profile_y_pv_value />
         <maximum>255.0</maximum>
         <minimum>0.0</minimum>
@@ -472,7 +472,7 @@
               <value>0.0</value>
             </exp>
             <pv trig="true">$(PVROOT)AD:stats1:MinValue_RBV</pv>
-            <pv trig="true">1</pv>
+            <pv trig="true">loc://ngemminaszero(1)</pv>
           </rule>
           <rule name="Set x_min" prop_id="x_axis_minimum" out_exp="true">
             <exp bool_exp="true">
@@ -498,8 +498,8 @@
         <tooltip>$(pv_name)</tooltip>
         <vertial_profile_x_pv_value />
         <vertial_profile_y_pv_value />
-        <vertical_profile_x_pv_name>loc://vpx</vertical_profile_x_pv_name>
-        <vertical_profile_y_pv_name>loc://vpy</vertical_profile_y_pv_name>
+        <vertical_profile_x_pv_name>loc://ngemvpx</vertical_profile_x_pv_name>
+        <vertical_profile_y_pv_name>loc://ngemvpy</vertical_profile_y_pv_name>
         <visible>true</visible>
         <widget_type>Intensity Graph</widget_type>
         <width>619</width>
@@ -637,7 +637,7 @@
               <value>0.0</value>
             </exp>
             <pv trig="true">$(PVROOT)AD:stats1:MinValue_RBV</pv>
-            <pv trig="true">1</pv>
+            <pv trig="true">loc://ngemminaszero(1)</pv>
           </rule>
         </rules>
         <scale_options>
@@ -671,10 +671,10 @@ $(pv_value)</tooltip>
         <trace_0_update_mode>0</trace_0_update_mode>
         <trace_0_visible>true</trace_0_visible>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <trace_0_x_pv>loc://hpx</trace_0_x_pv>
+        <trace_0_x_pv>loc://ngemhpx</trace_0_x_pv>
         <trace_0_x_pv_value />
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
-        <trace_0_y_pv>loc://hpy</trace_0_y_pv>
+        <trace_0_y_pv>loc://ngemhpy</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_count>1</trace_count>
         <transparent>false</transparent>
@@ -787,7 +787,7 @@ $(pv_value)</tooltip>
               <value>0.0</value>
             </exp>
             <pv trig="true">$(PVROOT)AD:stats1:MinValue_RBV</pv>
-            <pv trig="true">1</pv>
+            <pv trig="true">loc://ngemminaszero(1)</pv>
           </rule>
         </rules>
         <scale_options>
@@ -821,10 +821,10 @@ $(pv_value)</tooltip>
         <trace_0_update_mode>0</trace_0_update_mode>
         <trace_0_visible>true</trace_0_visible>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <trace_0_x_pv>loc://vpy</trace_0_x_pv>
+        <trace_0_x_pv>loc://ngemvpy</trace_0_x_pv>
         <trace_0_x_pv_value />
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
-        <trace_0_y_pv>loc://vpx</trace_0_y_pv>
+        <trace_0_y_pv>loc://ngemvpx</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_count>1</trace_count>
         <transparent>false</transparent>

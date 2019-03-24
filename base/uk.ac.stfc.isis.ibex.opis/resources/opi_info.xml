@@ -1860,7 +1860,6 @@
         </macros>
       </value>
     </entry>
-  </opis>
     <entry>
       <key>NGEM</key>
       <value>
@@ -1874,4 +1873,5 @@
         </categories>
       </value>
     </entry>
+  </opis>
 </descriptions>
