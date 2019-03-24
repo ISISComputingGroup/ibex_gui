@@ -1861,4 +1861,17 @@
       </value>
     </entry>
   </opis>
+    <entry>
+      <key>NGEM</key>
+      <value>
+        <type>MONITOR</type>
+        <path>ngem.opi</path>
+        <description>NGEM detector</description>
+        <macros>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
 </descriptions>
