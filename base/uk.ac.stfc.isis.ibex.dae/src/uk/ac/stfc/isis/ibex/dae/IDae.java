@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.dae;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
-import uk.ac.stfc.isis.ibex.dae.spectra.Spectra;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -89,12 +88,6 @@ public interface IDae {
      * @return experimental setup model
      */
 	ExperimentSetup experimentSetup();
-
-    /**
-     * 
-     * @return spectra model
-     */
-	Spectra spectra();
 		
     /**
      * @return the DAE actions

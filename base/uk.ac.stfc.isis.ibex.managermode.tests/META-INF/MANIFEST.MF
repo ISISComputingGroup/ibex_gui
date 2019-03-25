@@ -11,3 +11,9 @@ Import-Package: junit.framework,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.managermode
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.hamcrest;bundle-version="1.1.0",
+ org.hamcrest.core;bundle-version="1.3.0",
+ org.hamcrest.generator;bundle-version="1.3.0",
+ org.hamcrest.integration;bundle-version="1.3.0",
+ org.hamcrest.library;bundle-version="1.3.0",
+ org.hamcrest.text;bundle-version="1.1.0"

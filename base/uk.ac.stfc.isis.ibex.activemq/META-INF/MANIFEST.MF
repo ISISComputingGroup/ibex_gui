@@ -6,8 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.activemq.ActiveMQ
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: javax.jms,
- uk.ac.stfc.isis.ibex.activemq,
+Export-Package: uk.ac.stfc.isis.ibex.activemq,
  uk.ac.stfc.isis.ibex.activemq.message
 Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.model,
@@ -16,5 +15,5 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.ui.workbench
 Bundle-ClassPath: .,
- lib/activemq-all-5.15.4.jar
+ lib/activemq-all-5.15.7.jar
 Import-Package: org.apache.logging.log4j

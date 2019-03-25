@@ -36,6 +36,8 @@ import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
@@ -54,7 +56,10 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	 */
 	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
 	    return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())  // clone to avoid potential ConcurrentModificationException
-	    		.map(window -> window.getActivePage().getEditorReferences())
+	    		.filter(window -> window != null)
+	    		.map(IWorkbenchWindow::getActivePage)
+	    		.filter(page -> page != null)
+	    		.map(IWorkbenchPage::getEditorReferences)
 	    		.flatMap(Arrays::stream)
 	    		.map(editorReference -> editorReference.getEditor(false))
 	    		.filter(editor -> editor instanceof DataBrowserEditor)
