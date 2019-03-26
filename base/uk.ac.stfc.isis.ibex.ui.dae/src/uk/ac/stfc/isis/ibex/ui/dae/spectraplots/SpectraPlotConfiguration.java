@@ -25,8 +25,8 @@ public class SpectraPlotConfiguration {
 	private final PersistedLocalChannel<String> specMode;
 	
 	/**
-	 * A
-	 * @param plotNumber
+	 * Constructor for the spectra plot configuration.
+	 * @param plotNumber The plot number that this configuration is for.
 	 */
     public SpectraPlotConfiguration(int plotNumber) {
     	this.plotNumber = plotNumber;
