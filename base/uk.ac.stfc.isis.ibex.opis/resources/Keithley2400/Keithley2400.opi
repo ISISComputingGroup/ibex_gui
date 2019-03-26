@@ -139,7 +139,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>511</height>
+    <height>553</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -217,7 +217,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>787</width>
+    <width>793</width>
     <wuid>-e89b52e:15993563eb1:-795b</wuid>
     <x>6</x>
     <y>84</y>
@@ -239,7 +239,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>482</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -255,9 +255,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>785</width>
+      <width>791</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
       <x>1</x>
       <y>1</y>
@@ -279,7 +279,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>482</height>
+        <height>511</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -296,10 +296,10 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>786</width>
+        <width>787</width>
         <wuid>152945a9:159bcb97ba7:-7ef1</wuid>
         <x>0</x>
-        <y>0</y>
+        <y>6</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -320,7 +320,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>482</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -338,7 +338,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>785</width>
+      <width>791</width>
       <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
       <x>1</x>
       <y>1</y>
@@ -401,7 +401,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>482</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -419,7 +419,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>785</width>
+      <width>791</width>
       <wuid>3572d0fe:1648dcc8f25:-60b2</wuid>
       <x>1</x>
       <y>1</y>
@@ -441,7 +441,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>363</height>
+        <height>361</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -458,7 +458,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>376</width>
+        <width>374</width>
         <wuid>3572d0fe:1648dcc8f25:-5fff</wuid>
         <x>0</x>
         <y>6</y>
@@ -482,7 +482,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>482</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -498,9 +498,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>785</width>
+      <width>791</width>
       <wuid>3572d0fe:1648dcc8f25:-5694</wuid>
       <x>1</x>
       <y>1</y>
@@ -563,7 +563,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>482</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -581,7 +581,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>785</width>
+      <width>791</width>
       <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
       <x>1</x>
       <y>1</y>
