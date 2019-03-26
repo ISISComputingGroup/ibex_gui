@@ -19,6 +19,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
@@ -55,13 +57,13 @@ public class GroupEditorViewModel {
      * @return the selected group; or null if group index reference group that
      *         does not exist
      */
-    public EditableGroup getSelectedGroup(int selectedGroup) {
-        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
+    public Optional<EditableGroup> getSelectedGroup(int selectedGroup) {
+    	ArrayList<EditableGroup> groups = new ArrayList<EditableGroup>(observableConfigModel.getValue().getEditableGroups());
         
         try {
-            return groups.get(selectedGroup);
+            return Optional.of(groups.get(selectedGroup));
         } catch (IndexOutOfBoundsException ex) {
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -87,11 +89,7 @@ public class GroupEditorViewModel {
      * @param selectedGroup the selected group
      */
     public void removeGroup(int selectedGroup) {
-        EditableGroup group = getSelectedGroup(selectedGroup);
-
-        if (group != null) {
-            observableConfigModel.getValue().removeGroup(group);
-        }
+        getSelectedGroup(selectedGroup).ifPresent(g -> observableConfigModel.getValue().removeGroup(g));
     }
 
     /**
@@ -119,11 +117,11 @@ public class GroupEditorViewModel {
      * @param groupToSwapWith the group to swap with
      */
     private void swapGroups(int selectedGroup, int groupToSwapWith) {
-        EditableGroup group1 = getSelectedGroup(selectedGroup);
-        EditableGroup group2 = getSelectedGroup(groupToSwapWith);
+        Optional<EditableGroup> group1 = getSelectedGroup(selectedGroup);
+        Optional<EditableGroup> group2 = getSelectedGroup(groupToSwapWith);
 
-        if (group1 != null && group2 != null) {
-            observableConfigModel.getValue().swapGroups(group1, group2);
+        if (group1.isPresent() && group2.isPresent()) {
+            observableConfigModel.getValue().swapGroups(group1.get(), group2.get());
         }
     }
 
@@ -134,15 +132,9 @@ public class GroupEditorViewModel {
      * @return true, if successful
      */
     public boolean canEditSelected(int groupIndex) {
-        EditableGroup group = getSelectedGroup(groupIndex);
-
-        if (group == null) {
-            return false;
-        } else {
-            return group.isEditable();
-        }
+        return getSelectedGroup(groupIndex).map(g -> g.isEditable()).orElse(false);
     }
-
+    
     /**
      * Component detail.
      *
@@ -150,14 +142,14 @@ public class GroupEditorViewModel {
      * @return the string
      */
     public String componentDetail(int selectionIndex) {
-        EditableGroup group = getSelectedGroup(selectionIndex);
-        
-        if (group == null || group.isEditable()) {
-            return "";
-        } else {        
-            String componentName = group.getComponent() != null ? group.getComponent() : "unknown";
-            return "contributed by " + componentName;
-        }
+        return getSelectedGroup(selectionIndex).map(g -> {
+	        	if (g.isEditable()) {
+	        		return "";
+	        	} else {
+	        		String componentName = g.getComponent() != null ? g.getComponent() : "unknown";
+	        		return "contributed by " + componentName;
+	        	}
+        	}).orElse("");
     }
 
 }

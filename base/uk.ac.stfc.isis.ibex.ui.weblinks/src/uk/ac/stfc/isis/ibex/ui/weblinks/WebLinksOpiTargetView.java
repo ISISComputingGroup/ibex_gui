@@ -44,12 +44,6 @@ public class WebLinksOpiTargetView extends OpiView {
      * File name of the web links OPI.
      */
     private static final String WEB_LINKS_OPI = "weblinks.opi";
-    
-	private static WebLinksOpiTargetView instance;
-	
-	public static WebLinksOpiTargetView getInstance() {
-		return instance;
-	}
 
     /**
      * {@inheritDoc}

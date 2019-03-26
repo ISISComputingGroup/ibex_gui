@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -36,9 +37,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.DotDashedLine;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.LineDecoration;
 import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
 
-/*
+/**
  * The synoptic's components with an optionally overlaid beamline.
- * 
  */
 public class SynopticPanel extends Composite {
 
@@ -47,6 +47,12 @@ public class SynopticPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private boolean isPreview;
 	
+	/**
+	 * Constructor for the synoptic panel.
+	 * @param parent The parent composite that this panel belongs to.
+	 * @param style The SWT style flags for the panel.
+	 * @param isPreview True if the panel is part of the editor preview.
+	 */
     public SynopticPanel(Composite parent, int style, boolean isPreview) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.VERTICAL));
@@ -56,11 +62,7 @@ public class SynopticPanel extends Composite {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);	
 		scrolledComposite.getHorizontalBar().setPageIncrement(500);
-		scrolledComposite.addControlListener(new ControlListener() {
-			@Override
-			public void controlMoved(ControlEvent arg0) {
-				// Ignore
-			}
+		scrolledComposite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent arg0) {
 				scrolledComposite.getHorizontalBar().setPageIncrement(scrolledComposite.getSize().x);

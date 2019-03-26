@@ -66,6 +66,8 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
     /**
      * Runs dialog and tries to delete selected synoptic.
      *
+     * @param shell the shell to execute this action on.
+     *
      * @throws ExecutionException thrown when it can't find/write to PV.
      *
      * @return null.
