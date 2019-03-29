@@ -1866,12 +1866,6 @@
         <type>FILM_FABRICATION</type>
         <path>nimatro.opi</path>
         <description>The OPI for the NIMA Trough.</description>
-        <macros>
-          <macro>
-            <name>NIMATRO</name>
-            <description>The NIMA Trough PV prefix (e.g. NIMATRO_01).</description>
-          </macro>
-        </macros>
         <categories>
 		  <category>Gas and liquid handling systems</category>
         </categories>

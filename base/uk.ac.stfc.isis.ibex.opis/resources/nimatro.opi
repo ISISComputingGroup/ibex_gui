@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(NIMATRO):</PV_ROOT>
+    <PV_ROOT>$(P)NIMATRO_01:</PV_ROOT>
   </macros>
   <name></name>
   <rules />
@@ -166,9 +166,9 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>72</width>
+      <width>54</width>
       <wuid>3b5e6903:168e6fe3920:-7eac</wuid>
-      <x>234</x>
+      <x>252</x>
       <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
       <name>Text Update Target Pressure</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)PRESSURE:TARGET:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT)PRESSURE:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -258,7 +258,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>103</width>
+      <width>121</width>
       <wrap_words>false</wrap_words>
       <wuid>3b5e6903:168e6fe3920:-7e78</wuid>
       <x>120</x>
@@ -297,7 +297,7 @@ $(pv_value)</tooltip>
       <name>Text Input Target Pressure</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)PRESSURE:TARGET:SP</pv_name>
+      <pv_name>$(PV_ROOT)PRESSURE:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -316,9 +316,9 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>72</width>
+      <width>54</width>
       <wuid>3b5e6903:168e6fe3920:-7e77</wuid>
-      <x>234</x>
+      <x>252</x>
       <y>36</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -390,7 +390,7 @@ $(pv_value)</tooltip>
       <name>Text Update Target Area</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)AREA:TARGET:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT)AREA:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -408,7 +408,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>103</width>
+      <width>121</width>
       <wrap_words>false</wrap_words>
       <wuid>3b5e6903:168e6fe3920:-7e54</wuid>
       <x>120</x>
@@ -447,7 +447,7 @@ $(pv_value)</tooltip>
       <name>Text Input Target Area</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)AREA:TARGET:SP</pv_name>
+      <pv_name>$(PV_ROOT)AREA:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -466,9 +466,9 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>72</width>
+      <width>54</width>
       <wuid>3b5e6903:168e6fe3920:-7e53</wuid>
-      <x>234</x>
+      <x>252</x>
       <y>66</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -517,7 +517,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>103</width>
+      <width>121</width>
       <wrap_words>false</wrap_words>
       <wuid>3b5e6903:168e6fe3920:-783a</wuid>
       <x>120</x>
@@ -645,104 +645,6 @@ $(pv_value)</tooltip>
         <x>6</x>
         <y>52</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(pv_name)</pv_name>
-            <value>START</value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button Control Start</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT)CONTROL:START</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Start</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>55</width>
-        <wuid>3b5e6903:168e6fe3920:-7ca4</wuid>
-        <x>114</x>
-        <y>48</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(pv_name)</pv_name>
-            <value>STOP</value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button Control Stop</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT)CONTROL:STOP</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Stop</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>55</width>
-        <wuid>3b5e6903:168e6fe3920:-78bc</wuid>
-        <x>174</x>
-        <y>48</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <auto_size>false</auto_size>
@@ -782,154 +684,7 @@ $(pv_value)</tooltip>
         <wrap_words>true</wrap_words>
         <wuid>3b5e6903:168e6fe3920:-78b0</wuid>
         <x>6</x>
-        <y>92</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(pv_name)</pv_name>
-            <value>OPEN</value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button Barrier Open</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT)BARRIER:OPEN</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Open</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>55</width>
-        <wuid>3b5e6903:168e6fe3920:-78a2</wuid>
-        <x>114</x>
-        <y>88</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(pv_name)</pv_name>
-            <value>STOP</value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button Barrier Stop</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT)BARRIER:STOP</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Stop</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>55</width>
-        <wuid>3b5e6903:168e6fe3920:-789b</wuid>
-        <x>174</x>
-        <y>88</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(pv_name)</pv_name>
-            <value>CLOSE</value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button Barrier Close</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT)BARRIER:CLOSE</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Close</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>55</width>
-        <wuid>3b5e6903:168e6fe3920:-7894</wuid>
-        <x>234</x>
-        <y>88</y>
+        <y>90</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1013,6 +768,98 @@ $(pv_value)</tooltip>
         <wuid>3b5e6903:168e6fe3920:-7ea5</wuid>
         <x>114</x>
         <y>12</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
+        </background_color>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>28</height>
+        <horizontal>true</horizontal>
+        <items_from_pv>true</items_from_pv>
+        <name>ChoiceBtn Control</name>
+        <pv_name>$(PV_ROOT)CONTROL:STATE</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <selected_color>
+          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        </selected_color>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Choice Button</widget_type>
+        <width>132</width>
+        <wuid>f74d4d9:169ba387e6a:-7ef0</wuid>
+        <x>114</x>
+        <y>48</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
+        </background_color>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>28</height>
+        <horizontal>true</horizontal>
+        <items_from_pv>true</items_from_pv>
+        <name>ChoiceBtn Barrier</name>
+        <pv_name>$(PV_ROOT)BARRIER:STATE</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <selected_color>
+          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        </selected_color>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Choice Button</widget_type>
+        <width>198</width>
+        <wuid>f74d4d9:169ba387e6a:-7ee6</wuid>
+        <x>114</x>
+        <y>86</y>
       </widget>
     </widget>
   </widget>
