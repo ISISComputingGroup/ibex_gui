@@ -21,7 +21,7 @@ def reload_widget(widget):
         widget: wdidget to reload
     """
     widget.setPropertyValue("opi_file", "null.opi")
-    widget.setPropertyValue("opi_file", "component_pos.opi")
+    widget.setPropertyValue("opi_file", "param_move.opi")
 
 
 def _add_macros(widget_index, name, value):

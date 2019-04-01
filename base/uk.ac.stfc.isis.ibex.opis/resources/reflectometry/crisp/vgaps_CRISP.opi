@@ -15,11 +15,9 @@
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
-  <height>320</height>
+  <height>181</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)REF:</PV_ROOT>
-    <PREFIXED_PV>PARAM:$(PARAM_PV)</PREFIXED_PV>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -30,7 +28,7 @@
   <show_ruler>true</show_ruler>
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
-  <width>280</width>
+  <width>295</width>
   <wuid>450885f3:157944e4d4b:-797d</wuid>
   <x>-1</x>
   <y>-1</y>
@@ -52,12 +50,12 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>320</height>
+    <height>181</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Sample Stack</name>
+    <name>Vertical Slit Gaps (mm)</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -71,31 +69,36 @@
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
     <width>295</width>
-    <wuid>2150758c:16990a9ebac:-79ce</wuid>
+    <wuid>28840e26:169d9726b77:-7b95</wuid>
     <x>0</x>
     <y>0</y>
-    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
       <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
+        <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>28</height>
-      <image></image>
-      <name>Button_1</name>
-      <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
-      <pv_value />
+      <group_name></group_name>
+      <height>31</height>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PARAM_PV>S1VG</PARAM_PV>
+        <PARAM_NAME>S1VG</PARAM_NAME>
+      </macros>
+      <name>vgap_1</name>
+      <opi_file>../param.opi</opi_file>
+      <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -103,17 +106,13 @@
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <style>1</style>
-      <text>Redefine Axes ...</text>
-      <toggle_button>false</toggle_button>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip></tooltip>
       <visible>true</visible>
-      <widget_type>Action Button</widget_type>
-      <width>205</width>
-      <wuid>2150758c:16990a9ebac:-79c3</wuid>
-      <x>24</x>
-      <y>6</y>
+      <widget_type>Linking Container</widget_type>
+      <width>261</width>
+      <wuid>28840e26:169d9726b77:-7b93</wuid>
+      <x>0</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -136,11 +135,11 @@ $(pv_value)</tooltip>
       <height>31</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Phi</PARAM_NAME>
-        <M>MOT:STACK:PHI</M>
+        <PARAM_PV>S2VG</PARAM_PV>
+        <PARAM_NAME>S2VG</PARAM_NAME>
       </macros>
-      <name>Linking Container</name>
-      <opi_file>param_placeholder.opi</opi_file>
+      <name>vgap_1</name>
+      <opi_file>../param.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
@@ -153,9 +152,9 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>261</width>
-      <wuid>2150758c:16990a9ebac:-7450</wuid>
+      <wuid>28840e26:169d9726b77:-7b92</wuid>
       <x>0</x>
-      <y>40</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -178,11 +177,11 @@ $(pv_value)</tooltip>
       <height>31</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Psi</PARAM_NAME>
-        <M>MOT:STACK:PSI</M>
+        <PARAM_PV>S3VG</PARAM_PV>
+        <PARAM_NAME>S3VG</PARAM_NAME>
       </macros>
-      <name>Linking Container</name>
-      <opi_file>param_placeholder.opi</opi_file>
+      <name>vgap_1</name>
+      <opi_file>../param.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
@@ -195,9 +194,9 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>261</width>
-      <wuid>2150758c:16990a9ebac:-7441</wuid>
+      <wuid>28840e26:169d9726b77:-7b91</wuid>
       <x>0</x>
-      <y>80</y>
+      <y>72</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -220,11 +219,11 @@ $(pv_value)</tooltip>
       <height>31</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Height</PARAM_NAME>
-        <M>MOT:STACK:HEIGHT</M>
+        <PARAM_PV>S4VG</PARAM_PV>
+        <PARAM_NAME>S4VG</PARAM_NAME>
       </macros>
-      <name>Linking Container</name>
-      <opi_file>param_placeholder.opi</opi_file>
+      <name>vgap_1</name>
+      <opi_file>../param.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
@@ -237,51 +236,9 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>261</width>
-      <wuid>2150758c:16990a9ebac:-742b</wuid>
+      <wuid>28840e26:169d9726b77:-7b90</wuid>
       <x>0</x>
-      <y>120</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <group_name></group_name>
-      <height>31</height>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Trans</PARAM_NAME>
-        <M>MOT:STACK:TRANS</M>
-      </macros>
-      <name>Linking Container</name>
-      <opi_file>param_placeholder.opi</opi_file>
-      <resize_behaviour>1</resize_behaviour>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip></tooltip>
-      <visible>true</visible>
-      <widget_type>Linking Container</widget_type>
-      <width>261</width>
-      <wuid>2150758c:16990a9ebac:-73e7</wuid>
-      <x>0</x>
-      <y>160</y>
+      <y>102</y>
     </widget>
   </widget>
 </display>
