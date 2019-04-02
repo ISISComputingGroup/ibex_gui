@@ -619,7 +619,7 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
-		            <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -806,8 +806,8 @@
         <description>The OPI for the analyser. No properties required.</description>
         <macros/>
         <categories>
-                   <category>Monitors</category>
-		           <category>Polarisers and Analysers</category>
+          <category>Monitors</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -1174,10 +1174,10 @@
         <type>POLARISER</type>
         <path>polariser.opi</path>
         <description>The OPI for the polariser. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Polarisers and Analysers</category>
-                </categories>
+        <macros/>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1655,7 +1655,7 @@
           </macro>
         </macros>
       </value>
-        </entry>
+    </entry>
     <entry>
       <key>Induction Furnace</key>
       <value>
@@ -1751,7 +1751,7 @@
         </macros>
       </value>
     </entry>
-    <entry>        
+    <entry>
       <key>Spectra plot</key>
       <value>
         <categories>
@@ -1824,14 +1824,14 @@
           </macro>
         </macros>
         <categories>
-		  <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
     <entry>
       <key>JASCO PU-4180 Pump</key>
       <value>
-	    <categories>
+        <categories>
           <category>Gas and liquid handling systems</category>
         </categories>
         <type>PUMP</type>
@@ -1856,6 +1856,21 @@
           <macro>
             <name>KNRK6</name>
             <description>The KNRK6 PV prefix (e.g. KNRK6_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>CHTOBISR</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>chtobisr.opi</path>
+        <description>The OPI for the CHTOBISR</description>
+        <macros>
+          <macro>
+            <name>CHTOBISR</name>
+            <description>The CHTOBISR PV prefix (e.g. CHTOBISR_01)</description>
           </macro>
         </macros>
       </value>
