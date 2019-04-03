@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
- * Table showing the IOCs that could be added to a configuration.
+ * Table showing the available PVs that could be set on an IOCs.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
