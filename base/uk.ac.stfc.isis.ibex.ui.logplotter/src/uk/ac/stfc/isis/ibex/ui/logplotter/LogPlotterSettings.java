@@ -33,6 +33,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
  * changed.
  */
 public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
+	
+	public static final String LOGPLOTTER_JDBC_OPTS = "?rewriteBatchedStatements=true&useSSL=false&autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     
     /**
      * Current log plotter settings preference store.
@@ -101,7 +103,7 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The database URL corresponding to the given instrument.
      */
     private static String buildDatabaseUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/archive*jdbc:mysql://130.246.39.152/archive";
+    	return String.format("jdbc:mysql://%s/archive%s*jdbc:mysql://130.246.39.152/archive%s", hostName, LOGPLOTTER_JDBC_OPTS, LOGPLOTTER_JDBC_OPTS);
     }
 
     /**
@@ -109,6 +111,6 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The archives URL corresponding to the given instrument.
      */
     private static String buildArchivesUrl(String hostName) {
-        return "RDB|1|jdbc:mysql://" + hostName + "/archive*RDB|2|jdbc:mysql://130.246.39.152/archive";
+    	return String.format("RDB|1|jdbc:mysql://%s/archive%s*RDB|2|jdbc:mysql://130.246.39.152/archive%s", hostName, LOGPLOTTER_JDBC_OPTS, LOGPLOTTER_JDBC_OPTS);
     }
 }

@@ -75,7 +75,7 @@ public class LogPlotterSettingsTest {
      *         instrument.
      */
     private static String BuildArchiveSettings(String instrumentName) {
-        return "RDB|1|jdbc:mysql://" + instrumentName + "/archive*RDB|2|jdbc:mysql://130.246.39.152/archive";
+        return "RDB|1|jdbc:mysql://" + instrumentName + "/archive" + LogPlotterSettings.LOGPLOTTER_JDBC_OPTS + "*RDB|2|jdbc:mysql://130.246.39.152/archive" + LogPlotterSettings.LOGPLOTTER_JDBC_OPTS;
     }
 
     /**
@@ -83,7 +83,7 @@ public class LogPlotterSettingsTest {
      * @return The URLs settings string corresponding to the given instrument.
      */
     private static String BuildUrlsSettings(String instrumentName) {
-        return "jdbc:mysql://" + instrumentName + "/archive*jdbc:mysql://130.246.39.152/archive";
+        return "jdbc:mysql://" + instrumentName + "/archive" + LogPlotterSettings.LOGPLOTTER_JDBC_OPTS + "*jdbc:mysql://130.246.39.152/archive" + LogPlotterSettings.LOGPLOTTER_JDBC_OPTS;
     }
 
     // These settings represent the defaults, as set in

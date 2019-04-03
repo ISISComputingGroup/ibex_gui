@@ -32,6 +32,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * Class to manage the alarm settings for CSS Beast Alarm.
  */
 public class AlarmSettings {
+	
+	public static final String ALARM_JDBC_OPTS = "?rewriteBatchedStatements=true&useSSL=false&autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     /**
      * The plugin activator ID for beast.
@@ -75,7 +77,7 @@ public class AlarmSettings {
      *         instrument.
      */
     private static String buildRdbUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/ALARM";
+        return "jdbc:mysql://" + hostName + "/ALARM" + ALARM_JDBC_OPTS;
     }
 
     /**
