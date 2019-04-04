@@ -158,9 +158,9 @@
 $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Action Button</widget_type>
-      <width>75</width>
+      <width>39</width>
       <wuid>-744b7940:165a9b5d31a:-7a6a</wuid>
-      <x>240</x>
+      <x>276</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -209,10 +209,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>49</width>
+      <width>56</width>
       <wrap_words>false</wrap_words>
       <wuid>-e03d447:166346877c1:-7bdd</wuid>
-      <x>132</x>
+      <x>139</x>
       <y>4</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -281,9 +281,9 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>55</width>
+      <width>73</width>
       <wuid>-e03d447:166346877c1:-7bdc</wuid>
-      <x>180</x>
+      <x>198</x>
       <y>4</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -332,7 +332,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>52</width>
+      <width>56</width>
       <wrap_words>false</wrap_words>
       <wuid>-5cc9c870:167650cec59:-7fdd</wuid>
       <x>81</x>

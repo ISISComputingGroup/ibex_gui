@@ -74,47 +74,6 @@
     <wuid>2150758c:16990a9ebac:-79ce</wuid>
     <x>0</x>
     <y>0</y>
-    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>false</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>28</height>
-      <image></image>
-      <name>Button_1</name>
-      <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <style>1</style>
-      <text>Redefine Axes ...</text>
-      <toggle_button>false</toggle_button>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Action Button</widget_type>
-      <width>205</width>
-      <wuid>2150758c:16990a9ebac:-79c3</wuid>
-      <x>24</x>
-      <y>6</y>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -155,7 +114,7 @@ $(pv_value)</tooltip>
       <width>261</width>
       <wuid>2150758c:16990a9ebac:-7450</wuid>
       <x>0</x>
-      <y>40</y>
+      <y>1</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -197,7 +156,7 @@ $(pv_value)</tooltip>
       <width>261</width>
       <wuid>2150758c:16990a9ebac:-7441</wuid>
       <x>0</x>
-      <y>80</y>
+      <y>41</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -239,7 +198,7 @@ $(pv_value)</tooltip>
       <width>261</width>
       <wuid>2150758c:16990a9ebac:-742b</wuid>
       <x>0</x>
-      <y>120</y>
+      <y>81</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -281,7 +240,7 @@ $(pv_value)</tooltip>
       <width>261</width>
       <wuid>2150758c:16990a9ebac:-73e7</wuid>
       <x>0</x>
-      <y>160</y>
+      <y>121</y>
     </widget>
   </widget>
 </display>
