@@ -1633,7 +1633,7 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-        <type>UNKNOWN</type>
+        <type>REFLECTOMETRY</type>
         <path>reflectometry/front_panel.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
