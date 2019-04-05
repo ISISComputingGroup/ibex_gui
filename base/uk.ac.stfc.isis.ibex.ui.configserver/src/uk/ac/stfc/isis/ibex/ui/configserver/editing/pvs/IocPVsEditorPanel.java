@@ -19,21 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
@@ -48,6 +48,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	private IocPVDetailsPanel details;
     private EditableIoc ioc;
 	private Button btnAdd;
+	private Button btnCopy;
     private Button btnRemove;
     private final String newPVName = "NEW_PV";
 	
@@ -74,13 +75,16 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
             public void keyPressed(KeyEvent e) {
                 if (btnRemove.isEnabled() && (e.keyCode == SWT.DEL)) {
                     removeSelectedPV();
+                //copies selected blocks if press "Ctrl + D".
+                } else if (btnCopy.isEnabled() && e.character == 0x4) {
+                	copySelected();
                 }
             }
         });
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		composite.setLayout(new GridLayout(2, false));
+		composite.setLayout(new GridLayout(3, false));
 		
 		btnAdd = new Button(composite, SWT.NONE);
 		GridData gdBtnAdd = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
@@ -89,31 +93,23 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		btnAdd.setText("Add");
 		btnAdd.setEnabled(false);
 		
+		btnCopy = new Button(composite, SWT.NONE);
+		GridData gdBtnCopy = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gdBtnCopy.widthHint = 70;
+		btnCopy.setLayoutData(gdBtnCopy);
+		btnCopy.setText("&Duplicate");
+		btnCopy.setEnabled(false);
+		btnCopy.addListener(SWT.Selection, e -> copySelected());
+		
         btnRemove = new Button(composite, SWT.NONE);
 		GridData gdBtnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdBtnRemove.widthHint = 70;
 		btnRemove.setLayoutData(gdBtnRemove);
 		btnRemove.setText("Remove");
-		btnRemove.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-                removeSelectedPV();
-			}
-		});
+		btnRemove.addListener(SWT.Selection, e -> removeSelectedPV());
 		btnRemove.setEnabled(false);
 		
-		btnAdd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-                PVDefaultValue selected = new PVDefaultValue(generateNewName(), "NEW_VALUE");
-                ioc.getPvs().add(selected);
-                iocPVsTable.setRows(ioc.getPvs());
-                iocPVsTable.setSelection(ioc.getPvs().size() - 1);
-
-                btnRemove.setEnabled(true);
-                details.setPV(selected, ioc);
-			}
-		});
+		btnAdd.addListener(SWT.Selection, e -> addPVValue(new PVDefaultValue(generateNewName(newPVName), "NEW_VALUE")));
 
 		details = new IocPVDetailsPanel(this, SWT.NONE, messageDisplayer);
 		Composite detailsComposite = details;
@@ -124,6 +120,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				PVDefaultValue selected = iocPVsTable.firstSelectedRow();
 				btnRemove.setEnabled(selected != null);
+				btnCopy.setEnabled(selected != null);
                 details.setPV(selected, ioc);
 			}
 		});
@@ -131,21 +128,13 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	}
 
 
-    private String generateNewName() {
-        HashSet<String> names = new HashSet<String>();
-        for (PVDefaultValue pv : ioc.getPvs()) {
-            names.add(pv.getName());
-        }
-        String name;
-        int i = 0;
-        do {
-            name = newPVName;
-            if (i > 0) {
-                name = name + Integer.toString(i);
-            }
-            i++;
-        } while (names.contains(name));
-        return name;
+    private String generateNewName(String rootName) {
+    	List<String> existingNames = ioc.getPvs().stream()
+    			.map(p -> p.getName())
+    			.collect(Collectors.toList());
+    	
+        DefaultName namer = new DefaultName(rootName);
+        return namer.getUnique(existingNames);
     }
 
 	@Override
@@ -154,6 +143,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
         iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
         boolean enabled = ioc != null && ioc.isEditable();
 		btnAdd.setEnabled(enabled);
+		btnCopy.setEnabled(enabled);
 		details.setEnabled(enabled);
         details.setPVs(ioc.getAvailablePVs());
 	}
@@ -161,5 +151,20 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
     private void removeSelectedPV() {
         ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
         iocPVsTable.setRows(ioc.getPvs());
+    }
+    
+    private void copySelected() {
+    	PVDefaultValue selected = iocPVsTable.firstSelectedRow();
+    	addPVValue(new PVDefaultValue(generateNewName(selected.getName()), selected.getValue()));
+    }
+    
+    private void addPVValue(PVDefaultValue pvToAdd) {
+        ioc.getPvs().add(pvToAdd);
+        iocPVsTable.setRows(ioc.getPvs());
+        iocPVsTable.setSelected(pvToAdd);
+
+        btnRemove.setEnabled(true);
+        btnCopy.setEnabled(true);
+        details.setPV(pvToAdd, ioc);
     }
 }

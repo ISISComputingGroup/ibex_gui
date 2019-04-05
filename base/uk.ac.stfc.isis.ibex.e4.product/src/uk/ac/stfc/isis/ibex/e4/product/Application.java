@@ -35,6 +35,7 @@ public class Application implements IApplication {
 	 */
 	@Override
     public Object start(IApplicationContext context) {
+		JMXServer.startJMXServer();
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());

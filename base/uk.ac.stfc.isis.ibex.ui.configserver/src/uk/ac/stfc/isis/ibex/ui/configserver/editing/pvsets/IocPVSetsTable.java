@@ -32,6 +32,12 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private boolean isEditable = true;
 	
+	/**
+	 * Constructor for a PV sets table.
+	 * @param parent The parent composite that this table is part of.
+	 * @param style The SWT style for this composite.
+	 * @param tableStyle The SWT style for the underlying table.
+	 */
 	public IocPVSetsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.BORDER);
 
@@ -82,10 +88,18 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 		});	
 	}
 	
+	/**
+	 * Gets whether the values in the table can be edited by the user.
+	 * @return Whether the values in the table can be edited by the user.
+	 */
 	public boolean getIsEditable() {
 		return isEditable;
 	}
 	
+	/**
+	 * Sets whether the values in the table can be edited by the user.
+	 * @param isEditable true if the table can be edited by the user.
+	 */
 	public void setIsEditable(boolean isEditable) {
 		this.isEditable = isEditable;
 	}

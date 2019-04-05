@@ -81,7 +81,7 @@ public class IconLicencesDialogBox extends TitleAreaDialog {
 		container.setLayout(new GridLayout(1, false));
 			
 		Text txtIconLicences = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-        GridData gdIconLicences= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        GridData gdIconLicences = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdIconLicences.heightHint = 70;
         txtIconLicences.setLayoutData(gdIconLicences);
         

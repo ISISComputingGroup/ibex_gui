@@ -211,7 +211,7 @@ public class RunInformationViewModel extends Closer {
     /**
      * The file size (MB).
      */
-	public UpdatedObservableAdapter<Double> eventModeFileMB ;
+	public UpdatedObservableAdapter<Double> eventModeFileMB;
 
 	 /**
      * The data rate (MB/s).

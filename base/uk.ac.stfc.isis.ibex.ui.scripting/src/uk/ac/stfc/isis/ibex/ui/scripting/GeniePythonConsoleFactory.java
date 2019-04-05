@@ -32,6 +32,7 @@ import org.python.pydev.debug.newconsole.PydevConsoleInterpreter;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
 import org.python.pydev.plugin.PydevPlugin;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -89,6 +90,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
 		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
+		
 		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
 				monitor, false);
 
