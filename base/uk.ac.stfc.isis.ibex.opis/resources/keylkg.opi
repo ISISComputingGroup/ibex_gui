@@ -174,8 +174,8 @@
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <height>43</height>
-    <horizontal_alignment>0</horizontal_alignment>
+    <height>19</height>
+    <horizontal_alignment>1</horizontal_alignment>
     <name>Label Mode Info</name>
     <rules>
       <rule name="IF device is in communication mode THEN make change text" prop_id="text" out_exp="false">
@@ -198,11 +198,11 @@
     <vertical_alignment>0</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>331</width>
+    <width>421</width>
     <wrap_words>true</wrap_words>
     <wuid>5ceb1370:1694e3d48f0:-7aa9</wuid>
-    <x>456</x>
-    <y>102</y>
+    <x>12</x>
+    <y>84</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -243,7 +243,7 @@
     <width>433</width>
     <wuid>5ceb1370:1694e3d48f0:-7a79</wuid>
     <x>6</x>
-    <y>156</y>
+    <y>180</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -851,7 +851,7 @@ $(pv_value)</tooltip>
     <width>433</width>
     <wuid>5ceb1370:1694e3d48f0:-7a77</wuid>
     <x>6</x>
-    <y>84</y>
+    <y>108</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -1069,10 +1069,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>355</width>
+    <width>433</width>
     <wuid>5ceb1370:1694e3d48f0:-7a75</wuid>
-    <x>444</x>
-    <y>156</y>
+    <x>6</x>
+    <y>372</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -1109,7 +1109,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>355</width>
+      <width>433</width>
       <wuid>5ceb1370:1694e3d48f0:-7c6f</wuid>
       <x>0</x>
       <y>0</y>
