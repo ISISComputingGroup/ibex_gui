@@ -619,10 +619,7 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
-<<<<<<< HEAD
-=======
 		            <category>Polarisers and Analysers</category>
->>>>>>> master
         </categories>
       </value>
     </entry>
@@ -809,12 +806,8 @@
         <description>The OPI for the analyser. No properties required.</description>
         <macros/>
         <categories>
-<<<<<<< HEAD
-          <category>Monitors</category>
-=======
                    <category>Monitors</category>
 		           <category>Polarisers and Analysers</category>
->>>>>>> master
         </categories>
       </value>
     </entry>
@@ -1181,15 +1174,10 @@
         <type>POLARISER</type>
         <path>polariser.opi</path>
         <description>The OPI for the polariser. No properties required.</description>
-<<<<<<< HEAD
-        <macros/>
-        <categories/>
-=======
                 <macros />
                 <categories>
                     <category>Polarisers and Analysers</category>
                 </categories>
->>>>>>> master
       </value>
     </entry>
     <entry>
@@ -1645,11 +1633,7 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-<<<<<<< HEAD
-        <type>UNKNOWN</type>
-=======
         <type>REFLECTOMETRY</type>
->>>>>>> master
         <path>reflectometry/front_panel.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
@@ -1671,11 +1655,7 @@
           </macro>
         </macros>
       </value>
-<<<<<<< HEAD
-    </entry>
-=======
         </entry>
->>>>>>> master
     <entry>
       <key>Induction Furnace</key>
       <value>
@@ -1881,10 +1861,10 @@
       </value>
     </entry>
     <entry>
-      <key>KEYLKG</key>
+      <key>Keyence LK-G laser positioning sensor</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
+        <type>SENSOR</type>
         <path>keylkg.opi</path>
         <description>The OPI for the KEYLKG</description>
         <macros>
