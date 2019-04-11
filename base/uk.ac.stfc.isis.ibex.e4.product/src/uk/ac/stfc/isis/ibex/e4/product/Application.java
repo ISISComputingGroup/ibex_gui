@@ -36,8 +36,12 @@ public class Application implements IApplication {
 	 */
 	@Override
     public Object start(IApplicationContext context) {
+		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
+		
+		// Set up diirt as early as possible in the startup sequence.
 		PVManagerSettings.setUp();
+		
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());

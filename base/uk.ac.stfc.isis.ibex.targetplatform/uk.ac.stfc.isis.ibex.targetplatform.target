@@ -77,6 +77,9 @@
 		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.1.201903080817"/>
 		<unit id="org.csstudio.applications.utility.feature.feature.group" version="1.0.0.201903080817"/>
 		<unit id="org.csstudio.utilities.feature.feature.group" version="3.2.1.201903080817"/>
+		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201903080817"/>
+		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.1.201903080817"/>
+		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="1.0.0.201903080817"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.epics.jca" version="2.4.1"/>
