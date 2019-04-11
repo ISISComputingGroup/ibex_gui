@@ -943,20 +943,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.json-api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.json-api.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.help.base"
          download-size="0"
          install-size="0"
@@ -1056,13 +1042,6 @@
 
    <plugin
          id="org.epics.pvdata"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.jasper.glassfish"
          download-size="0"
          install-size="0"
          version="0.0.0"

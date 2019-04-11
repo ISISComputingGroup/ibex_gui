@@ -24,6 +24,7 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 
 /**
  * This class controls all aspects of the application's execution.
@@ -36,6 +37,7 @@ public class Application implements IApplication {
 	@Override
     public Object start(IApplicationContext context) {
 		JMXServer.startJMXServer();
+		PVManagerSettings.setUp();
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());

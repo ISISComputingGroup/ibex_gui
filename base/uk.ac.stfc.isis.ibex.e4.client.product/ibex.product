@@ -35,7 +35,6 @@
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
-
    <plugins>
    </plugins>
 
@@ -46,16 +45,16 @@
    </features>
 
    <configurations>
-      <plugin id="org.csstudio.archive.rdb" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader.channelarchiver" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader.rdb" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.platform.libs.jdbc" autoStart="true" startLevel="0" />
+      <plugin id="org.csstudio.archive.rdb" autoStart="false" startLevel="0" />
+      <plugin id="org.csstudio.archive.reader" autoStart="false" startLevel="0" />
+      <plugin id="org.csstudio.archive.reader.channelarchiver" autoStart="false" startLevel="0" />
+      <plugin id="org.csstudio.archive.reader.rdb" autoStart="false" startLevel="0" />
+      <plugin id="org.csstudio.platform.libs.jdbc" autoStart="false" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
-      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.osgi" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
