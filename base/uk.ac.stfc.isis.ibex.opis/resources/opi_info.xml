@@ -1633,7 +1633,7 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-        <type>UNKNOWN</type>
+        <type>REFLECTOMETRY</type>
         <path>reflectometry/front_panel.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
@@ -1856,6 +1856,24 @@
           <macro>
             <name>KNRK6</name>
             <description>The KNRK6 PV prefix (e.g. KNRK6_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Lakeshore 340</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>LAKESHORE</type>
+        <path>lakeshore340.opi</path>
+        <description>The OPI for the Lakeshore 340</description>
+        <macros>
+          <macro>
+            <name>LKSH340</name>
+            <description>The LKSH340 PV prefix (e.g. LKSH340_01)</description>
           </macro>
         </macros>
       </value>
