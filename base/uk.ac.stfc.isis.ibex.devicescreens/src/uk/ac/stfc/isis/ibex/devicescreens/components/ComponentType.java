@@ -163,7 +163,9 @@ public enum ComponentType {
 	/** Water bath position valve. */
 	WATER_BATH_VALVE,
 	/** Reflectometry Front Panel. */
-	REFLECTOMETRY;
+	REFLECTOMETRY,
+	/** Thin film fabrication device. **/
+	FILM_FABRICATION;
 	
 	private Target target;
 
