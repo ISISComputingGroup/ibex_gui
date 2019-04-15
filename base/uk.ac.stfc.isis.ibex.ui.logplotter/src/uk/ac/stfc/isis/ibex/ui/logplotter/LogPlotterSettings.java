@@ -101,7 +101,8 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The database URL corresponding to the given instrument.
      */
     private static String buildDatabaseUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/archive*jdbc:mysql://130.246.39.152/archive";
+        return "jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true"
+        		+ "*jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true";
     }
 
     /**
@@ -109,6 +110,7 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The archives URL corresponding to the given instrument.
      */
     private static String buildArchivesUrl(String hostName) {
-        return "RDB|1|jdbc:mysql://" + hostName + "/archive*RDB|2|jdbc:mysql://130.246.39.152/archive";
+        return "RDB|1|jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true"
+        		+ "*RDB|2|jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true";
     }
 }
