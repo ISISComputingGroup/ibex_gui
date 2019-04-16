@@ -181,6 +181,8 @@ public final class ComponentIcons {
             	return "reflectometry";
             case SENSOR:
             	return "sensor";
+            case FILM_FABRICATION:
+            	return "film_fabrication";
             default:
                 return "cog";
         }

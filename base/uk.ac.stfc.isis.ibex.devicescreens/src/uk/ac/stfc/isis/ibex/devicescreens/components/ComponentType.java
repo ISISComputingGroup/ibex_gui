@@ -165,7 +165,9 @@ public enum ComponentType {
 	/** Reflectometry Front Panel. */
 	REFLECTOMETRY,
 	/** Generic sensor **/
-	SENSOR;
+	SENSOR,
+	/** Thin film fabrication device. **/
+	FILM_FABRICATION;
 	
 	private Target target;
 

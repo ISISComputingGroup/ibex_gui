@@ -1859,7 +1859,7 @@
           </macro>
         </macros>
       </value>
-    </entry>
+    </entry> 
     <entry>
       <key>Keyence LK-G laser positioning sensor</key>
       <value>
@@ -1873,6 +1873,35 @@
             <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
           </macro>
         </macros>
+      </value>
+    </entry>           
+      <entry>
+      <key>Lakeshore 340</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>LAKESHORE</type>
+        <path>lakeshore340.opi</path>
+        <description>The OPI for the Lakeshore 340</description>
+        <macros>
+          <macro>
+            <name>LKSH340</name>
+            <description>The LKSH340 PV prefix (e.g. LKSH340_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>NIMA Trough</key>
+      <value>
+        <type>FILM_FABRICATION</type>
+        <path>nimatro.opi</path>
+        <description>The OPI for the NIMA Trough.</description>
+        <categories>
+		  <category>Gas and liquid handling systems</category>
+        </categories>
       </value>
     </entry>
   </opis>
