@@ -179,6 +179,8 @@ public final class ComponentIcons {
             	return "water_bath_valve";
             case REFLECTOMETRY:
             	return "reflectometry";
+            case FILM_FABRICATION:
+            	return "film_fabrication";
             default:
                 return "cog";
         }
