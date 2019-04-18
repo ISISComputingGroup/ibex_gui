@@ -60,7 +60,7 @@
 		<repository location="http://www.pydev.org/update_sites/5.9.2"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_Binaries/css_gui_dependencies/cs-studio/p2repo"/>
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio/p2repo"/>
 		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201904111713"/>
 		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.201904111717"/>
 		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201904111713"/>
@@ -83,16 +83,16 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.epics.jca" version="2.4.1"/>
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_Binaries/css_gui_dependencies/diirt/p2/target/repository/"/>
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/diirt/p2/target/repository/"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="1.0.3.201808291706"/>
 		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="1.0.3.201808291706"/>
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_Binaries/css_gui_dependencies/cs-studio-thirdparty/repository/target/repository"/>
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio-thirdparty/repository/target/repository"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="com.sun.jersey.bundle" version="1.19.0"/>
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_Binaries/css_gui_dependencies/maven-osgi-bundles/repository/target/repository/"/>
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/maven-osgi-bundles/repository/target/repository/"/>
 		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.6.3"/>
 		<unit id="com.fasterxml.jackson.core.jackson-core" version="2.6.3"/>
 		<unit id="com.fasterxml.jackson.core.jackson-databind" version="2.6.3"/>
