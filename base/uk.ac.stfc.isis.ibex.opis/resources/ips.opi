@@ -1096,7 +1096,11 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>27</height>
-          <items_from_pv>true</items_from_pv>
+          <items>
+            <s>Local &amp; Unlocked</s>
+            <s>Remote &amp; Unlocked</s>
+          </items>
+          <items_from_pv>false</items_from_pv>
           <name>Combo</name>
           <pv_name>$(PV_ROOT):CONTROL:SP</pv_name>
           <pv_value />
