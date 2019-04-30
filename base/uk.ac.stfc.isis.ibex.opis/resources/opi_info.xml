@@ -702,7 +702,7 @@
       <key>Polaris jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/polaris_jaws/Jaws_polaris.opi</path>
+        <path>jaws/polaris_jaws/Jaws_manager.opi</path>
         <description>The OPI for the Polaris jaw set. No properties required.</description>
         <macros/>
         <categories>
