@@ -1198,7 +1198,7 @@ $(pv_value)</tooltip>
             </scale_options>
             <scripts />
             <show_scrollbar>false</show_scrollbar>
-            <text>If components are not set on the device when starting the pump, attempt to reset the pump and try again.</text>
+            <text>If components are not set on the device when starting the pump, reset the pump and try again.</text>
             <tooltip></tooltip>
             <transparent>true</transparent>
             <vertical_alignment>1</vertical_alignment>
@@ -1844,7 +1844,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
-        <height>343</height>
+        <height>367</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -2882,7 +2882,7 @@ $(pv_value)</tooltip>
           <width>80</width>
           <wuid>-7ea2ed91:1687008d2ae:-7394</wuid>
           <x>96</x>
-          <y>282</y>
+          <y>306</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2931,7 +2931,7 @@ $(pv_value)</tooltip>
           <width>80</width>
           <wuid>-66c7722a:16a58f6d20d:-7f4c</wuid>
           <x>186</x>
-          <y>282</y>
+          <y>306</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
