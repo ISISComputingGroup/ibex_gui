@@ -836,7 +836,7 @@
         <categories>
           <category>Jaws and slits</category>
         </categories>
-      </value>
+      d</value>
     </entry>
     <entry>
       <key>Couette Cell</key>
@@ -1861,16 +1861,16 @@
       </value>
     </entry>
     <entry>
-      <key>CHTOBISR</key>
+      <key>Coherent OBIS Laser Remote</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
+        <type>LASER</type>
         <path>chtobisr.opi</path>
-        <description>The OPI for the CHTOBISR</description>
+        <description>The OPI for the Coherent OBIS Laser Remote</description>
         <macros>
           <macro>
             <name>CHTOBISR</name>
-            <description>The CHTOBISR PV prefix (e.g. CHTOBISR_01)</description>
+            <description>The PV prefix (e.g. CHTOBISR_01)</description>
           </macro>
         </macros>
       </value>
