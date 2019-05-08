@@ -1223,6 +1223,23 @@
       </value>
     </entry>
     <entry>
+      <key>TPG36x</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>TPG36x.opi</path>
+        <description>The OPI for the PFEIFFER 36x Vacuum Gauge.</description>
+        <macros>
+          <macro>
+            <name>TPG</name>
+            <description>The TPG36X PV prefix (e.g. TPG36X_01).</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Gem jaw set</key>
       <value>
         <type>JAWS</type>
