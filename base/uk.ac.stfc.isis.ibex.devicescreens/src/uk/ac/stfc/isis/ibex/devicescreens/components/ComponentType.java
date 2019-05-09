@@ -162,7 +162,7 @@ public enum ComponentType {
     PUMP,
 	/** Water bath position valve. */
 	WATER_BATH_VALVE,
-	/** Coherent OBIS Laser Remote**/
+	/** Coherent OBIS Laser Remote. */
 	OBIS_LASER_REMOTE;
 	
 	private Target target;
