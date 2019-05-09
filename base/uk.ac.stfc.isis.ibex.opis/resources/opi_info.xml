@@ -1864,7 +1864,7 @@
       <key>Coherent OBIS Laser Remote</key>
       <value>
         <categories/>
-        <type>LASER</type>
+        <type>OBIS_LASER_REMOTE</type>
         <path>chtobisr.opi</path>
         <description>The OPI for the Coherent OBIS Laser Remote</description>
         <macros>
