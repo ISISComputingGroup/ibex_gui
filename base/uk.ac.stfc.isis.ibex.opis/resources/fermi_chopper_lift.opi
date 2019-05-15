@@ -192,6 +192,9 @@ pv.setValue(1)
       <pv_value />
       <rules>
         <rule name="Levitation_enablement" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv1&gt;1">
+            <value>true</value>
+          </exp>
           <exp bool_exp="pv0==1">
             <value>false</value>
           </exp>
@@ -199,6 +202,7 @@ pv.setValue(1)
             <value>true</value>
           </exp>
           <pv trig="true">$(PV_SKF):STAT:LEVITATION_COMPLETE</pv>
+          <pv trig="true">$(PV_SKF):STAT:LEVITATION_COMPLETE.SEVR</pv>
         </rule>
       </rules>
       <scale_options>
@@ -256,6 +260,9 @@ pv.setValue(1)
       <pv_value />
       <rules>
         <rule name="Levitation_enablement" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv1&gt;1">
+            <value>true</value>
+          </exp>
           <exp bool_exp="pv0==1">
             <value>false</value>
           </exp>
@@ -263,6 +270,7 @@ pv.setValue(1)
             <value>true</value>
           </exp>
           <pv trig="true">$(PV_SKF):STAT:LEVITATION_COMPLETE</pv>
+          <pv trig="true">$(PV_SKF):STAT:LEVITATION_COMPLETE.SEVR</pv>
         </rule>
       </rules>
       <scale_options>
