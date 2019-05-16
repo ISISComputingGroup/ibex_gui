@@ -1893,7 +1893,7 @@
       <key>ALDN1000</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
+        <type>SYRINGE_PUMP</type>
         <path>aldn1000.opi</path>
         <description>The OPI for the ALDN1000</description>
         <macros>
@@ -1902,6 +1902,9 @@
             <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
           </macro>
         </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
       </value>
     </entry>
   </opis>
