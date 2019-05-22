@@ -162,6 +162,10 @@ public enum ComponentType {
     PUMP,
 	/** Water bath position valve. */
 	WATER_BATH_VALVE,
+	/** Reflectometry Front Panel. */
+	REFLECTOMETRY,
+	/** Thin film fabrication device. **/
+	FILM_FABRICATION,
 	/** Coherent OBIS Laser Remote. */
 	OBIS_LASER_REMOTE;
 	

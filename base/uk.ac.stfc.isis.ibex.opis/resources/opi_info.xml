@@ -702,7 +702,7 @@
       <key>Polaris jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/polaris_jaws/Jaws_polaris.opi</path>
+        <path>jaws/polaris_jaws/Jaws_manager.opi</path>
         <description>The OPI for the Polaris jaw set. No properties required.</description>
         <macros/>
         <categories>
@@ -1223,6 +1223,23 @@
       </value>
     </entry>
     <entry>
+      <key>TPG36x</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>TPG36x.opi</path>
+        <description>The OPI for the PFEIFFER 36x Vacuum Gauge.</description>
+        <macros>
+          <macro>
+            <name>TPG</name>
+            <description>The TPG36X PV prefix (e.g. TPG36X_01).</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Gem jaw set</key>
       <value>
         <type>JAWS</type>
@@ -1633,7 +1650,7 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
-        <type>UNKNOWN</type>
+        <type>REFLECTOMETRY</type>
         <path>reflectometry/front_panel.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
@@ -1858,6 +1875,35 @@
             <description>The KNRK6 PV prefix (e.g. KNRK6_01)</description>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Lakeshore 340</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>LAKESHORE</type>
+        <path>lakeshore340.opi</path>
+        <description>The OPI for the Lakeshore 340</description>
+        <macros>
+          <macro>
+            <name>LKSH340</name>
+            <description>The LKSH340 PV prefix (e.g. LKSH340_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>NIMA Trough</key>
+      <value>
+        <type>FILM_FABRICATION</type>
+        <path>nimatro.opi</path>
+        <description>The OPI for the NIMA Trough.</description>
+        <categories>
+		  <category>Gas and liquid handling systems</category>
+        </categories>
       </value>
     </entry>
     <entry>
