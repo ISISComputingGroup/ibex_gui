@@ -71,7 +71,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>TPG26x Pressure</text>
+    <text>TPG36x Pressure</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -101,7 +101,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>464</height>
+    <height>469</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -119,7 +119,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
     <width>649</width>
-    <wuid>-25dd6af8:16a96e729fa:-7f38</wuid>
+    <wuid>-25dd6af8:16a96e729fa:-7f61</wuid>
     <x>6</x>
     <y>42</y>
   </widget>
