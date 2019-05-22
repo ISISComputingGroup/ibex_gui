@@ -1341,7 +1341,7 @@ $(pv_value)</tooltip>
             <background_color>
               <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
             </background_color>
-            <border_alarm_sensitive>false</border_alarm_sensitive>
+            <border_alarm_sensitive>true</border_alarm_sensitive>
             <border_color>
               <color name="ISIS_Border" red="0" green="0" blue="0" />
             </border_color>
@@ -1874,7 +1874,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -1926,7 +1926,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -2019,7 +2019,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -2271,7 +2271,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -2605,7 +2605,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -2657,7 +2657,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -2791,7 +2791,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
