@@ -161,7 +161,11 @@ public enum ComponentType {
     /** Generic Pump. */
     PUMP,
 	/** Water bath position valve. */
-	WATER_BATH_VALVE;
+	WATER_BATH_VALVE,
+	/** Reflectometry Front Panel. */
+	REFLECTOMETRY,
+	/** Thin film fabrication device. **/
+	FILM_FABRICATION;
 	
 	private Target target;
 

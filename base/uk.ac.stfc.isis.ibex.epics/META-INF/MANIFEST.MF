@@ -30,5 +30,6 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion.json,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.pv,
+ uk.ac.stfc.isis.ibex.epics.pvmanager,
  uk.ac.stfc.isis.ibex.epics.writing
 Import-Package: uk.ac.stfc.isis.ibex.epics.observing
