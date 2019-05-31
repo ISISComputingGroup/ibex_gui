@@ -224,7 +224,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT_COMPRESSOR):ERR</pv_name>
+      <pv_name>$(PV_ROOT)ERR</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -276,7 +276,7 @@ $(pv_value)</tooltip>
       <name>Text Update_2</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT_COMPRESSOR):ELAPSED</pv_name>
+      <pv_name>$(PV_ROOT)ELAPSED</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -328,7 +328,7 @@ $(pv_value)</tooltip>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT_COMPRESSOR):POWER</pv_name>
+      <pv_name>$(PV_ROOT)POWER</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
