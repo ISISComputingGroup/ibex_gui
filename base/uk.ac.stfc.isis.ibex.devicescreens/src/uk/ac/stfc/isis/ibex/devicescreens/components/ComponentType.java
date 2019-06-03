@@ -34,6 +34,8 @@ public enum ComponentType {
 	UNKNOWN,
     /** Jaws component type. */
 	JAWS,
+	/** CP2800 Helum compressor component type. */
+	CP2800,
     /** Chopper component type. */
 	CHOPPER,
     /** Fermi Chopper component type. */

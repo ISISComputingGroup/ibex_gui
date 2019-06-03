@@ -1864,7 +1864,7 @@
       <key>CP2800</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
+        <type>CP2800</type>
         <path>cp2800.opi</path>
         <description>The OPI for the CP2800</description>
         <macros>
