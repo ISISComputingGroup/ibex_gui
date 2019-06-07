@@ -45,9 +45,10 @@ value = zlib.decompress(value.decode("hex"))
 params = json.loads(value)
 
 pos = 1
-for pv, name in params.items():
-    _add_macros(pos, "PARAM_PV", pv)
-    _add_macros(pos, "PARAM_NAME", name)
-    pos += 1
+for item in range(len(params)):
+    for pv, name in params[item].items():
+        _add_macros(pos, "PARAM_PV", pv)
+        _add_macros(pos, "PARAM_NAME", name)
+        pos += 1
 
 reload_widgets(pos)
