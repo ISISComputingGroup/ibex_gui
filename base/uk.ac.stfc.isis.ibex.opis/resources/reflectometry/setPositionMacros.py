@@ -47,4 +47,3 @@ for item in range(len(params)):
     reload_widget(pos, params[item]["type"])
     pos += 1
     
-#reload_widgets(pos)
