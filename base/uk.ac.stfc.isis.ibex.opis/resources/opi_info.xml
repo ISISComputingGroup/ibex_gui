@@ -671,7 +671,7 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
-		            <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -873,8 +873,8 @@
         <description>The OPI for the analyser. No properties required.</description>
         <macros/>
         <categories>
-                   <category>Monitors</category>
-		           <category>Polarisers and Analysers</category>
+          <category>Monitors</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -1263,10 +1263,10 @@
         <type>POLARISER</type>
         <path>polariser.opi</path>
         <description>The OPI for the polariser. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Polarisers and Analysers</category>
-                </categories>
+        <macros/>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1788,7 +1788,7 @@
           </macro>
         </macros>
       </value>
-        </entry>
+    </entry>
     <entry>
       <key>Induction Furnace</key>
       <value>
@@ -1889,7 +1889,7 @@
         </macros>
       </value>
     </entry>
-    <entry>        
+    <entry>
       <key>Spectra plot</key>
       <value>
         <categories>
@@ -1968,14 +1968,14 @@
           </macro>
         </macros>
         <categories>
-		  <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
     <entry>
       <key>JASCO PU-4180 Pump</key>
       <value>
-	    <categories>
+        <categories>
           <category>Gas and liquid handling systems</category>
         </categories>
         <type>PUMP</type>
@@ -2034,6 +2034,22 @@
         <categories>
 		  <category>Gas and liquid handling systems</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Coherent OBIS Laser Remote</key>
+      <value>
+        <categories/>
+        <type>OBIS_LASER_REMOTE</type>
+        <path>chtobisr.opi</path>
+        <description>The OPI for the Coherent OBIS Laser Remote</description>
+        <macros>
+          <macro>
+            <name>CHTOBISR</name>
+            <description>The PV prefix (e.g. CHTOBISR_01)</description>
+            <default>CHTOBISR_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
