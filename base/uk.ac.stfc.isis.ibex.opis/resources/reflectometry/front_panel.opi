@@ -69,7 +69,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>979</width>
+    <width>1051</width>
     <wuid>-16c8e940:165f1448c04:-7afd</wuid>
     <x>0</x>
     <y>0</y>
@@ -283,7 +283,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Tabbed Container</widget_type>
-      <width>967</width>
+      <width>1045</width>
       <wuid>450885f3:157944e4d4b:-7436</wuid>
       <x>0</x>
       <y>36</y>
@@ -321,9 +321,9 @@ $(pv_value)</tooltip>
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>true</visible>
+        <visible>false</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>965</width>
+        <width>1043</width>
         <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
         <x>1</x>
         <y>1</y>
@@ -660,7 +660,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>true</visible>
+              <visible>false</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-7a23</wuid>
@@ -742,7 +742,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>false</visible>
+              <visible>true</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-79e3</wuid>
@@ -909,7 +909,7 @@ $(pv_value)</tooltip>
           <transparent>false</transparent>
           <visible>true</visible>
           <widget_type>Grouping Container</widget_type>
-          <width>354</width>
+          <width>432</width>
           <wuid>3a15ff6c:167a2ac2773:-7e19</wuid>
           <x>601</x>
           <y>12</y>
@@ -950,7 +950,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>320</width>
+            <width>397</width>
             <wuid>660a6691:1677ec40d1b:-7ebd</wuid>
             <x>0</x>
             <y>39</y>
@@ -992,7 +992,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>320</width>
+            <width>397</width>
             <wuid>-19dc714f:1677a2ed8a5:-7ece</wuid>
             <x>0</x>
             <y>0</y>
@@ -1034,7 +1034,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>320</width>
+            <width>397</width>
             <wuid>2150758c:16990a9ebac:-6ddf</wuid>
             <x>0</x>
             <y>78</y>
@@ -1196,7 +1196,7 @@ $(pv_value)</tooltip>
           <transparent>false</transparent>
           <visible>true</visible>
           <widget_type>Grouping Container</widget_type>
-          <width>354</width>
+          <width>432</width>
           <wuid>28840e26:169d9726b77:-7720</wuid>
           <x>601</x>
           <y>396</y>
@@ -1381,9 +1381,9 @@ $(pv_value)</tooltip>
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>false</visible>
+        <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>965</width>
+        <width>1043</width>
         <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
         <x>1</x>
         <y>1</y>
@@ -1427,10 +1427,10 @@ $(pv_value)</tooltip>
           <transparent>false</transparent>
           <visible>true</visible>
           <widget_type>Grouping Container</widget_type>
-          <width>835</width>
+          <width>931</width>
           <wuid>7b2b8c8d:165c7bfd038:-7a1c</wuid>
-          <x>6</x>
-          <y>48</y>
+          <x>60</x>
+          <y>42</y>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
             <background_color>
@@ -1788,7 +1788,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7249</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>12</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1828,7 +1828,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-723e</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>62</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1868,7 +1868,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7233</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>112</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1908,7 +1908,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7228</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>162</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1948,7 +1948,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-721d</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>212</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1988,7 +1988,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7212</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>262</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2028,7 +2028,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7207</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>312</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2068,7 +2068,7 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-71fc</wuid>
-            <x>432</x>
+            <x>486</x>
             <y>362</y>
           </widget>
         </widget>
@@ -2109,7 +2109,7 @@ $(pv_value)</tooltip>
           <width>829</width>
           <wrap_words>false</wrap_words>
           <wuid>-744b7940:165a9b5d31a:-6151</wuid>
-          <x>12</x>
+          <x>63</x>
           <y>12</y>
         </widget>
       </widget>
@@ -2199,7 +2199,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Action Button</widget_type>
-      <width>967</width>
+      <width>1045</width>
       <wuid>-744b7940:165a9b5d31a:-7632</wuid>
       <x>0</x>
       <y>612</y>
