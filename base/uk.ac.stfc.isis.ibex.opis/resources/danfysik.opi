@@ -3853,10 +3853,10 @@ $(pv_value)</tooltip>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Model 8000 Interlocks</name>
+    <name>Model 8000/8500 Interlocks</name>
     <rules>
       <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;8000&quot;">
+        <exp bool_exp="pvStr0 == &quot;8000&quot; || pvStr0 == &quot;8500&quot;">
           <value>true</value>
         </exp>
         <pv trig="true">$(PV_ROOT)DEV_TYPE</pv>
