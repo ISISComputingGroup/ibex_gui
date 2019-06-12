@@ -39,6 +39,11 @@ public class Descriptions {
 	@XmlElement(name = "opi", type = OpiDescription.class)
 	Map<String, OpiDescription> opis = new HashMap<>();
 
+	/**
+	 * Gets the OPI descriptions.
+	 * 
+	 * @return opis the OPI descriptions
+	 */
 	public Map<String, OpiDescription> getOpis() {
 		return opis;
 	}

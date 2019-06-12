@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
+
 /**
  * Describes the target for navigation around the synoptic.
  */
@@ -110,14 +112,14 @@ public class TargetDescription {
 	}
 
     /**
-     * Adds possibly the property names; default blank properties are added.
+     * Adds the properties.
      *
-     * @param propertyKeys the property keys
+     * @param macros the properties
      */
-    public void addProperties(List<String> propertyKeys) {
-        for (String key : propertyKeys) {
-            if (!this.containsProperty(key)) {
-                properties.add(new Property(key, ""));
+    public void addProperties(List<MacroInfo> macros) {
+        for (MacroInfo macro : macros) {
+            if (!this.containsProperty(macro.getName())) {
+                properties.add(new Property(macro.getName(), macro.getDefault()));
             }
         }
     }
