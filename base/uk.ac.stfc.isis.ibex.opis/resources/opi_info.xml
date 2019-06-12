@@ -2047,6 +2047,7 @@
           <macro>
             <name>CHTOBISR</name>
             <description>The PV prefix (e.g. CHTOBISR_01)</description>
+            <default>CHTOBISR_01</default>
           </macro>
         </macros>
       </value>
