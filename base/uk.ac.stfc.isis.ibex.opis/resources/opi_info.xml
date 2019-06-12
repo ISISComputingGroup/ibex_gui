@@ -2025,14 +2025,33 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>NIMA Trough</key>
       <value>
         <type>FILM_FABRICATION</type>
         <path>nimatro.opi</path>
         <description>The OPI for the NIMA Trough.</description>
         <categories>
-		  <category>Gas and liquid handling systems</category>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Aladdin 1000</key>
+      <value>
+        <categories/>
+        <type>SYRINGE_PUMP</type>
+        <path>aldn1000.opi</path>
+        <description>The OPI for the ALDN1000</description>
+        <macros>
+          <macro>
+            <name>ALDN1000</name>
+            <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
         </categories>
       </value>
     </entry>
