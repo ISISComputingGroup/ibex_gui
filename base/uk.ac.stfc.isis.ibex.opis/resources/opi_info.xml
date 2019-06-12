@@ -2037,7 +2037,7 @@
       </value>
     </entry>
     <entry>
-      <key>ALDN1000</key>
+      <key>Aladdin 1000</key>
       <value>
         <categories/>
         <type>SYRINGE_PUMP</type>
@@ -2047,6 +2047,7 @@
           <macro>
             <name>ALDN1000</name>
             <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
           </macro>
         </macros>
         <categories>
