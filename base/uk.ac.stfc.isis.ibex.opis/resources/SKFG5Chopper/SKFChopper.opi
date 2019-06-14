@@ -259,8 +259,6 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <CHOP>_01</CHOP>
-          <CHOP_TYPE></CHOP_TYPE>
-          <STOP_TYPE></STOP_TYPE>
         </macros>
         <name>Tab 0 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
@@ -343,8 +341,6 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <CHOP>_02</CHOP>
-          <CHOP_TYPE></CHOP_TYPE>
-          <STOP_TYPE></STOP_TYPE>
         </macros>
         <name>Tab 1 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
@@ -427,8 +423,6 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <CHOP>_03</CHOP>
-          <CHOP_TYPE></CHOP_TYPE>
-          <STOP_TYPE></STOP_TYPE>
         </macros>
         <name>Tab 2 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
@@ -511,8 +505,6 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <CHOP>_04</CHOP>
-          <CHOP_TYPE></CHOP_TYPE>
-          <STOP_TYPE></STOP_TYPE>
         </macros>
         <name>Tab 3 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
@@ -595,8 +587,6 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <CHOP>_05</CHOP>
-          <CHOP_TYPE></CHOP_TYPE>
-          <STOP_TYPE></STOP_TYPE>
         </macros>
         <name>Tab 4 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
