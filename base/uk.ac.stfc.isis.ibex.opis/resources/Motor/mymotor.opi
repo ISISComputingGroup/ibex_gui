@@ -1348,7 +1348,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>19</height>
+      <height>27</height>
       <image></image>
       <name>HomeForwardsButton</name>
       <push_action_index>0</push_action_index>
@@ -1371,7 +1371,7 @@ For reverse home see more details</tooltip>
       <width>97</width>
       <wuid>-23027657:15ecdd7f624:-71f4</wuid>
       <x>57</x>
-      <y>96</y>
+      <y>102</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
