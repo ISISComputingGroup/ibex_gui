@@ -115,11 +115,13 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/** Default colour for undefined plot traces. */
 	private static final RGB BLACK = new RGB(0, 0, 0);
 
-	// private static final Color GREY =
-
 	private Label currentTS1;
 
 	private Label currentTS2;
+	
+	private Composite rowOne;
+	
+	private Composite rowTwo;
 
 	/**
 	 * Creates the Beam Graph view.
@@ -172,26 +174,33 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 */
 	private void createBeamStatsAndTimeToggles(final Composite parent) {
 
-		Color currentColor = new Color(parent.getDisplay(), 255, 255, 255);
-		Font currentFont = new Font(parent.getDisplay(), "Arial", 12, SWT.BOLD);
+		rowOne = createCompositeRow(parent);
+		rowTwo = createCompositeRow(parent);
+	
+		createTSCurrentLabel(rowOne, 1);
+		createTSCurrentLabel(rowOne, 2);
+		createButton(rowTwo, "Last 24 Hours", MILLISECONDS_IN_DAY);
+		createButton(rowTwo, "Last Hour", MILLISECONDS_IN_HOUR);
 
+	}
+	
+	private Composite createCompositeRow(final Composite parent){
+		
+		Color currentColor = new Color(parent.getDisplay(), 255, 255, 255);
 		Composite controlsComposite = new Composite(parent, SWT.NONE);
 		controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
 		controlsComposite.setBackground(currentColor);
 		controlsComposite.setSize(SWT.FILL, 20);
 
-		RowLayout rows = new RowLayout(SWT.HORIZONTAL);
-		rows.spacing = 20;
-		controlsComposite.setLayout(rows);
-
-		createTSCurrentLabel(controlsComposite, 1, currentFont);
-		createButton(controlsComposite, "Last 24 Hours", MILLISECONDS_IN_DAY);
-		createButton(controlsComposite, "Last Hour", MILLISECONDS_IN_HOUR);
-		createTSCurrentLabel(controlsComposite, 2, currentFont);
-
+		RowLayout rows2 = new RowLayout(SWT.HORIZONTAL);
+		rows2.spacing = 20;
+		controlsComposite.setLayout(rows2);
+		
+		return controlsComposite;
 	}
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
+		
 		Button button = new Button(parent, SWT.RADIO);
 		button.setText(name);
 		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
@@ -210,9 +219,11 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 * @param beamType: whether we are building a label for TS1 or TS2 (1|2)
 	 * @param currentFont : the font to use for the current labels
 	 */
-	private void createTSCurrentLabel(final Composite parent, int beamType, Font currentFont) {
-
-		Label leftSeperator = new Label(parent, SWT.SEPARATOR);
+	private void createTSCurrentLabel(final Composite parent, int beamType) {
+		
+		Font currentFont = new Font(parent.getDisplay(), "Arial", 12, SWT.BOLD);
+		
+		//Label leftSeperator = new Label(parent, SWT.SEPARATOR);
 		String title = String.format("TS%d Beam Current", beamType);  
 		createBeamLabel(parent, title, currentFont);
 
@@ -230,11 +241,11 @@ public class BeamGraphView extends ModelListenerAdapter {
 			break;
 		}
 
-		Label rightSeperator = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
+		//Label rightSeperator = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
 		RowData rowData = new RowData();
 		rowData.height = 20;
-		leftSeperator.setLayoutData(rowData);
-		rightSeperator.setLayoutData(rowData);
+		//leftSeperator.setLayoutData(rowData);
+		//rightSeperator.setLayoutData(rowData);
 
 	}
 
