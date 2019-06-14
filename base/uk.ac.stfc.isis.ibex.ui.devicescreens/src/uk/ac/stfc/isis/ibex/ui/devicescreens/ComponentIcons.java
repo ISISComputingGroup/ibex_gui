@@ -178,6 +178,12 @@ public final class ComponentIcons {
                 return "pump";
             case WATER_BATH_VALVE:
             	return "water_bath_valve";
+            case REFLECTOMETRY:
+            	return "reflectometry";
+            case FILM_FABRICATION:
+            	return "film_fabrication";
+            case OBIS_LASER_REMOTE:
+            	return "coherent_obis_laser_remote";
             default:
                 return "cog";
         }
