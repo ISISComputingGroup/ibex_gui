@@ -26,8 +26,6 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;
@@ -57,7 +55,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	
 	@Override
 	public boolean preShutdown() {
-		Instrument.getInstance().setInitial();
 		
         // set save and restore true here to make sure we save settings
         // these are actually restored in ApplicationWorkbenchWindowAdvisor
