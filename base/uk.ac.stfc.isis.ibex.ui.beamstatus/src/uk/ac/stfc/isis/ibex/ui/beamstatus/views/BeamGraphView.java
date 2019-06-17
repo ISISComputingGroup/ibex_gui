@@ -23,6 +23,8 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
+import java.text.DecimalFormat;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -222,8 +224,6 @@ public class BeamGraphView extends ModelListenerAdapter {
 	private void createTSCurrentLabel(final Composite parent, int beamType) {
 		
 		Font currentFont = new Font(parent.getDisplay(), "Arial", 12, SWT.BOLD);
-		
-		//Label leftSeperator = new Label(parent, SWT.SEPARATOR);
 		String title = String.format("TS%d Beam Current", beamType);  
 		createBeamLabel(parent, title, currentFont);
 
@@ -241,11 +241,8 @@ public class BeamGraphView extends ModelListenerAdapter {
 			break;
 		}
 
-		//Label rightSeperator = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
 		RowData rowData = new RowData();
 		rowData.height = 20;
-		//leftSeperator.setLayoutData(rowData);
-		//rightSeperator.setLayoutData(rowData);
 
 	}
 
@@ -263,14 +260,17 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 * Binds the value of the beam current for TS1/2 to the appropriate labels.
 	 */
 	private void bind(BeamStatus bs) {
-
+		
 		DataBindingContext bindingContext = new DataBindingContext();
+
+		
 		bindingContext.bindValue(WidgetProperties.text().observe(currentTS1),
 				BeanProperties.value("value").observe(bs.ts1().beamCurrent()));
 
 		bindingContext.bindValue(WidgetProperties.text().observe(currentTS2),
 				BeanProperties.value("value").observe(bs.ts2().beamCurrent()));
 	}
+	
 
 	private void createBeamStatusPlot() {
 		RTTimePlot rtPlot = modelPlot.getPlot();
