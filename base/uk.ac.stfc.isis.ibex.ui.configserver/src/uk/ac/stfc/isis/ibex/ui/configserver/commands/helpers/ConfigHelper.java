@@ -16,6 +16,7 @@ public abstract class ConfigHelper {
 	
     protected ConfigurationViewModels configurationViewModels;
     protected Shell shell;
+    protected static final int MAX_SECONDS_TO_WAIT = 2;
     
     /**
      * Create a dialog box for editing a config other than the current one.
@@ -29,7 +30,7 @@ public abstract class ConfigHelper {
         configurationViewModels.setModelAsConfig(configName);
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
-        if (Awaited.returnedValue(config, 1)) {
+        if (Awaited.returnedValue(config, MAX_SECONDS_TO_WAIT)) {
             openDialog(config.getValue(), false, editBlockFirst);
         }
     }
