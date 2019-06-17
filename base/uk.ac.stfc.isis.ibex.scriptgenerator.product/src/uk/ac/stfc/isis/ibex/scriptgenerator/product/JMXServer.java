@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.e4.product;
+package uk.ac.stfc.isis.ibex.scriptgenerator.product;
 
 import java.lang.management.ManagementFactory;
 
