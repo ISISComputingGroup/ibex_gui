@@ -186,14 +186,14 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	}
 	
+	/*
+	 * Creates a Composite with a row layout.
+	 */
 	private Composite createCompositeRow(final Composite parent){
 		
-		Color currentColor = new Color(parent.getDisplay(), 255, 255, 255);
 		Composite controlsComposite = new Composite(parent, SWT.NONE);
 		controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
-		controlsComposite.setBackground(currentColor);
 		controlsComposite.setSize(SWT.FILL, 20);
-
 		RowLayout rows2 = new RowLayout(SWT.HORIZONTAL);
 		rows2.spacing = 20;
 		controlsComposite.setLayout(rows2);
