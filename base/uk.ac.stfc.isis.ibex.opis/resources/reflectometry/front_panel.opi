@@ -660,7 +660,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>false</visible>
+              <visible>true</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-7a23</wuid>
@@ -742,7 +742,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>true</visible>
+              <visible>false</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-79e3</wuid>
@@ -950,7 +950,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>397</width>
+            <width>398</width>
             <wuid>660a6691:1677ec40d1b:-7ebd</wuid>
             <x>0</x>
             <y>39</y>
@@ -992,7 +992,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>397</width>
+            <width>398</width>
             <wuid>-19dc714f:1677a2ed8a5:-7ece</wuid>
             <x>0</x>
             <y>0</y>
@@ -1034,7 +1034,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>397</width>
+            <width>398</width>
             <wuid>2150758c:16990a9ebac:-6ddf</wuid>
             <x>0</x>
             <y>78</y>
@@ -1419,7 +1419,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts>
             <path pathString="setPositionMacros.py" checkConnect="true" sfe="false" seoe="false">
-              <pv trig="true">$(PV_ROOT)TRACKING_AXES</pv>
+              <pv trig="true">$(PV_ROOT)PARAM_INFO</pv>
             </path>
           </scripts>
           <show_scrollbar>true</show_scrollbar>
