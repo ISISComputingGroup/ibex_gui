@@ -3,5 +3,6 @@ bin.includes = plugin.xml,\
                .,\
                config.ini,\
                icons/,\
-               splash.bmp
+               splash.bmp,\
+               default.css
 source.. = src/

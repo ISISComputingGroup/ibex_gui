@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator.product;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
@@ -35,32 +32,22 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	
     @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
-        return new ApplicationWorkbenchWindowAdvisor(configurer);
+        return new WorkbenchWindowAdvisor(configurer);
     }
 
 	@Override
     public String getInitialWindowPerspectiveId() {
-		return null;
-	}
-	
-	@Override
-	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
-	    super.initialize(configurer);
-        this.configurer = configurer;
-
-        // set save and restore to false here to avoid restoring
-        // window layout restored in ApplicationWorkbenchWindowAdvisor
-        configurer.setSaveAndRestore(false);
+		return "uk.ac.stfc.isis.ibex.scriptgenerator.client.perspective.0";
 	}
 	
 	@Override
 	public boolean preShutdown() {
-		
+		return true;
         // set save and restore true here to make sure we save settings
         // these are actually restored in ApplicationWorkbenchWindowAdvisor
-        configurer.setSaveAndRestore(true);
-
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
+//        configurer.setSaveAndRestore(true);
+//
+//		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+//		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}
 }

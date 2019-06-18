@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * This class controls all aspects of the application's execution.
  */
@@ -36,6 +38,7 @@ public class Application implements IApplication {
 	@Override
     public Object start(IApplicationContext context) {
 		// Start a JMX server for remote diagnostics.
+		IsisLog.getLogger(getClass()).info("Starting script generator");
 		JMXServer.startJMXServer();
 		
 		Display display = PlatformUI.createDisplay();

@@ -2,8 +2,8 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension id="scriptgenerator" point="org.eclipse.core.runtime.products">
-   	<product application="uk.ac.stfc.isis.ibex.scriptgenerator.product.application" name="IBEX">
-    <property name="appName" value="IBEX"> </property>
+   	<product application="uk.ac.stfc.isis.ibex.scriptgenerator.product.scriptgenerator" name="scriptgenerator">
+    <property name="appName" value="scriptgenerator"> </property>
     <property name="applicationXMI" value="uk.ac.stfc.isis.ibex.scriptgenerator.client/Application.e4xmi"> </property>
     <property
           name="aboutImage"

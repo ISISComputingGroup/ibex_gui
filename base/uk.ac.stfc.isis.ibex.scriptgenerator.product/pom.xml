@@ -8,7 +8,6 @@
   	<version>1.0.0-SNAPSHOT</version>
   	<relativePath>../uk.ac.stfc.isis.ibex.scriptgenerator.tycho.parent</relativePath>
   </parent>
-  <version>1.0.0-SNAPSHOT</version>
   <build>
   	<pluginManagement>
   		<plugins>
