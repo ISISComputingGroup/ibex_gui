@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -35,20 +35,18 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlockLogSettingsViewModel;
 
-@SuppressWarnings("checkstyle:methodname")
+@SuppressWarnings({"unchecked", "checkstyle:methodname"})
 public class IocStateTest {
 
-    private EditableBlock mockBlock;
     private ConfigServer mockServer;
-    private ForwardingObservable componentDetails;
-    private ForwardingObservable currentConfig;
+    private ForwardingObservable<Collection<Configuration>> componentDetails;
+    private ForwardingObservable<Configuration> currentConfig;
     private static final String IOC_NAME = "Ioc name";
 
     @Before
     public void setUp() {
-        mockBlock = mock(EditableBlock.class);
+        mock(EditableBlock.class);
         mockServer = mock(ConfigServer.class);
         componentDetails = mock(ForwardingObservable.class);
         currentConfig = mock(ForwardingObservable.class);
