@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension id="scriptgenerator" point="org.eclipse.core.runtime.products">
+   	<product application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" name="scriptgenerator">
+    <property name="appName" value="scriptgenerator"> </property>
+    <property name="applicationXMI" value="uk.ac.stfc.isis.scriptgenerator.client/Application.e4xmi"> </property>
+    <property
+          name="aboutImage"
+          value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+    </property>
+    <property
+          name="windowImages"
+          value="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+    </property>
+    <property
+          name="applicationCSS"
+          value="platform:/plugin/uk.ac.stfc.isis.scriptgenerator.client/default.css">
+    </property>
+  </product>
+</extension>
+   <extension
+         id="app"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator"
+            name="scriptgenerator">
+         <property
+               name="windowImages"
+               value="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif,../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+         </property>
+         <property
+               name="aboutImage"
+               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">
+         </property>
+         <property
+               name="applicationCSS"
+               value="/uk.ac.stfc.isis.scriptgenerator.client/default.css">
+         </property>
+         <property
+               name="appName"
+               value="scriptgenerator">
+         </property>
+      </product>
+   </extension>
+</plugin>

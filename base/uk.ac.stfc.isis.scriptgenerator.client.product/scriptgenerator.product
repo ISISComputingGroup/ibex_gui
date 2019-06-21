@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="scriptgenerator" uid="scriptgenerator.product" id="uk.ac.stfc.isis.ibex.scriptgenerator.client.scriptgenerator" application="uk.ac.stfc.isis.ibex.scriptgenerator.product.scriptgenerator" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="scriptgenerator" uid="scriptgenerator.product" id="uk.ac.stfc.isis.scriptgenerator.client.scriptgenerator" application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
@@ -44,7 +44,7 @@
    </plugins>
 
    <features>
-      <feature id="uk.ac.stfc.isis.ibex.scriptgenerator.feature.base" version="1.0.0.qualifier"/>
+      <feature id="uk.ac.stfc.isis.scriptgenerator.feature.base" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
@@ -55,9 +55,9 @@
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.scriptgenerator" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.scriptgenerator.client" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.scriptgenerator.product" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.scriptgenerator" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.scriptgenerator.client" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.scriptgenerator.product" autoStart="false" startLevel="0" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.scriptgenerator.product" />
    </configurations>
 
@@ -66,7 +66,7 @@
    </preferencesInfo>
 
    <cssInfo>
-      <file path="/uk.ac.stfc.isis.ibex.scriptgenerator.client/default.css"/>
+      <file path="/uk.ac.stfc.isis.scriptgenerator.client/default.css"/>
    </cssInfo>
 
 </product>

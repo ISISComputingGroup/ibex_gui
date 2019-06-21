@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="uk.ac.stfc.isis.ibex.scriptgenerator.feature.base"
+      id="uk.ac.stfc.isis.scriptgenerator.feature.base"
       label="Base"
       version="1.0.0.qualifier">
 
@@ -26,20 +26,6 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.scriptgenerator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.scriptgenerator.client"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.scriptgenerator.product"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -352,6 +338,20 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.widgets"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.scriptgenerator.client"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.scriptgenerator.product"
          download-size="0"
          install-size="0"
          version="0.0.0"

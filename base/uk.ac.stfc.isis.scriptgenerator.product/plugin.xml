@@ -27,7 +27,7 @@
          </property>
          <property
                name="applicationCSS"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.scriptgenerator.client/default.css">
+               value="platform:/plugin/uk.ac.stfc.isis.scriptgenerator.client/default.css">
          </property>
          <property
                name="appName"
