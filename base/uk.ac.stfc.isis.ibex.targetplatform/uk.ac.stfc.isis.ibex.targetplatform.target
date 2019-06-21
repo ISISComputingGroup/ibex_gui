@@ -61,25 +61,25 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio/p2repo"/>
-		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201904111713"/>
-		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.201904111717"/>
-		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201904111713"/>
-		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.201904111713"/>
-		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201904111713"/>
-		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201904111713"/>
-		<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201904111713"/>
-		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.201904111713"/>
-		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201904111717"/>
-		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.201904111717"/>
-		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201904111717"/>
-		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="4.0.1.201904111717"/>
-		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="1.0.0.201904111717"/>
-		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.1.201904111717"/>
-		<unit id="org.csstudio.applications.utility.feature.feature.group" version="1.0.0.201904111717"/>
-		<unit id="org.csstudio.utilities.feature.feature.group" version="3.2.1.201904111717"/>
-		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201904111717"/>
-		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.1.201904111717"/>
-		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="1.0.0.201904111717"/>
+		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201906111211"/>
+		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.201906111214"/>
+		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201906111211"/>
+		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.201906111211"/>
+		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201906111211"/>
+		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201906111211"/>
+		<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201906111211"/>
+		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.201906111211"/>
+		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.201906111214"/>
+		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.201906111214"/>
+		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201906111214"/>
+		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="4.0.1.201906111214"/>
+		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="1.0.0.201906111214"/>
+		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.1.201906111214"/>
+		<unit id="org.csstudio.applications.utility.feature.feature.group" version="1.0.0.201906111214"/>
+		<unit id="org.csstudio.utilities.feature.feature.group" version="3.2.1.201906111214"/>
+		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201906111214"/>
+		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.1.201906111214"/>
+		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="1.0.0.201906111214"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.epics.jca" version="2.4.1"/>

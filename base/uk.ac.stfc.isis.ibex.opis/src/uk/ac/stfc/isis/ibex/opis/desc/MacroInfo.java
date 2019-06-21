@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.opis.desc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,15 +33,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MacroInfo {
 	private String name;
 	private String description;
-		
+	
+	@XmlElement(name="default")
+	private String defaultValue;
+	
+	/**
+	 * Gets the name.
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Gets the description.
+	 * @return description
+	 */
 	public String getDescription() {
 		return description;
 	}
-	
+
+	/**
+	 * Gets the default value.
+	 * @return default
+	 */
+	public String getDefault() {
+		return defaultValue;
+	}
+
 	/**
 	 * The XML serialisation requires a default constructor.
 	 */
@@ -55,6 +75,7 @@ public class MacroInfo {
 	public MacroInfo(String name, String description) {
 		this.name = name;
 		this.description = description;
+		this.defaultValue = "";
 	}
 	
 	

@@ -232,7 +232,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -256,7 +256,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>1</EURO_NUM>
@@ -338,7 +338,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>2</EURO_NUM>
@@ -396,7 +396,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>779</width>
       <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
@@ -420,7 +420,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>3</EURO_NUM>
@@ -502,7 +502,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>4</EURO_NUM>
@@ -584,7 +584,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>5</EURO_NUM>
@@ -666,7 +666,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>6</EURO_NUM>
@@ -748,7 +748,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>536</height>
+        <height>584</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <EURO_NUM>7</EURO_NUM>

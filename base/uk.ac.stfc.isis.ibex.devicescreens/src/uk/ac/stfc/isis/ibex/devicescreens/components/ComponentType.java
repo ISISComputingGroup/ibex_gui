@@ -167,7 +167,9 @@ public enum ComponentType {
 	/** Generic sensor **/
 	SENSOR,
 	/** Thin film fabrication device. **/
-	FILM_FABRICATION;
+	FILM_FABRICATION,
+	/** Coherent OBIS Laser Remote. */
+	OBIS_LASER_REMOTE;
 	
 	private Target target;
 

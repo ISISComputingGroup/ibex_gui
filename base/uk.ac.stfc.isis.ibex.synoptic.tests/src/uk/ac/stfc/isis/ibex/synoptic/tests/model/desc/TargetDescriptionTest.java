@@ -27,6 +27,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
@@ -47,9 +48,9 @@ public class TargetDescriptionTest {
         source.setName(NAME);
         source.setType(TargetType.OPI);
 
-        List<String> propertyKeys = new ArrayList<>();
-        propertyKeys.add(KEY_0);
-        propertyKeys.add(KEY_1);
+        List<MacroInfo> propertyKeys = new ArrayList<>();
+        propertyKeys.add(new MacroInfo(KEY_0, ""));
+        propertyKeys.add(new MacroInfo(KEY_1, ""));
         source.addProperties(propertyKeys);
     }
 
