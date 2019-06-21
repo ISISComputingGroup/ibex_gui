@@ -66,7 +66,6 @@ public class LogView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {		
-		parent.setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 		
 		
 		ScrolledComposite container = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
