@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -30,6 +30,7 @@ import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
+import org.csstudio.trends.databrowser2.model.ModelListenerAdapter;
 import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
@@ -102,7 +103,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	    try {
 	    	// Create axis
 			AxisConfig axis = new AxisConfig(displayName);
-			axis.setAutoScale(false);
+			axis.setAutoScale(true);
 			model.addAxis(axis);
 	    	
 			// Create trace
@@ -113,6 +114,24 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			// Add item to new axes
 			item.setAxis(axis);
 			model.addItem(item);
+			
+			model.addListener(new ModelListenerAdapter() {
+			    private int timesScaled = 0;
+			    private static final int TIMES_SCALED_LIMIT = 10;
+			    private boolean autoscale = true;
+
+	            @Override
+	            public void selectedSamplesChanged() {
+	                if (timesScaled < TIMES_SCALED_LIMIT) {
+	                    timesScaled++;
+	                } else if (autoscale) {
+	                    axis.setAutoScale(false);
+	                    autoscale = false;
+	                }
+	            }
+	            
+	        });
+	        
 	    } catch (Exception ex) {
 	        MessageDialog.openError(editor.getSite().getShell(),
 	                Messages.Error,
