@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
-import uk.ac.stfc.isis.ibex.configserver.IocRunningState;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -123,7 +122,7 @@ public class IocButtonPanel extends Composite {
 		IConverter startConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				
-				return control.startIoc().getCanSend() && ioc.getIsRunning() == IocRunningState.STOPPED;
+				return control.startIoc().getCanSend() && !ioc.getIsRunning();
 			}
 
 		};
@@ -139,7 +138,7 @@ public class IocButtonPanel extends Composite {
 		IConverter stopConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				
-				return control.stopIoc().getCanSend() && ioc.getIsRunning() == IocRunningState.RUNNING_LOCALLY;
+				return control.stopIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};
@@ -155,7 +154,7 @@ public class IocButtonPanel extends Composite {
 		IConverter restartConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				
-				return control.restartIoc().getCanSend() && ioc.getIsRunning() == IocRunningState.RUNNING_LOCALLY;
+				return control.restartIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};

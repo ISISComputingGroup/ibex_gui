@@ -24,7 +24,6 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.IocRunningState;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 
@@ -60,14 +59,14 @@ public class StateLabelProvider extends SortableObservableMapCellLabelProvider<I
 		super.update(cell);
 
         IocState state = (IocState) cell.getElement();
-        boolean isRunning = state != null && state.getIsRunning() == IocRunningState.RUNNING_LOCALLY;
+        boolean isRunning = state != null && state.getIsRunning();
         cell.setText(stringFromRow(state));
 		cell.setForeground(isRunning ? COLOR_RUNNING : COLOR_STOPPED);
 	}
 
 	@Override
 	protected String stringFromRow(IocState row) {
-		boolean isRunning = row != null && row.getIsRunning() == IocRunningState.RUNNING_LOCALLY;
+		boolean isRunning = row != null && row.getIsRunning();
 		return isRunning ? TEXT_RUNNING : TEXT_NOT_RUNNING;
 	}
 }

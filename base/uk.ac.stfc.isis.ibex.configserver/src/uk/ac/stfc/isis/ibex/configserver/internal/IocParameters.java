@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.configserver.IocRunningState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
@@ -31,13 +30,13 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 // NB This class holds data coming from IOCS, so it lists the properties available to be set on an IOC, rather than those actually set in a config
 public class IocParameters {
 
-	private final IocRunningState running;
+	private final boolean running;
     private final String description;
 	private List<Macro> macros = new ArrayList<Macro>();
 	private List<AvailablePV> pvs = new ArrayList<AvailablePV>();
 	private List<AvailablePVSet> pvsets = new ArrayList<AvailablePVSet>();
 
-    public IocParameters(IocRunningState running, Collection<Macro> macros, Collection<AvailablePV> pvs,
+    public IocParameters(boolean running, Collection<Macro> macros, Collection<AvailablePV> pvs,
             Collection<AvailablePVSet> pvsets, String description) {
 		this.running = running;
         this.description = description;
@@ -55,7 +54,7 @@ public class IocParameters {
 		}
 	}
 	
-	public IocRunningState isRunning() {
+	public boolean isRunning() {
 		return running;
 	}
 	
