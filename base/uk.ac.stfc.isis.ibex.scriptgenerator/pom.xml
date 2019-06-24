@@ -4,9 +4,9 @@
   <packaging>eclipse-plugin</packaging>
   <parent>
   	<groupId>CSS_ISIS</groupId>
-  	<artifactId>uk.ac.stfc.isis.ibex.scriptgenerator.tycho.parent</artifactId>
+  	<artifactId>uk.ac.stfc.isis.scriptgenerator.tycho.parent</artifactId>
   	<version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../uk.ac.stfc.isis.ibex.scriptgenerator.tycho.parent</relativePath>
+  	<relativePath>../uk.ac.stfc.isis.scriptgenerator.tycho.parent</relativePath>
   </parent>
   <build>
   	<pluginManagement>
