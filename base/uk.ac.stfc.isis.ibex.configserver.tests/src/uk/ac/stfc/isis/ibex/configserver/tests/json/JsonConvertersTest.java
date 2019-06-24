@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.IocRunningState;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
@@ -232,7 +233,7 @@ public class JsonConvertersTest {
 		
 		IocState ioc = iocList.iterator().next();
 		assertEquals(iocName, ioc.getName());
-		assertTrue(!ioc.getIsRunning());
+		assertTrue(ioc.getIsRunning() == IocRunningState.STOPPED);
 	}
 	
 	@Test

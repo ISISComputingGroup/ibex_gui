@@ -39,12 +39,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Class to hold information about the state of an IOC.
  * 
  * Implementation note: this class represents an immutable instance of the state
- * of an IOC at a particular time.
+ * of an IOC at a particular time - it does not mutate to match the current state.
  */
 public class IocState extends ModelObject implements Comparable<IocState>, INamed {
 
     private final String name;
-    private final boolean isRunning;
+    private final IocRunningState isRunning;
     private final String description;
 
     /**
@@ -57,7 +57,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @param description
      *            description of the IOC
      */
-    public IocState(String name, boolean isRunning, String description) {
+    public IocState(String name, IocRunningState isRunning, String description) {
 	this.name = name;
 	this.isRunning = isRunning;
 	this.description = description;
@@ -78,7 +78,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * 
      * @return true if it is running; false otherwise
      */
-    public boolean getIsRunning() {
+    public IocRunningState getIsRunning() {
 	return isRunning;
     }
 
