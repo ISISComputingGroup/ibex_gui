@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2jV5MGGNEeeR5ozUwT3tEw" elementId="uk.ac.stfc.isis.client.scriptgenerator.product.application">
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2jV5MGGNEeeR5ozUwT3tEw" elementId="uk.ac.stfc.isis.ibex.client.scriptgenerator.product.application">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_X1-d4GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow." label="" iconURI="">
     <tags>shellMaximized</tags>
-    <children xsi:type="advanced:PerspectiveStack" xmi:id="_uMW6EJGoEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.scriptgenerator.client.perspectivestack.0">
-      <children xsi:type="advanced:Perspective" xmi:id="_umobQJGoEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.scriptgenerator.client.perspective.0">
-        <children xsi:type="basic:PartStack" xmi:id="_Co6VgJNkEemAXoaj-ZzBLA" elementId="uk.ac.stfc.isis.scriptgenerator.client.partstack.0">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_uMW6EJGoEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_umobQJGoEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.perspective.0">
+        <children xsi:type="basic:PartStack" xmi:id="_Co6VgJNkEemAXoaj-ZzBLA" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.partstack.0">
           <children xsi:type="basic:Part" xmi:id="_8NgLsJHLEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.TestView" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.TestView" label="scripting view"/>
         </children>
       </children>
