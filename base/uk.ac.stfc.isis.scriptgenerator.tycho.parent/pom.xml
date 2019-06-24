@@ -164,12 +164,22 @@
 
 	<modules>
 		
-		<module>../uk.ac.stfc.isis.scriptgenerator.feature.base</module>
+		
 		
 
 		
 		
+		
+		
+		<module>../uk.ac.stfc.isis.scriptgenerator.feature.base</module>
 		<module>../uk.ac.stfc.isis.scriptgenerator.product</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
+		<module>../uk.ac.stfc.isis.scriptgenerator.client</module>
+		<module>../uk.ac.stfc.isis.ibex.logger</module>
+		
+		<module>
+			../uk.ac.stfc.isis.scriptgenerator.client.product
+		</module>
 	</modules>
 </project>
 
