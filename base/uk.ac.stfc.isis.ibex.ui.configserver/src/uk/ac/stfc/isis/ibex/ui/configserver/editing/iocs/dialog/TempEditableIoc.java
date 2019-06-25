@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
  * configuration when explicitly called.
  */
 public class TempEditableIoc extends EditableIoc {
-    private EditableIoc editingIoc;
+    private final EditableIoc editingIoc;
 
     /**
      * Constructor for the temp IOC.
@@ -51,6 +51,7 @@ public class TempEditableIoc extends EditableIoc {
         editingIoc.setMacros(getMacros());
         editingIoc.setPvs(getPvs());
         editingIoc.setPvSets(getPvSets());
+        editingIoc.setHost(getHost());
     }
 
 }

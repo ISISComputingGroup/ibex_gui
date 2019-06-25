@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Optional;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
@@ -77,12 +77,12 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      *            The IOC to match
      */
 	public Ioc(Ioc other) {
-		this.name = other.getName();
-		this.autostart = other.getAutostart();
-		this.simlevel = other.getSimLevel();
-		this.restart = other.getRestart();
-		this.component = other.getComponent();
-		this.host = other.getHost();
+		this(other.getName());
+		this.setAutostart(other.getAutostart());
+		this.setSimLevel(other.getSimLevel());
+		this.setRestart(other.getRestart());
+		this.setComponent(other.getComponent());
+		this.setHost(other.getHost());
 		
 		for (PVSet set : other.getPvSets()) {
 			pvsets.add(new PVSet(set));
@@ -138,11 +138,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      * @return Get the IOC's simulation level
      */
 	public SimLevel getSimLevel() {
-		if (simlevel == null) {
-			simlevel = SimLevel.NONE;
-		}
-		
-		return simlevel;
+		return Optional.ofNullable(simlevel).orElse(SimLevel.NONE);
 	}
 
     /**
@@ -157,33 +153,21 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      * @return A collection of IOC macros
      */
 	public Collection<Macro> getMacros() {
-		if (macros == null) {
-			macros = new ArrayList<>();
-		}
-		
-		return macros;
+		return Optional.ofNullable(macros).orElseGet(ArrayList::new);
 	}
 	
     /**
      * @return A collection of IOC PV sets
      */
 	public Collection<PVSet> getPvSets() {
-		if (pvsets == null) {
-			pvsets = new ArrayList<>();
-		}
-		
-		return pvsets;
+		return Optional.ofNullable(pvsets).orElseGet(ArrayList::new);
 	}
 
     /**
      * @return A collection of IOC PV values
      */
 	public Collection<PVDefaultValue> getPvs() {
-		if (pvs == null) {
-			pvs = new ArrayList<>();
-		}
-		
-		return pvs;
+		return Optional.ofNullable(pvs).orElseGet(ArrayList::new);
 	}
 
     /**
@@ -261,7 +245,6 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	 * @return - the hostname
 	 */
 	public String getHost() {
-		System.out.println("Read host as " + host);
 		return host;
 	}
 	
@@ -271,7 +254,5 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	 */
 	public void setHost(String host) {
 		firePropertyChange("host", this.host, this.host = host);
-		firePropertyChange("host", this.host, this.host = "bacon");
-		System.out.println("Fired property change");
 	}
 }

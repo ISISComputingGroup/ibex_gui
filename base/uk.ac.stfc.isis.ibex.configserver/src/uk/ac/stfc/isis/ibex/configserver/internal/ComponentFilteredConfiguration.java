@@ -86,7 +86,7 @@ public class ComponentFilteredConfiguration extends Configuration {
      */
     public static List<Group> filterGroups(Collection<Group> groups) {
         return groups.stream()
-        		.map(group -> group == null ? group : new Group(group.getName(), new ArrayList<String>(), group.getComponent()))
+        		.map(group -> group.getComponent() == null ? group : new Group(group.getName(), new ArrayList<String>(), group.getComponent()))
         		.collect(Collectors.toCollection(ArrayList::new));
 	}
 }

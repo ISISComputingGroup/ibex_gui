@@ -21,11 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 import java.util.logging.Logger;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -323,16 +319,11 @@ public class ConfigServerVariables extends Closer {
      * @return the PV name
      */
 	private String getConfigPV(final String configName) {
-		try {
-			return Iterables.find(configsInfo.getValue(), new Predicate<ConfigInfo>() {
-				@Override
-				public boolean apply(ConfigInfo info) {
-					return info.name().equals(configName);
-				}
-			}).pv();
-		} catch (NoSuchElementException e) {
-			return configName.toUpperCase(Locale.ENGLISH);
-		}
+		return configsInfo.getValue().stream()
+				.filter(info -> info.name().equals(configName))
+				.findFirst()
+				.map(ConfigInfo::pv)
+				.orElse(configName.toUpperCase(Locale.ENGLISH));
 	}
 	
     /**
@@ -342,15 +333,10 @@ public class ConfigServerVariables extends Closer {
      * @return the PV name
      */
 	private String getComponentPV(final String componentName) {
-		try {
-			return Iterables.find(componentsInfo.getValue(), new Predicate<ConfigInfo>() {
-				@Override
-				public boolean apply(ConfigInfo info) {
-					return info.name().equals(componentName);
-				}
-			}).pv();
-		} catch (NoSuchElementException e) {
-			return componentName.toUpperCase(Locale.ENGLISH);
-		}
+		return componentsInfo.getValue().stream()
+				.filter(info -> info.name().equals(componentName))
+				.findFirst()
+				.map(ConfigInfo::pv)
+				.orElse(componentName.toUpperCase(Locale.ENGLISH));
 	}
 }
