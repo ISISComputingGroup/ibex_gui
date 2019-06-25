@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
@@ -46,6 +47,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
     TableViewerColumn autoStart;
     TableViewerColumn autoRestart;
+    TableViewerColumn host;
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
@@ -86,6 +88,13 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
             return !ioc.inComponent();
         }
     };
+    
+    private DataboundCellLabelProvider<EditableIoc> hostLabelProvider = new DataboundCellLabelProvider<EditableIoc>(observeProperty("host")) {
+		@Override
+		protected String stringFromRow(EditableIoc ioc) {
+			return ioc.getHost();
+		}
+	};
 
     /**
      * Standard constructor.
@@ -113,6 +122,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 		simLevel();
 		autostart();
 		restart();
+		host();
 	}
 
     /**
@@ -168,6 +178,13 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void restart() {
         autoRestart = createColumn("Auto-restart?", 1, false, autoRestartLabelProvider);
+	}
+	
+	/**
+     * Creates the host column.
+     */
+	private void host() {
+        host = createColumn("Host", 1, false, hostLabelProvider);
 	}
 
     /**

@@ -62,6 +62,8 @@ public class EditPanel extends Composite {
     private MacroPanel macros;
     private IocPVsEditorPanel pvVals;
     private IocPVSetsEditorPanel pvSets;
+	private Label hostLbl;
+	private Text hostTxt;
 
     /**
      * Constructor for the Edit IOC panel.
@@ -117,6 +119,14 @@ public class EditPanel extends Composite {
         autoRestart = new Button(cmpIocDetails, SWT.CHECK);
         autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoRestart.setText("Auto-Restart");
+        
+        hostLbl = new Label(cmpIocDetails, SWT.NONE);
+        hostLbl.setText("Host: ");
+        hostLbl.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+        
+        hostTxt = new Text(cmpIocDetails, SWT.BORDER);
+        hostTxt.setEditable(true);
+        hostTxt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLS - 1, 1));
 
         TabFolder iocSettings = new TabFolder(this, SWT.NONE);
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -175,7 +185,8 @@ public class EditPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoRestart),
                 BeanProperties.value("editable").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(simLevel.getCombo()),
-                BeanProperties.value("editable").observe(editableIoc));  
+                BeanProperties.value("editable").observe(editableIoc));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(hostTxt), 
+        		BeanProperties.value("host").observe(editableIoc));
     }
-
 }

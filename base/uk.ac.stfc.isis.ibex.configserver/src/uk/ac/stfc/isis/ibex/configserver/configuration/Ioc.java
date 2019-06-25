@@ -58,6 +58,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	private Collection<PVDefaultValue> pvs = new ArrayList<PVDefaultValue>();
 	private Collection<Macro> macros = new ArrayList<Macro>();
 	private String component;
+    private String host = "";
 	
     /**
      * Create an IOC with a given name.
@@ -81,6 +82,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 		this.simlevel = other.getSimLevel();
 		this.restart = other.getRestart();
 		this.component = other.getComponent();
+		this.host = other.getHost();
 		
 		for (PVSet set : other.getPvSets()) {
 			pvsets.add(new PVSet(set));
@@ -252,5 +254,24 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	@Override
 	public int hashCode() {
 		return name.hashCode();
+	}
+	
+	/**
+	 * Gets the host that this IOC is running on.
+	 * @return - the hostname
+	 */
+	public String getHost() {
+		System.out.println("Read host as " + host);
+		return host;
+	}
+	
+	/**
+	 * Sets the host that this IOC should run on.
+	 * @param host - the hostname
+	 */
+	public void setHost(String host) {
+		firePropertyChange("host", this.host, this.host = host);
+		firePropertyChange("host", this.host, this.host = "bacon");
+		System.out.println("Fired property change");
 	}
 }

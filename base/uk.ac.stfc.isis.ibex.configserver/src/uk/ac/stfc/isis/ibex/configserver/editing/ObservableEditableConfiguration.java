@@ -66,7 +66,7 @@ public class ObservableEditableConfiguration
 	        Logger.getGlobal().log(Level.SEVERE, "Error while creating configuration", e);
             throw e;
         }
-	}	
+	}
 
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
