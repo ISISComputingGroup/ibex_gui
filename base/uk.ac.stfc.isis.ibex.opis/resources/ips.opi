@@ -807,10 +807,10 @@ $(pv_value)</tooltip>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
         </font>
         <foreground_color>
-          <color name="Major" red="255" green="0" blue="0" />
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
         </foreground_color>
         <height>61</height>
         <horizontal_alignment>0</horizontal_alignment>
@@ -2393,10 +2393,10 @@ $(pv_value)</tooltip>
           <border_width>1</border_width>
           <enabled>true</enabled>
           <font>
-            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
           </font>
           <foreground_color>
-            <color name="Major" red="255" green="0" blue="0" />
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
           </foreground_color>
           <height>31</height>
           <horizontal_alignment>0</horizontal_alignment>
@@ -2848,10 +2848,10 @@ $(pv_value)</tooltip>
           <border_width>1</border_width>
           <enabled>true</enabled>
           <font>
-            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
           </font>
           <foreground_color>
-            <color name="Major" red="255" green="0" blue="0" />
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
           </foreground_color>
           <height>49</height>
           <horizontal_alignment>0</horizontal_alignment>
