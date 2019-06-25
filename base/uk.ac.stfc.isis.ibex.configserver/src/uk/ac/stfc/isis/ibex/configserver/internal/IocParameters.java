@@ -27,7 +27,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 
-// NB This class holds data coming from IOCS, so it lists the properties available to be set on an IOC, rather than those actually set in a config
+/**
+ * NB This class holds data coming from IOCS, so it lists the properties 
+ * available to be set on an IOC, rather than those actually set in a config
+ */
 public class IocParameters {
 
 	private final boolean running;
@@ -35,11 +38,22 @@ public class IocParameters {
 	private List<Macro> macros = new ArrayList<Macro>();
 	private List<AvailablePV> pvs = new ArrayList<AvailablePV>();
 	private List<AvailablePVSet> pvsets = new ArrayList<AvailablePVSet>();
+	private final String host;
 
+	/**
+	 * Builds a new set of IOC parameters.
+	 * @param running - whether the IOC is running.
+	 * @param macros - The macros to use.
+	 * @param pvs - The pvs to use.
+	 * @param pvsets - The pvsets associated with this IOC.
+	 * @param description - The description of this IOC.
+	 * @param host - The host this IOC is running on.
+	 */
     public IocParameters(boolean running, Collection<Macro> macros, Collection<AvailablePV> pvs,
-            Collection<AvailablePVSet> pvsets, String description) {
+            Collection<AvailablePVSet> pvsets, String description, String host) {
 		this.running = running;
         this.description = description;
+        this.host = host;
 
 		for (Macro macro : macros) {
 			this.macros.add(macro);
@@ -54,23 +68,51 @@ public class IocParameters {
 		}
 	}
 	
+    /**
+     * Whether this ioc is running.
+     * @return - true if ioc is running
+     */
 	public boolean isRunning() {
 		return running;
 	}
 	
+	/**
+	 * The macros that are available to be set of this IOC (not necessarily actually set in a config).
+	 * @return the macros.
+	 */
 	public Collection<Macro> getMacros() {
 		return macros;
 	}
 	
+	/**
+	 * The pvs available to be set on this IOC.
+	 * @return the pvs.
+	 */
 	public Collection<AvailablePV> getPVs() {
 		return pvs;
 	}
 	
+	/**
+	 * The PV sets available to this IOC.
+	 * @return the pv sets.
+	 */
 	public Collection<AvailablePVSet> getPVSets() {
 		return pvsets;
 	}
 
+	/**
+	 * The description of this IOC.
+	 * @return the description.
+	 */
     public String getDescription() {
         return description;
+    }
+    
+    /**
+     * The host which this IOC is running on.
+     * @return the hostname.
+     */
+    public String getHost() {
+    	return host;
     }
 }
