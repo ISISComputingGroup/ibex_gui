@@ -21,8 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -31,32 +35,51 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ToyModel;
+
 /**
  * Provides settings to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class TestView {
 
+	private ToyModel toyModel;
+	private Label lblOrder;
+	private DataBindingContext bindingContext;
+	
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		
+		this.toyModel = Activator.getModel();
+		
 		Group grpSettings = new Group(parent, SWT.NULL);
-		grpSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		grpSettings.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		grpSettings.setLayout(new RowLayout(SWT.VERTICAL));
 		grpSettings.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_DARK_RED));
 
-		//new Label(grpSettings, SWT.CENTER);
-		
-		//Label labelSettings = new Label(grpSettings, SWT.RIGHT);
-		
-		
-		Label lblOrder = new Label(grpSettings, SWT.CENTER);
-		//lblOrder.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
-		lblOrder.setText("test");
+		this.lblOrder = new Label(parent, SWT.NONE);
+		this.lblOrder.setText("test");
 		
 		
-		Button button = new Button(grpSettings, SWT.PUSH);
+		Button button = new Button(grpSettings, SWT.NONE);
 		button.setText("Press me!");
+		
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toyModel.iterateNumber();
+			}
+		});
+		
+		bind();
 	}
+
+	private void bind() {
+		bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
+				BeanProperties.value("iteratedNumber").observe(toyModel));
+	}
+	
 
 }

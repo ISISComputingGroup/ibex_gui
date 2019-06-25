@@ -45,5 +45,18 @@ public class Activator implements BundleActivator {
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
 	}
+	
+    private static ToyModel instance;
+
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return the singleton instance of this class
+	 */
+    public static ToyModel getModel() { 
+    	return model; 
+    }
+
+    private final static ToyModel model = new ToyModel();
 
 }
