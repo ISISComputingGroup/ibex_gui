@@ -66,9 +66,9 @@ public class EditableIocsConverter extends Converter<Map<String, IocParameters>,
 	 * @param toBeSet - The method to call if the value was non-null.
 	 * @param value - The value to set.
 	 */
-	private static <T> void setIfNotNull(Consumer<T> methodToCallIfNotNull, T value) {
+	private static <T> void setIfNotNull(Consumer<T> toBeSet, T value) {
 		if (value != null ) {
-			methodToCallIfNotNull.accept(value);
+			toBeSet.accept(value);
 		}
 	}
 }
