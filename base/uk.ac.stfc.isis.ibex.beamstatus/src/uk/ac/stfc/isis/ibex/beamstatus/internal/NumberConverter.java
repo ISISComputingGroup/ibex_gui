@@ -33,6 +33,6 @@ public class NumberConverter extends Converter<Number, String> {
 		if (value == null) {
 			return "UNKNOWN";
 		}
-		return String.format("%.02f", value);//value.toString();
+		return String.format("%.02f", value);
 	}
 }

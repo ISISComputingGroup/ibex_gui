@@ -23,8 +23,6 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
-import java.text.DecimalFormat;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -189,7 +187,8 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/*
 	 * Creates a Composite with a row layout.
 	 */
-	private Composite createCompositeRow(final Composite parent){
+	@SuppressWarnings("checkstyle:magicnumber")
+	private Composite createCompositeRow(final Composite parent) { 
 		
 		Composite controlsComposite = new Composite(parent, SWT.NONE);
 		controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
@@ -221,6 +220,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 * @param beamType: whether we are building a label for TS1 or TS2 (1|2)
 	 * @param currentFont : the font to use for the current labels
 	 */
+	@SuppressWarnings("checkstyle:magicnumber")
 	private void createTSCurrentLabel(final Composite parent, int beamType) {
 		
 		Font currentFont = new Font(parent.getDisplay(), "Arial", 12, SWT.BOLD);
