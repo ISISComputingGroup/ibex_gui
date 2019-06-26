@@ -178,7 +178,7 @@ public class TargetSelectorViewModel extends ModelObject {
         TargetDescription currentTarget = synopticViewModel.getSingleSelectedComp().target();
         if (!(opi.equals(currentTarget.name()))) {
         	TargetDescription newTarget = new TargetDescription(opi, TargetType.OPI);
-        	newTarget.addProperties(synopticViewModel.getOpi(opi).getKeys());
+        	newTarget.addProperties(synopticViewModel.getOpi(opi).getMacros());
         	synopticViewModel.getSingleSelectedComp().setTarget(newTarget);  
         }
         
