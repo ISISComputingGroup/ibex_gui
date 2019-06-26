@@ -278,7 +278,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </tab_1_foreground_color>
       <tab_1_icon_path></tab_1_icon_path>
-      <tab_1_title>Components</tab_1_title>
+      <tab_1_title>All Parameters</tab_1_title>
       <tab_count>2</tab_count>
       <tooltip></tooltip>
       <visible>true</visible>
@@ -935,7 +935,7 @@ $(pv_value)</tooltip>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PARAM_NAME>SM Angle</PARAM_NAME>
-              <PARAM_PV>PARAM:ANGLE_SM</PARAM_PV>
+              <PARAM_PV>PARAM:SMANGLE</PARAM_PV>
             </macros>
             <name></name>
             <opi_file>param_move.opi</opi_file>
@@ -1019,7 +1019,7 @@ $(pv_value)</tooltip>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PARAM_NAME>SM In</PARAM_NAME>
-              <PARAM_PV>PARAM:INBEAM_SM</PARAM_PV>
+              <PARAM_PV>PARAM:SMINBEAM</PARAM_PV>
             </macros>
             <name></name>
             <opi_file>param_inout.opi</opi_file>
@@ -1038,6 +1038,48 @@ $(pv_value)</tooltip>
             <wuid>2150758c:16990a9ebac:-6ddf</wuid>
             <x>0</x>
             <y>78</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>30</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <PARAM_NAME>SM In</PARAM_NAME>
+              <PARAM_PV>PARAM:SAMPINBEAM</PARAM_PV>
+            </macros>
+            <name>_3</name>
+            <opi_file>param_inout.opi</opi_file>
+            <resize_behaviour>1</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>true</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>398</width>
+            <wuid>-74439178:16b93487e3a:-7ced</wuid>
+            <x>0</x>
+            <y>114</y>
           </widget>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1370,7 +1412,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Components</name>
+        <name>All Parameters</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1405,7 +1447,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
           </foreground_color>
-          <height>427</height>
+          <height>535</height>
           <lock_children>false</lock_children>
           <macros>
             <include_parent_macros>true</include_parent_macros>
@@ -1430,7 +1472,7 @@ $(pv_value)</tooltip>
           <width>931</width>
           <wuid>7b2b8c8d:165c7bfd038:-7a1c</wuid>
           <x>60</x>
-          <y>42</y>
+          <y>6</y>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
             <background_color>
@@ -1468,8 +1510,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-6596</wuid>
-            <x>6</x>
-            <y>12</y>
+            <x>0</x>
+            <y>1</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1508,8 +1550,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-61cf</wuid>
-            <x>6</x>
-            <y>62</y>
+            <x>0</x>
+            <y>51</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1548,8 +1590,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-61bd</wuid>
-            <x>6</x>
-            <y>112</y>
+            <x>0</x>
+            <y>101</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1588,8 +1630,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-61ae</wuid>
-            <x>6</x>
-            <y>162</y>
+            <x>0</x>
+            <y>151</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1628,8 +1670,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-619f</wuid>
-            <x>6</x>
-            <y>212</y>
+            <x>0</x>
+            <y>201</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1668,8 +1710,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-6190</wuid>
-            <x>6</x>
-            <y>262</y>
+            <x>0</x>
+            <y>251</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1708,8 +1750,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-6181</wuid>
-            <x>6</x>
-            <y>312</y>
+            <x>0</x>
+            <y>301</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1748,8 +1790,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>-744b7940:165a9b5d31a:-6172</wuid>
-            <x>6</x>
-            <y>362</y>
+            <x>0</x>
+            <y>351</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1788,8 +1830,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7249</wuid>
-            <x>486</x>
-            <y>12</y>
+            <x>0</x>
+            <y>397</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1828,8 +1870,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-723e</wuid>
-            <x>486</x>
-            <y>62</y>
+            <x>0</x>
+            <y>445</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1868,8 +1910,8 @@ $(pv_value)</tooltip>
             <widget_type>Linking Container</widget_type>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7233</wuid>
-            <x>486</x>
-            <y>112</y>
+            <x>0</x>
+            <y>492</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1909,7 +1951,7 @@ $(pv_value)</tooltip>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7228</wuid>
             <x>486</x>
-            <y>162</y>
+            <y>1</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1949,7 +1991,7 @@ $(pv_value)</tooltip>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-721d</wuid>
             <x>486</x>
-            <y>212</y>
+            <y>51</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1989,7 +2031,7 @@ $(pv_value)</tooltip>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7212</wuid>
             <x>486</x>
-            <y>262</y>
+            <y>101</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -2029,7 +2071,7 @@ $(pv_value)</tooltip>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-7207</wuid>
             <x>486</x>
-            <y>312</y>
+            <y>151</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -2069,48 +2111,248 @@ $(pv_value)</tooltip>
             <width>400</width>
             <wuid>7b2b8c8d:165c7bfd038:-71fc</wuid>
             <x>486</x>
-            <y>362</y>
+            <y>201</y>
           </widget>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <auto_size>false</auto_size>
-          <background_color>
-            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-          </background_color>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
-          </font>
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <height>31</height>
-          <horizontal_alignment>1</horizontal_alignment>
-          <name>Label</name>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <text>Positions relative to beam (mm)</text>
-          <tooltip></tooltip>
-          <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
-          <visible>true</visible>
-          <widget_type>Label</widget_type>
-          <width>829</width>
-          <wrap_words>false</wrap_words>
-          <wuid>-744b7940:165a9b5d31a:-6151</wuid>
-          <x>63</x>
-          <y>12</y>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_17</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7cb6</wuid>
+            <x>486</x>
+            <y>251</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_18</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7ca5</wuid>
+            <x>486</x>
+            <y>301</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_19</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7c94</wuid>
+            <x>486</x>
+            <y>351</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_20</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7c83</wuid>
+            <x>486</x>
+            <y>397</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_21</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7c72</wuid>
+            <x>486</x>
+            <y>445</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <background_color>
+              <color red="240" green="240" blue="240" />
+            </background_color>
+            <border_color>
+              <color red="0" green="128" blue="255" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            </font>
+            <foreground_color>
+              <color red="192" green="192" blue="192" />
+            </foreground_color>
+            <group_name></group_name>
+            <height>40</height>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <name>pos_22</name>
+            <opi_file>param_move.opi</opi_file>
+            <resize_behaviour>3</resize_behaviour>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <tooltip></tooltip>
+            <visible>false</visible>
+            <widget_type>Linking Container</widget_type>
+            <width>400</width>
+            <wuid>-74439178:16b93487e3a:-7c61</wuid>
+            <x>486</x>
+            <y>492</y>
+          </widget>
         </widget>
       </widget>
     </widget>
