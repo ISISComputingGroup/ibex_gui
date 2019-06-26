@@ -1,26 +1,28 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2018 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2018
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.annotation.PostConstruct;
 
@@ -61,76 +63,88 @@ public class JournalViewerView {
     /**
      * The view ID.
      */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
-	
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
+
     private Label lblError;
     private Label lblLastUpdate;
-    
+
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
-    
+
     private Button btnRefresh;
     private Spinner spinnerPageNumber;
+    private FilterControl filterControl;
 
-	private DataboundTable<JournalRow> table;
+    private DataboundTable<JournalRow> table;
 
-	/**
-	 * Create contents of the view part.
-	 * @param parent The parent view part.
-	 */
-	@PostConstruct
-	public void createPartControl(final Composite parent) {
-		parent.setLayout(new GridLayout(1, false));
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-		parent.setLayoutData(gd);
+    private static final JournalField[] FIELDS = { JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.START_TIME,
+            JournalField.RB_NUMBER, JournalField.USERS };
 
-		Label lblTitle = new Label(parent, SWT.NONE);
-		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
-		lblTitle.setText("Journal Viewer");
-		
-		Composite selectedContainer = new Composite(parent, SWT.FILL);
-		RowLayout rl = new RowLayout();
-		rl.justify = false;
-		rl.pack = false;
-		rl.type = SWT.HORIZONTAL;
-		selectedContainer.setLayout(rl);
-		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
-		Composite controls = new Composite(parent, SWT.FILL);
-		RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
-		rlControls.center = true;
-		controls.setLayout(rlControls);
-		
-		Label lblPage = new Label(controls, SWT.NONE);
-		lblPage.setText("Page number: ");
-        
+    /**
+     * Create contents of the view part.
+     * 
+     * @param parent
+     *            The parent view part.
+     */
+    @PostConstruct
+    public void createPartControl(final Composite parent) {
+        parent.setLayout(new GridLayout(1, false));
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+        parent.setLayoutData(gd);
+
+        Label lblTitle = new Label(parent, SWT.NONE);
+        lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
+        lblTitle.setText("Journal Viewer");
+
+        Composite selectedContainer = new Composite(parent, SWT.FILL);
+        RowLayout rl = new RowLayout();
+        rl.justify = false;
+        rl.pack = false;
+        rl.type = SWT.HORIZONTAL;
+        selectedContainer.setLayout(rl);
+        selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+        Composite controls = new Composite(parent, SWT.FILL);
+        RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
+        rlControls.center = true;
+        controls.setLayout(rlControls);
+
+        Label lblPage = new Label(controls, SWT.NONE);
+        lblPage.setText("Page number: ");
+
         spinnerPageNumber = new Spinner(controls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
-		
+
         btnRefresh = new Button(controls, SWT.NONE);
         btnRefresh.setText("Refresh data");
-        
-        FilterControl filterControl = new FilterControl(controls);
+
+        filterControl = new FilterControl(controls);
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
         filterControl.setLayout(rlFilterControl);
-        
+
         Button btnSearch = new Button(controls, SWT.NONE);
+        btnSearch.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                search();
+            }
+        });
         btnSearch.setLayoutData(new RowData(100, SWT.DEFAULT));
         btnSearch.setText("Search");
-		
-		for (final JournalField property : JournalField.values()) {
-			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
-			checkbox.setText(property.getFriendlyName());
-			checkbox.setSelection(model.getFieldSelected(property));
-			checkbox.addSelectionListener(new SelectionAdapter() {
-	            @Override
-	            public void widgetSelected(SelectionEvent e) {
-	                super.widgetSelected(e);
-	                model.setFieldSelected(property, checkbox.getSelection());
-	            }
-	        });
-		}
-        
+
+        for (final JournalField property : JournalField.values()) {
+            final Button checkbox = new Button(selectedContainer, SWT.CHECK);
+            checkbox.setText(property.getFriendlyName());
+            checkbox.setSelection(model.getFieldSelected(property));
+            checkbox.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    super.widgetSelected(e);
+                    model.setFieldSelected(property, checkbox.getSelection());
+                }
+            });
+        }
+
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
 		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
@@ -151,49 +165,106 @@ public class JournalViewerView {
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
         lblError.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
         lblError.setText("placeholder");
-        
+
         lblLastUpdate = new Label(parent, SWT.NONE);
         lblLastUpdate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         lblLastUpdate.setText("placeholder");
 
         bind();
-	}
-	
-	private void changeTableColumns() {
-		// Dispose all the columns and re-add them, otherwise the columns may not be in the expected order.
-		for (TableColumn col : table.table().getColumns()) {
-			col.dispose();
-		}
-		
-		for (final JournalField field : JournalField.values()) {
-			if (model.getFieldSelected(field)) {
-				TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true, new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
-					@Override
-					protected String stringFromRow(JournalRow row) {
-						return row.get(field);
-					}
-				});
-				col.getColumn().setText(field.getFriendlyName());
-				
-			}
-		}
-		
-		forceResizeTable();
-	}
-	
-	/**
-	 * Forces the table to display the columns correctly.
-	 * 
-	 * This is a dirty hack but is the only way I found to ensure the columns displayed properly.
-	 */
-	private void forceResizeTable() {
-		table.setRedraw(false);
-		Point prevSize = table.getSize();
-		table.setSize(prevSize.x, prevSize.y - 1);
-		table.setSize(prevSize);
-		table.setRedraw(true);
-	}
-	
+    }
+
+    /**
+     * Requests that the model perform a search for log messages that match the
+     * request parameters.
+     */
+    private void search() {
+        if (model != null) {
+            int fieldIndex = filterControl.getCmbFilterTypeIndex();
+
+            if (fieldIndex != -1) {
+                final JournalField field = FIELDS[fieldIndex];
+                String value = null;
+                Integer fromNumber = null;
+                Integer toNumber = null;
+                Calendar fromTime = null;
+                Calendar toTime = null;
+                if (field == JournalField.RUN_NUMBER) {
+                    fromNumber = filterControl.getRunNumberFrom();
+                    toNumber = filterControl.getRunNumberTo();
+                } else if (field == JournalField.START_TIME) {
+                    fromTime = filterControl.getStartTimeFrom();
+                    toTime = filterControl.getStartTimeTo();
+                } else {
+                    value = filterControl.getActiveSearchText();
+                }
+
+                runSearchJob(field, value, fromNumber, toNumber, fromTime, toTime);
+
+            }
+        }
+    }
+
+    private void runSearchJob(final JournalField field, final String value, Integer fromNumber, Integer toNumber,
+            final Calendar fromTime, final Calendar toTime) {
+
+        final Runnable searchJob = new Runnable() {
+            @Override
+            public void run() {
+                model.search(field, value, fromNumber, toNumber, fromTime, toTime);
+            }
+        };
+
+        Thread searchJobThread = new Thread(searchJob);
+
+        searchJobThread.start();
+    }
+
+    private void clearSearchResults() {
+//        txtValue.setText("");
+
+//        if (model != null) {
+//            model.clearSearch();
+//        }
+    }
+
+    private void changeTableColumns() {
+        // Dispose all the columns and re-add them, otherwise the columns may
+        // not be in the expected order.
+        for (TableColumn col : table.table().getColumns()) {
+            col.dispose();
+        }
+
+        for (final JournalField field : JournalField.values()) {
+            if (model.getFieldSelected(field)) {
+                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
+                        new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+                            @Override
+                            protected String stringFromRow(JournalRow row) {
+                                return row.get(field);
+                            }
+                        });
+                col.getColumn().setText(field.getFriendlyName());
+
+            }
+        }
+
+        forceResizeTable();
+    }
+
+    /**
+     * Forces the table to display the columns correctly.
+     * 
+     * This is a dirty hack but is the only way I found to ensure the columns
+     * displayed properly.
+     */
+    private void forceResizeTable() {
+        table.setRedraw(false);
+        Point prevSize = table.getSize();
+        table.setSize(prevSize.x, prevSize.y - 1);
+        table.setSize(prevSize);
+        table.setRedraw(true);
+    }
+
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
                 BeanProperties.value("message").observe(model));
@@ -204,27 +275,26 @@ public class JournalViewerView {
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
 
-        
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.refresh();
             }
         });
-        
+
         model.addPropertyChangeListener("runs", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {		
-				Display.getDefault().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						changeTableColumns();	
-						table.setRows(model.getRuns());
-					}
-				});
-			}
-		});
-        
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeTableColumns();
+                        table.setRows(model.getRuns());
+                    }
+                });
+            }
+        });
+
         // TODO do this the E4 way
 //        // Add a listener to refresh the page whenever it becomes visible
 //        try {

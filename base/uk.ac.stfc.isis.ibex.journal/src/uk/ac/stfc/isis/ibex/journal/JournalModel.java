@@ -21,7 +21,9 @@ package uk.ac.stfc.isis.ibex.journal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
@@ -99,11 +101,95 @@ public class JournalModel extends ModelObject {
     }
     
     /**
+     * Attempts to connect to the database and update the status to display
+     * runs that match the request parameters.
+     * 
+     * @param field The journal field to search by.
+     * @param value Search the 'searchField' field of every record for this string value (null = no string search)
+     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
+     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
+     * @param fromTime Consider only runs with a start time after this time (null = no limit).
+     * @param toTime Consider only runs with a start time before this time (null = no limit).
+     */
+    public void search(JournalField field, String value, Integer fromNumber, Integer toNumber, Calendar fromTime,
+            Calendar toTime) {
+        Connection connection = null;
+        try {
+            String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
+            String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
+            String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
+
+            connection = Rdb.connectToDatabase(schema, user, password).getConnection();
+
+            setMessage("");
+            setLastUpdate(new Date());
+            updateRunsSearch(connection, field, value, fromNumber, toNumber, fromTime, toTime);
+        } catch (Exception ex) {
+            setMessage(Rdb.getError(ex).toString());
+            LOG.error(ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException | NullPointerException e) {
+                // Do nothing - connection was null, or already closed.
+                LOG.warn("Tried closing non-existent connection.");
+            }
+        }
+    }
+    
+    /**
      * Clears instrument specific data in the model.
      */
     public void clearModel() {
     	setRuns(Collections.<JournalRow>emptyList());
         lastUpdate = null;
+    }
+    
+    /**
+     * Searches for and updates runs form the database.
+     * 
+     * @param connection the SQL connection to use.
+     * @param field The journal field to search by.
+     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
+     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
+     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
+     * @param fromTime Consider only runs with a start time after this time (null = no limit).
+     * @param toTime Consider only runs with a start time before this time (null = no limit).
+     * @throws SQLException - If there was an error while querying the database
+     */
+    private void updateRunsSearch(Connection connection, JournalField field, String searchString, Integer fromNumber,
+            Integer toNumber, Calendar fromTime, Calendar toTime) throws SQLException{
+        long startTime = System.currentTimeMillis();
+        
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM journal_entries ORDER BY run_number DESC LIMIT 0, 5");
+
+        ResultSet rs = constructSearchSQLQuery(connection, field, searchString, fromNumber, toNumber, fromTime, toTime).executeQuery();
+        
+        List<JournalRow> runs = new ArrayList<>();
+        while (rs.next()) {
+            JournalRow run = new JournalRow();
+            for (JournalField property : selectedFields) {
+                try {
+                    String sqlValue = rs.getString(property.getSqlFieldName());
+                    String value = property.getFormatter().format(sqlValue);
+                    run.put(property, value);
+                } catch (SQLException e) {
+                    run.put(property, "None");
+                }
+            }
+            runs.add(run);
+        }
+        rs.close();
+        
+        setRuns(Collections.unmodifiableList(runs));
+        updateRunsCount(connection);
+        
+        long totalTime = System.currentTimeMillis() - startTime;
+        if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
+            LOG.warn(String.format(
+                    "Journal parser SQL queries took %s ms. Should have taken less than %s ms.",
+                    totalTime, QUERY_DURATION_WARNING_LEVEL));
+        }
     }
     
     /**
@@ -167,6 +253,68 @@ public class JournalModel extends ModelObject {
     	st.setInt(1, (pageNumber - 1) * PAGE_SIZE);
     	st.setInt(2, PAGE_SIZE);
     	return st;
+    }
+    
+    private PreparedStatement constructSearchSQLQuery(Connection connection, JournalField field, String searchString, Integer fromNumber,
+            Integer toNumber, Calendar fromTime, Calendar toTime) throws SQLException {
+        
+        StringBuilder query = new StringBuilder("SELECT * FROM journal_entries");
+        
+        if (searchString != null || fromNumber != null || toNumber != null || fromTime != null || toTime != null) {
+            query.append(" WHERE");
+            boolean firstCondition = true;
+            if (searchString != null) {
+                query.append(firstCondition ? " " : " AND ");
+                firstCondition = false;
+                query.append(field.getSqlFieldName() + " LIKE ?");
+            }
+            if (fromNumber != null) {
+                query.append(firstCondition ? " " : " AND ");
+                firstCondition = false;
+                query.append(field.getSqlFieldName() + " >= ?");
+            }
+            if (toNumber != null) {
+                query.append(firstCondition ? " " : " AND ");
+                firstCondition = false;
+                query.append(field.getSqlFieldName() + " <= ?");
+            }
+            if (fromTime != null) {
+                query.append(firstCondition ? " " : " AND ");
+                firstCondition = false;
+                query.append(field.getSqlFieldName() + " > ?");
+            }
+            if (toTime != null) {
+                query.append(firstCondition ? " " : " AND ");
+                firstCondition = false;
+                query.append(field.getSqlFieldName() + " < ?");
+            }
+        }
+        query.append(" ORDER BY run_number DESC LIMIT ?, ?");
+        System.out.println(query);
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        
+        int index = 0;
+        if (searchString != null) {
+            st.setString(++index, "%" + searchString + "%");
+        }
+        if (fromNumber != null) {
+            st.setInt(++index, fromNumber);
+        }
+        if (toNumber != null) {
+            st.setInt(++index, toNumber);
+        }
+        if (fromTime != null) {
+            Timestamp start = new Timestamp(fromTime.getTimeInMillis());
+            st.setTimestamp(++index, start);
+        }
+        if (toTime != null) {
+            Timestamp end = new Timestamp(toTime.getTimeInMillis());
+            st.setTimestamp(++index, end);
+        }
+        
+        st.setInt(++index, (pageNumber - 1) * PAGE_SIZE);
+        st.setInt(++index, PAGE_SIZE);
+        return st;
     }
     
     /**
