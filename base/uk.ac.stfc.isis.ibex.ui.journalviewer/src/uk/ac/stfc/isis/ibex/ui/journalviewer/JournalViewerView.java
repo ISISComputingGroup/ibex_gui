@@ -21,11 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import javax.annotation.PostConstruct;
-
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,8 +39,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
@@ -49,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
+import org.eclipse.swt.layout.RowData;
 
 /**
  * Journal viewer main view.
@@ -95,7 +97,9 @@ public class JournalViewerView {
 		selectedContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
 		Composite controls = new Composite(parent, SWT.FILL);
-		controls.setLayout(new GridLayout(3, false));
+		RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
+		rlControls.center = true;
+		controls.setLayout(rlControls);
 		
 		Label lblPage = new Label(controls, SWT.NONE);
 		lblPage.setText("Page number: ");
@@ -105,7 +109,14 @@ public class JournalViewerView {
 		
         btnRefresh = new Button(controls, SWT.NONE);
         btnRefresh.setText("Refresh data");
-		
+        
+        FilterControl filterControl = new FilterControl(controls);
+        RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
+        filterControl.setLayout(rlFilterControl);
+        
+        Button btnSearch = new Button(controls, SWT.NONE);
+        btnSearch.setLayoutData(new RowData(100, SWT.DEFAULT));
+        btnSearch.setText("Search");
 		
 		for (final JournalField property : JournalField.values()) {
 			final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -119,7 +130,7 @@ public class JournalViewerView {
 	            }
 	        });
 		}
-		
+        
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
 		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
