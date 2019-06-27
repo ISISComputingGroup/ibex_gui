@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2018 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -100,18 +100,25 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
+     * Resets the active search parameters to null.
+     */
+    public void resetActiveParameters() {
+        model.resetActiveParameters();
+    }
+    
+    /**
      * Performs a search, returning all runs that match the request parameters.
      * 
      * @param field The journal field to search by.
-     * @param value Search the 'searchField' field of every record for this string value (null = no string search)
+     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
      * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
      * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
      * @param fromTime Consider only runs with a start time after this time (null = no limit).
      * @param toTime Consider only runs with a start time before this time (null = no limit).
      */
-    public void search(JournalField field, String value, Integer fromNumber, Integer toNumber, Calendar fromTime,
+    public void search(JournalField field, String searchString, Integer fromNumber, Integer toNumber, Calendar fromTime,
             Calendar toTime) {
-        model.search(field, value, fromNumber, toNumber, fromTime, toTime);
+        model.search(field, searchString, fromNumber, toNumber, fromTime, toTime);
     }
     
     /**

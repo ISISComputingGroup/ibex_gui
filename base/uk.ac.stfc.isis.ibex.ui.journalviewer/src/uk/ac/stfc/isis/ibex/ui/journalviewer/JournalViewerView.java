@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2018
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -39,8 +37,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -70,15 +70,18 @@ public class JournalViewerView {
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
+    private static final Display DISPLAY = Display.getCurrent();
 
     private Button btnRefresh;
     private Spinner spinnerPageNumber;
     private FilterControl filterControl;
+    private Button btnSearch;
+    private ProgressBar progressBar;
 
     private DataboundTable<JournalRow> table;
 
-    private static final JournalField[] FIELDS = { JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.START_TIME,
-            JournalField.RB_NUMBER, JournalField.USERS };
+    private static final JournalField[] FIELDS = {JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.START_TIME,
+            JournalField.RB_NUMBER, JournalField.USERS};
 
     /**
      * Create contents of the view part.
@@ -108,6 +111,7 @@ public class JournalViewerView {
         RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
         rlControls.center = true;
         controls.setLayout(rlControls);
+        controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         Label lblPage = new Label(controls, SWT.NONE);
         lblPage.setText("Page number: ");
@@ -122,15 +126,13 @@ public class JournalViewerView {
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
         filterControl.setLayout(rlFilterControl);
 
-        Button btnSearch = new Button(controls, SWT.NONE);
-        btnSearch.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                search();
-            }
-        });
+        btnSearch = new Button(controls, SWT.NONE);
         btnSearch.setLayoutData(new RowData(100, SWT.DEFAULT));
         btnSearch.setText("Search");
+        
+        progressBar = new ProgressBar(controls, SWT.INDETERMINATE);
+        progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
+        setProgressIndicatorsVisible(false);
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -210,21 +212,15 @@ public class JournalViewerView {
         final Runnable searchJob = new Runnable() {
             @Override
             public void run() {
+                setProgressIndicatorsVisible(true);
                 model.search(field, value, fromNumber, toNumber, fromTime, toTime);
+                setProgressIndicatorsVisible(false);
             }
         };
 
         Thread searchJobThread = new Thread(searchJob);
 
         searchJobThread.start();
-    }
-
-    private void clearSearchResults() {
-//        txtValue.setText("");
-
-//        if (model != null) {
-//            model.clearSearch();
-//        }
     }
 
     private void changeTableColumns() {
@@ -264,6 +260,17 @@ public class JournalViewerView {
         table.setSize(prevSize);
         table.setRedraw(true);
     }
+    
+    private void setProgressIndicatorsVisible(final boolean visible) {
+
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisible(visible);
+            }
+        });
+
+    }
 
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(lblError),
@@ -278,7 +285,17 @@ public class JournalViewerView {
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+                setProgressIndicatorsVisible(true);
+                model.resetActiveParameters();
                 model.refresh();
+                setProgressIndicatorsVisible(false);
+            }
+        });
+        
+        btnSearch.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                search();
             }
         });
 
@@ -288,8 +305,10 @@ public class JournalViewerView {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
+                        setProgressIndicatorsVisible(true);
                         changeTableColumns();
                         table.setRows(model.getRuns());
+                        setProgressIndicatorsVisible(false);
                     }
                 });
             }

@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -31,32 +30,20 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
-
-import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalRow;
-import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
-import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
-import org.eclipse.swt.layout.RowLayout;
 
 /**
  * The Class Search Control to allow searching within the log.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class FilterControl extends Composite {
-
-    private Composite parent;
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
     private Text txtSearchRBNumber;
@@ -87,8 +74,6 @@ public class FilterControl extends Composite {
      */
     public FilterControl(Composite parent) {
         super(parent, SWT.NONE);
-        this.parent = parent;
-
         Composite grpFilter = new Composite(parent, SWT.NONE);
         grpFilter.setLayout(null);
 
@@ -99,7 +84,7 @@ public class FilterControl extends Composite {
         cmbFilterType = new Combo(grpFilter, SWT.READ_ONLY);
         cmbFilterType.setBounds(74, 10, 97, 23);
 
-        cmbFilterType.setItems(new String[] { "Run number", "Title", "Start time", "RB number", "Users" });
+        cmbFilterType.setItems(new String[] {"Run number", "Title", "Start time", "RB number", "Users"});
         cmbFilterType.select(0);
 
         cmpSearch = new Composite(grpFilter, SWT.NONE);
@@ -108,18 +93,18 @@ public class FilterControl extends Composite {
 
         Composite cmpRunNumber = new Composite(cmpSearch, SWT.NONE);
         cmpFilters.add(cmpRunNumber);
-        GridLayout gl_cmpRunNumber = new GridLayout(5, false);
-        gl_cmpRunNumber.marginLeft = 90;
-        cmpRunNumber.setLayout(gl_cmpRunNumber);
+        GridLayout glCmpRunNumber = new GridLayout(5, false);
+        glCmpRunNumber.marginLeft = 90;
+        cmpRunNumber.setLayout(glCmpRunNumber);
 
         chkNumberFrom = new Button(cmpRunNumber, SWT.CHECK);
         chkNumberFrom.setText("From");
 
         spinnerFromNumber = new Spinner(cmpRunNumber, SWT.BORDER);
         spinnerFromNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
-        GridData gd_spinnerFromNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_spinnerFromNumber.widthHint = 30;
-        spinnerFromNumber.setLayoutData(gd_spinnerFromNumber);
+        GridData gdSpinnerFromNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdSpinnerFromNumber.widthHint = 30;
+        spinnerFromNumber.setLayoutData(gdSpinnerFromNumber);
         spinnerFromNumber.setEnabled(false);
 
         Label lblSpacing = new Label(cmpRunNumber, SWT.NONE);
@@ -130,9 +115,9 @@ public class FilterControl extends Composite {
 
         spinnerToNumber = new Spinner(cmpRunNumber, SWT.BORDER);
         spinnerToNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
-        GridData gd_spinnerToNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_spinnerToNumber.widthHint = 30;
-        spinnerToNumber.setLayoutData(gd_spinnerToNumber);
+        GridData gdSpinnerToNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdSpinnerToNumber.widthHint = 30;
+        spinnerToNumber.setLayoutData(gdSpinnerToNumber);
         spinnerToNumber.setEnabled(false);
 
         cmpTitle = new Composite(cmpSearch, SWT.NONE);
