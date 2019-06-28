@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Calendar;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -34,10 +34,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
@@ -46,13 +46,13 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
-import org.eclipse.swt.layout.RowData;
 
 /**
  * Journal viewer main view.
@@ -84,6 +84,7 @@ public class JournalViewerView {
             JournalField.RB_NUMBER, JournalField.USERS};
     private Composite searchControls;
     private Button btnClear;
+    private Composite basicControls;
 
     /**
      * Create contents of the view part.
@@ -114,14 +115,20 @@ public class JournalViewerView {
         rlControls.center = true;
         controls.setLayout(rlControls);
         controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        
+        basicControls = new Composite(controls, SWT.NONE);
+        RowLayout rlBasicControls = new RowLayout(SWT.HORIZONTAL);
+        rlBasicControls.marginTop = 7;
+        rlBasicControls.center = true;
+        basicControls.setLayout(rlBasicControls);
 
-        Label lblPage = new Label(controls, SWT.NONE);
+        Label lblPage = new Label(basicControls, SWT.NONE);
         lblPage.setText("Page number: ");
 
-        spinnerPageNumber = new Spinner(controls, SWT.BORDER);
+        spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
 
-        btnRefresh = new Button(controls, SWT.NONE);
+        btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
         
         searchControls = new Composite(controls, SWT.NONE);
@@ -172,7 +179,7 @@ public class JournalViewerView {
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		table.initialise();
+//		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
@@ -195,36 +202,32 @@ public class JournalViewerView {
             int fieldIndex = searchInput.getCmbFilterTypeIndex();
 
             if (fieldIndex != -1) {
+                JournalParameters parameters = new JournalParameters();
                 final JournalField field = FIELDS[fieldIndex];
-                String value = null;
-                Integer fromNumber = null;
-                Integer toNumber = null;
-                Calendar fromTime = null;
-                Calendar toTime = null;
+                parameters.field = field;
                 if (field == JournalField.RUN_NUMBER) {
-                    fromNumber = searchInput.getRunNumberFrom();
-                    toNumber = searchInput.getRunNumberTo();
+                    parameters.fromNumber = searchInput.getRunNumberFrom();
+                    parameters.toNumber = searchInput.getRunNumberTo();
                 } else if (field == JournalField.START_TIME) {
-                    fromTime = searchInput.getStartTimeFrom();
-                    toTime = searchInput.getStartTimeTo();
+                    parameters.fromTime = searchInput.getStartTimeFrom();
+                    parameters.toTime = searchInput.getStartTimeTo();
                 } else {
-                    value = searchInput.getActiveSearchText();
+                    parameters.searchString = searchInput.getActiveSearchText();
                 }
 
-                runSearchJob(field, value, fromNumber, toNumber, fromTime, toTime);
+                runSearchJob(parameters);
 
             }
         }
     }
 
-    private void runSearchJob(final JournalField field, final String value, Integer fromNumber, Integer toNumber,
-            final Calendar fromTime, final Calendar toTime) {
+    private void runSearchJob(JournalParameters parameters) {
 
         final Runnable searchJob = new Runnable() {
             @Override
             public void run() {
                 setProgressIndicatorsVisible(true);
-                model.search(field, value, fromNumber, toNumber, fromTime, toTime);
+                model.search(parameters);
                 setProgressIndicatorsVisible(false);
             }
         };
@@ -304,6 +307,7 @@ public class JournalViewerView {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 setProgressIndicatorsVisible(true);
+                spinnerPageNumber.setSelection(1);
                 model.refresh();
                 setProgressIndicatorsVisible(false);
             }
@@ -312,6 +316,7 @@ public class JournalViewerView {
         btnSearch.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+                spinnerPageNumber.setSelection(1);
                 search();
             }
         });
@@ -320,6 +325,7 @@ public class JournalViewerView {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 setProgressIndicatorsVisible(true);
+                spinnerPageNumber.setSelection(1);
                 searchInput.clearInput();
                 model.resetActiveParameters();
                 model.refresh();

@@ -24,7 +24,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.stream.Collectors;
+
+import uk.ac.stfc.isis.ibex.journal.JournalSort.JournalSortDirection;
 
 /**
  * Prepares the SQL statement which searches the journal database.
@@ -34,168 +36,125 @@ import java.util.Calendar;
  * 
  */
 public class JournalSqlStatement {
+    private JournalParameters parameters;
     private int pageNumber;
     private int pageSize;
     private Connection connection;
-    private JournalField field;
-    private ArrayList<JournalField> sortFields = new ArrayList<JournalField>();
-    private ArrayList<String> sortDirections = new ArrayList<String>();
+    private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     private static final String SELECT = "SELECT * FROM journal_entries";
     
     /**
      * Create a journal SQL statement.
      * 
+     * @param parameters The search parameters.
      * @param pageNumber The page number to get the data for.
      * @param pageSize The number of rows on each page.
      * @param connection the SQL connection to use.
-     * @param field The journal field to search by.
      */
-    public JournalSqlStatement(int pageNumber, int pageSize, Connection connection, JournalField field) {
+    public JournalSqlStatement(JournalParameters parameters, int pageNumber, int pageSize, Connection connection) {
+        this.parameters = parameters;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.connection = connection;
-        this.field = field;
     }
     
     /**
-     * Constructs a prepared statement which gets journal data from the database with no filtering.
+     * Constructs a prepared statement for getting journal data from the database.
      * 
      * @return An SQL PreparedStatement
      * @throws SQLException - If there was an error while querying the database
      */
-    public PreparedStatement constructDefaultQuery() throws SQLException{
+    public PreparedStatement constructQuery() throws SQLException {
         StringBuilder query = new StringBuilder(SELECT);
-        query.append(getSortLimitStatement());
-        PreparedStatement st = connection.prepareStatement(query.toString());
-        st.setInt(1, (pageNumber - 1) * pageSize);
-        st.setInt(2, pageSize);
-        return st;
-    }
-    
-    /**
-     * Constructs a prepared statement which searches the database with a text search.
-     * 
-     * @param searchString Search the 'searchField' field of every record for this string value
-     * @return An SQL PreparedStatement
-     * @throws SQLException - If there was an error while querying the database
-     */
-    public PreparedStatement constructTextSearchQuery(String searchString) throws SQLException {
-        StringBuilder query = new StringBuilder(SELECT);
-        query.append(" WHERE " + field.getSqlFieldName() + " LIKE ?");
-        query.append(getSortLimitStatement());
-        PreparedStatement st = connection.prepareStatement(query.toString());
-        st.setString(1, "%" + searchString + "%");
-        st.setInt(2, (pageNumber - 1) * pageSize);
-        st.setInt(3, pageSize);
-        return st;
-    }
-    
-    /**
-     * Constructs a prepared statement which searches the database with number parameters.
-     * 
-     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
-     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
-     * @return An SQL PreparedStatement
-     * @throws SQLException - If there was an error while querying the database
-     */
-    public PreparedStatement constructNumberSearchQuery(Integer fromNumber, Integer toNumber) throws SQLException {
-        StringBuilder query = new StringBuilder(SELECT);
-        query.append(" WHERE");
-        if (fromNumber != null) {
-            query.append(" " + field.getSqlFieldName() + " >= ?");
-        }
-        if (fromNumber != null && toNumber != null) {
-            query.append(" AND");
-        }
-        if (toNumber != null) {
-            query.append(" " + field.getSqlFieldName() + " <= ?");
-        }
-        query.append(getSortLimitStatement());
-        System.out.println(query);
-        PreparedStatement st = connection.prepareStatement(query.toString());
         
+        query.append(createWhereTemplate());
+        query.append(createSortLimitTemplate());
+        
+        return fillTemplate(query.toString());
+    }
+    
+    /**
+     * @return A string containing the WHERE section of the query.
+     */
+    private String createWhereTemplate() {
+        StringBuilder query = new StringBuilder();
+        if (parameters.hasOptionalParameters()) {
+            query.append(" WHERE ");
+            ArrayList<String> parts = new ArrayList<String>();
+            parameters.searchString.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " LIKE ?"));
+            parameters.fromNumber.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " >= ?"));
+            parameters.toNumber.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " <= ?"));
+            parameters.fromTime.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " >= ?"));
+            parameters.toTime.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " <= ?"));
+            query.append(String.join(" AND ", parts));
+        }
+        return query.toString();
+    }
+    
+    /**
+     * @param query The string query template to fill.
+     * @return A full prepared statement ready to be executed.
+     * @throws SQLException - If there was an error while querying the database
+     */
+    private PreparedStatement fillTemplate(String query) throws SQLException {
+        PreparedStatement st = connection.prepareStatement(query.toString());
         int index = 0;
-        if (fromNumber != null) {
-            st.setInt(++index, fromNumber);
+        
+        if (parameters.searchString.isPresent()) {
+            st.setString(++index, "%" + parameters.searchString.get() + "%");
         }
-        if (toNumber != null) {
-            st.setInt(++index, toNumber);
+        if (parameters.fromNumber.isPresent()) {
+            st.setInt(++index, parameters.fromNumber.get());
         }
+        if (parameters.toNumber.isPresent()) {
+            st.setInt(++index, parameters.toNumber.get());
+        }
+        if (parameters.fromTime.isPresent()) {
+            st.setTimestamp(++index, new Timestamp(parameters.fromTime.get().getTimeInMillis()));
+        }
+        if (parameters.toTime.isPresent()) {
+            st.setTimestamp(++index, new Timestamp(parameters.toTime.get().getTimeInMillis()));
+        }
+        
         st.setInt(++index, (pageNumber - 1) * pageSize);
         st.setInt(++index, pageSize);
         return st;
-    }
-    
-    /**
-     * Constructs a prepared statement which searches the database with time parameters.
-     * 
-     * @param fromTime Consider only runs with a start time after this time (null = no limit)
-     * @param toTime Consider only runs with a start time before this time (null = no limit)
-     * @return An SQL PreparedStatement
-     * @throws SQLException - If there was an error while querying the database
-     */
-    public PreparedStatement constructTimeSearchQuery(Calendar fromTime, Calendar toTime) throws SQLException {
-        StringBuilder query = new StringBuilder(SELECT);
-        query.append(" WHERE");
-        if (fromTime != null) {
-            query.append(" " + field.getSqlFieldName() + " >= ?");
-        }
-        if (fromTime != null && toTime != null) {
-            query.append(" AND");
-        }
-        if (toTime != null) {
-            query.append(" " + field.getSqlFieldName() + " <= ?");
-        }
-        query.append(getSortLimitStatement());
-        PreparedStatement st = connection.prepareStatement(query.toString());
-        
-        int index = 0;
-        if (fromTime != null) {
-            Timestamp timestamp = new Timestamp(fromTime.getTimeInMillis());
-            st.setTimestamp(++index, timestamp);
-        }
-        if (toTime != null) {
-            Timestamp timestamp = new Timestamp(toTime.getTimeInMillis());
-            st.setTimestamp(++index, timestamp);
-        }
-        st.setInt(++index, (pageNumber - 1) * pageSize);
-        st.setInt(++index, pageSize);
-        return st;
-    }
-    
-    /**
-     * Adds a field to be used to order the results in ascending order.
-     * 
-     * @param sortField
-     */
-    public void addAscendingSort(JournalField sortField) {
-        sortFields.add(sortField);
-        sortDirections.add(" ASC");
-    }
-    
-    /**
-     * Adds a field to be used to order the results in descending order.
-     * 
-     * @param sortField
-     */
-    public void addDescendingSort(JournalField sortField) {
-        sortFields.add(sortField);
-        sortDirections.add(" DESC");
     }
     
     /**
      * @return A string containing the ORDER BY and LIMIT sections of the query.
      */
-    private String getSortLimitStatement() {
-        StringBuilder statement = new StringBuilder();
-        if (sortFields.size() > 0) {
-            statement.append(" ORDER BY " + sortFields.get(0).getSqlFieldName() + sortDirections.get(0));
-            for (int i = 1; i < sortFields.size(); i++) {
-                statement.append(", " + sortFields.get(i).getSqlFieldName() + sortDirections.get(i));
-            }
+    private String createSortLimitTemplate() {
+        if (sorts.size() == 0) {
+            throw new IllegalStateException("Cannot not sort data.");
         }
+        StringBuilder statement = new StringBuilder();
+        statement.append(" ORDER BY ");
+
+        statement.append(sorts.stream()
+                .map(js -> js.sortField.getSqlFieldName() + " " + js.direction.getSql())
+                .collect(Collectors.joining(", ")));
+        
         statement.append(" LIMIT ?, ?");
         return statement.toString();
+    }
+    
+    /**
+     * Adds a field to be used to order the results in ascending order.
+     * 
+     * @param sortField The field to sort with.
+     */
+    public void addAscendingSort(JournalField sortField) {
+        sorts.add(new JournalSort(sortField, JournalSortDirection.ASCENDING));
+    }
+    
+    /**
+     * Adds a field to be used to order the results in descending order.
+     * 
+     * @param sortField The field to sort with.
+     */
+    public void addDescendingSort(JournalField sortField) {
+        sorts.add(new JournalSort(sortField, JournalSortDirection.DESCENDING));
     }
     
 }

@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -230,46 +231,46 @@ public class SearchInput extends Composite {
     /**
      * @return The text in the search box of the currently active filter type.
      */
-    public String getActiveSearchText() {
+    public Optional<String> getActiveSearchText() {
         if (stackSearch.topControl == cmpTitle) {
-            return txtSearchTitle.getText();
+            return Optional.of(txtSearchTitle.getText());
         } else if (stackSearch.topControl == cmpRBNumber) {
-            return txtSearchRBNumber.getText();
+            return Optional.of(txtSearchRBNumber.getText());
         } else if (stackSearch.topControl == cmpUsers) {
-            return txtSearchUsers.getText();
+            return Optional.of(txtSearchUsers.getText());
         } else {
             return null;
         }
     }
 
     /**
-     * @return The number in the from run number spinner, (null if inactive).
+     * @return The number in the from run number spinner.
      */
-    public Integer getRunNumberFrom() {
-        return chkNumberFrom.getSelection() ? spinnerFromNumber.getSelection() : null;
+    public Optional<Integer> getRunNumberFrom() {
+        return chkNumberFrom.getSelection() ? Optional.of(spinnerFromNumber.getSelection()) : Optional.empty();
     }
 
     /**
-     * @return The number in the to run number spinner, (null if inactive).
+     * @return The number in the to run number spinner.
      */
-    public Integer getRunNumberTo() {
-        return chkNumberTo.getSelection() ? spinnerToNumber.getSelection() : null;
+    public Optional<Integer> getRunNumberTo() {
+        return chkNumberTo.getSelection() ? Optional.of(spinnerToNumber.getSelection()) : Optional.empty();
     }
 
     /**
-     * @return A Calendar representing the start time to search from, (null if inactive).
+     * @return A Calendar representing the start time to search from.
      */
-    public Calendar getStartTimeFrom() {
-        return chkTimeFrom.getSelection() ? new GregorianCalendar(dtFromDate.getYear(), dtFromDate.getMonth(),
-                dtFromDate.getDay(), dtFromTime.getHours(), dtFromTime.getMinutes(), dtFromTime.getSeconds()) : null;
+    public Optional<Calendar> getStartTimeFrom() {
+        return chkTimeFrom.getSelection() ? Optional.of(new GregorianCalendar(dtFromDate.getYear(), dtFromDate.getMonth(),
+                dtFromDate.getDay(), dtFromTime.getHours(), dtFromTime.getMinutes(), dtFromTime.getSeconds())) : Optional.empty();
     }
 
     /**
-     * @return A Calendar representing the start time to search to, (null if inactive).
+     * @return A Calendar representing the start time to search to.
      */
-    public Calendar getStartTimeTo() {
-        return chkTimeTo.getSelection() ? new GregorianCalendar(dtToDate.getYear(), dtToDate.getMonth(),
-                dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds()) : null;
+    public Optional<Calendar> getStartTimeTo() {
+        return chkTimeTo.getSelection() ? Optional.of(new GregorianCalendar(dtToDate.getYear(), dtToDate.getMonth(),
+                dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds())) : Optional.empty();
     }
     
     /**

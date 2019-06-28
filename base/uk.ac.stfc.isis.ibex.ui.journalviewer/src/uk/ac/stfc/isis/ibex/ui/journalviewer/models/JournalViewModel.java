@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
+import uk.ac.stfc.isis.ibex.journal.JournalParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -108,16 +109,10 @@ public class JournalViewModel extends ModelObject {
     /**
      * Performs a search, returning all runs that match the request parameters.
      * 
-     * @param field The journal field to search by.
-     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
-     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
-     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
-     * @param fromTime Consider only runs with a start time after this time (null = no limit).
-     * @param toTime Consider only runs with a start time before this time (null = no limit).
+     * @param parameters The parameters to search with.
      */
-    public void search(JournalField field, String searchString, Integer fromNumber, Integer toNumber, Calendar fromTime,
-            Calendar toTime) {
-        model.search(field, searchString, fromNumber, toNumber, fromTime, toTime);
+    public void search(JournalParameters parameters) {
+        model.search(parameters);
     }
     
     /**

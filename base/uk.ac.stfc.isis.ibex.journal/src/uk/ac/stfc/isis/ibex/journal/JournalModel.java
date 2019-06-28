@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
@@ -62,13 +61,8 @@ public class JournalModel extends ModelObject {
     private int pageMax = 1;
     
     // The search parameters of the most recent or active search
-    // Used so the search is remembered when changing the page number
-    private JournalField activeField = JournalField.RUN_NUMBER;
-    private String activeSearchString = null;
-    private Integer activeFromNumber = null;
-    private Integer activeToNumber = null;
-    private Calendar activeFromTime = null;
-    private Calendar activeToTime = null;
+    // Used so the search is remembered when changing the page number or refreshing
+    private JournalParameters activeParameters = new JournalParameters();
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -84,22 +78,16 @@ public class JournalModel extends ModelObject {
      * Reloads the runs with the current parameters.
      */
     public void refresh() {
-    	search(activeField, activeSearchString, activeFromNumber, activeToNumber, activeFromTime, activeToTime);
+    	search(activeParameters);
     }
     
     /**
      * Attempts to connect to the database and update the status to display
      * runs that match the request parameters.
      * 
-     * @param field The journal field to search by.
-     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
-     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
-     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
-     * @param fromTime Consider only runs with a start time after this time (null = no limit).
-     * @param toTime Consider only runs with a start time before this time (null = no limit).
+     * @param parameters The parameters to search with.
      */
-    public void search(JournalField field, String searchString, Integer fromNumber, Integer toNumber, Calendar fromTime,
-            Calendar toTime) {
+    public void search(JournalParameters parameters) {
         Connection connection = null;
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
@@ -110,8 +98,8 @@ public class JournalModel extends ModelObject {
 
             setMessage("");
             setLastUpdate(new Date());
-            updateRunsSearch(connection, field, searchString, fromNumber, toNumber, fromTime, toTime);
-            setActiveParameters(field, searchString, fromNumber, toNumber, fromTime, toTime);
+            updateRunsSearch(connection, parameters);
+            activeParameters = parameters;
         } catch (Exception ex) {
             setMessage(Rdb.getError(ex).toString());
             LOG.error(ex);
@@ -134,34 +122,18 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Searches for and updates runs form the database.
+     * Searches for and updates runs from the database.
      * 
      * @param connection the SQL connection to use.
-     * @param field The journal field to search by.
-     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
-     * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
-     * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
-     * @param fromTime Consider only runs with a start time after this time (null = no limit).
-     * @param toTime Consider only runs with a start time before this time (null = no limit).
-     * @throws SQLException - If there was an error while querying the database
+     * @param parameters The parameters to search with.
      */
-    private void updateRunsSearch(Connection connection, JournalField field, String searchString, Integer fromNumber,
-            Integer toNumber, Calendar fromTime, Calendar toTime) throws SQLException{
+    private void updateRunsSearch(Connection connection, JournalParameters parameters) throws SQLException {
         long startTime = System.currentTimeMillis();
 
-        JournalSqlStatement journalStatement = new JournalSqlStatement(pageNumber, PAGE_SIZE, connection, field);
+        JournalSqlStatement journalStatement = new JournalSqlStatement(parameters, pageNumber, PAGE_SIZE, connection);
         journalStatement.addDescendingSort(JournalField.RUN_NUMBER);
         
-        PreparedStatement statement;
-        if (searchString != null) {
-            statement = journalStatement.constructTextSearchQuery(searchString);
-        } else if (fromNumber != null || toNumber != null) {
-            statement = journalStatement.constructNumberSearchQuery(fromNumber, toNumber);
-        } else if (fromTime != null || toTime != null) {
-            statement = journalStatement.constructTimeSearchQuery(fromTime, toTime);
-        } else {
-            statement = journalStatement.constructDefaultQuery();
-        }
+        PreparedStatement statement = journalStatement.constructQuery();
         
         ResultSet rs = statement.executeQuery();
         
@@ -215,35 +187,10 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Sets the active search parameters.
-     * 
-     * @param field
-     * @param searchString
-     * @param fromNumber
-     * @param toNumber
-     * @param fromTime
-     * @param toTime
-     */
-    private void setActiveParameters(JournalField field, String searchString, Integer fromNumber,
-            Integer toNumber, Calendar fromTime, Calendar toTime) {
-        activeField = field;
-        activeSearchString = searchString;
-        activeFromNumber = fromNumber;
-        activeToNumber = toNumber;
-        activeFromTime = fromTime;
-        activeToTime = toTime;
-    }
-    
-    /**
      * Resets the active search parameters to their default values.
      */
     public void resetActiveParameters() {
-        activeField = JournalField.RUN_NUMBER;
-        activeSearchString = null;
-        activeFromNumber = null;
-        activeToNumber = null;
-        activeFromTime = null;
-        activeToTime = null;
+        activeParameters = new JournalParameters();
     }
     
     private void setRuns(List<JournalRow> runs) {
