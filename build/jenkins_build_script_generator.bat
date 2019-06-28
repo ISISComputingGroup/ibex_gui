@@ -33,7 +33,7 @@ net use p: \\isis\inst$
 
 python.exe purge_archive_client.py
 
-set TARGET_DIR=base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\ibex.product\win32\win32\x86_64
+set TARGET_DIR=base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\scriptgenerator.product\win32\win32\x86_64
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
