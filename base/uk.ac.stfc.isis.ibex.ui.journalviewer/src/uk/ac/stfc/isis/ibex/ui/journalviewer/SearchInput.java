@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Text;
  * The Class Search Control to allow searching within the log.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class FilterControl extends Composite {
+public class SearchInput extends Composite {
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
     private Text txtSearchRBNumber;
@@ -72,7 +72,7 @@ public class FilterControl extends Composite {
      * @param parent
      *            the parent in which this control resides
      */
-    public FilterControl(Composite parent) {
+    public SearchInput(Composite parent) {
         super(parent, SWT.NONE);
         Composite grpFilter = new Composite(parent, SWT.NONE);
         grpFilter.setLayout(null);
@@ -270,5 +270,39 @@ public class FilterControl extends Composite {
     public Calendar getStartTimeTo() {
         return chkTimeTo.getSelection() ? new GregorianCalendar(dtToDate.getYear(), dtToDate.getMonth(),
                 dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds()) : null;
+    }
+    
+    /**
+     * Clears all of the user input and resets the buttons.
+     */
+    public void clearInput() {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                chkNumberFrom.setSelection(false);
+                chkNumberTo.setSelection(false);
+                chkTimeFrom.setSelection(false);
+                chkTimeTo.setSelection(false);
+                
+                txtSearchRBNumber.setText("");
+                txtSearchTitle.setText("");
+                txtSearchUsers.setText("");
+                
+                spinnerFromNumber.setSelection(0);
+                spinnerToNumber.setSelection(0);
+                spinnerFromNumber.setEnabled(false);
+                spinnerToNumber.setEnabled(false);
+                
+                Calendar cal = Calendar.getInstance();
+                dtFromDate.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+                dtToDate.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+                dtFromTime.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
+                dtToTime.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
+                dtFromDate.setEnabled(false);
+                dtToDate.setEnabled(false);
+                dtFromTime.setEnabled(false);
+                dtToTime.setEnabled(false);
+            }
+        });
     }
 }

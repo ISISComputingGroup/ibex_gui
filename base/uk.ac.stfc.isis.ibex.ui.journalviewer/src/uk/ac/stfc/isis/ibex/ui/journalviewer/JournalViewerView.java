@@ -74,7 +74,7 @@ public class JournalViewerView {
 
     private Button btnRefresh;
     private Spinner spinnerPageNumber;
-    private FilterControl filterControl;
+    private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
 
@@ -82,6 +82,8 @@ public class JournalViewerView {
 
     private static final JournalField[] FIELDS = {JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.START_TIME,
             JournalField.RB_NUMBER, JournalField.USERS};
+    private Composite searchControls;
+    private Button btnClear;
 
     /**
      * Create contents of the view part.
@@ -121,16 +123,25 @@ public class JournalViewerView {
 
         btnRefresh = new Button(controls, SWT.NONE);
         btnRefresh.setText("Refresh data");
+        
+        searchControls = new Composite(controls, SWT.NONE);
+        RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
+        rlSearchControls.center = true;
+        searchControls.setLayout(rlSearchControls);
 
-        filterControl = new FilterControl(controls);
+        searchInput = new SearchInput(searchControls);
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
-        filterControl.setLayout(rlFilterControl);
+        searchInput.setLayout(rlFilterControl);
 
-        btnSearch = new Button(controls, SWT.NONE);
-        btnSearch.setLayoutData(new RowData(100, SWT.DEFAULT));
+        btnSearch = new Button(searchControls, SWT.NONE);
+        btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
         btnSearch.setText("Search");
         
-        progressBar = new ProgressBar(controls, SWT.INDETERMINATE);
+        btnClear = new Button(searchControls, SWT.NONE);
+        btnClear.setText("Clear");
+        
+        progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
+        progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
         setProgressIndicatorsVisible(false);
 
@@ -181,7 +192,7 @@ public class JournalViewerView {
      */
     private void search() {
         if (model != null) {
-            int fieldIndex = filterControl.getCmbFilterTypeIndex();
+            int fieldIndex = searchInput.getCmbFilterTypeIndex();
 
             if (fieldIndex != -1) {
                 final JournalField field = FIELDS[fieldIndex];
@@ -191,13 +202,13 @@ public class JournalViewerView {
                 Calendar fromTime = null;
                 Calendar toTime = null;
                 if (field == JournalField.RUN_NUMBER) {
-                    fromNumber = filterControl.getRunNumberFrom();
-                    toNumber = filterControl.getRunNumberTo();
+                    fromNumber = searchInput.getRunNumberFrom();
+                    toNumber = searchInput.getRunNumberTo();
                 } else if (field == JournalField.START_TIME) {
-                    fromTime = filterControl.getStartTimeFrom();
-                    toTime = filterControl.getStartTimeTo();
+                    fromTime = searchInput.getStartTimeFrom();
+                    toTime = searchInput.getStartTimeTo();
                 } else {
-                    value = filterControl.getActiveSearchText();
+                    value = searchInput.getActiveSearchText();
                 }
 
                 runSearchJob(field, value, fromNumber, toNumber, fromTime, toTime);
@@ -277,16 +288,22 @@ public class JournalViewerView {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
-        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPageNumber),
-                BeanProperties.value("pageNumber").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
 
+        spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                setProgressIndicatorsVisible(true);
+                model.setPageNumber(spinnerPageNumber.getSelection());
+                setProgressIndicatorsVisible(false);
+            }
+        });
+        
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 setProgressIndicatorsVisible(true);
-                model.resetActiveParameters();
                 model.refresh();
                 setProgressIndicatorsVisible(false);
             }
@@ -296,6 +313,17 @@ public class JournalViewerView {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 search();
+            }
+        });
+        
+        btnClear.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                setProgressIndicatorsVisible(true);
+                searchInput.clearInput();
+                model.resetActiveParameters();
+                model.refresh();
+                setProgressIndicatorsVisible(false);
             }
         });
 

@@ -69,8 +69,6 @@ public class JournalModel extends ModelObject {
     private Integer activeToNumber = null;
     private Calendar activeFromTime = null;
     private Calendar activeToTime = null;
-    private ArrayList<JournalField> sortFields = new ArrayList<JournalField>();
-    private ArrayList<String> sortOrders = new ArrayList<String>();
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -80,12 +78,10 @@ public class JournalModel extends ModelObject {
 	 */
     public JournalModel(IPreferenceStore preferenceStore) {
         this.preferenceStore = preferenceStore;
-        sortFields.add(JournalField.RUN_NUMBER);
-        sortOrders.add("DESC");
     }
 
     /**
-     * Attempts to connect to the database and updates the status accordingly.
+     * Reloads the runs with the current parameters.
      */
     public void refresh() {
     	search(activeField, activeSearchString, activeFromNumber, activeToNumber, activeFromTime, activeToTime);
@@ -153,10 +149,21 @@ public class JournalModel extends ModelObject {
             Integer toNumber, Calendar fromTime, Calendar toTime) throws SQLException{
         long startTime = System.currentTimeMillis();
 
-//        ResultSet rs = constructSearchSQLQuery(connection, field, searchString, fromNumber, toNumber, fromTime, toTime).executeQuery();
+        JournalSqlStatement journalStatement = new JournalSqlStatement(pageNumber, PAGE_SIZE, connection, field);
+        journalStatement.addDescendingSort(JournalField.RUN_NUMBER);
         
-        JournalSqlStatement journalStatement = new JournalSqlStatement(pageNumber, PAGE_SIZE);
-        ResultSet rs = journalStatement.constructSearchQuery(connection, field, searchString, fromNumber, toNumber, fromTime, toTime, sortFields, sortOrders).executeQuery();
+        PreparedStatement statement;
+        if (searchString != null) {
+            statement = journalStatement.constructTextSearchQuery(searchString);
+        } else if (fromNumber != null || toNumber != null) {
+            statement = journalStatement.constructNumberSearchQuery(fromNumber, toNumber);
+        } else if (fromTime != null || toTime != null) {
+            statement = journalStatement.constructTimeSearchQuery(fromTime, toTime);
+        } else {
+            statement = journalStatement.constructDefaultQuery();
+        }
+        
+        ResultSet rs = statement.executeQuery();
         
         List<JournalRow> runs = new ArrayList<>();
         while (rs.next()) {
@@ -313,7 +320,7 @@ public class JournalModel extends ModelObject {
      * @param pageNumber The new page number.
      */
     public void setPage(int pageNumber) {
-        firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+        this.pageNumber = pageNumber;
         refresh();
     }
 

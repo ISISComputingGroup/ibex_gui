@@ -67,7 +67,6 @@ public class JournalViewModel extends ModelObject {
         setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
         setMessage(model.getMessage());
         setRuns(model.getRuns());
-        setPageNumber(model.getPage());
         setPageNumberMax(model.getPageMax());
     }
 
@@ -186,9 +185,7 @@ public class JournalViewModel extends ModelObject {
      */
     public void setPageNumber(int pageNumber) {
     	if (pageNumber != model.getPage()) {
-    		int previousPage = model.getPage();
 	    	model.setPage(pageNumber);
-	    	firePropertyChange("pageNumber", previousPage, model.getPage());
     	}
     }
     

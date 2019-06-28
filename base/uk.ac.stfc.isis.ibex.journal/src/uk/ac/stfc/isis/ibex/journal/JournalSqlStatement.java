@@ -29,104 +29,173 @@ import java.util.Calendar;
 /**
  * Prepares the SQL statement which searches the journal database.
  * 
+ * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
+ * accidentally as that could lead to a SQL injection vulnerability.
+ * 
  */
 public class JournalSqlStatement {
     private int pageNumber;
     private int pageSize;
+    private Connection connection;
+    private JournalField field;
+    private ArrayList<JournalField> sortFields = new ArrayList<JournalField>();
+    private ArrayList<String> sortDirections = new ArrayList<String>();
+    private static final String SELECT = "SELECT * FROM journal_entries";
     
     /**
-     * Create a journal SQL statement
+     * Create a journal SQL statement.
      * 
-     * @param pageNumber The page number to get the data for
-     * @param pageSize The number of rows on each page
+     * @param pageNumber The page number to get the data for.
+     * @param pageSize The number of rows on each page.
+     * @param connection the SQL connection to use.
+     * @param field The journal field to search by.
      */
-    public JournalSqlStatement(int pageNumber, int pageSize) {
+    public JournalSqlStatement(int pageNumber, int pageSize, Connection connection, JournalField field) {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
+        this.connection = connection;
+        this.field = field;
     }
     
     /**
-     * Constructs a PreparedStatement using the searching and sorting parameters
+     * Constructs a prepared statement which gets journal data from the database with no filtering.
      * 
-     * @param connection the SQL connection to use.
-     * @param field The journal field to search by.
-     * @param searchString Search the 'searchField' field of every record for this string value (null = no string search)
+     * @return An SQL PreparedStatement
+     * @throws SQLException - If there was an error while querying the database
+     */
+    public PreparedStatement constructDefaultQuery() throws SQLException{
+        StringBuilder query = new StringBuilder(SELECT);
+        query.append(getSortLimitStatement());
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        st.setInt(1, (pageNumber - 1) * pageSize);
+        st.setInt(2, pageSize);
+        return st;
+    }
+    
+    /**
+     * Constructs a prepared statement which searches the database with a text search.
+     * 
+     * @param searchString Search the 'searchField' field of every record for this string value
+     * @return An SQL PreparedStatement
+     * @throws SQLException - If there was an error while querying the database
+     */
+    public PreparedStatement constructTextSearchQuery(String searchString) throws SQLException {
+        StringBuilder query = new StringBuilder(SELECT);
+        query.append(" WHERE " + field.getSqlFieldName() + " LIKE ?");
+        query.append(getSortLimitStatement());
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        st.setString(1, "%" + searchString + "%");
+        st.setInt(2, (pageNumber - 1) * pageSize);
+        st.setInt(3, pageSize);
+        return st;
+    }
+    
+    /**
+     * Constructs a prepared statement which searches the database with number parameters.
+     * 
      * @param fromNumber Consider only runs with a run number from this number and up (null = no limit)
      * @param toNumber Consider only runs with a run number from this number and below (null = no limit)
-     * @param fromTime Consider only runs with a start time after this time (null = no limit)
-     * @param toTime Consider only runs with a start time before this time (null = no limit)
-     * @param sortFields A list of fields to be used to order the results
-     * @param sortOrders A list of orders for each of the sort fields, either ASC or DESC
-     * @throws SQLException - If there was an error while querying the database
      * @return An SQL PreparedStatement
+     * @throws SQLException - If there was an error while querying the database
      */
-    public PreparedStatement constructSearchQuery(Connection connection, JournalField field, String searchString,
-            Integer fromNumber, Integer toNumber, Calendar fromTime, Calendar toTime,
-            ArrayList<JournalField> sortFields, ArrayList<String> sortOrders) throws SQLException {
-        
-        StringBuilder query = new StringBuilder("SELECT * FROM journal_entries");
-
-        if (searchString != null || fromNumber != null || toNumber != null || fromTime != null || toTime != null) {
-            query.append(" WHERE");
-            boolean firstCondition = true;
-            if (searchString != null) {
-                query.append(firstCondition ? " " : " AND ");
-                firstCondition = false;
-                query.append(field.getSqlFieldName() + " LIKE ?");
-            }
-            if (fromNumber != null) {
-                query.append(firstCondition ? " " : " AND ");
-                firstCondition = false;
-                query.append(field.getSqlFieldName() + " >= ?");
-            }
-            if (toNumber != null) {
-                query.append(firstCondition ? " " : " AND ");
-                firstCondition = false;
-                query.append(field.getSqlFieldName() + " <= ?");
-            }
-            if (fromTime != null) {
-                query.append(firstCondition ? " " : " AND ");
-                firstCondition = false;
-                query.append(field.getSqlFieldName() + " > ?");
-            }
-            if (toTime != null) {
-                query.append(firstCondition ? " " : " AND ");
-                firstCondition = false;
-                query.append(field.getSqlFieldName() + " < ?");
-            }
+    public PreparedStatement constructNumberSearchQuery(Integer fromNumber, Integer toNumber) throws SQLException {
+        StringBuilder query = new StringBuilder(SELECT);
+        query.append(" WHERE");
+        if (fromNumber != null) {
+            query.append(" " + field.getSqlFieldName() + " >= ?");
         }
-        
-        if (sortFields.size() > 0) {
-            query.append(" ORDER BY " + sortFields.get(0).getSqlFieldName() + " " + sortOrders.get(0));
-            for (int i = 1; i < sortFields.size(); i++) {
-                query.append(", " + sortFields.get(i).getSqlFieldName() + " " + sortOrders.get(i));
-            }
+        if (fromNumber != null && toNumber != null) {
+            query.append(" AND");
         }
-        
-        query.append(" LIMIT ?, ?");
+        if (toNumber != null) {
+            query.append(" " + field.getSqlFieldName() + " <= ?");
+        }
+        query.append(getSortLimitStatement());
+        System.out.println(query);
         PreparedStatement st = connection.prepareStatement(query.toString());
-
+        
         int index = 0;
-        if (searchString != null) {
-            st.setString(++index, "%" + searchString + "%");
-        }
         if (fromNumber != null) {
             st.setInt(++index, fromNumber);
         }
         if (toNumber != null) {
             st.setInt(++index, toNumber);
         }
-        if (fromTime != null) {
-            Timestamp start = new Timestamp(fromTime.getTimeInMillis());
-            st.setTimestamp(++index, start);
-        }
-        if (toTime != null) {
-            Timestamp end = new Timestamp(toTime.getTimeInMillis());
-            st.setTimestamp(++index, end);
-        }
-
         st.setInt(++index, (pageNumber - 1) * pageSize);
         st.setInt(++index, pageSize);
         return st;
     }
+    
+    /**
+     * Constructs a prepared statement which searches the database with time parameters.
+     * 
+     * @param fromTime Consider only runs with a start time after this time (null = no limit)
+     * @param toTime Consider only runs with a start time before this time (null = no limit)
+     * @return An SQL PreparedStatement
+     * @throws SQLException - If there was an error while querying the database
+     */
+    public PreparedStatement constructTimeSearchQuery(Calendar fromTime, Calendar toTime) throws SQLException {
+        StringBuilder query = new StringBuilder(SELECT);
+        query.append(" WHERE");
+        if (fromTime != null) {
+            query.append(" " + field.getSqlFieldName() + " >= ?");
+        }
+        if (fromTime != null && toTime != null) {
+            query.append(" AND");
+        }
+        if (toTime != null) {
+            query.append(" " + field.getSqlFieldName() + " <= ?");
+        }
+        query.append(getSortLimitStatement());
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        
+        int index = 0;
+        if (fromTime != null) {
+            Timestamp timestamp = new Timestamp(fromTime.getTimeInMillis());
+            st.setTimestamp(++index, timestamp);
+        }
+        if (toTime != null) {
+            Timestamp timestamp = new Timestamp(toTime.getTimeInMillis());
+            st.setTimestamp(++index, timestamp);
+        }
+        st.setInt(++index, (pageNumber - 1) * pageSize);
+        st.setInt(++index, pageSize);
+        return st;
+    }
+    
+    /**
+     * Adds a field to be used to order the results in ascending order.
+     * 
+     * @param sortField
+     */
+    public void addAscendingSort(JournalField sortField) {
+        sortFields.add(sortField);
+        sortDirections.add(" ASC");
+    }
+    
+    /**
+     * Adds a field to be used to order the results in descending order.
+     * 
+     * @param sortField
+     */
+    public void addDescendingSort(JournalField sortField) {
+        sortFields.add(sortField);
+        sortDirections.add(" DESC");
+    }
+    
+    /**
+     * @return A string containing the ORDER BY and LIMIT sections of the query.
+     */
+    private String getSortLimitStatement() {
+        StringBuilder statement = new StringBuilder();
+        if (sortFields.size() > 0) {
+            statement.append(" ORDER BY " + sortFields.get(0).getSqlFieldName() + sortDirections.get(0));
+            for (int i = 1; i < sortFields.size(); i++) {
+                statement.append(", " + sortFields.get(i).getSqlFieldName() + sortDirections.get(i));
+            }
+        }
+        statement.append(" LIMIT ?, ?");
+        return statement.toString();
+    }
+    
 }
