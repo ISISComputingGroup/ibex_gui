@@ -34,7 +34,7 @@ pipeline {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
             }
-            else if (env.GIT_BRANCH == "origin/master") {
+            else if (env.GIT_BRANCH == "origin/Ticket4164_script_generator") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
             }
