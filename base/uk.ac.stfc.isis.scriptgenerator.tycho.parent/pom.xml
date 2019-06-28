@@ -182,6 +182,9 @@
 		</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
+		<module>../uk.ac.stfc.isis.ibex.logger.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.model.tests</module>
 	</modules>
 </project>
 
