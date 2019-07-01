@@ -140,7 +140,11 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	                if (dataCount < DATA_COUNT_LIMIT) {
 	                    dataCount++;
 	                } else if (autoscale) {
-	                    axis.setAutoScale(false);
+	                    Display.getDefault().asyncExec(new Runnable() {
+	                        public void run() {
+	                            axis.setAutoScale(false);
+	                        }
+	                    });
 	                    autoscale = false;
 	                }
 	            }
