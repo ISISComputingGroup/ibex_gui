@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -32,6 +32,12 @@ public interface PVHistoryPresenter {
 	Stream<String> getDataBrowserTitles();
 	
 	/**
+	 * Get all of the lists of axes for all of the plots that the PV Hiatory could be added to.
+	 * @return A list of the names of the axes.
+	 */
+	Stream<AxisList> getAxisTitles();
+	
+	/**
 	 * Creates a new display and plots the PV history on it.
 	 * @param pvAddress The PV to plot the history of.
 	 * @param display The user-friendly name for the plot and the axis
@@ -45,4 +51,14 @@ public interface PVHistoryPresenter {
 	 * @param displayName The name of the display to add the PV to.
 	 */
 	void addToDisplay(String pvAddress, String display, String displayName);
+
+	/**
+	 * Adds a PV to a pre-existing axis.
+	 * @param pvAddress The PV to plot the history of.
+	 * @param display The user-friendly name for the plot and the axis to add.
+	 * @param presenterName The name of the display to add the PV to.
+	 * @param axisName The name of the axis to add the PV to.
+	 */
+    void addToAxis(String pvAddress, String display, String presenterName, String axisName);
+
 }

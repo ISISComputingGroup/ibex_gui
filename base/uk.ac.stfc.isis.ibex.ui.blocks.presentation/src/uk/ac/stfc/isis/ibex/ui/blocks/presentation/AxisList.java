@@ -1,7 +1,6 @@
-
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,32 +21,33 @@ package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 import java.util.stream.Stream;
 
 /**
- * A null object for the PV history presenter, to use when a real object is unavailable.
+ * A class which holds the name of a plot and its axes.
  */
-public class NullPVHistoryPresenter implements PVHistoryPresenter {
-	@Override
-	public void newDisplay(String pvAddress, String displayName) {
-		// do nothing
-	}
-	
-	public Stream<String> getDataBrowserTitles() {
-		return Stream.empty();
-	}
-
-	@Override
-	public void addToDisplay(String pvAddress, String display, String presenterName) {
-		// do nothing
-	}
-
-    @Override
-    public Stream<AxisList> getAxisTitles() {
-        // do nothing
-        return null;
+public class AxisList {
+    private String plotName;
+    private Stream<String> axisNames;
+    
+    /**
+     * Create an axis list.
+     * @param plotName The name of the plot the axis is associated with.
+     * @param axisNames A stream containing all of the axis names.
+     */
+    public AxisList(String plotName, Stream<String> axisNames) {
+        this.plotName = plotName;
+        this.axisNames = axisNames;
     }
-
-    @Override
-    public void addToAxis(String pvAddress, String display, String presenterName, String axisName) {
-        // do nothing
+    
+    /**
+     * @return the plotName
+     */
+    public String getPlotName() {
+        return plotName;
     }
-
+    /**
+     * @return the axisNames
+     */
+    public Stream<String> getAxisNames() {
+        return axisNames;
+    }
+    
 }

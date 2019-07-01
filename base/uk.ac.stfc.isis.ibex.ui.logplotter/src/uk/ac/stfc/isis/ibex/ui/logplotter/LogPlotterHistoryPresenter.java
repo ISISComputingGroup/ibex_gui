@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserEditor;
@@ -41,6 +42,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.ui.blocks.presentation.AxisList;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -90,6 +92,16 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 		return getCurrentDataBrowsers().map(e -> e.getTitle());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Stream<AxisList> getAxisTitles() {
+	    return getCurrentDataBrowsers().map(e ->
+	    new AxisList(e.getTitle(),
+	            StreamSupport.stream(e.getModel().getAxes().spliterator(), false).map(a -> a.getName())));
+	}
+	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {
 		if (editor == null) {
 	        return;
@@ -116,14 +128,16 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			model.addItem(item);
 			
 			model.addListener(new ModelListenerAdapter() {
-			    private int timesScaled = 0;
-			    private static final int TIMES_SCALED_LIMIT = 10;
+			    private int dataCount = 0;
+			    private static final int DATA_COUNT_LIMIT = 10;
 			    private boolean autoscale = true;
 
+			    // This listener is triggered every time that a data point is added to the graph,
+                // either from archive data or from new data.
 	            @Override
 	            public void selectedSamplesChanged() {
-	                if (timesScaled < TIMES_SCALED_LIMIT) {
-	                    timesScaled++;
+	                if (dataCount < DATA_COUNT_LIMIT) {
+	                    dataCount++;
 	                } else if (autoscale) {
 	                    axis.setAutoScale(false);
 	                    autoscale = false;
@@ -137,6 +151,47 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	                Messages.Error,
 	                NLS.bind(Messages.ErrorFmt, ex.getMessage()));
 	    }
+	}
+	
+	private void addPVToAxis(String pvAddress, final String displayName, DataBrowserEditor editor, String axisName) {
+	    if (editor == null) {
+            return;
+        }
+        Model model = editor.getModel();
+        model.setSaveChanges(false);
+        model.setArchiveRescale(ArchiveRescale.NONE);
+        
+        // Add received items
+        final double period = Preferences.getScanPeriod();
+        try {
+            // Create trace
+            final PVItem item = new PVItem(pvAddress, period);
+            item.setDisplayName(displayName);
+            item.useDefaultArchiveDataSources();
+
+            // Extract the axis to add to from the list of axes
+            List<AxisConfig> axes = StreamSupport.stream(model.getAxes().spliterator(), false).filter(a -> a.getName() == axisName).collect(Collectors.toList());
+            if (axes.size() == 0) {
+                // Can't find the axis to add to, so create new one
+                AxisConfig axis = new AxisConfig(displayName);
+                axis.setAutoScale(true);
+                model.addAxis(axis);
+
+                // Add item to new axes
+                item.setAxis(axis);
+                model.addItem(item);
+            } else {
+                AxisConfig axis = axes.get(0);
+                
+                // Add the item to the axis and the model
+                item.setAxis(axis);
+                model.addItem(item);
+            }
+        } catch (Exception ex) {
+            MessageDialog.openError(editor.getSite().getShell(),
+                    Messages.Error,
+                    NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+        }
 	}
 	
 	/**
@@ -175,6 +230,23 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 				trace.getAxis().setColor(trace.getColor());
 			}
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addToAxis(String pvAddress, String display, String presenterName, String axisName) {
+	    List<DataBrowserEditor> editors = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
+                .collect(Collectors.toList());
+      
+      if (editors.size() == 0) {
+          // Can't find the editor to add to, make a new one
+          newDisplay(pvAddress, display);
+      } else {
+          DataBrowserEditor editor = editors.get(0);
+          addPVToAxis(pvAddress, display, editor, axisName);
+      }
 	}
 
 }

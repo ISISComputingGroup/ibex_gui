@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -74,13 +74,23 @@ public class BlocksMenu extends MenuManager {
 	};
 	
 	private IAction createAddToPlotAction(String plotName) {
-		return new Action("Add to " + plotName + " plot") {
+		return new Action("Add to " + plotName + " plot to a new axis") {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
 				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName);
 			}
 		};
+	}
+	
+	private IAction createAddToAxisAction(String plotName, String axisName) {
+	    return new Action("Add to " + plotName + " plot to the " + axisName + " axis") {
+            @Override
+            public void run() {
+                BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+                Presenter.pvHistoryPresenter().addToAxis(block.blockServerAlias(), block.getName(), plotName, axisName);
+            }
+        };
 	}
 	
     /**
@@ -115,6 +125,10 @@ public class BlocksMenu extends MenuManager {
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPlotAction);
 				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
+				
+				Presenter.pvHistoryPresenter().getAxisTitles()
+				 .forEach(p -> p.getAxisNames()
+				         .forEach(a -> logSubMenu.add(createAddToAxisAction(p.getPlotName(), a))));
 			}
         });
 		
