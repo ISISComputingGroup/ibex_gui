@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -179,13 +180,14 @@ public class SummaryPanel extends Composite {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
-                updateSynopticNamesInComboBox(value);
+            	Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             @Override
             public void onValue(Collection<SynopticInfo> value) {
-                updateSynopticNamesInComboBox(value);
-
+            	// The event comes from PV manager's threadpool but the method
+            	// needs to manipulate UI elements so need to explicitly run on UI thread.
+                Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             /**
