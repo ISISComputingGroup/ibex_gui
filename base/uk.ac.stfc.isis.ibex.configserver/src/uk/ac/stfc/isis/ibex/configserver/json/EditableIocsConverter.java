@@ -56,7 +56,7 @@ public class EditableIocsConverter extends Converter<Map<String, IocParameters>,
 		setIfNotNull(ioc::setAvailablePVs, parameters.getPVs());
 		setIfNotNull(ioc::setAvailablePVSets, parameters.getPVSets());
 		setIfNotNull(ioc::setDescription, parameters.getDescription());
-		setIfNotNull(ioc::setHost, parameters.getHost());
+		setIfNotNull(ioc::setRemotePvPrefix, parameters.getRemotePvPrefix());
 		return ioc;	
 	}
 	

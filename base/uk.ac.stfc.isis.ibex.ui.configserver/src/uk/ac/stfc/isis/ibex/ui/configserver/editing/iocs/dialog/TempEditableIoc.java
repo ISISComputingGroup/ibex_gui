@@ -51,7 +51,7 @@ public class TempEditableIoc extends EditableIoc {
         editingIoc.setMacros(getMacros());
         editingIoc.setPvs(getPvs());
         editingIoc.setPvSets(getPvSets());
-        editingIoc.setHost(getHost());
+        editingIoc.setRemotePvPrefix(getRemotePvPrefix());
     }
 
 }

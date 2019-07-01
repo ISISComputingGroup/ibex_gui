@@ -47,7 +47,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
     TableViewerColumn autoStart;
     TableViewerColumn autoRestart;
-    TableViewerColumn host;
+    TableViewerColumn remotePvPrefix;
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
@@ -89,10 +89,10 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
         }
     };
     
-    private DataboundCellLabelProvider<EditableIoc> hostLabelProvider = new DataboundCellLabelProvider<EditableIoc>(observeProperty("host")) {
+    private DataboundCellLabelProvider<EditableIoc> remotePvPrefixLabelProvider = new DataboundCellLabelProvider<EditableIoc>(observeProperty("remotePvPrefix")) {
 		@Override
 		protected String stringFromRow(EditableIoc ioc) {
-			return ioc.getHost();
+			return ioc.getRemotePvPrefix();
 		}
 	};
 
@@ -122,7 +122,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 		simLevel();
 		autostart();
 		restart();
-		host();
+		remotePvPrefix();
 	}
 
     /**
@@ -181,10 +181,10 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	/**
-     * Creates the host column.
+     * Creates the remote pv prefix column.
      */
-	private void host() {
-        host = createColumn("Host", 1, false, hostLabelProvider);
+	private void remotePvPrefix() {
+        remotePvPrefix = createColumn("Remote prefix", 1, false, remotePvPrefixLabelProvider);
 	}
 
     /**

@@ -54,11 +54,11 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	private boolean restart = true;
 
 	private SimLevel simlevel = SimLevel.NONE;
-	private Collection<PVSet> pvsets = new ArrayList<PVSet>();
-	private Collection<PVDefaultValue> pvs = new ArrayList<PVDefaultValue>();
-	private Collection<Macro> macros = new ArrayList<Macro>();
+	private Collection<PVSet> pvsets;
+	private Collection<PVDefaultValue> pvs;
+	private Collection<Macro> macros;
 	private String component;
-    private String host = "";
+    private String remotePvPrefix = "";
 	
     /**
      * Create an IOC with a given name.
@@ -82,19 +82,11 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 		this.setSimLevel(other.getSimLevel());
 		this.setRestart(other.getRestart());
 		this.setComponent(other.getComponent());
-		this.setHost(other.getHost());
+		this.setRemotePvPrefix(other.getRemotePvPrefix());
 		
-		for (PVSet set : other.getPvSets()) {
-			pvsets.add(new PVSet(set));
-		}
-		
-		for (PVDefaultValue defaultValue : other.getPvs()) {
-			pvs.add(new PVDefaultValue(defaultValue));
-		}
-		
-		for (Macro macro : other.getMacros()) {
-			macros.add(new Macro(macro));
-		}
+		this.pvsets = new ArrayList<>(other.getPvSets());
+		this.pvs = new ArrayList<>(other.getPvs());
+		this.macros = new ArrayList<>(other.getMacros());
 	}
 	
     /**
@@ -241,18 +233,18 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	}
 	
 	/**
-	 * Gets the host that this IOC is running on.
-	 * @return - the hostname
+	 * Gets the remote pv prefix of the machine that this IOC is running on.
+	 * @return - the remote pv prefix
 	 */
-	public String getHost() {
-		return host;
+	public String getRemotePvPrefix() {
+		return remotePvPrefix;
 	}
 	
 	/**
-	 * Sets the host that this IOC should run on.
-	 * @param host - the hostname
+	 * Sets the remote pv prefix of the machine that this IOC should be run on.
+	 * @param remotePvPrefix - the hostname
 	 */
-	public void setHost(String host) {
-		firePropertyChange("host", this.host, this.host = host);
+	public void setRemotePvPrefix(String remotePvPrefix) {
+		firePropertyChange("remotePvPrefix", this.remotePvPrefix, this.remotePvPrefix = remotePvPrefix);
 	}
 }
