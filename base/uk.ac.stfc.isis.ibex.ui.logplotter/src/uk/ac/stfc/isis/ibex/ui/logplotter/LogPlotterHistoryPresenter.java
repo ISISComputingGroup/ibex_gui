@@ -133,7 +133,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 			    private boolean autoscale = true;
 
 			    // This listener is triggered every time that a data point is added to the graph,
-                // either from archive data or from new data.
+                // either from archive data or from new data. After 10 pieces of data are received,
+			    // it turns off autoscale.
 	            @Override
 	            public void selectedSamplesChanged() {
 	                if (dataCount < DATA_COUNT_LIMIT) {
