@@ -99,7 +99,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
 	public Stream<AxisList> getAxisTitles() {
 	    return getCurrentDataBrowsers().map(e ->
 	    new AxisList(e.getTitle(),
-	            StreamSupport.stream(e.getModel().getAxes().spliterator(), false).map(a -> a.getName())));
+	            StreamSupport.stream(e.getModel().getAxes().spliterator(), false).map(a -> a.getName()).collect(Collectors.toList())));
 	}
 	
 	private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor) {

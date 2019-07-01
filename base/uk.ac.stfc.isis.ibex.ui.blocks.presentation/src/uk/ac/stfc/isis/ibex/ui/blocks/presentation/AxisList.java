@@ -18,21 +18,21 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 /**
  * A class which holds the name of a plot and its axes.
  */
 public class AxisList {
     private String plotName;
-    private Stream<String> axisNames;
+    private List<String> axisNames;
     
     /**
      * Create an axis list.
      * @param plotName The name of the plot the axis is associated with.
      * @param axisNames A stream containing all of the axis names.
      */
-    public AxisList(String plotName, Stream<String> axisNames) {
+    public AxisList(String plotName, List<String> axisNames) {
         this.plotName = plotName;
         this.axisNames = axisNames;
     }
@@ -46,7 +46,7 @@ public class AxisList {
     /**
      * @return the axisNames
      */
-    public Stream<String> getAxisNames() {
+    public List<String> getAxisNames() {
         return axisNames;
     }
     

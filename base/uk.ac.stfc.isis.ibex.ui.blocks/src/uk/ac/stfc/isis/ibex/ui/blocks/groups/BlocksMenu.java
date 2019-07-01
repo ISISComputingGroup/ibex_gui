@@ -127,7 +127,7 @@ public class BlocksMenu extends MenuManager {
 				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
 				
 				Presenter.pvHistoryPresenter().getAxisTitles()
-				 .forEach(p -> p.getAxisNames()
+				 .forEach(p -> p.getAxisNames().stream()
 				         .forEach(a -> logSubMenu.add(createAddToAxisAction(p.getPlotName(), a))));
 			}
         });
