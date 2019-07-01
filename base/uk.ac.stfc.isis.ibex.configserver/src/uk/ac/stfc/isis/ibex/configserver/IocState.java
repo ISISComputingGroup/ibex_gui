@@ -1,37 +1,39 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 /*
  * Copyright (C) 2013-2014 Research Councils UK (STFC)
  *
  * This file is part of the Instrument Control Project at ISIS.
  *
- * This code and information are provided "as is" without warranty of any 
- * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
- * purpose.
+ * This code and information are provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the implied
+ * warranties of merchantability and/or fitness for a particular purpose.
  */
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.Collection;
 import java.util.Objects;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -43,6 +45,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class IocState extends ModelObject implements Comparable<IocState>, INamed {
 
+    private final ConfigServer configServer;
     private final String name;
     private final boolean isRunning;
     private final String description;
@@ -50,6 +53,8 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
     /**
      * Instantiates a new IOC state.
      *
+     * @param configServer
+     *            the Config Server
      * @param name
      *            the name
      * @param isRunning
@@ -57,10 +62,11 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @param description
      *            description of the IOC
      */
-    public IocState(String name, boolean isRunning, String description) {
-	this.name = name;
-	this.isRunning = isRunning;
-	this.description = description;
+    public IocState(ConfigServer configServer, String name, boolean isRunning, String description) {
+        this.configServer = configServer;
+        this.name = name;
+        this.isRunning = isRunning;
+        this.description = description;
     }
 
     /**
@@ -70,7 +76,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      */
     @Override
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
@@ -79,7 +85,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return true if it is running; false otherwise
      */
     public boolean getIsRunning() {
-	return isRunning;
+        return isRunning;
     }
 
     /**
@@ -88,13 +94,13 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return the description
      */
     public String getDescription() {
-	return description;
+        return description;
     }
 
     /**
-     * Gets whether or not the IOC is in the current configuration. The result
-     * is calculated at run-time so that it is as up to date as possible with
-     * the actual configuration being used.
+     * Gets whether or not the IOC is in the current configuration or in any
+     * selected components. The result is calculated at run-time so that it is
+     * as up to date as possible with the actual configuration being used.
      * 
      * Can't easily use listeners here because it will cause a memory leak
      * (#3425). The reason for this is that instances of this class are
@@ -105,8 +111,19 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {
-	Configuration currentConfig = Configurations.getInstance().server().currentConfig().getValue();
-	return currentConfig.getIocs().stream().anyMatch(ioc -> Objects.equals(ioc.getName(), name));
+        Configuration currentConfig = configServer.currentConfig().getValue();
+        Collection<Configuration> components = configServer.componentDetails().getValue();
+
+        Set<String> enabledComponentNames =
+                currentConfig.getComponents().stream().map(comp -> comp.getName()).collect(Collectors.toSet());
+
+        Collection<Ioc> configIocs = currentConfig.getIocs();
+        components.stream().forEach(comp -> {
+            if (enabledComponentNames.contains(comp.getName())) {
+                configIocs.addAll(comp.getIocs());
+            }
+        });
+        return configIocs.stream().anyMatch(ioc -> Objects.equals(ioc.getName(), name));
     }
 
     /**
@@ -114,6 +131,6 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      */
     @Override
     public int compareTo(IocState iocState) {
-	return name.compareTo(iocState.getName());
+        return name.compareTo(iocState.getName());
     }
 }
