@@ -76,16 +76,21 @@ public class JournalSqlStatement {
     /**
      * @return A string containing the WHERE section of the query.
      */
-    private String createWhereTemplate() {
+    public String createWhereTemplate() {
         StringBuilder query = new StringBuilder();
         if (parameters.hasOptionalParameters()) {
             query.append(" WHERE ");
             ArrayList<String> parts = new ArrayList<String>();
-            parameters.searchString.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " LIKE ?"));
-            parameters.fromNumber.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " >= ?"));
-            parameters.toNumber.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " <= ?"));
-            parameters.fromTime.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " >= ?"));
-            parameters.toTime.ifPresent(x -> parts.add(parameters.field.getSqlFieldName() + " <= ?"));
+            
+            if (parameters.getSearchString().isPresent()) {
+                parts.add(parameters.getField().getSqlFieldName() + " LIKE ?");
+            } else if (parameters.getFromNumber().isPresent() || parameters.getToNumber().isPresent()) {
+                parameters.getFromNumber().ifPresent(x -> parts.add(parameters.getField().getSqlFieldName() + " >= ?"));
+                parameters.getToNumber().ifPresent(x -> parts.add(parameters.getField().getSqlFieldName() + " <= ?"));
+            } else {
+                parameters.getFromTime().ifPresent(x -> parts.add(parameters.getField().getSqlFieldName() + " >= ?"));
+                parameters.getToTime().ifPresent(x -> parts.add(parameters.getField().getSqlFieldName() + " <= ?"));
+            }
             query.append(String.join(" AND ", parts));
         }
         return query.toString();
@@ -100,20 +105,20 @@ public class JournalSqlStatement {
         PreparedStatement st = connection.prepareStatement(query.toString());
         int index = 0;
         
-        if (parameters.searchString.isPresent()) {
-            st.setString(++index, "%" + parameters.searchString.get() + "%");
+        if (parameters.getSearchString().isPresent()) {
+            st.setString(++index, "%" + parameters.getSearchString().get() + "%");
         }
-        if (parameters.fromNumber.isPresent()) {
-            st.setInt(++index, parameters.fromNumber.get());
+        if (parameters.getFromNumber().isPresent()) {
+            st.setInt(++index, parameters.getFromNumber().get());
         }
-        if (parameters.toNumber.isPresent()) {
-            st.setInt(++index, parameters.toNumber.get());
+        if (parameters.getToNumber().isPresent()) {
+            st.setInt(++index, parameters.getToNumber().get());
         }
-        if (parameters.fromTime.isPresent()) {
-            st.setTimestamp(++index, new Timestamp(parameters.fromTime.get().getTimeInMillis()));
+        if (parameters.getFromTime().isPresent()) {
+            st.setTimestamp(++index, new Timestamp(parameters.getFromTime().get().getTimeInMillis()));
         }
-        if (parameters.toTime.isPresent()) {
-            st.setTimestamp(++index, new Timestamp(parameters.toTime.get().getTimeInMillis()));
+        if (parameters.getToTime().isPresent()) {
+            st.setTimestamp(++index, new Timestamp(parameters.getToTime().get().getTimeInMillis()));
         }
         
         st.setInt(++index, (pageNumber - 1) * pageSize);
@@ -124,7 +129,7 @@ public class JournalSqlStatement {
     /**
      * @return A string containing the ORDER BY and LIMIT sections of the query.
      */
-    private String createSortLimitTemplate() {
+    public String createSortLimitTemplate() {
         if (sorts.size() == 0) {
             throw new IllegalStateException("Cannot not sort data.");
         }

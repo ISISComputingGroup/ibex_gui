@@ -179,7 +179,7 @@ public class JournalViewerView {
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-//		table.initialise();
+		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
@@ -204,15 +204,13 @@ public class JournalViewerView {
             if (fieldIndex != -1) {
                 JournalParameters parameters = new JournalParameters();
                 final JournalField field = FIELDS[fieldIndex];
-                parameters.field = field;
+                parameters.setField(field);
                 if (field == JournalField.RUN_NUMBER) {
-                    parameters.fromNumber = searchInput.getRunNumberFrom();
-                    parameters.toNumber = searchInput.getRunNumberTo();
+                    parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
                 } else if (field == JournalField.START_TIME) {
-                    parameters.fromTime = searchInput.getStartTimeFrom();
-                    parameters.toTime = searchInput.getStartTimeTo();
+                    parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
                 } else {
-                    parameters.searchString = searchInput.getActiveSearchText();
+                    parameters.setSearchString(searchInput.getActiveSearchText());
                 }
 
                 runSearchJob(parameters);
