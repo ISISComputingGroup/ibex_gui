@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -42,7 +43,7 @@ public class IocStateConverter extends Converter<Map<String, IocParameters>, Col
 	@Override
 	public Collection<IocState> convert(Map<String, IocParameters> value) throws ConversionException {
 		return value.entrySet().stream()
-				.map(entry -> new IocState(entry.getKey(), entry.getValue().isRunning(), entry.getValue().getDescription()))
+				.map(entry -> new IocState(Configurations.getInstance().server(), entry.getKey(), entry.getValue().isRunning(), entry.getValue().getDescription()))
 				.collect(Collectors.toSet());
 	}
 }

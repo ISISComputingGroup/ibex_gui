@@ -3,25 +3,20 @@ import json
 import zlib
 
 
-def reload_widgets(count):
-    """
-    Reload all the position widgets. We have 'count' of them.
-    Args:
-        Count: widget to reload
-    """
-    for index in range(1, count + 1):
-        reload_widget(display.getWidget("pos_" + str(index)))
-
-
-def reload_widget(widget):
+def reload_widget(index, param_type):
     """
     We have to reload the widget to update the macros. Done by unsetting and resetting the
     target OPI.
     Args:
         widget: wdidget to reload
     """
+    widget = display.getWidget("pos_" + str(index))
+
     widget.setPropertyValue("opi_file", "null.opi")
-    widget.setPropertyValue("opi_file", "param_move.opi")
+    if param_type == "in_out":
+        widget.setPropertyValue("opi_file", "param_inout.opi")
+    else:
+        widget.setPropertyValue("opi_file", "param_move.opi")
 
 
 def _add_macros(widget_index, name, value):
@@ -45,9 +40,10 @@ value = zlib.decompress(value.decode("hex"))
 params = json.loads(value)
 
 pos = 1
-for pv, name in params.items():
-    _add_macros(pos, "PARAM_PV", pv)
-    _add_macros(pos, "PARAM_NAME", name)
-    pos += 1
+for item in range(len(params)):
 
-reload_widgets(pos)
+    _add_macros(pos, "PARAM_PV", params[item]["prepended_alias"])
+    _add_macros(pos, "PARAM_NAME",  params[item]["param_name"])
+    reload_widget(pos, params[item]["type"])
+    pos += 1
+    
