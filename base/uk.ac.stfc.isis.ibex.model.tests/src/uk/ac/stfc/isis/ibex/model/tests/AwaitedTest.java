@@ -35,6 +35,9 @@ import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 
+/**
+ * For testing the awaited class.
+ */
 @SuppressWarnings("checkstyle:methodname")
 public class AwaitedTest {
 

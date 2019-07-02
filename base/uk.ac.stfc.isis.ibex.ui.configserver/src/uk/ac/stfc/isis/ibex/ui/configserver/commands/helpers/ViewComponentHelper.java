@@ -68,6 +68,14 @@ public class ViewComponentHelper extends ConfigHelper {
         dialog.open();
     }
     
+    /**
+     * Create a dialog box for editing a component.
+     * 
+     * @param componentName
+     *            The name of the component we wish to edit
+     * @param editBlockFirst
+     *            Whether to present the blocks tab first
+     */
     @Override
     public void createDialog(String componentName, boolean editBlockFirst) {
         configurationViewModels.setModelAsComponent(componentName);

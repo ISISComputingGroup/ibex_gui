@@ -19,20 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.util.List;
-
-import org.eclipse.e4.ui.di.AboutToShow;
-import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
-import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
-import org.eclipse.e4.ui.model.application.ui.menu.MMenuFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
-import uk.ac.stfc.isis.ibex.ui.configserver.BundleConstants;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
@@ -44,38 +34,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
  * It sets the menu labels, and opens the dialogue for editing or viewing the
  * configurations.
  */
-public class EditConfigHandler extends ConfigHandler<Configuration> {
+public class EditConfigHandler extends EditConfigurationsHandler {
 
-    private static final String EDIT_MENU_TEXT = "Edit";
-    private static final String READ_ONLY_TEXT = "View";
-    private static final String MENU_MNEMONIC = "E";
-    private static final String EDIT_TITLE = "Edit Configuration";
-    private static final String VIEW_TITLE = "View Configuration";
-    private static final String EDIT_TOOLTIP = "Select and edit an existing configuration";
-    private static final String VIEW_TOOLTIP = "Select and view an existing configuration";
-
-    private boolean canWrite;
-
-    /**
-     * This is an inner anonymous class will disable the menu item if the
-     * configurations are not available.
-     */
-    private Observer<Configuration> configObserver = new BaseObserver<Configuration>() {
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            canViewOrEditConfig(isConnected);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            canViewOrEditConfig(false);
-        }
-
-        private void canViewOrEditConfig(boolean isConnected) {
-            setCanExecute(isConnected);
-        }
-    };
+    private static final String TYPE_STRING = "Configuration";
 
     /**
      * Create the handler for opening the editor via the menu.
@@ -86,7 +47,7 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
     }
 
     /**
-     * Execute the handler to open the given edit/view config dialogue.
+     * Execute the handler to open the given edit/view configuration dialogue.
      *
      * @param shell
      *            the shell to user
@@ -97,10 +58,10 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
         String titleText;
         if (canWrite) {
             helper = new EditConfigHelper(shell, SERVER);
-            titleText = EDIT_TITLE;
+            titleText = editTitle;
         } else {
             helper = new ViewConfigHelper(shell);
-            titleText = VIEW_TITLE;
+            titleText = viewTitle;
         }
 
         ConfigSelectionDialog selectionDialog =
@@ -117,44 +78,23 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
         }
     }
 
+    /**
+     * Create a dialog to confirm whether the user wants to edit a current configuration.
+     * 
+     * @param configName the name of the configuration
+     * @param shell the shell to user
+     * @return the response from the user
+     */
     private boolean editCurrentConfigConfirmDialog(String configName, Shell shell) {
         return MessageDialog.openQuestion(shell, "Confirm Edit Current Configuration",
                 configName + " is the current configuration, are you sure you want to edit it?");
     }
 
     /**
-     * Generate the menu item as the menu is about to be shown.
-     * 
-     * It must be dynamic because the menu has a different label depending on
-     * the state of the config pv.
-     * 
-     * @param items
-     *            menu items to add to
+     * {@inheritDoc}
      */
-    @AboutToShow
-    public void aboutToShow(List<MMenuElement> items) {
-        String menuText;
-        String tooltipText;
-        if (canWrite) {
-            menuText = EDIT_MENU_TEXT;
-            tooltipText = EDIT_TOOLTIP;
-        } else {
-            menuText = READ_ONLY_TEXT;
-            tooltipText = VIEW_TOOLTIP;
-        }
-
-        MDirectMenuItem dynamicItem = MMenuFactory.INSTANCE.createDirectMenuItem();
-
-        dynamicItem.setLabel(menuText);
-        dynamicItem.setTooltip(tooltipText);
-        dynamicItem.setMnemonics(MENU_MNEMONIC);
-        dynamicItem.setContributorURI(BundleConstants.getPlatformPlugin()); // Plugin in which this menu item exists
-        dynamicItem.setContributionURI(BundleConstants.getClassURI(EditConfigHandler.class));
-        items.add(dynamicItem);
-    }
-
     @Override
-    public void canWriteChanged(final boolean canWrite) {
-        this.canWrite = canWrite;
+    public String getTypeString() {
+        return TYPE_STRING;
     }
 }
