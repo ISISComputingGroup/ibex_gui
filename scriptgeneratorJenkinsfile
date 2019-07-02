@@ -13,14 +13,14 @@ pipeline {
   
   stages {  
     stage("Checkout") {
-      steps {
+      buildStep("Checkout") {
         echo "Branch: ${env.BRANCH_NAME}"
         checkout scm
       }
     }
     
     stage("Build") {
-      steps {
+      buildStep("Build") {
         script {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
@@ -56,19 +56,19 @@ pipeline {
     }
     
     stage("Unit Tests") {
-      steps {
+      buildStep("Unit Tests") {
         junit '**/surefire-reports/TEST-*.xml'
       }
     }
     
     stage("Checkstyle") {
-      steps {
+      buildStep("Checkstyle") {
         archiveCheckstyleResults()
       }
     }
     
     stage("Doxygen") {
-      steps {
+      buildStep("Doxygen") {
         bat '''
             "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
             '''
@@ -97,4 +97,15 @@ def archiveCheckstyleResults() {
           pattern: "**/target/checkstyle-result.xml",
           unHealthy: "",
           usePreviousBuildAsReference: true])
+}
+// See https://issues.jenkins-ci.org/browse/JENKINS-39482?focusedCommentId=288123&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-288123
+def setBuildStatus(String context, String message, String state) {
+    context = context ?: "ci/jenkins/scriptgenerator"
+    step([
+          $class: "GitHubCommitStatusSetter",
+          reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/ISISComputingGroup/ibex_gui"],
+          contextSource: [$class: "ManuallyEnteredCommitContextSource", context: context],
+          errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+          statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ])
 }
