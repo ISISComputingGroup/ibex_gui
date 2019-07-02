@@ -2,6 +2,8 @@
 
 pipeline {
 
+withGitHubCommitStatus context: "continuous-integration/jenkins/script_generator" {
+
   // agent defines where the pipeline will run.
   agent {  
     label "ndw1757"
@@ -94,6 +96,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
+  }
   }
 }
 
