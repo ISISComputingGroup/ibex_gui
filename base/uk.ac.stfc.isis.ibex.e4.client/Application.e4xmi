@@ -46,6 +46,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_okwE4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.usermanual" label="User manual" tooltip="IBEX User Manual" command="_w0psQKkDEeeNUPQOsQF40g"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ptAtcGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.consolelogdialog" label="Console log" tooltip="Console Log" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_WF7KULs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.iconlicences" label="Icon Licences" tooltip="Icon Licences" command="_oZBHMLs4EeiDDI01_3WoHA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_159VoI6MEemt64GQaAalTw" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.gethelp" label="Get help" tooltip="View support telephone numbers or submit a report" command="_YC3xII6MEemt64GQaAalTw"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_pNvIsH3WEee2jZQhjWIQ1g" elementId="org.eclipse.ui.run" toBeRendered="false" visible="false" label="&amp;Run"/>
       <children xsi:type="menu:Menu" xmi:id="_6uLgoH3WEee2jZQhjWIQ1g" elementId="edit" toBeRendered="false" visible="false" label="Edit"/>
@@ -108,6 +109,7 @@
   <handlers xmi:id="_Q7_cIKkEEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.about" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.AboutHandler" command="_hj--kKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_v5ccsKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.usermanual" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.ManualHandler" command="_w0psQKkDEeeNUPQOsQF40g"/>
   <handlers xmi:id="_37kgEKkNEeeEH_5MGE7mgA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.consolelogdialog" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.logger/uk.ac.stfc.isis.ibex.ui.logger.ConsoleLogHandler" command="_5pQ8gKkDEeeNUPQOsQF40g"/>
+  <handlers xmi:id="_jkxuEI6MEemt64GQaAalTw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.gethelp" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.GetHelpHandler" command="_YC3xII6MEemt64GQaAalTw"/>
   <handlers xmi:id="_JRFiEJlbEeiJWOfXjwtf9A" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SwitchPerspective" command="_UJcx8IOSEeizju06Crxm-g"/>
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
@@ -586,6 +588,7 @@
   <commands xmi:id="_hj--kKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.about" commandName="About IBEX" description="About IBEX"/>
   <commands xmi:id="_w0psQKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.usermanual" commandName="User Manual " description="User Manual"/>
   <commands xmi:id="_5pQ8gKkDEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.consolelog" commandName="Console Log" description="Console Log"/>
+  <commands xmi:id="_YC3xII6MEemt64GQaAalTw" elementId="uk.ac.stfc.isis.ibex.e4.client.command.gethelp" commandName="Get help" description="View support telephone numbers or submit a report"/>
   <commands xmi:id="_UJcx8IOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.command.switchperspetives" commandName="Switch Perspetives" description="Switch Perspetives">
     <tags>type:user</tags>
     <parameters xmi:id="_cauroIOSEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" name="perspectiveid" optional="false"/>
