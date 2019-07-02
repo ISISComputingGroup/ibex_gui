@@ -2,6 +2,8 @@
 
 pipeline {
 
+withGitHubCommitStatus context: "continuous-integration/jenkins/script_generator" {
+
   // agent defines where the pipeline will run.
   agent {  
     label "ndw1757"
@@ -21,7 +23,6 @@ pipeline {
     
     stage("Build") {
       steps {
-	   withGitHubCommitStatus context: "continuous-integration/jenkins/script_generator" {
         script {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
@@ -62,7 +63,6 @@ pipeline {
             jenkins_build.bat
             """
       }
-	  }
     }
     
     stage("Unit Tests") {
@@ -96,6 +96,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
+  }
   }
 }
 
