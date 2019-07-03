@@ -2005,8 +2005,23 @@
           </macro>
         </macros>
       </value>
-    </entry>
+    </entry> 
     <entry>
+      <key>Keyence LK-G laser positioning sensor</key>
+      <value>
+        <categories/>
+        <type>SENSOR</type>
+        <path>keylkg.opi</path>
+        <description>The OPI for the KEYLKG</description>
+        <macros>
+          <macro>
+            <name>KEYLKG</name>
+            <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>           
+      <entry>
       <key>Lakeshore 340</key>
       <value>
         <categories>
