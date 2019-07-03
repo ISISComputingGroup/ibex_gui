@@ -19,23 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * The interface for a class that displays the history of a PV in some way.
  */
 public interface PVHistoryPresenter {
-	/**
-	 * Get all the displays that the PV History could be added to.
-	 * @return A list of the names of the presenters.
-	 */
-	Stream<String> getDataBrowserTitles();
 	
 	/**
-	 * Get all of the lists of axes for all of the plots that the PV Hiatory could be added to.
-	 * @return A list of the names of the axes.
+	 * Gets the names of all of the plots, mapped to lists of axis names.
+	 * @return A hash map of plot names and lists of axis names
 	 */
-	Stream<AxisList> getAxisTitles();
+	HashMap<String, ArrayList<String>> getBrowserTitles();
 	
 	/**
 	 * Creates a new display and plots the PV history on it.
@@ -43,22 +40,14 @@ public interface PVHistoryPresenter {
 	 * @param display The user-friendly name for the plot and the axis
 	 */
 	void newDisplay(String pvAddress, String display);
-	
-	/**
-	 * Adds a PV to a pre-existing display.
-	 * @param pvAddress The PV to plot the history of.
-	 * @param display The user-friendly name for the plot and the axis
-	 * @param displayName The name of the display to add the PV to.
-	 */
-	void addToDisplay(String pvAddress, String display, String displayName);
 
-	/**
-	 * Adds a PV to a pre-existing axis.
-	 * @param pvAddress The PV to plot the history of.
-	 * @param display The user-friendly name for the plot and the axis to add.
-	 * @param presenterName The name of the display to add the PV to.
-	 * @param axisName The name of the axis to add the PV to.
-	 */
-    void addToAxis(String pvAddress, String display, String presenterName, String axisName);
+    /**
+     * Adds a PV to a pre-existing display.
+     * @param pvAddress The PV to plot the history of.
+     * @param display The user-friendly name for the plot and the axis to add.
+     * @param presenterName The name of the display to add the PV to.
+     * @param axisName The name of the axis to add the PV to, if empty creates a new axis
+     */
+    void addToDisplay(String pvAddress, String display, String presenterName, Optional<String> axisName);
 
 }

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * A null object for the PV history presenter, to use when a real object is unavailable.
@@ -29,24 +31,15 @@ public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	public void newDisplay(String pvAddress, String displayName) {
 		// do nothing
 	}
-	
-	public Stream<String> getDataBrowserTitles() {
-		return Stream.empty();
-	}
-
-	@Override
-	public void addToDisplay(String pvAddress, String display, String presenterName) {
-		// do nothing
-	}
 
     @Override
-    public Stream<AxisList> getAxisTitles() {
+    public HashMap<String, ArrayList<String>> getBrowserTitles() {
         // do nothing
         return null;
     }
 
     @Override
-    public void addToAxis(String pvAddress, String display, String presenterName, String axisName) {
+    public void addToDisplay(String pvAddress, String display, String presenterName, Optional<String> axisName) {
         // do nothing
     }
 
