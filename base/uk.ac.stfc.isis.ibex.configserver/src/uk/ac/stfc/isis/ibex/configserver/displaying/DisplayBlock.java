@@ -399,9 +399,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         return block.getName() + ":"  + System.lineSeparator() + description;
     }
 
-    /**
-     * Sets the value tooltip text.
-     */
     private synchronized void setDisconnected(Boolean disconnected) {
         this.disconnected = disconnected;
     }
