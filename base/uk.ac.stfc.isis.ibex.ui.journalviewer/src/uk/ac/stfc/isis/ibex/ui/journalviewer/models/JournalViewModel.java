@@ -212,4 +212,12 @@ public class JournalViewModel extends ModelObject {
         return model.getSearchableFields();
     }
 
+    /**
+     * Sorts by the specified field, and swaps the direction if already active.
+     * @param field The field to sort by
+     */
+    public void sortBy(JournalField field) {
+        model.sortBy(field);
+    }
+
 }

@@ -26,8 +26,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import uk.ac.stfc.isis.ibex.journal.JournalSort.JournalSortDirection;
-
 /**
  * Prepares the SQL statement which searches the journal database.
  * 
@@ -40,7 +38,6 @@ public class JournalSqlStatement {
     private int pageNumber;
     private int pageSize;
     private Connection connection;
-    private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     private static final String SELECT = "SELECT * FROM journal_entries";
     
     /**
@@ -130,14 +127,14 @@ public class JournalSqlStatement {
      * @return A string containing the ORDER BY and LIMIT sections of the query.
      */
     public String createSortLimitTemplate() {
-        if (sorts.size() == 0) {
+        if (parameters.getSorts().size() == 0) {
             throw new IllegalStateException("Cannot not sort data.");
         }
         StringBuilder statement = new StringBuilder();
         statement.append(" ORDER BY ");
 
-        statement.append(sorts.stream()
-                .map(js -> js.sortField.getSqlFieldName() + " " + js.direction.getSql())
+        statement.append(parameters.getSorts().stream()
+                .map(js -> createOrderByString(js))
                 .collect(Collectors.joining(", ")));
         
         statement.append(" LIMIT ?, ?");
@@ -145,21 +142,14 @@ public class JournalSqlStatement {
     }
     
     /**
-     * Adds a field to be used to order the results in ascending order.
-     * 
-     * @param sortField The field to sort with.
+     * @param journalSort a journal sort
+     * @return a string to be inserted into the query for ordering with this journal sort
      */
-    public void addAscendingSort(JournalField sortField) {
-        sorts.add(new JournalSort(sortField, JournalSortDirection.ASCENDING));
+    private String createOrderByString(JournalSort journalSort) {
+        if (journalSort.sortField == JournalField.RB_NUMBER) {
+            return "cast(" + journalSort.sortField.getSqlFieldName() + " as unsigned) " + journalSort.direction.getSql();
+        } else {
+            return journalSort.sortField.getSqlFieldName() + " " + journalSort.direction.getSql();
+        }
     }
-    
-    /**
-     * Adds a field to be used to order the results in descending order.
-     * 
-     * @param sortField The field to sort with.
-     */
-    public void addDescendingSort(JournalField sortField) {
-        sorts.add(new JournalSort(sortField, JournalSortDirection.DESCENDING));
-    }
-    
 }

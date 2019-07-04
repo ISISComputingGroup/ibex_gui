@@ -135,7 +135,6 @@ public class JournalModel extends ModelObject {
         long startTime = System.currentTimeMillis();
 
         JournalSqlStatement journalStatement = new JournalSqlStatement(parameters, pageNumber, PAGE_SIZE, connection);
-        journalStatement.addDescendingSort(JournalField.RUN_NUMBER);
         
         ResultSet rs = journalStatement.constructQuery().executeQuery();
         
@@ -318,5 +317,25 @@ public class JournalModel extends ModelObject {
      */
     public List<JournalField> getSearchableFields() {
         return SEARCHABLE_FIELDS;
+    }
+
+    /**
+     * Sorts by the specified field, and swaps the direction if already active.
+     * @param field The field to sort by
+     */
+    public void sortBy(JournalField field) {
+        JournalSort primarySort = activeParameters.getPrimarySort();
+        
+        if (primarySort.sortField == field) {
+            primarySort.swapDirection();
+        } else {
+            activeParameters.clearSorts();
+            if (field != JournalField.RUN_NUMBER) {
+                activeParameters.addSort(field);
+            }
+            activeParameters.addSort(JournalField.RUN_NUMBER);
+        }
+
+        refresh();
     }
 }

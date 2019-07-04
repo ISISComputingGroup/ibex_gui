@@ -84,8 +84,20 @@ public class JournalSqlStatementTest {
         assertEquals(template, " WHERE run_number >= ? AND run_number <= ?");
     }
     
+    @Test
+    public void test_GIVEN_date_parameters_WHEN_create_where_template_THEN_correct_statement_returned() {
+        parameters.setField(JournalField.START_TIME);
+        parameters.setNumbers(Optional.of(0), Optional.of(1));
+        JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
+        
+        String template = statement.createWhereTemplate();
+        
+        assertEquals(template, " WHERE start_time >= ? AND start_time <= ?");
+    }
+    
     @Test(expected = IllegalStateException.class)
     public void test_GIVEN_no_sorts_WHEN_create_sort_limit_template_THEN_exception_thrown() {
+        parameters.clearSorts();
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
         
         statement.createSortLimitTemplate();
@@ -94,7 +106,6 @@ public class JournalSqlStatementTest {
     @Test
     public void test_GIVEN_one_sort_WHEN_create_sort_limit_template_THEN_correct_statement_returned() {
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
-        statement.addDescendingSort(JournalField.RUN_NUMBER);
         
         String template = statement.createSortLimitTemplate();
         
@@ -103,13 +114,23 @@ public class JournalSqlStatementTest {
     
     @Test
     public void test_GIVEN_multiple_sorts_WHEN_create_sort_limit_template_THEN_correct_statement_returned() {
+        parameters.addSort(JournalField.USERS);
+        parameters.addSort(JournalField.RUN_NUMBER);
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
-        statement.addDescendingSort(JournalField.RUN_NUMBER);
-        statement.addAscendingSort(JournalField.USERS);
-        statement.addDescendingSort(JournalField.RB_NUMBER);
         
         String template = statement.createSortLimitTemplate();
         
-        assertEquals(template, " ORDER BY run_number DESC, users ASC, rb_number DESC LIMIT ?, ?");
+        assertEquals(template, " ORDER BY run_number DESC, users ASC, run_number DESC LIMIT ?, ?");
+    }
+    
+    @Test
+    public void test_GIVEN_rb_number_sort_WHEN_create_sort_limit_template_THEN_correct_statement_returned() {
+        parameters.clearSorts();
+        parameters.addSort(JournalField.RB_NUMBER);
+        JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
+        
+        String template = statement.createSortLimitTemplate();
+        
+        assertEquals(template, " ORDER BY cast(rb_number as unsigned) DESC LIMIT ?, ?");
     }
 }

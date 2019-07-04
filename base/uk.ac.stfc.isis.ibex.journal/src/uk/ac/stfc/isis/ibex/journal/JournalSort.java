@@ -50,5 +50,13 @@ public class JournalSort {
         this.sortField = sortField;
         this.direction = direction;
     }
+
+    public void swapDirection() {
+        if (direction == JournalSortDirection.ASCENDING) {
+            direction = JournalSortDirection.DESCENDING;
+        } else {
+            direction = JournalSortDirection.ASCENDING;
+        }
+    }
     
 }

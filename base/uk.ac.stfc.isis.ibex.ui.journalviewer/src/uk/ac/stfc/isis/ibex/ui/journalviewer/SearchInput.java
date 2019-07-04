@@ -239,7 +239,7 @@ public class SearchInput extends Composite {
         } else if (stackSearch.topControl == cmpUsers) {
             return Optional.of(txtSearchUsers.getText());
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 

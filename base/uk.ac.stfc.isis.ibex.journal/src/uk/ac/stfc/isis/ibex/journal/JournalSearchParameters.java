@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -32,6 +33,11 @@ public class JournalSearchParameters {
     private Optional<Integer> toNumber = Optional.empty();
     private Optional<Calendar> fromTime = Optional.empty();
     private Optional<Calendar> toTime = Optional.empty();
+    private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
+    {
+        // This is the default sort
+        addSort(JournalField.RUN_NUMBER);
+    }
     
     /**
      * A search can only be made with parameters of one type.
@@ -136,4 +142,38 @@ public class JournalSearchParameters {
     public Optional<Calendar> getToTime() {
         return toTime;
     }
+    
+    /**
+     * Adds a field to be used to order the results in the default order.
+     * 
+     * @param sortField The field to sort with.
+     */
+    public void addSort(JournalField sortField) {
+        sorts.add(new JournalSort(sortField, sortField.getSortDirection()));
+    }
+
+    /**
+     * @return the sorts
+     */
+    public ArrayList<JournalSort> getSorts() {
+        return sorts;
+    }
+    
+    /**
+     * Clear the sorts list.
+     */
+    public void clearSorts() {
+        sorts = new ArrayList<JournalSort>();
+    }
+    
+    /**
+     * @return the first sort in the list of sorts
+     */
+    public JournalSort getPrimarySort() {
+        if (sorts.size() == 0) {
+            throw new IllegalStateException("There is no sort");
+        }
+        return sorts.get(0);
+    }
+
 }

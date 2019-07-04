@@ -148,7 +148,6 @@ public class JournalViewerView {
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
-        setProgressIndicatorsVisible(false);
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -158,7 +157,9 @@ public class JournalViewerView {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     super.widgetSelected(e);
+                    setProgressIndicatorsVisible(true);
                     model.setFieldSelected(property, checkbox.getSelection());
+                    setProgressIndicatorsVisible(false);
                 }
             });
         }
@@ -180,7 +181,10 @@ public class JournalViewerView {
 		        SelectionAdapter selectionAdapter = new SelectionAdapter() {
 		            @Override
 		            public void widgetSelected(SelectionEvent e) {
-		                JournalField sortField = JournalField.getFieldFromFriendlyName(column.getText());
+		                JournalField field = JournalField.getFieldFromFriendlyName(column.getText());
+		                setProgressIndicatorsVisible(true);
+                        model.sortBy(field);
+                        setProgressIndicatorsVisible(false);
 		            }
 		        };
 		        return selectionAdapter;
@@ -200,6 +204,8 @@ public class JournalViewerView {
         lblLastUpdate.setText("placeholder");
 
         bind();
+        model.refresh();
+        setProgressIndicatorsVisible(false);
     }
 
     /**
@@ -209,22 +215,18 @@ public class JournalViewerView {
     private void search() {
         int fieldIndex = searchInput.getCmbFilterTypeIndex();
 
-        // If for whatever reason the filter type combo has nothing selected, the index will be -1
-        if (fieldIndex != -1) {
-            JournalSearchParameters parameters = new JournalSearchParameters();
-            final JournalField field = model.getSearchableFields().get(fieldIndex);
-            parameters.setField(field);
-            if (field == JournalField.RUN_NUMBER) {
-                parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
-            } else if (field == JournalField.START_TIME) {
-                parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
-            } else {
-                parameters.setSearchString(searchInput.getActiveSearchText());
-            }
-
-            runSearchJob(parameters);
-
+        JournalSearchParameters parameters = new JournalSearchParameters();
+        final JournalField field = model.getSearchableFields().get(fieldIndex);
+        parameters.setField(field);
+        if (field == JournalField.RUN_NUMBER) {
+            parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
+        } else if (field == JournalField.START_TIME) {
+            parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
+        } else {
+            parameters.setSearchString(searchInput.getActiveSearchText());
         }
+
+        runSearchJob(parameters);
     }
 
     private void runSearchJob(JournalSearchParameters parameters) {
@@ -282,7 +284,12 @@ public class JournalViewerView {
     }
     
     private void setProgressIndicatorsVisible(final boolean visible) {
-        DISPLAY.asyncExec(() -> progressBar.setVisible(visible));
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisible(visible);
+            }
+        });
     }
 
     private void bind() {
