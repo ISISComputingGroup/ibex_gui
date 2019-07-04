@@ -47,7 +47,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchWidgetType;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.journal.JournalSearch;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -134,7 +136,7 @@ public class JournalViewerView {
         rlSearchControls.center = true;
         searchControls.setLayout(rlSearchControls);
 
-        searchInput = new SearchInput(searchControls);
+        searchInput = new SearchInput(searchControls, model);
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
         searchInput.setLayout(rlFilterControl);
 
@@ -207,24 +209,33 @@ public class JournalViewerView {
      * request parameters.
      */
     private void search() {
-        int fieldIndex = searchInput.getCmbFilterTypeIndex();
+        JournalSearch<?> journalSearch = searchInput.getJournalSearch();
+        JournalSearchWidgetType widgetType = journalSearch.getWidgetType();
+        
+        if (widgetType == JournalSearchWidgetType.CALENDAR_SEARCH) {
+            
+        } else if (widgetType == JournalSearchWidgetType.INTEGER_SEARCH) {
+            
+        } else {
+            
+        }
 
         // If for whatever reason the filter type combo has nothing selected, the index will be -1
-        if (fieldIndex != -1) {
-            JournalSearchParameters parameters = new JournalSearchParameters();
-            final JournalField field = model.getSearchableFields().get(fieldIndex);
-            parameters.setField(field);
-            if (field == JournalField.RUN_NUMBER) {
-                parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
-            } else if (field == JournalField.START_TIME) {
-                parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
-            } else {
-                parameters.setSearchString(searchInput.getActiveSearchText());
-            }
-
-            runSearchJob(parameters);
-
-        }
+//        if (fieldIndex != -1) {
+//            JournalSearchParameters parameters = new JournalSearchParameters();
+//            final JournalField field = model.getSearchableFields().get(fieldIndex);
+//            parameters.setField(field);
+//            if (field == JournalField.RUN_NUMBER) {
+//                parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
+//            } else if (field == JournalField.START_TIME) {
+//                parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
+//            } else {
+//                parameters.setSearchString(searchInput.getActiveSearchText());
+//            }
+//            
+//            runSearchJob(parameters);
+//
+//        }
     }
 
     private void runSearchJob(JournalSearchParameters parameters) {

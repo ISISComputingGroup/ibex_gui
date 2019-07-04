@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
@@ -51,8 +52,19 @@ public class JournalModel extends ModelObject {
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
 	
-	private static final List<JournalField> SEARCHABLE_FIELDS = Arrays.asList(new JournalField[]{JournalField.RUN_NUMBER,
-	        JournalField.TITLE, JournalField.START_TIME, JournalField.RB_NUMBER, JournalField.USERS});
+//	private static final List<JournalField> SEARCHABLE_FIELDS = Arrays.asList(new JournalField[]{JournalField.RUN_NUMBER,
+//	        JournalField.TITLE, JournalField.START_TIME, JournalField.RB_NUMBER, JournalField.USERS});
+	
+	@SuppressWarnings("rawtypes")
+    private static final List<JournalSearch> SEARCHES = Arrays.asList(
+	        new JournalSearch<Integer>(JournalField.RUN_NUMBER) {
+	            public JournalSearchWidgetType getWidgetType() {
+	                return JournalSearchWidgetType.INTEGER_SEARCH;
+	            }
+	        },
+	        new JournalSearchCalendar(JournalField.START_TIME)
+	        // new JournalSearch<Integer>(JournalField.RB_NUMBER) {}
+	);
 
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
     private static final int PAGE_SIZE = 25;
@@ -316,7 +328,8 @@ public class JournalModel extends ModelObject {
     /**
      * @return the searchableFields
      */
-    public List<JournalField> getSearchableFields() {
-        return SEARCHABLE_FIELDS;
+    @SuppressWarnings("rawtypes")
+    public List<JournalSearch> getSearches() {
+        return SEARCHES;
     }
 }

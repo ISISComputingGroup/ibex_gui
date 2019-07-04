@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.swt.SWT;
@@ -40,43 +42,50 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalSearch;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchCalendar;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchWidgetType;
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+
 /**
  * The Class Search Control to allow searching within the log.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchInput extends Composite {
 
-    private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
-    private Text txtSearchRBNumber;
     private Composite cmpSearch;
-    private Composite cmpTitle;
-    private Composite cmpRBNumber;
-    private Composite cmpUsers;
+    private Composite cmpTxtSearch;
     private static StackLayout stackSearch = new StackLayout();
 
     private static final int SEARCH_BOX_WIDTH = 410;
     private static final int RUN_NUMBER_MAX_VALUE = 99999999;
 
     private static final Display DISPLAY = Display.getCurrent();
-    private Text txtSearchTitle;
-    private Text txtSearchUsers;
+    private Text txtSearch;
 
     private Spinner spinnerFromNumber, spinnerToNumber;
     private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
     private DateTime dtFromDate, dtFromTime, dtToDate, dtToTime;
 
     private Combo cmbFilterType;
+    private JournalViewModel model;
 
     /**
      * Instantiates a new filter control.
      *
      * @param parent
      *            the parent in which this control resides
+     * @param model
+     *            the view model
      */
-    public SearchInput(Composite parent) {
+    public SearchInput(Composite parent, JournalViewModel model) {
         super(parent, SWT.NONE);
         Composite grpFilter = new Composite(parent, SWT.NONE);
         grpFilter.setLayout(null);
+        this.model = model;
+        
+        Map<JournalSearchWidgetType, Composite> map = new HashMap<>();
 
         Label lblSearch = new Label(grpFilter, SWT.NONE);
         lblSearch.setBounds(5, 14, 64, 15);
@@ -85,53 +94,53 @@ public class SearchInput extends Composite {
         cmbFilterType = new Combo(grpFilter, SWT.READ_ONLY);
         cmbFilterType.setBounds(74, 10, 97, 23);
 
-        cmbFilterType.setItems(new String[] {"Run number", "Title", "Start time", "RB number", "Users"});
+        cmbFilterType.setItems(model.getSearches().stream().map(JournalSearch::getField).map(JournalField::getFriendlyName).toArray(String[]::new));
         cmbFilterType.select(0);
 
         cmpSearch = new Composite(grpFilter, SWT.NONE);
         cmpSearch.setBounds(176, 5, 435, 34);
         cmpSearch.setLayout(stackSearch);
 
-        Composite cmpRunNumber = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpRunNumber);
+        Composite cmpIntSearch = new Composite(cmpSearch, SWT.NONE);
+        map.put(JournalSearchWidgetType.INTEGER_SEARCH, cmpIntSearch);
         GridLayout glCmpRunNumber = new GridLayout(5, false);
         glCmpRunNumber.marginLeft = 90;
-        cmpRunNumber.setLayout(glCmpRunNumber);
+        cmpIntSearch.setLayout(glCmpRunNumber);
 
-        chkNumberFrom = new Button(cmpRunNumber, SWT.CHECK);
+        chkNumberFrom = new Button(cmpIntSearch, SWT.CHECK);
         chkNumberFrom.setText("From");
 
-        spinnerFromNumber = new Spinner(cmpRunNumber, SWT.BORDER);
+        spinnerFromNumber = new Spinner(cmpIntSearch, SWT.BORDER);
         spinnerFromNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
         GridData gdSpinnerFromNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdSpinnerFromNumber.widthHint = 30;
         spinnerFromNumber.setLayoutData(gdSpinnerFromNumber);
         spinnerFromNumber.setEnabled(false);
 
-        Label lblSpacing = new Label(cmpRunNumber, SWT.NONE);
+        Label lblSpacing = new Label(cmpIntSearch, SWT.NONE);
         lblSpacing.setText("     ");
 
-        chkNumberTo = new Button(cmpRunNumber, SWT.CHECK);
+        chkNumberTo = new Button(cmpIntSearch, SWT.CHECK);
         chkNumberTo.setText("To");
 
-        spinnerToNumber = new Spinner(cmpRunNumber, SWT.BORDER);
+        spinnerToNumber = new Spinner(cmpIntSearch, SWT.BORDER);
         spinnerToNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
         GridData gdSpinnerToNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdSpinnerToNumber.widthHint = 30;
         spinnerToNumber.setLayoutData(gdSpinnerToNumber);
         spinnerToNumber.setEnabled(false);
 
-        cmpTitle = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpTitle);
-        cmpTitle.setLayout(new GridLayout(1, false));
+        cmpTxtSearch = new Composite(cmpSearch, SWT.NONE);
+        map.put(JournalSearchWidgetType.TEXT_SEARCH, cmpTxtSearch);
+        cmpTxtSearch.setLayout(new GridLayout(1, false));
 
-        txtSearchTitle = new Text(cmpTitle, SWT.BORDER);
+        txtSearch = new Text(cmpTxtSearch, SWT.BORDER);
         GridData gdTxtSearchTitle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdTxtSearchTitle.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchTitle.setLayoutData(gdTxtSearchTitle);
+        txtSearch.setLayoutData(gdTxtSearchTitle);
 
         Composite cmpTimePicker = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpTimePicker);
+        map.put(JournalSearchWidgetType.CALENDAR_SEARCH, cmpTimePicker);
         cmpTimePicker.setLayout(new GridLayout(7, false));
 
         chkTimeFrom = new Button(cmpTimePicker, SWT.CHECK);
@@ -171,27 +180,8 @@ public class SearchInput extends Composite {
             }
         });
 
-        cmpRBNumber = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpRBNumber);
-        cmpRBNumber.setLayout(new GridLayout(1, false));
-
-        txtSearchRBNumber = new Text(cmpRBNumber, SWT.BORDER);
-        GridData gdTxtSearchRBNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtSearchRBNumber.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchRBNumber.setLayoutData(gdTxtSearchRBNumber);
-
-        stackSearch.topControl = cmpRunNumber;
-
-        cmpUsers = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpUsers);
-        cmpUsers.setLayout(new GridLayout(1, false));
-
-        txtSearchUsers = new Text(cmpUsers, SWT.BORDER);
-        GridData gdTxtSearchUsers = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtSearchUsers.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchUsers.setLayoutData(gdTxtSearchUsers);
-
-        cmpSearch.setTabList(new Control[] {cmpRunNumber, cmpTitle, cmpTimePicker, cmpRBNumber, cmpUsers});
+        stackSearch.topControl = cmpIntSearch;
+        cmpSearch.setTabList(new Control[]{cmpIntSearch, cmpTxtSearch, cmpTimePicker});
 
         chkNumberFrom.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -213,7 +203,8 @@ public class SearchInput extends Composite {
                 DISPLAY.asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
+                        stackSearch.topControl = map.get(getJournalSearch().getWidgetType());
+                        // stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
                         cmpSearch.layout();
                     }
                 });
@@ -222,45 +213,44 @@ public class SearchInput extends Composite {
     }
 
     /**
-     * @return The current selection index of the filter type drop-down menu.
+     * @return The currently selected journal search
      */
-    public int getCmbFilterTypeIndex() {
-        return cmbFilterType.getSelectionIndex();
+    public JournalSearch getJournalSearch() {
+        JournalSearch journalSearch = model.getSearches().get(cmbFilterType.getSelectionIndex());
+        JournalSearchWidgetType widgetType = journalSearch.getWidgetType();
+        
+        if (widgetType == JournalSearchWidgetType.CALENDAR_SEARCH) {
+            journalSearch.setFrom(getTimeFrom());
+            
+        }
+        return journalSearch;
     }
 
     /**
      * @return The text in the search box of the currently active filter type.
      */
-    public Optional<String> getActiveSearchText() {
-        if (stackSearch.topControl == cmpTitle) {
-            return Optional.of(txtSearchTitle.getText());
-        } else if (stackSearch.topControl == cmpRBNumber) {
-            return Optional.of(txtSearchRBNumber.getText());
-        } else if (stackSearch.topControl == cmpUsers) {
-            return Optional.of(txtSearchUsers.getText());
-        } else {
-            return null;
-        }
+    private Optional<String> getSearchText() {
+        return Optional.of(txtSearch.getText());
     }
 
     /**
      * @return The number in the from run number spinner.
      */
-    public Optional<Integer> getRunNumberFrom() {
+    private Optional<Integer> getNumberFrom() {
         return chkNumberFrom.getSelection() ? Optional.of(spinnerFromNumber.getSelection()) : Optional.empty();
     }
 
     /**
      * @return The number in the to run number spinner.
      */
-    public Optional<Integer> getRunNumberTo() {
+    private Optional<Integer> getNumberTo() {
         return chkNumberTo.getSelection() ? Optional.of(spinnerToNumber.getSelection()) : Optional.empty();
     }
 
     /**
      * @return A Calendar representing the start time to search from.
      */
-    public Optional<Calendar> getStartTimeFrom() {
+    private Optional<Calendar> getTimeFrom() {
         return chkTimeFrom.getSelection() ? Optional.of(new GregorianCalendar(dtFromDate.getYear(), dtFromDate.getMonth(),
                 dtFromDate.getDay(), dtFromTime.getHours(), dtFromTime.getMinutes(), dtFromTime.getSeconds())) : Optional.empty();
     }
@@ -268,7 +258,7 @@ public class SearchInput extends Composite {
     /**
      * @return A Calendar representing the start time to search to.
      */
-    public Optional<Calendar> getStartTimeTo() {
+    private Optional<Calendar> getTimeTo() {
         return chkTimeTo.getSelection() ? Optional.of(new GregorianCalendar(dtToDate.getYear(), dtToDate.getMonth(),
                 dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds())) : Optional.empty();
     }
@@ -285,9 +275,7 @@ public class SearchInput extends Composite {
                 chkTimeFrom.setSelection(false);
                 chkTimeTo.setSelection(false);
                 
-                txtSearchRBNumber.setText("");
-                txtSearchTitle.setText("");
-                txtSearchUsers.setText("");
+                txtSearch.setText("");
                 
                 spinnerFromNumber.setSelection(0);
                 spinnerToNumber.setSelection(0);
