@@ -534,7 +534,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>1</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box</name>
+    <name>Jaw set 1</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -575,7 +575,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>4</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box_1</name>
+    <name>Jaw set 4</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -616,7 +616,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>2</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box_2</name>
+    <name>Jaw set 2</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -657,7 +657,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>3</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box_3</name>
+    <name>Jaw set 3</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -698,7 +698,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>5</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box_4</name>
+    <name>Jaw set 5</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
@@ -1510,9 +1510,9 @@ $(pv_value)</tooltip>
     <height>152</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <NUMBER>4</NUMBER>
+      <NUMBER>6</NUMBER>
     </macros>
-    <name>A Linking Container That Looks Like a Group Box_5</name>
+    <name>Jaw set 6</name>
     <opi_file>single_jaw.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
