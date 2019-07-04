@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
-import uk.ac.stfc.isis.ibex.journal.JournalParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -111,7 +111,7 @@ public class JournalViewModel extends ModelObject {
      * 
      * @param parameters The parameters to search with.
      */
-    public void search(JournalParameters parameters) {
+    public void search(JournalSearchParameters parameters) {
         model.search(parameters);
     }
     
@@ -203,6 +203,13 @@ public class JournalViewModel extends ModelObject {
      */
     public int getPageNumberMax() {
     	return model.getPageMax();
+    }
+    
+    /**
+     * @return the searchableFields
+     */
+    public List<JournalField> getSearchableFields() {
+        return model.getSearchableFields();
     }
 
 }

@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.journal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import uk.ac.stfc.isis.ibex.journal.formatters.DateTimeJournalFormatter;
 import uk.ac.stfc.isis.ibex.journal.formatters.DecimalPlacesFormatter;
 import uk.ac.stfc.isis.ibex.journal.formatters.IJournalFormatter;
@@ -216,6 +219,17 @@ public enum JournalField {
      */
     public IJournalFormatter getFormatter() {
     	return formatter;
+    }
+    
+    /**
+     * Takes a friendly name and find its associated field. Throws an error if no such field exists.
+     * @param name the friendly name
+     * @return a journal field
+     */
+    public static JournalField getFieldFromFriendlyName(String name) {
+        return (new ArrayList<JournalField>(Arrays.asList(JournalField.values())))
+                .stream().filter(f -> f.getFriendlyName().equals(name))
+                .findFirst().get();
     }
     
 }

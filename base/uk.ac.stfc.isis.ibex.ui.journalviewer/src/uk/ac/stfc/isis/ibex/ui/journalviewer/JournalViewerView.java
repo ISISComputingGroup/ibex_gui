@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
@@ -80,8 +80,6 @@ public class JournalViewerView {
 
     private DataboundTable<JournalRow> table;
 
-    private static final JournalField[] FIELDS = {JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.START_TIME,
-            JournalField.RB_NUMBER, JournalField.USERS};
     private Composite searchControls;
     private Button btnClear;
     private Composite basicControls;
@@ -176,6 +174,17 @@ public class JournalViewerView {
 			protected ColumnComparator<JournalRow> comparator() {
 				return new NullComparator<>();
 			}
+			
+			@Override
+			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
+		        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		            @Override
+		            public void widgetSelected(SelectionEvent e) {
+		                JournalField sortField = JournalField.getFieldFromFriendlyName(column.getText());
+		            }
+		        };
+		        return selectionAdapter;
+		    }
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
@@ -198,28 +207,27 @@ public class JournalViewerView {
      * request parameters.
      */
     private void search() {
-        if (model != null) {
-            int fieldIndex = searchInput.getCmbFilterTypeIndex();
+        int fieldIndex = searchInput.getCmbFilterTypeIndex();
 
-            if (fieldIndex != -1) {
-                JournalParameters parameters = new JournalParameters();
-                final JournalField field = FIELDS[fieldIndex];
-                parameters.setField(field);
-                if (field == JournalField.RUN_NUMBER) {
-                    parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
-                } else if (field == JournalField.START_TIME) {
-                    parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
-                } else {
-                    parameters.setSearchString(searchInput.getActiveSearchText());
-                }
-
-                runSearchJob(parameters);
-
+        // If for whatever reason the filter type combo has nothing selected, the index will be -1
+        if (fieldIndex != -1) {
+            JournalSearchParameters parameters = new JournalSearchParameters();
+            final JournalField field = model.getSearchableFields().get(fieldIndex);
+            parameters.setField(field);
+            if (field == JournalField.RUN_NUMBER) {
+                parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
+            } else if (field == JournalField.START_TIME) {
+                parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
+            } else {
+                parameters.setSearchString(searchInput.getActiveSearchText());
             }
+
+            runSearchJob(parameters);
+
         }
     }
 
-    private void runSearchJob(JournalParameters parameters) {
+    private void runSearchJob(JournalSearchParameters parameters) {
 
         final Runnable searchJob = new Runnable() {
             @Override
@@ -274,14 +282,7 @@ public class JournalViewerView {
     }
     
     private void setProgressIndicatorsVisible(final boolean visible) {
-
-        DISPLAY.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisible(visible);
-            }
-        });
-
+        DISPLAY.asyncExec(() -> progressBar.setVisible(visible));
     }
 
     private void bind() {

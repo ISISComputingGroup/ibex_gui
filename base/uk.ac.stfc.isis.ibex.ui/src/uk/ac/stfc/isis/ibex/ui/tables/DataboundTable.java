@@ -371,7 +371,15 @@ public abstract class DataboundTable<TRow> extends Composite {
 		return viewCol;
 	}
 	
-	private SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
+	/**
+	 * Gets a selection adapter for when a column is selected.
+	 * Tables can override to provide their own.
+	 * 
+	 * @param column the column to create the adapter for
+	 * @param index the index of the column
+	 * @return the selection adapter
+	 */
+	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
         SelectionAdapter selectionAdapter = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

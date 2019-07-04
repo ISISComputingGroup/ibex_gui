@@ -26,7 +26,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.journal.JournalParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 
 /**
  * Tests parts of the journal model.
@@ -34,12 +34,12 @@ import uk.ac.stfc.isis.ibex.journal.JournalParameters;
  */
 @SuppressWarnings("checkstyle:methodname")
 public class JournalModelTests {
-    private JournalParameters params;
+    private JournalSearchParameters params;
     private static final String TEST_STRING = "Tuturu!";
     
     @Before
     public void setup() {
-        params = new JournalParameters();
+        params = new JournalSearchParameters();
     }
     
     @Test

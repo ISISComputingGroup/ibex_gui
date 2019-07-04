@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
@@ -49,6 +50,9 @@ public class JournalModel extends ModelObject {
 	private List<JournalRow> runs = Collections.emptyList();
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
+	
+	private static final List<JournalField> SEARCHABLE_FIELDS = Arrays.asList(new JournalField[]{JournalField.RUN_NUMBER,
+	        JournalField.TITLE, JournalField.START_TIME, JournalField.RB_NUMBER, JournalField.USERS});
 
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
     private static final int PAGE_SIZE = 25;
@@ -62,7 +66,7 @@ public class JournalModel extends ModelObject {
     
     // The search parameters of the most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
-    private JournalParameters activeParameters = new JournalParameters();
+    private JournalSearchParameters activeParameters = new JournalSearchParameters();
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -87,7 +91,7 @@ public class JournalModel extends ModelObject {
      * 
      * @param parameters The parameters to search with.
      */
-    public void search(JournalParameters parameters) {
+    public void search(JournalSearchParameters parameters) {
         Connection connection = null;
         try {
             String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
@@ -127,7 +131,7 @@ public class JournalModel extends ModelObject {
      * @param connection the SQL connection to use.
      * @param parameters The parameters to search with.
      */
-    private void searchUpdateRuns(Connection connection, JournalParameters parameters) throws SQLException {
+    private void searchUpdateRuns(Connection connection, JournalSearchParameters parameters) throws SQLException {
         long startTime = System.currentTimeMillis();
 
         JournalSqlStatement journalStatement = new JournalSqlStatement(parameters, pageNumber, PAGE_SIZE, connection);
@@ -200,7 +204,7 @@ public class JournalModel extends ModelObject {
      * Resets the active search parameters to their default values.
      */
     public void resetActiveParameters() {
-        activeParameters = new JournalParameters();
+        activeParameters = new JournalSearchParameters();
     }
     
     private void setRuns(List<JournalRow> runs) {
@@ -308,4 +312,11 @@ public class JournalModel extends ModelObject {
 	public int getPageMax() {
 		return pageMax;
 	}
+
+    /**
+     * @return the searchableFields
+     */
+    public List<JournalField> getSearchableFields() {
+        return SEARCHABLE_FIELDS;
+    }
 }

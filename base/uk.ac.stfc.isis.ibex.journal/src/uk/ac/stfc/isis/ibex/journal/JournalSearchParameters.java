@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * Encapsulates journal search parameters.
  */
-public class JournalParameters {
+public class JournalSearchParameters {
     private JournalField field = JournalField.RUN_NUMBER;
     private Optional<String> searchString = Optional.empty();
     private Optional<Integer> fromNumber = Optional.empty();
@@ -33,6 +33,11 @@ public class JournalParameters {
     private Optional<Calendar> fromTime = Optional.empty();
     private Optional<Calendar> toTime = Optional.empty();
     
+    /**
+     * A search can only be made with parameters of one type.
+     * Once some parameters have been set, this variable is set to true
+     * and used to prevent more parameters from being added.
+     */
     private boolean set = false;
     
     /**

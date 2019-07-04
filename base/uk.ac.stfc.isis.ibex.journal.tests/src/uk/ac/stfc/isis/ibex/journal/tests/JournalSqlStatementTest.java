@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalSqlStatement;
 
 /**
@@ -43,23 +43,23 @@ public class JournalSqlStatementTest {
     private Connection connection;
     @Mock
     private PreparedStatement st;
-    private JournalParameters parameters;
+    private JournalSearchParameters parameters;
     private static final int PAGE_NUMBER = 1;
     private static final int PAGE_SIZE = 25;
 
     
     @Before
     public void setup() {
-        parameters = new JournalParameters();
+        parameters = new JournalSearchParameters();
     }
     
     @Test
     public void test_GIVEN_no_parameters_WHEN_create_where_template_THEN_nothing_returned() {
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
         
-        String t = statement.createWhereTemplate();
+        String template = statement.createWhereTemplate();
         
-        assertEquals(t, "");
+        assertEquals(template, "");
     }
     
     @Test
@@ -68,9 +68,9 @@ public class JournalSqlStatementTest {
         parameters.setSearchString(Optional.of("Tuturu!"));
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
         
-        String t = statement.createWhereTemplate();
+        String template = statement.createWhereTemplate();
         
-        assertEquals(t, " WHERE title LIKE ?");
+        assertEquals(template, " WHERE title LIKE ?");
     }
     
     @Test
@@ -79,9 +79,9 @@ public class JournalSqlStatementTest {
         parameters.setNumbers(Optional.of(0), Optional.of(1));
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
         
-        String t = statement.createWhereTemplate();
+        String template = statement.createWhereTemplate();
         
-        assertEquals(t, " WHERE run_number >= ? AND run_number <= ?");
+        assertEquals(template, " WHERE run_number >= ? AND run_number <= ?");
     }
     
     @Test(expected = IllegalStateException.class)
@@ -96,9 +96,9 @@ public class JournalSqlStatementTest {
         JournalSqlStatement statement = new JournalSqlStatement(parameters, PAGE_NUMBER, PAGE_SIZE, connection);
         statement.addDescendingSort(JournalField.RUN_NUMBER);
         
-        String t = statement.createSortLimitTemplate();
+        String template = statement.createSortLimitTemplate();
         
-        assertEquals(t, " ORDER BY run_number DESC LIMIT ?, ?");
+        assertEquals(template, " ORDER BY run_number DESC LIMIT ?, ?");
     }
     
     @Test
@@ -108,8 +108,8 @@ public class JournalSqlStatementTest {
         statement.addAscendingSort(JournalField.USERS);
         statement.addDescendingSort(JournalField.RB_NUMBER);
         
-        String t = statement.createSortLimitTemplate();
+        String template = statement.createSortLimitTemplate();
         
-        assertEquals(t, " ORDER BY run_number DESC, users ASC, rb_number DESC LIMIT ?, ?");
+        assertEquals(template, " ORDER BY run_number DESC, users ASC, rb_number DESC LIMIT ?, ?");
     }
 }

@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.journal.JournalSort.JournalSortDirection;
  * 
  */
 public class JournalSqlStatement {
-    private JournalParameters parameters;
+    private JournalSearchParameters parameters;
     private int pageNumber;
     private int pageSize;
     private Connection connection;
@@ -51,7 +51,7 @@ public class JournalSqlStatement {
      * @param pageSize The number of rows on each page.
      * @param connection the SQL connection to use.
      */
-    public JournalSqlStatement(JournalParameters parameters, int pageNumber, int pageSize, Connection connection) {
+    public JournalSqlStatement(JournalSearchParameters parameters, int pageNumber, int pageSize, Connection connection) {
         this.parameters = parameters;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
