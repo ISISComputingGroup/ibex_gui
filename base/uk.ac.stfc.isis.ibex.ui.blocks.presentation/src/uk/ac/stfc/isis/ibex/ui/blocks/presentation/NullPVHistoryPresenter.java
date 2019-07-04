@@ -33,7 +33,7 @@ public class NullPVHistoryPresenter implements PVHistoryPresenter {
 	}
 
     @Override
-    public HashMap<String, ArrayList<String>> getBrowserTitles() {
+    public HashMap<String, ArrayList<String>> getPlotsAndAxes() {
         // do nothing
         return null;
     }

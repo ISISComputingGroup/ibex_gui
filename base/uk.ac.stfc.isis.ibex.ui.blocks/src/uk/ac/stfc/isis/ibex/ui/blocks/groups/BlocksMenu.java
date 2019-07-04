@@ -129,7 +129,7 @@ public class BlocksMenu extends MenuManager {
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPlotAction);
 				
-				HashMap<String, ArrayList<String>> dataBrowserData = Presenter.pvHistoryPresenter().getBrowserTitles();
+				HashMap<String, ArrayList<String>> dataBrowserData = Presenter.pvHistoryPresenter().getPlotsAndAxes();
 				for (String plotName : dataBrowserData.keySet()) {
 				    MenuManager plotSubMenu = new MenuManager("Add to " + plotName + " plot...");
 				    

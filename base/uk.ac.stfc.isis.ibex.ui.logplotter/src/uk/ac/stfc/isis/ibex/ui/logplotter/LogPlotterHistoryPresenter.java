@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2019 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
@@ -49,70 +49,81 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
  * The class that is responsible for displaying the log plotter.
  */
 public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
-	
-	/**
-	 * Returns a stream of all the current data browsers. Editors are taken from all windows instead of just the active window
-	 * as the active window is null if called from a non UI-thread (ie when switching instruments). 
-	 * 
-	 * @return
-	 *         A stream of all the current data browser editors.
-	 */
-	public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
-	    return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())  // clone to avoid potential ConcurrentModificationException
-	    		.filter(window -> window != null)
-	    		.map(IWorkbenchWindow::getActivePage)
-	    		.filter(page -> page != null)
-	    		.map(IWorkbenchPage::getEditorReferences)
-	    		.flatMap(Arrays::stream)
-	    		.map(editorReference -> editorReference.getEditor(false))
-	    		.filter(editor -> editor instanceof DataBrowserEditor)
-	    		.map(editor -> (DataBrowserEditor) editor);
-	}
-	
-	/**
-	 * Closes all the current data browsers.
-	 */
-	public static void closeAllDataBrowsers() {
+
+    /**
+     * Returns a stream of all the current data browsers. Editors are taken from
+     * all windows instead of just the active window as the active window is
+     * null if called from a non UI-thread (ie when switching instruments).
+     * 
+     * @return A stream of all the current data browser editors.
+     */
+    public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
+        return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone()) // clone
+                                                                                      // to
+                                                                                      // avoid
+                                                                                      // potential
+                                                                                      // ConcurrentModificationException
+                .filter(window -> window != null).map(IWorkbenchWindow::getActivePage).filter(page -> page != null)
+                .map(IWorkbenchPage::getEditorReferences).flatMap(Arrays::stream)
+                .map(editorReference -> editorReference.getEditor(false))
+                .filter(editor -> editor instanceof DataBrowserEditor).map(editor -> (DataBrowserEditor) editor);
+    }
+
+    /**
+     * Closes all the current data browsers.
+     */
+    public static void closeAllDataBrowsers() {
         getCurrentDataBrowsers().forEach(editor -> closeDataBrowser(editor));
-	}
-	
-	/**
-	 * Closes the given data browser editor. Runs asynchronously on the GUI thread.
-	 * @param dataBrowser the editor to close
-	 */
-	private static void closeDataBrowser(final DataBrowserEditor dataBrowser) {
-		Display.getDefault().asyncExec(() -> dataBrowser.getEditorSite().getWorkbenchWindow().getActivePage().closeEditor(dataBrowser, false));
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HashMap<String, ArrayList<String>> getBrowserTitles() {
-	    HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-	    getCurrentDataBrowsers().forEach(e -> map.put(e.getTitle(),
-	            new ArrayList<String>(StreamSupport.stream(e.getModel().getAxes().spliterator(), false)
-	                    .map(a -> a.getName())
-	                    .collect(Collectors.toList()))));
-	    return map;
-	}
-	
-	/**
-	 * Adds a PV to an editor.
-	 * 
-	 * @param pvAddress The PV to plot the history of
-     * @param displayName The user-friendly name for the plot and the axis to add
-	 * @param editor The editor to add the PV to
-	 * @param axisName The name of the axis to add the PV to, if empty creates a new axis
-	 */
-	public void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor, Optional<String> axisName) {
-	    if (editor == null) {
-            return;
-        }
+    }
+
+    /**
+     * Closes the given data browser editor. Runs asynchronously on the GUI
+     * thread.
+     * 
+     * @param dataBrowser
+     *            the editor to close
+     */
+    private static void closeDataBrowser(final DataBrowserEditor dataBrowser) {
+        Display.getDefault().asyncExec(
+                () -> dataBrowser.getEditorSite().getWorkbenchWindow().getActivePage().closeEditor(dataBrowser, false));
+    }
+
+    private Stream<AxisConfig> getAxes(DataBrowserEditor editor) {
+        // Axes are returned as an iterable so must use spliterator to create
+        // stream.
+        return StreamSupport.stream(editor.getModel().getAxes().spliterator(), false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HashMap<String, ArrayList<String>> getPlotsAndAxes() {
+        HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+        getCurrentDataBrowsers().forEach(e -> map.put(e.getTitle(),
+                new ArrayList<String>(getAxes(e).map(a -> a.getName()).collect(Collectors.toList()))));
+        return map;
+    }
+
+    /**
+     * Adds a PV to an editor.
+     * 
+     * @param pvAddress
+     *            The PV to plot the history of
+     * @param displayName
+     *            The user-friendly name for the plot and the axis to add
+     * @param editor
+     *            The editor to add the PV to
+     * @param axisName
+     *            The name of the axis to add the PV to, if empty creates a new
+     *            axis
+     */
+    private void addPVToEditor(String pvAddress, final String displayName, DataBrowserEditor editor,
+            Optional<String> axisName) {
         Model model = editor.getModel();
         model.setSaveChanges(false);
         model.setArchiveRescale(ArchiveRescale.NONE);
-        
+
         // Add received items
         final double period = Preferences.getScanPeriod();
         try {
@@ -120,88 +131,93 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
             final PVItem item = new PVItem(pvAddress, period);
             item.setDisplayName(displayName);
             item.useDefaultArchiveDataSources();
-            
+
             AxisConfig axis;
             if (axisName.isPresent()) {
-                
                 // Extract the axis to add to from the list of axes
-                Optional<AxisConfig> existingAxis = StreamSupport.stream(model.getAxes().spliterator(), false).filter(a -> a.getName() == axisName.get()).findFirst();
-                
-                if (existingAxis.isPresent()) {
-                    axis = existingAxis.get();
-                } else {
-                    // Can't find the axis to add to, so create new one
-                    axis = new AxisConfig(displayName);
-                    axis.setAutoScale(true);
-                    model.addAxis(axis);
-                }
-                
-            } else {
-                // If an existing axis has not been specified, create a new one
-                axis = new AxisConfig(displayName);
-                axis.setAutoScale(true);
-                model.addAxis(axis);
-                
-                model.addListener(new ModelListenerAdapter() {
-                    private int dataCount = 0;
-                    private static final int DATA_COUNT_LIMIT = 10;
-                    private boolean autoscale = true;
+                axis = getAxes(editor).filter(a -> a.getName() == axisName.get()).findFirst()
+                        .orElse(createNewAxis(displayName, model));
 
-                    // This listener is triggered every time that a data point is added to the graph,
-                    // either from archive data or from new data. After 10 pieces of data are received,
-                    // it turns off autoscale.
-                    @Override
-                    public void selectedSamplesChanged() {
-                        if (dataCount < DATA_COUNT_LIMIT) {
-                            dataCount++;
-                        } else if (autoscale) {
-                            Display.getDefault().asyncExec(() -> axis.setAutoScale(false));
-                            autoscale = false;
-                        }
-                    }
-                    
-                });
+            } else {
+                axis = createNewAxis(displayName, model);
             }
-            
+
             // Add item to the axis and model
             item.setAxis(axis);
             model.addItem(item);
         } catch (Exception ex) {
-            MessageDialog.openError(editor.getSite().getShell(),
-                    Messages.Error,
+            MessageDialog.openError(editor.getSite().getShell(), Messages.Error,
                     NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void newDisplay(String pvAddress, final String displayName) {		
-	    // Create new editor
-	    final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
-	    	@Override
-	    	public String getName() {
-	    		return displayName;
-	    	}
-	    });
-	    
-	    addPVToEditor(pvAddress, displayName, editor, Optional.empty());
-	    
-	}
-	
-	/**
+    }
+
+    /**
+     * Creates a new axis on the specified plot.
+     * 
+     * @param displayName
+     *            The name of the new axis.
+     * @param model
+     *            The model to add the axis to.
+     * @return The created axis.
+     */
+    private AxisConfig createNewAxis(final String displayName, Model model) {
+        AxisConfig axis;
+        // If an existing axis has not been specified, create a new one
+        axis = new AxisConfig(displayName);
+        axis.setAutoScale(true);
+        model.addAxis(axis);
+
+        model.addListener(new ModelListenerAdapter() {
+            private int dataCount = 0;
+            private static final int DATA_COUNT_LIMIT = 10;
+            private boolean autoscale = true;
+
+            // This listener is triggered every time that a data point
+            // is added to the graph,
+            // either from archive data or from new data. After 10
+            // pieces of data are received,
+            // it turns off autoscale.
+            @Override
+            public void selectedSamplesChanged() {
+                if (dataCount < DATA_COUNT_LIMIT) {
+                    dataCount++;
+                } else if (autoscale) {
+                    Display.getDefault().asyncExec(() -> axis.setAutoScale(false));
+                    autoscale = false;
+                }
+            }
+
+        });
+        return axis;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void newDisplay(String pvAddress, final String displayName) {
+        // Create new editor
+        final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
+            @Override
+            public String getName() {
+                return displayName;
+            }
+        });
+
+        addPVToEditor(pvAddress, displayName, editor, Optional.empty());
+
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void addToDisplay(String pvAddress, String display, String presenterName, Optional<String> axisName) {
-        Optional<DataBrowserEditor> editorFromCurrent = getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName))
-                  .findFirst();
-        DataBrowserEditor editor;
-        
+        Optional<DataBrowserEditor> editorFromCurrent =
+                getCurrentDataBrowsers().filter(e -> e.getTitle().equals(presenterName)).findFirst();
+
         if (editorFromCurrent.isPresent()) {
-            editor = editorFromCurrent.get();
-            addPVToEditor(pvAddress, display, editor, axisName);
+            addPVToEditor(pvAddress, display, editorFromCurrent.get(), axisName);
         } else {
             // Can't find the editor to add to, make a new one
             newDisplay(pvAddress, display);

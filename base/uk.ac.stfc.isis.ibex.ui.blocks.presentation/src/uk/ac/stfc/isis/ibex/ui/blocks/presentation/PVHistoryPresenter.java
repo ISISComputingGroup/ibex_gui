@@ -29,10 +29,12 @@ import java.util.Optional;
 public interface PVHistoryPresenter {
 	
 	/**
-	 * Gets the names of all of the plots, mapped to lists of axis names.
-	 * @return A hash map of plot names and lists of axis names
-	 */
-	HashMap<String, ArrayList<String>> getBrowserTitles();
+     * Gets the names of all of the plots, along with a list of axis names for
+     * each plot.
+     * 
+     * @return A hash map of plot names and lists of axis names
+     */
+    HashMap<String, ArrayList<String>> getPlotsAndAxes();
 	
 	/**
 	 * Creates a new display and plots the PV history on it.
