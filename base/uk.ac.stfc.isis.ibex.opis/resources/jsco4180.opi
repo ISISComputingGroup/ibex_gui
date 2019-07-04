@@ -3210,7 +3210,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>85</width>
+      <width>205</width>
       <wrap_words>false</wrap_words>
       <wuid>-7ea2ed91:1687008d2ae:-746e</wuid>
       <x>150</x>
@@ -3330,19 +3330,12 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_Red" red="255" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>41</height>
-      <horizontal_alignment>1</horizontal_alignment>
-      <name>Label device issue:</name>
-      <rules>
-        <rule name="Rule" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0 == 1">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)ERROR:COMP</pv>
-        </rule>
-      </rules>
+      <height>20</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <name>Label current error:</name>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -3350,17 +3343,69 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>WARNING: Device unable to set components. Contact support.</text>
+      <text>Last input error:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>344</width>
+      <width>125</width>
       <wrap_words>true</wrap_words>
-      <wuid>4b28c433:16bb34aad8b:-7faa</wuid>
+      <wuid>4b28c433:16bb34aad8b:-7f98</wuid>
       <x>5</x>
-      <y>272</y>
+      <y>282</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update current error_1</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(PV_ROOT)ERROR:STR</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>######</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>205</width>
+      <wrap_words>false</wrap_words>
+      <wuid>4b28c433:16bb34aad8b:-7f97</wuid>
+      <x>150</x>
+      <y>282</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3414,5 +3459,53 @@ $(pv_value)</tooltip>
     <wuid>4b28c433:16bb34aad8b:-7fa9</wuid>
     <x>550</x>
     <y>618</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Red" red="255" green="0" blue="0" />
+    </foreground_color>
+    <height>41</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>Label device issue:</name>
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)ERROR:COMP</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <text>WARNING: Device unable to set components. Contact support.</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>false</visible>
+    <widget_type>Label</widget_type>
+    <width>344</width>
+    <wrap_words>true</wrap_words>
+    <wuid>4b28c433:16bb34aad8b:-7faa</wuid>
+    <x>421</x>
+    <y>558</y>
   </widget>
 </display>
