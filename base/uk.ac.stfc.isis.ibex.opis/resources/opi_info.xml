@@ -2017,6 +2017,7 @@
           <macro>
             <name>KEYLKG</name>
             <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
+            <default>KEYLKG_01</default>
           </macro>
         </macros>
       </value>
