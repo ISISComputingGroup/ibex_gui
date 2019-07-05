@@ -57,6 +57,6 @@ public class Activator implements BundleActivator {
     	return model; 
     }
 
-    private final static ToyModel model = new ToyModel();
+    private static final ToyModel model = new ToyModel();
 
 }

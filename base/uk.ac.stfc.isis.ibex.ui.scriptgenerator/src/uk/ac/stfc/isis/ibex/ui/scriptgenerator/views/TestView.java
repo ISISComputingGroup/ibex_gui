@@ -49,6 +49,9 @@ public class TestView {
 	private DataBindingContext bindingContext;
 	
 	@PostConstruct
+	/**
+	 * A basic framework to hold the toy interface.
+	 */
 	public void createPartControl(Composite parent) {
 		
 		this.toyModel = Activator.getModel();

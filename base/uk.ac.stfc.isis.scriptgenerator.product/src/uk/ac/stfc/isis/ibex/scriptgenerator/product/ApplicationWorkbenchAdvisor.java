@@ -43,11 +43,5 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	@Override
 	public boolean preShutdown() {
 		return true;
-        // set save and restore true here to make sure we save settings
-        // these are actually restored in ApplicationWorkbenchWindowAdvisor
-//        configurer.setSaveAndRestore(true);
-//
-//		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-//		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}
 }
