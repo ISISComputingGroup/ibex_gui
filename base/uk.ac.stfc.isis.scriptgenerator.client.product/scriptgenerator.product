@@ -4,7 +4,7 @@
 <product name="scriptgenerator" uid="scriptgenerator.product" id="uk.ac.stfc.isis.scriptgenerator.client.scriptgenerator" application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
+      <image path="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif"/>
    </aboutInfo>
 
    <configIni use="default">
@@ -23,15 +23,17 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
+   <windowImages i16="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif" i32="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif" i48="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif" i64="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif" i128="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif" i256="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif"/>
+
 
    <launcher name="ibex-script-generator">
       <solaris/>
       <win useIco="true">
-         <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
+         <ico path="/uk.ac.stfc.isis.scriptgenerator.client.product/icons/scriptgen.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
