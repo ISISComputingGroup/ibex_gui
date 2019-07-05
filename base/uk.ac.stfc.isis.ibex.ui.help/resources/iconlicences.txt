@@ -190,7 +190,8 @@ Stopped.png designed by ISIS Computing Group
 
 Script Generator ->uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons
 
-hammer_32x24 designed by Freepik at www.flaticon.com
+scriptgenerator_32 designed by ISIS Computing Group
+
 
 
 
