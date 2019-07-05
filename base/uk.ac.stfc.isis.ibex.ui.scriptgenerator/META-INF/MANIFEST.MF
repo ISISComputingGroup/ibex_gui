@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
  org.eclipse.core.databinding.property;bundle-version="1.6.200",
  uk.ac.stfc.isis.ibex.scriptgenerator,
  org.eclipse.core.databinding,
- org.eclipse.jface.databinding
+ org.eclipse.jface.databinding,
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
