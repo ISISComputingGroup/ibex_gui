@@ -1,8 +1,0 @@
-bin.includes = plugin.xml,\
-               META-INF/,\
-               .,\
-               config.ini,\
-               icons/,\
-               splash.bmp,\
-               default.css
-source.. = src/
