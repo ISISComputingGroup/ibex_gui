@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -109,7 +109,7 @@ public class VersionPanel extends Composite {
 
         javaPathLabel = new Label(this, SWT.NONE);
         GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
-        javaPathGd.widthHint = 200;
+        javaPathGd.widthHint = 250;
         javaPathLabel.setLayoutData(javaPathGd);
 
         // Not bound as fixed

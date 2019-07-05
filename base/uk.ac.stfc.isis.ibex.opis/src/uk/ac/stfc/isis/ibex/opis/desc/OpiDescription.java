@@ -82,21 +82,6 @@ public class OpiDescription {
 	public List<MacroInfo> getMacros() {
 		return macros;
 	}
-	
-    /**
-     * Gets the macro keys; e.g. names of all the macros.
-     *
-     * @return the macro names for the OPI
-     */
-    public List<String> getKeys() {
-	    List<String> keys = new ArrayList<>();
-	    
-	    for (MacroInfo macro : macros) {
-	        keys.add(macro.getName());
-	    }
-	    
-        return keys;
-	}
 
 	/**
 	 * The XML serialisation requires a default constructor.
@@ -128,14 +113,10 @@ public class OpiDescription {
      *         no description
      */
     public String getMacroDescription(String macroName) {
-
-        for (MacroInfo macro : this.macros) {
-            if (macroName.equals(macro.getName())) {
-                return macro.getDescription();
-            }
-        }
-
-        return "";
+    	return macros.stream().filter(macro -> macro.getName().equals(macroName))
+    			.map(m -> m.getDescription())
+    			.findFirst()
+    			.orElse("");
     }
 
     /**
