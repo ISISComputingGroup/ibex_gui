@@ -2087,5 +2087,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>TTI355</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>tti355.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTI355</name>
+            <description>The TTI355 PV prefix (e.g. TTI355_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
