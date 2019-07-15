@@ -23,16 +23,17 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.EnumSet;
-import java.util.List;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-import uk.ac.stfc.isis.ibex.journal.JournalModel;
-import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
-import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalModel;
+import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -92,6 +93,7 @@ public class JournalViewModel extends ModelObject {
     private void setLastUpdate(String lastUpdate) {
         firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
     }
+    
     /**
      * Refreshes the data from the journal database.
      */
@@ -107,12 +109,20 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
+     * @param parameters the search parameters to make active
+     */
+    public void setActiveParameters(JournalSearchParameters parameters) {
+        model.setActiveParameters(parameters);
+    }
+    
+    /**
      * Performs a search, returning all runs that match the request parameters.
      * 
      * @param parameters The parameters to search with.
+     * @return a CompletableFuture
      */
-    public void search(JournalSearchParameters parameters) {
-        model.search(parameters);
+    public CompletableFuture<Void> search(JournalSearchParameters parameters) {
+        return model.search(parameters);
     }
     
     /**
@@ -132,15 +142,16 @@ public class JournalViewModel extends ModelObject {
      * Sets a particular journal field to be selected or deselected.
      * @param field an element of the JournalField enum to select
      * @param selected true to select this field, false to deselect it
+     * @return a CompletableFuture
      */
-    public void setFieldSelected(JournalField field, boolean selected) {
+    public CompletableFuture<Void> setFieldSelected(JournalField field, boolean selected) {
     	EnumSet<JournalField> selectedFields = model.getSelectedFields();
     	if (selected) {
     		selectedFields.add(field);
     	} else if (selectedFields.contains(field)) {
     		selectedFields.remove(field);
     	}
-    	model.setSelectedFields(selectedFields);
+    	return model.setSelectedFields(selectedFields);
     }
     
     /**
@@ -177,11 +188,10 @@ public class JournalViewModel extends ModelObject {
     
     /**
      * @param pageNumber The number of the results page.
+     * @return a CompletableFuture
      */
-    public void setPageNumber(int pageNumber) {
-    	if (pageNumber != model.getPage()) {
-	    	model.setPage(pageNumber);
-    	}
+    public CompletableFuture<Void> setPageNumber(int pageNumber) {
+        return model.setPage(pageNumber);
     }
     
     /**
@@ -215,9 +225,10 @@ public class JournalViewModel extends ModelObject {
     /**
      * Sorts by the specified field, and swaps the direction if already active.
      * @param field The field to sort by
+     * @return a CompletableFuture
      */
-    public void sortBy(JournalField field) {
-        model.sortBy(field);
+    public CompletableFuture<Void> sortBy(JournalField field) {
+        return model.sortBy(field);
     }
-
+    
 }

@@ -47,19 +47,14 @@ import org.eclipse.swt.widgets.Text;
 public class SearchInput extends Composite {
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
-    private Text txtSearchRBNumber;
     private Composite cmpSearch;
-    private Composite cmpTitle;
-    private Composite cmpRBNumber;
-    private Composite cmpUsers;
+    private Text textSearchBox;
     private static StackLayout stackSearch = new StackLayout();
 
     private static final int SEARCH_BOX_WIDTH = 410;
     private static final int RUN_NUMBER_MAX_VALUE = 99999999;
 
     private static final Display DISPLAY = Display.getCurrent();
-    private Text txtSearchTitle;
-    private Text txtSearchUsers;
 
     private Spinner spinnerFromNumber, spinnerToNumber;
     private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
@@ -121,14 +116,14 @@ public class SearchInput extends Composite {
         spinnerToNumber.setLayoutData(gdSpinnerToNumber);
         spinnerToNumber.setEnabled(false);
 
-        cmpTitle = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpTitle);
-        cmpTitle.setLayout(new GridLayout(1, false));
-
-        txtSearchTitle = new Text(cmpTitle, SWT.BORDER);
+        Composite cmpTextSearch = new Composite(cmpSearch, SWT.NONE);
+        cmpFilters.add(cmpTextSearch);
+        cmpTextSearch.setLayout(new GridLayout(1, false));
+        
+        textSearchBox = new Text(cmpTextSearch, SWT.BORDER);
         GridData gdTxtSearchTitle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdTxtSearchTitle.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchTitle.setLayoutData(gdTxtSearchTitle);
+        textSearchBox.setLayoutData(gdTxtSearchTitle);
 
         Composite cmpTimePicker = new Composite(cmpSearch, SWT.NONE);
         cmpFilters.add(cmpTimePicker);
@@ -155,70 +150,13 @@ public class SearchInput extends Composite {
         dtToTime = new DateTime(cmpTimePicker, SWT.BORDER | SWT.TIME);
         dtToTime.setEnabled(false);
 
-        chkTimeFrom.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                dtFromDate.setEnabled(chkTimeFrom.getSelection());
-                dtFromTime.setEnabled(chkTimeFrom.getSelection());
-            }
-        });
-
-        chkTimeTo.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                dtToDate.setEnabled(chkTimeTo.getSelection());
-                dtToTime.setEnabled(chkTimeTo.getSelection());
-            }
-        });
-
-        cmpRBNumber = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpRBNumber);
-        cmpRBNumber.setLayout(new GridLayout(1, false));
-
-        txtSearchRBNumber = new Text(cmpRBNumber, SWT.BORDER);
-        GridData gdTxtSearchRBNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtSearchRBNumber.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchRBNumber.setLayoutData(gdTxtSearchRBNumber);
-
         stackSearch.topControl = cmpRunNumber;
+        cmpFilters.add(cmpTextSearch);
+        cmpFilters.add(cmpTextSearch);
 
-        cmpUsers = new Composite(cmpSearch, SWT.NONE);
-        cmpFilters.add(cmpUsers);
-        cmpUsers.setLayout(new GridLayout(1, false));
-
-        txtSearchUsers = new Text(cmpUsers, SWT.BORDER);
-        GridData gdTxtSearchUsers = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtSearchUsers.widthHint = SEARCH_BOX_WIDTH;
-        txtSearchUsers.setLayoutData(gdTxtSearchUsers);
-
-        cmpSearch.setTabList(new Control[] {cmpRunNumber, cmpTitle, cmpTimePicker, cmpRBNumber, cmpUsers});
-
-        chkNumberFrom.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                spinnerFromNumber.setEnabled(chkNumberFrom.getSelection());
-            }
-        });
-
-        chkNumberTo.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                spinnerToNumber.setEnabled(chkNumberTo.getSelection());
-            }
-        });
-
-        cmbFilterType.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                DISPLAY.asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
-                        cmpSearch.layout();
-                    }
-                });
-            }
-        });
+        cmpSearch.setTabList(new Control[] {cmpRunNumber, cmpTextSearch, cmpTimePicker, cmpTextSearch, cmpTextSearch});
+        
+        bind();
     }
 
     /**
@@ -232,15 +170,7 @@ public class SearchInput extends Composite {
      * @return The text in the search box of the currently active filter type.
      */
     public Optional<String> getActiveSearchText() {
-        if (stackSearch.topControl == cmpTitle) {
-            return Optional.of(txtSearchTitle.getText());
-        } else if (stackSearch.topControl == cmpRBNumber) {
-            return Optional.of(txtSearchRBNumber.getText());
-        } else if (stackSearch.topControl == cmpUsers) {
-            return Optional.of(txtSearchUsers.getText());
-        } else {
-            return Optional.empty();
-        }
+        return Optional.of(textSearchBox.getText());
     }
 
     /**
@@ -285,9 +215,7 @@ public class SearchInput extends Composite {
                 chkTimeFrom.setSelection(false);
                 chkTimeTo.setSelection(false);
                 
-                txtSearchRBNumber.setText("");
-                txtSearchTitle.setText("");
-                txtSearchUsers.setText("");
+                textSearchBox.setText("");
                 
                 spinnerFromNumber.setSelection(0);
                 spinnerToNumber.setSelection(0);
@@ -303,6 +231,51 @@ public class SearchInput extends Composite {
                 dtToDate.setEnabled(false);
                 dtFromTime.setEnabled(false);
                 dtToTime.setEnabled(false);
+            }
+        });
+    }
+    
+    private void bind() {
+        chkTimeFrom.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                dtFromDate.setEnabled(chkTimeFrom.getSelection());
+                dtFromTime.setEnabled(chkTimeFrom.getSelection());
+            }
+        });
+
+        chkTimeTo.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                dtToDate.setEnabled(chkTimeTo.getSelection());
+                dtToTime.setEnabled(chkTimeTo.getSelection());
+            }
+        });
+        
+        chkNumberFrom.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                spinnerFromNumber.setEnabled(chkNumberFrom.getSelection());
+            }
+        });
+
+        chkNumberTo.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                spinnerToNumber.setEnabled(chkNumberTo.getSelection());
+            }
+        });
+
+        cmbFilterType.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                DISPLAY.asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
+                        cmpSearch.layout();
+                    }
+                });
             }
         });
     }

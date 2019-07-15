@@ -46,8 +46,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
+import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -158,8 +158,7 @@ public class JournalViewerView {
                 public void widgetSelected(SelectionEvent e) {
                     super.widgetSelected(e);
                     setProgressIndicatorsVisible(true);
-                    model.setFieldSelected(property, checkbox.getSelection());
-                    setProgressIndicatorsVisible(false);
+                    model.setFieldSelected(property, checkbox.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
                 }
             });
         }
@@ -183,8 +182,7 @@ public class JournalViewerView {
 		            public void widgetSelected(SelectionEvent e) {
 		                JournalField field = JournalField.getFieldFromFriendlyName(column.getText());
 		                setProgressIndicatorsVisible(true);
-                        model.sortBy(field);
-                        setProgressIndicatorsVisible(false);
+	                    model.sortBy(field).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		            }
 		        };
 		        return selectionAdapter;
@@ -226,23 +224,9 @@ public class JournalViewerView {
             parameters.setSearchString(searchInput.getActiveSearchText());
         }
 
-        runSearchJob(parameters);
-    }
-
-    private void runSearchJob(JournalSearchParameters parameters) {
-
-        final Runnable searchJob = new Runnable() {
-            @Override
-            public void run() {
-                setProgressIndicatorsVisible(true);
-                model.search(parameters);
-                setProgressIndicatorsVisible(false);
-            }
-        };
-
-        Thread searchJobThread = new Thread(searchJob);
-
-        searchJobThread.start();
+        model.setActiveParameters(parameters);
+        setProgressIndicatorsVisible(true);
+        model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
     }
 
     private void changeTableColumns() {
@@ -284,12 +268,11 @@ public class JournalViewerView {
     }
     
     private void setProgressIndicatorsVisible(final boolean visible) {
-        DISPLAY.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisible(visible);
-            }
-        });
+        DISPLAY.asyncExec(() -> progressBar.setVisible(visible));
+    }
+    
+    private void resetPageNumber() {
+        DISPLAY.asyncExec(() -> spinnerPageNumber.setSelection(1));
     }
 
     private void bind() {
@@ -304,25 +287,23 @@ public class JournalViewerView {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 setProgressIndicatorsVisible(true);
-                model.setPageNumber(spinnerPageNumber.getSelection());
-                setProgressIndicatorsVisible(false);
+                model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }
         });
         
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+                resetPageNumber();
                 setProgressIndicatorsVisible(true);
-                spinnerPageNumber.setSelection(1);
-                model.refresh();
-                setProgressIndicatorsVisible(false);
+                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }
         });
         
         btnSearch.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                spinnerPageNumber.setSelection(1);
+                resetPageNumber();
                 search();
             }
         });
@@ -330,19 +311,18 @@ public class JournalViewerView {
         btnClear.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setProgressIndicatorsVisible(true);
-                spinnerPageNumber.setSelection(1);
+                resetPageNumber();
                 searchInput.clearInput();
                 model.resetActiveParameters();
-                model.refresh();
-                setProgressIndicatorsVisible(false);
+                setProgressIndicatorsVisible(true);
+                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }
         });
 
         model.addPropertyChangeListener("runs", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Display.getDefault().asyncExec(new Runnable() {
+                DISPLAY.asyncExec(new Runnable() {
                     @Override
                     public void run() {
                         setProgressIndicatorsVisible(true);

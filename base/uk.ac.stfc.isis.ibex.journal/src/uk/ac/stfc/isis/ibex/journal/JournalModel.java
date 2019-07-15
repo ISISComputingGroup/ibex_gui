@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -59,7 +63,9 @@ public class JournalModel extends ModelObject {
     
     // In ms. If a query takes longer than this, issue a warning.
     // Exact choice of number is arbitrary.
-    private static final int QUERY_DURATION_WARNING_LEVEL = 2000; 
+    private static final int QUERY_DURATION_WARNING_LEVEL = 2000;
+    
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(1);
     
     private int pageNumber = 1;
     private int pageMax = 1;
@@ -81,8 +87,8 @@ public class JournalModel extends ModelObject {
     /**
      * Reloads the runs with the current parameters.
      */
-    public void refresh() {
-    	search(activeParameters);
+    public CompletableFuture<Void> refresh() {
+    	return search(activeParameters);
     }
     
     /**
@@ -91,30 +97,35 @@ public class JournalModel extends ModelObject {
      * 
      * @param parameters The parameters to search with.
      */
-    public void search(JournalSearchParameters parameters) {
-        Connection connection = null;
-        try {
-            String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
-            String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
-            String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
-
-            connection = Rdb.connectToDatabase(schema, user, password).getConnection();
-
-            setMessage("");
-            setLastUpdate(new Date());
-            searchUpdateRuns(connection, parameters);
-            activeParameters = parameters;
-        } catch (Exception ex) {
-            setMessage(Rdb.getError(ex).toString());
-            LOG.error(ex);
-        } finally {
+    public CompletableFuture<Void> search(JournalSearchParameters parameters) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        EXECUTOR.submit(() -> {
+            Connection connection = null;
             try {
-                connection.close();
-            } catch (SQLException | NullPointerException e) {
-                // Do nothing - connection was null, or already closed.
-                LOG.warn("Tried closing non-existent connection.");
+                String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
+                String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
+                String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
+
+                connection = Rdb.connectToDatabase(schema, user, password).getConnection();
+
+                setMessage("");
+                setLastUpdate(new Date());
+                searchUpdateRuns(connection, parameters);
+                activeParameters = parameters;
+            } catch (Exception ex) {
+                setMessage(Rdb.getError(ex).toString());
+                LOG.error(ex);
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException | NullPointerException e) {
+                    // Do nothing - connection was null, or already closed.
+                    LOG.warn("Tried closing non-existent connection.");
+                }
             }
-        }
+            future.complete(null);
+        });
+        return future;
     }
     
     /**
@@ -206,6 +217,13 @@ public class JournalModel extends ModelObject {
         activeParameters = new JournalSearchParameters();
     }
     
+    /**
+     * @param parameters the search parameters to make active
+     */
+    public void setActiveParameters(JournalSearchParameters parameters) {
+        activeParameters = parameters;
+    }
+    
     private void setRuns(List<JournalRow> runs) {
     	firePropertyChange("runs", this.runs, this.runs = runs);
     }
@@ -228,9 +246,9 @@ public class JournalModel extends ModelObject {
      * Sets the selected fields.
      * @param selected an enumset containing all of the JournalFields which are currently selected
      */
-    public void setSelectedFields(EnumSet<JournalField> selected) {
+    public CompletableFuture<Void> setSelectedFields(EnumSet<JournalField> selected) {
     	this.selectedFields = selected;
-    	refresh();
+    	return refresh();
     }
     
     /**
@@ -279,9 +297,9 @@ public class JournalModel extends ModelObject {
      * 
      * @param pageNumber The new page number.
      */
-    public void setPage(int pageNumber) {
+    public CompletableFuture<Void> setPage(int pageNumber) {
         this.pageNumber = pageNumber;
-        refresh();
+        return refresh();
     }
 
     /**
@@ -323,7 +341,7 @@ public class JournalModel extends ModelObject {
      * Sorts by the specified field, and swaps the direction if already active.
      * @param field The field to sort by
      */
-    public void sortBy(JournalField field) {
+    public CompletableFuture<Void> sortBy(JournalField field) {
         JournalSort primarySort = activeParameters.getPrimarySort();
         
         if (primarySort.sortField == field) {
@@ -336,6 +354,6 @@ public class JournalModel extends ModelObject {
             activeParameters.addSort(JournalField.RUN_NUMBER);
         }
 
-        refresh();
+        return refresh();
     }
 }
