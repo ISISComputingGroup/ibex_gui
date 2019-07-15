@@ -111,7 +111,7 @@ public class EditComponentHelper extends ConfigHelper {
         configurationViewModels.setModelAsComponent(componentName);
         UpdatedValue<EditableConfiguration> component = configurationViewModels.getConfigModel();
 
-        if (Awaited.returnedValue(component, 1)) {
+        if (Awaited.returnedValue(component, MAX_SECONDS_TO_WAIT)) {
             openDialog(component.getValue(), false, editBlockFirst);
         }
     }

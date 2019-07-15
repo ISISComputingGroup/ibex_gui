@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -18,6 +18,10 @@
 */
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -74,13 +78,23 @@ public class BlocksMenu extends MenuManager {
 	};
 	
 	private IAction createAddToPlotAction(String plotName) {
-		return new Action("Add to " + plotName + " plot") {
+		return new Action("Add to new axis") {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName);
+				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.empty());
 			}
 		};
+	}
+	
+	private IAction createAddToAxisAction(String plotName, String axisName) {
+	    return new Action("Add to " + axisName + " axis") {
+            @Override
+            public void run() {
+                BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+                Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.of(axisName));
+            }
+        };
 	}
 	
     /**
@@ -114,7 +128,16 @@ public class BlocksMenu extends MenuManager {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPlotAction);
-				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
+				
+				HashMap<String, ArrayList<String>> dataBrowserData = Presenter.pvHistoryPresenter().getPlotsAndAxes();
+				for (String plotName : dataBrowserData.keySet()) {
+				    MenuManager plotSubMenu = new MenuManager("Add to " + plotName + " plot...");
+				    
+				    plotSubMenu.add(createAddToPlotAction(plotName));
+				    dataBrowserData.get(plotName).stream().forEach(a -> plotSubMenu.add(createAddToAxisAction(plotName, a)));
+				    
+				    logSubMenu.add(plotSubMenu);
+				}
 			}
         });
 		
