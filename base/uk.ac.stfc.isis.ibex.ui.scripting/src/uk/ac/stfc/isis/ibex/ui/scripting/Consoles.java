@@ -69,11 +69,11 @@ public class Consoles extends AbstractUIPlugin {
 	 * Limit on the total number of lines (input and output) per console.
 	 *
 	 * Limit is based on the following:
-	 * - 500k characters ~ 500MB memory use (measured using visual VM)
+	 * - 5M characters ~ 500MB memory use (measured using visual VM)
 	 * - Users could have multiple consoles open (but are unlikely to have more than a few with significant output)
 	 * - We want to keep the memory use of the consoles less than ~100MB
 	 */
-	private static final int MAXIMUM_LINES_TO_KEEP_PER_CONSOLE = 50000;
+	private static final int MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE = 1000000;
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
 
@@ -176,10 +176,8 @@ public class Consoles extends AbstractUIPlugin {
 
 			@Override
 			public void documentAboutToBeChanged(DocumentEvent event) {
-				System.out.println(console.getDocument().getLength());
-
-				if (console.getDocument().getLength() > MAXIMUM_LINES_TO_KEEP_PER_CONSOLE) {
-					LOG.info("Too many output lines (more than " + MAXIMUM_LINES_TO_KEEP_PER_CONSOLE + "). Clearing the output of this console.");
+				if (console.getDocument().getLength() > MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE) {
+					LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
 					Display.getCurrent().asyncExec(console::clearConsole);
 				}
 			}
