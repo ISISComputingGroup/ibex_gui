@@ -51,7 +51,7 @@ public class UpdatedValue<T> extends ModelObject {
 	}
 	
 	protected synchronized void setValue(T value) {
-		isSet = true;
+		isSet = (value != null);
 		firePropertyChange("value", this.value, this.value = value);
 	}
 }

@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -21,7 +40,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
  * Class for grouping information on a single block into one composite.
  */
 public class GroupRow extends Composite {
-	
+    
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final int NAME_WIDTH = 100;
     private static final int VALUE_WIDTH = 75;
@@ -41,9 +60,9 @@ public class GroupRow extends Composite {
      * @param style The SWT style parameter
      * @param block The observed block
      */
-	public GroupRow(Composite parent, int style, DisplayBlock block) {
-		super(parent, style);
-		
+    public GroupRow(Composite parent, int style, DisplayBlock block) {
+        super(parent, style);
+        
         GridLayout layout = new GridLayout(NUM_ELEMENTS, false);
         layout.marginHeight = 0;
         layout.marginWidth = 0;
@@ -51,7 +70,7 @@ public class GroupRow extends Composite {
         this.setBackground(WHITE);
         this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        lblName = labelMaker(this, SWT.NONE, block.getName() + ": ", block.getDescription());
+        lblName = boundLabelMaker(this, SWT.NONE, block.getName(), block, "nameTooltipText");
         GridData gdLblName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
         gdLblName.widthHint = NAME_WIDTH;
         lblName.setLayoutData(gdLblName);
@@ -71,15 +90,14 @@ public class GroupRow extends Composite {
         gdValueContainer.heightHint = VALUE_HEIGHT + VALUE_HEIGHT_MARGIN;
         valueContainer.setLayoutData(gdValueContainer);
 
-        lblValue =
-                labelMaker(valueContainer, SWT.RIGHT, block.getValue(), block.getDescription());
+        lblValue = boundLabelMaker(valueContainer, SWT.RIGHT, block.getValue(), block, "valueTooltipText");
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;
         lblValue.setLayoutData(gdValue);
         lblValue.setVisible(true);
         valueContainer.pack();
 
-        lblStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status");
+        lblStatus = statusLabelMaker(this, SWT.CENTER, "Run Control Status");
         FontDescriptor boldDescriptor = FontDescriptor.createFrom(lblStatus.getFont()).setStyle(SWT.BOLD);
         Font boldFont = boldDescriptor.createFont(lblStatus.getDisplay());
         lblStatus.setFont(boldFont);
@@ -118,17 +136,27 @@ public class GroupRow extends Composite {
 
         bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
                 BeanProperties.value("blockState").observe(block), null, borderStrategy);
-	}
-	
-	@Override
-	public void setMenu(Menu menu) {
-		super.setMenu(menu);
-		lblName.setMenu(menu);
-		lblValue.setMenu(menu);
-		lblStatus.setMenu(menu);
-	}
+    }
+    
+    @Override
+    public void setMenu(Menu menu) {
+        super.setMenu(menu);
+        lblName.setMenu(menu);
+        lblValue.setMenu(menu);
+        lblStatus.setMenu(menu);
+    }
 
-    private Label labelMaker(Composite composite, int style, String text, String description) {
+    private Label statusLabelMaker(Composite composite, int style, String description) {
+        Label label = new Label(composite, style);
+
+        label.setBackground(WHITE);
+
+        label.setToolTipText(description);
+
+        return label;
+    }
+    
+    private Label boundLabelMaker(Composite composite, int style, String text, DisplayBlock block, String propertyName) {
         Label label = new Label(composite, style);
         if (text != null) {
             label.setText(text);
@@ -136,7 +164,8 @@ public class GroupRow extends Composite {
 
         label.setBackground(WHITE);
 
-        label.setToolTipText(text + System.lineSeparator() + description);
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(label), BeanProperties.value(propertyName).observe(block));
 
         return label;
     }
