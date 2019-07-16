@@ -79,6 +79,9 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		}
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void createConsole(String additionalInitialComands) {
 		try {

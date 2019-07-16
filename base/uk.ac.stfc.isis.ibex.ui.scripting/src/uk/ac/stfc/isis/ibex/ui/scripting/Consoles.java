@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
@@ -32,10 +34,7 @@ import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.internal.Workbench;
-import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.Event;
@@ -50,7 +49,6 @@ import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 /**
  * The activator class controls the plug-in life cycle.
  */
-@SuppressWarnings("restriction")  // No warnings for old-style E3 apis.
 public class Consoles extends AbstractUIPlugin {
 
 	/**
@@ -82,7 +80,7 @@ public class Consoles extends AbstractUIPlugin {
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
 
-	private ICommandService commandService;
+	private Set<Runnable> consoleLengthListeners = new HashSet<Runnable>();
 
 	/**
 	 * {@inheritDoc}
@@ -94,10 +92,6 @@ public class Consoles extends AbstractUIPlugin {
 		PyDevConfiguration.configure();
 
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
-
-		// This is an old E3-style API, so need to get it via a static accessor.
-		// We need to use the old style API as we still run PyDEV in a compatibility view.
-		commandService = Workbench.getInstance().getService(ICommandService.class);
 
 		// Can't get this via injection. The following works though.
 		IEventBroker broker = eclipseContext.get(IEventBroker.class);
@@ -204,7 +198,7 @@ public class Consoles extends AbstractUIPlugin {
 						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
 						Display.getDefault().asyncExec(console::clearConsole);
 					}
-					updateConsoleLengthUiElement();
+					consoleLengthListeners.forEach(Runnable::run);
 				}
 			});
 			LOG.info(String.format("Added output length limit to console %s", console));
@@ -215,10 +209,19 @@ public class Consoles extends AbstractUIPlugin {
 		}
 	}
 
-	private void updateConsoleLengthUiElement() {
-		if (commandService != null) {
-			commandService.refreshElements("uk.ac.stfc.isis.ibex.ui.scripting.clearConsole", null);
-			((WorkbenchWindow) Workbench.getInstance().getActiveWorkbenchWindow()).getCoolBarManager2().setLockLayout(false);
-		}
+	/**
+	 * Register a listener to be called whenever the length of the console output changes.
+	 * @param r a runnable to run whenever the length changes.
+	 */
+	public void addConsoleLengthListener(Runnable r) {
+		consoleLengthListeners.add(r);
+	}
+
+	/**
+	 * Removes a console length listener that was previously registered.
+	 * @param r the runnable to remove
+	 */
+	public void removeConsoleLengthListener(Runnable r) {
+		consoleLengthListeners.remove(r);
 	}
 }
