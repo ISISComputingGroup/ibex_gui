@@ -2005,8 +2005,24 @@
           </macro>
         </macros>
       </value>
-    </entry>
+    </entry> 
     <entry>
+      <key>Keyence LK-G laser positioning sensor</key>
+      <value>
+        <categories/>
+        <type>SENSOR</type>
+        <path>keylkg.opi</path>
+        <description>The OPI for the KEYLKG</description>
+        <macros>
+          <macro>
+            <name>KEYLKG</name>
+            <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
+            <default>KEYLKG_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>           
+      <entry>
       <key>Lakeshore 340</key>
       <value>
         <categories>
@@ -2067,6 +2083,23 @@
             <name>CHTOBISR</name>
             <description>The PV prefix (e.g. CHTOBISR_01)</description>
             <default>CHTOBISR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TTI355</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>tti355.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTI355</name>
+            <description>The TTI355 PV prefix (e.g. TTI355_01)</description>
           </macro>
         </macros>
       </value>

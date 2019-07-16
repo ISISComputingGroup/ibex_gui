@@ -17,30 +17,34 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.blocks.presentation;
+package uk.ac.stfc.isis.ibex.ui.help;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.swt.widgets.Shell;
 
 /**
- * A null object for the PV history presenter, to use when a real object is unavailable.
+ * The handler for opening the get help dialog window via the menu.
  */
-public class NullPVHistoryPresenter implements PVHistoryPresenter {
-	@Override
-	public void newDisplay(String pvAddress, String displayName) {
-		// do nothing
-	}
-
-    @Override
-    public HashMap<String, ArrayList<String>> getPlotsAndAxes() {
-        // do nothing
-        return null;
+public class GetHelpHandler {
+    
+    /**
+     * Opens the 'Get help' dialog window in help menu.
+     * @param shell The shell to open 'Get help' window in help menu.
+     */
+    @Execute
+    public void execute(Shell shell) {
+        GetHelpDialogBox dialog = new GetHelpDialogBox(shell);
+        dialog.open();
     }
-
-    @Override
-    public void addToDisplay(String pvAddress, String display, String presenterName, Optional<String> axisName) {
-        // do nothing
+    
+    /**
+     * Help menu option always available (not instrument dependent).
+     * @return True
+     */
+    @CanExecute
+    public boolean canExecute() {
+        return true;
     }
 
 }

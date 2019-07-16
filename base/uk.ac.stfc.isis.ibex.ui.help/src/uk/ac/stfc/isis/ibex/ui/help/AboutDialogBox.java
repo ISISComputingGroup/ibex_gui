@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -36,9 +36,9 @@ import org.eclipse.swt.widgets.Shell;
 public class AboutDialogBox extends TitleAreaDialog {
 
     /** Dialog width. */
-    public static final int WIDTH = 300;
+    public static final int WIDTH = 400;
     /** Dialog height. */
-    private static final int HEIGHT = 260;
+    private static final int HEIGHT = 275;
 
     /**
      * Construct a new about Ibex dialog box.
@@ -46,7 +46,8 @@ public class AboutDialogBox extends TitleAreaDialog {
      * @param parentShell The parent shell in which in the dialog will be loaded
      */
 	public AboutDialogBox(Shell parentShell) {
-		super(parentShell);		
+		super(parentShell);	
+		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 	}
 
 	@Override
