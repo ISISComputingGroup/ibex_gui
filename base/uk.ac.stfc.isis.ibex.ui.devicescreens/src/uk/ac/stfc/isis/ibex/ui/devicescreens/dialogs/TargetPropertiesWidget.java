@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -50,8 +50,6 @@ public class TargetPropertiesWidget extends Composite {
 
     /** The properties table. */
     private TargetPropertiesTable table;
-
-    private Text valueText;
 
     private Text txtDescription;
 	
@@ -103,13 +101,6 @@ public class TargetPropertiesWidget extends Composite {
         gdTable.minimumHeight = TABLE_HEIGHT;
         table.setLayoutData(gdTable);
 
-        Label lblValue = new Label(controlComposite, SWT.NONE);
-        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblValue.setText("Value");
-
-        valueText = new Text(controlComposite, SWT.BORDER);
-        valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
         Label lblPropertyDescription = new Label(controlComposite, SWT.NONE);
         lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPropertyDescription.setText("Description");
@@ -125,11 +116,6 @@ public class TargetPropertiesWidget extends Composite {
 
     private void bind() {
         DataBindingContext bindingContext = new DataBindingContext();
-        
-        bindingContext.bindValue(SWTObservables.observeText(valueText, SWT.Modify),
-                BeanProperties.value("valueText").observe(viewModel));
-        bindingContext.bindValue(SWTObservables.observeEnabled(valueText),
-                BeanProperties.value("valueTextEnabled").observe(viewModel));
 
         bindingContext.bindValue(SWTObservables.observeText(txtDescription),
                 BeanProperties.value("descriptionText").observe(viewModel));

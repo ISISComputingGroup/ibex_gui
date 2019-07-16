@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -59,56 +59,52 @@ public class TargetPropertiesViewModelTest {
     }
 
     @Test
-    public void WHEN_no_property_is_selected_THEN_value_and_description_blank() {
+    public void WHEN_no_property_is_selected_THEN_description_blank() {
         // Act
         viewModel.setTableSelection(null);
 
         // Assert
-        assertEquals("", viewModel.getValueText());
         assertEquals("", viewModel.getDescriptionText());
     }
 
     @Test
-    public void WHEN_property_is_selected_THEN_value_and_description_change() {
+    public void WHEN_property_is_selected_THEN_description_changes() {
         // Act
         viewModel.setTableSelection(property1);
 
         // Assert
-        assertEquals(propertyValue1, viewModel.getValueText());
         assertEquals(propertyDescription1, viewModel.getDescriptionText());
     }
 
     @Test
-    public void WHEN_no_available_properties_THEN_table_and_text_box_are_disabled() {
+    public void WHEN_no_available_properties_THEN_table_is_disabled() {
         // Act
         viewModel.setProperties(new ArrayList<PropertyDescription>());
 
         // Assert
         assertEquals(false, viewModel.getTableEnabled());
-        assertEquals(false, viewModel.getValueTextEnabled());
     }
 
     @Test
     public void WHEN_changing_the_selected_property_on_the_viewmodel_THEN_value_changes_on_target() {
         // Act
         viewModel.setTableSelection(property1);
-        viewModel.setValueText("Hello");
+        property1.setValue("Hello");
         viewModel.setDescriptionText("Hello again.");
 
         // Assert
-        assertEquals("Hello", viewModel.getValueText());
+        assertEquals("Hello", property1.getValue());
         assertEquals("Hello", property1.getValue());
         assertEquals("Hello again.", viewModel.getDescriptionText());
     }
 
     @Test
-    public void WHEN_set_properties_to_empty_THEN_value_changes_on_target() {
+    public void WHEN_set_properties_to_empty_THEN_description_changes_on_target() {
         // Act
         viewModel.setProperties(new ArrayList<PropertyDescription>());
         
 
         // Assert
-        assertEquals("", viewModel.getValueText());
         assertEquals("", viewModel.getDescriptionText());
     }
 
@@ -118,7 +114,7 @@ public class TargetPropertiesViewModelTest {
         viewModel.setProperties(Arrays.asList(property1));
 
         // Assert
-        assertEquals(propertyValue1, viewModel.getValueText());
+        assertEquals(propertyValue1, property1.getValue());
         assertEquals(propertyDescription1, viewModel.getDescriptionText());
     }
 
