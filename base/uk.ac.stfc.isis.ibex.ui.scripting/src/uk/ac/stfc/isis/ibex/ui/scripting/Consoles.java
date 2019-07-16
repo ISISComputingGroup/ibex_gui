@@ -32,7 +32,10 @@ import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.Event;
@@ -47,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 /**
  * The activator class controls the plug-in life cycle.
  */
+@SuppressWarnings("restriction")  // No warnings for old-style E3 apis.
 public class Consoles extends AbstractUIPlugin {
 
 	/**
@@ -74,9 +78,11 @@ public class Consoles extends AbstractUIPlugin {
 	 * - Users could have multiple consoles open (but are unlikely to have more than a few with significant output)
 	 * - We want to keep the memory use of the consoles less than ~100MB
 	 */
-	private static final int MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE = 1000000;
+	public static final int MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE = 1000000;
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
+
+	private ICommandService commandService;
 
 	/**
 	 * {@inheritDoc}
@@ -88,6 +94,10 @@ public class Consoles extends AbstractUIPlugin {
 		PyDevConfiguration.configure();
 
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
+
+		// This is an old E3-style API, so need to get it via a static accessor.
+		// We need to use the old style API as we still run PyDEV in a compatibility view.
+		commandService = Workbench.getInstance().getService(ICommandService.class);
 
 		// Can't get this via injection. The following works though.
 		IEventBroker broker = eclipseContext.get(IEventBroker.class);
@@ -103,7 +113,7 @@ public class Consoles extends AbstractUIPlugin {
 				}
 
 				if (((MPerspective) newValue).getElementId().equals(PERSPECTIVE_ID)) {
-					Consoles.createConsole();
+					createConsole();
 				}
 			}
 		};
@@ -120,7 +130,7 @@ public class Consoles extends AbstractUIPlugin {
 	 *
 	 * @return a stream of open scripting consoles.
 	 */
-	private static Stream<ScriptConsole> getPythonScriptingConsoles() {
+	private Stream<ScriptConsole> getPythonScriptingConsoles() {
 		return Arrays.stream(ConsolePlugin.getDefault()
 				.getConsoleManager()
 				.getConsoles())
@@ -133,7 +143,7 @@ public class Consoles extends AbstractUIPlugin {
 	 *
 	 * @return true, if there are; false otherwise
 	 */
-	public static boolean anyActive() {
+	public boolean anyActive() {
 		return getPythonScriptingConsoles().findAny().isPresent();
 	}
 
@@ -159,7 +169,7 @@ public class Consoles extends AbstractUIPlugin {
 	/**
 	 * Create a new pydev console based on the current instrument.
 	 */
-	public static void createConsole() {
+	public void createConsole() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -176,12 +186,12 @@ public class Consoles extends AbstractUIPlugin {
 	 *
 	 * The consoles will be cleared if their total output exceeds the limit defined at the top of this file.
 	 */
-	public static void installOutputLengthLimitsOnAllConsoles() {
+	public void installOutputLengthLimitsOnAllConsoles() {
 		LOG.info("Installing output length limits on all consoles");
-		getPythonScriptingConsoles().forEach(Consoles::installOutputLengthLimit);
+		getPythonScriptingConsoles().forEach(this::installOutputLengthLimit);
 	}
 
-	private static void installOutputLengthLimit(final ScriptConsole console) {
+	private void installOutputLengthLimit(final ScriptConsole console) {
 		try {
 			console.getDocument().addDocumentListener(new IDocumentListener() {
 				@Override
@@ -194,6 +204,7 @@ public class Consoles extends AbstractUIPlugin {
 						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
 						Display.getDefault().asyncExec(console::clearConsole);
 					}
+					updateConsoleLengthUiElement();
 				}
 			});
 			LOG.info(String.format("Added output length limit to console %s", console));
@@ -201,6 +212,13 @@ public class Consoles extends AbstractUIPlugin {
 			// If we can't add the listener, log and carry on, this is not a critical error.
 			LoggerUtils.logErrorWithStackTrace(LOG,
 					String.format("Failed to install output length limit to console '%s' because: %s", console, e.getMessage()), e);
+		}
+	}
+
+	private void updateConsoleLengthUiElement() {
+		if (commandService != null) {
+			commandService.refreshElements("uk.ac.stfc.isis.ibex.ui.scripting.clearConsole", null);
+			((WorkbenchWindow) Workbench.getInstance().getActiveWorkbenchWindow()).getCoolBarManager2().setLockLayout(false);
 		}
 	}
 }

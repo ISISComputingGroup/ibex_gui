@@ -74,7 +74,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 			// that pydev is using, as it is a method local variable so even with reflection tricks
 			// I'm not sure we can get at it.
 			if (event.getJob().getName() == "Create Interactive Console") {
-				Consoles.installOutputLengthLimitsOnAllConsoles();
+				Consoles.getDefault().installOutputLengthLimitsOnAllConsoles();
 			}
 		}
 	};

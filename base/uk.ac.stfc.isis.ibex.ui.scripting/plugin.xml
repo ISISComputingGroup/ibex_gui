@@ -35,6 +35,10 @@
 	      </with>
 	   </activeWhen>
 	</handler>
+    <handler
+          class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthHandler"
+          commandId="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
+    </handler>
 	</extension>
 	
 	   <extension
@@ -43,5 +47,23 @@
             id="uk.ac.stfc.isis.ibex.ui.scripting.KillScript"
             name="Kill the script">
       </command>
-      </extension>
+      <command
+            id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole"
+            name="Clear Console">
+      </command>
+    </extension>
+      
+    <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
+      <command
+            commandId="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole"
+            mode="FORCE_TEXT"
+            style="push"
+            tooltip="The console can only hold a certain amount of output. When it reaches it&apos;s limit, it needs to be cleared. This will happen automatically when the console buffer gets too full, but you can also clear it manually using this button or the right-click context menu."/>
+      <dynamic
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ContributionItem1"
+            id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
+      </dynamic> 
+      </menuContribution>
+    </extension>
 </plugin>
