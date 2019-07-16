@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -66,6 +67,18 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
 	private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
 
+	private static final IJobChangeListener JOB_CHANGE_LISTENER = new JobChangeAdapter() {
+		@Override
+		public void done(IJobChangeEvent event) {
+			// Unfortunately I couldn't find a way to enforce that the string here matches the string
+			// that pydev is using, as it is a method local variable so even with reflection tricks
+			// I'm not sure we can get at it.
+			if (event.getJob().getName() == "Create Interactive Console") {
+				Consoles.installOutputLengthLimitsOnAllConsoles();
+			}
+		}
+	};
+
 	@Override
 	public void createConsole(String additionalInitialComands) {
 		try {
@@ -77,17 +90,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
 		// Add a listener so that after a console is created, we install output length limits.
 		// This is the only way I found to do this, without relying on some arbitrary timeout.
-		// Unfortunately I couldn't find a way to enforce that the string here matches the string
-		// that pydev is using, as it is a method local variable so even with reflection tricks
-		// I'm not sure we can get at it.
-		Job.getJobManager().addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(IJobChangeEvent event) {
-				if (event.getJob().getName() == "Create Interactive Console") {
-					Consoles.installOutputLengthLimitsOnAllConsoles();
-				}
-			}
-		});
+		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
 	}
 
 	private void setInitialInterpreterCommands() {

@@ -41,6 +41,7 @@ import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 
 /**
@@ -112,6 +113,13 @@ public class Consoles extends AbstractUIPlugin {
 		GraphingConnector.startListening();
 	}
 
+	/**
+	 * Returns a stream of python scripting consoles (excluding other console types).
+	 *
+	 * If no consoles are open, an empty stream will be returned.
+	 *
+	 * @return a stream of open scripting consoles.
+	 */
 	private static Stream<ScriptConsole> getPythonScriptingConsoles() {
 		return Arrays.stream(ConsolePlugin.getDefault()
 				.getConsoleManager()
@@ -163,25 +171,36 @@ public class Consoles extends AbstractUIPlugin {
 		});
 	}
 
+	/**
+	 * Installs an output length limiting listener on all open consoles.
+	 *
+	 * The consoles will be cleared if their total output exceeds the limit defined at the top of this file.
+	 */
 	public static void installOutputLengthLimitsOnAllConsoles() {
 		LOG.info("Installing output length limits on all consoles");
 		getPythonScriptingConsoles().forEach(Consoles::installOutputLengthLimit);
 	}
 
 	private static void installOutputLengthLimit(final ScriptConsole console) {
-		console.getDocument().addDocumentListener(new IDocumentListener() {
-			@Override
-			public void documentChanged(DocumentEvent event) {
-			}
-
-			@Override
-			public void documentAboutToBeChanged(DocumentEvent event) {
-				if (console.getDocument().getLength() > MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE) {
-					LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
-					Display.getCurrent().asyncExec(console::clearConsole);
+		try {
+			console.getDocument().addDocumentListener(new IDocumentListener() {
+				@Override
+				public void documentChanged(DocumentEvent event) {
 				}
-			}
-		});
-		LOG.info(String.format("Added output length limit to console %s", console));
+
+				@Override
+				public void documentAboutToBeChanged(DocumentEvent event) {
+					if (console.getDocument().getLength() > MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE) {
+						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
+						Display.getDefault().asyncExec(console::clearConsole);
+					}
+				}
+			});
+			LOG.info(String.format("Added output length limit to console %s", console));
+		} catch (RuntimeException e) {
+			// If we can't add the listener, log and carry on, this is not a critical error.
+			LoggerUtils.logErrorWithStackTrace(LOG,
+					String.format("Failed to install output length limit to console '%s' because: %s", console, e.getMessage()), e);
+		}
 	}
 }
