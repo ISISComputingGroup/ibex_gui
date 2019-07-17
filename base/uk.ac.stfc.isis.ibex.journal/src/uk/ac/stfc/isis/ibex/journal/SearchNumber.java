@@ -48,7 +48,7 @@ public class SearchNumber extends JournalSearch {
     }
 
     @Override
-    protected String createWhereTemplate() {
+    public String createWhereTemplate() {
         StringBuilder query = new StringBuilder();
         if (fromNumber.isPresent() || toNumber.isPresent()) {
             query.append(" WHERE ");

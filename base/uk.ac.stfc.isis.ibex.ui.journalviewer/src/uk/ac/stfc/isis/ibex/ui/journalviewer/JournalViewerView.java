@@ -223,17 +223,6 @@ public class JournalViewerView {
             search = new SearchString(field, searchInput.getActiveSearchText());
         }
 
-//        JournalSearchParameters parameters = new JournalSearchParameters();
-//        final JournalField field = model.getSearchableFields().get(fieldIndex);
-//        parameters.setField(field);
-//        if (field == JournalField.RUN_NUMBER) {
-//            parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
-//        } else if (field == JournalField.START_TIME) {
-//            parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
-//        } else {
-//            parameters.setSearchString(searchInput.getActiveSearchText());
-//        }
-
         model.setActiveSearch(search);
         setProgressIndicatorsVisible(true);
         model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));

@@ -50,7 +50,7 @@ public class SearchTime extends JournalSearch {
     }
 
     @Override
-    protected String createWhereTemplate() {
+    public String createWhereTemplate() {
         StringBuilder query = new StringBuilder();
         if (fromTime.isPresent() || toTime.isPresent()) {
             query.append(" WHERE ");

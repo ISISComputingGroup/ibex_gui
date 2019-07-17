@@ -39,7 +39,7 @@ public class EmptySearch extends JournalSearch {
      * {@inheritDoc}
      */
     @Override
-    protected String createWhereTemplate() {
+    public String createWhereTemplate() {
         return "";
     }
 

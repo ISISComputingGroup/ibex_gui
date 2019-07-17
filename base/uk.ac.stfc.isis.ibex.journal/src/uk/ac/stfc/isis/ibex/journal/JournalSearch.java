@@ -70,7 +70,7 @@ public abstract class JournalSearch {
     /**
      * @return A string containing the WHERE section of the query.
      */
-    protected abstract String createWhereTemplate();
+    public abstract String createWhereTemplate();
 
     /**
      * @param connection
@@ -91,7 +91,7 @@ public abstract class JournalSearch {
     /**
      * @return A string containing the ORDER BY and LIMIT sections of the query.
      */
-    private String createSortLimitTemplate() {
+    public String createSortLimitTemplate() {
         if (sorts.size() == 0) {
             throw new IllegalStateException("Cannot not sort data.");
         }
@@ -120,23 +120,6 @@ public abstract class JournalSearch {
     }
 
     /**
-     * Sets the field.
-     * 
-     * @param field
-     *            The field to set.
-     */
-    public void setField(JournalField field) {
-        this.field = field;
-    }
-
-    /**
-     * @return the field
-     */
-    public JournalField getField() {
-        return field;
-    }
-
-    /**
      * Adds a field to be used to order the results in the default order.
      * 
      * @param sortField
@@ -144,13 +127,6 @@ public abstract class JournalSearch {
      */
     public void addSort(JournalField sortField) {
         sorts.add(new JournalSort(sortField, sortField.getSortDirection()));
-    }
-
-    /**
-     * @return the sorts
-     */
-    public ArrayList<JournalSort> getSorts() {
-        return sorts;
     }
 
     /**

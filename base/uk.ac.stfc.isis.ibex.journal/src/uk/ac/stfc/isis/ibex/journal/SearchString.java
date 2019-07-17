@@ -45,7 +45,7 @@ public class SearchString extends JournalSearch {
      * {@inheritDoc}
      */
     @Override
-    protected String createWhereTemplate() {
+    public String createWhereTemplate() {
         return " WHERE " + field.getSqlFieldName() + " LIKE ?";
     }
 
