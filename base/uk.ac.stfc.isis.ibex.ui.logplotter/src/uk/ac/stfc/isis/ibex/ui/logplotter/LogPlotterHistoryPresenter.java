@@ -58,11 +58,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
      * @return A stream of all the current data browser editors.
      */
     public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
-        return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone()) // clone
-                                                                                      // to
-                                                                                      // avoid
-                                                                                      // potential
-                                                                                      // ConcurrentModificationException
+        // clone to avoid potential ConcurrentModificationException
+        return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())
                 .filter(window -> window != null).map(IWorkbenchWindow::getActivePage).filter(page -> page != null)
                 .map(IWorkbenchPage::getEditorReferences).flatMap(Arrays::stream)
                 .map(editorReference -> editorReference.getEditor(false))
@@ -136,8 +133,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
             if (axisName.isPresent()) {
                 // Extract the axis to add to from the list of axes
                 axis = getAxes(editor).filter(a -> a.getName() == axisName.get()).findFirst()
-                        .orElse(createNewAxis(displayName, model));
-
+                        .orElseGet(() -> createNewAxis(displayName, model));
             } else {
                 axis = createNewAxis(displayName, model);
             }
