@@ -120,13 +120,13 @@ scripting designed by Smashicons at www.flaticon.com
 
 Synoptic Perspective ->uk.ac.stfc.isis.ibex.ui.synoptic/icons
 
-tick designed by Eleonor Wang at www.flaticon.come
+tick designed by Eleonor Wang at www.flaticon.com
 earth3_24x24 designed by Freepik at www.flaticon.com
 earth16_24x24 designed by Freepik at www.flaticon.com
 earth16_32x24 designed by Freepik at www.flaticon.com
-navigate_left designed by Hanan at www.flaticon.come
-navigate_right designed by Hanan at www.flaticon.come
-navigate_up designed by Hanan at www.flaticon.come
+navigate_left designed by Hanan at www.flaticon.com
+navigate_right designed by Hanan at www.flaticon.com
+navigate_up designed by Hanan at www.flaticon.com
 
 Synoptic Editor ->uk.ac.stfc.isis.ibex.ui.synoptic.editor/icons
 
