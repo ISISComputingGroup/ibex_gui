@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -47,7 +44,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
-import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearch;
+import uk.ac.stfc.isis.ibex.journal.SearchNumber;
+import uk.ac.stfc.isis.ibex.journal.SearchString;
+import uk.ac.stfc.isis.ibex.journal.SearchTime;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -212,19 +212,29 @@ public class JournalViewerView {
      */
     private void search() {
         int fieldIndex = searchInput.getCmbFilterTypeIndex();
-
-        JournalSearchParameters parameters = new JournalSearchParameters();
+        
+        JournalSearch search = null;
         final JournalField field = model.getSearchableFields().get(fieldIndex);
-        parameters.setField(field);
         if (field == JournalField.RUN_NUMBER) {
-            parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
+            search = new SearchNumber(field, searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
         } else if (field == JournalField.START_TIME) {
-            parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
+            search = new SearchTime(field, searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
         } else {
-            parameters.setSearchString(searchInput.getActiveSearchText());
+            search = new SearchString(field, searchInput.getActiveSearchText());
         }
 
-        model.setActiveParameters(parameters);
+//        JournalSearchParameters parameters = new JournalSearchParameters();
+//        final JournalField field = model.getSearchableFields().get(fieldIndex);
+//        parameters.setField(field);
+//        if (field == JournalField.RUN_NUMBER) {
+//            parameters.setNumbers(searchInput.getRunNumberFrom(), searchInput.getRunNumberTo());
+//        } else if (field == JournalField.START_TIME) {
+//            parameters.setTimes(searchInput.getStartTimeFrom(), searchInput.getStartTimeTo());
+//        } else {
+//            parameters.setSearchString(searchInput.getActiveSearchText());
+//        }
+
+        model.setActiveSearch(search);
         setProgressIndicatorsVisible(true);
         model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
     }
@@ -313,7 +323,7 @@ public class JournalViewerView {
             public void widgetSelected(SelectionEvent e) {
                 resetPageNumber();
                 searchInput.clearInput();
-                model.resetActiveParameters();
+                model.resetActiveSearch();
                 setProgressIndicatorsVisible(true);
                 model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -169,22 +170,22 @@ public class SearchInput extends Composite {
     /**
      * @return The text in the search box of the currently active filter type.
      */
-    public Optional<String> getActiveSearchText() {
-        return Optional.of(textSearchBox.getText());
+    public String getActiveSearchText() {
+        return textSearchBox.getText();
     }
 
     /**
      * @return The number in the from run number spinner.
      */
-    public Optional<Integer> getRunNumberFrom() {
-        return chkNumberFrom.getSelection() ? Optional.of(spinnerFromNumber.getSelection()) : Optional.empty();
+    public OptionalInt getRunNumberFrom() {
+        return chkNumberFrom.getSelection() ? OptionalInt.of(spinnerFromNumber.getSelection()) : OptionalInt.empty();
     }
 
     /**
      * @return The number in the to run number spinner.
      */
-    public Optional<Integer> getRunNumberTo() {
-        return chkNumberTo.getSelection() ? Optional.of(spinnerToNumber.getSelection()) : Optional.empty();
+    public OptionalInt getRunNumberTo() {
+        return chkNumberTo.getSelection() ? OptionalInt.of(spinnerToNumber.getSelection()) : OptionalInt.empty();
     }
 
     /**

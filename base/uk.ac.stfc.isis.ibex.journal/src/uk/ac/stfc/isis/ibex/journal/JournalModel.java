@@ -72,7 +72,7 @@ public class JournalModel extends ModelObject {
     
     // The search parameters of the most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
-    private JournalSearchParameters activeParameters = new JournalSearchParameters();
+    private JournalSearch activeSearch = new EmptySearch();
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -86,18 +86,20 @@ public class JournalModel extends ModelObject {
 
     /**
      * Reloads the runs with the current parameters.
+     * @return a CompleteableFuture
      */
     public CompletableFuture<Void> refresh() {
-    	return search(activeParameters);
+    	return search(activeSearch);
     }
     
     /**
      * Attempts to connect to the database and update the status to display
      * runs that match the request parameters.
      * 
-     * @param parameters The parameters to search with.
+     * @param search The search to use.
+     * @return a CompleteableFuture
      */
-    public CompletableFuture<Void> search(JournalSearchParameters parameters) {
+    public CompletableFuture<Void> search(JournalSearch search) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         EXECUTOR.submit(() -> {
             Connection connection = null;
@@ -110,8 +112,8 @@ public class JournalModel extends ModelObject {
 
                 setMessage("");
                 setLastUpdate(new Date());
-                searchUpdateRuns(connection, parameters);
-                activeParameters = parameters;
+                searchUpdateRuns(connection, search);
+                activeSearch = search;
             } catch (Exception ex) {
                 setMessage(Rdb.getError(ex).toString());
                 LOG.error(ex);
@@ -142,15 +144,12 @@ public class JournalModel extends ModelObject {
      * @param connection the SQL connection to use.
      * @param parameters The parameters to search with.
      */
-    private void searchUpdateRuns(Connection connection, JournalSearchParameters parameters) throws SQLException {
+    private void searchUpdateRuns(Connection connection, JournalSearch search) throws SQLException {
         long startTime = System.currentTimeMillis();
-
-        JournalSqlStatement journalStatement = new JournalSqlStatement(parameters, pageNumber, PAGE_SIZE, connection);
         
-        ResultSet rs = journalStatement.constructQuery().executeQuery();
+        ResultSet rs = search.constructQuery(connection, pageNumber, PAGE_SIZE).executeQuery();
         
         List<JournalRow> runs = formatResults(rs);
-        
         setRuns(Collections.unmodifiableList(runs));
         updateRunsCount(connection);
         
@@ -213,15 +212,15 @@ public class JournalModel extends ModelObject {
     /**
      * Resets the active search parameters to their default values.
      */
-    public void resetActiveParameters() {
-        activeParameters = new JournalSearchParameters();
+    public void resetActiveSearch() {
+        activeSearch = new EmptySearch();
     }
     
     /**
-     * @param parameters the search parameters to make active
+     * @param search the search to set as active
      */
-    public void setActiveParameters(JournalSearchParameters parameters) {
-        activeParameters = parameters;
+    public void setActiveSearch(JournalSearch search) {
+        activeSearch = search;
     }
     
     private void setRuns(List<JournalRow> runs) {
@@ -245,6 +244,7 @@ public class JournalModel extends ModelObject {
     /**
      * Sets the selected fields.
      * @param selected an enumset containing all of the JournalFields which are currently selected
+     * @return a CompleteableFuture
      */
     public CompletableFuture<Void> setSelectedFields(EnumSet<JournalField> selected) {
     	this.selectedFields = selected;
@@ -296,6 +296,7 @@ public class JournalModel extends ModelObject {
      * Sets the page number that is being looked at.
      * 
      * @param pageNumber The new page number.
+     * @return a CompleteableFuture
      */
     public CompletableFuture<Void> setPage(int pageNumber) {
         this.pageNumber = pageNumber;
@@ -340,18 +341,19 @@ public class JournalModel extends ModelObject {
     /**
      * Sorts by the specified field, and swaps the direction if already active.
      * @param field The field to sort by
+     * @return a CompleteableFuture
      */
     public CompletableFuture<Void> sortBy(JournalField field) {
-        JournalSort primarySort = activeParameters.getPrimarySort();
+        JournalSort primarySort = activeSearch.getPrimarySort();
         
         if (primarySort.sortField == field) {
             primarySort.swapDirection();
         } else {
-            activeParameters.clearSorts();
+            activeSearch.clearSorts();
             if (field != JournalField.RUN_NUMBER) {
-                activeParameters.addSort(field);
+                activeSearch.addSort(field);
             }
-            activeParameters.addSort(JournalField.RUN_NUMBER);
+            activeSearch.addSort(JournalField.RUN_NUMBER);
         }
 
         return refresh();

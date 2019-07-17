@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
-import uk.ac.stfc.isis.ibex.journal.JournalSearchParameters;
+import uk.ac.stfc.isis.ibex.journal.JournalSearch;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -104,15 +104,15 @@ public class JournalViewModel extends ModelObject {
     /**
      * Resets the active search parameters to null.
      */
-    public void resetActiveParameters() {
-        model.resetActiveParameters();
+    public void resetActiveSearch() {
+        model.resetActiveSearch();
     }
     
     /**
-     * @param parameters the search parameters to make active
+     * @param search the search parameters to make active
      */
-    public void setActiveParameters(JournalSearchParameters parameters) {
-        model.setActiveParameters(parameters);
+    public void setActiveSearch(JournalSearch search) {
+        model.setActiveSearch(search);
     }
     
     /**
