@@ -269,12 +269,9 @@ public class SearchInput extends Composite {
         cmbFilterType.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                DISPLAY.asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
-                        cmpSearch.layout();
-                    }
+                DISPLAY.asyncExec(() -> {
+                    stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
+                    cmpSearch.layout();
                 });
             }
         });

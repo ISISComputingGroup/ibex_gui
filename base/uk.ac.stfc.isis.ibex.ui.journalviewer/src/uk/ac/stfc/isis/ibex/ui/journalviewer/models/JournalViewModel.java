@@ -116,16 +116,6 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * Performs a search, returning all runs that match the request parameters.
-     * 
-     * @param parameters The parameters to search with.
-     * @return a CompletableFuture
-     */
-    public CompletableFuture<Void> search(JournalSearchParameters parameters) {
-        return model.search(parameters);
-    }
-    
-    /**
      * Gets the runs in the journal.
      * 
      * @return the runs.

@@ -319,20 +319,13 @@ public class JournalViewerView {
             }
         });
 
-        model.addPropertyChangeListener("runs", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                DISPLAY.asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        setProgressIndicatorsVisible(true);
-                        changeTableColumns();
-                        table.setRows(model.getRuns());
-                        setProgressIndicatorsVisible(false);
-                    }
-                });
-            }
-        });
+        model.addPropertyChangeListener("runs", e -> 
+        DISPLAY.asyncExec(() -> {
+                setProgressIndicatorsVisible(true);
+                changeTableColumns();
+                table.setRows(model.getRuns());
+                setProgressIndicatorsVisible(false);
+            }));
 
         // TODO do this the E4 way
 //        // Add a listener to refresh the page whenever it becomes visible
