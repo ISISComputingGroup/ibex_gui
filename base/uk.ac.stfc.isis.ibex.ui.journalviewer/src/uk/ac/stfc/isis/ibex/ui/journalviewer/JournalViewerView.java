@@ -26,6 +26,8 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -211,6 +213,7 @@ public class JournalViewerView {
      * request parameters.
      */
     private void search() {
+        resetPageNumber();
         int fieldIndex = searchInput.getCmbFilterTypeIndex();
         
         JournalSearch search = null;
@@ -302,7 +305,6 @@ public class JournalViewerView {
         btnSearch.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                resetPageNumber();
                 search();
             }
         });
@@ -324,7 +326,22 @@ public class JournalViewerView {
                 changeTableColumns();
                 table.setRows(model.getRuns());
                 setProgressIndicatorsVisible(false);
-            }));
+        }));
+        
+        searchInput.addSearchListeners(new KeyListener() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
+                    search();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Do nothing
+            }
+        });
 
         // TODO do this the E4 way
 //        // Add a listener to refresh the page whenever it becomes visible

@@ -27,6 +27,7 @@ import java.util.OptionalInt;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -120,7 +121,7 @@ public class SearchInput extends Composite {
         Composite cmpTextSearch = new Composite(cmpSearch, SWT.NONE);
         cmpFilters.add(cmpTextSearch);
         cmpTextSearch.setLayout(new GridLayout(1, false));
-        
+
         textSearchBox = new Text(cmpTextSearch, SWT.BORDER);
         GridData gdTxtSearchTitle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdTxtSearchTitle.widthHint = SEARCH_BOX_WIDTH;
@@ -155,9 +156,10 @@ public class SearchInput extends Composite {
         cmpFilters.add(cmpTextSearch);
         cmpFilters.add(cmpTextSearch);
 
-        cmpSearch.setTabList(new Control[] {cmpRunNumber, cmpTextSearch, cmpTimePicker, cmpTextSearch, cmpTextSearch});
-        
-        bind();
+        cmpSearch
+                .setTabList(new Control[] {cmpRunNumber, cmpTextSearch, cmpTimePicker, cmpTextSearch, cmpTextSearch});
+
+        addListeners();
     }
 
     /**
@@ -192,8 +194,10 @@ public class SearchInput extends Composite {
      * @return A Calendar representing the start time to search from.
      */
     public Optional<Calendar> getStartTimeFrom() {
-        return chkTimeFrom.getSelection() ? Optional.of(new GregorianCalendar(dtFromDate.getYear(), dtFromDate.getMonth(),
-                dtFromDate.getDay(), dtFromTime.getHours(), dtFromTime.getMinutes(), dtFromTime.getSeconds())) : Optional.empty();
+        return chkTimeFrom.getSelection()
+                ? Optional.of(new GregorianCalendar(dtFromDate.getYear(), dtFromDate.getMonth(), dtFromDate.getDay(),
+                        dtFromTime.getHours(), dtFromTime.getMinutes(), dtFromTime.getSeconds()))
+                : Optional.empty();
     }
 
     /**
@@ -201,9 +205,10 @@ public class SearchInput extends Composite {
      */
     public Optional<Calendar> getStartTimeTo() {
         return chkTimeTo.getSelection() ? Optional.of(new GregorianCalendar(dtToDate.getYear(), dtToDate.getMonth(),
-                dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds())) : Optional.empty();
+                dtToDate.getDay(), dtToTime.getHours(), dtToTime.getMinutes(), dtToTime.getSeconds()))
+                : Optional.empty();
     }
-    
+
     /**
      * Clears all of the user input and resets the buttons.
      */
@@ -215,14 +220,14 @@ public class SearchInput extends Composite {
                 chkNumberTo.setSelection(false);
                 chkTimeFrom.setSelection(false);
                 chkTimeTo.setSelection(false);
-                
+
                 textSearchBox.setText("");
-                
+
                 spinnerFromNumber.setSelection(0);
                 spinnerToNumber.setSelection(0);
                 spinnerFromNumber.setEnabled(false);
                 spinnerToNumber.setEnabled(false);
-                
+
                 Calendar cal = Calendar.getInstance();
                 dtFromDate.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
                 dtToDate.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
@@ -235,8 +240,8 @@ public class SearchInput extends Composite {
             }
         });
     }
-    
-    private void bind() {
+
+    private void addListeners() {
         chkTimeFrom.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -252,7 +257,7 @@ public class SearchInput extends Composite {
                 dtToTime.setEnabled(chkTimeTo.getSelection());
             }
         });
-        
+
         chkNumberFrom.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -276,5 +281,21 @@ public class SearchInput extends Composite {
                 });
             }
         });
+    }
+
+    /**
+     * Adds a KeyListener to the elements where search parameters are input.
+     * 
+     * @param listener
+     *            the KeyListener to add
+     */
+    public void addSearchListeners(KeyListener listener) {
+        textSearchBox.addKeyListener(listener);
+        spinnerFromNumber.addKeyListener(listener);
+        spinnerToNumber.addKeyListener(listener);
+        dtFromDate.addKeyListener(listener);
+        dtFromTime.addKeyListener(listener);
+        dtToDate.addKeyListener(listener);
+        dtToTime.addKeyListener(listener);
     }
 }
