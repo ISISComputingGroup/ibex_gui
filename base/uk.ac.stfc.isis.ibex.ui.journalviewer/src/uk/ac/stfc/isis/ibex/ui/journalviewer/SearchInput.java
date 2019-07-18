@@ -54,7 +54,10 @@ public class SearchInput extends Composite {
     private static StackLayout stackSearch = new StackLayout();
 
     private static final int SEARCH_BOX_WIDTH = 410;
+    
+    // Run numbers can be up to 8 digits
     private static final int RUN_NUMBER_MAX_VALUE = 99999999;
+    private static final int NUMBER_SPINNER_WIDTH = 45;
 
     private static final Display DISPLAY = Display.getCurrent();
 
@@ -92,7 +95,7 @@ public class SearchInput extends Composite {
         Composite cmpRunNumber = new Composite(cmpSearch, SWT.NONE);
         cmpFilters.add(cmpRunNumber);
         GridLayout glCmpRunNumber = new GridLayout(5, false);
-        glCmpRunNumber.marginLeft = 90;
+        glCmpRunNumber.marginLeft = 75;
         cmpRunNumber.setLayout(glCmpRunNumber);
 
         chkNumberFrom = new Button(cmpRunNumber, SWT.CHECK);
@@ -101,7 +104,7 @@ public class SearchInput extends Composite {
         spinnerFromNumber = new Spinner(cmpRunNumber, SWT.BORDER);
         spinnerFromNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
         GridData gdSpinnerFromNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdSpinnerFromNumber.widthHint = 30;
+        gdSpinnerFromNumber.widthHint = NUMBER_SPINNER_WIDTH;
         spinnerFromNumber.setLayoutData(gdSpinnerFromNumber);
         spinnerFromNumber.setEnabled(false);
 
@@ -114,7 +117,7 @@ public class SearchInput extends Composite {
         spinnerToNumber = new Spinner(cmpRunNumber, SWT.BORDER);
         spinnerToNumber.setMaximum(RUN_NUMBER_MAX_VALUE);
         GridData gdSpinnerToNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdSpinnerToNumber.widthHint = 30;
+        gdSpinnerToNumber.widthHint = NUMBER_SPINNER_WIDTH;
         spinnerToNumber.setLayoutData(gdSpinnerToNumber);
         spinnerToNumber.setEnabled(false);
 

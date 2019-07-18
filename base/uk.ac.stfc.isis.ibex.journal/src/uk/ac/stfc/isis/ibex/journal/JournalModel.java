@@ -66,6 +66,8 @@ public class JournalModel extends ModelObject {
     private static final int QUERY_DURATION_WARNING_LEVEL = 2000;
     
     private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(1);
+
+    private static final String NO_RESULTS_FOUND = "No results found with current search parameters";
     
     private int pageNumber = 1;
     private int pageMax = 1;
@@ -150,6 +152,9 @@ public class JournalModel extends ModelObject {
         ResultSet rs = search.constructQuery(connection, pageNumber, PAGE_SIZE).executeQuery();
         
         List<JournalRow> runs = formatResults(rs);
+        if (runs.size() ==  0) {
+            setMessage(NO_RESULTS_FOUND);
+        }
         setRuns(Collections.unmodifiableList(runs));
         updateRunsCount(connection);
         
