@@ -70,7 +70,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>260</width>
+    <width>259</width>
     <wuid>-16c8e940:165f1448c04:-7e27</wuid>
     <x>0</x>
     <y>0</y>
@@ -108,10 +108,10 @@
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>55</width>
+      <width>40</width>
       <wrap_words>false</wrap_words>
       <wuid>-744b7940:165a9b5d31a:-67c9</wuid>
-      <x>0</x>
+      <x>1</x>
       <y>5</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -166,9 +166,9 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>45</width>
+      <width>55</width>
       <wuid>-e03d447:166346877c1:-7bdc</wuid>
-      <x>170</x>
+      <x>162</x>
       <y>5</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -217,10 +217,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>45</width>
+      <width>52</width>
       <wrap_words>false</wrap_words>
       <wuid>-5cc9c870:167650cec59:-7fdd</wuid>
-      <x>65</x>
+      <x>52</x>
       <y>5</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -272,30 +272,40 @@ $(pv_value)</tooltip>
       <width>31</width>
       <wrap_words>false</wrap_words>
       <wuid>2150758c:16990a9ebac:-6e50</wuid>
-      <x>222</x>
+      <x>226</x>
       <y>5</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
+      <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>2</horizontal_alignment>
-      <name>Label</name>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update_1</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(P)$(M)</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -303,16 +313,18 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Set:</text>
-      <tooltip></tooltip>
+      <show_units>false</show_units>
+      <text>######</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
-      <widget_type>Label</widget_type>
-      <width>47</width>
+      <widget_type>Text Update</widget_type>
+      <width>52</width>
       <wrap_words>false</wrap_words>
-      <wuid>144d031e:169a4d1d15c:-7fcf</wuid>
-      <x>116</x>
+      <wuid>-166f7f1c:16bdb17a9a5:-7dae</wuid>
+      <x>103</x>
       <y>5</y>
     </widget>
   </widget>
