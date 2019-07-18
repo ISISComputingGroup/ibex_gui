@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -202,6 +204,21 @@ public class SearchControl extends Canvas {
 				dtToTime.setEnabled(chkTo.getSelection());
 			}
 		});
+        
+        addSearchListeners(new KeyListener() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
+                    search();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Do nothing
+            }
+        });
 		
         new Label(grpFilter, SWT.NONE);
 		
@@ -312,4 +329,18 @@ public class SearchControl extends Canvas {
             parent.addMessageFilter(infoFilter);
         }
 	}
+    
+    /**
+     * Adds a KeyListener to the elements where search parameters are input.
+     * 
+     * @param listener
+     *            the KeyListener to add
+     */
+    private void addSearchListeners(KeyListener listener) {
+        txtValue.addKeyListener(listener);
+        dtFromDate.addKeyListener(listener);
+        dtFromTime.addKeyListener(listener);
+        dtToDate.addKeyListener(listener);
+        dtToTime.addKeyListener(listener);
+    }
 }
