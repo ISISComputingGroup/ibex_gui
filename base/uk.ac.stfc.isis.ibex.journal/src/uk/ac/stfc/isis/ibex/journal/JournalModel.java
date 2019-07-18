@@ -72,7 +72,7 @@ public class JournalModel extends ModelObject {
     private int pageNumber = 1;
     private int pageMax = 1;
     
-    // The search parameters of the most recent or active search
+    // The most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
     private JournalSearch activeSearch = new EmptySearch();
 
@@ -215,16 +215,27 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Resets the active search parameters to their default values.
+     * Resets the active search to empty.
      */
     public void resetActiveSearch() {
+        ArrayList<JournalSort> oldSorts = activeSearch.getSorts();
         activeSearch = new EmptySearch();
+        activeSearch.setSorts(oldSorts);
     }
     
     /**
+     * @return the active search
+     */
+    public JournalSearch getActiveSearch() {
+        return activeSearch;
+    }
+    
+    /**
+     * Sets a new active search. This retains the previous sort.
      * @param search the search to set as active
      */
     public void setActiveSearch(JournalSearch search) {
+        search.setSorts(activeSearch.getSorts());
         activeSearch = search;
     }
     

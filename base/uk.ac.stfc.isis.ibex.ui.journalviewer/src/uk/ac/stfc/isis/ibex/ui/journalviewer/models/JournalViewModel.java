@@ -30,10 +30,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.eclipse.swt.SWT;
+
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalSearch;
+import uk.ac.stfc.isis.ibex.journal.JournalSort.JournalSortDirection;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -102,10 +105,17 @@ public class JournalViewModel extends ModelObject {
     }
     
     /**
-     * Resets the active search parameters to null.
+     * Resets the active search to empty.
      */
     public void resetActiveSearch() {
         model.resetActiveSearch();
+    }
+    
+    /**
+     * @return the active search
+     */
+    public JournalSearch getActiveSearch() {
+        return model.getActiveSearch();
     }
     
     /**
@@ -151,6 +161,17 @@ public class JournalViewModel extends ModelObject {
      */
     public boolean getFieldSelected(JournalField field) {
     	return model.getSelectedFields().contains(field);
+    }
+    
+    /**
+     * @return the sort direction of the primary sort for SWT to use
+     */
+    public int getSortDirection() {
+        if (getActiveSearch().getPrimarySort().getDirection() == JournalSortDirection.DESCENDING) {
+            return SWT.DOWN;
+        } else {
+            return SWT.UP;
+        }
     }
     
     private String dateToString(Date lastUpdate) {

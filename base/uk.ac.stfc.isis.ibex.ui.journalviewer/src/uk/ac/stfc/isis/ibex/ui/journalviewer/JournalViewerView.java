@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
+import java.util.Arrays;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -47,6 +49,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalSearch;
+import uk.ac.stfc.isis.ibex.journal.JournalSort;
 import uk.ac.stfc.isis.ibex.journal.SearchNumber;
 import uk.ac.stfc.isis.ibex.journal.SearchString;
 import uk.ac.stfc.isis.ibex.journal.SearchTime;
@@ -177,6 +180,7 @@ public class JournalViewerView {
 				return new NullComparator<>();
 			}
 			
+			// Sort table by selected column when a column header is clicked
 			@Override
 			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
 		        SelectionAdapter selectionAdapter = new SelectionAdapter() {
@@ -253,6 +257,7 @@ public class JournalViewerView {
         }
 
         forceResizeTable();
+        updateSortIndicator();
     }
 
     /**
@@ -267,6 +272,23 @@ public class JournalViewerView {
         table.setSize(prevSize.x, prevSize.y - 1);
         table.setSize(prevSize);
         table.setRedraw(true);
+    }
+    
+    /**
+     * Updates the sort indicator arrow to the currently sorted column
+     */
+    private void updateSortIndicator() {
+        JournalSort activeSort = model.getActiveSearch().getPrimarySort();
+        
+        // Goes through the columns of the table,
+        // and if it finds the column which is currently sorted, display an indicator
+        Arrays.asList(table.table().getColumns()).stream()
+            .filter(col -> col.getText() == activeSort.getSortField().getFriendlyName())
+            .findFirst()
+            .ifPresent(col -> {
+                table.table().setSortColumn(col);
+                table.table().setSortDirection(model.getSortDirection());
+            });
     }
     
     private void setProgressIndicatorsVisible(final boolean visible) {

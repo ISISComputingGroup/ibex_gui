@@ -146,4 +146,18 @@ public abstract class JournalSearch {
         return sorts.get(0);
     }
 
+    /**
+     * @return the sorts
+     */
+    public ArrayList<JournalSort> getSorts() {
+        return sorts;
+    }
+
+    /**
+     * @param sorts the sorts to set
+     */
+    public void setSorts(ArrayList<JournalSort> sorts) {
+        this.sorts = sorts;
+    }
+
 }

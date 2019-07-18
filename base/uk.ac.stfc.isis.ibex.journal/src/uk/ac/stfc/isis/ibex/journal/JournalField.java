@@ -38,7 +38,7 @@ public enum JournalField {
     /** 
      * Uamps. 
      */
-    UAMPS("Uamps", "uamps", new DecimalPlacesFormatter(4), JournalSortDirection.ASCENDING),
+    UAMPS("Uamps", "uamps", new DecimalPlacesFormatter(4), JournalSortDirection.DESCENDING),
     /** 
      * Rb number. 
      */
