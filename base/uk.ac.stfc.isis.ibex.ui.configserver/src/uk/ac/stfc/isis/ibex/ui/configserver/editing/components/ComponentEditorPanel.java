@@ -21,7 +21,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +34,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
@@ -95,14 +93,14 @@ public class ComponentEditorPanel extends Composite {
                 } else if (iocConflicts.isEmpty()) {
                     new MessageDialog(getShell(), "Conflicts in selected configuration", null,
                             DisplayConfiguration.buildWarning(blockConflicts, "block",
-                                    "Cannot add the selected components, as it would result in duplicate",
+                                    "Cannot add the selected components as it would result in duplicate",
                                     "Please rename or remove the duplicate",
                                     "adding these components"),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 } else {
                     new MessageDialog(getShell(), "Conflicts in selected configuration", null,
                             DisplayConfiguration.buildWarning(iocConflicts, "IOC",
-                                    "Cannot add the selected components, as it would result in duplicate",
+                                    "Cannot add the selected components as it would result in duplicate",
                                     "Please remove the duplicate",
                                     "adding these components"),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();

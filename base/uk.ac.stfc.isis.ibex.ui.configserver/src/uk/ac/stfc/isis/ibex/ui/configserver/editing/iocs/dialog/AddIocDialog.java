@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2017 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -23,8 +23,11 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -37,6 +40,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
@@ -64,7 +70,21 @@ public class AddIocDialog extends IocDialog {
     private SelectionListener nextListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            nextPage();
+            
+            DuplicateChecker duplicateChecker = new DuplicateChecker();
+            duplicateChecker.setBase(Configurations.getInstance().server().currentConfig().getValue());
+            Map<String, Set<String>> conflicts = duplicateChecker.checkIocsOnAddIoc(addViewModel.getSelectedIoc());
+            
+            if (conflicts.isEmpty()) {
+                nextPage();
+            } else {
+                new MessageDialog(getShell(), "Conflicts in selected configuration", null,
+                        DisplayConfiguration.buildWarning(conflicts, "IOC",
+                                "Cannot add the selected IOC as it would result in duplicate",
+                                "Please remove the duplicate",
+                                "adding this IOC"),
+                        MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
+            }
         }
     };
 

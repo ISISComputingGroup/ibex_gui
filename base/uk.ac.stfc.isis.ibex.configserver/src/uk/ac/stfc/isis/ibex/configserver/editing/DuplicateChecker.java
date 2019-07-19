@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -228,9 +229,22 @@ public class DuplicateChecker {
         addComponents(filterNative(replaceEdited(edited)));
         return getConflicts(allIocs);
     }
+    
+    /**
+     * Checks a configuration for duplicate IOCs if a given IOC were to be added.
+     * 
+     * @param ioc the IOC which the user wants to add
+     * @return The map of duplicate IOCs and their sources
+     */
+    public Map<String, Set<String>> checkIocsOnAddIoc(Ioc ioc) {
+        init();
+        addComponents(filterNative(components));
+        addIocs(Collections.singleton(ioc), "The IOC which is being added");
+        return getConflicts(allIocs);
+    }
 
     /**
-     * @param all the map to check for conflicts
+     * @param allMap the map to check for conflicts
      * @return a map containing the conflicts
      */
     private Map<String, Set<String>> getConflicts(Map<String, Set<String>> allMap) {
