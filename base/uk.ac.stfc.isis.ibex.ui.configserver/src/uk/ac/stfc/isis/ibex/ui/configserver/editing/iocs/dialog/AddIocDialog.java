@@ -73,7 +73,7 @@ public class AddIocDialog extends IocDialog {
             
             DuplicateChecker duplicateChecker = new DuplicateChecker();
             duplicateChecker.setBase(Configurations.getInstance().server().currentConfig().getValue());
-            Map<String, Set<String>> conflicts = duplicateChecker.checkIocsOnAddIoc(addViewModel.getSelectedIoc());
+            Map<String, Set<String>> conflicts = duplicateChecker.checkIocsOnAddIoc(addViewModel.getSelectedIoc(), config.getName());
             
             if (conflicts.isEmpty()) {
                 nextPage();
@@ -81,7 +81,7 @@ public class AddIocDialog extends IocDialog {
                 new MessageDialog(getShell(), "Conflicts in selected configuration", null,
                         DisplayConfiguration.buildWarning(conflicts, "IOC",
                                 "Cannot add the selected IOC as it would result in duplicate",
-                                "Please remove the duplicate",
+                                "Please remove this component from the current configuration or remove the duplicate",
                                 "adding this IOC"),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
             }

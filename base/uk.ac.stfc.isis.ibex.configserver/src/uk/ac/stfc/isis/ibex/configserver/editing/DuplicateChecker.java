@@ -234,12 +234,17 @@ public class DuplicateChecker {
      * Checks a configuration for duplicate IOCs if a given IOC were to be added.
      * 
      * @param ioc the IOC which the user wants to add
+     * @param comp the name of the component which the ioc is being added to
      * @return The map of duplicate IOCs and their sources
      */
-    public Map<String, Set<String>> checkIocsOnAddIoc(Ioc ioc) {
+    public Map<String, Set<String>> checkIocsOnAddIoc(Ioc ioc, String comp) {
         init();
-        addComponents(filterNative(components));
-        addIocs(Collections.singleton(ioc), "The IOC which is being added");
+        Collection<Configuration> activeComponents = filterNative(components);
+        // Only check for conflicts if the component being edited is active
+        if (activeComponents.stream().anyMatch(c -> c.getName().equals(comp))) {
+            addComponents(activeComponents);
+            addIocs(Collections.singleton(ioc), "The current component");
+        }
         return getConflicts(allIocs);
     }
 
