@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -62,12 +63,26 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
                 new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
-            Map<String, Set<String>> conflicts = getConflicts(config);
-            if (conflicts.isEmpty()) {
+            Map<String, Set<String>> blockConflicts = getBlockConflicts(config);
+            Map<String, Set<String>> iocConflicts = getIocConflicts(config);
+            
+            if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
                 Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
+            } else if (iocConflicts.isEmpty()) {
+                new MessageDialog(shell, "Conflicts in selected configuration", null,
+                        DisplayConfiguration.buildWarning(blockConflicts, "block",
+                                "Cannot load the selected configuration as it and its components contains duplicate",
+                                "Please rename or remove the duplicate",
+                                "loading this configuration"),
+                        MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
+                execute(shell);
             } else {
-                new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
+                new MessageDialog(shell, "Conflicts in selected configuration", null,
+                        DisplayConfiguration.buildWarning(iocConflicts, "IOC",
+                                "Cannot load the selected configuration as it and its components contains duplicate",
+                                "Please remove the duplicate",
+                                "loading this configuration"),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 execute(shell);
             }
@@ -88,30 +103,17 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         }
     }
 
-    private Map<String, Set<String>> getConflicts(String name) {
+    private Map<String, Set<String>> getBlockConflicts(String name) {
         Configuration config = configs.get(name);
         DuplicateChecker duplicateChecker = new DuplicateChecker();
         duplicateChecker.setBase(config);
-        return duplicateChecker.checkOnLoad();
+        return duplicateChecker.checkBlocksOnLoad();
     }
-
-    private String buildWarning(Map<String, Set<String>> conflicts) {
-        boolean multi = (conflicts.size() > 1);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Cannot load the selected configuration as it and its components contains duplicate blocks. "
-                + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
-
-        for (String block : conflicts.keySet()) {
-            sb.append("Block \"" + block + "\" contained in:\n");
-            Set<String> sources = conflicts.get(block);
-            for (String source : sources) {
-                sb.append("\u2022 " + source + "\n");
-            }
-            sb.append("\n");
-        }
-        sb.append(
-                "Please rename or remove the duplicate block" + (multi ? "s" : "")
-                        + " before loading this configuration.");
-        return sb.toString();
+    
+    private Map<String, Set<String>> getIocConflicts(String name) {
+        Configuration config = configs.get(name);
+        DuplicateChecker duplicateChecker = new DuplicateChecker();
+        duplicateChecker.setBase(config);
+        return duplicateChecker.checkIocsOnLoad();
     }
 }

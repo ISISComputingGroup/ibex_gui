@@ -106,7 +106,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
 
         // Assert
         assertTrue(result.isEmpty());
@@ -121,7 +121,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
 
         // Assert
         assertTrue(result.isEmpty());
@@ -139,7 +139,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -154,7 +154,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -171,7 +171,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2)));
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -188,7 +188,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -207,7 +207,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2)));
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -226,7 +226,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -243,7 +243,7 @@ public class DuplicateCheckerTest {
         Configuration comp1 = mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1));
         Configuration comp2 = mockComp(COMP_TOADD_NAME_2, Arrays.asList(block1));
         Collection<Configuration> toAdd = Arrays.asList(comp1, comp2);
-        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -263,7 +263,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block1));
-        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -283,7 +283,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block2));
-        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -302,7 +302,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block1));
-        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -322,7 +322,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block2));
-        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));

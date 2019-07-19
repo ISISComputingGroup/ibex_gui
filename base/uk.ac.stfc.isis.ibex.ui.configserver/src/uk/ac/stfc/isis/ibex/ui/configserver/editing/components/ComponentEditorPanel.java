@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -35,7 +35,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -84,21 +86,25 @@ public class ComponentEditorPanel extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 duplicateChecker.setBase(config.asConfiguration());
                 Collection<Configuration> toToggle = editor.unselectedItems();
-                Map<String, Set<String>> allConflicts = duplicateChecker.checkOnAdd(toToggle);
-
-                Iterator<Configuration> iter = toToggle.iterator();
-                while (iter.hasNext()) {
-                    Configuration comp = iter.next();
-                    if (allConflicts.keySet().contains(comp.getName())) {
-                        iter.remove();
-                    }
-                }
-
-                if (allConflicts.isEmpty()) {
+                
+                Map<String, Set<String>> blockConflicts = duplicateChecker.checkBlocksOnAdd(toToggle);
+                Map<String, Set<String>> iocConflicts = duplicateChecker.checkIocsOnAdd(toToggle);
+                
+                if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                     components.toggleSelection(toToggle);
+                } else if (iocConflicts.isEmpty()) {
+                    new MessageDialog(getShell(), "Conflicts in selected configuration", null,
+                            DisplayConfiguration.buildWarning(blockConflicts, "block",
+                                    "Cannot add the selected components, as it would result in duplicate",
+                                    "Please rename or remove the duplicate",
+                                    "adding these components"),
+                            MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 } else {
-                    new MessageDialog(getShell(), "Conflicts with current configuration", null,
-                            buildWarning(allConflicts),
+                    new MessageDialog(getShell(), "Conflicts in selected configuration", null,
+                            DisplayConfiguration.buildWarning(iocConflicts, "IOC",
+                                    "Cannot add the selected components, as it would result in duplicate",
+                                    "Please remove the duplicate",
+                                    "adding these components"),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 }
 			}
@@ -112,24 +118,4 @@ public class ComponentEditorPanel extends Composite {
 			}
 		});
 	}
-
-    private String buildWarning(Map<String, Set<String>> conflicts) {
-        boolean multi = (conflicts.size() > 1);
-        StringBuilder sb = new StringBuilder();
-        sb.append(
-                "Cannot add the selected components, as it would result in duplicate blocks in this configuration. "
-                        + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
-
-        for (String block : conflicts.keySet()) {
-            sb.append("Block \"" + block + "\" contained in:\n");
-            Set<String> sources = conflicts.get(block);
-            for (String source : sources) {
-                sb.append("\u2022 " + source + "\n");
-            }
-            sb.append("\n");
-        }
-        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "")
-                + " before adding these components.");
-        return sb.toString();
-    }
 }
