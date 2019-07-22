@@ -22,8 +22,8 @@
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,21 +31,19 @@ import java.util.Set;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
 /**
- * Class used to check for conflicts caused by duplicate elements to decide if a
+ * Class used to check for conflicts caused by duplicate items to decide if a
  * given component can be added to a configuration.
+ * @param <T> the type to check for duplicates
  */
-public class DuplicateChecker {
+public abstract class DuplicateChecker<T extends INamedInComponent> {
 
     private Configuration baseConfig;
     private Collection<Configuration> components;
-    private Map<String, Set<String>> allBlocks;
-    private Map<String, Set<String>> allIocs;
+    private Map<String, Set<String>> allItems;
 
     /**
      * Sets the base configuration to check against.
@@ -71,181 +69,116 @@ public class DuplicateChecker {
     }
 
     /**
-     * Initialises by added the blocks and IOCs from the current configuration
+     * Initialises by adding the items from the current configuration
      */
     private void init() {
-        addConfigBlocks();
-        addConfigIocs();
+        addConfigItems();
     }
 
     /**
-     * Adds to the Map the blocks of the current configuration
+     * Adds to the Map the items of the current configuration
      */
-    private void addConfigBlocks() {
-        allBlocks = new HashMap<String, Set<String>>();
-        for (Block block : baseConfig.getBlocks()) {
-            if (!block.inComponent()) {
-                String name = block.getName().toUpperCase();
+    private void addConfigItems() {
+        allItems = new HashMap<String, Set<String>>();
+        for (T item : getItems(baseConfig)) {
+            if (!item.inComponent()) {
+                String name = item.getName().toUpperCase();
                 Set<String> source = new HashSet<>();
                 source.add(baseConfig.getName() + " (base configuration)");
-                allBlocks.put(name, source);
+                allItems.put(name, source);
             }
         }
     }
-    
-    /**
-     * Adds to the Map the IOCs of the current configuration
-     */
-    private void addConfigIocs() {
-        allIocs = new HashMap<String, Set<String>>();
-        // Unlike getBlocks(), getIocs() does not return any of the IOCs in the components
-        for (Ioc ioc : baseConfig.getIocs()) {
-            String name = ioc.getName().toUpperCase();
-            Set<String> source = new HashSet<>();
-            source.add(baseConfig.getName() + " (base configuration)");
-            allIocs.put(name, source);
-        }
-    }
 
     /**
-     * Adds to the Map the blocks and IOCs of the given components
+     * @param config the configuration
+     * @return the configurations items
+     */
+    abstract Collection<T> getItems(Configuration config);
+
+    /**
+     * Adds to the Map the items and IOCs of the given components
      * @param components the components
      */
     private void addComponents(Collection<Configuration> components) {
         for (Configuration comp : components) {
-            addBlocks(comp.getBlocks(), comp.getName());
-            addIocs(comp.getIocs(), comp.getName());
+            addItems(getItems(comp), comp.getName());
         }
     }
 
     /**
-     * Adds to the Map the blocks of the given component
-     * @param blocks the blocks to add
-     * @param compName the name of the component the blocks belong to
+     * Adds to the Map the items of the given component
+     * @param items the items to add
+     * @param compName the name of the component the items belong to
      */
-    private void addBlocks(Collection<Block> blocks, String compName) {
-        for (Block block : blocks) {
-            String name = block.getName().toUpperCase();
-            if (allBlocks.containsKey(name)) {
-                allBlocks.get(name).add(compName);
+    private void addItems(Collection<T> items, String compName) {
+        for (T item : items) {
+            String name = item.getName().toUpperCase();
+            if (allItems.containsKey(name)) {
+                allItems.get(name).add(compName);
             } else {
                 Set<String> source = new HashSet<>();
                 source.add(compName);
-                allBlocks.put(name, source);
-            }
-        }
-    }
-    
-    /**
-     * Adds to the Map the IOCs of the given component
-     * @param iocs the IOCs to add
-     * @param compName the name of the component the IOCs belong to
-     */
-    private void addIocs(Collection<Ioc> iocs, String compName) {
-        for (Ioc ioc : iocs) {
-            String name = ioc.getName().toUpperCase();
-            if (allIocs.containsKey(name)) {
-                allIocs.get(name).add(compName);
-            } else {
-                Set<String> source = new HashSet<>();
-                source.add(compName);
-                allIocs.put(name, source);
+                allItems.put(name, source);
             }
         }
     }
 
     /**
-     * Checks the configuration set as base for duplicate blocks.
+     * Checks the configuration set as base for duplicate items.
      * 
-     * @return The map of duplicate blocks and their sources
+     * @return The map of duplicate items and their sources
      */
-    public Map<String, Set<String>> checkBlocksOnLoad() {
+    public Map<String, Set<String>> checkItemsOnLoad() {
         init();
         addComponents(filterNative(components));
-        return getConflicts(allBlocks);
+        return getConflicts(allItems);
     }
 
     /**
-     * Checks the configuration set as base for duplicate blocks after adding a set
+     * Checks the configuration set as base for duplicate items after adding a set
      * of components to it.
      * 
      * @param toAdd The components to be added to this config
-     * @return The map of duplicate blocks and their sources
+     * @return The map of duplicate items and their sources
      */
-    public Map<String, Set<String>> checkBlocksOnAdd(Collection<Configuration> toAdd) {
+    public Map<String, Set<String>> checkItemsOnAdd(Collection<Configuration> toAdd) {
         init();
         addComponents(filterNative(components));
         addComponents(toAdd);
-        return getConflicts(allBlocks);
+        return getConflicts(allItems);
     }
 
     /**
-     * Checks a configuration for duplicate blocks after one of its components has
+     * Checks a configuration for duplicate items after one of its components has
      * been edited.
      * 
      * @param edited The edited component.
-     * @return The map of duplicate blocks and their sources
+     * @return The map of duplicate items and their sources
      */
-    public Map<String, Set<String>> checkBlocksOnEdit(Configuration edited) {
+    public Map<String, Set<String>> checkItemsOnEdit(Configuration edited) {
         init();
         addComponents(filterNative(replaceEdited(edited)));
-        return getConflicts(allBlocks);
+        return getConflicts(allItems);
     }
     
-    /**
-     * Checks the configuration set as base for duplicate IOCs.
-     * 
-     * @return The map of duplicate IOCs and their sources
-     */
-    public Map<String, Set<String>> checkIocsOnLoad() {
-        init();
-        addComponents(filterNative(components));
-        return getConflicts(allIocs);
-    }
     
     /**
-     * Checks the configuration set as base for duplicate IOCs after adding a set
-     * of components to it.
+     * Checks a configuration for duplicate items if a given item were to be added.
      * 
-     * @param toAdd The components to be added to this config
-     * @return The map of duplicate IOCs and their sources
+     * @param item the item which the user wants to add
+     * @param comp the name of the component which the item is being added to
+     * @return The map of duplicate items and their sources
      */
-    public Map<String, Set<String>> checkIocsOnAdd(Collection<Configuration> toAdd) {
-        init();
-        addComponents(filterNative(components));
-        addComponents(toAdd);
-        return getConflicts(allIocs);
-    }
-
-    /**
-     * Checks a configuration for duplicate IOCs after one of its components has
-     * been edited.
-     * 
-     * @param edited The edited component.
-     * @return The map of duplicate IOCs and their sources
-     */
-    public Map<String, Set<String>> checkIocsOnEdit(Configuration edited) {
-        init();
-        addComponents(filterNative(replaceEdited(edited)));
-        return getConflicts(allIocs);
-    }
-    
-    /**
-     * Checks a configuration for duplicate IOCs if a given IOC were to be added.
-     * 
-     * @param ioc the IOC which the user wants to add
-     * @param comp the name of the component which the ioc is being added to
-     * @return The map of duplicate IOCs and their sources
-     */
-    public Map<String, Set<String>> checkIocsOnAddIoc(Ioc ioc, String comp) {
+    public Map<String, Set<String>> checkItemsOnAddItem(T item, String comp) {
         init();
         Collection<Configuration> activeComponents = filterNative(components);
         // Only check for conflicts if the component being edited is active
         if (activeComponents.stream().anyMatch(c -> c.getName().equals(comp))) {
             addComponents(activeComponents);
-            addIocs(Collections.singleton(ioc), "The current component");
+            addItems(Arrays.asList(item), "The current component");
         }
-        return getConflicts(allIocs);
+        return getConflicts(allItems);
     }
 
     /**
@@ -264,15 +197,15 @@ public class DuplicateChecker {
 
     /**
      * Finds if duplicates for a given name exist in the config to check.
-     * This method is not currently used anywhere, but is left in case it is useful.
+     * This method is not currently used anywhere, but is left in in case it is useful.
      * 
      * @param name
-     *            The block name to check for.
-     * @return The name of duplicate blocks.
+     *            The item name to check for.
+     * @return The name of duplicate items.
      */
     public String findDuplicate(String name) {
         addComponents(filterNative(components));
-        for (String key : allBlocks.keySet()) {
+        for (String key : allItems.keySet()) {
             if (name.equalsIgnoreCase(key)) {
                 return key;
             }

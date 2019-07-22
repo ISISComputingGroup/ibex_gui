@@ -30,7 +30,8 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.RecentConfigSelectionDialog;
@@ -70,8 +71,8 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
     }
 
     private void checksForConflicts(Shell shell, String config) {
-        Map<String, Set<String>> blockConflicts = getBlockConflicts(config);
-        Map<String, Set<String>> iocConflicts = getIocConflicts(config);
+        Map<String, Set<String>> blockConflicts = getItemConflicts(new BlockDuplicateChecker(), configs.get(config));
+        Map<String, Set<String>> iocConflicts = getItemConflicts(new IocDuplicateChecker(), configs.get(config));
         
         if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
             loadsConfig(config);
@@ -111,19 +112,5 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
                 });
             }
         }
-    }
-
-    private Map<String, Set<String>> getBlockConflicts(String name) {
-        Configuration config = configs.get(name);
-        DuplicateChecker duplicateChecker = new DuplicateChecker();
-        duplicateChecker.setBase(config);
-        return duplicateChecker.checkBlocksOnLoad();
-    }
-    
-    private Map<String, Set<String>> getIocConflicts(String name) {
-        Configuration config = configs.get(name);
-        DuplicateChecker duplicateChecker = new DuplicateChecker();
-        duplicateChecker.setBase(config);
-        return duplicateChecker.checkIocsOnLoad();
     }
 }

@@ -38,14 +38,18 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
+import uk.ac.stfc.isis.ibex.configserver.editing.INamedInComponent;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 
 /**
- *
+ * Class for testing the configuration duplicate checker. Since DuplicateChecker works with
+ * generic types, tests which use blocks will also test the functionality for IOCs, and vice versa.
  */
 public class DuplicateCheckerTest {
 
-    private DuplicateChecker duplicateChecker;
+    private DuplicateChecker<? extends INamedInComponent> duplicateChecker;
     private Configuration baseConfig;
     private Collection<Configuration> allComps;
     private Collection<Block> configBlocks;
@@ -67,7 +71,6 @@ public class DuplicateCheckerTest {
     private Block block2 = mockBlock(BLOCK_NAME_2, "");
     
     private Ioc ioc1 = mockIoc(IOC_NAME_1, "");
-    private Ioc ioc2 = mockIoc(IOC_NAME_2, "");
 
     private Block mockBlock(String name, String component) {
         Block block = mock(Block.class);
@@ -115,7 +118,7 @@ public class DuplicateCheckerTest {
         configIocs = new ArrayList<Ioc>();
         allComps = new ArrayList<Configuration>();
 
-        duplicateChecker = new DuplicateChecker();
+        duplicateChecker = new BlockDuplicateChecker();
     }
 
     @Test
@@ -125,7 +128,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnLoad();
 
         // Assert
         assertTrue(result.isEmpty());
@@ -140,7 +143,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnLoad();
 
         // Assert
         assertTrue(result.isEmpty());
@@ -158,7 +161,7 @@ public class DuplicateCheckerTest {
         duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnLoad();
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnLoad();
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -173,7 +176,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1), Collections.emptyList()));
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -190,7 +193,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2), Collections.emptyList()));
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -207,7 +210,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1), Collections.emptyList()));
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -226,7 +229,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2), Collections.emptyList()));
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -245,7 +248,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1), Collections.emptyList()));
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -262,7 +265,7 @@ public class DuplicateCheckerTest {
         Configuration comp1 = mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1), Collections.emptyList());
         Configuration comp2 = mockComp(COMP_TOADD_NAME_2, Arrays.asList(block1), Collections.emptyList());
         Collection<Configuration> toAdd = Arrays.asList(comp1, comp2);
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnAdd(toAdd);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnAdd(toAdd);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -282,7 +285,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block1), Collections.emptyList());
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnEdit(edited);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
@@ -302,7 +305,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block2), Collections.emptyList());
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnEdit(edited);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -321,7 +324,7 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block1), Collections.emptyList());
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnEdit(edited);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -341,236 +344,21 @@ public class DuplicateCheckerTest {
 
         // Act
         Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block2), Collections.emptyList());
-        Map<String, Set<String>> result = duplicateChecker.checkBlocksOnEdit(edited);
+        Map<String, Set<String>> result = duplicateChecker.checkItemsOnEdit(edited);
 
         // Assert
         assertTrue(result.containsKey(BLOCK_NAME_1));
     }
     
     @Test
-    public void GIVEN_config_with_unique_native_iocs_WHEN_checking_config_THEN_no_conflicts_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1, ioc2);
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnLoad();
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-    
-    @Test
-    public void GIVEN_config_with_duplicate_ioc_in_component_WHEN_checking_config_THEN_conflict_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnLoad();
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-
-    @Test
-    public void
-            GIVEN_blank_config_WHEN_adding_another_component_with_unique_ioc_THEN_no_conflicts_returned() {
-        // Arrange
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void
-            GIVEN_base_config_contains_ioc_WHEN_adding_another_component_with_unique_ioc_THEN_no_conflicts_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc2)));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void
-            GIVEN_base_config_contains_ioc_WHEN_adding_another_component_with_duplicate_ioc_THEN_conflict_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-
-    @Test
-    public void
-            GIVEN_component_in_config_contains_ioc_WHEN_adding_another_component_with_unique_ioc_THEN_no_conflicts_returned() {
-        // Arrange
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc2)));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void
-            GIVEN_component_in_config_contains_ioc_WHEN_adding_another_component_with_duplicate_ioc_THEN_conflict_returned() {
-        // Arrange
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-
-    @Test
-    public void
-            GIVEN_components_to_add_contain_duplicate_iocs_between_themselves_WHEN_adding_adding_components_to_config_THEN_conflict_returned() {
-        // Arrange
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Configuration comp1 = mockComp(COMP_TOADD_NAME_1, Collections.emptyList(), Arrays.asList(ioc1));
-        Configuration comp2 = mockComp(COMP_TOADD_NAME_2, Collections.emptyList(), Arrays.asList(ioc1));
-        Collection<Configuration> toAdd = Arrays.asList(comp1, comp2);
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAdd(toAdd);
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-
-    @Test
-    public void
-            GIVEN_component_in_config_contains_no_duplicate_iocs_WHEN_adding_duplicate_to_component_THEN_conflict_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc2)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Configuration edited = mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnEdit(edited);
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-
-    @Test
-    public void
-            GIVEN_component_in_config_contains_duplicate_ioc_WHEN_duplicate_is_removed_from_component_THEN_no_conflicts_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Configuration edited = mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc2));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnEdit(edited);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void GIVEN_component_not_in_config_WHEN_adding_duplicate_ioc_to_component_THEN_no_conflict_returned() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc2)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Configuration edited = mockComp(COMP_NAME_2, Collections.emptyList(), Arrays.asList(ioc1));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnEdit(edited);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void
-            GIVEN_component_with_duplicate_ioc_in_config_WHEN_duplicate_is_removed_from_other_component_THEN_conflict_remains() {
-        // Arrange
-        configIocs = Arrays.asList(ioc1);
-        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
-        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-
-        allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
-
-        duplicateChecker.setBase(baseConfig, allComps);
-
-        // Act
-        Configuration edited = mockComp(COMP_NAME_2, Collections.emptyList(), Arrays.asList(ioc2));
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnEdit(edited);
-
-        // Assert
-        assertTrue(result.containsKey(IOC_NAME_1));
-    }
-    
-    @Test
     public void GIVEN_config_blank_WHEN_adding_ioc_THEN_no_conflict_returned() {
         // Arrange
+        DuplicateChecker<Ioc> checker = new IocDuplicateChecker();
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
+        checker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAddIoc(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
+        Map<String, Set<String>> result = checker.checkItemsOnAddItem(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -579,14 +367,15 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_with_native_ioc_WHEN_adding_unique_ioc_THEN_no_conflict_returned() {
         // Arrange
+        DuplicateChecker<Ioc> checker = new IocDuplicateChecker();
         configIocs.add(ioc1);
         allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Collections.emptyList()));
         configComps.add(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
+        checker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAddIoc(mockIoc(IOC_NAME_2, COMP_NAME_1), COMP_NAME_1);
+        Map<String, Set<String>> result = checker.checkItemsOnAddItem(mockIoc(IOC_NAME_2, COMP_NAME_1), COMP_NAME_1);
 
         // Assert
         assertTrue(result.isEmpty());
@@ -595,14 +384,15 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_with_native_ioc_WHEN_adding_duplicate_ioc_THEN_conflict_returned() {
         // Arrange
+        DuplicateChecker<Ioc> checker = new IocDuplicateChecker();
         configIocs.add(ioc1);
         allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Collections.emptyList()));
         configComps.add(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
+        checker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAddIoc(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
+        Map<String, Set<String>> result = checker.checkItemsOnAddItem(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
 
         // Assert
         assertTrue(result.containsKey(IOC_NAME_1));
@@ -611,14 +401,15 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_with_ioc_in_component_WHEN_adding_duplicate_ioc_THEN_conflict_returned() {
         // Arrange
+        DuplicateChecker<Ioc> checker = new IocDuplicateChecker();
         configIocs.add(ioc1);
         allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
         configComps.add(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
+        checker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAddIoc(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
+        Map<String, Set<String>> result = checker.checkItemsOnAddItem(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
 
         // Assert
         assertTrue(result.containsKey(IOC_NAME_1));
@@ -627,13 +418,14 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_component_not_in_config_WHEN_adding_duplicate_ioc_THEN_no_conflict_returned() {
         // Arrange
+        DuplicateChecker<Ioc> checker = new IocDuplicateChecker();
         configIocs.add(ioc1);
         allComps.add(mockComp(COMP_NAME_1, Collections.emptyList(), Arrays.asList(ioc1)));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps, configIocs);
-        duplicateChecker.setBase(baseConfig, allComps);
+        checker.setBase(baseConfig, allComps);
 
         // Act
-        Map<String, Set<String>> result = duplicateChecker.checkIocsOnAddIoc(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
+        Map<String, Set<String>> result = checker.checkItemsOnAddItem(mockIoc(IOC_NAME_1, COMP_NAME_1), COMP_NAME_1);
 
         // Assert
         assertTrue(result.isEmpty());

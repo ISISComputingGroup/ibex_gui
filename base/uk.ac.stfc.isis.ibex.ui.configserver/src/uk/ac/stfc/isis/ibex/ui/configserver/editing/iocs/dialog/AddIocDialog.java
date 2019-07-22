@@ -41,10 +41,12 @@ import org.eclipse.swt.widgets.Shell;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 
 /**
  * Dialog for adding a new IOC to a config and initialising its settings.
@@ -71,9 +73,9 @@ public class AddIocDialog extends IocDialog {
         @Override
         public void widgetSelected(SelectionEvent e) {
             
-            DuplicateChecker duplicateChecker = new DuplicateChecker();
+            DuplicateChecker<Ioc> duplicateChecker = new IocDuplicateChecker();
             duplicateChecker.setBase(Configurations.getInstance().server().currentConfig().getValue());
-            Map<String, Set<String>> conflicts = duplicateChecker.checkIocsOnAddIoc(addViewModel.getSelectedIoc(), config.getName());
+            Map<String, Set<String>> conflicts = duplicateChecker.checkItemsOnAddItem(addViewModel.getSelectedIoc(), config.getName());
             
             if (conflicts.isEmpty()) {
                 nextPage();

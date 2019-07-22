@@ -34,11 +34,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -76,17 +80,19 @@ public class ComponentEditorPanel extends Composite {
 		IObservableList<Configuration> unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
 
-        final DuplicateChecker duplicateChecker = new DuplicateChecker();
+        DuplicateChecker<Block> blockDuplicateChecker = new BlockDuplicateChecker();
+        DuplicateChecker<Ioc> iocDuplicateChecker = new IocDuplicateChecker();
 
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                duplicateChecker.setBase(config.asConfiguration());
+			    blockDuplicateChecker.setBase(config.asConfiguration());
+			    iocDuplicateChecker.setBase(config.asConfiguration());
                 Collection<Configuration> toToggle = editor.unselectedItems();
                 
-                Map<String, Set<String>> blockConflicts = duplicateChecker.checkBlocksOnAdd(toToggle);
-                Map<String, Set<String>> iocConflicts = duplicateChecker.checkIocsOnAdd(toToggle);
+                Map<String, Set<String>> blockConflicts = blockDuplicateChecker.checkItemsOnAdd(toToggle);
+                Map<String, Set<String>> iocConflicts = iocDuplicateChecker.checkItemsOnAdd(toToggle);
                 
                 if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                     components.toggleSelection(toToggle);

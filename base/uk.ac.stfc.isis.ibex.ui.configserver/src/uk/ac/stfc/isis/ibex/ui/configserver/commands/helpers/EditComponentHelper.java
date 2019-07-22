@@ -32,10 +32,14 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
@@ -81,8 +85,8 @@ public class EditComponentHelper extends ConfigHelper {
                 new EditConfigDialog(shell, TITLE, subTitle, component, false,
                         configurationViewModels, editBlockFirst);
         if (editDialog.open() == Window.OK) {
-            Map<String, Set<String>> blockConflicts = blockConflictsWithCurrent(component);
-            Map<String, Set<String>> iocConflicts = iocConflictsWithCurrent(component);
+            Map<String, Set<String>> blockConflicts = itemConflictsWithCurrent(new BlockDuplicateChecker(), component);
+            Map<String, Set<String>> iocConflicts = itemConflictsWithCurrent(new IocDuplicateChecker(), component);
             
             if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                 try {
@@ -128,22 +132,11 @@ public class EditComponentHelper extends ConfigHelper {
         }
     }
 
-    private Map<String, Set<String>> blockConflictsWithCurrent(EditableConfiguration editingComp) {
+    private Map<String, Set<String>> itemConflictsWithCurrent(DuplicateChecker<?> checker, EditableConfiguration editingComp) {
         Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
         if (compInCurrent(editingComp)) {
-            DuplicateChecker duplicateChecker = new DuplicateChecker();
-            duplicateChecker.setBase(server.currentConfig().getValue());
-            conflicts = duplicateChecker.checkBlocksOnEdit(editingComp.asConfiguration());
-        }
-        return conflicts;
-    }
-    
-    private Map<String, Set<String>> iocConflictsWithCurrent(EditableConfiguration editingComp) {
-        Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
-        if (compInCurrent(editingComp)) {
-            DuplicateChecker duplicateChecker = new DuplicateChecker();
-            duplicateChecker.setBase(server.currentConfig().getValue());
-            conflicts = duplicateChecker.checkIocsOnEdit(editingComp.asConfiguration());
+            checker.setBase(server.currentConfig().getValue());
+            conflicts = checker.checkItemsOnEdit(editingComp.asConfiguration());
         }
         return conflicts;
     }
