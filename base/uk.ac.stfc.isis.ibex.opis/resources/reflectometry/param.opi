@@ -270,14 +270,18 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <rules>
         <rule name="RED if VALUE does not match RBV" prop_id="background_color" out_exp="false">
-          <exp bool_exp="pv2==1">
+          <exp bool_exp="pv0==1">
             <value>
               <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
             </value>
           </exp>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV)</pv>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP:RBV</pv>
+          <exp bool_exp="pv1==0&amp;&amp;pv0==0">
+            <value>
+              <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+            </value>
+          </exp>
           <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGING</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):RBV:AT_POS</pv>
         </rule>
       </rules>
       <scale_options>
