@@ -68,7 +68,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>260</width>
+    <width>181</width>
     <wuid>-166f7f1c:16bdb17a9a5:-74cb</wuid>
     <x>0</x>
     <y>0</y>
@@ -109,7 +109,7 @@
       <width>49</width>
       <wrap_words>false</wrap_words>
       <wuid>-166f7f1c:16bdb17a9a5:-74ca</wuid>
-      <x>75</x>
+      <x>0</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -149,7 +149,7 @@
       <width>49</width>
       <wrap_words>false</wrap_words>
       <wuid>-166f7f1c:16bdb17a9a5:-74c9</wuid>
-      <x>135</x>
+      <x>60</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -189,7 +189,7 @@
       <width>49</width>
       <wrap_words>false</wrap_words>
       <wuid>-166f7f1c:16bdb17a9a5:-74c8</wuid>
-      <x>204</x>
+      <x>130</x>
       <y>0</y>
     </widget>
   </widget>

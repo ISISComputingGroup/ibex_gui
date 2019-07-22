@@ -277,9 +277,9 @@
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>261</width>
+      <width>181</width>
       <wuid>-166f7f1c:16bdb17a9a5:-7483</wuid>
-      <x>0</x>
+      <x>70</x>
       <y>5</y>
     </widget>
   </widget>

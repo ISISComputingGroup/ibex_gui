@@ -258,7 +258,7 @@
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>1</height>
+      <height>20</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -275,9 +275,9 @@
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>1</width>
+      <width>182</width>
       <wuid>-166f7f1c:16bdb17a9a5:-73c6</wuid>
-      <x>0</x>
+      <x>70</x>
       <y>5</y>
     </widget>
   </widget>
