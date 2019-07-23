@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -205,18 +206,13 @@ public class SearchControl extends Canvas {
 			}
 		});
         
-        addSearchListeners(new KeyListener() {
+        addSearchListeners(new KeyAdapter() {
 
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
                     search();
                 }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // Do nothing
             }
         });
 		

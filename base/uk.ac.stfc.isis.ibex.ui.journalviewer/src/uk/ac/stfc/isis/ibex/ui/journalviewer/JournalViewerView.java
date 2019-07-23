@@ -28,8 +28,8 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -350,18 +350,12 @@ public class JournalViewerView {
                 setProgressIndicatorsVisible(false);
         }));
         
-        searchInput.addSearchListeners(new KeyListener() {
-
+        searchInput.addSearchListeners(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
                     search();
                 }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // Do nothing
             }
         });
 
