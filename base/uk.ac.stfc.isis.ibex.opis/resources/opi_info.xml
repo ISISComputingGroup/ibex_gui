@@ -1469,6 +1469,25 @@
       </value>
     </entry>
     <entry>
+      <key>Heliox</key>
+      <value>
+        <type>DILUTION_FRIDGE</type>
+        <path>heliox.opi</path>
+        <description>The OPI for the Heliox (Mercury) sorption fridge</description>
+        <macros>
+          <macro>
+            <name>HELIOX</name>
+            <description>The heliox PV prefix (e.g. HELIOX_01).</description>
+            <default>HELIOX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Pixelman</key>
       <value>
         <type>PIXELMAN</type>
