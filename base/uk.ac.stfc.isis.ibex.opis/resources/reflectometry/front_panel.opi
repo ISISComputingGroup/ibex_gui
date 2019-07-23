@@ -660,7 +660,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>true</visible>
+              <visible>false</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-7a23</wuid>
@@ -704,8 +704,8 @@ $(pv_value)</tooltip>
                 <widget_type>Linking Container</widget_type>
                 <width>250</width>
                 <wuid>-66312240:1683d19d453:-776d</wuid>
-                <x>6</x>
-                <y>9</y>
+                <x>5</x>
+                <y>10</y>
               </widget>
             </widget>
             <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -785,8 +785,8 @@ $(pv_value)</tooltip>
                 <widget_type>Linking Container</widget_type>
                 <width>250</width>
                 <wuid>-66312240:1683d19d453:-75f6</wuid>
-                <x>6</x>
-                <y>6</y>
+                <x>5</x>
+                <y>10</y>
               </widget>
             </widget>
             <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -823,7 +823,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>false</visible>
+              <visible>true</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-77ca</wuid>
@@ -867,8 +867,8 @@ $(pv_value)</tooltip>
                 <widget_type>Linking Container</widget_type>
                 <width>250</width>
                 <wuid>-66312240:1683d19d453:-75d9</wuid>
-                <x>6</x>
-                <y>6</y>
+                <x>5</x>
+                <y>10</y>
               </widget>
             </widget>
           </widget>
