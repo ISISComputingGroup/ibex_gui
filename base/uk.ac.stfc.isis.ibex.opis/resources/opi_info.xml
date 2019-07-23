@@ -2104,5 +2104,24 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Watson-Marlow 323</key>
+      <value>
+        <categories/>
+        <type>PUMP</type>
+        <path>wm323.opi</path>
+        <description>The OPI for the WM323</description>
+        <macros>
+          <macro>
+            <name>WM323</name>
+            <description>The WM323 PV prefix (e.g. WM323_01)</description>
+            <default>WM323_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
