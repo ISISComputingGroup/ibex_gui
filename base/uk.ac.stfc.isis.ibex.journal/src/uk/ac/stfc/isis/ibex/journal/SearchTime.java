@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -28,8 +27,8 @@ import java.util.Calendar;
 import java.util.Optional;
 
 /**
- * Handles parameters for searching for a string and constructing the SQL query
- * .
+ * Handles parameters for searching between two times and constructing the SQL
+ * query.
  */
 public class SearchTime extends JournalSearch {
     private Optional<Calendar> fromTime;
@@ -67,21 +66,17 @@ public class SearchTime extends JournalSearch {
     }
 
     @Override
-    protected PreparedStatement fillTemplate(Connection connection, String query, int pageNumber, int pageSize)
-            throws SQLException {
-        PreparedStatement st = connection.prepareStatement(query.toString());
+    protected PreparedStatement fillTemplate(PreparedStatement statement) throws SQLException {
         int index = 0;
 
         if (fromTime.isPresent()) {
-            st.setTimestamp(++index, new Timestamp(fromTime.get().getTimeInMillis()));
+            statement.setTimestamp(++index, new Timestamp(fromTime.get().getTimeInMillis()));
         }
         if (toTime.isPresent()) {
-            st.setTimestamp(++index, new Timestamp(toTime.get().getTimeInMillis()));
+            statement.setTimestamp(++index, new Timestamp(toTime.get().getTimeInMillis()));
         }
 
-        st.setInt(++index, (pageNumber - 1) * pageSize);
-        st.setInt(++index, pageSize);
-        return st;
+        return statement;
     }
 
 }

@@ -19,15 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.OptionalInt;
 
 /**
- * Handles parameters for searching for a string and constructing the SQL query
- * .
+ * Handles parameters for searching between two integers and constructing the
+ * SQL query.
  */
 public class SearchNumber extends JournalSearch {
     private OptionalInt fromNumber;
@@ -65,21 +64,17 @@ public class SearchNumber extends JournalSearch {
     }
 
     @Override
-    protected PreparedStatement fillTemplate(Connection connection, String query, int pageNumber, int pageSize)
-            throws SQLException {
-        PreparedStatement st = connection.prepareStatement(query.toString());
+    protected PreparedStatement fillTemplate(PreparedStatement statement) throws SQLException {
         int index = 0;
 
         if (fromNumber.isPresent()) {
-            st.setInt(++index, fromNumber.getAsInt());
+            statement.setInt(++index, fromNumber.getAsInt());
         }
         if (toNumber.isPresent()) {
-            st.setInt(++index, toNumber.getAsInt());
+            statement.setInt(++index, toNumber.getAsInt());
         }
 
-        st.setInt(++index, (pageNumber - 1) * pageSize);
-        st.setInt(++index, pageSize);
-        return st;
+        return statement;
     }
 
 }

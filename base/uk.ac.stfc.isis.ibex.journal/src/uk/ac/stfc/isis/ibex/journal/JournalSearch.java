@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 public abstract class JournalSearch {
     private static final String SELECT = "SELECT * FROM journal_entries";
-    protected JournalField field = JournalField.RUN_NUMBER;
+    protected final JournalField field;
     private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     {
         // This is the default sort
@@ -64,7 +64,15 @@ public abstract class JournalSearch {
 
         query.append(createWhereTemplate());
         query.append(createSortLimitTemplate());
-        return fillTemplate(connection, query.toString(), pageNumber, pageSize);
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        fillTemplate(st);
+
+        // The last parameters in the statement are for doing the limiting so we
+        // use page number and page size
+        int lastParameter = st.getParameterMetaData().getParameterCount();
+        st.setInt(lastParameter - 1, (pageNumber - 1) * pageSize);
+        st.setInt(lastParameter, pageSize);
+        return st;
     }
 
     /**
@@ -73,20 +81,16 @@ public abstract class JournalSearch {
     public abstract String createWhereTemplate();
 
     /**
-     * @param connection
-     *            the SQL connection to use
-     * @param query
-     *            The string query template to fill.
-     * @param pageNumber
-     *            the current page number
-     * @param pageSize
-     *            the number of entries on each page
-     * @return A full prepared statement ready to be executed.
+     * Fills in the the prepared statement with the parameters unique to the
+     * query.
+     * 
+     * @param preparedStatement
+     *            The statement to fill in.
+     * @return The prepared statement with all the query parameters filled in.
      * @throws SQLException
-     *             - If there was an error while querying the database
+     *             If the prepared statement has been modified incorrectly.
      */
-    protected abstract PreparedStatement fillTemplate(Connection connection, String query, int pageNumber, int pageSize)
-            throws SQLException;
+    protected abstract PreparedStatement fillTemplate(PreparedStatement preparedStatement) throws SQLException;
 
     /**
      * @return A string containing the ORDER BY and LIMIT sections of the query.

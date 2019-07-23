@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -53,14 +52,9 @@ public class SearchString extends JournalSearch {
      * {@inheritDoc}
      */
     @Override
-    protected PreparedStatement fillTemplate(Connection connection, String query, int pageNumber, int pageSize)
-            throws SQLException {
-        PreparedStatement st = connection.prepareStatement(query.toString());
-        int index = 0;
-        st.setString(++index, "%" + searchString + "%");
-        st.setInt(++index, (pageNumber - 1) * pageSize);
-        st.setInt(++index, pageSize);
-        return st;
+    protected PreparedStatement fillTemplate(PreparedStatement statement) throws SQLException {
+        statement.setString(1, "%" + searchString + "%");
+        return statement;
     }
 
 }

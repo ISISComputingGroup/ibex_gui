@@ -19,9 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.journal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 /**
  * Handles parameters for searching for a string and constructing the SQL query .
@@ -47,11 +45,7 @@ public class EmptySearch extends JournalSearch {
      * {@inheritDoc}
      */
     @Override
-    protected PreparedStatement fillTemplate(Connection connection, String query, int pageNumber, int pageSize)
-            throws SQLException {
-        PreparedStatement st = connection.prepareStatement(query.toString());
-        st.setInt(1, (pageNumber - 1) * pageSize);
-        st.setInt(2, pageSize);
+    protected PreparedStatement fillTemplate(PreparedStatement st) {
         return st;
     }
 
