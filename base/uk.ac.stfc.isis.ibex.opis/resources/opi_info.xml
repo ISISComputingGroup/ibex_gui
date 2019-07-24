@@ -2107,7 +2107,6 @@
     <entry>
       <key>Watson-Marlow 323</key>
       <value>
-        <categories/>
         <type>PUMP</type>
         <path>wm323.opi</path>
         <description>The OPI for the WM323</description>
