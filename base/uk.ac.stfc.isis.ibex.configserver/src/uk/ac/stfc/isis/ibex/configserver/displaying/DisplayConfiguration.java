@@ -20,6 +20,7 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -187,6 +188,34 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
         }
         sb.append(
                 pleaseMessage + " " + conflictType + (multi ? "s" : "") + " before " + doMessage + ".");
+        return sb.toString();
+    }
+    
+    public static String buildWarning(Map<String, Set<String>> blockConflicts, Map<String, Set<String>> iocConflicts,
+            String action, String element) {
+        Map<String, Map<String, Set<String>>> conflicts = new HashMap<>();
+        if (iocConflicts.size() > 0) {
+            conflicts.put("IOC", iocConflicts);
+        }
+        if (blockConflicts.size() > 0) {
+            conflicts.put("Block", blockConflicts);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Cannot %s the %s as it would result in the following duplicate elements:\n\n", action, element));
+
+        for (String conflictType : conflicts.keySet()) {
+            for (String item : conflicts.get(conflictType).keySet()) {
+                sb.append(conflictType.substring(0, 1).toUpperCase() + conflictType.substring(1) + " \"" + item + "\" contained in:\n");
+                Set<String> sources = conflicts.get(conflictType).get(item);
+                for (String source : sources) {
+                    sb.append("\u2022 " + source + "\n");
+                }
+                sb.append("\n");
+            }
+        }
+        
+        sb.append("Please resolve these conflicts by removing / renaming duplicate elements as appropriate before proceeding.");
         return sb.toString();
     }
 }

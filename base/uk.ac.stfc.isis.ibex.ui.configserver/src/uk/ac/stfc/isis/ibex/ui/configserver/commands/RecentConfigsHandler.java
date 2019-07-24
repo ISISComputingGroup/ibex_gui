@@ -76,20 +76,9 @@ public class RecentConfigsHandler extends DisablingConfigHandler<String> {
         
         if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
             loadsConfig(config);
-        } else if (iocConflicts.isEmpty()) {
-            new MessageDialog(shell, "Conflicts in selected configuration", null,
-                    DisplayConfiguration.buildWarning(blockConflicts, "block",
-                            "Cannot load the selected configuration as it and its components contains duplicate",
-                            "Please rename or remove the duplicate",
-                            "loading this configuration"),
-                    MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-            execute(shell);
         } else {
             new MessageDialog(shell, "Conflicts in selected configuration", null,
-                    DisplayConfiguration.buildWarning(iocConflicts, "IOC",
-                            "Cannot load the selected configuration as it and its components contains duplicate",
-                            "Please remove the duplicate",
-                            "loading this configuration"),
+                    DisplayConfiguration.buildWarning(blockConflicts, iocConflicts, "load", "configuration"),
                     MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
             execute(shell);
         }

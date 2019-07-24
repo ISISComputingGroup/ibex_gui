@@ -32,9 +32,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
@@ -94,17 +92,8 @@ public class EditComponentHelper extends ConfigHelper {
                 } catch (IOException e) {
                     openErrorSavingDialog(e);
                 }
-            } else if (iocConflicts.isEmpty()) {
-                openConflictsDialog(DisplayConfiguration.buildWarning(blockConflicts, "block",
-                        "Cannot save this component as it is used in the current configuration and would result in duplicate",
-                        "Please rename or remove the duplicate",
-                        "saving this component"));
-                openDialog(component, false, editBlockFirst);
             } else {
-                openConflictsDialog(DisplayConfiguration.buildWarning(iocConflicts, "IOC",
-                        "Cannot save this component as it is used in the current configuration and would result in duplicate",
-                        "Please remove the duplicate",
-                        "saving this component"));
+                openConflictsDialog(DisplayConfiguration.buildWarning(blockConflicts, iocConflicts, "save", "component"));
                 openDialog(component, false, editBlockFirst);
             }
         }

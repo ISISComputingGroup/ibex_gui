@@ -96,19 +96,9 @@ public class ComponentEditorPanel extends Composite {
                 
                 if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                     components.toggleSelection(toToggle);
-                } else if (iocConflicts.isEmpty()) {
-                    new MessageDialog(getShell(), "Conflicts in selected configuration", null,
-                            DisplayConfiguration.buildWarning(blockConflicts, "block",
-                                    "Cannot add the selected components as it would result in duplicate",
-                                    "Please rename or remove the duplicate",
-                                    "adding these components"),
-                            MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 } else {
                     new MessageDialog(getShell(), "Conflicts in selected configuration", null,
-                            DisplayConfiguration.buildWarning(iocConflicts, "IOC",
-                                    "Cannot add the selected components as it would result in duplicate",
-                                    "Please remove the duplicate",
-                                    "adding these components"),
+                            DisplayConfiguration.buildWarning(blockConflicts, iocConflicts, "add", "component"),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 }
 			}

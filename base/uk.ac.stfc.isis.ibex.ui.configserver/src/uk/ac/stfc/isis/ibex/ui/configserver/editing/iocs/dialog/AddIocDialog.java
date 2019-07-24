@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -81,10 +82,7 @@ public class AddIocDialog extends IocDialog {
                 nextPage();
             } else {
                 new MessageDialog(getShell(), "Conflicts in selected configuration", null,
-                        DisplayConfiguration.buildWarning(conflicts, "IOC",
-                                "Cannot add the selected IOC as it would result in duplicate",
-                                "Please remove this component from the current configuration or remove the duplicate",
-                                "adding this IOC"),
+                        DisplayConfiguration.buildWarning(new HashMap<>(), conflicts, "add", "IOC"),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
             }
         }

@@ -29,9 +29,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 public interface INamedInComponent extends INamed {
     
     /**
-     * Gets whether the block belongs to a component.
+     * Gets whether the object belongs to a component.
      * 
-     * @return whether the block belongs to a component
+     * @return whether the object belongs to a component
      */
     boolean inComponent();
 }
