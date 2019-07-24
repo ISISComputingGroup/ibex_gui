@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,6 +68,11 @@ public class Consoles extends AbstractUIPlugin {
 	private static Consoles plugin;
 
 	private static final GeniePythonConsoleFactory GENIE_CONSOLE_FACTORY = new GeniePythonConsoleFactory();
+
+	/**
+	 * This is the file which we will log old console output to if it is trimmed automatically.
+	 */
+	private static final String TRIMMED_CONSOLE_LOG_PATH = Paths.get(System.getProperty("user.dir"), "console-output-trimmed.txt").toString();
 
 	private IEclipseContext eclipseContext;
 
@@ -195,7 +203,9 @@ public class Consoles extends AbstractUIPlugin {
 				@Override
 				public void documentAboutToBeChanged(DocumentEvent event) {
 					if (console.getDocument().getLength() > MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE) {
-						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Clearing the output of this console.");
+						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Saving & clearing the output of this console.");
+
+						writeConsoleOutputToFile(console);
 						Display.getDefault().asyncExec(console::clearConsole);
 					}
 					consoleLengthListeners.forEach(Runnable::run);
@@ -206,6 +216,15 @@ public class Consoles extends AbstractUIPlugin {
 			// If we can't add the listener, log and carry on, this is not a critical error.
 			LoggerUtils.logErrorWithStackTrace(LOG,
 					String.format("Failed to install output length limit to console '%s' because: %s", console, e.getMessage()), e);
+		}
+	}
+
+	private void writeConsoleOutputToFile(ScriptConsole console) {
+		try (FileWriter writer = new FileWriter(TRIMMED_CONSOLE_LOG_PATH)) {
+			writer.write(console.getDocument().get());
+			LOG.info(String.format("Console output saved to file at '%s'", TRIMMED_CONSOLE_LOG_PATH));
+		} catch (RuntimeException | IOException e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
 	}
 

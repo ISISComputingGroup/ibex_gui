@@ -21,7 +21,9 @@ public class ConsoleLengthMonitor extends WorkbenchWindowControlContribution {
 
 	private static final String TOOLTIP_TEXT = "The scripting console can only hold a certain amount of output.\n\n"
 			+ "When the buffer is full, the console will be automatically cleared. The console can also be cleared\n"
-			+ "manually by clicking this button or using the right-click context menu.";
+			+ "manually by clicking this button or using the right-click context menu.\n\n"
+			+ "If desired, the present console output can also be saved via the console's right click context menu for "
+			+ "future reference.";
 
 	private Button button;
 
