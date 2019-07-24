@@ -760,7 +760,7 @@
       <key>Polaris jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/polaris_jaws/Jaws_manager.opi</path>
+        <path>jaws/jaws_managers/polaris_manager.opi</path>
         <description>The OPI for the Polaris jaw set. No properties required.</description>
         <macros/>
         <categories>
@@ -1337,7 +1337,7 @@
       <key>Gem jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/gem_jaws/Jaws_gem.opi</path>
+        <path>jaws/jaws_managers/gem_manager.opi</path>
         <description>The OPI for the Gem jaw set. No properties required.</description>
         <macros/>
         <categories>
@@ -1460,6 +1460,25 @@
             <name>TRITON</name>
             <description>The triton PV prefix (e.g. TRITON_01).</description>
             <default>TRITON_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Heliox</key>
+      <value>
+        <type>DILUTION_FRIDGE</type>
+        <path>heliox.opi</path>
+        <description>The OPI for the Heliox (Mercury) sorption fridge</description>
+        <macros>
+          <macro>
+            <name>HELIOX</name>
+            <description>The heliox PV prefix (e.g. HELIOX_01).</description>
+            <default>HELIOX_01</default>
           </macro>
         </macros>
         <categories>
@@ -2049,6 +2068,18 @@
         <description>The OPI for the NIMA Trough.</description>
         <categories>
           <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+	<entry>
+      <key>Nimrod jaw set</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/nimrod_manager.opi</path>
+        <description>The OPI for the Nimrod jaw set. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
         </categories>
       </value>
     </entry>

@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2018 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -23,15 +23,20 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer.models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.EnumSet;
-import java.util.List;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
+import org.eclipse.swt.SWT;
+
+import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
-import uk.ac.stfc.isis.ibex.journal.JournalField;
+import uk.ac.stfc.isis.ibex.journal.JournalSearch;
+import uk.ac.stfc.isis.ibex.journal.JournalSort.JournalSortDirection;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -67,7 +72,6 @@ public class JournalViewModel extends ModelObject {
         setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
         setMessage(model.getMessage());
         setRuns(model.getRuns());
-        setPageNumber(model.getPage());
         setPageNumberMax(model.getPageMax());
     }
 
@@ -92,13 +96,34 @@ public class JournalViewModel extends ModelObject {
     private void setLastUpdate(String lastUpdate) {
         firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
     }
+    
     /**
      * Refreshes the data from the journal database.
      */
     public void refresh() {
         model.refresh();
     }
-
+    
+    /**
+     * Resets the active search to empty.
+     */
+    public void resetActiveSearch() {
+        model.resetActiveSearch();
+    }
+    
+    /**
+     * @return the active search
+     */
+    public JournalSearch getActiveSearch() {
+        return model.getActiveSearch();
+    }
+    
+    /**
+     * @param search the search parameters to make active
+     */
+    public void setActiveSearch(JournalSearch search) {
+        model.setActiveSearch(search);
+    }
     
     /**
      * Gets the runs in the journal.
@@ -117,15 +142,16 @@ public class JournalViewModel extends ModelObject {
      * Sets a particular journal field to be selected or deselected.
      * @param field an element of the JournalField enum to select
      * @param selected true to select this field, false to deselect it
+     * @return a CompletableFuture
      */
-    public void setFieldSelected(JournalField field, boolean selected) {
+    public CompletableFuture<Void> setFieldSelected(JournalField field, boolean selected) {
     	EnumSet<JournalField> selectedFields = model.getSelectedFields();
     	if (selected) {
     		selectedFields.add(field);
     	} else if (selectedFields.contains(field)) {
     		selectedFields.remove(field);
     	}
-    	model.setSelectedFields(selectedFields);
+    	return model.setSelectedFields(selectedFields);
     }
     
     /**
@@ -135,6 +161,17 @@ public class JournalViewModel extends ModelObject {
      */
     public boolean getFieldSelected(JournalField field) {
     	return model.getSelectedFields().contains(field);
+    }
+    
+    /**
+     * @return the sort direction of the primary sort for SWT to use
+     */
+    public int getSortDirection() {
+        if (getActiveSearch().getPrimarySort().getDirection() == JournalSortDirection.DESCENDING) {
+            return SWT.DOWN;
+        } else {
+            return SWT.UP;
+        }
     }
     
     private String dateToString(Date lastUpdate) {
@@ -162,13 +199,10 @@ public class JournalViewModel extends ModelObject {
     
     /**
      * @param pageNumber The number of the results page.
+     * @return a CompletableFuture
      */
-    public void setPageNumber(int pageNumber) {
-    	if (pageNumber != model.getPage()) {
-    		int previousPage = model.getPage();
-	    	model.setPage(pageNumber);
-	    	firePropertyChange("pageNumber", previousPage, model.getPage());
-    	}
+    public CompletableFuture<Void> setPageNumber(int pageNumber) {
+        return model.setPage(pageNumber);
     }
     
     /**
@@ -191,5 +225,21 @@ public class JournalViewModel extends ModelObject {
     public int getPageNumberMax() {
     	return model.getPageMax();
     }
+    
+    /**
+     * @return the searchableFields
+     */
+    public List<JournalField> getSearchableFields() {
+        return model.getSearchableFields();
+    }
 
+    /**
+     * Sorts by the specified field, and swaps the direction if already active.
+     * @param field The field to sort by
+     * @return a CompletableFuture
+     */
+    public CompletableFuture<Void> sortBy(JournalField field) {
+        return model.sortBy(field);
+    }
+    
 }

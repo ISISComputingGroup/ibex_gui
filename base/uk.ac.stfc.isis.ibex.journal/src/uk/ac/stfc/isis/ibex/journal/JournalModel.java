@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -22,10 +22,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -49,16 +54,27 @@ public class JournalModel extends ModelObject {
 	private List<JournalRow> runs = Collections.emptyList();
 
 	private EnumSet<JournalField> selectedFields = EnumSet.of(JournalField.RUN_NUMBER, JournalField.TITLE, JournalField.UAMPS);
+	
+	private static final List<JournalField> SEARCHABLE_FIELDS = Arrays.asList(new JournalField[]{JournalField.RUN_NUMBER,
+	        JournalField.TITLE, JournalField.START_TIME, JournalField.RB_NUMBER, JournalField.USERS});
 
     private static final Logger LOG = IsisLog.getLogger(JournalModel.class);
     private static final int PAGE_SIZE = 25;
     
     // In ms. If a query takes longer than this, issue a warning.
     // Exact choice of number is arbitrary.
-    private static final int QUERY_DURATION_WARNING_LEVEL = 500; 
+    private static final int QUERY_DURATION_WARNING_LEVEL = 2000;
+    
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(1);
+
+    private static final String NO_RESULTS_FOUND = "No results found with current search parameters";
     
     private int pageNumber = 1;
     private int pageMax = 1;
+    
+    // The most recent or active search
+    // Used so the search is remembered when changing the page number or refreshing
+    private JournalSearch activeSearch = new EmptySearch();
 
 	/**
 	 * Constructor for the journal model. Takes a preferenceStore as an argument
@@ -71,31 +87,49 @@ public class JournalModel extends ModelObject {
     }
 
     /**
-     * Attempts to connect to the database and updates the status accordingly.
+     * Reloads the runs with the current parameters.
+     * @return a CompleteableFuture
      */
-    public void refresh() {
-    	Connection connection = null;
-        try {
-            String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
-            String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
-            String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
+    public CompletableFuture<Void> refresh() {
+    	return search(activeSearch);
+    }
+    
+    /**
+     * Attempts to connect to the database and update the status to display
+     * runs that match the request parameters.
+     * 
+     * @param search The search to use.
+     * @return a CompleteableFuture
+     */
+    public CompletableFuture<Void> search(JournalSearch search) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        EXECUTOR.submit(() -> {
+            Connection connection = null;
+            try {
+                String schema = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_SCHEMA);
+                String user = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_USERNAME);
+                String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
-            connection = Rdb.connectToDatabase(schema, user, password).getConnection();
+                connection = Rdb.connectToDatabase(schema, user, password).getConnection();
 
-            setMessage("");
-            setLastUpdate(new Date());
-            updateRuns(connection);
-        } catch (Exception ex) {
-            setMessage(Rdb.getError(ex).toString());
-            LOG.error(ex);
-        } finally {
-        	try {
-        		connection.close();
-        	} catch (SQLException | NullPointerException e) {
-				// Do nothing - connection was null, or already closed.
-                LOG.warn("Tried closing non-existent connection.");
-			}
-        }
+                setMessage("");
+                setLastUpdate(new Date());
+                searchUpdateRuns(connection, search);
+                activeSearch = search;
+            } catch (Exception ex) {
+                setMessage(Rdb.getError(ex).toString());
+                LOG.error(ex);
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException | NullPointerException e) {
+                    // Do nothing - connection was null, or already closed.
+                    LOG.warn("Tried closing non-existent connection.");
+                }
+            }
+            future.complete(null);
+        });
+        return future;
     }
     
     /**
@@ -107,40 +141,55 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Updates the runs from the database.
-     * @param connection - the SQL connection to use
-     * @throws SQLException - If there was an error while querying the database
+     * Searches for and updates runs from the database.
+     * 
+     * @param connection the SQL connection to use.
+     * @param parameters The parameters to search with.
      */
-    private void updateRuns(Connection connection) throws SQLException {
-    	long startTime = System.currentTimeMillis();
-
-    	ResultSet rs = constructSQLQuery(connection).executeQuery();
-    	
-    	List<JournalRow> runs = new ArrayList<>();
-    	while (rs.next()) {
-    		JournalRow run = new JournalRow();
-    		for (JournalField property : selectedFields) {
-    			try {
-    				String sqlValue = rs.getString(property.getSqlFieldName());
-    				String value = property.getFormatter().format(sqlValue);
-    				run.put(property, value);
-    			} catch (SQLException e) {
-					run.put(property, "None");
-				}
-    		}
-    		runs.add(run);
-    	}
-    	rs.close();
-    	
-    	setRuns(Collections.unmodifiableList(runs));
-    	updateRunsCount(connection);
-	    
-	    long totalTime = System.currentTimeMillis() - startTime;
-	    if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
-	    	LOG.warn(String.format(
-	    			"Journal parser SQL queries took %s ms. Should have taken less than %s ms.",
-	    			totalTime, QUERY_DURATION_WARNING_LEVEL));
-	    }
+    private void searchUpdateRuns(Connection connection, JournalSearch search) throws SQLException {
+        long startTime = System.currentTimeMillis();
+        
+        ResultSet rs = search.constructQuery(connection, pageNumber, PAGE_SIZE).executeQuery();
+        
+        List<JournalRow> runs = formatResults(rs);
+        if (runs.size() ==  0) {
+            setMessage(NO_RESULTS_FOUND);
+        }
+        setRuns(Collections.unmodifiableList(runs));
+        updateRunsCount(connection);
+        
+        long totalTime = System.currentTimeMillis() - startTime;
+        if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
+            LOG.warn(String.format(
+                    "Journal parser SQL queries took %s ms. Should have taken less than %s ms.",
+                    totalTime, QUERY_DURATION_WARNING_LEVEL));
+        }
+    }
+    
+    /**
+     * Formats the result set returned by the database into rows for populating the table.
+     * 
+     * @param rs The results set generated by a query.
+     * @return An array list of journal rows.
+     * @throws SQLException
+     */
+    private List<JournalRow> formatResults(ResultSet rs) throws SQLException {
+        List<JournalRow> runs = new ArrayList<>();
+        while (rs.next()) {
+            JournalRow run = new JournalRow();
+            for (JournalField property : selectedFields) {
+                try {
+                    String sqlValue = rs.getString(property.getSqlFieldName());
+                    String value = property.getFormatter().format(sqlValue);
+                    run.put(property, value);
+                } catch (SQLException e) {
+                    run.put(property, "None");
+                }
+            }
+            runs.add(run);
+        }
+        rs.close();
+        return runs;
     }
     
     private void updateRunsCount(Connection connection) throws SQLException {
@@ -150,23 +199,6 @@ public class JournalModel extends ModelObject {
     	}
 	    setTotalResults(rs.getInt(1));
 	    rs.close();
-    }
-
-	/**
-     * Constructs the SQL query which extracts all relevant information from the database.
-     * 
-     * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
-     * accidentally as that could lead to a SQL injection vulnerability.
-     * 
-     * @return a SQL prepared statement ready to be executed.
-     * @throws SQLException if a SQL exception occurred while preparing the statement
-     */
-    private PreparedStatement constructSQLQuery(Connection connection) throws SQLException {
-    	String query = "SELECT * FROM journal_entries ORDER BY run_number DESC LIMIT ?, ?";
-        PreparedStatement st = connection.prepareStatement(query);
-    	st.setInt(1, (pageNumber - 1) * PAGE_SIZE);
-    	st.setInt(2, PAGE_SIZE);
-    	return st;
     }
     
     /**
@@ -180,6 +212,31 @@ public class JournalModel extends ModelObject {
      */
     private PreparedStatement constructCountFieldsSQLQuery(Connection connection) throws SQLException {
     	return connection.prepareStatement("SELECT COUNT(*) FROM journal_entries");
+    }
+    
+    /**
+     * Resets the active search to empty.
+     */
+    public void resetActiveSearch() {
+        ArrayList<JournalSort> oldSorts = activeSearch.getSorts();
+        activeSearch = new EmptySearch();
+        activeSearch.setSorts(oldSorts);
+    }
+    
+    /**
+     * @return the active search
+     */
+    public JournalSearch getActiveSearch() {
+        return activeSearch;
+    }
+    
+    /**
+     * Sets a new active search. This retains the previous sort.
+     * @param search the search to set as active
+     */
+    public void setActiveSearch(JournalSearch search) {
+        search.setSorts(activeSearch.getSorts());
+        activeSearch = search;
     }
     
     private void setRuns(List<JournalRow> runs) {
@@ -203,10 +260,11 @@ public class JournalModel extends ModelObject {
     /**
      * Sets the selected fields.
      * @param selected an enumset containing all of the JournalFields which are currently selected
+     * @return a CompleteableFuture
      */
-    public void setSelectedFields(EnumSet<JournalField> selected) {
+    public CompletableFuture<Void> setSelectedFields(EnumSet<JournalField> selected) {
     	this.selectedFields = selected;
-    	refresh();
+    	return refresh();
     }
     
     /**
@@ -254,10 +312,11 @@ public class JournalModel extends ModelObject {
      * Sets the page number that is being looked at.
      * 
      * @param pageNumber The new page number.
+     * @return a CompleteableFuture
      */
-    public void setPage(int pageNumber) {
-        firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
-        refresh();
+    public CompletableFuture<Void> setPage(int pageNumber) {
+        this.pageNumber = pageNumber;
+        return refresh();
     }
 
     /**
@@ -287,4 +346,32 @@ public class JournalModel extends ModelObject {
 	public int getPageMax() {
 		return pageMax;
 	}
+
+    /**
+     * @return the searchableFields
+     */
+    public List<JournalField> getSearchableFields() {
+        return SEARCHABLE_FIELDS;
+    }
+
+    /**
+     * Sorts by the specified field, and swaps the direction if already active.
+     * @param field The field to sort by
+     * @return a CompleteableFuture
+     */
+    public CompletableFuture<Void> sortBy(JournalField field) {
+        JournalSort primarySort = activeSearch.getPrimarySort();
+        
+        if (primarySort.sortField == field) {
+            primarySort.swapDirection();
+        } else {
+            activeSearch.clearSorts();
+            if (field != JournalField.RUN_NUMBER) {
+                activeSearch.addSort(field);
+            }
+            activeSearch.addSort(JournalField.RUN_NUMBER);
+        }
+
+        return refresh();
+    }
 }
