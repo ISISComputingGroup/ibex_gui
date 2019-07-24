@@ -162,35 +162,14 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		}
 	}
 	
-	/**
+    /**
      * Creates a warning informing the user of a conflict.
-     * @param conflicts a map containing the conflicts
-     * @param conflictType the type of conflict, for example block or ioc
-     * @param cannotMessage the part of the message which says what cannot be done
-     * @param pleaseMessage the part of the message which asks the user to do something
-     * @param doMessage the part of the message which says what the user is trying to do
-     * @return the warning String
+     * @param blockConflicts a map containing the block conflicts
+     * @param iocConflicts a map containing the IOC conflicts
+     * @param action what the user is trying to do
+     * @param element the thing that the user is trying to do something to
+     * @return the warning string
      */
-    public static String buildWarning(Map<String, Set<String>> conflicts, String conflictType, String cannotMessage, String pleaseMessage, String doMessage) {
-        boolean multi = (conflicts.size() > 1);
-        StringBuilder sb = new StringBuilder();
-        sb.append(
-                cannotMessage  + " " + conflictType + "s. "
-                        + "Conflicts detected for the following " + conflictType + (multi ? "s" : "") + ":\n\n");
-
-        for (String item : conflicts.keySet()) {
-            sb.append(conflictType.substring(0, 1).toUpperCase() + conflictType.substring(1) + " \"" + item + "\" contained in:\n");
-            Set<String> sources = conflicts.get(item);
-            for (String source : sources) {
-                sb.append("\u2022 " + source + "\n");
-            }
-            sb.append("\n");
-        }
-        sb.append(
-                pleaseMessage + " " + conflictType + (multi ? "s" : "") + " before " + doMessage + ".");
-        return sb.toString();
-    }
-    
     public static String buildWarning(Map<String, Set<String>> blockConflicts, Map<String, Set<String>> iocConflicts,
             String action, String element) {
         Map<String, Map<String, Set<String>>> conflicts = new HashMap<>();
