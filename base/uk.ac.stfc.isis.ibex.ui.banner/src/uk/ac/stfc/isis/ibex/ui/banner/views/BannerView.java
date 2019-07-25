@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
@@ -169,10 +170,10 @@ public class BannerView {
     /**
      * Observes the banner model and forwards changes to the UI.
      */
-    private final BaseObserver<Collection<BannerItem>> modelAdapter = new BaseObserver<Collection<BannerItem>>() {
+    private final BaseObserver<BannerCustom> modelAdapter = new BaseObserver<BannerCustom>() {
         @Override
-        public void onValue(Collection<BannerItem> value) {
-            setBanner(convertBannerItems(value));
+        public void onValue(BannerCustom value) {
+            setBanner(convertBannerItems(value.items));
         }
 
         @Override

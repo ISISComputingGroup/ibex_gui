@@ -19,11 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
-import java.util.Collection;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
@@ -83,11 +82,11 @@ public class Banner implements BundleActivator {
         Banner.context = null;
     }
 
-    private final BaseObserver<Collection<BannerItem>> descriptionAdapter = new BaseObserver<Collection<BannerItem>>() {
+    private final BaseObserver<BannerCustom> descriptionAdapter = new BaseObserver<BannerCustom>() {
 
         @Override
-        public void onValue(Collection<BannerItem> value) {
-            for (BannerItem item : value) {
+        public void onValue(BannerCustom value) {
+            for (BannerItem item : value.items) {
                 item.createPVObservable();
             }
         }

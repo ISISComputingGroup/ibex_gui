@@ -19,10 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
-import java.util.Collection;
-
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -53,10 +51,10 @@ public class Observables {
 	};
 
     /**
-     * Observable for the PV that holds a description of what items should be on
+     * Observable for the PV that holds a description of what should be on
      * the banner.
      */
-    public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
+    public final ForwardingObservable<BannerCustom> bannerDescription;
     /**
      * Observable for the PV that gives the motion status of the motors.
      */
