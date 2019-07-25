@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.banner;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -88,6 +89,9 @@ public class Banner implements BundleActivator {
         public void onValue(BannerCustom value) {
             for (BannerItem item : value.items) {
                 item.createPVObservable();
+            }
+            for (BannerButton button : value.buttons) {
+                button.createPVWritable();
             }
         }
     };

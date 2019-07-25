@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -40,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
@@ -126,13 +128,29 @@ public class BannerView {
         }
         return convertedItems;
     }
+    
+    /**
+     * Converts a collection of banner button objects into models
+     * 
+     * @param items the banner buttons
+     * @return the control models
+     */
+    private Collection<ControlModel> convertBannerButtons(Collection<BannerButton> buttons) {
+        Collection<ControlModel> convertedItems = new ArrayList<ControlModel>();
+        if (!(buttons == null)) {
+            for (BannerButton button : buttons) {
+                convertedItems.add(new CustomControlModel(banner.observables(), button));
+            }
+        }
+        return convertedItems;
+    }
 
     /**
      * Adds an indicator widget for each banner item.
      * 
-     * @param models the banner item indicator models observed by the widget
+     * @param indicatorModels the banner item indicator models observed by the widget
      */
-    private void setBanner(final Collection<IndicatorModel> models) {
+    private void setBanner(final Collection<IndicatorModel> indicatorModels, final Collection<ControlModel> controlModels) {
         disposeBanner();
         Display.getDefault().syncExec(new Runnable() {
             @Override
@@ -140,12 +158,22 @@ public class BannerView {
                 GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
                 gdBannerItem.widthHint = ITEM_WIDTH;
 
-                for (IndicatorModel model : models) {
-                    glBannerItemPanel.numColumns = models.size();
+                for (ControlModel model : controlModels) {
+                    glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
+
+                    Control bannerButton = new Control(bannerItemPanel, SWT.NONE, model, ALARM_FONT);
+                    GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+                    gdMotionControl.widthHint = 100;
+                    bannerButton.setLayoutData(gdMotionControl);
+                }
+                
+                for (IndicatorModel model : indicatorModels) {
+                    glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
                     bannerItem.setLayoutData(gdBannerItem);
                 }
+
                 bannerItemPanel.layout(true);
             }
         });
@@ -173,7 +201,7 @@ public class BannerView {
     private final BaseObserver<BannerCustom> modelAdapter = new BaseObserver<BannerCustom>() {
         @Override
         public void onValue(BannerCustom value) {
-            setBanner(convertBannerItems(value.items));
+            setBanner(convertBannerItems(value.items), convertBannerButtons(value.buttons));
         }
 
         @Override
