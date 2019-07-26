@@ -12,5 +12,4 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.configserver
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.banner,
- uk.ac.stfc.isis.ibex.banner.motion
+Export-Package: uk.ac.stfc.isis.ibex.banner

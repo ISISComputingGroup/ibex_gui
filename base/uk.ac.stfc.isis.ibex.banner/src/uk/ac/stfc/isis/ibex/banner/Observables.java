@@ -26,18 +26,14 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
 /**
  * Holds the Observables and Writables for the Spangle Banner.
  */
 public class Observables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
 	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
 		@Override
@@ -59,10 +55,6 @@ public class Observables {
      * Observable for the PV that gives the motion status of the motors.
      */
     public final ForwardingObservable<InMotionState> inMotion;
-    /**
-     * Writable connected to the PV that will stop all motors in motion.
-     */
-    public final Writable<Long> stop;
 	
     /**
      * Constructs the object and points the class variables at the correct
@@ -73,8 +65,6 @@ public class Observables {
         inMotion = InstrumentUtils.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix("CS:MOT:MOVING")),
                 doubleToMotionState);
-        stop = writeFactory.getSwitchableWritable(new LongChannel(),
-                InstrumentUtils.addPrefix("CS:MOT:STOP:ALL"));
 	}		
 
 }

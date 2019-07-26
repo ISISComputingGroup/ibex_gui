@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
+import java.util.Objects;
+
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.banner.InMotionState;
@@ -60,6 +62,7 @@ public class InMotionViewState implements IndicatorViewStateConverter<InMotionSt
 			default:
 				return false;
 		}
+//		return Objects.equals(state, InMotionState.MOVING);
 	}
 	
 	public Boolean availability() {

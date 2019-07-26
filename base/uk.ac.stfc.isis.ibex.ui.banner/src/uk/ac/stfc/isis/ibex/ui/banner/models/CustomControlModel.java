@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.swt.graphics.RGB;
 
 import uk.ac.stfc.isis.ibex.banner.ObservableCustomControl;
-import uk.ac.stfc.isis.ibex.banner.Observables;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -33,30 +32,28 @@ import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
  */
 public class CustomControlModel extends ModelObject implements ControlModel {
 
-    private final Observables observables;
+    private final int index;
     private final ObservableCustomControl control;
     private final String text;
     private final RGB textColour;
     private final RGB buttonColour;
+    private final int fontSize;
     private final int width;
     private final int height;
-    private final BannerButton button;
     
     /**
      * TThe model for custom buttons in the banner.
      * 
-     * @param observables
-     *                     The observables class associated with the custom control.
      * @param button
      *                     A BannerButton class containing information about the custom button
      */
-    public CustomControlModel(Observables observables, BannerButton button) {
-        this.observables = observables;
-        this.button = button;
+    public CustomControlModel(BannerButton button) {
         control = new ObservableCustomControl(button.writable(), button.valueToWrite());
+        index = button.index();
         text = button.name();
         textColour = button.textColour();
         buttonColour = button.buttonColour();
+        fontSize = button.fontSize();
         width = button.width();
         height = button.height();
     }
@@ -68,10 +65,19 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     public void click() {
         control.act();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int index() {
+        return index;
+    }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String text() {
         return text;
     }
@@ -82,6 +88,46 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     @Override
     public UpdatedValue<Boolean> enabled() {
         return control.canWrite();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RGB textColour() {
+        return textColour;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RGB buttonColour() {
+        return buttonColour;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int fontSize() {
+        return fontSize;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int width() {
+        return width;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int height() {
+        return height;
     }
 
 }

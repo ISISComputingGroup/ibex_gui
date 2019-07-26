@@ -116,4 +116,10 @@ public class CurrentConfigModel extends Closer implements IndicatorModel {
         return observer.availability();
     }
 
+    @Override
+    public int index() {
+        // Not used
+        return 0;
+    }
+
 }

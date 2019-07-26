@@ -27,6 +27,10 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  * Model for indicators displayed on the banner.
  */
 public interface IndicatorModel {
+    /**
+     * @return the index which indicates the order that elements on the banner should be displayed
+     */
+    int index();
 	/**
 	 * @return Text model for indicator model.
 	 */

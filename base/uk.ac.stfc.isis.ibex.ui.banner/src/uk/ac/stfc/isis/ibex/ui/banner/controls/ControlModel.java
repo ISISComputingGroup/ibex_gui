@@ -19,10 +19,48 @@
 
 package uk.ac.stfc.isis.ibex.ui.banner.controls;
 
+import org.eclipse.swt.graphics.RGB;
+
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Interface for Control Models.
+ */
 public interface ControlModel {
+    /**
+     * Action when the button is clicked.
+     */
 	void click();
+	/**
+     * @return the index which indicates the order that elements on the banner should be displayed
+     */
+    int index();
+	/**
+	 * @return the button's text
+	 */
 	String text();
+	/**
+     * @return an UpdatedValue Boolean of whether the button is enabled
+     */
 	UpdatedValue<Boolean> enabled();
+	/**
+     * @return the RGB colour of the text
+     */
+	RGB textColour();
+	/**
+     * @return the RGB colour of the button
+     */
+    RGB buttonColour();
+    /**
+     * @return the font size
+     */
+    int fontSize();
+    /**
+     * @return the width of the button
+     */
+    int width();
+    /**
+     * @return the height of the button
+     */
+    int height();
 }

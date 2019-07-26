@@ -43,7 +43,6 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 
@@ -59,18 +58,11 @@ public class BannerView {
      * View ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
-    private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
 
-    private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
-    private final ControlModel motionModel = new MotionControlModel(banner.observables());
-
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
-
-    private Indicator inMotion;
-    private Control motionControl;
     
     /**
      * Create the controls for the part.
@@ -94,22 +86,7 @@ public class BannerView {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
-        
-        Indicator currentConfig = new Indicator(parent, SWT.NONE, new CurrentConfigModel(), ALARM_FONT);
-        GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdCurrentConfig.widthHint = 360;
-        currentConfig.setLayoutData(gdCurrentConfig);
 
-        inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
-        GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdInMotion.widthHint = 170;
-        inMotion.setLayoutData(gdInMotion);
-
-        motionControl = new Control(parent, SWT.NONE, motionModel, ALARM_FONT);
-        GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdMotionControl.widthHint = 100;
-        motionControl.setLayoutData(gdMotionControl);
-       
     }
 
     /**
@@ -123,7 +100,11 @@ public class BannerView {
         Collection<IndicatorModel> convertedItems = new ArrayList<IndicatorModel>();
         if (!(items == null)) {
             for (BannerItem item : items) {
-                convertedItems.add(new BannerItemModel(item));
+                if (item.pv().equals("CS:MOT:MOVING")) {
+                    convertedItems.add(new InMotionModel(banner.observables(), item.index()));
+                } else {
+                    convertedItems.add(new BannerItemModel(item));
+                }
             }
         }
         return convertedItems;
@@ -139,7 +120,7 @@ public class BannerView {
         Collection<ControlModel> convertedItems = new ArrayList<ControlModel>();
         if (!(buttons == null)) {
             for (BannerButton button : buttons) {
-                convertedItems.add(new CustomControlModel(banner.observables(), button));
+                convertedItems.add(new CustomControlModel(button));
             }
         }
         return convertedItems;
@@ -155,24 +136,35 @@ public class BannerView {
         Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {
-                GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
-                gdBannerItem.widthHint = ITEM_WIDTH;
+                glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size() + 3;
 
-                for (ControlModel model : controlModels) {
-                    glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
-
-                    Control bannerButton = new Control(bannerItemPanel, SWT.NONE, model, ALARM_FONT);
-                    GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-                    gdMotionControl.widthHint = 100;
-                    bannerButton.setLayoutData(gdMotionControl);
+                // The models all contain a unique index which depends on the order the
+                // items and buttons were listed in the XML.
+                // The indexes are then used to display the banner elements in the intended order.
+                for (int i = 0; i < indicatorModels.size() + controlModels.size(); i++) {
+                    for (IndicatorModel model : indicatorModels) {
+                        if (model.index() == i) {
+                            Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
+                            GridData gdBannerItem = new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1);
+                            gdBannerItem.widthHint = bannerItem.getWidth() + 20;
+                            bannerItem.setLayoutData(gdBannerItem);
+                        }
+                    }
+                    for (ControlModel model : controlModels) {
+                        if (model.index() == i) {
+                            Control bannerButton = new Control(bannerItemPanel, SWT.NONE, model);
+                            GridData gdBannerControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+                            gdBannerControl.widthHint = model.width();
+                            gdBannerControl.heightHint = model.height();
+                            bannerButton.setLayoutData(gdBannerControl);
+                        }
+                    }
                 }
                 
-                for (IndicatorModel model : indicatorModels) {
-                    glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
-
-                    Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
-                    bannerItem.setLayoutData(gdBannerItem);
-                }
+                Indicator currentConfig = new Indicator(bannerItemPanel, SWT.NONE, new CurrentConfigModel(), ALARM_FONT);
+                GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+                gdCurrentConfig.widthHint = 200;
+                currentConfig.setLayoutData(gdCurrentConfig);
 
                 bannerItemPanel.layout(true);
             }

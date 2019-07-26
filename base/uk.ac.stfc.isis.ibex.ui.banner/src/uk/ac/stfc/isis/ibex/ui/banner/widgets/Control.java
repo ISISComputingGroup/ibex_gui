@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,17 +22,21 @@ package uk.ac.stfc.isis.ibex.ui.banner.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 
+/**
+ * Holds a button which can be pressed to send a value to a PV.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Control extends Composite {
 
@@ -40,7 +44,13 @@ public class Control extends Composite {
 	
 	private Button btnLoremIpsum;
 	
-	public Control(Composite parent, int style, ControlModel model, Font font) {
+	/**
+	 * Create a button which can be pressed to send a value to a PV.
+	 * @param parent Parent of control
+	 * @param style SWT Style.
+	 * @param model Control Model
+	 */
+	public Control(Composite parent, int style, ControlModel model) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -50,6 +60,9 @@ public class Control extends Composite {
 		
 		if (model != null) {
 			btnLoremIpsum.setText(model.text());
+			btnLoremIpsum.setForeground(new Color(Display.getCurrent(), model.textColour()));
+			btnLoremIpsum.setBackground(new Color(Display.getCurrent(), model.buttonColour()));
+			btnLoremIpsum.setFont(SWTResourceManager.getFont("Segoe UI", model.fontSize(), SWT.BOLD));
 			bind(model);
 		}
 	}

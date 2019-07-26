@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
  */
 public class BannerItemModel extends ModelObject implements IndicatorModel {
 
+    private final int index;
     private final SettableUpdatedValue<String> text = new SettableUpdatedValue<>();
     private final SettableUpdatedValue<Boolean> availability = new SettableUpdatedValue<>(true);
     private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
@@ -52,6 +53,7 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
      */
     public BannerItemModel(final BannerItem item) {
     	this.item = item;
+    	index = item.index();
                 
         item.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -100,7 +102,15 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     }
 
     /**
-     * @return the text of this banner item.
+     * {@inheritDoc}
+     */
+    @Override
+    public int index() {
+        return index;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
 	@Override
 	public UpdatedValue<String> text() {
@@ -108,16 +118,16 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
 	}
 
 	/**
-	 * @return the colour of this banner item.
-	 */
+     * {@inheritDoc}
+     */
 	@Override
 	public UpdatedValue<Color> color() {
 		return colour;
 	}
 
 	/**
-	 * @return the availability of this banner item.
-	 */
+     * {@inheritDoc}
+     */
 	@Override
 	public UpdatedValue<Boolean> availability() {
 		return availability;

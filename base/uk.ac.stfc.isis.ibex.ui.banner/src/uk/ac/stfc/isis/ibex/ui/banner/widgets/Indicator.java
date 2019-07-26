@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -70,5 +70,12 @@ public class Indicator extends Composite {
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(model.text()));
 		bindingContext.bindValue(WidgetProperties.foreground().observe(text), BeanProperties.value("value").observe(model.color()));
 		bindingContext.bindValue(WidgetProperties.visible().observe(text), BeanProperties.value("value").observe(model.availability()));
+	}
+	
+	/**
+	 * @return the width of the text in pixels
+	 */
+	public int getWidth() {
+	    return text.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 	}
 }

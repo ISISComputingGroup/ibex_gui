@@ -34,12 +34,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Instrument specific button displayed in the banner.
  */
 public class BannerButton extends ModelObject {
+    private int index;
     private String name;
     private String pv;
     private Boolean local = true;
     private Long pvValue;
     private String textColour;
     private String buttonColour;
+    private int fontSize;
     private int width;
     private int height;
     
@@ -61,6 +63,13 @@ public class BannerButton extends ModelObject {
      */
     public Writable<Long> writable() {
         return pvWritable;
+    }
+    
+    /**
+     * @return the index which indicates the order that elements on the banner should be displayed
+     */
+    public int index() {
+        return index;
     }
     
     /**
@@ -102,6 +111,13 @@ public class BannerButton extends ModelObject {
     public RGB buttonColour() {
         Color c = Color.decode(buttonColour);
         return new RGB(c.getRed(), c.getGreen(), c.getBlue());
+    }
+    
+    /**
+     * @return the width of the button
+     */
+    public int fontSize() {
+        return fontSize;
     }
     
     /**
