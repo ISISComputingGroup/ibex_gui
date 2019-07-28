@@ -19,7 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -49,7 +50,7 @@ public final class InstrumentUtils {
      * @return the new observable
      */
     public static <S, T> ForwardingObservable<T> convert(ClosableObservable<S> observable,
-            Converter<S, T> converter) {
+            Function<S, T> converter) {
         return new ForwardingObservable<>(new ConvertingObservable<>(observable, converter));
 	}
 
@@ -66,7 +67,7 @@ public final class InstrumentUtils {
      *            The converter
      * @return The new writable
      */
-    public static <S, T> Writable<T> convert(Writable<S> destination, Converter<T, S> converter) {
+    public static <S, T> Writable<T> convert(Writable<S> destination, Function<T, S> converter) {
         return new ForwardingWritable<>(destination, converter);
     }
 

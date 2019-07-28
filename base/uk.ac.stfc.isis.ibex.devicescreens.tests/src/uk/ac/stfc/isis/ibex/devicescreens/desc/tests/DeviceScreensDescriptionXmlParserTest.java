@@ -56,7 +56,7 @@ public class DeviceScreensDescriptionXmlParserTest {
             // Act
             String inputXml =
                     DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
-            DeviceScreensDescription description = parser.convert(inputXml);
+            DeviceScreensDescription description = parser.apply(inputXml);
 
             // Assert
             assertEquals(1, description.getDevices().size());
@@ -82,7 +82,7 @@ public class DeviceScreensDescriptionXmlParserTest {
         String invalidXml = "invalid";
         
         try {
-            parser.convert(invalidXml);
+            parser.apply(invalidXml);
             fail("ConversionException not thrown");
         } catch (ConversionException e) {
             assertNotNull(e.getMessage());

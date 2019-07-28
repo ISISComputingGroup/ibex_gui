@@ -19,29 +19,27 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
-public class ParametersConverter extends Converter<String, Collection<String>> {
+public class ParametersConverter implements Function<String, Collection<String>> {
 
 	@Override
-	public Collection<String> convert(String value) throws ConversionException {
-		List<String> pvs = new ArrayList<>();
-		for (String pv : removeBracesAndSplit(value)) {
-			pvs.add(unquote(pv));
-		}
-		return pvs;
+	public Collection<String> apply(String value) throws ConversionException {
+		return Arrays.stream(removeBracesAndSplit(value))
+		    .map(ParametersConverter::unquote)
+		    .collect(Collectors.toList());
 	}
 
-	private String unquote(String pv) {
+	private static String unquote(String pv) {
 		return pv.replaceAll("\"", "");
 	}
 
-	private String[] removeBracesAndSplit(String value) {
+	private static String[] removeBracesAndSplit(String value) {
 		return value.substring(1, value.length() - 2).split(", ");
 	}
 }

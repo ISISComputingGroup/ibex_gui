@@ -51,7 +51,7 @@ public class IocsParameterConverterTest {
 		IocsParametersConverter conv = new IocsParametersConverter();
 		
 		// Act
-		Map<String, IocParameters> pars = conv.convert(exampleJson);
+		Map<String, IocParameters> pars = conv.apply(exampleJson);
 
 		// Assert
 		assertTrue(pars.keySet().contains("TEST_01"));
@@ -84,7 +84,7 @@ public class IocsParameterConverterTest {
 		IocsParametersConverter conv = new IocsParametersConverter();
 		
 		// Act
-		Map<String, IocParameters> pars = conv.convert(exampleJson);
+		Map<String, IocParameters> pars = conv.apply(exampleJson);
 		IocParameters sdTestPars = pars.get("SDTEST_03");
 		List<Macro> macros = (List<Macro>) sdTestPars.getMacros();
 		Macro macro = macros.get(0);

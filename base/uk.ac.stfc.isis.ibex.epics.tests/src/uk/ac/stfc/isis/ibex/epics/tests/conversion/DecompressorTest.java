@@ -26,7 +26,7 @@ public class DecompressorTest {
 		-41, 81, 8, -49, 47, -54, 73, 1, 0, 27, 52, 4, 73 };
 
 	// Act
-	byte[] result = dcmprssr.convert(compressed);
+	byte[] result = dcmprssr.apply(compressed);
 	String ans = new String(result, "UTF-8");
 
 	// Assert

@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 public class InstrumentDescriptionParserTest {
 
 	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.SynopticParser#convert(java.lang.String)}.
+	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.SynopticParser#apply(java.lang.String)}.
 	 */
 	@Test
 	public final void convert_string_valid() {
@@ -48,7 +48,7 @@ public class InstrumentDescriptionParserTest {
 				+ "</instrument>";
 		// Act
 		try {
-			SynopticDescription testDesc = parser.convert(value);
+			SynopticDescription testDesc = parser.apply(value);
 			assertEquals(expected, testDesc.name());
 		} catch (ConversionException e) {
 			fail(e.getMessage());
@@ -63,7 +63,7 @@ public class InstrumentDescriptionParserTest {
 		String value = expected;
 		// Act
 		try {
-			parser.convert(value);
+			parser.apply(value);
 			fail("ConversionException not thrown");
 		} catch (ConversionException e) {
 			assertNotNull(e.getMessage());

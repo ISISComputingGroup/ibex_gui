@@ -63,7 +63,7 @@ public class DeviceScreensDescriptionToXmlConverterTest {
 
         try {
             // Act
-            String resultXml = converter.convert(deviceScreensDescription);
+            String resultXml = converter.apply(deviceScreensDescription);
 
             // Assert
             assertEquals(expectedXml, resultXml);

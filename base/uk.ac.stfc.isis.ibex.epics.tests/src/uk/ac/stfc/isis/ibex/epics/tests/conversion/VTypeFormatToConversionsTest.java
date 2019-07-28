@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.function.Function;
+
 import org.diirt.util.array.ListByte;
 import org.diirt.util.array.ListFloat;
 import org.diirt.util.text.NumberFormats;
@@ -36,7 +38,6 @@ import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -54,11 +55,11 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_number() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumber();
+		Function<VNumber, Number> converter = VTypeFormat.toNumber();
 		VDouble vnum = ValueFactory.newVDouble(123.456);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.456);
@@ -67,14 +68,14 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_number_with_precision() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumber();
+		Function<VNumber, Number> converter = VTypeFormat.toNumber();
 		
 		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "", NumberFormats.format(1), 0.0, 0.0, 0.0, 0.0, 0.0);
 		
 		VDouble vnum = ValueFactory.newVDouble(123.456, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		// Note: Number here should not be altered as there is no consideration of precision in toNumber
@@ -84,14 +85,14 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_number_with_precision_greater_than_digits() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumber();
+		Function<VNumber, Number> converter = VTypeFormat.toNumber();
 		
 		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "", NumberFormats.format(5), 0.0, 0.0, 0.0, 0.0, 0.0);
 		
 		VDouble vnum = ValueFactory.newVDouble(123.4, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.4);
@@ -100,11 +101,11 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void conversion_no_precision() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
+		Function<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
 		VDouble vnum = ValueFactory.newVDouble(123.456);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.456);
@@ -113,14 +114,14 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void conversion_with_precision() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
+		Function<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
 		
 		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "", NumberFormats.format(1), 0.0, 0.0, 0.0, 0.0, 0.0);
 		
 		VDouble vnum = ValueFactory.newVDouble(123.456, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.5);
@@ -129,14 +130,14 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void conversion_with_precision_greater_than_digits() throws ConversionException {
 		// Arrange
-		Converter<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
+		Function<VNumber, Number> converter = VTypeFormat.toNumberWithPrecision();
 		
 		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "", NumberFormats.format(5), 0.0, 0.0, 0.0, 0.0, 0.0);
 		
 		VDouble vnum = ValueFactory.newVDouble(123.4, display);
 		
 		// Act
-		Number result = converter.convert(vnum);
+		Number result = converter.apply(vnum);
 		
 		// Assert
 		assertEquals(result, 123.4);
@@ -145,7 +146,7 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_vfloat_array() throws ConversionException {
 		// Arrange
-		Converter<VType, VFloatArray> converter = VTypeFormat.toVFloatArray();
+		Function<VType, VFloatArray> converter = VTypeFormat.toVFloatArray();
 		ListFloat data = new ListFloat() {
 			@Override
 			public int size() {
@@ -159,7 +160,7 @@ public class VTypeFormatToConversionsTest {
 		VFloatArray test = ValueFactory.newVFloatArray(data, null, null, null);
 		
 		// Act
-		VFloatArray result = converter.convert(test);
+		VFloatArray result = converter.apply(test);
 		
 		// Assert
 		assertEquals(result, test);
@@ -168,7 +169,7 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_vbyte_array() throws ConversionException {
 		// Arrange
-		Converter<VType, VByteArray> converter = VTypeFormat.toVByteArray();
+		Function<VType, VByteArray> converter = VTypeFormat.toVByteArray();
 		ListByte data = new ListByte() {
 			@Override
 			public int size() {
@@ -183,7 +184,7 @@ public class VTypeFormatToConversionsTest {
 		VByteArray test = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 		
 		// Act
-		VByteArray result = converter.convert(test);
+		VByteArray result = converter.apply(test);
 		
 		// Assert
 		assertEquals(result, test);
@@ -192,12 +193,12 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_vint() throws ConversionException {
 		// Arrange
-		Converter<VType, VInt> converter = VTypeFormat.toVInt();
+		Function<VType, VInt> converter = VTypeFormat.toVInt();
 		Integer test = 123;
 		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
-		VInt result = converter.convert(value);
+		VInt result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, value);
@@ -206,12 +207,12 @@ public class VTypeFormatToConversionsTest {
 	@Test
 	public void convert_to_long() throws ConversionException {
 		// Arrange
-		Converter<VInt, Long> converter = VTypeFormat.toLong();
+		Function<VInt, Long> converter = VTypeFormat.toLong();
 		Integer test = 123;
 		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
-		Long result = converter.convert(value);
+		Long result = converter.apply(value);
 		
 		// Assert
 		Long check = (long) test;
@@ -222,11 +223,11 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_enum() throws ConversionException {
 		
 		// Arrange
-		Converter<VEnum, TestingEnum> converter = VTypeFormat.toEnum(ENUM_TYPE);			
+		Function<VEnum, TestingEnum> converter = VTypeFormat.toEnum(ENUM_TYPE);			
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		TestingEnum result = converter.convert(value);
+		TestingEnum result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, TestingEnum.TEST1);
@@ -236,11 +237,11 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_enumString() throws ConversionException {
 		
 		// Arrange
-		Converter<VEnum, String> converter = VTypeFormat.toEnumString();				
+		Function<VEnum, String> converter = VTypeFormat.toEnumString();				
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		String result = converter.convert(value);
+		String result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, "TEST1");

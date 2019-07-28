@@ -41,7 +41,7 @@ public class CompressorTest {
 		81, 8, -49, 47, -54, 73, 1, 0, 27, 52, 4, 73 };
 
 	// Act
-	byte[] result = cmprssr.convert(text.getBytes());
+	byte[] result = cmprssr.apply(text.getBytes());
 
 	// Assert
 	assertArrayEquals(result, answer);

@@ -18,7 +18,7 @@ public class DateTimeFormatTest {
 		String test = "1992/02/07 00:00:01.000";
 		
 		//Act
-		String result = converter.convert(test);
+		String result = converter.apply(test);
 		
 		//Assert
 		assertEquals("07/02/1992 00:00:01", result);
@@ -32,7 +32,7 @@ public class DateTimeFormatTest {
 		String test = "02/07/1992 00:00:00";
 		
 		//Act
-		String result = converter.convert(test);
+		String result = converter.apply(test);
 		
 		//Assert
 		assertEquals("07/02/1992 00:00:00", result);
@@ -46,7 +46,7 @@ public class DateTimeFormatTest {
 		String test = "1992-02-07T00:00:00";
 		
 		//Act
-		String result = converter.convert(test);
+		String result = converter.apply(test);
 		
 		//Assert
 		assertEquals("07/02/1992 00:00:00", result);
@@ -58,7 +58,7 @@ public class DateTimeFormatTest {
 		ElapsedTimeFormatter converter = new ElapsedTimeFormatter();
 		
 		//Act
-		String result = converter.convert((long) 10000);
+		String result = converter.apply((long) 10000);
 		
 		//Assert
 		assertEquals("2 hours 46 min 40 s", result);
@@ -70,7 +70,7 @@ public class DateTimeFormatTest {
 		ElapsedTimeFormatter converter = new ElapsedTimeFormatter();
 		
 		//Act
-		String result = converter.convert((long) 10);
+		String result = converter.apply((long) 10);
 		
 		//Assert
 		assertEquals("10 s", result);
@@ -82,7 +82,7 @@ public class DateTimeFormatTest {
 		ElapsedTimeFormatter converter = new ElapsedTimeFormatter();
 		
 		//Act
-		String result = converter.convert((long) 100);
+		String result = converter.apply((long) 100);
 		
 		//Assert
 		assertEquals("1 min 40 s", result);

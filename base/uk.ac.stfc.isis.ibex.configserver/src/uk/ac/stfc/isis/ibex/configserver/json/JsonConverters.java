@@ -20,10 +20,9 @@
 package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Collection;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -39,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
@@ -51,114 +49,104 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 public class JsonConverters implements Converters {
 
 	@Override
-	public Converter<String, Configuration> toConfig() {
+	public Function<String, Configuration> toConfig() {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
-		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
+		return new JsonDeserialisingConverter<>(Configuration.class, gson).andThen(withFunction(INIT_CONFIG));
 	}
 
     @Override
-    public Converter<String, Collection<Configuration>> toConfigList() {
+    public Function<String, Collection<Configuration>> toConfigList() {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
         return new JsonDeserialisingConverter<>(Configuration[].class, gson)
-                .apply(Convert.<Configuration>toCollection()).apply(forEach(INIT_CONFIG));
+                .andThen(Convert.<Configuration>toCollection()).andThen(forEach(INIT_CONFIG));
     }
 
 	@Override
-	public Converter<String, ServerStatus> toServerStatus() {
+	public Function<String, ServerStatus> toServerStatus() {
 		return new JsonDeserialisingConverter<>(ServerStatus.class);
 	}
 	
 	@Override
-	public Converter<String, BlockRules> toBlockRules() {
+	public Function<String, BlockRules> toBlockRules() {
 		return new JsonDeserialisingConverter<>(BlockRules.class);
 	}
 
     @Override
-    public Converter<String, BlockServerNameValidator> toBlockServerTextValidor() {
+    public Function<String, BlockServerNameValidator> toBlockServerTextValidor() {
         return new JsonDeserialisingConverter<>(BlockServerNameValidator.class);
     }
 
 	@Override
-	public Converter<String, Collection<ConfigInfo>> toConfigsInfo() {
-		return new JsonDeserialisingConverter<>(ConfigInfo[].class).apply(Convert.<ConfigInfo>toCollection());
+	public Function<String, Collection<ConfigInfo>> toConfigsInfo() {
+		return new JsonDeserialisingConverter<>(ConfigInfo[].class).andThen(Convert.<ConfigInfo>toCollection());
 	}
 
 	@Override
-	public Converter<String, Collection<ComponentInfo>> toComponents() {
+	public Function<String, Collection<ComponentInfo>> toComponents() {
 		return new JsonDeserialisingConverter<>(ComponentInfo[].class)
-				.apply(Convert.<ComponentInfo>toCollection())
-				.apply(forEach(INIT_COMP));
+				.andThen(Convert.<ComponentInfo>toCollection())
+				.andThen(forEach(INIT_COMP));
 	}
 
 	@Override
-	public Converter<String, Collection<EditableIoc>> toIocs() {
-		return new IocsParametersConverter().apply(new EditableIocsConverter());
+	public Function<String, Collection<EditableIoc>> toIocs() {
+		return new IocsParametersConverter().andThen(new EditableIocsConverter());
 	}
 	
 	@Override
-	public Converter<String, Collection<PV>> toPVs() {
-		return new JsonDeserialisingConverter<>(String[][].class).apply(new PVsConverter());
+	public Function<String, Collection<PV>> toPVs() {
+		return new JsonDeserialisingConverter<>(String[][].class).andThen(new PVsConverter());
 	}
 	
 	@Override
-	public Converter<Configuration, String> configToString() {
+	public Function<Configuration, String> configToString() {
 		return new JsonSerialisingConverter<Configuration>(Configuration.class);
 	}
 	
 	@Override
-	public Converter<Collection<String>, String> namesToString() {
-		return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+	public Function<Collection<String>, String> namesToString() {
+		return Convert.toArray(new String[0]).andThen(new JsonSerialisingConverter<String[]>(String[].class));
 	}
 	
 	@Override
-	public Converter<String, Collection<String>> toNames() {
-		return new JsonDeserialisingConverter<>(String[].class).apply(Convert.<String>toCollection());
+	public Function<String, Collection<String>> toNames() {
+		return new JsonDeserialisingConverter<>(String[].class).andThen(Convert.<String>toCollection());
 	}
 	
 	@Override
-	public Converter<String, String> nameToString() {
+	public Function<String, String> nameToString() {
 		return new JsonSerialisingConverter<String>(String.class);
 	}
 	
 	@Override
-	public Converter<String, Collection<IocState>> toIocStates() {
-		return new IocsParametersConverter().apply(new IocStateConverter());
+	public Function<String, Collection<IocState>> toIocStates() {
+		return new IocsParametersConverter().andThen(new IocStateConverter());
 	}
 	
-	private static <A, B> Converter<A, B> withFunction(final Function<A, B> function) {
-		return new Converter<A, B>() {
+	private static <A, B> Function<A, B> withFunction(final Function<A, B> function) {
+		return new Function<A, B>() {
 			@Override
-			public B convert(A value) throws ConversionException {
+			public B apply(A value) throws ConversionException {
 				return function.apply(value);
 			}
 		};
 	}
 
-	private static <T> Converter<Collection<T>, Collection<T>> forEach(final Function<T, T> function) {
-		return new Converter<Collection<T>, Collection<T>>() {
+	private static <T> Function<Collection<T>, Collection<T>> forEach(final Function<T, T> function) {
+		return new Function<Collection<T>, Collection<T>>() {
 			@Override
-			public Collection<T> convert(Collection<T> value) throws ConversionException {
-				return Lists.newArrayList(Iterables.transform(value, function));
+			public Collection<T> apply(Collection<T> value) throws ConversionException {
+				return value.stream().map(function).collect(Collectors.toList());
 			}
 		};
 	}
 	
-	private static final Function<Configuration, Configuration> INIT_CONFIG = new Function<Configuration, Configuration>() {
-		@Override
-		public Configuration apply(Configuration uninitialised) {
-			return new Configuration(uninitialised);
-		}
-	};
+	private static final Function<Configuration, Configuration> INIT_CONFIG = uninitialized -> new Configuration(uninitialized);
 
-	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = new Function<ComponentInfo, ComponentInfo>() {
-		@Override
-		public ComponentInfo apply(ComponentInfo uninitialised) {
-			return new ComponentInfo(uninitialised);
-		}
-	};
+	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
 
 	@Override
-	public Converter<String, Collection<BannerItem>> toBannerDescription() {
-		return new JsonDeserialisingConverter<>(BannerItem[].class).apply(Convert.<BannerItem>toCollection());
+	public Function<String, Collection<BannerItem>> toBannerDescription() {
+		return new JsonDeserialisingConverter<>(BannerItem[].class).andThen(Convert.<BannerItem>toCollection());
 	}
 }

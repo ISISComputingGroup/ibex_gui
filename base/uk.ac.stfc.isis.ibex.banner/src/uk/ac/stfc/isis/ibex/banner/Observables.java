@@ -20,11 +20,11 @@
 package uk.ac.stfc.isis.ibex.banner;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -41,9 +41,9 @@ public class Observables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
-	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
+	private Function<Double, InMotionState> doubleToMotionState = new Function<Double, InMotionState>() {
 		@Override
-		public InMotionState convert(Double value) throws ConversionException {
+		public InMotionState apply(Double value) throws ConversionException {
 			if (value == null) {
 				return InMotionState.UNKNOWN;
 			}
