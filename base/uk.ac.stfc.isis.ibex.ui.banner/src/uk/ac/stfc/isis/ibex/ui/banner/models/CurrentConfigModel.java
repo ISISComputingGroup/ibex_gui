@@ -61,7 +61,7 @@ public class CurrentConfigModel extends Closer implements IndicatorModel {
 			@Override
 			public String getMessage() {
 				try {
-				    return StringUtils.truncateWithEllipsis(String.format("%s%s", CONFIG_PREFIX, state.name()), 50);
+				    return StringUtils.truncateWithEllipsis(String.format("%s%s", CONFIG_PREFIX, state.name()), 35);
 				} catch (NullPointerException e) {
 					return "Config: unknown";
 				}
@@ -119,6 +119,12 @@ public class CurrentConfigModel extends Closer implements IndicatorModel {
     @Override
     public int index() {
         // Not used
+        return 0;
+    }
+
+    @Override
+    public int width() {
+        // not used
         return 0;
     }
 

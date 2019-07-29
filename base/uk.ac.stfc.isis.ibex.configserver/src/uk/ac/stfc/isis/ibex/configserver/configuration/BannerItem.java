@@ -41,6 +41,7 @@ public class BannerItem extends ModelObject {
     private String name;
     private String pv;
     private Boolean local = true;
+    private int width;
 
     private String currentValue = null;
     private AlarmState currentAlarmState = AlarmState.UNDEFINED;
@@ -147,6 +148,13 @@ public class BannerItem extends ModelObject {
      */
     public String pv() {
         return pv;
+    }
+    
+    /**
+     * @return the width of the item.
+     */
+    public int width() {
+        return width;
     }
 
     /**

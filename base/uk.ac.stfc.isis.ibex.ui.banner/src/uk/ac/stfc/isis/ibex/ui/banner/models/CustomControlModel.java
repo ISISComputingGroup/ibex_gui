@@ -41,6 +41,13 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     private final int width;
     private final int height;
     
+    private static final int MIN_FONT = 0;
+    private static final int MAX_FONT = 16;
+    private static final int MIN_WIDTH = 10;
+    private static final int MAX_WIDTH = 1000;
+    private static final int MIN_HEIGHT = 10;
+    private static final int MAX_HEIGHT = 35;
+    
     /**
      * TThe model for custom buttons in the banner.
      * 
@@ -111,7 +118,13 @@ public class CustomControlModel extends ModelObject implements ControlModel {
      */
     @Override
     public int fontSize() {
-        return fontSize;
+        if (fontSize < MIN_FONT) {
+            return MIN_FONT;
+        } else if (fontSize > MAX_FONT) {
+            return MAX_FONT;
+        } else {
+            return fontSize;
+        }
     }
 
     /**
@@ -119,7 +132,13 @@ public class CustomControlModel extends ModelObject implements ControlModel {
      */
     @Override
     public int width() {
-        return width;
+        if (width < MIN_WIDTH) {
+            return MIN_WIDTH;
+        } else if (width > MAX_WIDTH) {
+            return MAX_WIDTH;
+        } else {
+            return width;
+        }
     }
 
     /**
@@ -127,7 +146,13 @@ public class CustomControlModel extends ModelObject implements ControlModel {
      */
     @Override
     public int height() {
-        return height;
+        if (height < MIN_HEIGHT) {
+            return MIN_HEIGHT;
+        } else if (height > MAX_HEIGHT) {
+            return MAX_HEIGHT;
+        } else {
+            return height;
+        }
     }
 
 }

@@ -72,10 +72,4 @@ public class Indicator extends Composite {
 		bindingContext.bindValue(WidgetProperties.visible().observe(text), BeanProperties.value("value").observe(model.availability()));
 	}
 	
-	/**
-	 * @return the width of the text in pixels
-	 */
-	public int getWidth() {
-	    return text.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-	}
 }

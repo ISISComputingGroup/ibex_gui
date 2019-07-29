@@ -32,9 +32,11 @@ public class InMotionModel extends Closer implements IndicatorModel {
 	
 	private final IndicatorStateObserver<InMotionState> inMotion;
 	private int index;
+	private int width;
 	
-	public InMotionModel(Observables observables, int index) {
+	public InMotionModel(Observables observables, int index, int width) {
 	    this.index = index;
+	    this.width = width;
 		inMotion = registerForClose(new IndicatorStateObserver<InMotionState>(observables.inMotion, new InMotionViewState()));
 	}
 	
@@ -53,6 +55,11 @@ public class InMotionModel extends Closer implements IndicatorModel {
     @Override
     public int index() {
         return index;
+    }
+
+    @Override
+    public int width() {
+        return width;
     }
 	
 }

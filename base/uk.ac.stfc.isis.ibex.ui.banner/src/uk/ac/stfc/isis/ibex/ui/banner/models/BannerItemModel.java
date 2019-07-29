@@ -45,6 +45,9 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
     
     private final BannerItem item;
+    private final int width;
+    private static final int MIN_WIDTH = 10;
+    private static final int MAX_WIDTH = 500;
     
     /**
      * Instantiates model and converter.
@@ -54,6 +57,7 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     public BannerItemModel(final BannerItem item) {
     	this.item = item;
     	index = item.index();
+    	width = item.width();
                 
         item.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -107,6 +111,20 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     @Override
     public int index() {
         return index;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int width() {
+        if (width < MIN_WIDTH) {
+            return MIN_WIDTH;
+        } else if (width > MAX_WIDTH) {
+            return MAX_WIDTH;
+        } else {
+            return width;
+        }
     }
     
     /**
