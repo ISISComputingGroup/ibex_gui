@@ -42,7 +42,6 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 
@@ -103,11 +102,7 @@ public class BannerView {
         Collection<IndicatorModel> convertedItems = new ArrayList<IndicatorModel>();
         if (!(items == null)) {
             for (BannerItem item : items) {
-                if (item.pv().equals("CS:MOT:MOVING")) {
-                    convertedItems.add(new InMotionModel(banner.observables(), item.index(), item.width()));
-                } else {
-                    convertedItems.add(new BannerItemModel(item));
-                }
+                convertedItems.add(new BannerItemModel(item));
             }
         }
         return convertedItems;

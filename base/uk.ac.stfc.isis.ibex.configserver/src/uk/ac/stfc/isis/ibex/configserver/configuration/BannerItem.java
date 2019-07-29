@@ -142,13 +142,6 @@ public class BannerItem extends ModelObject {
     public AlarmState alarm() {
         return currentAlarmState;
     }
-
-    /**
-     * @return the PV which this banner item points to.
-     */
-    public String pv() {
-        return pv;
-    }
     
     /**
      * @return the width of the item.

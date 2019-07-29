@@ -33,28 +33,12 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
  * Holds the Observables and Writables for the Spangle Banner.
  */
 public class Observables {
-    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-
-	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
-		@Override
-		public InMotionState convert(Double value) throws ConversionException {
-			if (value == null) {
-				return InMotionState.UNKNOWN;
-			}
-			
-			return value.equals(1.0) ? InMotionState.MOVING : InMotionState.STATIONARY;
-		}
-	};
 
     /**
      * Observable for the PV that holds a description of what should be on
      * the banner.
      */
     public final ForwardingObservable<BannerCustom> bannerDescription;
-    /**
-     * Observable for the PV that gives the motion status of the motors.
-     */
-    public final ForwardingObservable<InMotionState> inMotion;
 	
     /**
      * Constructs the object and points the class variables at the correct
@@ -62,9 +46,6 @@ public class Observables {
      */
     public Observables() {
         bannerDescription = Configurations.getInstance().variables().bannerDescription;
-        inMotion = InstrumentUtils.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
-                InstrumentUtils.addPrefix("CS:MOT:MOVING")),
-                doubleToMotionState);
 	}		
 
 }
