@@ -420,7 +420,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Stable:</text>
+      <text>Stability:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -2067,7 +2067,7 @@ $(pv_value)</tooltip>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Regeneration</name>
+    <name>He3 Regeneration</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -2084,6 +2084,111 @@ $(pv_value)</tooltip>
     <wuid>72fbd525:16c1eb09895:-7b49</wuid>
     <x>312</x>
     <y>78</y>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path>Common Scripts/sendZero.py</path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+pv.setValue(1)
+
+]]></scriptText>
+          <embedded>false</embedded>
+          <description></description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>23</height>
+      <image></image>
+      <name>Button_1</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT):TEMP:SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>Regenerate now</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>109</width>
+      <wuid>72fbd525:16c1eb09895:-7aaa</wuid>
+      <x>42</x>
+      <y>42</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>21</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update_3</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name></pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>Regeneration changes TSet to zero!</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>0</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>193</width>
+      <wrap_words>false</wrap_words>
+      <wuid>72fbd525:16c1eb09895:-7a9e</wuid>
+      <x>0</x>
+      <y>78</y>
+    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -2102,9 +2207,9 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>25</height>
+      <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Label</name>
+      <name>Label_2</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2113,16 +2218,68 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>TODO Ticket 4549</text>
+      <text>Regenerate required:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>115</width>
+      <width>121</width>
       <wrap_words>true</wrap_words>
-      <wuid>72fbd525:16c1eb09895:-7b47</wuid>
+      <wuid>72fbd525:16c1eb09895:-7a88</wuid>
       <x>6</x>
+      <y>6</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(PV_ROOT):REGEN:REQUIRED</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>######</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>61</width>
+      <wrap_words>false</wrap_words>
+      <wuid>72fbd525:16c1eb09895:-7a6a</wuid>
+      <x>132</x>
       <y>6</y>
     </widget>
   </widget>
@@ -2277,70 +2434,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_2_y_pv>$(PV_ROOT):HE3SORB:TEMP</trace_2_y_pv>
     <trace_2_y_pv_value />
-    <trace_3_anti_alias>true</trace_3_anti_alias>
-    <trace_3_buffer_size>100000</trace_3_buffer_size>
-    <trace_3_concatenate_data>true</trace_3_concatenate_data>
-    <trace_3_line_width>1</trace_3_line_width>
-    <trace_3_name>He4 Pot</trace_3_name>
-    <trace_3_plot_mode>0</trace_3_plot_mode>
-    <trace_3_point_size>4</trace_3_point_size>
-    <trace_3_point_style>0</trace_3_point_style>
-    <trace_3_trace_color>
-      <color red="0" green="0" blue="0" />
-    </trace_3_trace_color>
-    <trace_3_trace_type>0</trace_3_trace_type>
-    <trace_3_update_delay>100</trace_3_update_delay>
-    <trace_3_update_mode>4</trace_3_update_mode>
-    <trace_3_visible>true</trace_3_visible>
-    <trace_3_x_axis_index>0</trace_3_x_axis_index>
-    <trace_3_x_pv></trace_3_x_pv>
-    <trace_3_x_pv_value />
-    <trace_3_y_axis_index>1</trace_3_y_axis_index>
-    <trace_3_y_pv>$(PV_ROOT):HE4POT:TEMP</trace_3_y_pv>
-    <trace_3_y_pv_value />
-    <trace_4_anti_alias>true</trace_4_anti_alias>
-    <trace_4_buffer_size>100000</trace_4_buffer_size>
-    <trace_4_concatenate_data>true</trace_4_concatenate_data>
-    <trace_4_line_width>1</trace_4_line_width>
-    <trace_4_name>He High</trace_4_name>
-    <trace_4_plot_mode>0</trace_4_plot_mode>
-    <trace_4_point_size>4</trace_4_point_size>
-    <trace_4_point_style>0</trace_4_point_style>
-    <trace_4_trace_color>
-      <color red="128" green="0" blue="255" />
-    </trace_4_trace_color>
-    <trace_4_trace_type>0</trace_4_trace_type>
-    <trace_4_update_delay>100</trace_4_update_delay>
-    <trace_4_update_mode>4</trace_4_update_mode>
-    <trace_4_visible>true</trace_4_visible>
-    <trace_4_x_axis_index>0</trace_4_x_axis_index>
-    <trace_4_x_pv></trace_4_x_pv>
-    <trace_4_x_pv_value />
-    <trace_4_y_axis_index>1</trace_4_y_axis_index>
-    <trace_4_y_pv>$(PV_ROOT):HEHIGH:TEMP</trace_4_y_pv>
-    <trace_4_y_pv_value />
-    <trace_5_anti_alias>true</trace_5_anti_alias>
-    <trace_5_buffer_size>100000</trace_5_buffer_size>
-    <trace_5_concatenate_data>true</trace_5_concatenate_data>
-    <trace_5_line_width>1</trace_5_line_width>
-    <trace_5_name>He Low</trace_5_name>
-    <trace_5_plot_mode>0</trace_5_plot_mode>
-    <trace_5_point_size>4</trace_5_point_size>
-    <trace_5_point_style>0</trace_5_point_style>
-    <trace_5_trace_color>
-      <color red="255" green="170" blue="0" />
-    </trace_5_trace_color>
-    <trace_5_trace_type>0</trace_5_trace_type>
-    <trace_5_update_delay>100</trace_5_update_delay>
-    <trace_5_update_mode>4</trace_5_update_mode>
-    <trace_5_visible>true</trace_5_visible>
-    <trace_5_x_axis_index>0</trace_5_x_axis_index>
-    <trace_5_x_pv></trace_5_x_pv>
-    <trace_5_x_pv_value />
-    <trace_5_y_axis_index>1</trace_5_y_axis_index>
-    <trace_5_y_pv>$(PV_ROOT):HELOW:TEMP</trace_5_y_pv>
-    <trace_5_y_pv_value />
-    <trace_count>6</trace_count>
+    <trace_count>3</trace_count>
     <transparent>false</transparent>
     <trigger_pv>$(P)CS:IOC:$(HELIOX):DEVIOS:HEARTBEAT</trigger_pv>
     <trigger_pv_value />
