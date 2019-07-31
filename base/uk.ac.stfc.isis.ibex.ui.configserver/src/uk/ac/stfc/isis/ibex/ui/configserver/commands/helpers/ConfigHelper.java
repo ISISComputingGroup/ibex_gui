@@ -32,37 +32,35 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
  */
 public abstract class ConfigHelper {
     protected String title;
-	
+
     protected ConfigurationViewModels configurationViewModels;
     protected Shell shell;
     protected static final int MAX_SECONDS_TO_WAIT = 10;
-    
+
     /**
      * Create a dialog box for editing a config other than the current one.
-     * 
+     *
      * @param configName
      *            The name of the config we wish to edit
      * @param editBlockFirst
      *            Whether to present the blocks tab first
      */
     public void createDialog(String configName, boolean editBlockFirst) {
-        configurationViewModels.setModelAsConfig(configName);
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsConfig(configName);;
 
         if (Awaited.returnedValue(config, MAX_SECONDS_TO_WAIT)) {
             openDialog(config.getValue(), false, editBlockFirst);
         }
     }
-    
+
     /**
      * Create a dialog box for editing the current config.
-     * 
+     *
      * @param editBlockFirst
      *            Whether the first operation we want to do is edit a block
      */
     public void createDialogCurrent(boolean editBlockFirst) {
-        configurationViewModels.setModelAsCurrentConfig();
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsCurrentConfig();;
 
         if (Awaited.returnedValue(config, 1)) {
             openDialog(config.getValue(), true, editBlockFirst);
@@ -77,10 +75,10 @@ public abstract class ConfigHelper {
     public void createDialogCurrent() {
         createDialogCurrent(false);
     }
-    
+
     /**
      * Opens a view/edit configuration dialog for the specified configuration.
-     * 
+     *
      * @param config
      *            The configuration to open
      * @param isCurrent
@@ -90,11 +88,11 @@ public abstract class ConfigHelper {
      */
     protected abstract void openDialog(EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst);
-    
+
     /**
      * Get the display name for this configuration
-     * 
-     * This will return the configuration name or current if it is the current configuration. 
+     *
+     * This will return the configuration name or current if it is the current configuration.
      * @param config
      * 			The configuration to get the name from
      * @param isCurrent

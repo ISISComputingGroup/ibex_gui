@@ -7,18 +7,18 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
@@ -49,7 +49,7 @@ public class EditBlockHelper {
 
     /**
      * Constructor for the helper class.
-     * 
+     *
      * @param shell The shell in which to display dialog boxes
      * @param server The config server used to save the changed configuration
      */
@@ -87,7 +87,7 @@ public class EditBlockHelper {
     /**
      * Attempts to get a configuration or component to edit for the named block,
      * starting with the current configuration.
-     * 
+     *
      * @param blockName
      *            The name of the block to look for
      * @return The result of the request with details of the configuration and
@@ -96,8 +96,8 @@ public class EditBlockHelper {
     private EditBlockRequestResult findBlockHostConfiguration(String blockName) {
         // Get the current configuration so we can assess who the block the
         // belongs to.
-        configurationViewModels.setModelAsCurrentConfig();
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsCurrentConfig();
 
         EditBlockRequestResult result = new EditBlockRequestResult();
 
@@ -107,8 +107,8 @@ public class EditBlockHelper {
             if (block == null) {
                 result.setError("Cannot find block in current configuration or its components.");
             } else if (block.inComponent()) {
-                configurationViewModels.setModelAsComponent(block.getComponent());
-                UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.getConfigModel();
+
+                UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.setModelAsComponent(block.getComponent());
                 if (Awaited.returnedValue(editableComponent, 1)) {
                     result.setConfig(editableComponent.getValue().getName(), true);
                 } else {
@@ -125,7 +125,7 @@ public class EditBlockHelper {
 
     /**
      * Create a dialog box for editing the block.
-     * 
+     *
      * @param blockName
      *            The name of the block to edit
      */

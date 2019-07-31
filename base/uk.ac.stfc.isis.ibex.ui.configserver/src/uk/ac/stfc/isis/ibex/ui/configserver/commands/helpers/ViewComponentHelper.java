@@ -18,7 +18,7 @@
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
@@ -34,11 +34,11 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigDetailsDialog;
  * A helper class to open component viewing dialog boxes.
  */
 public class ViewComponentHelper extends ConfigHelper {
-    
+
     private static final String TITLE = "View Components";
     /**
      * Constructor for the helper class.
-     * 
+     *
      * @param shell
      *            The shell in which to display dialog boxes
      */
@@ -49,7 +49,7 @@ public class ViewComponentHelper extends ConfigHelper {
 
     /**
      * Opens the dialog.
-     * 
+     *
      * @param component
      *            the component to edit
      * @param isCurrent
@@ -67,10 +67,10 @@ public class ViewComponentHelper extends ConfigHelper {
                 new ConfigDetailsDialog(shell, TITLE, subTitle, component, false, configurationViewModels);
         dialog.open();
     }
-    
+
     /**
      * Create a dialog box for editing a component.
-     * 
+     *
      * @param componentName
      *            The name of the component we wish to edit
      * @param editBlockFirst
@@ -78,8 +78,8 @@ public class ViewComponentHelper extends ConfigHelper {
      */
     @Override
     public void createDialog(String componentName, boolean editBlockFirst) {
-        configurationViewModels.setModelAsComponent(componentName);
-        UpdatedValue<EditableConfiguration> component = configurationViewModels.getConfigModel();
+
+        UpdatedValue<EditableConfiguration> component = configurationViewModels.setModelAsComponent(componentName);
 
         if (Awaited.returnedValue(component, MAX_SECONDS_TO_WAIT)) {
             openDialog(component.getValue(), false, editBlockFirst);
