@@ -88,8 +88,8 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	
 	@Override
 	public void close() {
-		writerSubscription.removeObserver();
-		destinationSubscription.removeObserver();
+		writerSubscription.cancelSubscription();
+		destinationSubscription.cancelSubscription();
 	}
 
     private void checkPreconditions(Writable<T> destination) {

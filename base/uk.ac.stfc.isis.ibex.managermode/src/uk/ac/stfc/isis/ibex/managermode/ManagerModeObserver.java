@@ -78,7 +78,7 @@ public abstract class ManagerModeObserver implements Closable {
      */
     @Override
     public void close() {
-        subscription.removeObserver();
+        subscription.cancelSubscription();
     }
 
     /**

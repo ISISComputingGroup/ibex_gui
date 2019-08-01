@@ -72,7 +72,7 @@ public class InstrumentState implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.removeObserver();
+		sourceSubscription.cancelSubscription();
 	}
 	
 	private void setState(RunState state) {

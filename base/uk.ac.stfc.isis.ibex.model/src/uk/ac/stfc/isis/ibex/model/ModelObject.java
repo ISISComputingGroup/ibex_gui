@@ -22,12 +22,11 @@ package uk.ac.stfc.isis.ibex.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscribable;
 
 /**
  * Class that allows other objects to be bound to it.
  */
-public abstract class ModelObject implements IModelObject, Subscribable<PropertyChangeListener> {
+public abstract class ModelObject implements IModelObject {
 
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 

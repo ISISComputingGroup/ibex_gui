@@ -178,8 +178,8 @@ public class LoggingForwardingWriterTest {
         writer.close();
         
         // Assert
-        verify(mockSubscription1, times(1)).removeObserver();
-        verify(mockSubscription2, times(1)).removeObserver();
+        verify(mockSubscription1, times(1)).cancelSubscription();
+        verify(mockSubscription2, times(1)).cancelSubscription();
     }
 
     @Test(expected = IllegalArgumentException.class)

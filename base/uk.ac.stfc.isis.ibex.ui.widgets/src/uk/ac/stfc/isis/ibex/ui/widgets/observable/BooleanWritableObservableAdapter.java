@@ -119,7 +119,7 @@ public class BooleanWritableObservableAdapter implements Closable {
      */
 	@Override
 	public void close() {
-		writerSubscription.removeObserver();
-		writableSubscription.removeObserver();
+		writerSubscription.cancelSubscription();
+		writableSubscription.cancelSubscription();
 	}
 }

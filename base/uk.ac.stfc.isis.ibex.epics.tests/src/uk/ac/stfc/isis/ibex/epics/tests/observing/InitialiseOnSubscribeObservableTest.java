@@ -151,7 +151,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void calling_removeObserver_on_unsubscriber_stops_observer_being_update_on_value_changes() {
 		// Act
-		((Unsubscriber<String>) addObserverReturnedObject).removeObserver();
+		((Unsubscriber<String>) addObserverReturnedObject).cancelSubscription();
 		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - The first observer does not have its onValue method called, the second does not

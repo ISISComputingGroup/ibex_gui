@@ -77,7 +77,7 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	@Override
 	public void close() {
 		IsisLog.getLogger(getClass()).info("Closing UpdatedObservableAdapter " + this + " which was observing: " + observableName);
-		subscription.removeObserver();
+		subscription.cancelSubscription();
 	}
 
     private void subscribeTo(Observable<T> observable) {

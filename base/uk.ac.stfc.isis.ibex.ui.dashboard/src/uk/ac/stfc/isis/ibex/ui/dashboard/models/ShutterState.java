@@ -64,7 +64,7 @@ public class ShutterState implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.removeObserver();
+		sourceSubscription.cancelSubscription();
 	}
 	
 	private void setState(ShutterStatus state) {

@@ -119,7 +119,7 @@ public class BlocksView {
 		parent.setLayout(glParent);
 		
 		if (configSubscription != null) {
-			configSubscription.removeObserver();
+			configSubscription.cancelSubscription();
 		}
 		
 		groups = new GroupsPanel(parent, SWT.NONE);
@@ -133,6 +133,6 @@ public class BlocksView {
      */
     @PreDestroy
 	public void dispose() {
-    	configSubscription.removeObserver();
+    	configSubscription.cancelSubscription();
 	}
 }

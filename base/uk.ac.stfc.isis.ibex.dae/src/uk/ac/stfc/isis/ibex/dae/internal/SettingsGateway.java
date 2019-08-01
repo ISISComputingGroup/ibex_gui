@@ -70,8 +70,8 @@ public abstract class SettingsGateway implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.removeObserver();
-		destinationSubscription.removeObserver();
-		writerSubscription.removeObserver();
+		sourceSubscription.cancelSubscription();
+		destinationSubscription.cancelSubscription();
+		writerSubscription.cancelSubscription();
 	}
 }

@@ -63,8 +63,8 @@ public class ObservablePair<T1, T2> extends ClosableObservable<Pair<T1, T2>> {
 	
 	@Override
 	public void close() {
-		firstSubscription.removeObserver();
-		secondSubscription.removeObserver();
+		firstSubscription.cancelSubscription();
+		secondSubscription.cancelSubscription();
 	}
 
 	private T1 firstOrNull() {

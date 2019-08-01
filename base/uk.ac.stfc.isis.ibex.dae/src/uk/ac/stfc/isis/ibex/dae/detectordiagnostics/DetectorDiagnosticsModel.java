@@ -405,7 +405,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
      */
     private void close() {
         setDetectorDiagnosticsEnabled(false);
-        diagnosticsEnabledSubscription.removeObserver();
+        diagnosticsEnabledSubscription.cancelSubscription();
         spectrumNumbers.close();
         countRate.close();
         integral.close();

@@ -188,7 +188,7 @@ public class Configurations extends Closer implements BundleActivator {
 		Configurations.context = null;
 
 		for (Subscription subscription : loggingSubscriptions) {
-			subscription.removeObserver();
+			subscription.cancelSubscription();
 		}
 		
 		close();

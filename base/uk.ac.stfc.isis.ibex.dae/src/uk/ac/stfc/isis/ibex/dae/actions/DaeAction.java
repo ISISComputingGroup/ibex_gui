@@ -129,10 +129,10 @@ public abstract class DaeAction extends Action implements Closable {
 
 	@Override
 	public synchronized void close() {
-		runStateSubscription.removeObserver();
-		transitionSubscription.removeObserver();
-		targetSubscribtion.removeObserver();
-		writerSubscription.removeObserver();
+		runStateSubscription.cancelSubscription();
+		transitionSubscription.cancelSubscription();
+		targetSubscribtion.cancelSubscription();
+		writerSubscription.cancelSubscription();
 	}
 	
     /**

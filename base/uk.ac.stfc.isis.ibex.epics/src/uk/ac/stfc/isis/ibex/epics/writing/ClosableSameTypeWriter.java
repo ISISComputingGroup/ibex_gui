@@ -58,6 +58,6 @@ public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Clos
 	
 	@Override
 	public void close() {
-		destinationSubscription.removeObserver();
+		destinationSubscription.cancelSubscription();
 	}
 }

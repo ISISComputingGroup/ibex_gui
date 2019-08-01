@@ -134,7 +134,7 @@ public class SameTypeWriterTest {
         Subscription returnedSubscription = writer.subscribe(mockWritable);
 
         // Act
-        returnedSubscription.removeObserver();
+        returnedSubscription.cancelSubscription();
 
         // Assert
         writer.write(A_VALUE);

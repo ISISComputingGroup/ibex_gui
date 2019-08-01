@@ -116,11 +116,11 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
 	private void cancelSubscriptions() {
         if (readingSubscription != null) {
-            readingSubscription.removeObserver();
+            readingSubscription.cancelSubscription();
         }
 
 		if (writingSubsciption != null) {
-			writingSubsciption.removeObserver();
+			writingSubsciption.cancelSubscription();
 		}
 	}
 

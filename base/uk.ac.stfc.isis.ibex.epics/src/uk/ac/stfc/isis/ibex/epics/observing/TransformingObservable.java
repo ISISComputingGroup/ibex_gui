@@ -112,7 +112,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	 */
 	private void cancelSubscription() {
 		if (sourceSubscription != null) {
-			sourceSubscription.removeObserver();
+			sourceSubscription.cancelSubscription();
 		}
 	}
 

@@ -19,13 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
+import java.util.Set;
+
 import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -37,7 +42,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * provides better encapsulation of Block's functionality.
  *
  */
-public class DisplayBlock extends ModelObject implements IRuncontrol {
+public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final String blockServerAlias;
     private final Block block;
     private String value;
@@ -217,6 +222,9 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
             setRunControlEnabled(false);
         }
     };
+
+    private final Set<Subscription> subscriptions;
+
     /**
      * Instantiates a new Displayblock.
      *
@@ -242,13 +250,23 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
 
-        valueSource.subscribe(valueAdapter);
-        descriptionSource.subscribe(descriptionAdapter);
-        alarmSource.subscribe(alarmAdapter);
-        inRangeSource.subscribe(inRangeAdapter);
-        lowLimitSource.subscribe(lowLimitAdapter);
-        highLimitSource.subscribe(highLimitAdapter);
-        enabledSource.subscribe(enabledAdapter);
+        subscriptions = Sets.newHashSet(
+		    valueSource.subscribe(valueAdapter),
+		    descriptionSource.subscribe(descriptionAdapter),
+		    alarmSource.subscribe(alarmAdapter),
+		    inRangeSource.subscribe(inRangeAdapter),
+		    lowLimitSource.subscribe(lowLimitAdapter),
+		    highLimitSource.subscribe(highLimitAdapter),
+		    enabledSource.subscribe(enabledAdapter)
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public void close() {
+    	subscriptions.forEach(Subscription::cancelSubscription);
     }
 
     /**

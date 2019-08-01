@@ -33,7 +33,7 @@ public class UnsubscriberTest {
 	@Test
 	public void removing_observer_stops_observable_being_updated() {		
 		// Act
-		subscription.removeObserver();
+		subscription.cancelSubscription();
 		testableObservable.setValue(TestHelpers.STRING_VALUE);
 		
 		// Assert
@@ -43,8 +43,8 @@ public class UnsubscriberTest {
 	@Test
 	public void removing_observer_twice_does_nothing_the_second_time() {		
 		// Act
-		subscription.removeObserver();
-		subscription.removeObserver();
+		subscription.cancelSubscription();
+		subscription.cancelSubscription();
 		testableObservable.setValue(TestHelpers.STRING_VALUE);
 		
 		// Assert

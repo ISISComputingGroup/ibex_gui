@@ -41,7 +41,7 @@ public class Unsubscriber<T> implements Subscription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeObserver() {
+	public void cancelSubscription() {
 		subscribable.unsubscribe(subscriber);
 		subscriber = null;
 	}
