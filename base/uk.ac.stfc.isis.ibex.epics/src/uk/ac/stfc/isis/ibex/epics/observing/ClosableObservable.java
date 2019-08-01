@@ -112,10 +112,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      */
     @Override
     public void close() {
-    	for (Observer<T> observer : observers) {
-    		// Give one final update that the observer is no longer connected.
-            logErrorsAndContinue(() -> observer.onConnectionStatus(false));
-        }
         observers.clear();
     }
 

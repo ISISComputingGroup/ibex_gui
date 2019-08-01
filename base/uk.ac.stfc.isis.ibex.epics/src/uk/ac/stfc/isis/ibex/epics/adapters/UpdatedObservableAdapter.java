@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 
 public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> implements Closable {
@@ -49,8 +48,6 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 		}
 	};
 
-	private final String observableName;
-
     /**
      * Constructor.
      *
@@ -58,7 +55,6 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
      *            the observable
      */
 	public UpdatedObservableAdapter(ForwardingObservable<T> observable) {
-		observableName = observable.toString();
 		subscribeTo(observable);
 	}
 
@@ -76,7 +72,6 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	 */
 	@Override
 	public void close() {
-		IsisLog.getLogger(getClass()).info("Closing UpdatedObservableAdapter " + this + " which was observing: " + observableName);
 		subscription.cancelSubscription();
 	}
 

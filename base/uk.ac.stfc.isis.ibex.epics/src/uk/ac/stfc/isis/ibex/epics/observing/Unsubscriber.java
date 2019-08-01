@@ -24,6 +24,7 @@ import static java.util.Objects.requireNonNull;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 public class Unsubscriber<T> implements Subscription {
 
@@ -50,10 +51,14 @@ public class Unsubscriber<T> implements Subscription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finalize() {
-		if (subscriber != null) {
-			LOG.warn("Subscription " + toString() + " GC'd without observer " + subscriber + " being closed.");
-			subscribable.unsubscribe(subscriber);
+	public void finalize() throws Throwable {
+		try {
+			if (subscriber != null) {
+				LoggerUtils.logIfExtraDebug(LOG, "Subscription " + toString() + " GC'd before unsubscribe was called. Subscriber: "+ subscriber);
+				subscribable.unsubscribe(subscriber);
+			}
+		} finally {
+			super.finalize();
 		}
 	}
 }
