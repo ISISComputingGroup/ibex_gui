@@ -1613,26 +1613,21 @@ $(pv_value)</tooltip>
         <state_color_4>
           <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
         </state_color_4>
-        <state_color_5>
-          <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
-        </state_color_5>
         <state_color_fallback>
           <color name="ISIS_DAE_Button_Pause" red="255" green="150" blue="0" />
         </state_color_fallback>
-        <state_count>6</state_count>
+        <state_count>5</state_count>
         <state_label_0>S01</state_label_0>
         <state_label_1>S02</state_label_1>
         <state_label_2>S03</state_label_2>
         <state_label_3>S04</state_label_3>
         <state_label_4>S05</state_label_4>
-        <state_label_5>S06</state_label_5>
         <state_label_fallback>ERR</state_label_fallback>
         <state_value_0>0.0</state_value_0>
         <state_value_1>1.0</state_value_1>
         <state_value_2>2.0</state_value_2>
         <state_value_3>3.0</state_value_3>
         <state_value_4>4.0</state_value_4>
-        <state_value_5>5.0</state_value_5>
         <tooltip>$(pv_name)
 $(pv_value)</tooltip>
         <visible>true</visible>
@@ -2126,124 +2121,6 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <format_type>0</format_type>
-      <height>20</height>
-      <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update Run Time Infinite</name>
-      <precision>0</precision>
-      <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
-      <pv_value />
-      <rotation_angle>0.0</rotation_angle>
-      <rules>
-        <rule name="IF pump in continuous mode THEN show text" prop_id="visible" out_exp="true">
-          <exp bool_exp="pv0!=1">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)STATUS</pv>
-        </rule>
-      </rules>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_units>true</show_units>
-      <text>No limit</text>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>true</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Text Update</widget_type>
-      <width>85</width>
-      <wrap_words>false</wrap_words>
-      <wuid>-7ea2ed91:1687008d2ae:-6633</wuid>
-      <x>150</x>
-      <y>12</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <auto_size>false</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <format_type>0</format_type>
-      <height>20</height>
-      <horizontal_alignment>0</horizontal_alignment>
-      <name>Text Update Run Time Infinite_1</name>
-      <precision>0</precision>
-      <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
-      <pv_value />
-      <rotation_angle>0.0</rotation_angle>
-      <rules>
-        <rule name="IF pump in continuous mode THEN show text" prop_id="visible" out_exp="true">
-          <exp bool_exp="pv0!=1">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)STATUS</pv>
-        </rule>
-      </rules>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_units>true</show_units>
-      <text>No limit</text>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>true</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Text Update</widget_type>
-      <width>85</width>
-      <wrap_words>false</wrap_words>
-      <wuid>-7ea2ed91:1687008d2ae:-661a</wuid>
-      <x>150</x>
-      <y>42</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <auto_size>false</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2529,7 +2406,7 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <rules>
         <rule name="IF pump in continuous mode THEN hide text" prop_id="visible" out_exp="true">
-          <exp bool_exp="pv0==1">
+          <exp bool_exp="pv0==2">
             <value>false</value>
           </exp>
           <pv trig="true">$(PV_ROOT)STATUS</pv>
@@ -2588,7 +2465,7 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <rules>
         <rule name="IF pump in continuous mode THEN hide test" prop_id="visible" out_exp="true">
-          <exp bool_exp="pv0==1">
+          <exp bool_exp="pv0==2">
             <value>false</value>
           </exp>
           <pv trig="true">$(PV_ROOT)STATUS</pv>
@@ -2611,6 +2488,124 @@ $(pv_value)</tooltip>
       <width>85</width>
       <wrap_words>false</wrap_words>
       <wuid>-7ea2ed91:1687008d2ae:-667c</wuid>
+      <x>150</x>
+      <y>42</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update Run Time Infinite</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name></pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules>
+        <rule name="IF pump in continuous mode THEN show text" prop_id="visible" out_exp="true">
+          <exp bool_exp="pv0!=2">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)STATUS</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>No limit</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>85</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-7ea2ed91:1687008d2ae:-6633</wuid>
+      <x>150</x>
+      <y>12</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update Run Volume Infinite</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name></pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules>
+        <rule name="IF pump in continuous mode THEN show text" prop_id="visible" out_exp="true">
+          <exp bool_exp="pv0!=2">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)STATUS</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>No limit</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>85</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-7ea2ed91:1687008d2ae:-661a</wuid>
       <x>150</x>
       <y>42</y>
     </widget>
