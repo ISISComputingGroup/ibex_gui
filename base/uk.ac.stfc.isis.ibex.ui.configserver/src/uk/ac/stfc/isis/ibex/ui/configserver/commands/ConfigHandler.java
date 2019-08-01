@@ -88,7 +88,7 @@ public abstract class ConfigHandler<T> {
 	 * @param destination where to write the data to
 	 */
 	public ConfigHandler(Writable<T> destination) {
-		configService.writeTo(destination);
+		configService.subscribe(destination);
 		destination.subscribe(configService);
 	}
 	

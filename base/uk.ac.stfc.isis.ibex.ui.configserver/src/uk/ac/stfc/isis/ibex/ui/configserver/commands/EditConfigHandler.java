@@ -43,7 +43,7 @@ public class EditConfigHandler extends EditConfigurationsHandler {
      */
     public EditConfigHandler() {
         super(SERVER.saveAs());
-        SERVER.currentConfig().addObserver(configObserver);
+        SERVER.currentConfig().subscribe(configObserver);
     }
 
     /**

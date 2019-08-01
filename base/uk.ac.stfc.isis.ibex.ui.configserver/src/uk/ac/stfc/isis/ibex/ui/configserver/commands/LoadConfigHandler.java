@@ -78,7 +78,7 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         for (String name : SERVER.configNames()) {
             if (!configs.containsKey(name)) {
                 ForwardingObservable<Configuration> configObs = SERVER.config(name);
-                configObs.addObserver(new BaseObserver<Configuration>() {
+                configObs.subscribe(new BaseObserver<Configuration>() {
                     @Override
                     public void onValue(Configuration value) {
                         configs.put(value.getName(), value);

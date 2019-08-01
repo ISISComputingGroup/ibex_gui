@@ -27,7 +27,7 @@ public class UnsubscriberTest {
 		testableObservable = new TestableObservable<>();
 		observable = new ForwardingObservable<String>(testableObservable);
 		
-		subscription = (Unsubscriber<String>) observable.addObserver(mockObserver);
+		subscription = (Unsubscriber<String>) observable.subscribe(mockObserver);
 	}
 	
 	@Test

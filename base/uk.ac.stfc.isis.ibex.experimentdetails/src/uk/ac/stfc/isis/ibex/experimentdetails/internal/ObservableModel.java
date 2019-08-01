@@ -72,9 +72,9 @@ public class ObservableModel extends Model {
 	 * @param variables The set of observables that this model should be linked to.
 	 */
 	public ObservableModel(ExperimentDetailsVariables variables) {
-		variables.userDetails.addObserver(userDetailsObserver);
-		variables.sampleParameters.addObserver(sampleParametersObserver);
-		variables.beamParameters.addObserver(beamParametersObserver);
+		variables.userDetails.subscribe(userDetailsObserver);
+		variables.sampleParameters.subscribe(sampleParametersObserver);
+		variables.beamParameters.subscribe(beamParametersObserver);
 		this.variables = variables;
 	}
 

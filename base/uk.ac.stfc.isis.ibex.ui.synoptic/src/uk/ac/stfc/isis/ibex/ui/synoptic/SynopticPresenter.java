@@ -125,7 +125,7 @@ public class SynopticPresenter extends ModelObject {
 	    };
 	    
         ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
-        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
+        observingSynopticModel.getSynopticObservable().subscribe(descriptionObserver);
 	}
 
     private void updateModel() {

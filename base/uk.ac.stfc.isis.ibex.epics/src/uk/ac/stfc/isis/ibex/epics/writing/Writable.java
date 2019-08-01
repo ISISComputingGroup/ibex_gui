@@ -6,13 +6,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -20,7 +20,7 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscribable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
@@ -31,10 +31,10 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  * @param <T>
  *            Type that is written
  */
-public interface Writable<T> extends Closable {
+public interface Writable<T> extends Closable, Subscribable<ConfigurableWriter<?, ?>> {
 
     /**
-     * 
+     *
      * @return True if value can be written; False otherwise. I.e. if this is PV
      *         returns true if client is on the instrument
      */
@@ -42,33 +42,24 @@ public interface Writable<T> extends Closable {
 
     /**
      * Write the value to destination.
-     * 
+     *
      * @param value
      *            the value to write
      * @throws IOException
      *              if the write failed
      */
 	void write(T value) throws IOException;
-	
+
 	/**
 	 * Write the value to destination.
-	 * 
-	 * Does not throw an exception on failed write. 
-	 * 
-	 * This method should not be used unless you are 
+	 *
+	 * Does not throw an exception on failed write.
+	 *
+	 * This method should not be used unless you are
 	 * certain that the write cannot possibly fail.
-	 * 
+	 *
 	 * @param value
 	 *             the value to write
 	 */
 	void uncheckedWrite(T value);
-	
-	/**
-     * Allows the writer to receive updates from the writable.
-     * 
-     * @param writer
-     *            the writer to subscribe to
-     * @return a subscription on which to listen
-     */
-	Subscription subscribe(ConfigurableWriter<?, ?> writer);
 }

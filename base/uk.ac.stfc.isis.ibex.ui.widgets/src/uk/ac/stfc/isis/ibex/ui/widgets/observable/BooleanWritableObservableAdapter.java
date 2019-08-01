@@ -73,7 +73,7 @@ public class BooleanWritableObservableAdapter implements Closable {
         canSetValue = new SettableUpdatedValue<>();
         canSetValue.setValue(writable.canWrite());
 		
-		writableSubscription = writer.writeTo(writable);
+		writableSubscription = writer.subscribe(writable);
 		writerSubscription = writable.subscribe(writer);
 	}
 	

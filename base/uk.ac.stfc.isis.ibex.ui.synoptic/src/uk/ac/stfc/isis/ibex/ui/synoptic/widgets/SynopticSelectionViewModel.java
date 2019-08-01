@@ -92,7 +92,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 	 * Get the view model for the synoptic selector.
 	 */
     public SynopticSelectionViewModel() {
-        synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
+        synoptic.availableSynopticsInfo().subscribe(availableSynopticsObserver);
     }
 
     /**

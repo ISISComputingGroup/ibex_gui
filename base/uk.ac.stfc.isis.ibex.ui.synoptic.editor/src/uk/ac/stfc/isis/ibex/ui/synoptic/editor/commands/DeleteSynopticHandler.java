@@ -52,7 +52,7 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
      * destination is disabled.
      */
     public DeleteSynopticHandler() {
-        synopticService.writeTo(SYNOPTIC.delete());
+        synopticService.subscribe(SYNOPTIC.delete());
         SYNOPTIC.delete().subscribe(synopticService);
     }
 

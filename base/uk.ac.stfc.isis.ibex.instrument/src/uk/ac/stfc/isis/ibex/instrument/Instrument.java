@@ -141,7 +141,7 @@ public class Instrument implements BundleActivator {
      * Adds an observer to the instrument list observable.
      */
     private void setInstrumentsObserver() {
-        instrumentsObservable.addObserver(new BaseObserver<Collection<InstrumentInfo>>() {
+        instrumentsObservable.subscribe(new BaseObserver<Collection<InstrumentInfo>>() {
 
             boolean firstConnection = true;
 

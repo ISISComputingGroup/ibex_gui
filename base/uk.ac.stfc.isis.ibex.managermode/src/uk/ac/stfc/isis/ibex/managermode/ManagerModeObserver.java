@@ -70,7 +70,7 @@ public abstract class ManagerModeObserver implements Closable {
         color = new SettableUpdatedValue<>();
         availability = new SettableUpdatedValue<>();
         
-        subscription = observable.addObserver(observer);
+        subscription = observable.subscribe(observer);
     }
 
     /**

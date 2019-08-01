@@ -42,7 +42,7 @@ public class EditComponentHandler extends EditConfigurationsHandler {
      */
     public EditComponentHandler() {
         super(SERVER.saveAsComponent());
-        SERVER.currentConfig().addObserver(configObserver);
+        SERVER.currentConfig().subscribe(configObserver);
     }
 
     /**

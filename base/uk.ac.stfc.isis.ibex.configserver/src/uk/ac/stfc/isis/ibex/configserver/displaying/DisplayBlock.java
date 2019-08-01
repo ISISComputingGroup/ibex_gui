@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * Contains the functionality to display a Block's value and run-control
  * settings in a GUI.
- * 
+ *
  * Rather than inheriting from Block, it holds a reference to the Block as this
  * provides better encapsulation of Block's functionality.
  *
@@ -219,7 +219,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
     };
     /**
      * Instantiates a new Displayblock.
-     * 
+     *
      * @param block the block
      * @param valueSource the observable holding the block's value
      * @param descriptionSource the observable holding the block's description
@@ -242,13 +242,13 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
 
-        valueSource.addObserver(valueAdapter);
-        descriptionSource.addObserver(descriptionAdapter);
-        alarmSource.addObserver(alarmAdapter);
-        inRangeSource.addObserver(inRangeAdapter);
-        lowLimitSource.addObserver(lowLimitAdapter);
-        highLimitSource.addObserver(highLimitAdapter);
-        enabledSource.addObserver(enabledAdapter);
+        valueSource.subscribe(valueAdapter);
+        descriptionSource.subscribe(descriptionAdapter);
+        alarmSource.subscribe(alarmAdapter);
+        inRangeSource.subscribe(inRangeAdapter);
+        lowLimitSource.subscribe(lowLimitAdapter);
+        highLimitSource.subscribe(highLimitAdapter);
+        enabledSource.subscribe(enabledAdapter);
     }
 
     /**
@@ -370,28 +370,28 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         setValueTooltipText();
         setNameTooltipText();
     }
-    
+
     /**
      * Sets the value tooltip text.
      */
     public void setValueTooltipText() {
         firePropertyChange("valueTooltipText", null, null);
     }
-    
+
     /**
      * @return the value tooltip text.
      */
     public String getValueTooltipText() {
         return value + System.lineSeparator() + description;
     }
-    
+
     /**
      * Sets the name tooltip text.
      */
     public void setNameTooltipText() {
         firePropertyChange("nameTooltipText", null, null);
     }
-    
+
     /**
      * @return the name tooltip text.
      */

@@ -63,7 +63,7 @@ public class StringWritableObservableAdapter implements Closable {
 		canSetText = new SettableUpdatedValue<>();
 		canSetText.setValue(writable.canWrite());
 		
-		writableSubscription = writer.writeTo(writable);
+		writableSubscription = writer.subscribe(writable);
 		writerSubscription = writable.subscribe(writer);
 	}
 

@@ -19,21 +19,41 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import java.util.Collection;
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
+
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class Unsubscriber<T> implements Subscription {
 
-	private final Collection<T> observers;
-	private final T observer;
+	private static final Logger LOG = IsisLog.getLogger(Unsubscriber.class);
 
-	public Unsubscriber(Collection<T> observers, T observer) {
-		this.observers = Objects.requireNonNull(observers);
-		this.observer = Objects.requireNonNull(observer);
+	private Subscribable<T> subscribable;
+	private T subscriber;
+
+	public Unsubscriber(Subscribable<T> subscribable, T subscriber) {
+		this.subscribable = requireNonNull(subscribable);
+		this.subscriber = requireNonNull(subscriber);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeObserver() {
-		observers.remove(observer);
+		subscribable.unsubscribe(subscriber);
+		subscriber = null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void finalize() {
+		if (subscriber != null) {
+			LOG.warn("Subscription " + toString() + " GC'd without observer " + subscriber + " being closed.");
+			subscribable.unsubscribe(subscriber);
+		}
 	}
 }

@@ -63,12 +63,20 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      * Adds an observer to this observable
      */
     @Override
-    public Subscription addObserver(Observer<T> observer) {
+    public Subscription subscribe(Observer<T> observer) {
         observers.add(observer);
 
         // When a new observer is added, update it with the existing observable data
         logErrorsAndContinue(() -> observer.update(getValue(), currentError(), isConnected()));
-        return new Unsubscriber<Observer<T>>(observers, observer);
+        return new Unsubscriber<>(this, observer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public void unsubscribe(Observer<T> observer) {
+        observers.remove(observer);
     }
 
     /**

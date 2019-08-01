@@ -125,7 +125,7 @@ public class BlocksView {
 		groups = new GroupsPanel(parent, SWT.NONE);
 		groups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		configSubscription = CONFIG.addObserver(configObserver);
+		configSubscription = CONFIG.subscribe(configObserver);
 	}
 
     /**

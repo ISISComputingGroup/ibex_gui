@@ -102,8 +102,8 @@ public class SameTypeWriterTest {
         Writable<String> mockWritable1 = mock(Writable.class);
         Writable<String> mockWritable2 = mock(Writable.class);
 
-        writer.writeTo(mockWritable1);
-        writer.writeTo(mockWritable2);
+        writer.subscribe(mockWritable1);
+        writer.subscribe(mockWritable2);
 
         // Act
         writer.write(A_VALUE);
@@ -119,8 +119,8 @@ public class SameTypeWriterTest {
         Writable<String> mockWritable = mock(Writable.class);
 
         // Act
-        writer.writeTo(mockWritable);
-        writer.writeTo(mockWritable);
+        writer.subscribe(mockWritable);
+        writer.subscribe(mockWritable);
         writer.write(A_VALUE);
 
         // Assert
@@ -131,7 +131,7 @@ public class SameTypeWriterTest {
     public void adding_a_writable_returns_an_unsubscriber_that_removes_the_writable_from_the_list_of_writables() throws IOException {
         // Arrange
         Writable<String> mockWritable = mock(Writable.class);
-        Subscription returnedSubscription = writer.writeTo(mockWritable);
+        Subscription returnedSubscription = writer.subscribe(mockWritable);
 
         // Act
         returnedSubscription.removeObserver();
@@ -169,8 +169,8 @@ public class SameTypeWriterTest {
         assertFalse(stubWritable2.canWrite());
         assertFalse(writer.canWrite());
 
-        writer.writeTo(stubWritable1);
-        writer.writeTo(stubWritable2);
+        writer.subscribe(stubWritable1);
+        writer.subscribe(stubWritable2);
 
         assertFalse(writer.canWrite());
 

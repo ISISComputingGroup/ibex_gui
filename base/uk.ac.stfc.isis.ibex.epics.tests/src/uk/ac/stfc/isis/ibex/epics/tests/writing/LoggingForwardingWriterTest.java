@@ -140,10 +140,10 @@ public class LoggingForwardingWriterTest {
         Writable<String> mockWritable = mock(Writable.class);
 
         // Act
-        writer.writeTo(mockWritable);
+        writer.subscribe(mockWritable);
 
         // Assert
-        verify(mockInputWriter, times(1)).writeTo(mockWritable);
+        verify(mockInputWriter, times(1)).subscribe(mockWritable);
     }
 
     @Test
@@ -151,10 +151,10 @@ public class LoggingForwardingWriterTest {
         // Arrange
         Subscription mockSubscription = mock(Subscription.class);
         Writable<String> mockWritable = mock(Writable.class);
-        when(mockInputWriter.writeTo(any(Writable.class))).thenReturn(mockSubscription);
+        when(mockInputWriter.subscribe(any(Writable.class))).thenReturn(mockSubscription);
 
         // Act
-        Subscription returnedSubscription = writer.writeTo(mockWritable);
+        Subscription returnedSubscription = writer.subscribe(mockWritable);
 
         // Assert
         assertSame(mockSubscription, returnedSubscription);
@@ -168,11 +168,11 @@ public class LoggingForwardingWriterTest {
         Writable<String> mockWritable1 = mock(Writable.class);
         Writable<String> mockWritable2 = mock(Writable.class);
 
-        when(mockInputWriter.writeTo(mockWritable1)).thenReturn(mockSubscription1);
-        when(mockInputWriter.writeTo(mockWritable2)).thenReturn(mockSubscription2);
+        when(mockInputWriter.subscribe(mockWritable1)).thenReturn(mockSubscription1);
+        when(mockInputWriter.subscribe(mockWritable2)).thenReturn(mockSubscription2);
 
-        writer.writeTo(mockWritable1);
-        writer.writeTo(mockWritable2);
+        writer.subscribe(mockWritable1);
+        writer.subscribe(mockWritable2);
 
         // Act
         writer.close();
