@@ -43,8 +43,6 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
     public SwitchableObservable(ClosableObservable<T> source) {
         super(source);
         this.source = source;
-
-    	System.out.println("Created SwitchableObservable " + this.toString());
     }
 
     @Override
@@ -103,12 +101,4 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
         source.close();
         this.source = castNewSource;
     }
-
-    @Override
-	public void finalize() throws Throwable {
-    	System.out.println("Destroyed SwitchableObservable" + this.toString());
-    	super.finalize();
-    }
-
-
 }
