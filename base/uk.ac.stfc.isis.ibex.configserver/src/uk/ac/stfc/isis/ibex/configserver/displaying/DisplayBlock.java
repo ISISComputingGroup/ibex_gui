@@ -224,6 +224,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     };
 
     private final Set<Subscription> subscriptions;
+    private final Set<ForwardingObservable<?>> sources;
 
     /**
      * Instantiates a new Displayblock.
@@ -250,8 +251,18 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
 
+        sources = Sets.newHashSet(
+        	valueSource,
+        	descriptionSource,
+        	alarmSource,
+        	inRangeSource,
+        	lowLimitSource,
+        	highLimitSource,
+        	enabledSource
+        );
+
         subscriptions = Sets.newHashSet(
-		    valueSource.subscribe(valueAdapter),
+    		valueSource.subscribe(valueAdapter),
 		    descriptionSource.subscribe(descriptionAdapter),
 		    alarmSource.subscribe(alarmAdapter),
 		    inRangeSource.subscribe(inRangeAdapter),
@@ -267,6 +278,9 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     @Override
 	public void close() {
     	subscriptions.forEach(Subscription::cancelSubscription);
+    	subscriptions.clear();
+    	sources.forEach(ForwardingObservable::close);
+    	sources.clear();
     }
 
     /**

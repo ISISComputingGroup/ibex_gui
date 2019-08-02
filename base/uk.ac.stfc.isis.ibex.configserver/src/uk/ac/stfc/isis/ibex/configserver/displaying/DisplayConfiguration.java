@@ -84,7 +84,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 
 	@Override
 	public Collection<DisplayBlock> getDisplayBlocks() {
-		return displayBlocks;
+		return new ArrayList<>(displayBlocks);
 	}
 
 	/**
@@ -156,11 +156,19 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		displayBlocks = new ArrayList<>();
 		for (Block blk : blocks) {
 			String name = blk.getName();
-            displayBlocks.add(new DisplayBlock(blk, configServer.blockValue(name), configServer.blockDescription(name),
+            displayBlocks.add(
+        		new DisplayBlock(
+    				blk,
+            		configServer.blockValue(name),
+            		configServer.blockDescription(name),
                     configServer.alarm(name),
-					runControlServer.blockRunControlInRange(name), runControlServer.blockRunControlLowLimit(name),
-					runControlServer.blockRunControlHighLimit(name), runControlServer.blockRunControlEnabled(name),
-					configServer.blockServerAlias(name)));
+					runControlServer.blockRunControlInRange(name),
+					runControlServer.blockRunControlLowLimit(name),
+					runControlServer.blockRunControlHighLimit(name),
+					runControlServer.blockRunControlEnabled(name),
+					configServer.blockServerAlias(name)
+				)
+        	);
 		}
 	}
 }

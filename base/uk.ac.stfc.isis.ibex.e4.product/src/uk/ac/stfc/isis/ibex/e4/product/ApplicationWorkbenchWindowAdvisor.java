@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -36,11 +36,13 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     private static final int MIN_WINDOW_HEIGHT = 800;
     private static final int MIN_WINDOW_WIDTH = 1100;
-	
+
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}
@@ -49,18 +51,18 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
         return new ActionBarAdvisor(configurer);
     }
-    
+
     @Override
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         configurer.setShowCoolBar(false);
     }
-    
+
     @Override
     public void postWindowCreate() {
     	super.postWindowCreate();
         final Shell shell = getWindowConfigurer().getWindow().getShell();
-        
+
         WindowLayout windowLayout = getPreviousWindowSettings();
 
         shell.setMinimumSize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT);
@@ -72,7 +74,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     /**
      * Attempts to get previous window settings, otherwise returning sensible
      * defaults.
-     * 
+     *
      * @return An object with parameters for width, heigh, x position, y
      *         poistion and maximised flag
      */
@@ -91,7 +93,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 .append(new Path(".plugins"))
                 .append(new Path("org.eclipse.ui.workbench"))
                 .append("/workbench.xml");
-        
+
 
         // This pattern picks out from <window height="800" maximized="true"
         // width="1100" x="0" y="0">
@@ -107,7 +109,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             File file = new File(workbenchXml.toOSString());
             FileReader reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
-            
+
             boolean foundMatch = false;
 
             while (bufferedReader.ready() && !foundMatch) {
@@ -122,7 +124,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     windowWidth = Integer.parseInt(matchMaximised.group(3));
                     windowX = Integer.parseInt(matchMaximised.group(4));
                     windowY = Integer.parseInt(matchMaximised.group(5));
-                    
+
                     foundMatch = true;
                 } else if (matchNotMaximised.matches()) {
                     windowHeight = Integer.parseInt(matchNotMaximised.group(1));
@@ -130,13 +132,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     windowWidth = Integer.parseInt(matchNotMaximised.group(2));
                     windowX = Integer.parseInt(matchNotMaximised.group(3));
                     windowY = Integer.parseInt(matchNotMaximised.group(4));
-                    
+
                     foundMatch = true;
                 }
             }
             bufferedReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("No workbench.xml - using default initial window sizes");
+            IsisLog.getLogger(getClass()).info("No workbench.xml - using default initial window sizes");
         } catch (IOException e) {
             e.printStackTrace();
         }
