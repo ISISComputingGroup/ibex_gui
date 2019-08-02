@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.synoptic;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -28,7 +30,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 /**
  * A class for linking the PV observables used to define the synoptic with the
  * SynopticModel.
- * 
+ *
  */
 public class ObservingSynopticModel extends ModelObject {
 
@@ -42,7 +44,7 @@ public class ObservingSynopticModel extends ModelObject {
 
         @Override
         public void onError(Exception e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
             model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
         }
 

@@ -37,6 +37,7 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
@@ -140,7 +141,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         } catch (FileNotFoundException e) {
             IsisLog.getLogger(getClass()).info("No workbench.xml - using default initial window sizes");
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
 
         return new WindowLayout(windowHeight, windowWidth, windowX, windowY, windowMaximised);

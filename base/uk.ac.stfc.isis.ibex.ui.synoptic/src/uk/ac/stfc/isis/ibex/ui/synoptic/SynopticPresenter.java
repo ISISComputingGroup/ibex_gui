@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
@@ -48,26 +49,26 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
 /**
  * Responsible for the presentation logic of the synoptic.
- *  
+ *
  */
 public class SynopticPresenter extends ModelObject {
 
     private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);
 
 	private SynopticModel model;
-	
+
 	/**
 	 * Presenter for the synoptic navigator panel, the control that allows moving around inside a synoptic.
 	 */
 	private NavigationPresenter navigator;
-	
+
 	private Map<String, TargetNode> targets = new HashMap<>();
-	
+
 	/**
 	 * The components of the currently selected synoptic.
 	 */
 	private List<Component> components = new ArrayList<>();
-	
+
 	/**
 	 * Describes the path that has been taken in navigating through a synoptic.
 	 */
@@ -86,13 +87,13 @@ public class SynopticPresenter extends ModelObject {
 			}
 		}
 	};
-	
+
 	/**
 	 * Observes for changes to the synoptic description. The description will be changed
 	 * either when the server sends an updated description for the selected synoptic.
 	 */
     private final Observer<SynopticDescription> descriptionObserver;
-    
+
     /**
      * Manages the presentation of synoptics to the user in the synoptic perspective.
      */
@@ -101,7 +102,7 @@ public class SynopticPresenter extends ModelObject {
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
-		updateModel(); 
+		updateModel();
 		// Must be done after the navigator is initialised otherwise updateModel could
 		// trigger a nullPointer exception.
 		descriptionObserver = new BaseObserver<SynopticDescription>() {
@@ -112,7 +113,7 @@ public class SynopticPresenter extends ModelObject {
 
 	        @Override
 	        public void onError(Exception e) {
-	            e.printStackTrace();
+	            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 	            clearComponents();
 	        }
 
@@ -123,7 +124,7 @@ public class SynopticPresenter extends ModelObject {
 	            }
 	        }
 	    };
-	    
+
         ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
         observingSynopticModel.getSynopticObservable().subscribe(descriptionObserver);
 	}
@@ -135,7 +136,7 @@ public class SynopticPresenter extends ModelObject {
 
     /**
      * Gets the navigator.
-     * 
+     *
      * @return the navigator
      */
 	public NavigationPresenter navigator() {
@@ -144,7 +145,7 @@ public class SynopticPresenter extends ModelObject {
 
     /**
      * The hierarchy of components above the current component.
-     * 
+     *
      * @return the current trail
      */
 	public List<String> currentTrail() {
@@ -158,7 +159,7 @@ public class SynopticPresenter extends ModelObject {
 
     /**
      * The names of available targets.
-     * 
+     *
      * @return the names of available targets
      */
 	public List<String> getTargets() {
@@ -173,7 +174,7 @@ public class SynopticPresenter extends ModelObject {
 
     /**
      * Navigates to a target based on a name.
-     * 
+     *
      * @param targetName
      *            the target to navigate to
      */
@@ -185,7 +186,7 @@ public class SynopticPresenter extends ModelObject {
 
     /**
      * Navigates to a target.
-     * 
+     *
      * @param target
      *            the target to navigate to.
      */
@@ -203,13 +204,13 @@ public class SynopticPresenter extends ModelObject {
             }
             return;
         }
-        
+
         navigator.setCurrentTarget(targets.get(target.name()));
     }
 
     /**
      * Whether this target is valid.
-     * 
+     *
      * @param target
      *            the target to check
      * @return true if this target is valid.
@@ -230,7 +231,7 @@ public class SynopticPresenter extends ModelObject {
 
 	/**
      * The components for the instrument view to render.
-     * 
+     *
      * @return the components
      */
 	public List<? extends Component> components() {
@@ -287,10 +288,10 @@ public class SynopticPresenter extends ModelObject {
 		this.components = new ArrayList<>(components);
         firePropertyChange(SynopticView.COMPONENTS_CHANGE, null, components());
 	}
-	
+
     /**
      * Gets whether the beam is shown.
-     * 
+     *
      * @return true if the beam is shown
      */
 	public boolean showBeam() {

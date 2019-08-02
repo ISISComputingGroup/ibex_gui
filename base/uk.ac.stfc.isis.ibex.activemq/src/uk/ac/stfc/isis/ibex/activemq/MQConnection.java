@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -28,6 +28,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -73,7 +74,7 @@ public class MQConnection extends ModelObject implements Runnable {
 
     /**
      * Creates an activeMQ connection.
-     * 
+     *
      * @param initialHost
      *            The initial host instrument to connect to.
      * @param username
@@ -91,7 +92,7 @@ public class MQConnection extends ModelObject implements Runnable {
 
     /**
      * Sets the credentials for the connection.
-     * 
+     *
      * @param username
      *            The username to connect with.
      * @param password
@@ -148,13 +149,13 @@ public class MQConnection extends ModelObject implements Runnable {
             }
             sleep(ONE_SECOND);
         }
-    
+
         disconnect();
     }
 
     /**
      * Set the connection error, blank no error.
-     * 
+     *
      * @param connectionError
      *            connection error
      */
@@ -178,7 +179,7 @@ public class MQConnection extends ModelObject implements Runnable {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
     }
 
@@ -236,7 +237,7 @@ public class MQConnection extends ModelObject implements Runnable {
 
     /**
      * Updates the URL of the connection to a new instrument.
-     * 
+     *
      * @param host
      *            The new host instrument.
      */
@@ -248,7 +249,7 @@ public class MQConnection extends ModelObject implements Runnable {
 
         String oldjmsUrl = jmsUrl;
         jmsUrl = PROTOCOL + host + ":" + ActiveMQ.JMS_PORT;
-        
+
         if (oldjmsUrl != null && !jmsUrl.equals(oldjmsUrl)) {
             // Disconnect and reconnect
             disconnect();

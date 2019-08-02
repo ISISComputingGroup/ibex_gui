@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This is class allows the source observable in ForwardingObservable to be
@@ -93,7 +95,7 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
         try {
             castNewSource = (ClosableObservable<T>) newSource;
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
             return;
         }
 

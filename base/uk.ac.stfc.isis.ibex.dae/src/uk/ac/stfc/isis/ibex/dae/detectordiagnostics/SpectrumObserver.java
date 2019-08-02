@@ -21,8 +21,11 @@
  */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * An implementation of an observer that ignores nulls and prints stack traces on error.
@@ -31,7 +34,9 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public abstract class SpectrumObserver<T> implements Observer<T> {
 
-    /**
+    private static final Logger LOG = IsisLog.getLogger(SpectrumObserver.class);
+
+	/**
      * This method is called when a non-null value is available.
      *
      * @param value the value
@@ -53,8 +58,7 @@ public abstract class SpectrumObserver<T> implements Observer<T> {
      */
     @Override
     public void onError(Exception e) {
-        IsisLog.getLogger(getClass()).error(e.getMessage());
-        e.printStackTrace();
+        LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
     }
 
     /**
