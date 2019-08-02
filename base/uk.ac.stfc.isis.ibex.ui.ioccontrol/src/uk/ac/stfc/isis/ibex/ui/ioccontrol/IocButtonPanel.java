@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocButtonPanel extends Composite {
@@ -45,12 +44,12 @@ public class IocButtonPanel extends Composite {
 	private final Button start;
 	private final Button stop;
 	private final Button restart;
-
+	
 	private DataBindingContext bindingContext;
-
+	
     private IocState ioc;
 	private final IocControl control;
-
+	
 	public IocButtonPanel(Composite parent, int style, final IocControl control) {
 		super(parent, style);
 		this.control = control;
@@ -59,7 +58,7 @@ public class IocButtonPanel extends Composite {
         gridLayout.marginWidth = 10;
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
-
+		
 		start = new Button(this, SWT.NONE);
         start.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		start.setText("Start");
@@ -71,7 +70,7 @@ public class IocButtonPanel extends Composite {
 				}
 			}
 		});
-
+		
 		stop = new Button(this, SWT.NONE);
 		stop.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		stop.setText("Stop");
@@ -83,7 +82,7 @@ public class IocButtonPanel extends Composite {
 				}
 			}
 		});
-
+		
 		restart = new Button(this, SWT.NONE);
 		restart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		restart.setText("Restart");
@@ -106,15 +105,15 @@ public class IocButtonPanel extends Composite {
 			bindingContext = null;
 			return;
 		}
-
+		
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
-
-		bindingContext = Utils.getNewDatabindingContext();
-
+		
+		bindingContext = new DataBindingContext();
+		
 		bindStart(ioc);
-		bindStop(ioc);
+		bindStop(ioc);		
 		bindRestart(ioc);
 	}
 
@@ -122,15 +121,15 @@ public class IocButtonPanel extends Composite {
     private void bindStart(final IocState ioc) {
 		IConverter startConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {
+			public Object convert(Object arg0) {				
 				return control.startIoc().getCanSend() && !ioc.getIsRunning();
 			}
 
 		};
-
+		
 		UpdateValueStrategy startStrategy = new UpdateValueStrategy();
 		startStrategy.setConverter(startConverter);
-
+		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("canSend").observe(control.startIoc()), null, startStrategy);
 		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("isRunning").observe(ioc), null, startStrategy);
 	}
@@ -138,31 +137,31 @@ public class IocButtonPanel extends Composite {
     private void bindStop(final IocState ioc) {
 		IConverter stopConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {
+			public Object convert(Object arg0) {				
 				return control.stopIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};
-
+		
 		UpdateValueStrategy stopStrategy = new UpdateValueStrategy();
 		stopStrategy.setConverter(stopConverter);
-
+		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("canSend").observe(control.stopIoc()), null, stopStrategy);
 		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("isRunning").observe(ioc), null, stopStrategy);
 	}
-
+	
     private void bindRestart(final IocState ioc) {
 		IConverter restartConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {
+			public Object convert(Object arg0) {				
 				return control.restartIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};
-
+		
 		UpdateValueStrategy restartStrategy = new UpdateValueStrategy();
 		restartStrategy.setConverter(restartConverter);
-
+		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("canSend").observe(control.restartIoc()), null, restartStrategy);
 		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("isRunning").observe(ioc), null, restartStrategy);
 	}

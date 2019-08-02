@@ -21,7 +21,14 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 
 import static java.util.Objects.requireNonNull;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+
 public class Unsubscriber<T> implements Subscription {
+
+	private static final Logger LOG = IsisLog.getLogger(Unsubscriber.class);
 
 	private Subscribable<T> subscribable;
 	private T subscriber;
@@ -38,5 +45,20 @@ public class Unsubscriber<T> implements Subscription {
 	public void cancelSubscription() {
 		subscribable.unsubscribe(subscriber);
 		subscriber = null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void finalize() throws Throwable {
+		try {
+			if (subscriber != null) {
+				LoggerUtils.logIfExtraDebug(LOG, "Subscription " + toString() + " GC'd before unsubscribe was called. Subscriber: "+ subscriber);
+				subscribable.unsubscribe(subscriber);
+			}
+		} finally {
+			super.finalize();
+		}
 	}
 }

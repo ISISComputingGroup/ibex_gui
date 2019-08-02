@@ -7,23 +7,22 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Converts the source data to a specific type via a converter.
@@ -32,14 +31,14 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * @param <T> The required type to transform to.
  */
 public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
-
-	private static final Logger LOG = IsisLog.getLogger(ConvertingObservable.class);
+	
+	private static final Logger LOG = Logger.getLogger(ConvertingObservable.class.getName());
 
 	/**
 	 * Contains the transformation function to convert the raw source value to the new observable value.
 	 */
 	private final Converter<R, T> formatter;
-
+	
 	/**
 	 * @param source The source of raw data
 	 * @param formatter Converts raw data from the source to the value supplied by this observable
@@ -49,15 +48,15 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 		// setValue can be set any time from this call so the formatter must be set first.
 		setSource(source);
 	}
-
+	
 	@Override
 	protected T transform(R value) {
 		T newValue = null;
-
+		
 		// Synchronize with the observable source so that further updates are held whilst
 		// the data is being processed. Particularly important for large transforms
 		// like synoptics and configs.
-
+		
 		synchronized (this.source) {
 			if (formatter != null && value != null) {
 				try {
@@ -66,7 +65,7 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 					setError(e);
 				}
 			} else if (value == null) {
-				LOG.warn("Null Value discarded in converting observable: " + toString());
+				LOG.warning("Null Value discarded in converting observable: " + toString());
 			}
 		}
 		return newValue;

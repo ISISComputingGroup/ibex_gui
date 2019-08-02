@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -32,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -44,34 +45,33 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
  * IOC.
- *
- * In the list of available macros a description and pattern is also shown. The macro can only be
+ * 
+ * In the list of available macros a description and pattern is also shown. The macro can only be 
  * set if the pattern is matched by the new value.
- *
+ * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocMacroDetailsPanel extends Composite {
 	private Text name;
 	private Text value;
 	private MacroTable displayMacrosTable;
-    private DataBindingContext macroBindingContext = Utils.getNewDatabindingContext();
+    private DataBindingContext macroBindingContext = new DataBindingContext();
 	private UpdateValueStrategy valueStrategy = new UpdateValueStrategy();
 	private MacroValueValidator valueValidator;
 	private Label macroValueErrorLabel;
-
+	
 	private Macro macro;
 	private Label errorIconLabel;
 	private Button clearMacro;
     private Image scaled;
-
+	
     /**
      * Constructor for the macro details panel.
-     *
+     * 
      * @param parent
      *            The parent composite.
      * @param style
@@ -80,7 +80,7 @@ public class IocMacroDetailsPanel extends Composite {
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
-
+		
         displayMacrosTable = new MacroTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
@@ -105,19 +105,19 @@ public class IocMacroDetailsPanel extends Composite {
         Label lblName = new Label(cmpSelectedPv, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name");
-
+		
         name = new Text(cmpSelectedPv, SWT.BORDER);
 		name.setEditable(false);
         name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-
+		
         Label lblValue = new Label(cmpSelectedPv, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblValue.setText("Value");
-
+		
         value = new Text(cmpSelectedPv, SWT.BORDER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setEnabled(false);
-
+		
         clearMacro = new Button(cmpSelectedPv, SWT.NONE);
 		clearMacro.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -146,11 +146,11 @@ public class IocMacroDetailsPanel extends Composite {
         macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
 
 	}
-
+	
 	/**
      * Called when changing IOCs. Should reset everything such as name,
      * selection etc.
-     *
+     * 
      * @param macros
      *            The macros to display of the current IOC
      * @param canEdit
@@ -158,53 +158,53 @@ public class IocMacroDetailsPanel extends Composite {
      */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
-
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		
+        DataBindingContext bindingContext = new DataBindingContext();
 
 		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
 		valueStrategy.setBeforeSetValidator(valueValidator);
-
+		
 		setValueEditable(canEdit);
-
-		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel),
+		
+		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
 				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
-
+		
 		displayMacrosTable.setRows(macros);
 		displayMacrosTable.deselectAll();
-
+		
 		name.setText("");
 	}
-
+	
 	/**
 	 * Set a new selected macro.
-	 *
+	 * 
 	 * @param macro The macro to set
 	 */
-	public void setSelectedMacro(Macro macro) {
+	public void setSelectedMacro(Macro macro) {		
 		this.macro = macro;
-
+		
 		valueValidator.setMacro(macro);
 
         // Remove binding to previous macro
         macroBindingContext.dispose();
-        macroBindingContext = Utils.getNewDatabindingContext();
+        macroBindingContext = new DataBindingContext();
 
         macroBindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value),
                 BeanProperties.value("value").observe(macro), valueStrategy, null);
 	}
-
+	
 	private void setValueEditable(boolean enabled) {
 		value.setEnabled(enabled);
 		if (!enabled) {
 			value.setText("");
 		}
-
+		
 		// Force the validation to update, for example when selecting a macro
 		valueValidator.validate("");
-
+		
 		setClearButtonEnabled(enabled);
 	}
-
+	
 	private void setClearButtonEnabled(boolean enabled) {
 		if (macro == null || Strings.isNullOrEmpty(macro.getValue())) {
 			clearMacro.setEnabled(false);

@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
 
 /**
@@ -53,10 +52,10 @@ public class BlockSelectorPanel extends Composite {
 	private final Text pvAddress;
 	private final BlocksTable blockTable;
 	private DataBindingContext bindingContext;
-
+	
     /**
      * The constructor for the composite.
-     *
+     * 
      * @param parent
      *            The parent composite that this panel belongs to.
      * @param style
@@ -66,46 +65,46 @@ public class BlockSelectorPanel extends Composite {
      */
     public BlockSelectorPanel(Composite parent, int style, Collection<EditableBlock> availableBlocks) {
 		super(parent, style);
-
+		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-
+		
 		Group grpPV = new Group(this, SWT.NONE);
 		grpPV.setText("Block Selector");
-
+		
 		GridLayout gdGrpPV = new GridLayout(2, false);
 		grpPV.setLayout(gdGrpPV);
-
+		
 		Label lblBlockName = new Label(grpPV, SWT.NONE);
 		lblBlockName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblBlockName.setText("Block Name:");
-
+		
 		blockName = new Text(grpPV, SWT.BORDER);
 		GridData gdBlockName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gdBlockName.widthHint = 250;
 		blockName.setLayoutData(gdBlockName);
-
+		
 		Label lblPvAddress = new Label(grpPV, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPvAddress.setText("Block PV address:");
-
+		
 		pvAddress = new Text(grpPV, SWT.BORDER);
 		GridData gdPvAddress = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gdPvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gdPvAddress);
 		pvAddress.setEditable(false);
-
+		
 		blockName.addModifyListener(new ModifyListener() {
 			@Override
             public void modifyText(ModifyEvent arg0) {
 				blockTable.setSearch(blockName.getText());
 			}
 		});
-
+		
 		blockTable = new BlocksTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, false);
 		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gdPvTable.heightHint = 300;
 		blockTable.setLayoutData(gdPvTable);
-
+		
 		blockTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
             public void selectionChanged(SelectionChangedEvent arg0) {
@@ -117,20 +116,20 @@ public class BlockSelectorPanel extends Composite {
 				}
 			}
 		});
-
+		
         blockTable.setRows(availableBlocks);
 		blockTable.refresh();
 	}
-
+	
     /**
      * Set the block that the information on the panel will be bound to.
-     *
+     * 
      * @param block
      *            The block that provides the information.
      */
     public void setBlock(Block block) {
 		//Set up the binding here
-		bindingContext = Utils.getNewDatabindingContext();
+		bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(blockName),
                 BeanProperties.value("name").observe(block));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress),

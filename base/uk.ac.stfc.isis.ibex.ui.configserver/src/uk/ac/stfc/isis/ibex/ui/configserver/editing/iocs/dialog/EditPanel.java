@@ -6,18 +6,18 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- *
+ * 
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -66,7 +65,7 @@ public class EditPanel extends Composite {
 
     /**
      * Constructor for the Edit IOC panel.
-     *
+     * 
      * @param parent
      *            The parent composite.
      * @param style
@@ -142,7 +141,7 @@ public class EditPanel extends Composite {
 
     /**
      * Sets the IOC used by the panel.
-     *
+     * 
      * @param editableIoc
      *            The IOC.
      */
@@ -157,12 +156,12 @@ public class EditPanel extends Composite {
 
     /**
      * Binds view model values to widgets.
-     *
+     * 
      * @param editableIoc
      *            The IOC view model.
      */
     private void bind(EditableIoc editableIoc) {
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
@@ -176,7 +175,7 @@ public class EditPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoRestart),
                 BeanProperties.value("editable").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(simLevel.getCombo()),
-                BeanProperties.value("editable").observe(editableIoc));
+                BeanProperties.value("editable").observe(editableIoc));  
     }
 
 }

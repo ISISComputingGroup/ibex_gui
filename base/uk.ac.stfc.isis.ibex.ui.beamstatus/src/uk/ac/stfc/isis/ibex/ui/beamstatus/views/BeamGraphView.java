@@ -55,7 +55,6 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -262,7 +261,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 */
 	private void bind(BeamStatus bs) {
 		
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		DataBindingContext bindingContext = new DataBindingContext();
 
 		
 		bindingContext.bindValue(WidgetProperties.text().observe(currentTS1),

@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -38,8 +38,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
-
 /**
  * The dialog used to save a synoptic.
  */
@@ -48,7 +46,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
     private static final int DIALOG_WIDTH = 400;
     private static final int DIALOG_HEIGHT = 230;
-
+    
     private Text txtName;
     private Button okButton;
 
@@ -57,7 +55,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
     /**
      * Constructor for a dialog box to ask the user what name they wish to save
      * a synoptic under.
-     *
+     * 
      * @param parent
      *            The parent shell
      * @param model
@@ -74,7 +72,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         super.configureShell(shell);
         shell.setText("Save Synoptic As");
     }
-
+    
     @Override
     protected Point getInitialSize() {
         return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
@@ -107,7 +105,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
     }
 
     private void bind() {
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
 
         model.addPropertyChangeListener("error", new PropertyChangeListener() {
 
@@ -128,7 +126,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
     /**
      * Create contents of the button bar.
-     *
+     * 
      * @param parent
      */
     @Override

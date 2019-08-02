@@ -7,13 +7,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -31,8 +31,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
@@ -66,13 +64,13 @@ public class BlockRunControlPanel extends Composite {
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         btnEnabled.setText("Enabled");
-
+        
         setModel(viewModel);
     }
-
+	
 	private void setModel(BlockRunControlViewModel viewModel) {
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
-
+		DataBindingContext bindingContext = new DataBindingContext();
+		
         bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimit),
@@ -82,7 +80,7 @@ public class BlockRunControlPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
                 BeanProperties.value(BlockRunControlViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
-                BeanProperties.value(BlockRunControlViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel));
-
+                BeanProperties.value(BlockRunControlViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel)); 
+        
 	}
 }

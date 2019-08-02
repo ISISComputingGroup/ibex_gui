@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 /**
@@ -65,7 +64,7 @@ public class RunControlEditorPanel extends Composite {
     private boolean canSend;
 
     private final RunControlViewModel viewModel;
-
+	
     private Subscription saveAsSubscription;
 
 	/**
@@ -81,7 +80,7 @@ public class RunControlEditorPanel extends Composite {
 
     /**
      * Creates the panel for editing the run control on one block.
-     *
+     * 
      * @param parent
      *            The parent composite.
      * @param style
@@ -94,7 +93,7 @@ public class RunControlEditorPanel extends Composite {
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
             final RunControlViewModel viewModel) {
 		super(parent, style);
-
+		
 		this.configServer = configServer;
         this.viewModel = viewModel;
 
@@ -103,25 +102,25 @@ public class RunControlEditorPanel extends Composite {
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
         grpSelectedSetting.setText("Block Settings");
         grpSelectedSetting.setLayout(new GridLayout(7, false));
-
+		
 		Label lblName = new Label(grpSelectedSetting, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
-
+		
 		name = new Label(grpSelectedSetting, SWT.NONE);
         GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1);
 		gdLblName.widthHint = 150;
 		name.setLayoutData(gdLblName);
-
+		
 		Label lblLowLimit = new Label(grpSelectedSetting, SWT.NONE);
 		lblLowLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblLowLimit.setText("Low Limit:");
-
+		
 		txtLowLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		GridData gdTxtLow = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gdTxtLow.widthHint = 50;
 		txtLowLimit.setLayoutData(gdTxtLow);
-
+		
         spacerLabel = new Label(grpSelectedSetting, SWT.NONE);
         spacerLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         spacerLabel.setText(" ");
@@ -129,19 +128,19 @@ public class RunControlEditorPanel extends Composite {
 		Label lblHighLimit = new Label(grpSelectedSetting, SWT.NONE);
 		lblHighLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblHighLimit.setText("High Limit:");
-
+		
 		txtHighLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		GridData gdTxtHigh = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gdTxtHigh.widthHint = 50;
 		txtHighLimit.setLayoutData(gdTxtHigh);
-
+		
         spacerLabel2 = new Label(grpSelectedSetting, SWT.NONE);
         spacerLabel2.setText(" ");
 
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
-
+		
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreSingle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
         btnRestoreSingle.setText("Restore Configuration Values");
@@ -182,7 +181,7 @@ public class RunControlEditorPanel extends Composite {
 
         setModel(viewModel);
         setBlock(null);
-
+        
         parent.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
@@ -192,8 +191,8 @@ public class RunControlEditorPanel extends Composite {
 	}
 
     private void setModel(RunControlViewModel viewModel) {
-    	DataBindingContext bindingContext = Utils.getNewDatabindingContext();
-
+    	DataBindingContext bindingContext = new DataBindingContext();
+    	
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSend),
                 BeanProperties.value("sendEnabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtLowLimit),
@@ -203,7 +202,7 @@ public class RunControlEditorPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
                 BeanProperties.value(RunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
     }
-
+	
     private void setAllEnabled(boolean enabled) {
         txtLowLimit.setEnabled(enabled);
         txtHighLimit.setEnabled(enabled);
@@ -214,7 +213,7 @@ public class RunControlEditorPanel extends Composite {
 
     /**
      * Change the block that we are examining the run controls of.
-     *
+     * 
      * @param block
      *            The new block to examine.
      */

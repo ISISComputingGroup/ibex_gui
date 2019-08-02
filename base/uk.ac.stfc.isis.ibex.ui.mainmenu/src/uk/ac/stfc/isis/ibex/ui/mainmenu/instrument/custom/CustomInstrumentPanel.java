@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * A view for the definition of a new custom instrument info.
@@ -87,7 +86,7 @@ public class CustomInstrumentPanel extends Composite {
     }
 
     private void bindModel(CustomIntrumentViewModel viewModel) {
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtPVPrefix),
                 BeanProperties.value("pvPrefix").observe(viewModel));

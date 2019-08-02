@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -21,12 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation> {
-
+    
     /**
      * Instantiates a new device screens table.
      *
@@ -44,12 +44,12 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
      * @param tableStyle the table style
      */
     public DetectorDiagnosticsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle);
-        initialise();
+        super(parent, style, tableStyle);       
+        initialise();        
     }
-
+    
     private static final String DISPLAY_STRING_FOR_NULL_VALUE = "No data";
-
+    
     @Override
     protected void addColumns() {
         createSpectrumNumberColumn();
@@ -57,25 +57,25 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         createMaxSpecBinCountColumn();
         createIntegralColumn();
     }
-
+    
     /**
      * Binds this table to the underlying data.
-     *
+     * 
      * @param model the viewmodel for the view to bind to.
      */
     public void bind(DetectorDiagnosticsViewModel model) {
-        Utils.getNewDatabindingContext().bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model));
-
+        (new DataBindingContext()).bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model)); 
+        
         model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
-
+            
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setRows(model.getSpectra());
             }
         });
-
-        model.startObserving();
-    }
+        
+        model.startObserving(); 
+    } 
 
     private void createSpectrumNumberColumn() {
         createColumn("Spectrum number", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
@@ -87,7 +87,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
-
+            
             @Override
             public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
         		return new Comparable<SpectrumInformation>() {
@@ -103,7 +103,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         	}
         });
     }
-
+    
     private void createCountRateColumn() {
         createColumn("Count rate", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
             @Override
@@ -114,7 +114,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
-
+            
             @Override
             public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
         		return new Comparable<SpectrumInformation>() {
@@ -130,7 +130,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         	}
         });
     }
-
+    
     private void createMaxSpecBinCountColumn() {
         createColumn("Maximum", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
             @Override
@@ -141,7 +141,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
-
+            
             @Override
             public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
         		return new Comparable<SpectrumInformation>() {
@@ -157,7 +157,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
         	}
         });
     }
-
+    
     private void createIntegralColumn() {
         createColumn("Integral", 20, new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("integral")) {
             @Override
@@ -168,7 +168,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
                     return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
-
+            
             @Override
             public Comparable<SpectrumInformation> comparableForRow(final SpectrumInformation row) {
         		return new Comparable<SpectrumInformation>() {

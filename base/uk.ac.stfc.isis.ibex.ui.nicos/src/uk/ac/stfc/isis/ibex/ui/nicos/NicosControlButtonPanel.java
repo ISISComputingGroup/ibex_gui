@@ -6,18 +6,18 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- *
+ * 
  */
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 
 /**
@@ -40,7 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosControlButtonPanel extends Composite {
 
-    DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+    DataBindingContext bindingContext = new DataBindingContext();
 
     private Button btnStop;
     private Button btnTogglePause;
@@ -48,7 +47,7 @@ public class NicosControlButtonPanel extends Composite {
 
     /**
      * The constructor.
-     *
+     * 
      * @param parent
      *            The parent composite
      * @param style
@@ -92,7 +91,7 @@ public class NicosControlButtonPanel extends Composite {
                 BeanProperties.value("enableButtons").observe(statusModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
-
+        
         btnTogglePause.addListener(SWT.Selection, e -> statusModel.toggleExecution());
         btnStop.addListener(SWT.Selection, e -> statusModel.stopExecution());
     }

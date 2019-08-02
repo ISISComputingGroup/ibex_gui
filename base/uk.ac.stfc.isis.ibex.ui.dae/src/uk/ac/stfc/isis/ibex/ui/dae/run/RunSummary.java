@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
@@ -50,13 +49,13 @@ public class RunSummary {
 	private WritableObservingTextBox title;
     private Button btnDisplayTitle;
 	private LogMessageBox messageBox;
-
+	
 	private DaeActionButtonPanel daeButtonPanel;
     private RunSummaryViewModel model;
-
+    
     private static final int FIXED_WIDTH = 825;
     private static final int FIXED_HEIGHT = 400;
-
+	
     /**
      * Creates a view that shows a summary of the current run.
      */
@@ -67,7 +66,7 @@ public class RunSummary {
 
     /**
      * Instantiates this viewpart.
-     *
+     * 
      * @param parent The parent composite obtained from the eclipse context
      */
     @PostConstruct
@@ -78,7 +77,7 @@ public class RunSummary {
         scrolled.setExpandHorizontal(true);
         scrolled.setExpandVertical(true);
         scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
-
+        
     	Composite content = new Composite(scrolled, SWT.NONE);
     	content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         scrolled.setContent(content);
@@ -89,13 +88,13 @@ public class RunSummary {
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
         content.setLayout(gridLayout);
-
+        
         Composite lhsComposite = new Composite(content, SWT.NONE);
 		lhsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         GridLayout gl = new GridLayout(1, false);
         gl.verticalSpacing = 25;
         lhsComposite.setLayout(gl);
-
+        
         Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
         infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         infoComposite.setLayout(new GridLayout(5, false));
@@ -103,7 +102,7 @@ public class RunSummary {
 		Label lblInstrument = new Label(infoComposite, SWT.NONE);
 		lblInstrument.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblInstrument.setText("Instrument:");
-
+		
 		instrument = new Label(infoComposite, SWT.NONE);
 		GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdInstrument.minimumWidth = 100;
@@ -113,46 +112,46 @@ public class RunSummary {
 		Label lblRunStatus = new Label(infoComposite, SWT.NONE);
 		lblRunStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblRunStatus.setText("Run Status:");
-
+		
 		runStatus = new Label(infoComposite, SWT.NONE);
 		GridData gdRunStatus = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
 		gdRunStatus.widthHint = 100;
 		gdRunStatus.minimumWidth = 100;
 		runStatus.setLayoutData(gdRunStatus);
 		runStatus.setText("UNKNOWN");
-
+		
 		Label spacer = new Label(infoComposite, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-
+		
 		Label lblRunNumber = new Label(infoComposite, SWT.NONE);
 		lblRunNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblRunNumber.setText("Run Number:");
-
+		
 		runNumber = new Label(infoComposite, SWT.NONE);
 		GridData gdRunNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdRunNumber.minimumWidth = 100;
 		gdRunNumber.widthHint = 100;
 		runNumber.setLayoutData(gdRunNumber);
 		runNumber.setText("UNKNOWN");
-
+		
 		Label lblIsisCycle = new Label(infoComposite, SWT.NONE);
 		lblIsisCycle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblIsisCycle.setText("ISIS Cycle:");
-
+		
 		isisCycle = new Label(infoComposite, SWT.NONE);
 		GridData gdIsisCycle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdIsisCycle.minimumWidth = 100;
 		gdIsisCycle.widthHint = 100;
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
-
+		
         Label spacer2 = new Label(infoComposite, SWT.NONE);
         spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
 		Label lblTitle = new Label(infoComposite, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTitle.setText("Title:");
-
+		
 		title = new WritableObservingTextBox(infoComposite, SWT.NONE, model.title());
 		title.setFont(SWTResourceManager.getFont("Arial", 14, SWT.NORMAL));
 		GridData gdTitle = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
@@ -175,20 +174,20 @@ public class RunSummary {
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
+		
         daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
+		
         setModel(model);
 	}
 
     /**
      * Binds run model properties to GUI elements.
-     *
+     * 
      * @param viewModel the model containing the run information
      */
     private void setModel(RunSummaryViewModel viewModel) {
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(instrument), BeanProperties.value("value").observe(viewModel.instrument()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runStatus), BeanProperties.value("value").observe(viewModel.runStatus()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
@@ -198,6 +197,6 @@ public class RunSummary {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
                 BeanProperties.value("value").observe(viewModel.displayTitle().canSetValue()));
 
-		messageBox.setModel(viewModel.logMessageSource());
+		messageBox.setModel(viewModel.logMessageSource());		
 	}
 }

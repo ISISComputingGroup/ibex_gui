@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.beamstatus.TS1Observables;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * The GUI panel for displaying information from target station 1.
@@ -48,7 +47,7 @@ public class TargetStationOnePanel extends Composite {
 
     /**
      * The constructor.
-     *
+     * 
      * @param parent the parent
      * @param style the SWT style
      */
@@ -117,7 +116,7 @@ public class TargetStationOnePanel extends Composite {
     }
 
     private void bind(TS1Observables ts) {
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
                 BeanProperties.value("value").observe(ts.beam()));
         bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps()));

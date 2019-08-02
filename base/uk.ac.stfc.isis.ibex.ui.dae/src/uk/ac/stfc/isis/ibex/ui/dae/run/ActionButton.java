@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * ActionButtons: on press: will perform the action assigned to them.
@@ -38,14 +37,14 @@ public class ActionButton extends Button {
 
     /**
      * Create a new action button.
-     *
+     * 
      * @param parent a composite control which will be the parent of the new instance (cannot be null)
      * @param style the style of control to construct
      * @param action the action the button should perform
      */
 	public ActionButton(Composite parent, int style, Action action) {
 		super(parent, style);
-
+		
 		if (action != null) {
 			bind(action);
 		}
@@ -55,11 +54,11 @@ public class ActionButton extends Button {
 	protected void checkSubclass() {
 		// Allow sub-classing
 	}
-
+	
 	private void bind(final Action action) {
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("canExecute").observe(action));
-
+		
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

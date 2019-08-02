@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -36,8 +36,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
 
 /**
- * The handler class for editing the current config.
- *
+ * The handler class for editing the current config. 
+ * 
  * It sets the menu labels, and opens the dialogue for editing or viewing a configuration.
  */
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
@@ -52,7 +52,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	 * This is an inner anonymous class will disable the menu item if the current config is not available.
 	 */
     private Observer<Configuration> currentConfigObserver = new BaseObserver<Configuration>() {
-
+		
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			canViewOrEditConfig(isConnected);
@@ -62,13 +62,13 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 		public void onError(Exception e) {
 			canViewOrEditConfig(false);
 		}
-
+		
 		private void canViewOrEditConfig(boolean isConnected) {
 			setCanExecute(isConnected);
 		}
 	};
-
-
+	
+	
     /**
      * Create the handler for opening the editor via the menu.
      */
@@ -84,18 +84,18 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	 */
 	@Override
     public void safeExecute(Shell shell) {
-		ConfigHelper helper;
+        ConfigHelper helper;
         if (canWrite)  {
         	helper = new EditConfigHelper(shell, SERVER);
         } else {
         	helper = new ViewConfigHelper(shell);
         }
-		helper.createDialogCurrent();
+        helper.createDialogCurrent();
 	}
 
 	/**
 	 * Generate the menu item as the menu is about to be shown.
-	 *
+	 * 
 	 * It must be dynamic because the menu has a different label depending on the state of the config pv.
 	 * @param items menu items to add to
 	 */
@@ -107,14 +107,14 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 		} else {
 			menuText = READ_ONLY_TEXT;
 		}
-
+				
 		MDirectMenuItem dynamicItem = MMenuFactory.INSTANCE.createDirectMenuItem();
-
+		
 	    dynamicItem.setLabel(menuText);
 	    dynamicItem.setMnemonics(MENU_MNEMONIC);
 	    dynamicItem.setContributorURI(BundleConstants.getPlatformPlugin()); // plugin in which this menu item exists
-	    dynamicItem.setContributionURI(BundleConstants.getClassURI(EditCurrentConfigHandler.class));
-	    items.add(dynamicItem);
+	    dynamicItem.setContributionURI(BundleConstants.getClassURI(EditCurrentConfigHandler.class));    
+	    items.add(dynamicItem);	
 	}
 
 	@Override

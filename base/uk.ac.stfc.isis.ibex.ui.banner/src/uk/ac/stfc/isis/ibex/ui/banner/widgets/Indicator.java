@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -29,7 +29,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
 /**
@@ -39,7 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 public class Indicator extends Composite {
 
 	private final StyledText text;
-
+	
 	/**
 	 * Constructor.
 	 * @param parent Parent of indicator.
@@ -51,7 +50,7 @@ public class Indicator extends Composite {
 		super(parent, style);
 		setEnabled(false);
         setLayout(new FillLayout(SWT.HORIZONTAL));
-
+		
 		text = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
         text.setMargins(0, 1, 0, 2);
 		text.setText("Lorem Ipsum");
@@ -60,14 +59,14 @@ public class Indicator extends Composite {
         text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text.setFont(font);
 		text.setVisible(true);
-
+		
 		if (model != null) {
 			bind(model);
 		}
 	}
 
 	private void bind(IndicatorModel model) {
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(model.text()));
 		bindingContext.bindValue(WidgetProperties.foreground().observe(text), BeanProperties.value("value").observe(model.color()));
 		bindingContext.bindValue(WidgetProperties.visible().observe(text), BeanProperties.value("value").observe(model.availability()));

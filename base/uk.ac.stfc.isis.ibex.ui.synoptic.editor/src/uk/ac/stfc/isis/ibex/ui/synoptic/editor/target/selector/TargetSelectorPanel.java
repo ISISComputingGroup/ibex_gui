@@ -234,7 +234,7 @@ public class TargetSelectorPanel extends Composite {
     }
     
     private void bind() {
-        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
                 BeanProperties.value("name").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(txtSelectedTarget),

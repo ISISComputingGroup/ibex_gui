@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or
+* https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -22,14 +22,13 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 
 /**
@@ -45,10 +44,10 @@ public class Banner extends Composite {
 	private final Label lblShutter;
 	private final Label shutter;
 	private final Label simMode;
-
+	
 	/**
-	 * The constructor.
-	 *
+	 * The constructor. 
+	 * 
 	 * @param parent The parent composite
 	 * @param style The SWT style
 	 * @param model The model holding data to display in the view
@@ -64,37 +63,37 @@ public class Banner extends Composite {
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
-
+		
 		bannerText = new Label(this, SWT.WRAP | SWT.CENTER);
 		bannerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bannerText.setFont(titleFont);
 		bannerText.setText("INSTRUMENT   is   RUNNING");
-
+		
 		details = new Composite(this, SWT.NONE);
 		details.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 		details.setLayout(new GridLayout(5, false));
 		details.setBackgroundMode(SWT.INHERIT_DEFAULT);
-
+		
 		lblRun = new Label(details, SWT.NONE);
 		lblRun.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblRun.setFont(textFont);
 		lblRun.setText("Run:");
-
+		
 		runNumber = new Label(details, SWT.NONE);
 		runNumber.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		runNumber.setFont(textFont);
 		runNumber.setText("00000001");
-
+		
 		simMode = new Label(details, SWT.NONE);
 		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		simMode.setFont(simulationModeFont);
 		simMode.setText("SIMULATION MODE");
-
+		
 		lblShutter = new Label(details, SWT.NONE);
 		lblShutter.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblShutter.setFont(textFont);
 		lblShutter.setText("Shutter:");
-
+		
 		shutter = new Label(details, SWT.NONE);
 		GridData gdShutter = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdShutter.widthHint = 100;
@@ -102,14 +101,14 @@ public class Banner extends Composite {
 		shutter.setLayoutData(gdShutter);
 		shutter.setFont(textFont);
 		shutter.setText("UNKNOWN");
-
+		
 		if (model != null) {
 			bind(model);
 		}
 	}
-
+	
     private void bind(BannerModel model) {
-		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(bannerText), BeanProperties.value("value").observe(model.bannerText()));
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(model.runNumber()));
