@@ -20,6 +20,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 
@@ -40,12 +41,12 @@ public class NicosCurrentScriptContainer {
 	 */
 	public NicosCurrentScriptContainer() {
 		model = Nicos.getDefault().getModel();
-		bindingContext = new DataBindingContext();
+		bindingContext = Utils.getNewDatabindingContext();
 		scriptStatusViewModel = new ScriptStatusViewModel(model);
 	}
-	
+
     private static final Color NEUTRAL = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	
+
     private PropertyChangeListener highlightListener = new PropertyChangeListener() {
 
         @Override
@@ -64,7 +65,7 @@ public class NicosCurrentScriptContainer {
             });
         }
     };
-	
+
     /**
      * Create the view.
      * @param parent injected by eclipse
@@ -74,23 +75,23 @@ public class NicosCurrentScriptContainer {
     public void createCurrentScriptContainer(Composite parent) {
         parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         parent.setLayout(new GridLayout(1, false));
-           
+
         Composite currentScriptExecutingContainer = new Composite(parent, SWT.NONE);
         currentScriptExecutingContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         currentScriptExecutingContainer.setLayout(new GridLayout(3, false));
 
         Label lblCombinedScriptInfo = new Label(currentScriptExecutingContainer, SWT.NONE);
         lblCombinedScriptInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblCombinedScriptInfo), 
+        bindingContext.bindValue(WidgetProperties.text().observe(lblCombinedScriptInfo),
         		BeanProperties.value("combinedScriptInfo").observe(scriptStatusViewModel));
-        
+
         txtCurrentScript = new NumberedStyledText(parent, SWT.V_SCROLL | SWT.BORDER);
         txtCurrentScript.setEditable(false);
         txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
+
         bindingContext.bindValue(WidgetProperties.text().observe(txtCurrentScript),
                 BeanProperties.value("currentlyExecutingScript").observe(model));
- 
+
         model.addPropertyChangeListener("lineNumber", highlightListener);
         model.addPropertyChangeListener("currentlyExecutingScript", highlightListener);
         scriptStatusViewModel.addPropertyChangeListener("highlightColour", highlightListener);

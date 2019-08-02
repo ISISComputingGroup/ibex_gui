@@ -15,21 +15,23 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
+
 @SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupDialog extends Dialog {
 
 	private RBLookupPanel panel;
 	private DataBindingContext bindingContext;
 	private RBLookupViewModel viewModel;
-	
+
 	public RBLookupDialog(Shell parentShell, RBLookupViewModel viewModel) {
 		super(parentShell);
 		this.viewModel = viewModel;
 	}
-	
+
 	@Override
-	protected Control createDialogArea(Composite parent) {	
-		//Prevent the return key from closing the dialog		
+	protected Control createDialogArea(Composite parent) {
+		//Prevent the return key from closing the dialog
 		getShell().addTraverseListener(new TraverseListener() {
 			@Override
 			public void keyTraversed(TraverseEvent e) {
@@ -38,41 +40,41 @@ public class RBLookupDialog extends Dialog {
 				}
 			}
 		});
-		
+
 		panel = new RBLookupPanel(parent, SWT.NONE);
 		panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return panel;
 	}
-	
+
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText("RB Number Lookup");
 	}
-	
+
 	@Override
 	protected Point getInitialSize() {
 		return new Point(550, 475);
 	}
-	
+
 	@Override
 	public void okPressed() {
 		super.okPressed();
 	}
-	
+
 	@Override
 	public void create() {
 		super.create();
 		setModel();
 	}
-	
+
 	public void setModel() {
-		bindingContext = new DataBindingContext();
+		bindingContext = Utils.getNewDatabindingContext();
 
 		Button okButton = getButton(IDialogConstants.OK_ID);
 		bindingContext.bindValue(WidgetProperties.enabled().observe(okButton), BeanProperties.value("okEnabled").observe(viewModel));
-		
+
 		panel.setModel(viewModel);
 	}
 }

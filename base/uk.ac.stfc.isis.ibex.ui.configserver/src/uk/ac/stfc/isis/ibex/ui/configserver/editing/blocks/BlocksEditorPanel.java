@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -49,6 +49,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 
 /**
@@ -64,26 +65,26 @@ public class BlocksEditorPanel extends Composite {
 	private final Button remove;
 	private final Button copy;
 	private final BlocksEditorViewModel viewModel;
-	
+
 	private EditableConfiguration config;
-	
+
 	/**
 	 * The constructor for the block editor panel.
 	 *
 	 * @param parent
 	 *                 The composite that holds this panel.
-	 *      
+	 *
 	 * @param style
 	 *                 An integer giving the panel style using SWT style flags.
-	 * 
+	 *
 	 * @param viewModel
-	 *                 The view model for this panel.        
+	 *                 The view model for this panel.
 	 */
 	public BlocksEditorPanel(Composite parent, int style, BlocksEditorViewModel viewModel) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		this.viewModel = viewModel;
-		
+
 		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION, true);
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_table.heightHint = 90;
@@ -97,19 +98,19 @@ public class BlocksEditorPanel extends Composite {
 	                //copies selected blocks if press "Ctrl + D".
 	                } else if (e.character == 0x4) {
 	                    copySelected();
-	                //edits first selected block if press "Ctrl +E". 
+	                //edits first selected block if press "Ctrl +E".
 	                } else if (e.character == 0x5) {
                         openEditBlockDialog(table.firstSelectedRow());
                     }
                 }
-	                
+
 	            //adds new block if press "Ctrl + A".
 	            if (e.character == 0x01) {
 	            	addNew();
-	            }              
+	            }
             }
         });
-		
+
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 1, 1));
 		GridLayout gl_composite = new GridLayout(4, false);
@@ -117,11 +118,11 @@ public class BlocksEditorPanel extends Composite {
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
 		composite.setLayout(gl_composite);
-		
+
 		add = new Button(composite, SWT.NONE);
 		GridData gd_add = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_add.widthHint = 110;
-		
+
 		add.setLayoutData(gd_add);
 		add.setText("&Add Block");
 		add.addSelectionListener(new SelectionAdapter() {
@@ -130,20 +131,20 @@ public class BlocksEditorPanel extends Composite {
                 addNew();
 			}
 		});
-		
+
         copy = new Button(composite, SWT.NONE);
         GridData gd_copy = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_copy.widthHint = 110;
-        
+
         copy.setLayoutData(gd_copy);
         copy.setText("&Duplicate Block");
         copy.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent e) { 
+            public void widgetSelected(SelectionEvent e) {
                 copySelected();
             }
         });
-        
+
 		edit = new Button(composite, SWT.NONE);
 		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_edit.widthHint = 110;
@@ -155,7 +156,7 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 		edit.setText("&Edit Block");
-		
+
 		remove = new Button(composite, SWT.NONE);
 		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_remove.widthHint = 110;
@@ -167,7 +168,7 @@ public class BlocksEditorPanel extends Composite {
 				deleteSelected();
 			}
 		});
-		
+
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -176,7 +177,7 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
         table.viewer().addDoubleClickListener(new IDoubleClickListener() {
-		
+
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				EditableBlock block = table.firstSelectedRow();
@@ -185,41 +186,41 @@ public class BlocksEditorPanel extends Composite {
                 }
 			}
 		});
-        
-        DataBindingContext bindingContext = new DataBindingContext();
+
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
         bindingContext.bindValue(WidgetProperties.enabled().observe(edit),
                 BeanProperties.value("editEnabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(copy),
                 BeanProperties.value("copyDeleteEnabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(remove),
                 BeanProperties.value("copyDeleteEnabled").observe(viewModel));
-        
+
         viewModel.setSelectedBlocks(new ArrayList<>());
 	}
-	
+
 	/**
      * This method is responsible for setting the config to which the blocks will be added.
-     * 
+     *
      * @param config the configuration the blocks are to be registered with.
      */
-	public void setConfig(EditableConfiguration config) {	
+	public void setConfig(EditableConfiguration config) {
 		this.config = config;
-		
+
 		config.addPropertyChangeListener("blocks", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				setBlocks(config);
 			}
 		});
-		
+
 		setBlocks(config);
 	}
-	
+
 	private void copySelected() {
 	    for (Block block : table.selectedRows()) {
 	        EditableBlock added = new EditableBlock(block);
 	        added.setName(viewModel.getUniqueName(added.getName()));
-                
+
 	        try {
 	            config.addNewBlock(added);
 	        } catch (DuplicateBlockNameException e1) {
@@ -239,7 +240,7 @@ public class BlocksEditorPanel extends Composite {
         dialog.open();
         table.setSelected(added);
 	}
-	
+
 	private void setBlocks(EditableConfiguration config) {
 		table.setRows(config.getAllBlocks());
 		table.refresh();
@@ -247,14 +248,14 @@ public class BlocksEditorPanel extends Composite {
 
 	private void deleteSelected() {
     	List<EditableBlock> toRemove = table.selectedRows();
-    	
+
     	DeleteTableItemHelper<EditableBlock> helper = new DeleteTableItemHelper<>();
         int returnCode = helper.createDeleteDialog("Block", toRemove);
-		
+
 		if (returnCode == SWT.OK) {
 			int index = table.getSelectionIndex();
 			config.removeBlocks(toRemove);
-			
+
 			// Update new selection
 			int newIndex = index > 0 ? index - 1 : index;
 			table.setSelectionIndex(newIndex);

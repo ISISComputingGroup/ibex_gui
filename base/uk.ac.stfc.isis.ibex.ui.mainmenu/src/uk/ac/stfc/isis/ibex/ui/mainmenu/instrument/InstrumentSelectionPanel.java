@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * A view allowing selection of an instrument from a list of instruments.
@@ -54,7 +55,7 @@ public class InstrumentSelectionPanel extends Composite {
 
     /**
      * Creates an instance of the instrument selection panel.
-     * 
+     *
      * @param parent the parent composite
      * @param style the style of the panel
      * @param viewModel the view model for the instrument selection
@@ -135,8 +136,8 @@ public class InstrumentSelectionPanel extends Composite {
     }
 
     private void bindModel(InstrumentSelectionViewModel viewModel) {
-        DataBindingContext bindingContext = new DataBindingContext();
-        
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtSelectedName),
                 BeanProperties.value("selectedName").observe(viewModel));
     }

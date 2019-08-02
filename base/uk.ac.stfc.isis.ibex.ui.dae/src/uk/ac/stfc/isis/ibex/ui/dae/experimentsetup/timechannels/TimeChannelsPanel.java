@@ -146,7 +146,7 @@ public class TimeChannelsPanel extends Composite {
 	public void setModel(final TimeChannelsViewModel viewModel) {
         this.viewModel = viewModel;
 
-        bindingContext = new DataBindingContext();
+        bindingContext = Utils.getNewDatabindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
         bindingContext.bindList(WidgetProperties.items().observe(timeChannelFileSelector),

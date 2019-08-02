@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.TargetPropertiesViewModel;
 
 /**
@@ -44,7 +45,7 @@ public class TargetPropertiesWidget extends Composite {
 
     /** The minimum table height. */
     private static final int TABLE_HEIGHT = 150;
-	
+
     /** The view model. */
     private TargetPropertiesViewModel viewModel;
 
@@ -52,7 +53,7 @@ public class TargetPropertiesWidget extends Composite {
     private TargetPropertiesTable table;
 
     private Text txtDescription;
-	
+
     /**
      * Instantiates a new widget.
      *
@@ -61,29 +62,29 @@ public class TargetPropertiesWidget extends Composite {
      */
     public TargetPropertiesWidget(Composite parent, TargetPropertiesViewModel viewModel) {
 		super(parent, SWT.NONE);
-		
+
         this.viewModel = viewModel;
-		
+
 		GridLayout compositeLayout = new GridLayout(1, false);
 		compositeLayout.marginHeight = 0;
 		compositeLayout.marginWidth = 0;
-		
+
 		setLayout(compositeLayout);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
 		createControls(this);
 	}
-	
+
     /**
      * Creates the controls in the composite.
-     * 
+     *
      * Because the behaviour logic is quite complicated simple data-binding was
      * not used. Instead property change listeners were used.
      *
      * @param parent the parent
      */
 	public void createControls(Composite parent) {
-	    
+
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
         GridLayout glControlComposite = new GridLayout(2, false);
         glControlComposite.marginHeight = 0;
@@ -115,7 +116,7 @@ public class TargetPropertiesWidget extends Composite {
 	}
 
     private void bind() {
-        DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
 
         bindingContext.bindValue(SWTObservables.observeText(txtDescription),
                 BeanProperties.value("descriptionText").observe(viewModel));

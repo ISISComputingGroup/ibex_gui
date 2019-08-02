@@ -6,13 +6,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -32,60 +32,62 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
+
 /**
  * Contains the widget showing the synoptic drop down menu for switching, refresh button, and bread crumb trail.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SynopticSelection extends Composite {
-	
+
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
-	
+
 	// The synoptic drop down menu selector
 	private Combo synopticCombo;
-	
+
     private Button refreshButton;
 
 	public SynopticSelection(Composite parent, int style, final SynopticSelectionViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(3, false);
 		setLayout(gridLayout);
-		
+
 		GridData gdSynopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gdSynopticCombo.widthHint = 200;
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gdSynopticCombo);
-		
+
 		Button loadDefaultButton = new Button(this, SWT.NONE);
 		loadDefaultButton.setText("Load Default");
 		loadDefaultButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		loadDefaultButton.setBackground(BACKGROUND);
-		
+
 		loadDefaultButton.addSelectionListener(new SelectionAdapter() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				model.setLastDefault();
 			}
 		});
-		
+
         refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh synoptic");
 		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		refreshButton.setBackground(BACKGROUND);
-		
+
 		refreshButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				model.refreshSynoptic();
 			}
 		});
-		
+
 		bind(model);
 	}
-	
+
 	private void bind(SynopticSelectionViewModel model) {
-		DataBindingContext bindingContext = new DataBindingContext();
-		
+		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+
         bindingContext.bindList(WidgetProperties.items().observe(synopticCombo),
                 BeanProperties.list(SynopticSelectionViewModel.SYNOPTIC_LIST).observe(model));
         bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo),

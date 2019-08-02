@@ -14,6 +14,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
+
 /**
  * Button class, for buttons.
  *
@@ -21,13 +23,13 @@ import org.eclipse.wb.swt.ResourceManager;
 public abstract class Button extends CLabel {
 
     protected ButtonViewModel model;
-    private final DataBindingContext bindingContext = new DataBindingContext();
+    private final DataBindingContext bindingContext = Utils.getNewDatabindingContext();
     @SuppressWarnings("checkstyle:magicnumber")
     private int buttonWidthMin = 200;
 
     /**
      * Button constructor.
-     * 
+     *
      * @param parent
      *            Composite
      * @param imageUri

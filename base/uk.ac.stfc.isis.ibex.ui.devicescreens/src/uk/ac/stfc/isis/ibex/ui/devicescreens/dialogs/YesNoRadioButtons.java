@@ -6,18 +6,18 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * This class defines a set of radio buttons for the persistence setting.
@@ -52,16 +53,16 @@ public class YesNoRadioButtons extends ModelObject {
      */
     public YesNoRadioButtons(Composite parent, String trueText, String falseText) {
 
-        DataBindingContext bindingContext = new DataBindingContext();
-        
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+
         yesButton = new Button(parent, SWT.RADIO);
         noButton = new Button(parent, SWT.RADIO);
-        
+
         yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(yesButton),
                 BeanProperties.value("yesButtonSelected").observe(this));
-        
+
         noButton.setText(falseText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(noButton),
@@ -71,7 +72,7 @@ public class YesNoRadioButtons extends ModelObject {
     }
 
     /**
-     * 
+     *
      * @return the noButtonSelected whether no button is selected; if null
      *         returns false;
      */
@@ -124,7 +125,7 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * Getter for the selection of radio buttons.
-     * 
+     *
      * @return the selection of radio buttons
      */
     public Boolean getSelected() {
@@ -133,7 +134,7 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * Gets whether the radio buttons are enabled or not.
-     * 
+     *
      * @return whether the radio buttons are enabled
      */
     public boolean getEnabled() {
@@ -142,7 +143,7 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * Sets whether the radio buttons are enabled or not.
-     * 
+     *
      * @param enabled
      *            whether the radio buttons are enabled
      */

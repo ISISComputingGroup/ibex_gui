@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * A component which allows the user to change a device property in the synoptic perspective.
@@ -45,24 +46,24 @@ import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class WritableComponentView extends Composite {
-	
-	private DataBindingContext bindingContext = new DataBindingContext();
-	
+
+	private DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+
 	private final Composite parent;
 
 	private Label propertyName;
 	private Text text;
 	private Composite composite;
-	
+
 	private final WritableComponentProperty property;
-	
+
 	private final ModifyListener textModifyListener = new ModifyListener() {
 		@Override
 		public void modifyText(ModifyEvent e) {
-		    
+
 		}
 	};
-	
+
 	/**
      * @param parent
      *            The parent component
@@ -72,10 +73,10 @@ public class WritableComponentView extends Composite {
 	public WritableComponentView(Composite parent, final WritableComponentProperty property) {
 		this(parent, property, true, false);
 	}
-	
+
 	/**
 	 * Constructs a new instance of this class given its parent and a writable property.
-	 * 
+	 *
 	 * @param parent A widget which will be the parent of the new instance (cannot be null)
 	 * @param property The property of the component that is writable
 	 * @param displayName True if the property name should be displayed
@@ -84,19 +85,19 @@ public class WritableComponentView extends Composite {
 	public WritableComponentView(Composite parent, final WritableComponentProperty property, boolean displayName, final boolean isPreview) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.VERTICAL));
-		
+
 		this.parent = parent;
 		this.property = property;
-		
+
 		if (displayName) {
-			propertyName = new Label(this, SWT.NONE);		
+			propertyName = new Label(this, SWT.NONE);
 			propertyName.setAlignment(SWT.CENTER);
 			propertyName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 			propertyName.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
-	
+
 			propertyName.setText(property.displayName());
 		}
-		
+
 		composite = new Composite(this, SWT.NONE);
 		GridLayout glComposite = new GridLayout(2, false);
 		glComposite.horizontalSpacing = 1;
@@ -106,27 +107,27 @@ public class WritableComponentView extends Composite {
 		glComposite.verticalSpacing = 0;
 		glComposite.marginHeight = 0;
 		composite.setLayout(glComposite);
-		
+
 		text = new Text(composite, SWT.BORDER | SWT.RIGHT);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text.setFont(SWTResourceManager.getFont("Arial", 9, SWT.NORMAL));
-		
+
 		bindText(property);
-		
-		
+
+
 		text.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				text.removeModifyListener(textModifyListener);
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				text.addModifyListener(textModifyListener);
 			}
 		});
-		
+
 		text.addListener(SWT.Traverse, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
@@ -137,8 +138,8 @@ public class WritableComponentView extends Composite {
 				}
 			}
 		});
-		
-				
+
+
 	}
 
 	private void bindText(final WritableComponentProperty property) {
@@ -148,10 +149,10 @@ public class WritableComponentView extends Composite {
 		}
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(property.value()));
 	}
-	
+
 	private void sendValue() {
 	    property.writer().uncheckedWrite(text.getText());
 		parent.setFocus();
-		
+
 	}
 }

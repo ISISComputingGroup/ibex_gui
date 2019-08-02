@@ -21,14 +21,16 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Build a full configuration suitable for editing.
@@ -36,6 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 public class ObservableEditableConfiguration
         extends TransformingObservable<Configuration, EditableConfiguration> {
 
+	private static final Logger LOG = IsisLog.getLogger(ObservableEditableConfiguration.class);
 	private final ConfigServer configServer;
 
     /**
@@ -66,7 +69,7 @@ public class ObservableEditableConfiguration
                     valueOrEmptyCollection(configServer.pvs()));
 	    } catch (RuntimeException e) {
 	        // Log here because the exception will be lost in the observer/observables.
-	        Logger.getGlobal().log(Level.SEVERE, "Error while creating configuration", e);
+	        LoggerUtils.logErrorWithStackTrace(LOG, "Error while creating configuration", e);
             throw e;
         }
 	}

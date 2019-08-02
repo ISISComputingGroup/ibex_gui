@@ -7,27 +7,35 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.ui;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Set of utility methods and constants for working with SWT.
@@ -54,7 +62,7 @@ public final class Utils {
     /**
      * Sets the enabled flag on the input control and recursively on all its
      * children.
-     * 
+     *
      * @param control the top-level control
      * @param enabled whether the control and all its children should be enabled
      */
@@ -86,6 +94,24 @@ public final class Utils {
         }
 
         return activeWorkbenchWindow.getActivePage();
+    }
+
+    /**
+     * Utility to get a valid databinding context regardless of which thread it is called from.
+     *
+     * If you create databinding contexts on threads other than the UI thread, the context has no
+     * "realm" to use and so doesn't work.
+     *
+     * @return the data binding context
+     */
+    public static DataBindingContext getNewDatabindingContext() {
+    	try {
+    		// Databinding contexts must be created on the UI thread. Should never take longer than a second.
+    		return ConcurrencyUtils.callOnUiThread(DataBindingContext::new).get(1, TimeUnit.SECONDS);
+    	} catch (InterruptedException | ExecutionException | TimeoutException e) {
+    		LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(Utils.class), e.getMessage(), e);
+    		return null;
+		}
     }
 
 }

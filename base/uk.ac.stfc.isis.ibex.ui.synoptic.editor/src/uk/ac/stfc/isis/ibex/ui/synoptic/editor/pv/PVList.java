@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -42,24 +42,25 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * The class that displays the list of which PVs a synoptic component has.
  */
 public class PVList extends Composite {
 	private ListViewer list;
-	
+
 	private Button btnDelete;
 	private Button btnAdd;
 	private Button btnUp;
 	private Button btnDown;
-	
+
     private PvListViewModel viewModel;
-	
+
     /**
      * The constructor for the class. Creates the controls to be displayed and
      * binds them to the view model.
-     * 
+     *
      * @param parent
      *            The parent composite that holds this view.
      * @param viewModel
@@ -67,18 +68,18 @@ public class PVList extends Composite {
      */
     public PVList(Composite parent, final PvListViewModel viewModel) {
 		super(parent, SWT.NONE);
-		
+
         this.viewModel = viewModel;
-		
+
 		GridLayout compositeLayout = new GridLayout(2, false);
 		compositeLayout.marginHeight = 0;
 		compositeLayout.marginWidth = 0;
-		
+
 		setLayout(compositeLayout);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
         viewModel.addPropertyChangeListener("pvListChanged", new PropertyChangeListener() {
-            
+
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 list.setInput(e.getNewValue());
@@ -97,20 +98,20 @@ public class PVList extends Composite {
                 }
             }
         });
-		
+
 		createControls(this);
-		
+
         bind(viewModel);
 	}
-	
+
     /**
      * Bind the controls to the view model.
-     * 
+     *
      * @param viewModel
      *            The view model to bind to.
      */
     private void bind(PvListViewModel viewModel) {
-        DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDelete),
                 BeanProperties.value("deleteEnabled").observe(viewModel));
@@ -124,7 +125,7 @@ public class PVList extends Composite {
 
     /**
      * Creates the controls to be displayed.
-     * 
+     *
      * @param parent
      *            The composite on which to display the controls.
      */
@@ -133,7 +134,7 @@ public class PVList extends Composite {
 		list.getList().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         list.setContentProvider(new ArrayContentProvider());
 	    list.setLabelProvider(new PvLabelProvider());
-	    
+
 	    list.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
@@ -143,7 +144,7 @@ public class PVList extends Composite {
                 }
 			}
 		});
-	    
+
 	    list.getList().addKeyListener(new KeyAdapter() {
 	        @Override
 	        public void keyPressed(KeyEvent e) {
@@ -151,9 +152,9 @@ public class PVList extends Composite {
                     viewModel.removeSelectedPV();
                 }
 	        }
-            
+
         });
-	    
+
 	    Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -179,7 +180,7 @@ public class PVList extends Composite {
                 viewModel.demoteSelectedPV();
             }
         });
-	    
+
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
 	    controlComposite.setLayout(new GridLayout(1, false));
 	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

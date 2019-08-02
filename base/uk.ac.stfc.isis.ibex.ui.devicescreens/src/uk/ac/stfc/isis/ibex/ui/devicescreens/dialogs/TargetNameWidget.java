@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
@@ -49,25 +50,25 @@ public class TargetNameWidget extends Composite {
 
     /**
      * The constructor.
-     * 
+     *
      * @param parent the parent composite
      * @param viewModel the view model
      */
     public TargetNameWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
-		
+
         this.viewModel = viewModel;
-		
+
         this.availableOPIs = new ArrayList<>(viewModel.getAvailableOPIs());
         // Insert a blank option for the OPIs
         this.availableOPIs.add(0, "");
-		
+
 		createControls(this);
     }
 
     /**
      * Create the controls.
-     * 
+     *
      * @param parent the parent composite
      */
     private void createControls(Composite parent) {
@@ -83,7 +84,7 @@ public class TargetNameWidget extends Composite {
         cmboOpiName.setInput(availableOPIs);
         cmboOpiName.getCombo().select(-1);
 
-        DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
                 BeanProperties.value("key").observe(viewModel));

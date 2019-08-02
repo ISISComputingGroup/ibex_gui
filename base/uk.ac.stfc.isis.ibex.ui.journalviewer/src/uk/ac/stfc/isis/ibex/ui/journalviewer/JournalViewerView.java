@@ -53,6 +53,7 @@ import uk.ac.stfc.isis.ibex.journal.JournalSort;
 import uk.ac.stfc.isis.ibex.journal.SearchNumber;
 import uk.ac.stfc.isis.ibex.journal.SearchString;
 import uk.ac.stfc.isis.ibex.journal.SearchTime;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -73,7 +74,7 @@ public class JournalViewerView {
     private Label lblError;
     private Label lblLastUpdate;
 
-    private final DataBindingContext bindingContext = new DataBindingContext();
+    private final DataBindingContext bindingContext = Utils.getNewDatabindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
     private static final Display DISPLAY = Display.getCurrent();
 
@@ -91,7 +92,7 @@ public class JournalViewerView {
 
     /**
      * Create contents of the view part.
-     * 
+     *
      * @param parent
      *            The parent view part.
      */
@@ -118,7 +119,7 @@ public class JournalViewerView {
         rlControls.center = true;
         controls.setLayout(rlControls);
         controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        
+
         basicControls = new Composite(controls, SWT.NONE);
         RowLayout rlBasicControls = new RowLayout(SWT.HORIZONTAL);
         rlBasicControls.marginTop = 7;
@@ -133,7 +134,7 @@ public class JournalViewerView {
 
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
-        
+
         searchControls = new Composite(controls, SWT.NONE);
         RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
         rlSearchControls.center = true;
@@ -146,10 +147,10 @@ public class JournalViewerView {
         btnSearch = new Button(searchControls, SWT.NONE);
         btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
         btnSearch.setText("Search");
-        
+
         btnClear = new Button(searchControls, SWT.NONE);
         btnClear.setText("Clear");
-        
+
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
@@ -174,12 +175,12 @@ public class JournalViewerView {
 			protected void addColumns() {
 				changeTableColumns();
 			}
-			
+
 			@Override
 			protected ColumnComparator<JournalRow> comparator() {
 				return new NullComparator<>();
 			}
-			
+
 			// Sort table by selected column when a column header is clicked
 			@Override
 			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
@@ -195,7 +196,7 @@ public class JournalViewerView {
 		    }
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
@@ -219,7 +220,7 @@ public class JournalViewerView {
     private void search() {
         resetPageNumber();
         int fieldIndex = searchInput.getCmbFilterTypeIndex();
-        
+
         JournalSearch search = null;
         final JournalField field = model.getSearchableFields().get(fieldIndex);
         if (field == JournalField.RUN_NUMBER) {
@@ -262,7 +263,7 @@ public class JournalViewerView {
 
     /**
      * Forces the table to display the columns correctly.
-     * 
+     *
      * This is a dirty hack but is the only way I found to ensure the columns
      * displayed properly.
      */
@@ -273,13 +274,13 @@ public class JournalViewerView {
         table.setSize(prevSize);
         table.setRedraw(true);
     }
-    
+
     /**
      * Updates the sort indicator arrow to the currently sorted column
      */
     private void updateSortIndicator() {
         JournalSort activeSort = model.getActiveSearch().getPrimarySort();
-        
+
         // Goes through the columns of the table,
         // and if it finds the column which is currently sorted, display an indicator
         Arrays.asList(table.table().getColumns()).stream()
@@ -290,11 +291,11 @@ public class JournalViewerView {
                 table.table().setSortDirection(model.getSortDirection());
             });
     }
-    
+
     private void setProgressIndicatorsVisible(final boolean visible) {
         DISPLAY.asyncExec(() -> progressBar.setVisible(visible));
     }
-    
+
     private void resetPageNumber() {
         DISPLAY.asyncExec(() -> spinnerPageNumber.setSelection(1));
     }
@@ -314,7 +315,7 @@ public class JournalViewerView {
                 model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }
         });
-        
+
         btnRefresh.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -323,14 +324,14 @@ public class JournalViewerView {
                 model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
             }
         });
-        
+
         btnSearch.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 search();
             }
         });
-        
+
         btnClear.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -342,14 +343,14 @@ public class JournalViewerView {
             }
         });
 
-        model.addPropertyChangeListener("runs", e -> 
+        model.addPropertyChangeListener("runs", e ->
         DISPLAY.asyncExec(() -> {
                 setProgressIndicatorsVisible(true);
                 changeTableColumns();
                 table.setRows(model.getRuns());
                 setProgressIndicatorsVisible(false);
         }));
-        
+
         searchInput.addSearchListeners(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

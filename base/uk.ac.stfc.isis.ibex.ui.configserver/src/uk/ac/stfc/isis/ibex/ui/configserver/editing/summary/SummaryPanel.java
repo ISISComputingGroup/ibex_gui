@@ -129,7 +129,7 @@ public class SummaryPanel extends Composite {
     }
 
     private void setBindings() {
-        DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
 
         UpdateValueStrategy descValidator = new UpdateValueStrategy();
         // Set validator if not saving a new config

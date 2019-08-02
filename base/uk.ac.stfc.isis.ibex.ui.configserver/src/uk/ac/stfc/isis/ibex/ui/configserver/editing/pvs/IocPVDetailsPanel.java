@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -58,7 +59,7 @@ public class IocPVDetailsPanel extends Composite {
 
     /**
      * Constructor for the PV value details panel.
-     * 
+     *
      * @param parent
      *            The parent composite.
      * @param style
@@ -70,27 +71,27 @@ public class IocPVDetailsPanel extends Composite {
 		super(parent, style);
 		this.messageDisplayer = messageDisplayer;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Group grpSelectedPv = new Group(this, SWT.NONE);
 		grpSelectedPv.setText("Selected PV");
 		grpSelectedPv.setLayout(new GridLayout(2, false));
-		
+
 		Label lblName = new Label(grpSelectedPv, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name");
-		
+
 		name = new Text(grpSelectedPv, SWT.BORDER);
 		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		name.setEnabled(false);
-		
+
 		Label lblValue = new Label(grpSelectedPv, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblValue.setText("Value");
-		
+
 		value = new Text(grpSelectedPv, SWT.BORDER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setEnabled(false);
-		
+
 		availablePVTable = new IocAvailablePVsTable(grpSelectedPv, SWT.NONE, 0);
         GridData gdAvailablePVTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdAvailablePVTable.heightHint = TABLE_HEIGHT;
@@ -108,10 +109,10 @@ public class IocPVDetailsPanel extends Composite {
 			}
 		});
 	}
-	
+
     /**
      * Sets the default PV value.
-     * 
+     *
      * @param pv
      *            The default PV value
      * @param ioc
@@ -121,26 +122,26 @@ public class IocPVDetailsPanel extends Composite {
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
-		
+
 		if (pv == null) {
 			setTextEnabled(false);
-	
+
 			return;
 		}
-		
+
         setTextEnabled(ioc.isEditable());
-		
-		bindingContext = new DataBindingContext();
+
+		bindingContext = Utils.getNewDatabindingContext();
         strategy.setBeforeSetValidator(new PVNameValidator(ioc, pv, messageDisplayer));
-		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(pv), strategy, null); 
+
+		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(pv), strategy, null);
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(pv));
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("filter").observe(availablePVTable), 
+		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("filter").observe(availablePVTable),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		
+
 		updateAvailablePVs();
 	}
-	
+
 	private void setTextEnabled(boolean enabled) {
 		name.setEnabled(enabled);
 		value.setEnabled(enabled);
@@ -149,18 +150,18 @@ public class IocPVDetailsPanel extends Composite {
 			value.setText("");
 		}
 	}
-	
+
     /**
      * Sets the PV values.
-     * 
+     *
      * @param pvs
      *            The PV values.
      */
-	public void setPVs(Collection<AvailablePV> pvs) { 
+	public void setPVs(Collection<AvailablePV> pvs) {
 		this.pvs = pvs;
 		updateAvailablePVs();
 	}
-	
+
 	private void updateAvailablePVs() {
 		if (pvs != null) {
 		   	availablePVTable.setRows(pvs);

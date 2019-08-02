@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -22,9 +22,9 @@
  *
  * This file is part of the Instrument Control Project at ISIS.
  *
- * This code and information are provided "as is" without warranty of any 
+ * This code and information are provided "as is" without warranty of any
  * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
+ * implied warranties of merchantability and/or fitness for a particular
  * purpose.
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
@@ -54,6 +54,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentContentProvider;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDropListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentLabelProvider;
@@ -73,7 +74,7 @@ public class InstrumentTreeView extends Composite {
 
     /**
      * Constructor for the view.
-     * 
+     *
      * @param parent
      *            The parent composite that this view belongs to.
      * @param synopticViewModel
@@ -111,7 +112,7 @@ public class InstrumentTreeView extends Composite {
 
     /**
      * Creates the controls for the view.
-     * 
+     *
      * @param parent
      *            The parent composite that this is part of.
      */
@@ -124,7 +125,7 @@ public class InstrumentTreeView extends Composite {
 		int operations = DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[] {LocalSelectionTransfer.getTransfer()};
 		treeViewer.addDragSupport(operations, transferTypes, new DragSourceAdapter());
-                
+
 		treeViewer.addDropSupport(operations, transferTypes,
                 new ComponentDropListener(treeViewer, synopticViewModel));
 
@@ -161,7 +162,7 @@ public class InstrumentTreeView extends Composite {
 	}
 
     private void bind() {
-        DataBindingContext cnt = new DataBindingContext();
+        DataBindingContext cnt = Utils.getNewDatabindingContext();
 
         cnt.bindList(ViewerProperties.multipleSelection().observe(treeViewer),
                 BeanProperties.list("selectedComponents").observe(synopticViewModel));

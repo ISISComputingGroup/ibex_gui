@@ -49,11 +49,11 @@ import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to
  * this class.
- * 
+ *
  * Configuration includes name, description, a default synoptic, date created,
  * date modified and lists of editable IOCs, groups, blocks and components and
  * available blocks (blocks not from the current instrument).
- * 
+ *
  */
 public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
 
@@ -99,7 +99,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /** Available PVs. */
     private final List<PV> pvs;
-    
+
     /** If this is a component. */
     private boolean isComponent;
 
@@ -147,9 +147,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.name = config.name();
 		this.description = config.description();
 		this.synoptic = config.synoptic();
-		
+
 		this.allIocs = new ArrayList<>();
-		
+
 		for (EditableIoc ioc : iocs) {
 			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
 			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
@@ -217,8 +217,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     private void updateComponents() {
-        Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>();
-        iocsBeforeUpdate.addAll(componentIocs);
+        Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>(componentIocs);
+
         componentIocs.clear();
         for (Configuration comp : editableComponents.getSelected()) {
             for (Ioc ioc : comp.getIocs()) {
@@ -315,7 +315,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Whether the configuration is new or not (has previously been modified).
-     * 
+     *
      * @return True if configuration is new.
      */
     public boolean getIsNew() {
@@ -370,7 +370,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
         return result;
 	}
-	
+
     /**
      * @return The dates when the configuration has been modified
      */
@@ -387,7 +387,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Adds an IOC to the configuration.
-     * 
+     *
      * @param ioc
      *            The IOC to be added.
      */
@@ -399,7 +399,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Remove one or multiple IOCs from the configuration.
-     * 
+     *
      * @param iocs
      *            the list of IOCs to remove
      */
@@ -416,12 +416,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Collection<EditableIoc> getAvailableIocs() {
         List<EditableIoc> result = new ArrayList<EditableIoc>();
-    
+
         List<String> addedIocNames = new ArrayList<String>();
         for (EditableIoc ioc : getAddedIocs()) {
             addedIocNames.add(ioc.getName());
         }
-    
+
         for (EditableIoc ioc : allIocs) {
             if (!addedIocNames.contains(ioc.getName())) {
                 result.add(ioc);
@@ -447,7 +447,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
             selectedIoc.setAvailableMacros(availableMacros);
         }
-    
+
         Collections.sort(configIocs);
     }
 
@@ -480,9 +480,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * 
+     *
      * Add a new block to the configuration.
-     * 
+     *
      * @param block
      *            the EditableBlock to be added
      * @throws DuplicateBlockNameException
@@ -504,7 +504,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * Checks whether a given block name is unique or whether a block of that
      * name already exists.
-     * 
+     *
      * @param name
      *            the name whose uniqueness is checked
      * @return whether the name is unique as boolean
@@ -520,7 +520,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Makes a block unavailable (i.e. block is assigned to a group).
-     * 
+     *
      * @param block
      *            the block to make unavailable
      */
@@ -530,7 +530,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Makes a block available (i.e. block can be assigned to a group).
-     * 
+     *
      * @param block
      *            the block to make available
      */
@@ -542,7 +542,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Remove multiple blocks from the configuration.
-     * 
+     *
      * @param blocks
      *            the list of blocks to remove
      */
@@ -558,7 +558,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * Add a new editable group to the configuration, constructed using the
      * default name.
-     * 
+     *
      * @return The new group
      */
     public EditableGroup addNewGroup() {
@@ -577,7 +577,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Remove a group from the configuration.
-     * 
+     *
      * @param group
      *            The group to remove
      */
@@ -596,7 +596,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Return in a form suitable for saving as a configuration.
-     * 
+     *
      * @return the underlying configuration
      */
     public Configuration asConfiguration() {
@@ -608,7 +608,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * Return in a form suitable for saving as a component - ie without
      * contained components.
-     * 
+     *
      * @return the configuration as a component
      */
     public Configuration asComponent() {
@@ -620,7 +620,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * Swaps the indices of two groups in the configuration (for moving them up
      * and down).
-     * 
+     *
      * @param group1
      *            The first group
      * @param group2
@@ -643,7 +643,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Return a Block object associated to a given block name.
-     * 
+     *
      * @param blocks
      *            a list of blocks in the configuration
      * @param name
@@ -661,7 +661,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Return a Block object associated to a given block name.
-     * 
+     *
      * @param name
      *            the name of the block in question
      * @return the Block object
@@ -676,7 +676,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Add a block to the rename listener.
-     * 
+     *
      * @param block
      *            The block to add to the listener
      */
@@ -686,7 +686,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /**
      * Get the current list of groups in the configuration.
-     * 
+     *
      * @return the list of group names
      */
     @Override
@@ -698,20 +698,20 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
         return names;
     }
-    
+
     /**
      * Sets whether this configuration is a component or not.
-     * 
+     *
      * @param isComponent
      *            true if this is a component
      */
     public void setIsComponent(boolean isComponent) {
         firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
     }
-    
+
     /**
      * Get whether this configuration is a component or not.
-     * 
+     *
      * @return true if this is a component
      */
     public boolean getIsComponent() {

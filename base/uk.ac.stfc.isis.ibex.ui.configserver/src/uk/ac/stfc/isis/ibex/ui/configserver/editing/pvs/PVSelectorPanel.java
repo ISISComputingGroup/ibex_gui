@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -32,8 +32,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -47,6 +45,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlockPVTable;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilters;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
@@ -69,55 +68,55 @@ public class PVSelectorPanel extends Composite {
 	private PVFilter sourceFilter;
 	private PVFilter interestFilter;
 	private DataBindingContext bindingContext;
-	
+
     /**
      * Builds the selector panel for display.
-     * 
+     *
      * @param parent - the composite the panel is being added to
      * @param style - the style to use specified by the caller
      */
 	public PVSelectorPanel(Composite parent, int style) {
 		super(parent, style);
-		
+
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Group grpPV = new Group(this, SWT.NONE);
 		grpPV.setText("PV Selector");
-		
+
 		grpPV.setLayout(new GridLayout(3, false));
-		
+
 		Label lblViewPVs = new Label(grpPV, SWT.NONE);
 		lblViewPVs.setAlignment(SWT.RIGHT);
 		lblViewPVs.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblViewPVs.setText("PVs From:");		
-		
+		lblViewPVs.setText("PVs From:");
+
 		pvSource = new ComboViewer(grpPV, SWT.READ_ONLY);
 		GridData gdPvSource = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gdPvSource.widthHint = 100;
 		pvSource.getCombo().setLayoutData(gdPvSource);
 		pvSource.setContentProvider(new ArrayContentProvider());
-		pvSource.setInput(SourceFilters.values());	
+		pvSource.setInput(SourceFilters.values());
 
 		Label lblInterestLevel = new Label(grpPV, SWT.NONE);
 		lblInterestLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblInterestLevel.setText("Interest Level:");
-		
+
 		interestLevel = new ComboViewer(grpPV, SWT.READ_ONLY);
 		GridData gdInterestLevel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gdInterestLevel.widthHint = 100;
 		interestLevel.getCombo().setLayoutData(gdInterestLevel);
 		interestLevel.setContentProvider(new ArrayContentProvider());
-		interestLevel.setInput(InterestFilters.values());	
-		
+		interestLevel.setInput(InterestFilters.values());
+
 		Label lblPvAddress = new Label(grpPV, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPvAddress.setText("PV address:");
-		
+
 		pvAddress = new Text(grpPV, SWT.BORDER);
 		GridData gdPvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdPvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gdPvAddress);
-		
+
 		final Button btnClear = new Button(grpPV, SWT.NONE);
 		btnClear.setText("Clear");
 		Listener clearListener = new Listener() {
@@ -126,10 +125,10 @@ public class PVSelectorPanel extends Composite {
 				if (event.widget == btnClear) {
 					pvAddress.setText("");
 				}
-			}			
+			}
 		};
 		btnClear.addListener(SWT.Selection, clearListener);
-		
+
 		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.FULL_SELECTION);
 		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
 		gdPvTable.heightHint = 300;
@@ -137,7 +136,7 @@ public class PVSelectorPanel extends Composite {
 		new Label(grpPV, SWT.NONE);
 		new Label(grpPV, SWT.NONE);
 		new Label(grpPV, SWT.NONE);
-		
+
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
@@ -148,21 +147,21 @@ public class PVSelectorPanel extends Composite {
 				}
 			}
 		});
-		
+
 		pvAddress.addModifyListener(e -> blockPVTable.setSearch(pvAddress.getText()));
 	}
-	
+
     /**
      * Make sure that the appropriate config is associated with any changes.
-     * 
+     *
      * @param config - the configuration being edited, or which is loaded
      * @param pv - a pv associated with the config
      */
 	public void setConfig(EditableConfiguration config, PV pv) {
 		blockPVTable.setRows(config.pvs());
-		
+
 		filterFactory = new PVFilterFactory(config.getAddedIocs());
-		
+
 		//respond to changes in combo box
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -173,7 +172,7 @@ public class PVSelectorPanel extends Composite {
 				changeSourceFilter(pvFilter);
 			}
 		});
-		
+
 		interestLevel.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -183,20 +182,20 @@ public class PVSelectorPanel extends Composite {
 				changeInterestFilter(interestFilter);
 			}
 		});
-		
+
         // Get the filter values to use on loading the dialog
         pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
         interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
-		
+
 		//Set up the binding here
-		bindingContext = new DataBindingContext();		
+		bindingContext = Utils.getNewDatabindingContext();
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("address").observe(pv), null, null);
 	}
-	
+
     /**
      * Update the pv list based on any changes to the selected source filter
      * value.
-     * 
+     *
      * @param pvFilter - the filter to apply to the pvs
      */
 	private void changeSourceFilter(SourceFilters pvFilter) {
@@ -204,22 +203,22 @@ public class PVSelectorPanel extends Composite {
 		blockPVTable.setSourceFilter(sourceFilter.getFilter());
 		addFilterListener(sourceFilter);
 	}
-	
+
     /**
      * Update the pv list based on any changes to the selected interest filter
      * value.
-     * 
+     *
      * @param pvFilter - the filter to apply to the pvs
      */
 	private void changeInterestFilter(InterestFilters pvFilter) {
 		interestFilter = filterFactory.getFilter(pvFilter);
 		blockPVTable.setInterestFilter(interestFilter.getFilter());
 		addFilterListener(interestFilter);
-	}	
-	
+	}
+
     /**
      * Update the contents of the block there are changes to the filter.
-     * 
+     *
      * @param filter - the filter to apply
      */
 	private void addFilterListener(PVFilter filter) {
@@ -228,6 +227,6 @@ public class PVSelectorPanel extends Composite {
 			public void propertyChange(PropertyChangeEvent arg0) {
 				blockPVTable.refresh();
 			}
-		});		
+		});
 	}
 }

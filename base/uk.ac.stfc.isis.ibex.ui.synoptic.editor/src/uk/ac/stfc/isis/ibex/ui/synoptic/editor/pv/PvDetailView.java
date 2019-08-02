@@ -165,7 +165,7 @@ public class PvDetailView extends Composite {
 	
     private void bind(PvDetailViewModel model) {
 
-        DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = Utils.getNewDatabindingContext();
 
         bindingContext.bindValue(WidgetProperties.visible().observe(selectionComposite),
                 BeanProperties.value("selectionVisible").observe(model));

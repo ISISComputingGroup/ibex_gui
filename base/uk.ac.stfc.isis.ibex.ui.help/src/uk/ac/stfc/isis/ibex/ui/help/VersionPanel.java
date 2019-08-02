@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.help.Help;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 
 /**
@@ -54,7 +55,7 @@ public class VersionPanel extends Composite {
 
     /**
      * Construct a new version panel.
-     * 
+     *
      * @param parent The parent component
      * @param style The style to apply to the panel
      */
@@ -131,12 +132,12 @@ public class VersionPanel extends Composite {
     /**
      * Bind the server version as read from the target instrument to the local
      * server version so we can see changes.
-     * 
+     *
      * @param help The help model which monitors, amongst other things, the
      *            server version
      */
 	private void bind(Help help) {
-		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(serverVersion), BeanProperties.value("value").observe(help.revision()));	
+		DataBindingContext bindingContext = Utils.getNewDatabindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(serverVersion), BeanProperties.value("value").observe(help.revision()));
 	}
 }

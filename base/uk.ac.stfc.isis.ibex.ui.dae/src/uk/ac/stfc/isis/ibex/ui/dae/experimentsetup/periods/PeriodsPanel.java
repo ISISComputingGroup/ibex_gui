@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupCombo;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupRadioButton;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupText;
@@ -88,16 +89,16 @@ public class PeriodsPanel extends Composite {
 
     private StackLayout stackType = new StackLayout();
     private StackLayout stackSource = new StackLayout();
-    
+
 	private static final Display DISPLAY = Display.getCurrent();
-	
+
 	private PanelViewModel panelViewModel;
 
     private final Map<String, PropertyChangeListener> viewModelListeners = new HashMap<>();
-	
+
     /**
      * Standard constructor.
-     * 
+     *
      * @param parent The parent composite.
      * @param style The SWT style.
      * @param panelViewModel The viewModel that helps manipulate the panels.
@@ -109,7 +110,7 @@ public class PeriodsPanel extends Composite {
         GridLayout gl_main = new GridLayout(1, false);
         gl_main.verticalSpacing = 15;
         setLayout(gl_main);
-		
+
         GridLayout gl_noMargins = new GridLayout();
         gl_noMargins.marginWidth = 0;
         gl_noMargins.marginHeight = 0;
@@ -132,7 +133,7 @@ public class PeriodsPanel extends Composite {
 
         cmbPeriodType = new DaeExperimentSetupCombo(cmpPeriodType, SWT.DROP_DOWN | SWT.READ_ONLY, panelViewModel, "cmbPeriodType");
         cmbPeriodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
-        
+
         // Group dynamically displaying setup options
         grpSettings = new Group(this, SWT.NONE);
         grpSettings.setText("Period Settings");
@@ -150,12 +151,12 @@ public class PeriodsPanel extends Composite {
         Label lblNumberOfSoftware = new Label(cmpSwitchTypeSoftware, SWT.NONE);
         lblNumberOfSoftware.setText("Number of software periods:");
 
-        txtSoftwarePeriods = new DaeExperimentSetupText(cmpSwitchTypeSoftware, SWT.BORDER | SWT.RIGHT, 
+        txtSoftwarePeriods = new DaeExperimentSetupText(cmpSwitchTypeSoftware, SWT.BORDER | SWT.RIGHT,
                 panelViewModel, "softwarePeriods", "PeriodsPanel", "txtSoftwarePeriods");
         GridData gd_txtSoftwarePeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_txtSoftwarePeriods.widthHint = 60;
         txtSoftwarePeriods.setLayoutData(gd_txtSoftwarePeriods);
-        
+
         // Panel to set hardware periods
         cmpSwitchTypeHardware = new Composite(grpSettings, SWT.NONE);
         GridLayout gl_cmpSwitchTypeHardware = new GridLayout(1, false);
@@ -176,22 +177,22 @@ public class PeriodsPanel extends Composite {
         lblHardwarePeriodSequences.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblHardwarePeriodSequences.setText("Hardware period sequences:");
 
-        txtHardwarePeriods = new DaeExperimentSetupText(cmpHardwareSettings, SWT.BORDER | SWT.RIGHT, 
+        txtHardwarePeriods = new DaeExperimentSetupText(cmpHardwareSettings, SWT.BORDER | SWT.RIGHT,
                 panelViewModel, "hardwarePeriods", "PeriodsPanel", "txtHardwarePeriods");
         GridData gd_txtHardwarePeriods = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gd_txtHardwarePeriods.widthHint = 80;
         txtHardwarePeriods.setLayoutData(gd_txtHardwarePeriods);
-        
+
         Label lblOutputDelayus = new Label(cmpHardwareSettings, SWT.NONE);
         lblOutputDelayus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblOutputDelayus.setText("Output delay (μs):");
 
-        txtOutputDelay = new DaeExperimentSetupText(cmpHardwareSettings, SWT.BORDER | SWT.RIGHT, 
+        txtOutputDelay = new DaeExperimentSetupText(cmpHardwareSettings, SWT.BORDER | SWT.RIGHT,
                 panelViewModel, "outputDelay", "PeriodsPanel", "txtOutputDelay");
         GridData gd_txtOutputDelay = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
         gd_txtOutputDelay.widthHint = 80;
         txtOutputDelay.setLayoutData(gd_txtOutputDelay);
-        
+
         Composite cmpSourceSelector = new Composite(cmpHardwareSettings, SWT.NONE);
         cmpSourceSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
         GridLayout gl_composite = new GridLayout(5, false);
@@ -208,7 +209,7 @@ public class PeriodsPanel extends Composite {
         radioUsePeriodFile = new DaeExperimentSetupRadioButton(cmpSourceSelector, SWT.RADIO, panelViewModel, "periodsPanelBtns");
         radioUsePeriodFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
         radioUsePeriodFile.setText(PeriodSetupSource.FILE.toString());
-        
+
         cmpSource = new Composite(cmpSwitchTypeHardware, SWT.NONE);
         cmpSource.setLayout(stackSource);
         cmpSource.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -223,7 +224,7 @@ public class PeriodsPanel extends Composite {
 
         tblPeriods = new PeriodsTableView(cmpSwitchSourceParam, SWT.NONE, panelViewModel);
         tblPeriods.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
+
         // Panel to load file with period settings
         cmpSwitchSourceFile = new Composite(cmpSource, SWT.NONE);
         GridLayout gl_cmpSwitchSourceFile = new GridLayout(3, false);
@@ -251,7 +252,7 @@ public class PeriodsPanel extends Composite {
 
         cmbPeriodFile = new DaeExperimentSetupCombo(cmpSwitchSourceFile, SWT.DROP_DOWN | SWT.READ_ONLY, panelViewModel, "cmbPeriodFile");
         cmbPeriodFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        
+
         this.addDisposeListener(new DisposeListener() {
 
             @Override
@@ -259,22 +260,22 @@ public class PeriodsPanel extends Composite {
                 removeListeners();
                 tblPeriods.removeListener();
             }
-            
+
         });
-        
+
         fillWidgetLists();
     }
 
     /**
      * Binds model data to the relevant UI elements for automatic update.
-     * 
+     *
      * @param viewModel the model holding the period settings.
      */
 	public void setModel(final PeriodsViewModel viewModel) {
         this.model = viewModel;
 
-		bindingContext = new DataBindingContext();	
-		
+		bindingContext = Utils.getNewDatabindingContext();
+
 		bindingContext.bindList(WidgetProperties.items().observe(cmbPeriodFile), BeanProperties.list("periodFilesList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(lblPeriodFileRB), BeanProperties.value("periodFile").observe(viewModel));
 
@@ -282,24 +283,24 @@ public class PeriodsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtSoftwarePeriods), BeanProperties.value("softwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHardwarePeriods), BeanProperties.value("hardwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtOutputDelay), BeanProperties.value("outputDelay").observe(viewModel));
-		
+
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtHardwarePeriods),
                 BeanProperties.value("internalPeriod").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(radioSpecifyParameters),
                 BeanProperties.value("hardwarePeriod").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(radioUsePeriodFile),
                 BeanProperties.value("hardwarePeriod").observe(viewModel));
-        
+
 
         setPeriods(viewModel.periods());
         updateTypeStack(matchType(PeriodControlType.values()[model.getPeriodType()]));
         updateSourceStack(matchSource(model.getSetupSource()));
-        
+
 	}
-	
-	
+
+
 	private void setPeriods(final List<Period> newPeriods) {
-		DISPLAY.asyncExec(new Runnable() {	
+		DISPLAY.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				tblPeriods.setPeriods(newPeriods);
@@ -347,7 +348,7 @@ public class PeriodsPanel extends Composite {
             }
         });
     }
-    
+
     /**
      * Adds a listener for the period source.
      */
@@ -366,7 +367,7 @@ public class PeriodsPanel extends Composite {
         radioSpecifyParameters.addSelectionListener(sourceSelectionListener);
         radioUsePeriodFile.addSelectionListener(sourceSelectionListener);
     }
-    
+
     /**
      * Adds a listener for the period type.
      */
@@ -378,7 +379,7 @@ public class PeriodsPanel extends Composite {
             }
         });
     }
-    
+
     /**
      * Adds a listener for the period file.
      */
@@ -390,7 +391,7 @@ public class PeriodsPanel extends Composite {
             }
         });
     }
-    
+
     /**
      * Fills the map containing the view model's listeners.
      */
@@ -401,14 +402,14 @@ public class PeriodsPanel extends Composite {
                 lblNote.setVisible(!model.isInternalPeriod());
             }
         });
-        
+
         viewModelListeners.put("periods", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setPeriods(model.periods());
             }
         });
-        
+
         viewModelListeners.put("periodType", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -416,7 +417,7 @@ public class PeriodsPanel extends Composite {
             }
 
         });
-        
+
         viewModelListeners.put("setupSource", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -424,7 +425,7 @@ public class PeriodsPanel extends Composite {
             }
         });
     }
-    
+
     /**
      * Adds the various listeners to the viewModel.
      */
@@ -433,7 +434,7 @@ public class PeriodsPanel extends Composite {
             this.model.addPropertyChangeListener(listener.getKey(), listener.getValue());
         }
     }
-    
+
     /**
      * Fills the lists of widgets.
      */
@@ -444,13 +445,13 @@ public class PeriodsPanel extends Composite {
         radioBtns.add(radioUsePeriodFile);
         radioBtns.add(radioSpecifyParameters);
         panelViewModel.setBtnsListToRadioButtons(radioBtns);
-        
+
         if (!combos.isEmpty()) {
             combos.clear();
         }
         combos.add(cmbPeriodFile);
         combos.add(cmbPeriodType);
-        
+
         if (!textInputs.isEmpty()) {
             textInputs.clear();
         }
@@ -458,15 +459,15 @@ public class PeriodsPanel extends Composite {
         textInputs.add(txtHardwarePeriods);
         textInputs.add(txtOutputDelay);
     }
-    
-    
+
+
     /**
      * Rests the cache of the applied values for the different widgets.
      */
     public void resetCachedValue() {
         panelViewModel.resetTextInputsCachedValues(textInputs);
         panelViewModel.resetComboCachedValues(combos);
-        
+
         if (!radioBtnsRB.isEmpty()) {
             radioBtnsRB.clear();
         }
@@ -475,14 +476,14 @@ public class PeriodsPanel extends Composite {
         panelViewModel.resetRadioButtonsCachedValues(radioBtns, radioBtnsRB);
         tblPeriods.resetCachedValues();
     }
-    
+
     /**
      * Creates a cache of the applied values for the different widgets.
      */
     public void createInitialCachedValues() {
         panelViewModel.createInitialTextInputsCachedValues(textInputs);
         panelViewModel.createInitialComboCachedValues(combos);
-        
+
         if (!radioBtnsRB.isEmpty()) {
             radioBtnsRB.clear();
         }
@@ -490,7 +491,7 @@ public class PeriodsPanel extends Composite {
         radioBtnsRB.add(model.getSetupSource() == PeriodSetupSource.PARAMETERS);
         panelViewModel.createInitialRadioButtonsCachedValues(radioBtns, radioBtnsRB);
     }
-    
+
     /**
      * Adds all the listeners used in the panel.
      */
@@ -501,7 +502,7 @@ public class PeriodsPanel extends Composite {
         fillViewModelListenerMap();
         addViewModelListeners();
     }
-    
+
     /**
      * Goes over every widget and adds a label to a widget if its value is different from the one applied on the instrument.
      */
@@ -511,7 +512,7 @@ public class PeriodsPanel extends Composite {
         panelViewModel.ifTextInputValuesDifferentFromCachedValueThenChangeLabel(textInputs);
         tblPeriods.ifTableValueDifferentFromCachedValueThenChangeLabel();
     }
-    
+
     /**
      * Removes listeners from the viewModel.
      */
@@ -521,21 +522,21 @@ public class PeriodsPanel extends Composite {
         }
         viewModelListeners.clear();
     }
-    
+
     /**
      * Goes over every widget and adds a label to a widget if its value is different from the one applied on the instrument.
      */
     public void ifTableValuesDifferentFromCachedValuesThenChangeLabel() {
         tblPeriods.ifTableValueDifferentFromCachedValueThenChangeLabel();
     }
-    
+
     /**
      * Creates the initial set of cached values for the periods panel table.
      */
     public void addFirstTableListener() {
         tblPeriods.createInitialCachedValues();
     }
-    
+
     /**
      * Removes the listeners out dated when changes were applied.
      */
@@ -546,7 +547,7 @@ public class PeriodsPanel extends Composite {
         panelViewModel.removesTextInputListeners(textInputs);
         tblPeriods.removeListener();
     }
-    
+
     /**
      * Removes old listeners and adds new ones. The new listeners will contain the last applied values of the given widgets.
      */
@@ -556,5 +557,5 @@ public class PeriodsPanel extends Composite {
         fillViewModelListenerMap();
         addViewModelListeners();
     }
-    
+
 }

@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ToyModel;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * Provides settings to control the script generator.
@@ -79,7 +80,7 @@ public class TestView {
 	}
 
 	private void bind() {
-		bindingContext = new DataBindingContext();
+		bindingContext = Utils.getNewDatabindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 				BeanProperties.value("iteratedNumber").observe(toyModel));
 	}

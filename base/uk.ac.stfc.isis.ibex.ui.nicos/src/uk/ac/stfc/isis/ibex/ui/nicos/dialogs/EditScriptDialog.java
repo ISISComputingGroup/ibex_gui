@@ -21,7 +21,7 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
  */
 public class EditScriptDialog extends ScriptDialog {
 
-    private DataBindingContext bindingContext = new DataBindingContext();
+    private DataBindingContext bindingContext = Utils.getNewDatabindingContext();
     private static final Color ERROR_COLOR = SWTResourceManager.getColor(SWT.COLOR_RED);
     
 	/**
