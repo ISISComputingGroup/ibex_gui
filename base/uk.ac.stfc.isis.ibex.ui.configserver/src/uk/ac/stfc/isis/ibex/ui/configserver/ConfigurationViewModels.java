@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 /**
@@ -50,6 +51,7 @@ public class ConfigurationViewModels {
      */
     public ConfigurationViewModels() {
         groupEditorViewModel = new GroupEditorViewModel();
+        IsisLog.getLogger(getClass()).info("Created configurationviewmodels");
     }
 
     /**

@@ -49,21 +49,33 @@ public class ConfigEditing extends Closer implements Editing {
 		this.configServer = configServer;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<EditableConfiguration> currentConfig() {
 		return edit(configServer.currentConfig());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<EditableConfiguration> blankConfig() {
 		return edit(configServer.blankConfig());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<EditableConfiguration> config(String configName) {
 		return edit(configServer.config(configName));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ForwardingObservable<EditableConfiguration> component(String componentName) {
 		return edit(configServer.component(componentName));
