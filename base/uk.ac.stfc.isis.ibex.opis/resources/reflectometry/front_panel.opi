@@ -660,7 +660,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>false</visible>
+              <visible>true</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-7a23</wuid>
@@ -684,7 +684,7 @@ $(pv_value)</tooltip>
                   <color red="192" green="192" blue="192" />
                 </foreground_color>
                 <group_name></group_name>
-                <height>58</height>
+                <height>62</height>
                 <macros>
                   <include_parent_macros>true</include_parent_macros>
                   <SUFFIX>SP</SUFFIX>
@@ -702,7 +702,7 @@ $(pv_value)</tooltip>
                 <tooltip></tooltip>
                 <visible>true</visible>
                 <widget_type>Linking Container</widget_type>
-                <width>250</width>
+                <width>254</width>
                 <wuid>-66312240:1683d19d453:-776d</wuid>
                 <x>5</x>
                 <y>10</y>
@@ -766,7 +766,7 @@ $(pv_value)</tooltip>
                   <color red="192" green="192" blue="192" />
                 </foreground_color>
                 <group_name></group_name>
-                <height>58</height>
+                <height>62</height>
                 <macros>
                   <include_parent_macros>true</include_parent_macros>
                 </macros>
@@ -783,7 +783,7 @@ $(pv_value)</tooltip>
                 <tooltip></tooltip>
                 <visible>true</visible>
                 <widget_type>Linking Container</widget_type>
-                <width>250</width>
+                <width>254</width>
                 <wuid>-66312240:1683d19d453:-75f6</wuid>
                 <x>5</x>
                 <y>10</y>
@@ -823,7 +823,7 @@ $(pv_value)</tooltip>
               <show_scrollbar>true</show_scrollbar>
               <tooltip></tooltip>
               <transparent>true</transparent>
-              <visible>true</visible>
+              <visible>false</visible>
               <widget_type>Grouping Container</widget_type>
               <width>263</width>
               <wuid>-66312240:1683d19d453:-77ca</wuid>
@@ -847,7 +847,7 @@ $(pv_value)</tooltip>
                   <color red="192" green="192" blue="192" />
                 </foreground_color>
                 <group_name></group_name>
-                <height>58</height>
+                <height>62</height>
                 <macros>
                   <include_parent_macros>true</include_parent_macros>
                   <SUFFIX>RBV</SUFFIX>
@@ -865,7 +865,7 @@ $(pv_value)</tooltip>
                 <tooltip></tooltip>
                 <visible>true</visible>
                 <widget_type>Linking Container</widget_type>
-                <width>250</width>
+                <width>254</width>
                 <wuid>-66312240:1683d19d453:-75d9</wuid>
                 <x>5</x>
                 <y>10</y>
@@ -953,7 +953,7 @@ $(pv_value)</tooltip>
             <width>398</width>
             <wuid>660a6691:1677ec40d1b:-7ebd</wuid>
             <x>0</x>
-            <y>75</y>
+            <y>64</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -995,7 +995,7 @@ $(pv_value)</tooltip>
             <width>398</width>
             <wuid>-19dc714f:1677a2ed8a5:-7ece</wuid>
             <x>0</x>
-            <y>36</y>
+            <y>25</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1037,7 +1037,7 @@ $(pv_value)</tooltip>
             <width>398</width>
             <wuid>2150758c:16990a9ebac:-6ddf</wuid>
             <x>0</x>
-            <y>114</y>
+            <y>103</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1079,7 +1079,7 @@ $(pv_value)</tooltip>
             <width>398</width>
             <wuid>-74439178:16b93487e3a:-7ced</wuid>
             <x>0</x>
-            <y>150</y>
+            <y>139</y>
           </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
             <actions hook="false" hook_all="false" />
@@ -1099,7 +1099,7 @@ $(pv_value)</tooltip>
               <color red="192" green="192" blue="192" />
             </foreground_color>
             <group_name></group_name>
-            <height>22</height>
+            <height>20</height>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -1116,7 +1116,7 @@ $(pv_value)</tooltip>
             <tooltip></tooltip>
             <visible>true</visible>
             <widget_type>Linking Container</widget_type>
-            <width>184</width>
+            <width>182</width>
             <wuid>5ab6761d:16c1e2986e0:-7c70</wuid>
             <x>146</x>
             <y>6</y>
