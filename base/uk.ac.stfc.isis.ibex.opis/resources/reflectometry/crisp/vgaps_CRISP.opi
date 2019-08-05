@@ -112,7 +112,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b93</wuid>
       <x>0</x>
-      <y>30</y>
+      <y>24</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -154,7 +154,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b92</wuid>
       <x>0</x>
-      <y>60</y>
+      <y>54</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -196,7 +196,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b91</wuid>
       <x>0</x>
-      <y>90</y>
+      <y>84</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -238,7 +238,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b90</wuid>
       <x>0</x>
-      <y>120</y>
+      <y>114</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />

@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -21,12 +21,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
@@ -65,10 +67,23 @@ public class TargetPropertiesTable extends DataboundTable<PropertyDescription> {
     }
 
     private void value() {
-        createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
+        TableViewerColumn value = createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
             @Override
 			protected String stringFromRow(PropertyDescription row) {
                 return row.getValue();
+            }
+        });
+        
+        value.setEditingSupport(new StringEditingSupport<PropertyDescription>(viewer(), PropertyDescription.class) {
+
+            @Override
+            protected String valueFromRow(PropertyDescription row) {
+                return row.getValue();
+            }
+
+            @Override
+            protected void setValueForRow(PropertyDescription row, String value) {
+                row.setValue(value);
             }
         });
     }

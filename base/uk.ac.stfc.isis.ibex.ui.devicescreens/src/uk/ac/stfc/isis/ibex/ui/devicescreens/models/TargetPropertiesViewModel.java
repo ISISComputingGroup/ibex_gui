@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -36,13 +36,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class TargetPropertiesViewModel extends ModelObject {
     private EditDeviceScreensDescriptionViewModel viewModel;
 
-    private Boolean valueTextEnabled = false;
     private Boolean tableEnabled = false;
 
-    private String valueText;
     private String descriptionText;
 
-    private PropertyDescription tableSelection;
     private List<PropertyDescription> properties;
 
     /**
@@ -96,7 +93,6 @@ public class TargetPropertiesViewModel extends ModelObject {
             setTableSelection(null);
         }
         setTableEnabled(hasProperties);
-        setValueTextEnabled(hasProperties);
         firePropertyChange("properties", properties, properties = newProperties);
     }
 
@@ -119,11 +115,8 @@ public class TargetPropertiesViewModel extends ModelObject {
         if (selected != null) {
             String descText = viewModel.getTargetScreen().getMacroDescription(selected.getKey());
             setDescriptionText(descText);
-            updateValueText(selected.getValue());
-            tableSelection = selected;
         } else {
             setDescriptionText("");
-            updateValueText("");
         }
     }
 
@@ -138,45 +131,6 @@ public class TargetPropertiesViewModel extends ModelObject {
      */
     public Boolean getTableEnabled() {
         return tableEnabled;
-    }
-
-    private void setValueTextEnabled(Boolean enabled) {
-        firePropertyChange("valueTextEnabled", valueTextEnabled, valueTextEnabled = enabled);
-    }
-
-    /**
-     * Get whether the value text box is enabled or not. (Used in databinding,
-     * do not delete)
-     * 
-     * @return True if the value is enabled
-     */
-    public Boolean getValueTextEnabled() {
-        return valueTextEnabled;
-    }
-
-    /**
-     * Set the text in the value text box. (Used in databinding, do not delete)
-     * 
-     * @param text
-     *            The text to set the textbox to.
-     */
-    public void setValueText(String text) {
-        tableSelection.setValue(text);
-        updateValueText(text);
-    }
-
-    private void updateValueText(String text) {
-        firePropertyChange("valueText", valueText, valueText = text);
-    }
-
-    /**
-     * Get the value within the value textbox. (Used in databinding, do not
-     * delete)
-     * 
-     * @return The value in the text box.
-     */
-    public String getValueText() {
-        return valueText;
     }
 
     /**
