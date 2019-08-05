@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,12 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -34,6 +38,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public class MacroTable extends DataboundTable<Macro> {
 	
+    private final CellDecorator<Macro> rowDecorator = new MacroRowCellDecorator();
+    
     /**
      * Constructor for the table.
      * 
@@ -73,10 +79,16 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void value() {
-		createColumn("Value", 5, new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
+		createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
 			protected String stringFromRow(Macro row) {
-				return row.getValue();
+			    if (row.getValue() == null && row.getDefaultValue() != null) {
+			        return "(default: " + row.getDefaultValue() + ")";
+			    } else if (row.getValue() == null) {
+			        return "(default)";
+			    } else {
+			        return row.getValue();
+			    }
 			}
 		});
 	}

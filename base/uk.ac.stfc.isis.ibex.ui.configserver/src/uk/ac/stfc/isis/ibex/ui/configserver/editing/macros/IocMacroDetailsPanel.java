@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -29,16 +29,19 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Strings;
@@ -68,6 +71,8 @@ public class IocMacroDetailsPanel extends Composite {
 	private Label errorIconLabel;
 	private Button clearMacro;
     private Image scaled;
+    
+    private boolean canEdit;
 	
     /**
      * Constructor for the macro details panel.
@@ -117,12 +122,18 @@ public class IocMacroDetailsPanel extends Composite {
         value = new Text(cmpSelectedPv, SWT.BORDER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setEnabled(false);
+		value.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                setClearButtonEnabled(canEdit);
+            }
+        });
 		
         clearMacro = new Button(cmpSelectedPv, SWT.NONE);
 		clearMacro.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				macro.setValue("");
+				macro.setValue(null);
 				setClearButtonEnabled(false);
 			}
 		});
@@ -158,6 +169,7 @@ public class IocMacroDetailsPanel extends Composite {
      */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
+		this.canEdit = canEdit;
 		
         DataBindingContext bindingContext = new DataBindingContext();
 
@@ -183,6 +195,8 @@ public class IocMacroDetailsPanel extends Composite {
 	public void setSelectedMacro(Macro macro) {		
 		this.macro = macro;
 		
+		setClearButtonEnabled(canEdit);
+		
 		valueValidator.setMacro(macro);
 
         // Remove binding to previous macro
@@ -206,7 +220,7 @@ public class IocMacroDetailsPanel extends Composite {
 	}
 	
 	private void setClearButtonEnabled(boolean enabled) {
-		if (macro == null || Strings.isNullOrEmpty(macro.getValue())) {
+		if (macro == null /*|| Strings.isNullOrEmpty(macro.getValue())*/) {
 			clearMacro.setEnabled(false);
 		} else {
 			clearMacro.setEnabled(enabled);

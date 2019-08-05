@@ -1,6 +1,6 @@
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+import java.util.Objects;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -31,6 +33,7 @@ public class Macro extends ModelObject {
 	private String value;
 	private String description;
 	private String pattern;
+	private String defaultValue;
 
 	/**
 	 * GSON requires the default constructor to create the macro properly from
@@ -51,7 +54,7 @@ public class Macro extends ModelObject {
 	 */
 	public Macro(Macro other) {
 		this(other.getName(), other.getValue(), other.getDescription(), other
-				.getPattern());
+				.getPattern(), other.getDefaultValue());
 	}
 
 	/**
@@ -61,12 +64,14 @@ public class Macro extends ModelObject {
 	 * @param value macro value
 	 * @param description macro description
 	 * @param pattern Regex pattern macro value should follow
+	 * @param defaultValue the default value of the macro
 	 */
-	public Macro(String name, String value, String description, String pattern) {
+	public Macro(String name, String value, String description, String pattern, String defaultValue) {
 		this.name = name;
 		this.value = value;
 		this.description = description;
 		this.pattern = pattern;
+		this.defaultValue = defaultValue;
 	}
 
 	/**
@@ -137,6 +142,13 @@ public class Macro extends ModelObject {
 		return pattern;
 	}
 
+    /**
+     * @return default macro value
+     */
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
 	@Override
 	public String toString() {
 		return name + "=" + value;
@@ -160,4 +172,11 @@ public class Macro extends ModelObject {
 	public int hashCode() {
 		return name.hashCode();
 	}
+
+	/**
+	 * @return whether or not the Macro has been set by the user
+	 */
+    public boolean isSet() {
+        return value != null;
+    }
 }

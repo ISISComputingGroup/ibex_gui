@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -26,6 +26,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -169,9 +171,13 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		return new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent newValue) {
-				Macro newMacro = new Macro(displayMacro);
-				displayMacro.setValue((String) newValue.getNewValue());
-				setMacros.add(newMacro);
+			    Optional<Macro> existingMacro = setMacros.stream().filter(m -> m.getName() == displayMacro.getName()).findFirst();
+			    if (existingMacro.isPresent()) {
+                    existingMacro.get().setValue(displayMacro.getValue());
+                } else {
+                    Macro newMacro = new Macro(displayMacro);
+                    setMacros.add(newMacro);
+                }
 			}
 		};
 	}
