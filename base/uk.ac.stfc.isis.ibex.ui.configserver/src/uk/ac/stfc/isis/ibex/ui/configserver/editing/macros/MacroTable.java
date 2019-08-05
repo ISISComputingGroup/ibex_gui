@@ -21,16 +21,22 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 
+import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * The table for editing IOC macros.
@@ -39,6 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 public class MacroTable extends DataboundTable<Macro> {
 	
     private final CellDecorator<Macro> rowDecorator = new MacroRowCellDecorator();
+    private MacroValueValidator valueValidator;
     
     /**
      * Constructor for the table.
@@ -49,9 +56,12 @@ public class MacroTable extends DataboundTable<Macro> {
      *            The SWT style of this databound table.
      * @param tableStyle
      *            The SWT style of the inner table object.
+     * @param valueValidator
+     *            The macro value validator of the macro panel.
      */
-	public MacroTable(Composite parent, int style, int tableStyle) {
+	public MacroTable(Composite parent, int style, int tableStyle, MacroValueValidator valueValidator) {
 		super(parent, style, tableStyle | SWT.BORDER);
+		this.valueValidator = valueValidator;
 
 		initialise();
 	}
@@ -79,7 +89,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void value() {
-		createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
+		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
 			protected String stringFromRow(Macro row) {
 			    if (row.getValue() == null && row.getDefaultValue() != null) {
@@ -91,6 +101,36 @@ public class MacroTable extends DataboundTable<Macro> {
 			    }
 			}
 		});
+		
+		value.setEditingSupport(new StringEditingSupport<Macro>(viewer(), Macro.class) {
+		    
+		    @Override
+		    protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
+		        return new TextCellEditor((Composite) viewer.getControl()) {
+		            @Override
+		            protected void editOccured(ModifyEvent e) {
+		                super.editOccured(e);
+		                valueValidator.validate(text.getText());
+		            }
+		        };
+		    }
+
+            @Override
+            protected String valueFromRow(Macro row) {
+                if (row == null || row.getValue() == null) {
+                    return "";
+                } else {
+                    return row.getValue();
+                }
+            }
+
+            @Override
+            protected void setValueForRow(Macro row, String value) {
+                if (valueValidator.validate(value) == ValidationStatus.ok()) {
+                    row.setValue(value);
+                }
+            }
+        });
 	}
 	
 	private void description() {
@@ -110,4 +150,12 @@ public class MacroTable extends DataboundTable<Macro> {
 			}
 		});	
 	}
+
+	/**
+	 * Sets the validator used to validate user input.
+	 * @param valueValidator a MacroValueValidator
+	 */
+    public void setValidator(MacroValueValidator valueValidator) {
+        this.valueValidator = valueValidator;
+    }
 }

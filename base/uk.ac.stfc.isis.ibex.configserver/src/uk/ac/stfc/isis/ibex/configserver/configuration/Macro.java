@@ -18,8 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-import java.util.Objects;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
