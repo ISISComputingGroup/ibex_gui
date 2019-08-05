@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
+import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -46,6 +47,8 @@ public class MacroTable extends DataboundTable<Macro> {
 	
     private final CellDecorator<Macro> rowDecorator = new MacroRowCellDecorator();
     private MacroValueValidator valueValidator;
+    private StringEditingSupport<Macro> editingSupport;
+    private boolean canEdit;
     
     /**
      * Constructor for the table.
@@ -56,12 +59,9 @@ public class MacroTable extends DataboundTable<Macro> {
      *            The SWT style of this databound table.
      * @param tableStyle
      *            The SWT style of the inner table object.
-     * @param valueValidator
-     *            The macro value validator of the macro panel.
      */
-	public MacroTable(Composite parent, int style, int tableStyle, MacroValueValidator valueValidator) {
+	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.BORDER);
-		this.valueValidator = valueValidator;
 
 		initialise();
 	}
@@ -75,12 +75,13 @@ public class MacroTable extends DataboundTable<Macro> {
 	protected void addColumns() {
 		name();
 		value();
+		useDefault();
 		description();
 		pattern();
 	}
 	
 	private void name() {
-		createColumn("Macro name", 6, new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+		createColumn("Macro name", 5, new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
 			protected String stringFromRow(Macro row) {
 				return row.getName();
@@ -102,26 +103,27 @@ public class MacroTable extends DataboundTable<Macro> {
 			}
 		});
 		
-		value.setEditingSupport(new StringEditingSupport<Macro>(viewer(), Macro.class) {
-		    
-		    @Override
-		    protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
-		        return new TextCellEditor((Composite) viewer.getControl()) {
-		            @Override
-		            protected void editOccured(ModifyEvent e) {
-		                super.editOccured(e);
-		                valueValidator.validate(text.getText());
-		            }
-		        };
-		    }
+		editingSupport = new StringEditingSupport<Macro>(viewer(), Macro.class) {
+            
+            @Override
+            protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
+                return new TextCellEditor((Composite) viewer.getControl()) {
+                    @Override
+                    protected void editOccured(ModifyEvent e) {
+                        super.editOccured(e);
+                        valueValidator.validate(text.getText());
+                    }
+                };
+            }
 
             @Override
             protected String valueFromRow(Macro row) {
-                if (row == null || row.getValue() == null) {
-                    return "";
-                } else {
-                    return row.getValue();
+                if (row.getUseDefault()) {
+                    row.setUseDefault(false);
+                    row.setValue("");
                 }
+                
+                return row.getValue();
             }
 
             @Override
@@ -130,7 +132,34 @@ public class MacroTable extends DataboundTable<Macro> {
                     row.setValue(value);
                 }
             }
-        });
+        };
+		
+		value.setEditingSupport(editingSupport);
+	}
+	
+	private void useDefault() {
+	    createColumn("Use Default?", 4, false, new CheckboxLabelProvider<Macro>(observeProperty("useDefault")) {
+
+	        @Override
+	        protected boolean checked(Macro macro) {
+	            return macro.getUseDefault();
+	        }
+	        
+	        @Override
+	        protected void setChecked(Macro macro, boolean checked) {
+	            macro.setUseDefault(checked);
+	            if (checked) {
+	                macro.setValue(null);
+	            } else {
+	                macro.setValue("");
+	            }
+	        }
+	        
+            @Override
+            protected boolean isEditable(Macro model) {
+                return canEdit;
+            }
+	    });
 	}
 	
 	private void description() {
@@ -157,5 +186,14 @@ public class MacroTable extends DataboundTable<Macro> {
 	 */
     public void setValidator(MacroValueValidator valueValidator) {
         this.valueValidator = valueValidator;
+    }
+
+    /**
+     * Sets whether the table can be edited.
+     * @param canEdit whether or not the table can be edited.
+     */
+    public void setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
+        editingSupport.setEnabled(canEdit);
     }
 }

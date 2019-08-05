@@ -32,8 +32,9 @@ public class Macro extends ModelObject {
 	private String description;
 	private String pattern;
 	private String defaultValue;
+	private transient boolean useDefault;
 
-	/**
+    /**
 	 * GSON requires the default constructor to create the macro properly from
 	 * JSON.
 	 * 
@@ -41,7 +42,7 @@ public class Macro extends ModelObject {
 	 * create the object. This mean the parent class's constructor is NOT called.
 	 * GSON does not care if this is private.
 	 */
-	@SuppressWarnings("unused")
+    @SuppressWarnings("unused")
 	private Macro() {
 	}
 
@@ -145,6 +146,20 @@ public class Macro extends ModelObject {
      */
     public String getDefaultValue() {
         return defaultValue;
+    }
+    
+    /**
+     * @return the useDefault
+     */
+    public boolean getUseDefault() {
+        return useDefault;
+    }
+
+    /**
+     * @param useDefault the useDefault to set
+     */
+    public void setUseDefault(boolean useDefault) {
+        firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
     }
 
 	@Override

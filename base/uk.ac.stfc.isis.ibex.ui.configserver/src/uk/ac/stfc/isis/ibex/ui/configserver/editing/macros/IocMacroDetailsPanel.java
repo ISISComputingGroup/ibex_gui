@@ -29,12 +29,9 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -61,11 +58,8 @@ public class IocMacroDetailsPanel extends Composite {
 	
 	private Macro macro;
 	private Label errorIconLabel;
-	private Button clearMacro;
     private Image scaled;
     
-    private boolean canEdit;
-	
     /**
      * Constructor for the macro details panel.
      * 
@@ -78,7 +72,7 @@ public class IocMacroDetailsPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-        displayMacrosTable = new MacroTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION, valueValidator);
+        displayMacrosTable = new MacroTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
@@ -105,17 +99,6 @@ public class IocMacroDetailsPanel extends Composite {
         name = new Text(cmpSelectedPv, SWT.BORDER);
 		name.setEditable(false);
         name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-        clearMacro = new Button(cmpSelectedPv, SWT.NONE);
-		clearMacro.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				macro.setValue(null);
-				setClearButtonEnabled(false);
-			}
-		});
-		clearMacro.setText("Clear Macro");
-        clearMacro.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
         errorIconLabel = new Label(cmpSelectedPv, SWT.NONE);
         errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -146,7 +129,7 @@ public class IocMacroDetailsPanel extends Composite {
      */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
-		this.canEdit = canEdit;
+		displayMacrosTable.setCanEdit(canEdit);
 		
         DataBindingContext bindingContext = new DataBindingContext();
 
@@ -173,17 +156,7 @@ public class IocMacroDetailsPanel extends Composite {
 	public void setSelectedMacro(Macro macro) {		
 		this.macro = macro;
 		
-		setClearButtonEnabled(canEdit);
-		
 		valueValidator.setMacro(macro);
-	}
-	
-	private void setClearButtonEnabled(boolean enabled) {
-		if (macro == null) {
-			clearMacro.setEnabled(false);
-		} else {
-			clearMacro.setEnabled(enabled);
-		}
 	}
 
     @Override

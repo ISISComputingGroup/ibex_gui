@@ -26,14 +26,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-
-import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -132,52 +129,37 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		displayMacros = new ArrayList<Macro>();
 		
 		for (Macro availableMacro : availableMacros) {
-			boolean macroCurrentlySet = false;
 			final Macro displayMacro = new Macro(availableMacro);
 			for (final Macro setMacro : setMacros) {
 				if (setMacro.getName().equals(availableMacro.getName())) {
 					displayMacro.setValue(setMacro.getValue());
-					displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro, setMacros));
-					macroCurrentlySet = true;
 				}
 			}
 
 			displayMacros.add(displayMacro);
 			
-			if (!macroCurrentlySet) {
-				displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
+			displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
+			
+			if (displayMacro.getValue() == null) {
+			    displayMacro.setUseDefault(true);
 			}
 		}
 		
 		return displayMacros;
 	}
 	
-	private PropertyChangeListener updateValueListener(final Macro setMacro, final Collection<Macro> setMacros) {
-		return new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent newValue) {
-				String updatedValue = (String) newValue.getNewValue();
-				
-				if (Strings.isNullOrEmpty(updatedValue)) {
-					setMacros.remove(setMacro);
-				} else {
-					setMacro.setValue((String) newValue.getNewValue());
-				}
-			}
-		};
-	}
-	
 	private PropertyChangeListener addSetMacroListener(final Macro displayMacro, final Collection<Macro> setMacros) {
 		return new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent newValue) {
-			    Optional<Macro> existingMacro = setMacros.stream().filter(m -> m.getName() == displayMacro.getName()).findFirst();
+			    Optional<Macro> existingMacro = setMacros.stream().filter(m -> m.getName().equals(displayMacro.getName())).findFirst();
 			    if (existingMacro.isPresent()) {
                     existingMacro.get().setValue(displayMacro.getValue());
                 } else {
                     Macro newMacro = new Macro(displayMacro);
                     setMacros.add(newMacro);
                 }
+			    setMacros.removeIf(m -> m.getValue() == null);
 			}
 		};
 	}

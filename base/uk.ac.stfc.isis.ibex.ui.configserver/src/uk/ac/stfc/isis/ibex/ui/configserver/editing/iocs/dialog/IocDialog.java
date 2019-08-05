@@ -24,6 +24,7 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -53,6 +54,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
     protected final boolean readOnly;
     protected static final Display DISPLAY = Display.getCurrent();
+    private static final Point INITIAL_SIZE = new Point(800, 670);
+    private static final Point MINIMUM_SIZE = new Point(450, 400);
 
     /**
      * Constructor for the IOC dialog.
@@ -66,9 +69,21 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      */
     public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc) {
         super(parent);
+        setShellStyle(getShellStyle() | SWT.RESIZE);
         this.config = config;
         this.tempIoc = new TempEditableIoc(ioc);
         this.readOnly = !ioc.isEditable();
+    }
+    
+    @Override
+    protected Point getInitialSize() {
+        return INITIAL_SIZE;
+    }
+    
+    @Override
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setMinimumSize(MINIMUM_SIZE);
     }
 
     @Override
