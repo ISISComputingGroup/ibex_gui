@@ -96,7 +96,7 @@ public class MacroTable extends DataboundTable<Macro> {
 			    if (row.getValue() == null && row.getDefaultValue() != null) {
 			        return "(default: " + row.getDefaultValue() + ")";
 			    } else if (row.getValue() == null) {
-			        return "(default)";
+			        return "(default/not set)";
 			    } else {
 			        return row.getValue();
 			    }
