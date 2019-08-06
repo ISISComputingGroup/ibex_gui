@@ -35,7 +35,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
@@ -50,7 +49,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocMacroDetailsPanel extends Composite {
-	private Text name;
 	private MacroTable displayMacrosTable;
 	private UpdateValueStrategy valueStrategy = new UpdateValueStrategy();
 	private MacroValueValidator valueValidator;
@@ -82,7 +80,6 @@ public class IocMacroDetailsPanel extends Composite {
                 IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
                 if (selection.size() > 0) {
                     Macro macro = (Macro) selection.getFirstElement();
-                    name.setText(macro.getName());
                     setSelectedMacro(macro);
                 }
             }
@@ -91,14 +88,6 @@ public class IocMacroDetailsPanel extends Composite {
         Composite cmpSelectedPv = new Composite(this, SWT.NONE);
         cmpSelectedPv.setLayout(new GridLayout(3, false));
         cmpSelectedPv.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        Label lblName = new Label(cmpSelectedPv, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblName.setText("Name");
-		
-        name = new Text(cmpSelectedPv, SWT.BORDER);
-		name.setEditable(false);
-        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         errorIconLabel = new Label(cmpSelectedPv, SWT.NONE);
         errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -144,8 +133,6 @@ public class IocMacroDetailsPanel extends Composite {
 		
 		displayMacrosTable.setRows(macros);
 		displayMacrosTable.deselectAll();
-		
-		name.setText("");
 	}
 	
 	/**
