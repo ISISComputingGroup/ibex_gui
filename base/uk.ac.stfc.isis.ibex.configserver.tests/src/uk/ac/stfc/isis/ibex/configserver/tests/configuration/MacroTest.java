@@ -31,7 +31,7 @@ public class MacroTest {
 	public void create_macro_using_string_parameters_constructor_works() {
 		// Arrange
 		// Act
-		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "");
+		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "", null);
 		
 		// Assert
 		assertEquals(m.getName(), "macro1");
@@ -43,7 +43,7 @@ public class MacroTest {
 	@Test
 	public void string_parameters_constructor_change_value_works() {
 		// Arrange
-		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "");
+		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "", null);
 		
 		// Act
 		m.setValue("new value");
@@ -55,7 +55,7 @@ public class MacroTest {
 	@Test
 	public void create_macro_using_copy_constructor_works() {
 		// Arrange
-		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "");
+		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "", null);
 		
 		// Act
 		Macro m = new Macro(n);
@@ -70,7 +70,7 @@ public class MacroTest {
 	@Test
 	public void copy_constructor_change_value_works() {
 		// Arrange
-		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "");
+		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "", null);
 		Macro m = new Macro(n);
 		
 		// Act

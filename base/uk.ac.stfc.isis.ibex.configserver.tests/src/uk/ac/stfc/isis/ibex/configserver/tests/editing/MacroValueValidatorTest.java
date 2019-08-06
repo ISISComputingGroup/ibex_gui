@@ -64,8 +64,8 @@ public class MacroValueValidatorTest {
 		mockNameIsValidListener = mock(PropertyChangeListener.class);
 		showWarningIconListener = mock(PropertyChangeListener.class);
 		
-		macro = new Macro("name", "value", "description", PATTERN, "");
-		macroWithInvalidPattern = new Macro("name", "value", "description", INVALID_PATTERN, "");
+		macro = new Macro("name", "value", "description", PATTERN, "", null);
+		macroWithInvalidPattern = new Macro("name", "value", "description", INVALID_PATTERN, "", null);
 	}
 	
 	public MacroValueValidator getValidator(Macro macro) {

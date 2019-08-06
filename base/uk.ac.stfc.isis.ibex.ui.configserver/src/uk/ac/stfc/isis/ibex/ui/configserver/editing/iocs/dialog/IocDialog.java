@@ -54,7 +54,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
     protected final boolean readOnly;
     protected static final Display DISPLAY = Display.getCurrent();
-    private static final Point INITIAL_SIZE = new Point(800, 670);
+    private static final Point INITIAL_SIZE = new Point(1500, 670);
     private static final Point MINIMUM_SIZE = new Point(450, 400);
 
     /**

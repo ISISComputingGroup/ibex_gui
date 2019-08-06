@@ -18,6 +18,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+import java.util.Objects;
+
+import com.google.gson.annotations.SerializedName;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -32,7 +36,17 @@ public class Macro extends ModelObject {
 	private String description;
 	private String pattern;
 	private String defaultValue;
+	private HasDefault hasDefault;
 	private transient boolean useDefault;
+	
+	private enum HasDefault {
+	    @SerializedName("YES")
+	    YES,
+	    @SerializedName("NO")
+	    NO,
+	    @SerializedName("UNKNOWN")
+	    UNKNOWN
+	}
 
     /**
 	 * GSON requires the default constructor to create the macro properly from
@@ -53,7 +67,7 @@ public class Macro extends ModelObject {
 	 */
 	public Macro(Macro other) {
 		this(other.getName(), other.getValue(), other.getDescription(), other
-				.getPattern(), other.getDefaultValue());
+				.getPattern(), other.getDefaultValue(), other.getHasDefault());
 	}
 
 	/**
@@ -65,15 +79,23 @@ public class Macro extends ModelObject {
 	 * @param pattern Regex pattern macro value should follow
 	 * @param defaultValue the default value of the macro
 	 */
-	public Macro(String name, String value, String description, String pattern, String defaultValue) {
+	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault) {
 		this.name = name;
 		this.value = value;
 		this.description = description;
 		this.pattern = pattern;
 		this.defaultValue = defaultValue;
+		this.hasDefault = hasDefault;
 	}
 
 	/**
+     * @return the hasDefault
+     */
+    public HasDefault getHasDefault() {
+        return hasDefault;
+    }
+
+    /**
 	 * Set Macro name and fire a property change.
 	 * 
 	 * @param name new Macro name
@@ -146,6 +168,19 @@ public class Macro extends ModelObject {
      */
     public String getDefaultValue() {
         return defaultValue;
+    }
+    
+    /**
+     * @return default macro value for displaying to the user
+     */
+    public String getDefaultDisplay() {
+        if (hasDefault == HasDefault.YES) {
+            return defaultValue;
+        } else if (hasDefault == HasDefault.NO) {
+            return "(no default)";
+        } else {
+            return "(default unknown)";
+        }
     }
     
     /**

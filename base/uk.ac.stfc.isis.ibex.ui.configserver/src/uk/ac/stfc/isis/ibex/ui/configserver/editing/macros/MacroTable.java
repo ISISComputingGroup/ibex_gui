@@ -26,9 +26,12 @@ import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
@@ -49,6 +52,7 @@ public class MacroTable extends DataboundTable<Macro> {
     private MacroValueValidator valueValidator;
     private StringEditingSupport<Macro> editingSupport;
     private boolean canEdit;
+    private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
     
     /**
      * Constructor for the table.
@@ -76,6 +80,7 @@ public class MacroTable extends DataboundTable<Macro> {
 		name();
 		value();
 		useDefault();
+		defaultValue();
 		description();
 		pattern();
 	}
@@ -93,10 +98,8 @@ public class MacroTable extends DataboundTable<Macro> {
 		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
 			protected String stringFromRow(Macro row) {
-			    if (row.getValue() == null && row.getDefaultValue() != null) {
-			        return "(default: " + row.getDefaultValue() + ")";
-			    } else if (row.getValue() == null) {
-			        return "(not set/default)";
+			    if (row.getValue() == null) {
+			        return "(default)";
 			    } else {
 			        return row.getValue();
 			    }
@@ -138,7 +141,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void useDefault() {
-	    createColumn("Use Default?", 4, false, new CheckboxLabelProvider<Macro>(observeProperty("useDefault")) {
+	    createColumn("Use Default?", 3, false, new CheckboxLabelProvider<Macro>(observeProperty("useDefault")) {
 
 	        @Override
 	        protected boolean checked(Macro macro) {
@@ -162,8 +165,22 @@ public class MacroTable extends DataboundTable<Macro> {
 	    });
 	}
 	
+	private void defaultValue() {
+	    createColumn("Default", 5, new DataboundCellLabelProvider<Macro>(observeProperty("defaultValue")) {
+	        @Override
+	        public void update(ViewerCell cell) {
+	            super.update(cell);
+	            cell.setForeground(READONLY_COLOR);
+	        }
+            @Override
+            protected String stringFromRow(Macro row) {
+                return row.getDefaultDisplay();
+            }
+        });
+    }
+	
 	private void description() {
-		createColumn("Description", 8, new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
+		createColumn("Description", 12, new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
 			@Override
 			protected String stringFromRow(Macro row) {
 				return row.getDescription();
@@ -172,7 +189,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void pattern() {
-		createColumn("Pattern", 8, new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
+		createColumn("Pattern", 6, new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
 			@Override
 			protected String stringFromRow(Macro row) {
 				return row.getPattern();
