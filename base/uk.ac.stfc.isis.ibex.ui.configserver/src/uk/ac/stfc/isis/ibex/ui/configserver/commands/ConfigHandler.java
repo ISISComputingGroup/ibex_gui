@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +34,8 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -144,4 +148,14 @@ public abstract class ConfigHandler<T> {
                  + "Please report the problem to the computing group with a description of what you were trying to do.");
     }
 	
+    /**
+     * Gets the item conflicts on load with the given Duplicate checker and configuration.
+     * @param checker the DuplicateChecker
+     * @param config the Configuration
+     * @return a map of conflicts
+     */
+    protected Map<String, Set<String>> getItemConflicts(DuplicateChecker<?> checker, Configuration config) {
+        checker.setBase(config);
+        return checker.checkItemsOnLoad();
+    }
 }

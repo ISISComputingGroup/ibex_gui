@@ -1,7 +1,7 @@
 
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -33,8 +33,11 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
@@ -80,15 +83,17 @@ public class EditComponentHelper extends ConfigHelper {
                 new EditConfigDialog(shell, TITLE, subTitle, component, false,
                         configurationViewModels, editBlockFirst);
         if (editDialog.open() == Window.OK) {
-            Map<String, Set<String>> conflicts = conflictsWithCurrent(component);
-            if (conflicts.isEmpty()) {
+            Map<String, Set<String>> blockConflicts = itemConflictsWithCurrent(new BlockDuplicateChecker(), component);
+            Map<String, Set<String>> iocConflicts = itemConflictsWithCurrent(new IocDuplicateChecker(), component);
+            
+            if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                 try {
                     server.saveAsComponent().write(editDialog.getComponent());
                 } catch (IOException e) {
                     openErrorSavingDialog(e);
                 }
             } else {
-                openConflictsDialog(buildWarning(conflicts));
+                openConflictsDialog(DisplayConfiguration.buildWarning(blockConflicts, iocConflicts, "save", "component"));
                 openDialog(component, false, editBlockFirst);
             }
         }
@@ -116,15 +121,13 @@ public class EditComponentHelper extends ConfigHelper {
         }
     }
 
-    private Map<String, Set<String>> conflictsWithCurrent(EditableConfiguration editingComp) {
+    private Map<String, Set<String>> itemConflictsWithCurrent(DuplicateChecker<?> checker, EditableConfiguration editingComp) {
         Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
         if (compInCurrent(editingComp)) {
-            DuplicateChecker duplicateChecker = new DuplicateChecker();
-            duplicateChecker.setBase(server.currentConfig().getValue());
-            conflicts = duplicateChecker.checkOnEdit(editingComp.asConfiguration());
+            checker.setBase(server.currentConfig().getValue());
+            conflicts = checker.checkItemsOnEdit(editingComp.asConfiguration());
         }
         return conflicts;
-
     }
 
     private boolean compInCurrent(EditableConfiguration compToSave) {
@@ -134,25 +137,5 @@ public class EditComponentHelper extends ConfigHelper {
             }
         }
         return false;
-    }
-
-    private String buildWarning(Map<String, Set<String>> conflicts) {
-        boolean multi = (conflicts.size() > 1);
-        StringBuilder sb = new StringBuilder();
-        sb.append(
-                "Cannot save this component as it is used in the current configuration and would result in duplicate blocks. "
-                        + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
-
-        for (String block : conflicts.keySet()) {
-            sb.append("Block \"" + block + "\" contained in:\n");
-            Set<String> sources = conflicts.get(block);
-            for (String source : sources) {
-                sb.append("\u2022 " + source + "\n");
-            }
-            sb.append("\n");
-        }
-        sb.append(
-                "Please rename or remove the duplicate block" + (multi ? "s" : "") + " before saving this component.");
-        return sb.toString();
     }
 }
