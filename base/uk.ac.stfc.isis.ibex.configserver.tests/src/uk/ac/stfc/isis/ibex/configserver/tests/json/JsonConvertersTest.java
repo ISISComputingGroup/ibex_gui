@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
@@ -274,10 +274,10 @@ public class JsonConvertersTest {
     public void GIVEN_banner_json_is_valid_WHEN_transformed_to_banneritem_THEN_conversion_is_successful()
             throws ConversionException {
         // Arrange
-        Converter<String, BannerCustom> conv = new JsonConverters().toBannerDescription();
+        Converter<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        BannerCustom banner = conv.convert(bannerJson);
+        CustomBannerData banner = conv.convert(bannerJson);
 
         // Assert
         assertEquals(1, banner.buttons.size());
@@ -287,7 +287,7 @@ public class JsonConvertersTest {
     public void GIVEN_banner_json_is_invalid_WHEN_transformed_to_banneritem_THEN_conversion_fails()
             throws ConversionException {
         // Arrange
-        Converter<String, BannerCustom> conv = new JsonConverters().toBannerDescription();
+        Converter<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
 
         // Act
         conv.convert(bannerJsonBroken);

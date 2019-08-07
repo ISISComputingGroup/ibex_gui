@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 
 /**
  * Holds a button which can be pressed to send a value to a PV.
@@ -42,7 +42,7 @@ public class Control extends Composite {
 
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
-	private Button btnLoremIpsum;
+	private Button controlButton;
 	
 	/**
 	 * Create a button which can be pressed to send a value to a PV.
@@ -50,27 +50,27 @@ public class Control extends Composite {
 	 * @param style SWT Style.
 	 * @param model Control Model
 	 */
-	public Control(Composite parent, int style, ControlModel model) {
+	public Control(Composite parent, int style, CustomControlModel model) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		btnLoremIpsum = new Button(this, SWT.NONE);
-		btnLoremIpsum.setText("Lorem Ipsum");
-		btnLoremIpsum.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		controlButton = new Button(this, SWT.NONE);
+		controlButton.setText("Placeholder");
+		controlButton.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		
 		if (model != null) {
-			btnLoremIpsum.setText(model.text());
-			btnLoremIpsum.setForeground(new Color(Display.getCurrent(), model.textColour()));
-			btnLoremIpsum.setBackground(new Color(Display.getCurrent(), model.buttonColour()));
-			btnLoremIpsum.setFont(SWTResourceManager.getFont("Segoe UI", model.fontSize(), SWT.BOLD));
+			controlButton.setText(model.text());
+			controlButton.setForeground(new Color(Display.getCurrent(), model.textColour()));
+			controlButton.setBackground(new Color(Display.getCurrent(), model.buttonColour()));
+			controlButton.setFont(SWTResourceManager.getFont("Segoe UI", model.fontSize(), SWT.BOLD));
 			bind(model);
 		}
 	}
 
-	private void bind(final ControlModel model) {
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnLoremIpsum), BeanProperties.value("value").observe(model.enabled()));
+	private void bind(final CustomControlModel model) {
+		bindingContext.bindValue(WidgetProperties.enabled().observe(controlButton), BeanProperties.value("value").observe(model.enabled()));
 		
-		btnLoremIpsum.addSelectionListener(new SelectionAdapter() {
+		controlButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				model.click();

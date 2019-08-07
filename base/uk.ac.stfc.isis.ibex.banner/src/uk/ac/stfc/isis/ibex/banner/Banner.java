@@ -23,7 +23,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
@@ -83,10 +83,10 @@ public class Banner implements BundleActivator {
         Banner.context = null;
     }
 
-    private final BaseObserver<BannerCustom> descriptionAdapter = new BaseObserver<BannerCustom>() {
+    private final BaseObserver<CustomBannerData> descriptionAdapter = new BaseObserver<CustomBannerData>() {
 
         @Override
-        public void onValue(BannerCustom value) {
+        public void onValue(CustomBannerData value) {
             for (BannerItem item : value.items) {
                 item.createPVObservable();
             }

@@ -101,16 +101,14 @@ public class BannerButton extends ModelObject {
      * @return the RGB colour of the text in the button
      */
     public RGB textColour() {
-        Color c = Color.decode(textColour);
-        return new RGB(c.getRed(), c.getGreen(), c.getBlue());
+        return getRGBFromHex(textColour);
     }
     
     /**
      * @return the RGB colour of the button
      */
     public RGB buttonColour() {
-        Color c = Color.decode(buttonColour);
-        return new RGB(c.getRed(), c.getGreen(), c.getBlue());
+        return getRGBFromHex(buttonColour);
     }
     
     /**
@@ -132,5 +130,15 @@ public class BannerButton extends ModelObject {
      */
     public int height() {
         return height;
+    }
+    
+    /**
+     * Converts a hex colour into an RGB object.
+     * @param hex a hex string representation of a colour
+     * @return an RGB representing the colour
+     */
+    private RGB getRGBFromHex(String hex) {
+        Color c = Color.decode(hex);
+        return new RGB(c.getRed(), c.getGreen(), c.getBlue());
     }
 }

@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
@@ -30,19 +31,22 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.StringUtils;
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
 /**
  * Model containing banner item status as updated values used for display in
  * GUI.
  */
-public class BannerItemModel extends ModelObject implements IndicatorModel {
+public class BannerItemModel extends ModelObject {
+    
+    private static final Color RED = SWTResourceManager.getColor(255, 0, 0); 
+    private static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
+    private static final Color PURPLE = SWTResourceManager.getColor(255, 0, 255);
+    private static final Color ORANGE = SWTResourceManager.getColor(255, 120, 50);
 
     private final int index;
     private final SettableUpdatedValue<String> text = new SettableUpdatedValue<>();
     private final SettableUpdatedValue<Boolean> availability = new SettableUpdatedValue<>(true);
-    private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(IndicatorColours.BLACK);
+    private final SettableUpdatedValue<Color> colour = new SettableUpdatedValue<>(BLACK);
     
     private final BannerItem item;
     private final int width;
@@ -93,30 +97,28 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     	AlarmState alarm = item.alarm();
     	
     	if (alarm == AlarmState.MAJOR) {
-    		colour = IndicatorColours.RED;
+    		colour = RED;
     	} else if (alarm == AlarmState.MINOR) {
-    		colour = IndicatorColours.ORANGE;
+    		colour = ORANGE;
     	} else if (alarm == AlarmState.UNDEFINED || alarm == AlarmState.INVALID) {
-    		colour = IndicatorColours.PURPLE;
+    		colour = PURPLE;
     	} else {
-    		colour = IndicatorColours.BLACK;
+    		colour = BLACK;
     	}
     	
     	this.colour.setValue(colour);
     }
 
     /**
-     * {@inheritDoc}
+     * @return the index which indicates the order that elements on the banner should be displayed
      */
-    @Override
     public int index() {
         return index;
     }
     
     /**
-     * {@inheritDoc}
+     * @return the width of the indicator
      */
-    @Override
     public int width() {
         if (width < MIN_WIDTH) {
             return MIN_WIDTH;
@@ -128,25 +130,22 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     }
     
     /**
-     * {@inheritDoc}
+     * @return Text model for indicator model.
      */
-	@Override
 	public UpdatedValue<String> text() {
 		return text;
 	}
 
 	/**
-     * {@inheritDoc}
+     * @return Colour model for indicator model.
      */
-	@Override
 	public UpdatedValue<Color> color() {
 		return colour;
 	}
 
 	/**
-     * {@inheritDoc}
+     * @return Boolean model for indicator model.
      */
-	@Override
 	public UpdatedValue<Boolean> availability() {
 		return availability;
 	}

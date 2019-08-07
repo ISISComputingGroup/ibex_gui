@@ -29,7 +29,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 
 /**
  * Displays an item on the banner bar.
@@ -46,7 +46,7 @@ public class Indicator extends Composite {
 	 * @param model Indicator Model.
 	 * @param font Font for text.
 	 */
-	public Indicator(Composite parent, int style, IndicatorModel model, Font font) {
+	public Indicator(Composite parent, int style, BannerItemModel model, Font font) {
 		super(parent, style);
 		setEnabled(false);
         setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -65,7 +65,7 @@ public class Indicator extends Composite {
 		}
 	}
 
-	private void bind(IndicatorModel model) {
+	private void bind(BannerItemModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(model.text()));
 		bindingContext.bindValue(WidgetProperties.foreground().observe(text), BeanProperties.value("value").observe(model.color()));

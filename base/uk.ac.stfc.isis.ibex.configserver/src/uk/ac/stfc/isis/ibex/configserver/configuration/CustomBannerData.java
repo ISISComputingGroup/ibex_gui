@@ -24,7 +24,7 @@ import java.util.Collection;
 /**
  * Class which holds banner customisation data.
  */
-public class BannerCustom {
+public class CustomBannerData {
     /**
      * Instrument specific information displayed in the banner.
      */

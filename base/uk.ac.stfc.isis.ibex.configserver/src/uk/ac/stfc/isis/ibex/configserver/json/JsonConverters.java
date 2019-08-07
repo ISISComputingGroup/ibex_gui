@@ -30,7 +30,7 @@ import com.google.gson.GsonBuilder;
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -158,7 +158,7 @@ public class JsonConverters implements Converters {
 	};
 	
 	@Override
-	public Converter<String, BannerCustom> toBannerDescription() {
-        return new JsonDeserialisingConverter<>(BannerCustom.class);
+	public Converter<String, CustomBannerData> toBannerDescription() {
+        return new JsonDeserialisingConverter<>(CustomBannerData.class);
     }
 }

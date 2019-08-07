@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -34,13 +35,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerCustom;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.CurrentConfigModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
@@ -72,8 +70,8 @@ public class BannerView {
     public void createPartControl(Composite parent) {
 
         GridLayout glParent = new GridLayout(10, false);
-        glParent.marginRight = 2;
-        glParent.horizontalSpacing = 8;
+        glParent.marginRight = 0;
+        glParent.horizontalSpacing = 0;
         glParent.verticalSpacing = 0;
         glParent.marginWidth = 0;
         glParent.marginHeight = 0;
@@ -98,8 +96,8 @@ public class BannerView {
      * @param items the banner items
      * @return the indicator models
      */
-    private Collection<IndicatorModel> convertBannerItems(Collection<BannerItem> items) {
-        Collection<IndicatorModel> convertedItems = new ArrayList<IndicatorModel>();
+    private Collection<BannerItemModel> convertBannerItems(Collection<BannerItem> items) {
+        Collection<BannerItemModel> convertedItems = new ArrayList<>();
         if (!(items == null)) {
             for (BannerItem item : items) {
                 convertedItems.add(new BannerItemModel(item));
@@ -114,59 +112,69 @@ public class BannerView {
      * @param items the banner buttons
      * @return the control models
      */
-    private Collection<ControlModel> convertBannerButtons(Collection<BannerButton> buttons) {
-        Collection<ControlModel> convertedItems = new ArrayList<ControlModel>();
-        if (!(buttons == null)) {
-            for (BannerButton button : buttons) {
-                convertedItems.add(new CustomControlModel(button));
-            }
+    private Collection<CustomControlModel> convertBannerButtons(Collection<BannerButton> buttons) {
+        if (buttons != null) {
+            return buttons.stream().map(CustomControlModel::new).collect(Collectors.toList());
+        } else {
+            return new ArrayList<CustomControlModel>();
         }
-        return convertedItems;
     }
 
     /**
      * Adds an indicator widget for each banner item.
      * 
      * @param indicatorModels the banner item indicator models observed by the widget
+     * @param controlModels the banner button control models
      */
-    private void setBanner(final Collection<IndicatorModel> indicatorModels, final Collection<ControlModel> controlModels) {
+    private void setBanner(final Collection<BannerItemModel> indicatorModels, final Collection<CustomControlModel> controlModels) {
         disposeBanner();
         Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {
-                glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size() + 3;
+                glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
 
                 // The models all contain a unique index which depends on the order the
                 // items and buttons were listed in the XML.
                 // The indexes are then used to display the banner elements in the intended order.
                 for (int i = 0; i < indicatorModels.size() + controlModels.size(); i++) {
-                    for (IndicatorModel model : indicatorModels) {
+                    for (BannerItemModel model : indicatorModels) {
                         if (model.index() == i) {
-                            Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
-                            GridData gdBannerItem = new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1);
-                            gdBannerItem.widthHint = model.width();
-                            bannerItem.setLayoutData(gdBannerItem);
+                            drawIndicator(model);
                         }
                     }
-                    for (ControlModel model : controlModels) {
+                    for (CustomControlModel model : controlModels) {
                         if (model.index() == i) {
-                            Control bannerButton = new Control(bannerItemPanel, SWT.NONE, model);
-                            GridData gdBannerControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-                            gdBannerControl.widthHint = model.width();
-                            gdBannerControl.heightHint = model.height();
-                            bannerButton.setLayoutData(gdBannerControl);
+                            drawButton(model);
                         }
                     }
                 }
-                
-                Indicator currentConfig = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, new CurrentConfigModel(), ALARM_FONT);
-                GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-                gdCurrentConfig.widthHint = 360;
-                currentConfig.setLayoutData(gdCurrentConfig);
 
                 bannerItemPanel.layout(true);
             }
         });
+    }
+    
+    /**
+     * Draw an indicator using the model.
+     * @param model the BannerItemModel to use to draw the indicator
+     */
+    private void drawIndicator(BannerItemModel model) {
+        Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
+        GridData gdBannerItem = new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1);
+        gdBannerItem.widthHint = model.width();
+        bannerItem.setLayoutData(gdBannerItem);
+    }
+    
+    /**
+     * Draw an butotn using the model.
+     * @param model the ControlModel to use to draw the button
+     */
+    private void drawButton(CustomControlModel model) {
+        Control bannerButton = new Control(bannerItemPanel, SWT.NONE, model);
+        GridData gdBannerControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdBannerControl.widthHint = model.width();
+        gdBannerControl.heightHint = model.height();
+        bannerButton.setLayoutData(gdBannerControl);
     }
 
     /**
@@ -188,9 +196,9 @@ public class BannerView {
     /**
      * Observes the banner model and forwards changes to the UI.
      */
-    private final BaseObserver<BannerCustom> modelAdapter = new BaseObserver<BannerCustom>() {
+    private final BaseObserver<CustomBannerData> modelAdapter = new BaseObserver<CustomBannerData>() {
         @Override
-        public void onValue(BannerCustom value) {
+        public void onValue(CustomBannerData value) {
             setBanner(convertBannerItems(value.items), convertBannerButtons(value.buttons));
         }
 

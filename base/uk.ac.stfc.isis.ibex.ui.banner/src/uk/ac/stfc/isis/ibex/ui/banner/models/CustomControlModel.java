@@ -25,12 +25,11 @@ import uk.ac.stfc.isis.ibex.banner.ObservableCustomControl;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 
 /**
  * The model for custom buttons in the banner.
  */
-public class CustomControlModel extends ModelObject implements ControlModel {
+public class CustomControlModel extends ModelObject {
 
     private final int index;
     private final ObservableCustomControl control;
@@ -66,57 +65,50 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     }
     
     /**
-     * {@inheritDoc}
+     * Action when the button is clicked.
      */
-    @Override
     public void click() {
         control.act();
     }
     
     /**
-     * {@inheritDoc}
+     * @return the index which indicates the order that elements on the banner should be displayed
      */
-    @Override
     public int index() {
         return index;
     }
 
     /**
-     * {@inheritDoc}
+     * @return the button's text
      */
-    @Override
     public String text() {
         return text;
     }
 
     /**
-     * {@inheritDoc}
+     * @return an UpdatedValue Boolean of whether the button is enabled
      */
-    @Override
     public UpdatedValue<Boolean> enabled() {
         return control.canWrite();
     }
     
     /**
-     * {@inheritDoc}
+     * @return the RGB colour of the text
      */
-    @Override
     public RGB textColour() {
         return textColour;
     }
 
     /**
-     * {@inheritDoc}
+     * @return the RGB colour of the button
      */
-    @Override
     public RGB buttonColour() {
         return buttonColour;
     }
     
     /**
-     * {@inheritDoc}
+     * @return the font size
      */
-    @Override
     public int fontSize() {
         if (fontSize < MIN_FONT) {
             return MIN_FONT;
@@ -128,9 +120,8 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the width of the button
      */
-    @Override
     public int width() {
         if (width < MIN_WIDTH) {
             return MIN_WIDTH;
@@ -142,9 +133,8 @@ public class CustomControlModel extends ModelObject implements ControlModel {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the height of the button
      */
-    @Override
     public int height() {
         if (height < MIN_HEIGHT) {
             return MIN_HEIGHT;

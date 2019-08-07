@@ -77,7 +77,7 @@ public class BannerItem extends ModelObject {
         @Override
         public void onError(Exception e) {
             setCurrentValue(null);
-            IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
+            IsisLog.getLogger(getClass()).error("Exception in banner item (value) state adapter: " + e.getMessage());
         }
 
         @Override
@@ -92,13 +92,14 @@ public class BannerItem extends ModelObject {
 
         @Override
         public void onValue(AlarmState alarm) {
+            IsisLog.getLogger(getClass()).info("New alarm state in BannerItem " + alarmObservable + ": " + alarm);
             setCurrentAlarm(alarm);
         }
 
         @Override
         public void onError(Exception e) {
             setCurrentAlarm(AlarmState.INVALID);
-            IsisLog.getLogger(getClass()).error("Exception in banner item state adapter: " + e.getMessage());
+            IsisLog.getLogger(getClass()).error("Exception in banner item (alarm) state adapter: " + e.getMessage());
         }
 
         @Override
@@ -140,6 +141,7 @@ public class BannerItem extends ModelObject {
      * @return the alarm status of this banner item.
      */
     public AlarmState alarm() {
+        System.out.println(name + ": " + currentAlarmState);
         return currentAlarmState;
     }
     
