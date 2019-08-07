@@ -59,7 +59,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>470</height>
+    <height>530</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <CHAN>1</CHAN>
@@ -100,7 +100,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>470</height>
+    <height>530</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <CHAN>2</CHAN>
@@ -162,7 +162,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <width>735</width>
     <wuid>-40bd4f1a:16c661ab1e0:-7377</wuid>
     <x>6</x>
-    <y>475</y>
+    <y>535</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -370,7 +370,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>27</height>
+      <height>23</height>
       <items_from_pv>true</items_from_pv>
       <name>Combo</name>
       <pv_name>$(PV_ROOT):REMOTEMODE:SP</pv_name>
