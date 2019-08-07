@@ -59,7 +59,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>529</height>
+    <height>517</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
