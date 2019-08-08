@@ -65,7 +65,7 @@ public class ReadableComponentView extends Composite {
 		propertyName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		propertyName.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
 		
-		// Additional container to hold the text to draw a label around it
+		// Additional container to hold the text to draw a border around it
         valueContainer = new Composite(this, SWT.CENTER);
         GridLayout valueContainerLayout = new GridLayout(1, false);
         valueContainerLayout.marginWidth = BORDER_WIDTH;

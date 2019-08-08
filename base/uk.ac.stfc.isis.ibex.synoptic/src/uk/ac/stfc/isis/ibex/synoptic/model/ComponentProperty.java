@@ -21,15 +21,23 @@ package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Abstract superclass holding common functionality for component properties.
+ */
 public abstract class ComponentProperty extends ModelObject {
 	
 	private final String displayName;
 	
-	
+    /**
+     * @param displayName display name of the component property
+     */
 	public ComponentProperty(String displayName) {
 		this.displayName = displayName;
 	}
 
+	/**
+	 * @return the display name of the component property
+	 */
 	public String displayName() {
 		return displayName;
 	}

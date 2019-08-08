@@ -20,11 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.core.databinding.conversion.Converter;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.ui.PvStateColour;
 
 
 /**
@@ -35,10 +34,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
  * 
  */
 public class PvStatusBorderColourConverter extends Converter {
-    private static final Color GREY = SWTResourceManager.getColor(240, 240, 240);
-    private static final Color MAGENTA = SWTResourceManager.getColor(SWT.COLOR_MAGENTA);
-    private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
-    private static final Color ORANGE = SWTResourceManager.getColor(255, 128, 0);
 
     /**
      * Instantiates the converter.
@@ -58,13 +53,13 @@ public class PvStatusBorderColourConverter extends Converter {
         BlockState state = (BlockState) fromObject;
         switch (state) {
             case DISCONNECTED:
-                return MAGENTA;
+                return PvStateColour.MAGENTA;
             case MAJOR_ALARM:
-                return RED;
+                return PvStateColour.RED;
             case MINOR_ALARM:
-                return ORANGE;
+                return PvStateColour.ORANGE;
             default:
-                return GREY;
+                return PvStateColour.GREY;
         }
     }
 
