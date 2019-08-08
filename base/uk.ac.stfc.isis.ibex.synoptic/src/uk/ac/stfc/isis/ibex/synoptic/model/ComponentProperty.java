@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
-public abstract class ComponentProperty {
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
+public abstract class ComponentProperty extends ModelObject {
 	
 	private final String displayName;
 	
