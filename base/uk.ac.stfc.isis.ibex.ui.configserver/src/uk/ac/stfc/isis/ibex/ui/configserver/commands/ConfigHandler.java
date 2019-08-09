@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -118,7 +116,7 @@ public abstract class ConfigHandler<T> {
     public final void execute(Shell shell) {
         try {
             safeExecute(shell);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             onError(e);
         }
     }
@@ -131,7 +129,7 @@ public abstract class ConfigHandler<T> {
      * @param event
      *            the eclipse event
      */
-    public abstract void safeExecute(Shell event);
+    public abstract void safeExecute(Shell event) throws Exception;
 
     /**
      * Error handler. Override this to provide specific error handling

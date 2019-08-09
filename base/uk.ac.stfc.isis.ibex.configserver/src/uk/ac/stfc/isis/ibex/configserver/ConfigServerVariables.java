@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -54,6 +56,9 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  * BlockServer.
  */
 public class ConfigServerVariables extends Closer {
+
+	private static final Logger LOG = IsisLog.getLogger(ConfigServerVariables.class);
+
 	private final BlockServerAddresses blockServerAddresses;
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
@@ -288,7 +293,7 @@ public class ConfigServerVariables extends Closer {
      */
 	private ForwardingObservable<String> readCompressed(String address) {
         if (address.contains("BLOCKSERVER:IOCS")) {
-            LoggerUtils.logIfExtraDebug(IsisLog.getLogger(getClass()), "(Ticket 2161) Reading from " + address);
+            LoggerUtils.logIfExtraDebug(LOG, "(Ticket 2161) Reading from " + address);
         }
         return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(address));

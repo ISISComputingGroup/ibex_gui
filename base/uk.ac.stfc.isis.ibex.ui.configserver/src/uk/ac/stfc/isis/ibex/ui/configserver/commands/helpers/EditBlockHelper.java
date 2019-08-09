@@ -22,14 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 
@@ -66,8 +66,9 @@ public class EditBlockHelper {
      *            is this the current configuration
      * @param isComponent
      *            is this a component
+     * @throws TimeoutException
      */
-    private void createConfigurationDialog(String config, Boolean isCurrent, Boolean isComponent) {
+    private void createConfigurationDialog(String config, Boolean isCurrent, Boolean isComponent) throws TimeoutException {
         // Pick a helper class who'll open the edit dialog
         ConfigHelper helper;
         if (isComponent) {
@@ -93,31 +94,28 @@ public class EditBlockHelper {
      * @return The result of the request with details of the configuration and
      *         any errors
      */
-    private EditBlockRequestResult findBlockHostConfiguration(String blockName) {
+    private EditBlockRequestResult findBlockHostConfiguration(String blockName) throws TimeoutException {
         // Get the current configuration so we can assess who the block the
         // belongs to.
-
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsCurrentConfig();
 
         EditBlockRequestResult result = new EditBlockRequestResult();
 
         // Decide what to open
-        if (Awaited.returnedValue(config, 1)) {
-            Block block = config.getValue().getBlockByName(blockName);
+        try {
+        	EditableConfiguration config = configurationViewModels.getCurrentConfig();
+            Block block = config.getBlockByName(blockName);
             if (block == null) {
                 result.setError("Cannot find block in current configuration or its components.");
             } else if (block.inComponent()) {
-
-                UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.setModelAsComponent(block.getComponent());
-                if (Awaited.returnedValue(editableComponent, 1)) {
-                    result.setConfig(editableComponent.getValue().getName(), true);
-                } else {
+            	try {
+            		result.setConfig(configurationViewModels.getComponent(block.getComponent()).getName(), true);
+                } catch (TimeoutException err) {
                     result.setError("Cannot edit component containing block.");
                 }
             } else {
-                result.setConfig(config.getValue().getName(), false);
+                result.setConfig(config.getName(), false);
             }
-        } else {
+        } catch (TimeoutException e) {
             result.setError("There is no current configuration, so it can not be edited.");
         }
         return result;
@@ -128,8 +126,9 @@ public class EditBlockHelper {
      *
      * @param blockName
      *            The name of the block to edit
+     * @throws TimeoutException
      */
-    public void createDialog(String blockName) {
+    public void createDialog(String blockName) throws TimeoutException {
 
         EditBlockRequestResult result = findBlockHostConfiguration(blockName);
 

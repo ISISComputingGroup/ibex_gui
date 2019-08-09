@@ -23,12 +23,16 @@
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
+
+import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 /**
@@ -36,6 +40,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
  * configuration.
  */
 public class ConfigurationViewModels {
+
+    private static final int MAX_SECONDS_TO_WAIT_FOR_VALUE = 10;
 
     /** model that is being edited. */
     private Editing editingModel;
@@ -46,12 +52,14 @@ public class ConfigurationViewModels {
     /** view model for the group. */
     private GroupEditorViewModel groupEditorViewModel;
 
+    private static final Logger LOG = IsisLog.getLogger(ConfigurationViewModels.class);
+
     /**
      * Constructor.
      */
     public ConfigurationViewModels() {
         groupEditorViewModel = new GroupEditorViewModel();
-        IsisLog.getLogger(getClass()).info("Created configurationviewmodels");
+        LOG.info("Created configurationviewmodels");
     }
 
     /**
@@ -62,7 +70,7 @@ public class ConfigurationViewModels {
      */
     public void bind(Editing editingModel) {
         this.editingModel = editingModel;
-        setModelAsCurrentConfig();
+        observableConfigModel = new UpdatedObservableAdapter<EditableConfiguration>(editingModel.currentConfig());
     }
 
     /**
@@ -85,34 +93,60 @@ public class ConfigurationViewModels {
 
     /**
      * Set the model to point at the current configuration.
+     *
+     * @return configuration model
      */
-    public UpdatedObservableAdapter<EditableConfiguration> setModelAsCurrentConfig() {
-    	return setAsObservableConfigModel(editingModel.currentConfig());
+    public EditableConfiguration getCurrentConfig() throws TimeoutException {
+    	return currentValueFromObservable(editingModel.currentConfig());
     }
 
     /**
      * Set the model to point at the named configuration.
      *
      * @param configName name of the configuration
+     * @return configuration model
      */
-    public UpdatedObservableAdapter<EditableConfiguration> setModelAsConfig(String configName) {
-        return setAsObservableConfigModel(editingModel.config(configName));
+    public EditableConfiguration getConfig(String configName) throws TimeoutException {
+        return currentValueFromObservable(editingModel.config(configName));
     }
 
     /**
      * Set the model to point at the named component.
      *
      * @param componentName name of the component
+     * @return configuration model
      */
-    public UpdatedObservableAdapter<EditableConfiguration> setModelAsComponent(String componentName) {
-        return setAsObservableConfigModel(editingModel.component(componentName));
+    public EditableConfiguration getComponent(String componentName) throws TimeoutException {
+        return currentValueFromObservable(editingModel.component(componentName));
     }
 
     /**
      * Set the model to point at a blank configuration.
+     * @return configuration model
      */
-    public UpdatedObservableAdapter<EditableConfiguration> setModelAsBlankConfig() {
-    	return setAsObservableConfigModel(editingModel.blankConfig());
+    public EditableConfiguration getBlankConfig() throws TimeoutException {
+    	return currentValueFromObservable(editingModel.blankConfig());
+    }
+
+    /**
+     * This method takes an observable, waits for it to have a correct value, and then returns that value
+     * @param <T> - the type of value
+     * @param observable - the observable to monitor
+     * @return - the current value
+     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the value was accessible.
+     */
+    private static <T> T currentValueFromObservable(ForwardingObservable<T> observable) throws TimeoutException {
+
+    	UpdatedObservableAdapter<T> updateAdapter = new UpdatedObservableAdapter<>(observable);
+
+        if (Awaited.returnedValue(updateAdapter, MAX_SECONDS_TO_WAIT_FOR_VALUE)) {
+            T value = updateAdapter.getValue();
+            updateAdapter.close();
+            return value;
+        } else {
+        	updateAdapter.close();
+        	throw new TimeoutException("Could not get value from " + observable + " after waiting " + MAX_SECONDS_TO_WAIT_FOR_VALUE + " seconds.");
+        }
     }
 
     /**

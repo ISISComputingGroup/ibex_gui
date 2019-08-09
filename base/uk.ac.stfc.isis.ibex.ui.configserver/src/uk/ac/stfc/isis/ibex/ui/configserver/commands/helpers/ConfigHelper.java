@@ -19,12 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 
 /**
@@ -44,13 +44,10 @@ public abstract class ConfigHelper {
      *            The name of the config we wish to edit
      * @param editBlockFirst
      *            Whether to present the blocks tab first
+     * @throws TimeoutException
      */
-    public void createDialog(String configName, boolean editBlockFirst) {
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsConfig(configName);;
-
-        if (Awaited.returnedValue(config, MAX_SECONDS_TO_WAIT)) {
-            openDialog(config.getValue(), false, editBlockFirst);
-        }
+    public void createDialog(String configName, boolean editBlockFirst) throws TimeoutException {
+        openDialog(configurationViewModels.getConfig(configName), false, editBlockFirst);
     }
 
     /**
@@ -60,11 +57,9 @@ public abstract class ConfigHelper {
      *            Whether the first operation we want to do is edit a block
      */
     public void createDialogCurrent(boolean editBlockFirst) {
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsCurrentConfig();;
-
-        if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), true, editBlockFirst);
-        } else {
+        try {
+            openDialog(configurationViewModels.getCurrentConfig(), true, editBlockFirst);
+        } catch (TimeoutException err) {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }

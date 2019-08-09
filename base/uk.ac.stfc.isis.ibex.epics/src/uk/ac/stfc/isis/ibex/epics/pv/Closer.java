@@ -19,14 +19,22 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Registers objects to be closed later.
  */
 public class Closer implements Closable {
 
-	private final ClosableList<Closable> resources = new ClosableList<>();
+	private final List<Closable> resources = new ArrayList<>();
+	private static final Logger LOG = IsisLog.getLogger(Closer.class);
 
 	/**
 	 * Registers a resource to be closed by this class.
@@ -45,7 +53,13 @@ public class Closer implements Closable {
 	 */
 	@Override
 	public void close() {
-		resources.close();
+		for (Closable resource : resources) {
+			try {
+				resource.close();
+			} catch (Exception e) {
+				LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+			}
+		}
 	}
 
 }

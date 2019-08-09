@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -38,8 +39,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
@@ -85,7 +84,7 @@ public class EditComponentHelper extends ConfigHelper {
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> blockConflicts = itemConflictsWithCurrent(new BlockDuplicateChecker(), component);
             Map<String, Set<String>> iocConflicts = itemConflictsWithCurrent(new IocDuplicateChecker(), component);
-            
+
             if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                 try {
                     server.saveAsComponent().write(editDialog.getComponent());
@@ -112,13 +111,8 @@ public class EditComponentHelper extends ConfigHelper {
     }
 
     @Override
-    public void createDialog(String componentName, boolean editBlockFirst) {
-
-        UpdatedValue<EditableConfiguration> component = configurationViewModels.setModelAsComponent(componentName);
-
-        if (Awaited.returnedValue(component, MAX_SECONDS_TO_WAIT)) {
-            openDialog(component.getValue(), false, editBlockFirst);
-        }
+    public void createDialog(String componentName, boolean editBlockFirst) throws TimeoutException {
+        openDialog(configurationViewModels.getComponent(componentName), false, editBlockFirst);
     }
 
     private Map<String, Set<String>> itemConflictsWithCurrent(DuplicateChecker<?> checker, EditableConfiguration editingComp) {

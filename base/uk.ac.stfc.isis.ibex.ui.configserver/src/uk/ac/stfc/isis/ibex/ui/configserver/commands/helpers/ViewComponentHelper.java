@@ -22,11 +22,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigDetailsDialog;
 
@@ -75,14 +75,10 @@ public class ViewComponentHelper extends ConfigHelper {
      *            The name of the component we wish to edit
      * @param editBlockFirst
      *            Whether to present the blocks tab first
+     * @throws TimeoutException
      */
     @Override
-    public void createDialog(String componentName, boolean editBlockFirst) {
-
-        UpdatedValue<EditableConfiguration> component = configurationViewModels.setModelAsComponent(componentName);
-
-        if (Awaited.returnedValue(component, MAX_SECONDS_TO_WAIT)) {
-            openDialog(component.getValue(), false, editBlockFirst);
-        }
+    public void createDialog(String componentName, boolean editBlockFirst) throws TimeoutException {
+        openDialog(configurationViewModels.getComponent(componentName), false, editBlockFirst);
     }
 }

@@ -26,6 +26,13 @@ public class Unsubscriber<T> implements Subscription {
 	private Subscribable<T> subscribable;
 	private T subscriber;
 
+	/**
+	 * Creates a new unsubscriber. When this object's cancelSubscription method is called,
+	 * the observer will be removed from the observable.
+	 *
+	 * @param subscribable - the object to subscribe to
+	 * @param subscriber - the object which is subscribing
+	 */
 	public Unsubscriber(Subscribable<T> subscribable, T subscriber) {
 		this.subscribable = requireNonNull(subscribable);
 		this.subscriber = requireNonNull(subscriber);

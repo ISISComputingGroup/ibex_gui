@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -30,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
  * The handler class for editing configurations.
- * 
+ *
  * It sets the menu labels, and opens the dialogue for editing or viewing the
  * configurations.
  */
@@ -53,7 +55,7 @@ public class EditConfigHandler extends EditConfigurationsHandler {
      *            the shell to user
      */
     @Override
-    public void safeExecute(Shell shell) {
+    public void safeExecute(Shell shell) throws TimeoutException {
         ConfigHelper helper;
         String titleText;
         if (canWrite) {
@@ -80,7 +82,7 @@ public class EditConfigHandler extends EditConfigurationsHandler {
 
     /**
      * Create a dialog to confirm whether the user wants to edit a current configuration.
-     * 
+     *
      * @param configName the name of the configuration
      * @param shell the shell to user
      * @return the response from the user

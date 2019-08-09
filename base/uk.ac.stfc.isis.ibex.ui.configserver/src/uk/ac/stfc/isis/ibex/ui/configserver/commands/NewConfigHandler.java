@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
@@ -53,14 +53,9 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 	 * @param shell the shell
 	 */
 	@Override
-    public void safeExecute(Shell shell) {
+    public void safeExecute(Shell shell) throws TimeoutException {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
-
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.setModelAsBlankConfig();
-
-		if (Awaited.returnedValue(config, 1)) {
-            openDialog(shell, config.getValue(), configurationViewModels);
-		}
+        openDialog(shell, configurationViewModels.getBlankConfig(), configurationViewModels);
 	}
 
     private void openDialog(Shell shell, EditableConfiguration config, ConfigurationViewModels configurationViewModels) {

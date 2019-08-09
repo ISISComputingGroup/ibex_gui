@@ -179,7 +179,7 @@ public class MQConnection extends ModelObject implements Runnable {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
         }
     }
 
