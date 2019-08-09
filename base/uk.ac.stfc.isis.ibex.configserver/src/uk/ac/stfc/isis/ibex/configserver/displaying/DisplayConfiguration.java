@@ -1,6 +1,6 @@
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -20,7 +20,10 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Strings;
 
@@ -171,4 +174,40 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
         	);
 		}
 	}
+	
+    /**
+     * Creates a warning informing the user of a conflict.
+     * @param blockConflicts a map containing the block conflicts
+     * @param iocConflicts a map containing the IOC conflicts
+     * @param action what the user is trying to do
+     * @param element the thing that the user is trying to do something to
+     * @return the warning string
+     */
+    public static String buildWarning(Map<String, Set<String>> blockConflicts, Map<String, Set<String>> iocConflicts,
+            String action, String element) {
+        Map<String, Map<String, Set<String>>> conflicts = new HashMap<>();
+        if (iocConflicts.size() > 0) {
+            conflicts.put("IOC", iocConflicts);
+        }
+        if (blockConflicts.size() > 0) {
+            conflicts.put("Block", blockConflicts);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Cannot %s the %s as it would result in the following duplicate elements:\n\n", action, element));
+
+        for (String conflictType : conflicts.keySet()) {
+            for (String item : conflicts.get(conflictType).keySet()) {
+                sb.append(conflictType.substring(0, 1).toUpperCase() + conflictType.substring(1) + " \"" + item + "\" contained in:\n");
+                Set<String> sources = conflicts.get(conflictType).get(item);
+                for (String source : sources) {
+                    sb.append("\u2022 " + source + "\n");
+                }
+                sb.append("\n");
+            }
+        }
+        
+        sb.append("Please resolve these conflicts by removing / renaming duplicate elements as appropriate before proceeding.");
+        return sb.toString();
+    }
 }
