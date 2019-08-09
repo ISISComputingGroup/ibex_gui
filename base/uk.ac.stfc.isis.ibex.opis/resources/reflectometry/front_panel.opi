@@ -1397,7 +1397,7 @@ $(pv_value)</tooltip>
             <foreground_color>
               <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
             </foreground_color>
-            <format_type>0</format_type>
+            <format_type>4</format_type>
             <height>85</height>
             <horizontal_alignment>0</horizontal_alignment>
             <name>Text Update_1</name>
@@ -1422,7 +1422,7 @@ $(pv_value)</tooltip>
             <visible>true</visible>
             <widget_type>Text Update</widget_type>
             <width>301</width>
-            <wrap_words>false</wrap_words>
+            <wrap_words>true</wrap_words>
             <wuid>28840e26:169d9726b77:-76c2</wuid>
             <x>12</x>
             <y>29</y>
