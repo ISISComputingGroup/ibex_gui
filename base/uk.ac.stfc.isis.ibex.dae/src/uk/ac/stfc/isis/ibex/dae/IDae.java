@@ -61,6 +61,11 @@ public interface IDae {
 	ForwardingObservable<String> title();
 
     /**
+     * @return An observable on a string giving the title for the current run.
+     */
+    ForwardingObservable<String> titleSP();
+
+    /**
      * @return An observable on a boolean giving whether or not to display the
      *         title on the webpage.
      */
