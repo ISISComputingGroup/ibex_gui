@@ -15,14 +15,12 @@ alarm icon designed by Freepik from www.flaticon.com
 Beam Status ->uk.ac.stfc.isis.ibex.ui.beamstatus/icons
 
 status_24x24 designed by Freepik from www.flaticon.com
-status_32x24 designed by Freepik from www.flaticon.com
 
 
 
 DAE ->uk.ac.stfc.isis.ibex.ui.dae/icons
 
 server16_24x24 designed by Freepik from www.flaticon.com
-server16_32x24 designed by Freepik from www.flaticon.com
 cancel designed by Eleonor Wang at www.flaticon.com
 gauge designed by Freepik at www.flaticon.com
 info designed by Freepik at www.flaticon.com
@@ -33,7 +31,6 @@ plot designed by Freepik at www.flaticon.com
 resume designed by Freepik at www.flaticon.com
 save designed by Freepik at www.flaticon.com
 server16_24x24 designed by Freepik at www.flaticon.com
-server16_32x24 designed by Freepik at www.flaticon.com
 setup designed by Hanan at www.flaticon.com
 stop designed by Hanan at www.flaticon.com
 store designed by Picol at www.flaticon.com
@@ -47,7 +44,7 @@ Device Screens ->uk.ac.stfc.isis.ibex.ui.devicescreens/icons
 
 checkbox designed by Smashicons at www.flaticon.com
 navigate_cross designed by Smashicons at www.flaticon.com
-screen_32x24 designed by Freepik at www.flaticon.com
+screen_24x24 designed by Freepik at www.flaticon.com
 
 Device Screen Components ->uk.ac.stfc.isis.ibex.ui.devicescreens.icons/components
 
@@ -57,7 +54,6 @@ Synoptic components created designed by ISIS Computing Group
 
 Experiment Details ->uk.ac.stfc.isis.ibex.ui.experimentdetails/icons
 
-file148_32x24 designed by Freepik at www.flaticon.com
 file148_24x24 designed by Freepik at www.flaticon.com
 text102_24x24 designed by Freepik at www.flaticon.com
 usertext designed by Hanan designed by www.flaticon.com
@@ -66,7 +62,7 @@ usertext designed by Hanan designed by www.flaticon.com
 
 Journal Viewer ->uk.ac.stfc.isis.ibex.ui.journalviewer/icons
 
-journal_viewer_32x24.png designed by Freepik at www.flaticon.com
+journal_viewer_24x24.png designed by Freepik at www.flaticon.com
 
 
 
@@ -74,14 +70,12 @@ Log Plotter ->uk.ac.stfc.isis.ibex.ui.logplotter/icons
 
 databrowsing designed by Freepik at www.flaticon.com
 stocks2_24x24 designed by Freepik at www.flaticon.com
-stocks2_32x24 designed by Freepik at www.flaticon.com
 
 
 
 Motor ->uk.ac.stfc.isis.ibex.ui.motor/icons
 
 gears6_24x24 designed by Freepik at www.flaticon.com
-gears6_32x24 designed by Freepik at www.flaticon.com
 arrow_left_green designed by Picol at www.flaticon.com
 arrow_left_minimal designed by Picol at www.flaticon.com
 arrow_right_green designed by Picol at www.flaticon.com
@@ -105,7 +99,6 @@ save designed by Freepik at www.flaticon.com
 pause designed by Hanan at www.flaticon.com
 play designed by Hanan at www.flaticon.com
 resume designed by Freepik at www.flaticon.com
-script_server_32x24 designed by Smashicons at www.flaticon.com
 stop designed by Hanan at www.flaticon.com
 
 
@@ -113,7 +106,6 @@ stop designed by Hanan at www.flaticon.com
 Scripting ->uk.ac.stfc.isis.ibex.ui.scripting/icons
 
 script_24x24 designed by Smashicons at www.flaticon.com
-script_32x24 designed by Smashicons at www.flaticon.com
 scripting designed by Smashicons at www.flaticon.com
 
 
@@ -123,7 +115,6 @@ Synoptic Perspective ->uk.ac.stfc.isis.ibex.ui.synoptic/icons
 tick designed by Eleonor Wang at www.flaticon.com
 earth3_24x24 designed by Freepik at www.flaticon.com
 earth16_24x24 designed by Freepik at www.flaticon.com
-earth16_32x24 designed by Freepik at www.flaticon.com
 navigate_left designed by Hanan at www.flaticon.com
 navigate_right designed by Hanan at www.flaticon.com
 navigate_up designed by Hanan at www.flaticon.com
@@ -133,15 +124,13 @@ Synoptic Editor ->uk.ac.stfc.isis.ibex.ui.synoptic.editor/icons
 edit designed by Freepik at www.flaticon.com
 pencil43_24x24 designed by Freepik at www.flaticon.com
 settings4_24x24 designed by Freepik at www.flaticon.com
-settings_32x24 designed by Freepik at www.flaticon.com
 
 
 
 IOC Log ->uk.ac.stfc.isis.ibex.ui.log/icons
 
 delete designed by Eleonor Wang at www.flaticon.com
-log_32x24 designed by Freepik at www.flaticon.com
-log designed by Freepik at www.flaticon.com
+log_24x24 designed by Freepik at www.flaticon.com
 search designed by Hanan at www.flaticon.com
 
 
@@ -163,7 +152,6 @@ Alarm ->uk.ac.stfc.isis.ibex.ui.alarm/icons
 alarm designed by Freepik at www.flaticon.com
 refresh designed by Freepik at www.flaticon.com
 alarm_bell_24x24 designed by Freepik at www.flaticon.com
-alarm_bell_32x24 designed by Freepick at www.flaticon.com
 
 --
 
@@ -210,5 +198,4 @@ Web Links
 
 ->ui.weblinks/icons
 external1_24x24 designed by Freepik at www.flaticon.com
-external1_32x24 designed by Freepik at www.flaticon.com
 info designed by Freepik at www.flaticon.com

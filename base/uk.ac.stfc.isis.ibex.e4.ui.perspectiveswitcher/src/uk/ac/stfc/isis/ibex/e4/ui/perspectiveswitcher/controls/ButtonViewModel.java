@@ -13,6 +13,8 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class ButtonViewModel extends ModelObject {
 
+    protected static final String SPACING = "  ";
+    
     protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
     protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
 
@@ -120,7 +122,7 @@ public class ButtonViewModel extends ModelObject {
      */
     public void maximise(int width) {
         maximised = true;
-        setText(permanentText);
+        setText(SPACING + permanentText);
         setWidth(width);
     }
 
