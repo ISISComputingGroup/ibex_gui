@@ -56,7 +56,9 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
      *
      */
     protected void update() {
-        setText(ALARM + alarmCountAsText());
+        if (maximised) {
+            setText(ALARM + alarmCountAsText());
+        }
         setColor(chooseColor());
     }
 

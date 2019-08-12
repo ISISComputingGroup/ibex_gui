@@ -22,11 +22,16 @@ public class ButtonViewModel extends ModelObject {
     protected Font font = BUTTON_FONT;
     protected boolean inFocus = false;
     protected String text = "";
+    protected String permanentText = "";
+    protected boolean maximised = true;
+    protected int width;
 
     /**
-     * Initialises button focus and font.
+     * Initialises button focus and font, and text.
+     * @param buttonLabel the button label text
      */
-    public ButtonViewModel() {
+    public ButtonViewModel(String buttonLabel) {
+        permanentText = buttonLabel;
         setFocus(inFocus);
         setFont(font);
     }
@@ -97,5 +102,40 @@ public class ButtonViewModel extends ModelObject {
      */
     protected void setText(String newText) {
         firePropertyChange("text", text, text = newText);
+    }
+    
+    /**
+     * Minimises the button to display the icon only.
+     * @param width the width to maximise to
+     */
+    public void minimise(int width) {
+        maximised = false;
+        setText("");
+        setWidth(width);
+    }
+    
+    /**
+     * Maximises the button to its full size.
+     * @param width the width to minimise to
+     */
+    public void maximise(int width) {
+        maximised = true;
+        setText(permanentText);
+        setWidth(width);
+    }
+
+    /**
+     * @return the width of the button
+     */
+    public int getWidth() {
+        return width;
+    }
+    
+    /**
+     * Set the button width.
+     * @param newWidth the new button width
+     */
+    public void setWidth(int newWidth) {
+        firePropertyChange("width", width, width = newWidth);
     }
 }

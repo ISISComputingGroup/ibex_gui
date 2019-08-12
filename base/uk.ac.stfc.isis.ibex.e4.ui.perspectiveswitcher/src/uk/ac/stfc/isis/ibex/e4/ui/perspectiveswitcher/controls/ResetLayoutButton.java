@@ -12,6 +12,7 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 public class ResetLayoutButton extends Button {
 
     private final PerspectiveResetAdapter resetAdapter;
+    private final ResetLayoutButtonViewModel model;
     private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 
     /**
@@ -21,17 +22,19 @@ public class ResetLayoutButton extends Button {
      *            Composite
      * @param perspectivesProvider
      *            PerspectivesProvider
+     * @param model
+     *            ResetLayoutButtonViewModel
      */
-    public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider) {
-        super(parent, RESET_PERSPECTIVE_URI, "Sets the layout of the current perspective back to its default",
-                new ResetLayoutButtonViewModel());
-        model.setText("Reset Layout");
+    public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider, ResetLayoutButtonViewModel model) {
+        super(parent, RESET_PERSPECTIVE_URI, "Reset Layout: Sets the layout of the current perspective back to its default", model);
         resetAdapter = new PerspectiveResetAdapter(perspectivesProvider);
+        this.model = model;
     }
 
     @Override
     protected void mouseClickAction() {
         resetAdapter.widgetSelected(null);
         ResetLayoutButtonModel.getInstance().setChanged(false);
+        model.triggerReset();
     }
 }

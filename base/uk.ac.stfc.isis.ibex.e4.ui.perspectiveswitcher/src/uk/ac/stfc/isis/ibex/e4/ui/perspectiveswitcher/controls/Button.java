@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -12,6 +15,7 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
 /**
@@ -22,8 +26,6 @@ public abstract class Button extends CLabel {
 
     protected ButtonViewModel model;
     private final DataBindingContext bindingContext = new DataBindingContext();
-    @SuppressWarnings("checkstyle:magicnumber")
-    private int buttonWidthMin = 200;
 
     /**
      * Button constructor.
@@ -42,9 +44,23 @@ public abstract class Button extends CLabel {
         super(parent, SWT.SHADOW_OUT);
 
         setLayout(new GridLayout());
-        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-        // Needs to be wider than default to allow for larger text because its font is bold when the button is active.
-        gridData.minimumWidth = buttonWidthMin;
+        setRightMargin(0);
+        
+        GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+        model.addPropertyChangeListener("width", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        gridData.widthHint = model.getWidth();
+                        requestLayout();
+                    }
+                });
+            }
+        });
         setLayoutData(gridData);
 
         setToolTipText(tooltip);
