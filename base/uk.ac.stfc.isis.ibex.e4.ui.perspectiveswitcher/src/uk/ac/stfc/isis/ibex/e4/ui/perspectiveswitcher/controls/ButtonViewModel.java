@@ -33,6 +33,7 @@ public class ButtonViewModel extends ModelObject {
      */
     public ButtonViewModel(String buttonLabel) {
         permanentText = buttonLabel;
+        setText(buttonLabel);
         setFocus(inFocus);
         setFont(font);
     }
@@ -92,7 +93,11 @@ public class ButtonViewModel extends ModelObject {
      * @return String "Alarms ([alarm_count])"
      */
     public String getText() {
-        return text;
+        if (maximised) {
+            return SPACING + text;
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -102,10 +107,7 @@ public class ButtonViewModel extends ModelObject {
      *            new label for button.
      */
     protected void setText(String newText) {
-        if (maximised) {
-            newText = SPACING + newText;
-        }
-        firePropertyChange("text", text, text = newText);
+        firePropertyChange("text", "", text = newText);
     }
     
     /**
@@ -114,7 +116,7 @@ public class ButtonViewModel extends ModelObject {
      */
     public void minimise(int width) {
         maximised = false;
-        setText("");
+        firePropertyChange("text", text, "");
         setWidth(width);
     }
     
@@ -124,7 +126,7 @@ public class ButtonViewModel extends ModelObject {
      */
     public void maximise(int width) {
         maximised = true;
-        setText(permanentText);
+        setText(text);
         setWidth(width);
     }
     
