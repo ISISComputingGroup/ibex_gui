@@ -35,6 +35,5 @@ public class ResetLayoutButton extends Button {
     protected void mouseClickAction() {
         resetAdapter.widgetSelected(null);
         ResetLayoutButtonModel.getInstance().setChanged(false);
-        model.triggerReset();
     }
 }

@@ -44,7 +44,7 @@ public class PerspectiveSwitcherView {
 
 	private PerspectivesProvider perspectivesProvider;
 	private Collection<ButtonViewModel> buttonModels = new ArrayList<>();
-	CollapseSidebarButton button;
+	private CollapseSidebarButton collapseSidebarButton;
 	private Label separator;
 	private GridData separatorGD;
 	
@@ -92,17 +92,17 @@ public class PerspectiveSwitcherView {
 		addResetCurrentPerspectiveShortcut(composite);
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
-		addMinimiseButton(parent);
+		addCollapseButton(parent);
 		
 		maximise();
 	}
 	
-	private void addMinimiseButton(Composite parent) {
-	    button = new CollapseSidebarButton(parent);
-	    button.addMouseListener(new MouseAdapter() {
+	private void addCollapseButton(Composite parent) {
+	    collapseSidebarButton = new CollapseSidebarButton(parent);
+	    collapseSidebarButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseUp(MouseEvent e) {
-                if (button.isCollapsed()) {
+                if (collapseSidebarButton.isCollapsed()) {
                     maximise();
                 } else {
                     minimise();
@@ -149,25 +149,26 @@ public class PerspectiveSwitcherView {
 
 	private void addResetCurrentPerspectiveShortcut(Composite parent) {
 	    ResetLayoutButtonViewModel model = new ResetLayoutButtonViewModel();
-	    model.addPropertyChangeListener("triggerReset", new PropertyChangeListener() {
+	    buttonModels.add(model);
+	    
+	    ResetLayoutButton button = new ResetLayoutButton(parent, perspectivesProvider, model);
+	    button.addMouseListener(new MouseAdapter() {
             @Override
-            public void propertyChange(PropertyChangeEvent evt) {
+            public void mouseDown(MouseEvent e) {
                 maximise();
             }
-        });
-	    buttonModels.add(model);
-	    new ResetLayoutButton(parent, perspectivesProvider, model);
+	    });
 	}
 	
 	private void minimise() {
 	    separatorGD.widthHint = MINIMISED_BUTTON_WIDTH;
 	    buttonModels.forEach(m -> m.minimise(MINIMISED_BUTTON_WIDTH));
-	    button.collapse();
+	    collapseSidebarButton.collapse();
 	}
 	
 	private void maximise() {
         separatorGD.widthHint = MAXIMISED_BUTTON_WIDTH;
         buttonModels.forEach(m -> m.maximise(MAXIMISED_BUTTON_WIDTH));
-        button.expand();
+        collapseSidebarButton.expand();
     }
 }

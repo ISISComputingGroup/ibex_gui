@@ -13,7 +13,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class ButtonViewModel extends ModelObject {
 
-    protected static final String SPACING = "  ";
+    private static final String SPACING = "  ";
     
     protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
     protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
@@ -26,7 +26,6 @@ public class ButtonViewModel extends ModelObject {
     protected String text = "";
     protected String permanentText = "";
     protected boolean maximised = true;
-    protected int width;
 
     /**
      * Initialises button focus and font, and text.
@@ -103,6 +102,9 @@ public class ButtonViewModel extends ModelObject {
      *            new label for button.
      */
     protected void setText(String newText) {
+        if (maximised) {
+            newText = SPACING + newText;
+        }
         firePropertyChange("text", text, text = newText);
     }
     
@@ -122,15 +124,8 @@ public class ButtonViewModel extends ModelObject {
      */
     public void maximise(int width) {
         maximised = true;
-        setText(SPACING + permanentText);
+        setText(permanentText);
         setWidth(width);
-    }
-
-    /**
-     * @return the width of the button
-     */
-    public int getWidth() {
-        return width;
     }
     
     /**
@@ -138,6 +133,6 @@ public class ButtonViewModel extends ModelObject {
      * @param newWidth the new button width
      */
     public void setWidth(int newWidth) {
-        firePropertyChange("width", width, width = newWidth);
+        firePropertyChange("width", 0, newWidth);
     }
 }

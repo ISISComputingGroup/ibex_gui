@@ -54,11 +54,4 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
         }
     }
 
-    /**
-     * Trigger the layout the reset.
-     */
-    public void triggerReset() {
-        firePropertyChange("triggerReset", false, true);
-    }
-
 }

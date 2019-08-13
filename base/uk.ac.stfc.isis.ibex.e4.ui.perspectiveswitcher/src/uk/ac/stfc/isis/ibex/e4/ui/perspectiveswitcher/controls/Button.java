@@ -55,7 +55,7 @@ public abstract class Button extends CLabel {
                     
                     @Override
                     public void run() {
-                        gridData.widthHint = model.getWidth();
+                        gridData.widthHint = (int) evt.getNewValue();
                         requestLayout();
                     }
                 });
