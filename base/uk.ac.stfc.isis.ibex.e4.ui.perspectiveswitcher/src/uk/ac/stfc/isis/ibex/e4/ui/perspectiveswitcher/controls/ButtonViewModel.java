@@ -24,15 +24,13 @@ public class ButtonViewModel extends ModelObject {
     protected Font font = BUTTON_FONT;
     protected boolean inFocus = false;
     protected String text = "";
-    protected String permanentText = "";
-    protected boolean maximised = true;
+    private boolean maximised = true;
 
     /**
      * Initialises button focus and font, and text.
      * @param buttonLabel the button label text
      */
     public ButtonViewModel(String buttonLabel) {
-        permanentText = buttonLabel;
         setText(buttonLabel);
         setFocus(inFocus);
         setFont(font);
@@ -88,9 +86,9 @@ public class ButtonViewModel extends ModelObject {
     }
 
     /**
-     * Just returns Alarm text.
+     * Returns the text for the button.
      * 
-     * @return String "Alarms ([alarm_count])"
+     * @return The text for the button.
      */
     public String getText() {
         if (maximised) {
