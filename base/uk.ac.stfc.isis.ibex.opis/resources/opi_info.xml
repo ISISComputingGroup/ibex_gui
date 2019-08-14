@@ -2153,5 +2153,17 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>NIMROD Gas Panel</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>nimrod_gas_panel.opi</path>
+        <description>The OPI for the NIMROD Gas Panel</description>
+        <macros />
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>

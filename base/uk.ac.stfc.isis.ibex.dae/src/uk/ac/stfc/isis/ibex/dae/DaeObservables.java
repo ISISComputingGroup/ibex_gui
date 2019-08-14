@@ -89,6 +89,11 @@ public class DaeObservables {
     public final ForwardingObservable<String> title;
 
     /**
+     * An observable on the title for the current run.
+     */
+    public final ForwardingObservable<String> titleSP;
+
+    /**
      * An observable giving whether or not to display the title on the webpage.
      */
     public final ForwardingObservable<Boolean> displayTitle;
@@ -331,6 +336,8 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("RUNNUMBER")));
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("TITLE")));
+        titleSP = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix(DAE.endWith("TITLE:SP")));
         displayTitle = obsFactory.getSwitchableObservable(new BooleanChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("TITLE:DISPLAY")));
         users = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
