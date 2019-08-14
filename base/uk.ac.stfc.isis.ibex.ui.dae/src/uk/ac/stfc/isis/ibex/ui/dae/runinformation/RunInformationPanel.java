@@ -536,7 +536,7 @@ public class RunInformationPanel {
 		glGrpMemoryUsage.horizontalSpacing = 20;
 		grpMemoryUsage.setLayout(glGrpMemoryUsage);
 		grpMemoryUsage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		grpMemoryUsage.setText("Memory Usage");
+		grpMemoryUsage.setText("Event Mode Data Statistics");
 		
 		Label lblBufUsed = new Label(grpMemoryUsage, SWT.RIGHT);
 		GridData gdLblBufUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
