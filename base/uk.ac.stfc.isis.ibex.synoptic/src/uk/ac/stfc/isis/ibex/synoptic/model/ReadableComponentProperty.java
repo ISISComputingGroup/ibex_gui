@@ -20,10 +20,10 @@
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -36,7 +36,7 @@ public class ReadableComponentProperty extends ComponentProperty {
     /**
      * Specifies the block state, such as disconnected or under major alarm.
      */
-    private BlockState pvState = BlockState.DEFAULT;
+    private PvState pvState = PvState.DEFAULT;
 
     /**
      * @param displayName display name of the component property
@@ -51,7 +51,7 @@ public class ReadableComponentProperty extends ComponentProperty {
             public void connectionChanged(boolean isConnected) {
                 super.connectionChanged(isConnected);
                 if (!isConnected) {
-                    setPvState(BlockState.DISCONNECTED);
+                    setPvState(PvState.DISCONNECTED);
                 }
             }
         };
@@ -61,7 +61,7 @@ public class ReadableComponentProperty extends ComponentProperty {
     /**
      * @return String an UpdatedValue containing the value
      */
-    public UpdatedValue<String> value() {
+    public UpdatedValue<String> getValue() {
         return value;
     }
 
@@ -69,13 +69,13 @@ public class ReadableComponentProperty extends ComponentProperty {
 
         @Override
         public void onValue(AlarmState value) {
-            BlockState state = BlockState.DEFAULT;
+            PvState state = PvState.DEFAULT;
             if (value.name().equals("MINOR")) {
-                state = BlockState.MINOR_ALARM;
+                state = PvState.MINOR_ALARM;
             } else if (value.name().equals("MAJOR")) {
-                state = BlockState.MAJOR_ALARM;
+                state = PvState.MAJOR_ALARM;
             } else if (value.name().equals("INVALID")) {
-                state = BlockState.DISCONNECTED;
+                state = PvState.DISCONNECTED;
             }
 
             setPvState(state);
@@ -83,7 +83,7 @@ public class ReadableComponentProperty extends ComponentProperty {
 
         @Override
         public void onError(Exception e) {
-            BlockState state = BlockState.MINOR_ALARM;
+            PvState state = PvState.DISCONNECTED;
             setPvState(state);
         }
     };
@@ -91,11 +91,11 @@ public class ReadableComponentProperty extends ComponentProperty {
     /**
      * @return the overall PV status.
      */
-    public BlockState getPvState() {
+    public PvState getPvState() {
         return pvState;
     }
 
-    private void setPvState(BlockState pvState) {
+    private void setPvState(PvState pvState) {
         firePropertyChange("pvState", this.pvState, this.pvState = pvState);
     }
 }

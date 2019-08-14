@@ -1,7 +1,7 @@
 
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -20,12 +20,12 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.configserver.displaying;
+package uk.ac.stfc.isis.ibex.epics.pv;
 
 /**
  * Used to reflect alarm & connection status of a block in the GUI.
  */
-public enum BlockState {
+public enum PvState {
     /**
      * The default block state.
      */

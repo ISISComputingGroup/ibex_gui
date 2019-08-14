@@ -58,13 +58,6 @@ public class WritableComponentView extends Composite {
 
     private final WritableComponentProperty property;
 
-    private final ModifyListener textModifyListener = new ModifyListener() {
-        @Override
-        public void modifyText(ModifyEvent e) {
-
-        }
-    };
-
     /**
      * @param parent
      *            The parent component
@@ -117,26 +110,11 @@ public class WritableComponentView extends Composite {
 
         bindText(property);
 
-        text.addFocusListener(new FocusListener() {
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                text.removeModifyListener(textModifyListener);
-            }
-
-            @Override
-            public void focusGained(FocusEvent e) {
-                text.addModifyListener(textModifyListener);
-            }
-        });
-
         text.addListener(SWT.Traverse, new Listener() {
             @Override
             public void handleEvent(Event event) {
-                if (event.detail == SWT.TRAVERSE_RETURN) {
-                    if (!isPreview) {
-                        sendValue();
-                    }
+                if (event.detail == SWT.TRAVERSE_RETURN && !isPreview) {
+                    sendValue();
                 }
             }
         });

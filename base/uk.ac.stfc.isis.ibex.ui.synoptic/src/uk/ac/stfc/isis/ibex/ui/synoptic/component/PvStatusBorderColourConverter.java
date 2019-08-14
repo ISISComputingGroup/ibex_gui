@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.graphics.Color;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.ui.PvStateColour;
 
 
@@ -39,7 +39,7 @@ public class PvStatusBorderColourConverter extends Converter {
      * Instantiates the converter.
      */
     public PvStatusBorderColourConverter() {
-        super(BlockState.class, Color.class);
+        super(PvState.class, Color.class);
     }
 
     /**
@@ -50,7 +50,7 @@ public class PvStatusBorderColourConverter extends Converter {
      */
     @Override
     public Object convert(Object fromObject) {
-        BlockState state = (BlockState) fromObject;
+        PvState state = (PvState) fromObject;
         switch (state) {
             case DISCONNECTED:
                 return PvStateColour.MAGENTA;

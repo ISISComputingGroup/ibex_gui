@@ -92,7 +92,7 @@ public class ReadableComponentView extends Composite {
 
 	private void setProperty(ReadableComponentProperty property) {
 		propertyName.setText(property.displayName());
-		bindingContext.bindValue(WidgetProperties.text().observe(value), BeanProperties.value("value").observe(property.value()));
+		bindingContext.bindValue(WidgetProperties.text().observe(value), BeanProperties.value("value").observe(property.getValue()));
 		
 		UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
         borderStrategy.setConverter(new PvStatusBorderColourConverter());

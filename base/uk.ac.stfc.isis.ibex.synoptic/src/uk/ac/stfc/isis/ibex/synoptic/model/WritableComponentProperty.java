@@ -62,7 +62,7 @@ public class WritableComponentProperty extends ComponentProperty {
      * @return String an UpdatedValue containing the value
      */
 	public UpdatedValue<String> value() {
-		return valueSource.value();
+		return valueSource.getValue();
 	}
 	
 	/**

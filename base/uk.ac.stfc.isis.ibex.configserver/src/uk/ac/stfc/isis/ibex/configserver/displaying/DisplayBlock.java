@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -80,12 +81,12 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
     /**
      * Specifies the block state, such as disconnected or under major alarm.
      */
-    private BlockState blockState = BlockState.DEFAULT;
+    private PvState blockState = PvState.DEFAULT;
 
     /**
      * Saves the last alarm state (to restore after disconnect).
      */
-    private BlockState lastBlockState = BlockState.DEFAULT;
+    private PvState lastBlockState = PvState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -103,7 +104,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
             setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");
-                setBlockState(BlockState.DISCONNECTED);
+                setBlockState(PvState.DISCONNECTED);
             } else {
                 setBlockState(lastBlockState);
             }
@@ -135,13 +136,13 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
 
         @Override
         public void onValue(AlarmState value) {
-            BlockState state = BlockState.DEFAULT;
+            PvState state = PvState.DEFAULT;
             if (value.name().equals("MINOR")) {
-                state = BlockState.MINOR_ALARM;
+                state = PvState.MINOR_ALARM;
             } else if (value.name().equals("MAJOR")) {
-                state = BlockState.MAJOR_ALARM;
+                state = PvState.MAJOR_ALARM;
             } else if (value.name().equals("INVALID")) {
-                state = BlockState.DISCONNECTED;
+                state = PvState.DISCONNECTED;
             }
 
             lastBlockState = state;
@@ -150,7 +151,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
 
         @Override
         public void onError(Exception e) {
-            BlockState state = BlockState.MINOR_ALARM;
+            PvState state = PvState.DISCONNECTED;
             lastBlockState = state;
             setBlockState(state);
         }
@@ -348,7 +349,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
     /**
      * @return the overall block status.
      */
-    public BlockState getBlockState() {
+    public PvState getBlockState() {
         return blockState;
     }
 
@@ -431,7 +432,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol {
         firePropertyChange("runControlEnabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
     }
 
-    private void setBlockState(BlockState blockState) {
+    private void setBlockState(PvState blockState) {
         firePropertyChange("blockState", this.blockState, this.blockState = blockState);
     }
 
