@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -50,7 +49,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocMacroDetailsPanel extends Composite {
 	private MacroTable displayMacrosTable;
-	private UpdateValueStrategy valueStrategy = new UpdateValueStrategy();
 	private MacroValueValidator valueValidator;
 	private Label macroValueErrorLabel;
 	
@@ -123,7 +121,6 @@ public class IocMacroDetailsPanel extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
 
 		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
-		valueStrategy.setBeforeSetValidator(valueValidator);
 		
 		valueValidator.validate("");
 		displayMacrosTable.setValidator(valueValidator);

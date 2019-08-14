@@ -18,7 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-import java.util.Objects;
+import java.util.Optional;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -31,19 +31,52 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  */
 public class Macro extends ModelObject {
+    /**
+     * The name of the macro.
+     */
 	private String name;
+	/**
+	 * The currently set value of the macro.
+	 */
 	private String value;
+	/**
+	 * The description of the macro.
+	 */
 	private String description;
+	/**
+	 * The regex pattern that the value needs to match.
+	 */
 	private String pattern;
+	/**
+	 * The default value of the macro which is used when no value has been set.
+	 */
 	private String defaultValue;
+	/**
+	 * Whether the macro has a default value or not (or if it is unknown).
+	 */
 	private HasDefault hasDefault;
+	/**
+	 * Whether the default value should be used or not.
+	 */
 	private transient boolean useDefault;
 	
-	private enum HasDefault {
+	/**
+	 * An enum representing the existence or not of a default value.
+	 */
+	public enum HasDefault {
+	    /**
+	     * The macro has a default.
+	     */
 	    @SerializedName("YES")
 	    YES,
+	    /**
+	     * The macro does not have a default.
+	     */
 	    @SerializedName("NO")
 	    NO,
+	    /**
+         * Whether the macro has a default or not is unknown.
+         */
 	    @SerializedName("UNKNOWN")
 	    UNKNOWN
 	}
@@ -66,8 +99,8 @@ public class Macro extends ModelObject {
 	 * @param other exiting Macro to clone
 	 */
 	public Macro(Macro other) {
-		this(other.getName(), other.getValue(), other.getDescription(), other
-				.getPattern(), other.getDefaultValue(), other.getHasDefault());
+		this(other.getName(), other.getValue().isPresent() ? other.getValue().get() : null,
+		        other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault());
 	}
 
 	/**
@@ -78,6 +111,7 @@ public class Macro extends ModelObject {
 	 * @param description macro description
 	 * @param pattern Regex pattern macro value should follow
 	 * @param defaultValue the default value of the macro
+	 * @param hasDefault if the macro has a default, does not, or unknown
 	 */
 	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault) {
 		this.name = name;
@@ -89,9 +123,9 @@ public class Macro extends ModelObject {
 	}
 
 	/**
-     * @return the hasDefault
+     * @return if the macro has a default, does not have a default, or unknown. 
      */
-    public HasDefault getHasDefault() {
+    protected HasDefault getHasDefault() {
         return hasDefault;
     }
 
@@ -105,7 +139,6 @@ public class Macro extends ModelObject {
 	}
 
 	/**
-	 * 
 	 * @return macro name
 	 */
 	public String getName() {
@@ -117,16 +150,35 @@ public class Macro extends ModelObject {
 	 * 
 	 * @param value new Macro value
 	 */
-	public void setValue(String value) {
-		firePropertyChange("value", this.value, this.value = value);
+	public void setValue(Optional<String> value) {
+	    Optional<String> oldValue = getValue();
+	    this.value = value.isPresent() ? value.get() : null;
+		firePropertyChange("value", oldValue, value);
 	}
 
 	 /**
-     * 
      * @return macro value
      */
-	public String getValue() {
-		return value;
+	public Optional<String> getValue() {
+		return Optional.ofNullable(value);
+	}
+	
+	/**
+	 * @return macro value for displaying to the user
+	 */
+	public String getValueDisplay() {
+	    return getValue().orElse("(default)");
+	}
+	
+	/**
+	 * @return macro value to put in the cell when the user clicks on it to edit it
+	 */
+	public String getEditCellValue() {
+	    if (useDefault) {
+	        setUseDefault(false);
+	        setValue(Optional.of(""));
+	    }
+	    return getValueDisplay();
 	}
 
 	/**
@@ -156,7 +208,6 @@ public class Macro extends ModelObject {
 	}
 
 	/**
-     * 
      * @return macro regex pattern
      */
 	public String getPattern() {
@@ -175,7 +226,7 @@ public class Macro extends ModelObject {
      */
     public String getDefaultDisplay() {
         if (hasDefault == HasDefault.YES) {
-            return defaultValue;
+            return defaultValue.equals("") ? "(default is the empty string)" : defaultValue;
         } else if (hasDefault == HasDefault.NO) {
             return "(no default)";
         } else {
@@ -184,17 +235,31 @@ public class Macro extends ModelObject {
     }
     
     /**
-     * @return the useDefault
+     * @return whether the default value should be used or not
      */
     public boolean getUseDefault() {
         return useDefault;
     }
 
     /**
-     * @param useDefault the useDefault to set
+     * @param useDefault whether the default value should be used or not
      */
     public void setUseDefault(boolean useDefault) {
         firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
+    }
+    
+    /**
+     * Updates the useDefault and the value of the macro given the 'Use Default?' checkbox being checked or unchecked.
+     * 
+     * @param checked if the checkbox is checked or not
+     */
+    public void updateFromUseDefaultCheck(boolean checked) {
+        setUseDefault(checked);
+        if (checked) {
+            setValue(Optional.empty());
+        } else {
+            setValue(Optional.of(""));
+        }
     }
 
 	@Override
@@ -221,10 +286,4 @@ public class Macro extends ModelObject {
 		return name.hashCode();
 	}
 
-	/**
-	 * @return whether or not the Macro has been set by the user
-	 */
-    public boolean isSet() {
-        return value != null;
-    }
 }

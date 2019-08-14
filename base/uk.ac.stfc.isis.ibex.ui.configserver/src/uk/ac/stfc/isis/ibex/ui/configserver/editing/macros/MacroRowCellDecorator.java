@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
 /**
- * The cell decorator used to put IOCs into italics if they are not editable.
+ * The cell decorator used to display values in grey if they are default.
  */
 public class MacroRowCellDecorator extends CellDecorator<Macro> {
 	
@@ -37,22 +37,11 @@ public class MacroRowCellDecorator extends CellDecorator<Macro> {
 	
 	@Override
 	public void applyDecoration(ViewerCell cell) {
-    	if (isSet(cell)) {
-    		cell.setForeground(DEFAULT_COLOR);
+    	if (getRow(cell).getUseDefault()) {
+    		cell.setForeground(READONLY_COLOR);
     	} else {
-    	    cell.setForeground(READONLY_COLOR);
+    	    cell.setForeground(DEFAULT_COLOR);
     	}
    	}
-
-    /**
-     * Get whether the specific cell has a value set by the user.
-     * 
-     * @param cell
-     *            the cell to check.
-     * @return true if is editable.
-     */
-	public boolean isSet(ViewerCell cell) {
-		return getRow(cell).isSet();
-	}
 	
 }

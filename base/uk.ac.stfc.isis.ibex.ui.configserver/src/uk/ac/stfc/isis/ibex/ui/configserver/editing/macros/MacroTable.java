@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.jface.viewers.ColumnViewer;
@@ -98,11 +99,7 @@ public class MacroTable extends DataboundTable<Macro> {
 		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
 			protected String stringFromRow(Macro row) {
-			    if (row.getValue() == null) {
-			        return "(default)";
-			    } else {
-			        return row.getValue();
-			    }
+			    return row.getValueDisplay();
 			}
 		});
 		
@@ -121,18 +118,16 @@ public class MacroTable extends DataboundTable<Macro> {
 
             @Override
             protected String valueFromRow(Macro row) {
-                if (row.getUseDefault()) {
-                    row.setUseDefault(false);
-                    row.setValue("");
-                }
-                
-                return row.getValue();
+                // This is called when the user clicks on a cell to edit it.
+                return row.getEditCellValue();
             }
 
             @Override
             protected void setValueForRow(Macro row, String value) {
                 if (valueValidator.validate(value) == ValidationStatus.ok()) {
-                    row.setValue(value);
+                    row.setValue(Optional.of(value));
+                } else {
+                    valueValidator.validate("");
                 }
             }
         };
@@ -150,12 +145,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	        
 	        @Override
 	        protected void setChecked(Macro macro, boolean checked) {
-	            macro.setUseDefault(checked);
-	            if (checked) {
-	                macro.setValue(null);
-	            } else {
-	                macro.setValue("");
-	            }
+	            macro.updateFromUseDefaultCheck(checked);
 	        }
 	        
             @Override
