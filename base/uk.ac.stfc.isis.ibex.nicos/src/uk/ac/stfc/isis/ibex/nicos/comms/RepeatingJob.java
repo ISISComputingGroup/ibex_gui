@@ -60,7 +60,7 @@ public abstract class RepeatingJob extends Job {
                 return doTask(monitor);
             } catch (RuntimeException e) {
             	LoggerUtils.logErrorWithStackTrace(LOG, "Exception in repeating job " + this + ": " + e.getMessage(), e);
-            	return Status.CANCEL_STATUS;
+            	throw e;
             }
         } else {
             return Status.CANCEL_STATUS;

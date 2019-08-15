@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
@@ -68,7 +69,7 @@ public class NicosModel extends ModelObject {
     /**
      * The period to ask the server for a status update (in ms).
      */
-    private static final long UPDATE_STATUS_TIME = 1;
+    private static final long UPDATE_STATUS_TIME = 1000;
 
     /**
      * Maximum number of messages to fetch at a time.
@@ -125,12 +126,16 @@ public class NicosModel extends ModelObject {
         this.session = session;
         this.connectionJob = connectionJob;
         this.lastEntryTime = initialTime;
+        
+        LOG.info("Created NICOS model");
 
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
+            	LOG.info("Running repeating job to update NICOS script status");
                 updateScriptStatus();
                 updateLogEntries();
+                LOG.info("repeating job successful");
                 return Status.OK_STATUS;
             }
         };
@@ -221,7 +226,6 @@ public class NicosModel extends ModelObject {
         SentMessageDetails<String> scriptSentMessageDetails = sendMessageToNicos(nicosMessage);
         if (!scriptSentMessageDetails.isSent()) {
             setError(NicosErrorState.SCRIPT_SEND_FAIL);
-
         }
     }
 
@@ -241,7 +245,7 @@ public class NicosModel extends ModelObject {
      * @return the error
      */
     public NicosErrorState getError() {
-    	return error == null ? NicosErrorState.NO_ERROR : error;
+    	return Optional.ofNullable(error).orElse(NicosErrorState.NO_ERROR);
     }
 
     /**
@@ -438,8 +442,7 @@ public class NicosModel extends ModelObject {
      *            ID of script to dequeue
      */
     public void dequeueScript(String reqid) {
-        DequeueScript message = new DequeueScript(reqid);
-        sendMessageToNicos(message);
+        sendMessageToNicos(new DequeueScript(reqid));
     }
 
     /**
@@ -448,8 +451,7 @@ public class NicosModel extends ModelObject {
      * @param script The script to update
      */
     public void updateScript(QueuedScript script) {
-        UpdateScript message = new UpdateScript(script);
-        sendMessageToNicos(message);
+        sendMessageToNicos(new UpdateScript(script));
     }
 
     /**
@@ -459,7 +461,6 @@ public class NicosModel extends ModelObject {
      *            list of IDs of scripts
      */
 	public void sendReorderedQueue(List<String> listOfScriptIDs) {
-        SendReorderedQueue nicosMessage = new SendReorderedQueue(listOfScriptIDs);
-        sendMessageToNicos(nicosMessage);
+        sendMessageToNicos(new SendReorderedQueue(listOfScriptIDs));
 	}
 }

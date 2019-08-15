@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
@@ -40,7 +41,7 @@ public class Nicos extends Plugin {
 
     private final NicosModel model;
 
-    private static final int CONNECT_POLL_TIME = 1;
+    private static final int CONNECT_POLL_TIME = 10000;
 
     /**
      * @return The instance of this singleton.
@@ -59,6 +60,7 @@ public class Nicos extends Plugin {
 
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
+            	IsisLog.getLogger(getClass()).info("Running NICOS connection job");
                 model.connect(Instrument.getInstance().currentInstrument());
                 return Status.OK_STATUS;
             }
@@ -87,7 +89,7 @@ public class Nicos extends Plugin {
      * BundleContext)
      */
     @Override
-    public void start(BundleContext bundleContext) throws Exception {
+    public void start(BundleContext bundleContext) {
         Nicos.context = bundleContext;
     }
 
@@ -98,7 +100,7 @@ public class Nicos extends Plugin {
      * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
      */
     @Override
-    public void stop(BundleContext bundleContext) throws Exception {
+    public void stop(BundleContext bundleContext) {
         Nicos.context = null;
     }
 }

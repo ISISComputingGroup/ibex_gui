@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.nicos.comms;
 import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
+import org.zeromq.SocketType;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
@@ -39,14 +40,9 @@ public class ZMQWrapper {
 	private static final Logger LOG = IsisLog.getLogger(ZMQWrapper.class);
 
     private Optional<Socket> socket = Optional.empty();
-    private final Context context = ZMQ.context(1);
+    private final Context context;
 
-    {
-    	context.setMaxSockets(1);
-    	context.setIOThreads(1);
-    }
-
-    private static final int RECEIVE_TIMEOUT = 1;
+    private static final int RECEIVE_TIMEOUT = 500;
 
     private static final ZMQWrapper INSTANCE = new ZMQWrapper();
     private static final Object ZMQ_COMMS_LOCK = new Object();
@@ -57,6 +53,8 @@ public class ZMQWrapper {
      * Private constructor - access via getInstance instead (this class is a singleton).
      */
     private ZMQWrapper() {
+    	context = ZMQ.context(1);
+    	context.setMaxSockets(1);
     }
 
     /**
@@ -119,15 +117,14 @@ public class ZMQWrapper {
      */
     public void connect(String connectionUri) throws ZMQException {
     	checkCommsLockHeld();
-    	LOG.info("Opening ZMQ socket");
+    	LOG.info("Opening ZMQ connection to NICOS");
 
 		// disconnect old session first
 		disconnect();
 
-		Socket s = context.socket(ZMQ.REQ);
-		s.setReceiveTimeOut(RECEIVE_TIMEOUT);
-		s.connect(connectionUri);
-        this.socket = Optional.of(s);
+		socket = Optional.of(context.socket(SocketType.REQ));
+		socket.ifPresent(s -> s.setReceiveTimeOut(RECEIVE_TIMEOUT));
+		socket.ifPresent(s -> s.connect(connectionUri));
     }
 
     /**
@@ -137,7 +134,7 @@ public class ZMQWrapper {
      */
     public String receiveString() {
     	checkCommsLockHeld();
-        return socket.orElseThrow(this::socketDoesNotExist).recvStr();
+    	return getSocket().recvStr();
     }
 
     /**
@@ -150,10 +147,11 @@ public class ZMQWrapper {
      */
     public void send(String data, Boolean more) {
     	checkCommsLockHeld();
+    	
         if (more) {
-            socket.orElseThrow(this::socketDoesNotExist).sendMore(data);
+            getSocket().sendMore(data);
         } else {
-            socket.orElseThrow(this::socketDoesNotExist).send(data);
+            getSocket().send(data);
         }
     }
 
@@ -162,10 +160,8 @@ public class ZMQWrapper {
      */
     public void disconnect() {
     	checkCommsLockHeld();
-    	LOG.info("Closing old socket");
         socket.ifPresent(Socket::close);
         socket = Optional.empty();
-        LOG.info("Finished closing");
     }
 
     /**
@@ -174,5 +170,9 @@ public class ZMQWrapper {
      */
     private IllegalStateException socketDoesNotExist() {
     	return new IllegalStateException("Cannot operate on the ZMQ socket as it does not exist (has probably been closed and not re-opened).");
+    }
+    
+    private Socket getSocket() {
+    	return socket.orElseThrow(this::socketDoesNotExist);
     }
 }

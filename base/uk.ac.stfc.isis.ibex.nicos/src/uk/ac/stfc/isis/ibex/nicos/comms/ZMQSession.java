@@ -68,6 +68,7 @@ public class ZMQSession {
      * 
      */
     public ZMQSession(ZMQWrapper zmq) {
+    	LOG.info("Initialising ZMQSession");
         this.zmq = zmq;
     }
 
@@ -88,13 +89,7 @@ public class ZMQSession {
     }
 
     private String createConnectionURI(InstrumentInfo instrument) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(ZMQ_PROTO);
-        sb.append("://");
-        sb.append(instrument.hostName());
-        sb.append(":");
-        sb.append(ZMQ_PORT);
-        return sb.toString();
+        return String.format("%s://%s:%s", ZMQ_PROTO, instrument.hostName(), ZMQ_PORT.toString());
     }
 
     private void sendMultipleMessages(List<String> messages) throws ZMQException {
@@ -142,7 +137,7 @@ public class ZMQSession {
 
         String resp = zmq.receiveString();
         
-        if (status == null | resp == null | Objects.equals(status, "")) {
+        if (status == null || resp == null || Objects.equals(status, "")) {
             LOG.warn("No response from server after sending " + sentMessage.toString());
             return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
