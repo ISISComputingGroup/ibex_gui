@@ -42,7 +42,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
  */
 public class SynopticPanel extends Composite {
 
-	private BeamlineCompositeContainer instrumentComposite;
+	private static final int PAGE_INCREMENT = 500;
+    private BeamlineCompositeContainer instrumentComposite;
 	private LineDecoration beamline;
 	private ScrolledComposite scrolledComposite;
 	private boolean isPreview;
@@ -61,7 +62,7 @@ public class SynopticPanel extends Composite {
 		scrolledComposite = new ScrolledComposite(this, SWT.NONE | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);	
-		scrolledComposite.getHorizontalBar().setPageIncrement(500);
+		scrolledComposite.getHorizontalBar().setPageIncrement(PAGE_INCREMENT);
 		scrolledComposite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent arg0) {
