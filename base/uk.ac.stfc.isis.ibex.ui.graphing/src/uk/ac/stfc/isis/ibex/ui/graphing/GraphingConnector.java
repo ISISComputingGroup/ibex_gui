@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class GraphingConnector {
 	
-	private static Logger LOG = IsisLog.getLogger(GraphingConnector.class);
+	private static final Logger LOG = IsisLog.getLogger(GraphingConnector.class);
 	
 	/**
 	 * Starts listening for incoming py4j calls.

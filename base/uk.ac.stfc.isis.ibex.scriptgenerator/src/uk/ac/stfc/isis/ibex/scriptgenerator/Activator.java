@@ -54,9 +54,9 @@ public class Activator implements BundleActivator {
 	 * @return the singleton instance of this class
 	 */
     public static ToyModel getModel() { 
-    	return model; 
+    	return MODEL; 
     }
 
-    private static final ToyModel model = new ToyModel();
+    private static final ToyModel MODEL = new ToyModel();
 
 }
