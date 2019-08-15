@@ -6,25 +6,29 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * An eclipse Job that is scheduled to run at a set interval.
@@ -33,10 +37,11 @@ public abstract class RepeatingJob extends Job {
 
     private boolean running = true;
     protected long repeatDelay = 0;
+    private static final Logger LOG = IsisLog.getLogger(RepeatingJob.class);
 
     /**
      * Creates a job that is run repeatedly at a set interval.
-     * 
+     *
      * @param jobName
      *            The name of the job.
      * @param repeatPeriod
@@ -51,7 +56,12 @@ public abstract class RepeatingJob extends Job {
     protected IStatus run(IProgressMonitor monitor) {
         if (running) {
             schedule(repeatDelay);
-            return doTask(monitor);
+            try {
+                return doTask(monitor);
+            } catch (RuntimeException e) {
+            	LoggerUtils.logErrorWithStackTrace(LOG, "Exception in repeating job " + this + ": " + e.getMessage(), e);
+            	return Status.CANCEL_STATUS;
+            }
         } else {
             return Status.CANCEL_STATUS;
         }
@@ -59,7 +69,7 @@ public abstract class RepeatingJob extends Job {
 
     /**
      * Performs the task that this job is expected to do.
-     * 
+     *
      * @param monitor
      *            The monitor to post job progress to.
      * @return The status of the job.
@@ -73,7 +83,7 @@ public abstract class RepeatingJob extends Job {
 
     /**
      * Set the job running status.
-     * 
+     *
      * @param running
      *            True to start the job running, false to stop.
      */

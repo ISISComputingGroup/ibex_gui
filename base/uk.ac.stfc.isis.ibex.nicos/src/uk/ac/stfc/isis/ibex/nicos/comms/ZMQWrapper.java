@@ -6,20 +6,22 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
+
+import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
 import org.zeromq.ZMQ;
@@ -33,26 +35,30 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * A class that wraps the specific ZMQ library to aid in testing.
  */
 public class ZMQWrapper {
-	
-	private final Logger logger = IsisLog.getLogger(getClass());
 
-    private Socket socket;
-    private final Context context;
+	private static final Logger LOG = IsisLog.getLogger(ZMQWrapper.class);
 
-    private static final int RECEIVE_TIMEOUT = 500;
-    
+    private Optional<Socket> socket = Optional.empty();
+    private final Context context = ZMQ.context(1);
+
+    {
+    	context.setMaxSockets(1);
+    	context.setIOThreads(1);
+    }
+
+    private static final int RECEIVE_TIMEOUT = 1;
+
     private static final ZMQWrapper INSTANCE = new ZMQWrapper();
     private static final Object ZMQ_COMMS_LOCK = new Object();
-    
+
     /**
-     * Create a ZMQWrapper to wrap the ZMQ library. 
-     * 
+     * Create a ZMQWrapper to wrap the ZMQ library.
+     *
      * Private constructor - access via getInstance instead (this class is a singleton).
      */
     private ZMQWrapper() {
-        context = ZMQ.context(1);
     }
-    
+
     /**
      * Get the instance of this singleton.
      * @return the single instance of this ZMQ wrapper
@@ -60,44 +66,44 @@ public class ZMQWrapper {
     public static synchronized ZMQWrapper getInstance() {
     	return INSTANCE;
     }
-    
+
     /**
      * Gets the lock used by this ZMQ session.
-     * 
+     *
      * While this lock is held, it is guaranteed that no other threads will
      * read or write to ZMQ.
-     * 
-     * It is an error not to acquire the lock before reading/writing to ZMQ. 
-     * The lock should be held for any group of reads/writes which must be kept together 
+     *
+     * It is an error not to acquire the lock before reading/writing to ZMQ.
+     * The lock should be held for any group of reads/writes which must be kept together
      * (for example, a message to NICOS and it's response).
-     * 
+     *
      * For example, you should not do:
-     * 
+     *
      * synchronized(zmq.getLock()) {
      *    zmq.send(...);
      * }
      * synchronized(zmq.getLock()) {
      *    zmq.receiveString(...);
      * }
-     * 
+     *
      * As a different message might be read or written in between the read/write pair. Instead, do:
-     * 
+     *
      * synchronized(zmq.getLock()) {
      *     zmq.send(...);
      *     zmq.receiveString(...);
      * }
-     * 
+     *
      * Which guarantees that the write and read will execute with no intermediate ZMQ operations.
-     * 
+     *
      * @return The lock.
      */
     public Object getLock() {
     	return ZMQ_COMMS_LOCK;
     }
-    
+
     private void checkCommsLockHeld() {
     	if (!Thread.holdsLock(getLock())) {
-    		logger.error("The current thread does not hold the ZMQ comms lock. "
+    		LOG.error("The current thread does not hold the ZMQ comms lock. "
     				+ "This is a programming error and may cause message interleaving. "
     				+ "Attempting to continue anyway but some messages or their replies may not be correctly interpreted.");
     	}
@@ -105,7 +111,7 @@ public class ZMQWrapper {
 
     /**
      * Connect to the ZMQ session.
-     * 
+     *
      * @param connectionUri
      *            The URI that we want to connect to.
      * @throws ZMQException
@@ -113,24 +119,30 @@ public class ZMQWrapper {
      */
     public void connect(String connectionUri) throws ZMQException {
     	checkCommsLockHeld();
-        socket = context.socket(ZMQ.REQ);
-        socket.setReceiveTimeOut(RECEIVE_TIMEOUT);
-        socket.connect(connectionUri);
+    	LOG.info("Opening ZMQ socket");
+
+		// disconnect old session first
+		disconnect();
+
+		Socket s = context.socket(ZMQ.REQ);
+		s.setReceiveTimeOut(RECEIVE_TIMEOUT);
+		s.connect(connectionUri);
+        this.socket = Optional.of(s);
     }
 
     /**
      * Receive a string from the ZMQ connection.
-     * 
+     *
      * @return The string to receive.
      */
     public String receiveString() {
     	checkCommsLockHeld();
-        return socket.recvStr();
+        return socket.orElseThrow(this::socketDoesNotExist).recvStr();
     }
 
     /**
      * Send a string to the ZMQ connection.
-     * 
+     *
      * @param data
      *            The string to send.
      * @param more
@@ -139,9 +151,9 @@ public class ZMQWrapper {
     public void send(String data, Boolean more) {
     	checkCommsLockHeld();
         if (more) {
-            socket.sendMore(data);
+            socket.orElseThrow(this::socketDoesNotExist).sendMore(data);
         } else {
-            socket.send(data);
+            socket.orElseThrow(this::socketDoesNotExist).send(data);
         }
     }
 
@@ -150,6 +162,17 @@ public class ZMQWrapper {
      */
     public void disconnect() {
     	checkCommsLockHeld();
-        socket.close();
+    	LOG.info("Closing old socket");
+        socket.ifPresent(Socket::close);
+        socket = Optional.empty();
+        LOG.info("Finished closing");
+    }
+
+    /**
+     * Exception thrown when attempting to use a connection that isn't open.
+     * @return the exception to be thrown
+     */
+    private IllegalStateException socketDoesNotExist() {
+    	return new IllegalStateException("Cannot operate on the ZMQ socket as it does not exist (has probably been closed and not re-opened).");
     }
 }

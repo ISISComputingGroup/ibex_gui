@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -68,8 +68,8 @@ public class NicosModel extends ModelObject {
     /**
      * The period to ask the server for a status update (in ms).
      */
-    private static final long UPDATE_STATUS_TIME = 1000;
-    
+    private static final long UPDATE_STATUS_TIME = 1;
+
     /**
      * Maximum number of messages to fetch at a time.
      */
@@ -92,9 +92,9 @@ public class NicosModel extends ModelObject {
 
     /**
      * Default constructor.
-     * 
+     *
      * This will initialise the connection to zeroMQ and login to NICOS.
-     * 
+     *
      * @param session
      *            the session to use to send and receive messages to and from
      *            the script server
@@ -108,9 +108,9 @@ public class NicosModel extends ModelObject {
 
     /**
      * Constructor for the model.
-     * 
+     *
      * This will initialise the connection to zeroMQ and login to NICOS.
-     * 
+     *
      * @param session
      *            the session to use to send and receive messages to and from
      *            the script sever
@@ -147,7 +147,7 @@ public class NicosModel extends ModelObject {
 
     /**
      * Connect the model to a NICOS server.
-     * 
+     *
      * @param instrument
      *            The instrument to connect to.
      */
@@ -186,7 +186,7 @@ public class NicosModel extends ModelObject {
         connectionJob.setRunning(false);
         updateStatusJob.setRunning(true);
     }
-    
+
     /**
      * Disconnect the model from the NICOS server.
      */
@@ -203,7 +203,7 @@ public class NicosModel extends ModelObject {
     public List<NicosLogEntry> getLogEntries() {
         return newLogEntries;
     }
-    
+
     private void setLogEntries(List<NicosLogEntry> newLogEntries) {
         firePropertyChange("logEntries", this.newLogEntries, this.newLogEntries = newLogEntries);
         this.lastEntryTime = newLogEntries.get(newLogEntries.size() - 1).getTimeStamp();
@@ -212,7 +212,7 @@ public class NicosModel extends ModelObject {
     /**
      * Send a script to NICOS. Do not wait for a reply the acknowledgement can
      * be found in script send status.
-     * 
+     *
      * @param script
      *            to queue
      */
@@ -221,21 +221,21 @@ public class NicosModel extends ModelObject {
         SentMessageDetails<String> scriptSentMessageDetails = sendMessageToNicos(nicosMessage);
         if (!scriptSentMessageDetails.isSent()) {
             setError(NicosErrorState.SCRIPT_SEND_FAIL);
-            
+
         }
     }
-    
+
     private void setError(NicosErrorState error) {
     	setError(error, "");
     }
-    
+
     private void setError(NicosErrorState error, String additionalInformation) {
     	firePropertyChange("error", this.error, this.error = error);
     	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
             LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
     	}
     }
-    
+
     /**
      * Gets the last error in communication with NICOS.
      * @return the error
@@ -246,7 +246,7 @@ public class NicosModel extends ModelObject {
 
     /**
      * Send a command for controlling the execution of the current script.
-     * 
+     *
      * @param instruction
      *            The execution instruction to send to the server.
      */
@@ -263,7 +263,7 @@ public class NicosModel extends ModelObject {
 
     /**
      * Send a message to NICOS.
-     * 
+     *
      * @param nicosMessage
      *            message to send
      * @return details about the sending of that message
@@ -271,7 +271,7 @@ public class NicosModel extends ModelObject {
     private <TSEND, TRESP> SentMessageDetails<TRESP> sendMessageToNicos(NICOSMessage<TSEND, TRESP> nicosMessage) {
         return session.sendMessage(nicosMessage);
     }
-    
+
     /**
      * Gets the status of the currently executing script from the server.
      */
@@ -305,7 +305,7 @@ public class NicosModel extends ModelObject {
             }
             SentMessageDetails<ReceiveLogMessage> message = sendMessageToNicos(new GetLog(numMessages));
 			ReceiveLogMessage logSentMessageDetails = message.getResponse();
-            
+
             if (logSentMessageDetails == null || !message.isSent()) {
                 setError(NicosErrorState.NO_RESPONSE);
                 break;
@@ -317,7 +317,7 @@ public class NicosModel extends ModelObject {
                 // nothing more to fetch
                 break;
             }
-            
+
             newEntries = new ArrayList<NicosLogEntry>(current);
             firstEntryTime = newEntries.get(0).getTimeStamp();
             numMessages *= MESSAGES_SCALE_FACTOR;
@@ -331,7 +331,7 @@ public class NicosModel extends ModelObject {
 
     /**
      * Filters old log entries out from a nicos log.
-     * 
+     *
      * @param entries the original list of entries
      * @return a new list with old entries removed
      */
@@ -343,79 +343,79 @@ public class NicosModel extends ModelObject {
 
     /**
      * Set which line number is currently executing.
-     * 
+     *
      * @param lineNumber the line number
      */
-	private void setLineNumber(int lineNumber) {		
+	private void setLineNumber(int lineNumber) {
 		firePropertyChange("lineNumber", this.lineNumber, this.lineNumber = lineNumber);
 	}
-	
+
 	/**
 	 * The currently executing line number.
-	 * 
+	 *
 	 * @return the line number
 	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}
-	
+
 	/**
 	 * Sets the name of the currently executing script.
-	 * 
+	 *
 	 * @param scriptName of the current running script
 	 */
 	private void setScriptName(String scriptName) {
 		firePropertyChange("scriptName", this.scriptName, this.scriptName = scriptName);
 	}
-   
+
 	/**
 	 * A formatted string representation of the current running script name to display on the user interface.
-	 * 
+	 *
 	 * @return a formatted string representation of the current script name to display on the user interface
 	 */
 	public String getScriptName() {
 		return scriptName;
 	}
-	
+
 	/**
 	 * Sets the currently executing script text.
-	 * 
+	 *
 	 * @param script the current script
 	 */
 	private void setCurrentlyExecutingScript(String script) {
 		firePropertyChange("currentlyExecutingScript", this.currentlyExecutingScript, this.currentlyExecutingScript = script);
 	}
-	
+
 	/**
 	 * The currently executing script text.
-	 * 
+	 *
 	 * @return the script
 	 */
 	public String getCurrentlyExecutingScript() {
 		return currentlyExecutingScript;
     }
-	
+
 	/**
 	 * Set the list of scripts in the nicos queue.
-	 * 
+	 *
 	 * @param newQueuedScripts the new list of scripts
 	 */
 	private void setQueuedScripts(List<QueuedScript> newQueuedScripts) {
 		firePropertyChange("queuedScripts", this.queuedScripts, this.queuedScripts = newQueuedScripts);
 	}
-	
+
 	/**
 	 * The currently queued scripts.
-	 * 
+	 *
 	 * @return the queued scripts
 	 */
 	public List<QueuedScript> getQueuedScripts() {
         return Collections.unmodifiableList(queuedScripts);
     }
-	
+
 	/**
 	 * The status of the currently executing script.
-	 * 
+	 *
 	 * @param scriptStatus the status
 	 */
     private void setScriptStatus(ScriptStatus scriptStatus) {
@@ -424,16 +424,16 @@ public class NicosModel extends ModelObject {
 
     /**
      * The current script execution status.
-     * 
+     *
      * @return the script status
      */
     public ScriptStatus getScriptStatus() {
         return scriptStatus;
     }
-	
+
     /**
      * Dequeue script.
-     * 
+     *
      * @param reqid
      *            ID of script to dequeue
      */
@@ -441,20 +441,20 @@ public class NicosModel extends ModelObject {
         DequeueScript message = new DequeueScript(reqid);
         sendMessageToNicos(message);
     }
-    
+
     /**
      * Update the content of a script in the queue.
-     * 
+     *
      * @param script The script to update
      */
     public void updateScript(QueuedScript script) {
         UpdateScript message = new UpdateScript(script);
         sendMessageToNicos(message);
     }
-    
+
     /**
      * Send reordered list of reqids to NICOS.
-     * 
+     *
      * @param listOfScriptIDs
      *            list of IDs of scripts
      */
