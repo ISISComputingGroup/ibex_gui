@@ -135,12 +135,15 @@ public class ConfigurationViewModels {
      * @return - the current value
      * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the value was accessible.
      */
-    private static <T> T currentValueFromObservable(ForwardingObservable<T> observable) throws TimeoutException {
+    private EditableConfiguration currentValueFromObservable(ForwardingObservable<EditableConfiguration> observable) throws TimeoutException {
+    	// Required because the groups model uses the "global" state of this class - so need to ensure we keep updating the state even
+    	// if things don't directly need it to be updated.
+    	setAsObservableConfigModel(observable);
 
-    	UpdatedObservableAdapter<T> updateAdapter = new UpdatedObservableAdapter<>(observable);
+    	UpdatedObservableAdapter<EditableConfiguration> updateAdapter = new UpdatedObservableAdapter<>(observable);
 
         if (Awaited.returnedValue(updateAdapter, MAX_SECONDS_TO_WAIT_FOR_VALUE)) {
-            T value = updateAdapter.getValue();
+        	EditableConfiguration value = updateAdapter.getValue();
             updateAdapter.close();
             return value;
         } else {
@@ -154,13 +157,12 @@ public class ConfigurationViewModels {
      * @param model - the new model to use.
      * @return an updated observable observing the new model
      */
-    private UpdatedObservableAdapter<EditableConfiguration> setAsObservableConfigModel(ForwardingObservable<EditableConfiguration> model) {
+    private void setAsObservableConfigModel(ForwardingObservable<EditableConfiguration> model) {
     	// Close old observable adapter if it was set.
     	Optional.ofNullable(observableConfigModel).ifPresent(UpdatedObservableAdapter::close);
 
     	observableConfigModel = new UpdatedObservableAdapter<>(model);
     	groupEditorViewModel.updateModel(observableConfigModel);
-    	return observableConfigModel;
     }
 
 }
