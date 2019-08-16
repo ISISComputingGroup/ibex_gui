@@ -67,6 +67,11 @@ public class DashboardView {
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 
+	/**
+	 * Create the dashboard view.
+	 * 
+	 * @param parent the parent composite
+	 */
 	@PostConstruct
     public void createPartControl(Composite parent) {
 		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);

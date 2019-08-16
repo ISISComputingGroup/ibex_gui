@@ -20,26 +20,26 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.Model;
+import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
-public class ViewModel {
+public class ExperimentDetailsViewModel {
 
-    private static ViewModel instance;
+    private static ExperimentDetailsViewModel instance;
 	
-	public final Model model = ExperimentDetails.getInstance().model();
+	public final ExperimentDetailsModel model = ExperimentDetails.getInstance().model();
 	
 	public final StringWritableObservableAdapter rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
 	
-    private ViewModel() {
+    private ExperimentDetailsViewModel() {
         instance = this;
     }
 
     // TODO: Don't use a singleton here split this into three separate view
     // models instead.
-    public static ViewModel getInstance() {
+    public static ExperimentDetailsViewModel getInstance() {
         if (instance == null) {
-            instance = new ViewModel();
+            instance = new ExperimentDetailsViewModel();
         }
         return instance;
 	}

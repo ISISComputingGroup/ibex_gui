@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
  * THREAD SAFETY NOTE:
  *   All subclasses of this class are required to be thread-safe using explicit locking. Subclasses can share
  *   this class' lock object.
+ * @param <T> the type of the writable
  */
 public abstract class BaseWritable<T> implements Writable<T> {
 
@@ -53,6 +54,9 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		return canWrite;
 	}
 	
+	/**
+	 * @return the last exception that occurred.
+	 */
 	public synchronized Exception lastError() {
 		return lastError;
 	}
@@ -62,6 +66,11 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		writers.forEach(writer -> writer.onError(e));
 	}
 	
+	/**
+	 * Method triggered when the write status is changed.
+	 * 
+	 * @param canWrite whether the writable can write or not
+	 */
 	protected synchronized void canWriteChanged(boolean canWrite) {
 		this.canWrite = canWrite;
 		writers.forEach(writer -> writer.onCanWriteChanged(canWrite));

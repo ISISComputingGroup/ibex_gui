@@ -35,6 +35,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog displaying details about the block's name and PV.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockDetailsPanel extends Composite {
 	
@@ -44,6 +47,13 @@ public class BlockDetailsPanel extends Composite {
 	private final Button local;
 	private final Button btnPickPV;
 
+	/**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block details.
+     */
 	public BlockDetailsPanel(Composite parent, int style, final BlockDetailsViewModel viewModel) {
 		super(parent, style);
 		

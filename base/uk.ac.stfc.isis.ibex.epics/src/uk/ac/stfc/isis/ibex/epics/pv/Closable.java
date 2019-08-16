@@ -25,5 +25,8 @@ package uk.ac.stfc.isis.ibex.epics.pv;
  *
  */
 public interface Closable {
+    /**
+     * Close the closable.
+     */
 	void close();
 }

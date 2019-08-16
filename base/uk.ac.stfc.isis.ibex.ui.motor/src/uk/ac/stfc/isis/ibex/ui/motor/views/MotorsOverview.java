@@ -60,7 +60,6 @@ public class MotorsOverview extends Composite {
      * 
      * @param parent - The parent of this element
      * @param style - The base style to be applied to the overview
-     * @param palette - The new palette to use.
      */
     public MotorsOverview(Composite parent, int style) {
 		super(parent, style);

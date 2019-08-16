@@ -32,12 +32,22 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog for the block's run-control settings.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
     private Text lowLimit;
     private Text highLimit;
     private Button btnEnabled;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block run-control.
+     */
     public BlockRunControlPanel(Composite parent, int style, BlockRunControlViewModel viewModel) {
         super(parent, style);
 

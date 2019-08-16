@@ -36,6 +36,9 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
+/**
+ * A panel containing all of the run information.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunInformationPanel {
 
@@ -578,6 +581,11 @@ public class RunInformationPanel {
         setModel(viewModel);
 	}
 	
+	/**
+	 * Sets the model and binds all of the values.
+	 *
+	 * @param viewModel the view model
+	 */
 	public void setModel(DaeViewModel viewModel) {
 		bind(viewModel.runInformation());
 	}

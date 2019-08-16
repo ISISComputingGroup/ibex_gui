@@ -40,6 +40,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 /**
  * The double list editor control.
+ * 
  * @param <T> the type of item in the list
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })

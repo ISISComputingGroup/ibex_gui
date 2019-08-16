@@ -27,7 +27,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 
-// NB This class holds data coming from IOCS, so it lists the properties available to be set on an IOC, rather than those actually set in a config
+/**
+ * Class which holds data coming from IOCS.
+ * It lists the properties available to be set on an IOC, rather than those actually set in a config.
+ */
 public class IocParameters {
 
 	private final boolean running;
@@ -54,22 +57,37 @@ public class IocParameters {
 		}
 	}
 	
+    /**
+     * @return true if the IOC is running, false otherwise.
+     */
 	public boolean isRunning() {
 		return running;
 	}
 	
+	/**
+	 * @return a collection of the IOC's macros
+	 */
 	public Collection<Macro> getMacros() {
 		return macros;
 	}
 	
+	/**
+	 * @return a collection of the IOC's available PVs
+	 */
 	public Collection<AvailablePV> getPVs() {
 		return pvs;
 	}
 	
+	/**
+	 * @return a collection of the IOC's available PV sets
+	 */
 	public Collection<AvailablePVSet> getPVSets() {
 		return pvsets;
 	}
-
+	
+	/**
+     * @return the description of the IOC
+     */
     public String getDescription() {
         return description;
     }

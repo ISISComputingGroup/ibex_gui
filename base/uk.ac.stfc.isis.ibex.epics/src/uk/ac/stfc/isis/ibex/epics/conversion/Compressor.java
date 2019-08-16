@@ -23,6 +23,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.Deflater;
 
+/**
+ * A converter to compress a byte array.
+ */
 public class Compressor extends Converter<byte[], byte[]> {
 		
     private static final int KB_IN_BYTES = 1024;

@@ -37,6 +37,9 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
+/**
+ * A dialog for editing the run control.
+ */
 public class EditRunControlDialog extends TitleAreaDialog {
 
 	private static final Point INITIAL_SIZE = new Point(650, 500);
@@ -46,6 +49,14 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	RunControlSettingsPanel editor;
 	RunControlViewModel viewModel;
 	
+	/**
+	 * Creates a dialog for configuring the run-control settings.
+	 * 
+	 * @param parentShell the parent SWT Shell
+	 * @param title the title of the dialog window
+	 * @param configServer the Config Server 
+	 * @param runControlServer the Run Control server
+	 */
 	public EditRunControlDialog(Shell parentShell, String title, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parentShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
