@@ -23,12 +23,30 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
  * Sizes that can be used in the TRANS combo box within the Aperture settings.
  */
 public enum ApertureTrans {
-	LARGE("Large = ?, ? mm"),
-	MEDIUM("Medium = 20, 14 mm"),
-	SMALL("Small = ?, ? mm");
+    
+    
+    /**
+     * Large aperture.
+     */
+    LARGE("Large = ?, ? mm"),
+    
+    /**
+     * Medium aperture.
+     */
+    MEDIUM("Medium = 20, 14 mm"),
+    
+    /**
+     * Small aperture.
+     */
+    SMALL("Small = ?, ? mm");
 	
 	private String name;
 	
+	/**
+	 * Instantiates a new aperture trans.
+	 *
+	 * @param displayName the display name
+	 */
 	ApertureTrans(String displayName) {
 		this.name = displayName;
 	}

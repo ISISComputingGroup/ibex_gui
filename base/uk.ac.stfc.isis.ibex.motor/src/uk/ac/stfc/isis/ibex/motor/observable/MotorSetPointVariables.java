@@ -29,6 +29,9 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
+/**
+ * Contains the set point variables for a motor.
+ */
 public class MotorSetPointVariables {
 
 	private static final Converter<Double, Boolean> TO_BOOLEAN = new Converter<Double, Boolean>() {

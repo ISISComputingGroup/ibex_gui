@@ -16,5 +16,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.scriptgenerator;bundle-version="1.0.0"
 Export-Package: uk.ac.stfc.isis.ibex.ui.widgets,
- uk.ac.stfc.isis.ibex.ui.widgets.models,
  uk.ac.stfc.isis.ibex.ui.widgets.observable

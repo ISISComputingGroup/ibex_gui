@@ -34,6 +34,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog editing the block's logging settings.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockLogSettingsPanel extends Composite {
     private Button btnEnabled;
@@ -41,6 +44,13 @@ public class BlockLogSettingsPanel extends Composite {
     private Label lblSettings;
     private Text txtSettings;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block settings.
+     */
     public BlockLogSettingsPanel(Composite parent, int style, final BlockLogSettingsViewModel viewModel) {
         super(parent, style);
 

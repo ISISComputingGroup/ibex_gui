@@ -24,6 +24,11 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.viewers.TextCellEditor;
 
+/**
+ * Provides support for editing double values within a table.
+ * 
+ * @param <TRow> the row type
+ */
 public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<TRow, Double> {
 
 	protected CellEditor editor;

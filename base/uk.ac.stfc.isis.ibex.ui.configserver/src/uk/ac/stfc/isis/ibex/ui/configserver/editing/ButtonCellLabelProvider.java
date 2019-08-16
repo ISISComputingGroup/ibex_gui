@@ -32,11 +32,18 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
+/**
+ * A label provider that adds a button to a cell.
+ */
 public abstract class ButtonCellLabelProvider extends ObservableMapCellLabelProvider {
 
 	private final Map<ViewerCell, Button> cellButtons = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
+	/**
+     * The default constructor for the ButtonLabelProvider.
+     * @param attributeMaps The attribute maps that this label provider should be observing
+     */
 	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
 		super(attributeMaps);
 	}
