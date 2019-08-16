@@ -21,12 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
 import org.zeromq.SocketType;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMQ.Context;
+import org.zeromq.ZContext;
 import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZMQException;
 
@@ -40,7 +40,7 @@ public class ZMQWrapper {
 	private static final Logger LOG = IsisLog.getLogger(ZMQWrapper.class);
 
     private Optional<Socket> socket = Optional.empty();
-    private final Context context;
+    private Optional<ZContext> context = Optional.empty();
 
     private static final int RECEIVE_TIMEOUT = 500;
 
@@ -53,8 +53,6 @@ public class ZMQWrapper {
      * Private constructor - access via getInstance instead (this class is a singleton).
      */
     private ZMQWrapper() {
-    	context = ZMQ.context(1);
-    	context.setMaxSockets(1);
     }
 
     /**
@@ -121,8 +119,9 @@ public class ZMQWrapper {
 
 		// disconnect old session first
 		disconnect();
-
-		socket = Optional.of(context.socket(SocketType.REQ));
+		
+		context = Optional.of(new ZContext(1));
+		socket = context.map(c -> c.createSocket(SocketType.REQ));
 		socket.ifPresent(s -> s.setReceiveTimeOut(RECEIVE_TIMEOUT));
 		socket.ifPresent(s -> s.connect(connectionUri));
     }
@@ -134,7 +133,7 @@ public class ZMQWrapper {
      */
     public String receiveString() {
     	checkCommsLockHeld();
-    	return getSocket().recvStr();
+    	return getSocketOrThrow().recvStr();
     }
 
     /**
@@ -149,9 +148,9 @@ public class ZMQWrapper {
     	checkCommsLockHeld();
     	
         if (more) {
-            getSocket().sendMore(data);
+            getSocketOrThrow().sendMore(data);
         } else {
-            getSocket().send(data);
+            getSocketOrThrow().send(data);
         }
     }
 
@@ -160,19 +159,24 @@ public class ZMQWrapper {
      */
     public void disconnect() {
     	checkCommsLockHeld();
-        socket.ifPresent(Socket::close);
+    	if (context.isPresent() && socket.isPresent()) {
+    		LOG.info("Destroying old context and socket");
+    		context.get().destroySocket(socket.get());
+    	}
+        
+    	context
+    	    .map(ZContext::getSockets)
+    	    .map(List::size)
+    	    .ifPresent(i -> LOG.info("In ZMQ disconnect, " + i + " sockets left in context"));
+    	
+    	context.ifPresent(ZContext::close);
+    	
         socket = Optional.empty();
-    }
-
-    /**
-     * Exception thrown when attempting to use a connection that isn't open.
-     * @return the exception to be thrown
-     */
-    private IllegalStateException socketDoesNotExist() {
-    	return new IllegalStateException("Cannot operate on the ZMQ socket as it does not exist (has probably been closed and not re-opened).");
+        context = Optional.empty();
     }
     
-    private Socket getSocket() {
-    	return socket.orElseThrow(this::socketDoesNotExist);
+    private Socket getSocketOrThrow() {
+    	return socket.orElseThrow(() -> new IllegalStateException(
+    					"Cannot operate on the ZMQ socket as it does not exist (has probably been closed and not re-opened)."));
     }
 }
