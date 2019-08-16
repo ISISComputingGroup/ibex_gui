@@ -89,7 +89,7 @@ public class ZMQSession {
     }
 
     private String createConnectionURI(InstrumentInfo instrument) {
-        return String.format("%s://%s:%s", ZMQ_PROTO, instrument.hostName(), ZMQ_PORT.toString());
+        return String.format("%s://%s:%s", ZMQ_PROTO, instrument.hostName(), ZMQ_PORT);
     }
 
     private void sendMultipleMessages(List<String> messages) throws ZMQException {
