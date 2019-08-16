@@ -21,7 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.comms;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
@@ -40,7 +39,7 @@ public class ZMQWrapper {
 	private static final Logger LOG = IsisLog.getLogger(ZMQWrapper.class);
 
     private Optional<Socket> socket = Optional.empty();
-    private Optional<ZContext> context = Optional.empty();
+    private final ZContext context = new ZContext(1);
 
     private static final int RECEIVE_TIMEOUT = 500;
 
@@ -120,8 +119,7 @@ public class ZMQWrapper {
 		// disconnect old session first
 		disconnect();
 		
-		context = Optional.of(new ZContext(1));
-		socket = context.map(c -> c.createSocket(SocketType.REQ));
+		socket = Optional.of(context.createSocket(SocketType.REQ));
 		socket.ifPresent(s -> s.setReceiveTimeOut(RECEIVE_TIMEOUT));
 		socket.ifPresent(s -> s.connect(connectionUri));
     }
@@ -159,20 +157,9 @@ public class ZMQWrapper {
      */
     public void disconnect() {
     	checkCommsLockHeld();
-    	if (context.isPresent() && socket.isPresent()) {
-    		LOG.info("Destroying old context and socket");
-    		context.get().destroySocket(socket.get());
-    	}
-        
-    	context
-    	    .map(ZContext::getSockets)
-    	    .map(List::size)
-    	    .ifPresent(i -> LOG.info("In ZMQ disconnect, " + i + " sockets left in context"));
-    	
-    	context.ifPresent(ZContext::close);
-    	
+
+    	socket.ifPresent(context::destroySocket);
         socket = Optional.empty();
-        context = Optional.empty();
     }
     
     private Socket getSocketOrThrow() {
