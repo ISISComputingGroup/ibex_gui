@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.comms.RepeatingJob;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQSession;
 import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
@@ -60,7 +59,6 @@ public class Nicos extends Plugin {
 
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
-            	IsisLog.getLogger(getClass()).info("Running NICOS connection job");
                 model.connect(Instrument.getInstance().currentInstrument());
                 return Status.OK_STATUS;
             }

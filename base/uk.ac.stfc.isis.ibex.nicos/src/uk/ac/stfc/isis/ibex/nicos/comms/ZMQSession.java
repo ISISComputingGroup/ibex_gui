@@ -68,7 +68,6 @@ public class ZMQSession {
      * 
      */
     public ZMQSession(ZMQWrapper zmq) {
-    	LOG.info("Initialising ZMQSession");
         this.zmq = zmq;
     }
 

@@ -126,8 +126,6 @@ public class NicosModel extends ModelObject {
         this.session = session;
         this.connectionJob = connectionJob;
         this.lastEntryTime = initialTime;
-        
-        LOG.info("Created NICOS model");
 
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
             @Override
