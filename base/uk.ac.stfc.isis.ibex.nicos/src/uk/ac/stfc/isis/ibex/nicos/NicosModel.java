@@ -130,10 +130,8 @@ public class NicosModel extends ModelObject {
         updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
-            	LOG.info("Running repeating job to update NICOS script status");
                 updateScriptStatus();
                 updateLogEntries();
-                LOG.info("repeating job successful");
                 return Status.OK_STATUS;
             }
         };
