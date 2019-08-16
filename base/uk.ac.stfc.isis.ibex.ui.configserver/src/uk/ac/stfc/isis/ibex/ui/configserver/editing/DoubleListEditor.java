@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -40,8 +40,8 @@ import org.eclipse.wb.swt.ResourceManager;
 
 /**
  * The double list editor control.
- *
- * @param <T>
+ * 
+ * @param <T> the type of item in the list
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class DoubleListEditor<T> extends Composite {
@@ -179,7 +179,7 @@ public class DoubleListEditor<T> extends Composite {
 		String temp = selectedList.getItem(swappingIndex);
 		selectedList.setItem(swappingIndex, selected);
 		selectedList.setItem(selectIndex, temp);
-		selectedList.select(swappingIndex);
+		selectedList.setSelection(swappingIndex);
 		setUpDownEnabled(swappingIndex);
 	}
 	
