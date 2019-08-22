@@ -228,7 +228,7 @@
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:SAMPLE:HGAP:SP</pv_name>
+      <pv_name>$(P)JAWMAN:SAMPLE:HGAP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -430,7 +430,7 @@ $(pv_value)</tooltip>
       <name>Text Input_7</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:SAMPLE:VGAP:SP</pv_name>
+      <pv_name>$(P)JAWMAN:SAMPLE:VGAP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -830,7 +830,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:MOD:HGAP:SP</pv_name>
+      <pv_name>$(P)JAWMAN:MOD:HGAP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1032,7 +1032,7 @@ $(pv_value)</tooltip>
       <name>Text Input_7</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:MOD:VGAP:SP</pv_name>
+      <pv_name>$(P)JAWMAN:MOD:VGAP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1171,7 +1171,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:HCENT:SP</pv_name>
+      <pv_name>$(P)JAWMAN:HCENT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1373,7 +1373,7 @@ $(pv_value)</tooltip>
       <name>Text Input_7</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)GEMJAWSET:VCENT:SP</pv_name>
+      <pv_name>$(P)JAWMAN:VCENT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
