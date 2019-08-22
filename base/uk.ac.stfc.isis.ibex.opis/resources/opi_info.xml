@@ -2166,16 +2166,19 @@
       </value>
     </entry>
     <entry>
-      <key>OERCONE</key>
+      <key>NIMROD Oerlikon Centre-One Pressure Gauge</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
-        <path>oercone.opi</path>
-        <description>The OPI for the OERCONE</description>
+      	<type>PRESSURE_GAUGE</type>
+      	<path>oercone.opi</path>
+      	<description>The OPI for the NIMROD Oerlikon Centre-One Pressure Gauge</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
         <macros>
           <macro>
             <name>OERCONE</name>
             <description>The OERCONE PV prefix (e.g. OERCONE_01)</description>
+          	<default>OERCONE_01</default>
           </macro>
         </macros>
       </value>
