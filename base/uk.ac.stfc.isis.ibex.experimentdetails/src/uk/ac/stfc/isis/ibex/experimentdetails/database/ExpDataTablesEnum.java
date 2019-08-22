@@ -23,13 +23,34 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
  * An enum to improve readability as to which table is which.
  */
 public enum ExpDataTablesEnum {
+    
+    /**
+     * A table containing information about users.
+     */
 	USER_TABLE("user"),
+	
+	/**
+	 * A table containing information about roles.
+	 */
 	ROLE_TABLE("role"),
+	
+	/**
+     * A table containing information about experiments.
+     */
 	EXPERIMENT_TABLE("experiment"),
+	
+	/**
+     * A table containing information about experiment teams.
+     */
 	EXPERIMENT_TEAMS_TABLE("experimentteams");
 
     private final String representation;
     
+    /**
+     * Instantiates a new experiment data tables enum.
+     *
+     * @param representation the representation
+     */
     ExpDataTablesEnum(String representation) {
     	this.representation = representation;
     }

@@ -19,10 +19,33 @@
 
 package uk.ac.stfc.isis.ibex.dashboard;
 
+/**
+ * An enum for the status of the instrument's shutter.
+ */
 public enum ShutterStatus {
+    
+    /**
+     * The status is unknown.
+     */
 	UNKNOWN,
+	
+	/**
+	 * The shutter is open.
+	 */
 	OPEN,
+	
+	/**
+	 * The shutter is closed.
+	 */
 	CLOSED,
+	
+	/**
+	 * The shutter is moving.
+	 */
 	MOVING,
+	
+	/**
+	 * There is a fault with the shutter.
+	 */
 	FAULT,
 }

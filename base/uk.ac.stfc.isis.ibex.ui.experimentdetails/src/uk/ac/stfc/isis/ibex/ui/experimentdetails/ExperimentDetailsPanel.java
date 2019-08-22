@@ -46,10 +46,13 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+/**
+ * A panel containing details of the experiment such as RB number and the experiment team.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private final ViewModel viewModel = ViewModel.getInstance();
+    private final ExperimentDetailsViewModel viewModel = ExperimentDetailsViewModel.getInstance();
 	
 	private final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 

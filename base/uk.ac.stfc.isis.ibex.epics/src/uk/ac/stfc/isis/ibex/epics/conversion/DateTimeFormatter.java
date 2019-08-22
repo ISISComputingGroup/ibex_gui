@@ -25,6 +25,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+/**
+ * A class for formatting and converting between different time formats.
+ */
 public class DateTimeFormatter extends Converter<String, String> {
 		
 	private static final String ISO_PATTERN_NO_MILLIS_NO_OFFSET =  "yyyy-MM-dd'T'HH:mm:ss";

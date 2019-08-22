@@ -18,13 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.logger.tests;
 
-import static org.junit.Assert.assertEquals;
-
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.graphics.Color;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 

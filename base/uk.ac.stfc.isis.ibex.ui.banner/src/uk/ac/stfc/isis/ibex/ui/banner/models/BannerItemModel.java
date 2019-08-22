@@ -45,6 +45,8 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     
     private final BannerItem item;
     
+    private static final int MAX_TEXT_LENGTH = 30;
+    
     /**
      * Instantiates model and converter.
      * 
@@ -77,7 +79,7 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     		setText = item.name() + ": " + item.value();
     	}
     	
-    	StringUtils.truncateWithEllipsis(setText, 30);
+    	StringUtils.truncateWithEllipsis(setText, MAX_TEXT_LENGTH);
     	
     	text.setValue(setText);
     }

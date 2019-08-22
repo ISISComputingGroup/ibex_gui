@@ -27,9 +27,6 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public class ClosingSwitcher extends Switcher {
 
-    public ClosingSwitcher() {
-    }
-
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
         for (Switchable switchable : switchables) {

@@ -21,6 +21,11 @@ package uk.ac.stfc.isis.ibex.epics.pv;
 
 import java.util.ArrayList;
 
+/**
+ * A closable which implements the closing of a list.
+ * 
+ * @param <T> the type of items in the list
+ */
 public class ClosableList<T extends Closable> extends ArrayList<T> implements Closable {
 
 	private static final long serialVersionUID = 8636379885861243532L;

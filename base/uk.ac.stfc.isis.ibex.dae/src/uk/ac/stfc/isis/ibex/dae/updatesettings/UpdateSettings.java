@@ -26,18 +26,38 @@ public class UpdateSettings extends ModelObject {
 	private int autosaveFrequency;
 	private AutosaveUnit autosaveUnits = AutosaveUnit.FRAMES; 
 	
+	/**
+	 * Gets the autosave frequency.
+	 *
+	 * @return the autosave frequency
+	 */
 	public int getAutosaveFrequency() {
 		return autosaveFrequency;
 	}
 
+	/**
+	 * Sets the autosave frequency.
+	 *
+	 * @param value the new autosave frequency
+	 */
 	public void setAutosaveFrequency(int value) {
 		firePropertyChange("autosaveFrequency", autosaveFrequency, autosaveFrequency = value);
 	}
 
+	/**
+	 * Gets the autosave units.
+	 *
+	 * @return the autosave units
+	 */
 	public AutosaveUnit getAutosaveUnits() {
 		return autosaveUnits;
 	}
 
+	/**
+	 * Sets the autosave units.
+	 *
+	 * @param value the new autosave units
+	 */
 	public void setAutosaveUnits(AutosaveUnit value) {
 		firePropertyChange("autosaveUnits", autosaveUnits, autosaveUnits = value);
 	}

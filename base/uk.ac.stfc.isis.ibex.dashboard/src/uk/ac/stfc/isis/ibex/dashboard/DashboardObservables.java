@@ -40,12 +40,29 @@ public class DashboardObservables extends Closer {
     private static final String USERS = "ED:SURNAME";
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
+    /**
+     * An observable for the shutter status to be displayed on the dashboard.
+     */
     public final ForwardingObservable<ShutterStatus> shutter;
+    
+    /**
+     * An observable for the instrument time to be displayed on the dashboard.
+     */
     public final ForwardingObservable<String> instrumentTime;
+    
+    /**
+     * An observable for the list of users to be displayed on the dashboard.
+     */
     public final ForwardingObservable<String> users;
-		
+	
+    /**
+     * Holds the observables for the DAE.
+     */
 	public final DaeObservables dae;
 
+	/**
+	 * Constructor which initialises the observables.
+	 */
     public DashboardObservables() {
         shutter = obsFactory.getSwitchableObservable(new EnumChannel<>(ShutterStatus.class),
                 InstrumentUtils.addPrefix(SHUTTER_STATUS));

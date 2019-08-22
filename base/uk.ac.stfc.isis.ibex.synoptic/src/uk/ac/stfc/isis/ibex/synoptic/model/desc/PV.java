@@ -77,26 +77,50 @@ public class PV extends ModelObject {
         this.recordType = other.recordType;
     }
 
+    /**
+     * @return the display name of the PV.
+     */
 	public String displayName() {
 		return displayName;
 	}
 	
+	/**
+     * @return the address of the PV.
+     */
 	public String address() {
 		return address;
 	}
 	
+	/**
+     * @return the record type of the PV.
+     */
 	public RecordType recordType() {
 		return recordType;
 	}
 	
+	/**
+	 * Sets the display name.
+	 * 
+	 * @param displayName the display name to set.
+	 */
 	public void setDisplayName(String displayName) {
         firePropertyChange("pvName", this.displayName, this.displayName = displayName);
 	}
 	
+	/**
+     * Sets the PV address.
+     * 
+     * @param address the address name to set.
+     */
 	public void setAddress(String address) {
         firePropertyChange("pvAddress", this.address, this.address = address);
 	}
 	
+	/**
+     * Sets the record type.
+     * 
+     * @param recordType the record type to set.
+     */
 	public void setRecordType(RecordType recordType) {
 		this.recordType = recordType;
 	}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension id="scriptgenerator" point="org.eclipse.core.runtime.products">
+   	<product application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" name="scriptgenerator">
+    <property name="appName" value="scriptgenerator"> </property>
+    <property name="applicationXMI" value="uk.ac.stfc.isis.scriptgenerator.client/Application.e4xmi"> </property>
+    <property
+          name="aboutImage"
+          value="../uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
+    </property>
+    <property
+          name="windowImages"
+          value="../uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
+    </property>
+    <property
+          name="applicationCSS"
+          value="platform:/plugin/uk.ac.stfc.isis.scriptgenerator.client/default.css">
+    </property>
+  </product>
+</extension>
+</plugin>

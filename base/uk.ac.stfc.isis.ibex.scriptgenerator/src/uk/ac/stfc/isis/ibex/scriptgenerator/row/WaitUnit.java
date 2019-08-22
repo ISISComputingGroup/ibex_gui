@@ -23,13 +23,28 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.row;
  * The wait units used in the "SANS Wait" and "TRANS Wait" fields in the table.
  */
 public enum WaitUnit {
+    
+    
+	/** MicroAmp Hours. */
 	UAMPS("MicroAmp Hours"),
+	
+	/** Minutes. */
 	MINUTES("Minutes"),
+	
+	/** Seconds. */
 	SECONDS("Seconds"),
+	
+	/** Frames. */
 	FRAMES("Frames");
 	
+	/** The name. */
 	private String name;
 	
+	/**
+	 * Instantiates a new wait unit.
+	 *
+	 * @param displayName the display name
+	 */
 	WaitUnit(String displayName) {
 		this.name = displayName;
 	}

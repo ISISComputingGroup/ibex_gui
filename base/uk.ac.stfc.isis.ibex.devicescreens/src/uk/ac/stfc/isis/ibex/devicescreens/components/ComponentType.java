@@ -166,6 +166,8 @@ public enum ComponentType {
 	WATER_BATH_VALVE,
 	/** Reflectometry Front Panel. */
 	REFLECTOMETRY,
+	/** Generic sensor. **/
+	SENSOR,
 	/** Thin film fabrication device. **/
 	FILM_FABRICATION,
 	/** Coherent OBIS Laser Remote. */

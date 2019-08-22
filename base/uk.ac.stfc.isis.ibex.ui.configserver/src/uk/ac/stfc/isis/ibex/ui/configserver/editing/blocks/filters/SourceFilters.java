@@ -23,8 +23,20 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
  * The filter values allowed based on the source of PVs.
  */
 public enum SourceFilters {
+    
+    /**
+     * Display all IOCs.
+     */
     ALL("All IOCs"),
+    
+    /**
+     * Display only active IOCs.
+     */
     ACTIVE("Active IOCs"),
+    
+    /**
+     * Display only config IOCs.
+     */
     ASSOCIATED("Config IOCs");
 	
 	private String displayName;
