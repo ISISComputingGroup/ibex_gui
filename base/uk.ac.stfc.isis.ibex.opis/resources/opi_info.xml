@@ -2082,6 +2082,7 @@
           <macro>
             <name>CP2800</name>
             <description>The CP2800 PV prefix (e.g. CP2800_01)</description>
+            <default>CP2800_01</default>
           </macro>
         </macros>
       </value>
