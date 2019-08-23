@@ -95,6 +95,7 @@ public class ConfigurationViewModels {
      * Set the model to point at the current configuration.
      *
      * @return configuration model
+     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the current config was accessible.
      */
     public EditableConfiguration getCurrentConfig() throws TimeoutException {
     	return currentValueFromObservable(editingModel.currentConfig());
@@ -105,6 +106,7 @@ public class ConfigurationViewModels {
      *
      * @param configName name of the configuration
      * @return configuration model
+     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the config was accessible.
      */
     public EditableConfiguration getConfig(String configName) throws TimeoutException {
         return currentValueFromObservable(editingModel.config(configName));
@@ -115,6 +117,7 @@ public class ConfigurationViewModels {
      *
      * @param componentName name of the component
      * @return configuration model
+     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the component was accessible.
      */
     public EditableConfiguration getComponent(String componentName) throws TimeoutException {
         return currentValueFromObservable(editingModel.component(componentName));
@@ -123,6 +126,7 @@ public class ConfigurationViewModels {
     /**
      * Set the model to point at a blank configuration.
      * @return configuration model
+     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the blank config was accessible.
      */
     public EditableConfiguration getBlankConfig() throws TimeoutException {
     	return currentValueFromObservable(editingModel.blankConfig());
