@@ -45,6 +45,7 @@ public abstract class ConfigHelper {
      * @param editBlockFirst
      *            Whether to present the blocks tab first
      * @throws TimeoutException
+     *             Thrown if the config cannot be obtained in a reasonable time.
      */
     public void createDialog(String configName, boolean editBlockFirst) throws TimeoutException {
         openDialog(configurationViewModels.getConfig(configName), false, editBlockFirst);

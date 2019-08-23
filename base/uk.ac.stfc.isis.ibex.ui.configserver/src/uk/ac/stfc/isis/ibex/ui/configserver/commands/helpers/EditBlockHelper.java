@@ -127,6 +127,8 @@ public class EditBlockHelper {
      * @param blockName
      *            The name of the block to edit
      * @throws TimeoutException
+     *             Thrown if the host config cannot be obtained in a reasonable
+     *             time.
      */
     public void createDialog(String blockName) throws TimeoutException {
 

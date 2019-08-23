@@ -53,14 +53,14 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     private boolean isConnected;
 
     /**
-     *  Optional exception that occured while connecting to the data source.
+     * Optional exception that occurred while connecting to the data source.
      */
     private Optional<Exception> currentError = Optional.empty();
 
     private static final Logger LOG = IsisLog.getLogger(ClosableObservable.class);
 
     /**
-     * Adds an observer to this observable
+     * Adds an observer to this observable.
      */
     @Override
     public Subscription subscribe(Observer<T> observer) {

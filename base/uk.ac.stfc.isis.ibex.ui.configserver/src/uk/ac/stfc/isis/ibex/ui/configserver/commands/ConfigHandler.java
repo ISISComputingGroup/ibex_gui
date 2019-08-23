@@ -128,6 +128,8 @@ public abstract class ConfigHandler<T> {
      *
      * @param event
      *            the eclipse event
+     * @throws Exception
+     *             thrown if there is an error in executing the command.
      */
     public abstract void safeExecute(Shell event) throws Exception;
 
