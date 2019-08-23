@@ -30,8 +30,20 @@ import java.util.List;
  * 
  */
 public enum LogMessageSeverity {
+    
+    /**
+     * A message which provides information.
+     */
     INFO("Information"),
+    
+    /**
+     * A message which has minor severity.
+     */
     MINOR("Minor"),
+    
+    /**
+     * A message which has major severity.
+     */
     MAJOR("Major");
 
     private String text;
@@ -44,10 +56,20 @@ public enum LogMessageSeverity {
         }
     }
 
+    /**
+     * Instantiates a new log message severity.
+     *
+     * @param text the text
+     */
     LogMessageSeverity(String text) {
         this.text = text;
     }
 
+    /**
+     * Gets all of the severities as a list of strings.
+     *
+     * @return the list
+     */
     public static List<String> allToString() {
         return Collections.unmodifiableList(ALLTOSTRING);
     }

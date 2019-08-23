@@ -21,15 +21,40 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 
+/**
+ * An enum representing the role of a person.
+ */
 public enum RoleViews {
+    
+    /**
+     * Blank or undefined role, "Any".
+     */
 	ANY("Any", Role.BLANK),
+	
+	/**
+	 * The person is a contact.
+	 */
 	CONTACT("Contact", Role.CONTACT),
+	
+	/**
+	 * The person is a PI.
+	 */
 	PI("PI", Role.PI),
+	
+	/**
+	 * The person is a user.
+	 */
 	USER("User", Role.USER);
 	
 	private final String text;
 	private final Role modelRole;
 	
+	/**
+	 * Constructor.
+	 *
+	 * @param text the text
+	 * @param modelRole the role
+	 */
 	RoleViews(final String text, final Role modelRole) {
 		this.text = text;
 		this.modelRole = modelRole;
@@ -40,6 +65,11 @@ public enum RoleViews {
 		return text;
 	}
 	
+	/**
+	 * Gets the role of the user.
+	 *
+	 * @return the role
+	 */
 	public Role getModelRole() {
 		return modelRole;
 	}

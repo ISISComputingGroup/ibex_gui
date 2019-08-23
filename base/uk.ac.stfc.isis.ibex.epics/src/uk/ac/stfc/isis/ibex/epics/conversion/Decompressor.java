@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
+/**
+ * A converter to decompress a byte array.
+ */
 public class Decompressor extends Converter<byte[], byte[]> {
 	
     private static final int KB_IN_BYTES = 1024;

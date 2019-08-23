@@ -14,6 +14,7 @@ import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
 /**
  * Handler for button which shows the percentage of console buffer in use and clears the console on click.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class ConsoleLengthMonitor extends WorkbenchWindowControlContribution {
 
 	private static final String FORMAT = "Buffer %.0f%% full. Click to clear console now.";

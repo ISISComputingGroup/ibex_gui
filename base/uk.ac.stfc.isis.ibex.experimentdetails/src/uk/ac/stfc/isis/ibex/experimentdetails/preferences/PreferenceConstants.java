@@ -23,12 +23,22 @@ package uk.ac.stfc.isis.ibex.experimentdetails.preferences;
  */
 public final class PreferenceConstants {
     
+    /** The username to connect to the experiment data database. **/
     public static final String P_EXP_DATA_SQL_USERNAME = "sqlExpDataUsername";
+    
+    /** The password to connect to the experiment data database. **/
     public static final String P_EXP_DATA_SQL_PASSWORD = "sqlExpDataPassword";
+
+    /** The schema to connect to the experiment data database. **/
     public static final String P_EXP_DATA_SQL_SCHEMA = "sqlExpDataSchema";    
     
+    /** The default for the database username. **/
     public static final String DEFAULT_EXP_DATA_SQL_USERNAME = "report";
+    
+    /** The default for the database password. **/
     public static final String DEFAULT_EXP_DATA_SQL_PASSWORD = "$report";
+    
+    /** The default for the database schema. **/
     public static final String DEFAULT_EXP_DATA_SQL_SCHEMA = "exp_data";
     
     private PreferenceConstants() {

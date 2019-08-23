@@ -23,6 +23,9 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+/**
+ * A formatter for converting from an elapsed time in seconds, to hours-minutes-seconds format.
+ */
 public class ElapsedTimeFormatter extends Converter<Long, String> {
 		
     private static final int ONE_SECOND_IN_MS = 1000;

@@ -30,6 +30,11 @@ public enum Order {
 	
 	private String name;
 	
+	/**
+	 * Instantiates a new order.
+	 *
+	 * @param displayName the display name
+	 */
 	Order(String displayName) {
 		this.name = displayName;
 	}

@@ -39,11 +39,18 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
+/**
+ * The workbench window advisor for the application.
+ */
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     private static final int MIN_WINDOW_HEIGHT = 800;
     private static final int MIN_WINDOW_WIDTH = 1100;
 
+    /**
+     * Constructor.
+     * @param configurer the configurer
+     */
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}

@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 
+/**
+ * @param <T> Type of the value provided
+ */
 public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> implements Closable {
 
 	private Subscription subscription;
@@ -61,6 +64,11 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	protected void error(Exception e) {
 	}
 
+	/**
+	 * Called on connection change.
+	 * 
+	 * @param isConnected if the connection is connected.
+	 */
 	protected void connectionChanged(boolean isConnected) {
 		if (!isConnected) {
 			setValue(null);

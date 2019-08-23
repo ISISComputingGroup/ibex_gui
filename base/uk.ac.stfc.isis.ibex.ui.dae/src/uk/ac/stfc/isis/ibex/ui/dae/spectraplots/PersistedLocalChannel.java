@@ -18,6 +18,8 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 /**
  * A class to interact with "local" channels from CS-Studio. This class provides utility methods to read,
  * write and persist these channels.
+ *
+ * @param <T>
  */
 public class PersistedLocalChannel<T> {
 	

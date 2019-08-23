@@ -45,6 +45,11 @@ public class ConfigEditing extends Closer implements Editing {
 
 	private final ConfigServer configServer;
 
+	/**
+	 * Standard constructor.
+	 * 
+	 * @param configServer the config server
+	 */
 	public ConfigEditing(ConfigServer configServer) {
 		this.configServer = configServer;
 	}
