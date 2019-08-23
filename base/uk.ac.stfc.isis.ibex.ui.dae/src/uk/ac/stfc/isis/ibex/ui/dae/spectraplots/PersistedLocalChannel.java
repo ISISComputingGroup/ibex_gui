@@ -63,7 +63,7 @@ public class PersistedLocalChannel<T> {
     		LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'", initialValue, address), e);
     	}
     	
-    	observable.addObserver(new BaseObserver<T>() {
+    	observable.subscribe(new BaseObserver<T>() {
     		@Override
     		public void onValue(T value) {
     			if (value != null) {

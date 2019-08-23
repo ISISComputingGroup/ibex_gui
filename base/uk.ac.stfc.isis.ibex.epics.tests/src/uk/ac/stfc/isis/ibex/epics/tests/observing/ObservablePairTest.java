@@ -71,7 +71,7 @@ public class ObservablePairTest {
 		initIntegerObservable = new ForwardingObservable<>(testableIntegerObservable);
 		
 		observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
-		observablePair.addObserver(mockObserver);
+		observablePair.subscribe(mockObserver);
 	}
 	
 	@Test

@@ -188,14 +188,14 @@ public class Configurations extends Closer implements BundleActivator {
 		Configurations.context = null;
 
 		for (Subscription subscription : loggingSubscriptions) {
-			subscription.removeObserver();
+			subscription.cancelSubscription();
 		}
 		
 		close();
 	}
 
 	private void addLogging() {
-		loggingSubscriptions.add(variables.currentConfig.addObserver(new LoggingConfigurationObserver(LOG, "Current config")));
-		loggingSubscriptions.add(variables.serverStatus.addObserver(new LoggingObserver<ServerStatus>(LOG, "Server status")));
+		loggingSubscriptions.add(variables.currentConfig.subscribe(new LoggingConfigurationObserver(LOG, "Current config")));
+		loggingSubscriptions.add(variables.serverStatus.subscribe(new LoggingObserver<ServerStatus>(LOG, "Server status")));
 	}
 }

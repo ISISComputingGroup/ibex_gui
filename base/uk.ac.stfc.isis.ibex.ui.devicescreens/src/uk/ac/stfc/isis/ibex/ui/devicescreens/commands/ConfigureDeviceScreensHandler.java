@@ -59,7 +59,7 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
      * Constructor.
      */
     public ConfigureDeviceScreensHandler() {
-        configService.writeTo(writeable);
+        configService.subscribe(writeable);
         writeable.subscribe(configService);
     }
 
