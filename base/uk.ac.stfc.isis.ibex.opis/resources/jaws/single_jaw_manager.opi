@@ -181,17 +181,22 @@ $(pv_value)</tooltip>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>LeftToRight</scriptName>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from java.lang import Thread, Runnable
 
-r = PVUtil.getDouble(pvs[1])*1.05
-width =  100*PVUtil.getDouble(pvs[0])/r + 100
 
-if width < 1:
-	width = 1
-elif width > 200:
-	width = 200
+class Updater(Runnable):
+    def run(self):
+        r = PVUtil.getDouble(pvs[1])*1.05
+        width =  100*PVUtil.getDouble(pvs[0])/r + 100
+        
+        if width < 1:
+        	width = 1
+        elif width > 200:
+        	width = 200
+        
+        widget.setPropertyValue("width", width)
 
-widget.setPropertyValue("width", width)
-
+Thread(Updater()).start()
 ]]></scriptText>
           <pv trig="true">$(P)MOT:JAWS$(NUMBER):JW</pv>
           <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXE</pv>
@@ -259,20 +264,24 @@ $(pv_value)</tooltip>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>RightToLeft</scriptName>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from java.lang import Runnable, Thread
 
-TR_X = display.getWidget("JawBackground").getPropertyValue("x") +display.getWidget("JawBackground").getPropertyValue("width")
+class Updater(Runnable):
+    def run(self):
+        TR_X = display.getWidget("JawBackground").getPropertyValue("x") +display.getWidget("JawBackground").getPropertyValue("width")
+        
+        r = PVUtil.getDouble(pvs[1])*1.05
+        width =  -100*PVUtil.getDouble(pvs[0])/r + 100
+        
+        if width < 1:
+        	width = 1
+        elif width > 200:
+        	width = 200
+        
+        widget.setPropertyValue("width", width)
+        widget.setPropertyValue("x", TR_X - width)
 
-r = PVUtil.getDouble(pvs[1])*1.05
-width =  -100*PVUtil.getDouble(pvs[0])/r + 100
-
-if width < 1:
-	width = 1
-elif width > 200:
-	width = 200
-
-widget.setPropertyValue("width", width)
-widget.setPropertyValue("x", TR_X - width)
-
+Thread(Updater()).start()
 ]]></scriptText>
           <pv trig="true">$(P)MOT:JAWS$(NUMBER):JE</pv>
           <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXE</pv>
@@ -339,21 +348,25 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>TopToBottom</scriptName>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+          <scriptText><![CDATA[from java.lang import Thread, Runnable
+from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
-r = 1.05*PVUtil.getDouble(pvs[1])
-#ConsoleUtil.writeInfo(str(r))
-height =  -100*PVUtil.getDouble(pvs[0])/r + 100
-#ConsoleUtil.writeInfo(str(height))
+class Updater(Runnable):
+    def run(self):
+        r = 1.05*PVUtil.getDouble(pvs[1])
+        #ConsoleUtil.writeInfo(str(r))
+        height =  -100*PVUtil.getDouble(pvs[0])/r + 100
+        #ConsoleUtil.writeInfo(str(height))
 
-if height < 1:
-	height = 1
-elif height > 200:
-	height = 200
+        if height < 1:
+            height = 1
+        elif height > 200:
+	    height = 200
 
-widget.setPropertyValue("height", height)
+        widget.setPropertyValue("height", height)
 
+Thread(Updater()).start()
 ]]></scriptText>
           <pv trig="true">$(P)MOT:JAWS$(NUMBER):JN</pv>
           <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXN</pv>
@@ -421,20 +434,25 @@ $(pv_value)</tooltip>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>BottomToTop</scriptName>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from java.lang import Thread, Runnable
 
-BL_Y = display.getWidget("JawBackground").getPropertyValue("y") +display.getWidget("JawBackground").getPropertyValue("height")
 
-r = PVUtil.getDouble(pvs[1])*1.05
-height =  100*PVUtil.getDouble(pvs[0])/r + 100
+class Updater(Runnable):
+    def run(self):
+        BL_Y = display.getWidget("JawBackground").getPropertyValue("y") +display.getWidget("JawBackground").getPropertyValue("height")
+        
+        r = PVUtil.getDouble(pvs[1])*1.05
+        height =  100*PVUtil.getDouble(pvs[0])/r + 100
+        
+        if height < 1:
+        	height = 1
+        elif height > 200:
+        	height = 200
+        
+        widget.setPropertyValue("height", height)
+        widget.setPropertyValue("y", BL_Y - height)
 
-if height < 1:
-	height = 1
-elif height > 200:
-	height = 200
-
-widget.setPropertyValue("height", height)
-widget.setPropertyValue("y", BL_Y - height)
-
+Thread(Updater()).start()
 ]]></scriptText>
           <pv trig="true">$(P)MOT:JAWS$(NUMBER):JS</pv>
           <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXN</pv>
@@ -449,7 +467,7 @@ $(pv_value)</tooltip>
       <width>200</width>
       <wuid>4cf9b5a4:15ad74ff055:-60cc</wuid>
       <x>216</x>
-      <y>100</y>
+      <y>99</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -875,7 +893,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Gap</text>
+      <text>Gap x</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
