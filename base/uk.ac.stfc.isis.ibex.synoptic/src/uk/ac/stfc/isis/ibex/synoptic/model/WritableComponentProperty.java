@@ -48,7 +48,7 @@ public class WritableComponentProperty extends ComponentProperty {
 			Writable<String> destination) {
 		super(displayName);
 		valueSource = new ReadableComponentProperty(displayName, source, sourceAlarm);
-		writer.writeTo(destination);	
+		writer.subscribe(destination);	
 	}
 	
 	/**

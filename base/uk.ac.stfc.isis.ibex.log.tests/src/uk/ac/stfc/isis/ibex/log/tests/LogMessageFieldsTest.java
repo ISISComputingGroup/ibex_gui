@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -23,11 +23,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class is responsible for testing the Log Message Fields for the XML
  * interaction.
- * 
+ *
  */
 public class LogMessageFieldsTest {
 
@@ -108,7 +110,7 @@ public class LogMessageFieldsTest {
 	try {
 	    result = LogMessageFields.getFieldByTagName(tagName);
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 	}
 	// Assert
 	assertEquals(expected, result);

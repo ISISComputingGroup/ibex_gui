@@ -34,7 +34,7 @@ public class MacroInfo {
 	private String name;
 	private String description;
 	
-	@XmlElement(name="default")
+	@XmlElement(name = "default")
 	private String defaultValue;
 	
 	/**

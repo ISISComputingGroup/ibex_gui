@@ -29,14 +29,31 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * The model for the experiment details information.
  */
-public abstract class Model extends ModelObject {
+public abstract class ExperimentDetailsModel extends ModelObject {
 
+    /**
+     * @return the sample parameters
+     */
 	public abstract Collection<Parameter> getSampleParameters();
 	
+	/**
+	 * Sets the sample parameters.
+	 * 
+	 * @param sampleParameters the sample parameters to set.
+	 */
 	protected abstract void setSampleParameters(Collection<Parameter> sampleParameters);
 
+	
+	/**
+	 * @return the beam parameters
+	 */
 	public abstract Collection<Parameter> getBeamParameters();
 
+	/**
+	 * Sets the beam parameters.
+	 * 
+	 * @param beamParameters the beam parameters to set.
+	 */
 	protected abstract void setBeamParameters(Collection<Parameter> beamParameters);
 	
 	/**

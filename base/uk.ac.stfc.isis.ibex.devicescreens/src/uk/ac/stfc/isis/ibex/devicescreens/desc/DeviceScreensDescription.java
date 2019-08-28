@@ -28,13 +28,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class describes the devices element of the device screens XML format.
- * 
+ *
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
@@ -42,7 +45,9 @@ import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 
-    /** The devices that make up the description. */
+    private static final Logger LOG = IsisLog.getLogger(DeviceScreensDescription.class);
+
+	/** The devices that make up the description. */
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
 
@@ -54,7 +59,7 @@ public class DeviceScreensDescription {
 
     /**
      * A copy constructor.
-     * 
+     *
      * @param original the item to copy
      */
     public DeviceScreensDescription(DeviceScreensDescription original) {
@@ -65,7 +70,7 @@ public class DeviceScreensDescription {
 
     /**
      * Getter for the list of devices.
-     * 
+     *
      * @return the list of devices
      */
     public List<DeviceDescription> getDevices() {
@@ -74,7 +79,7 @@ public class DeviceScreensDescription {
 
     /**
      * Setter for the list of devices.
-     * 
+     *
      * @param devices the new device list
      */
     public void setDevices(List<DeviceDescription> devices) {
@@ -83,13 +88,13 @@ public class DeviceScreensDescription {
 
     /**
      * Adds a device to the list of device descriptions.
-     * 
+     *
      * @param device the device description to add
      */
     public void addDevice(DeviceDescription device) {
         devices.add(device);
     }
-    
+
     /**
      * Gets a new device screen description filtered to only include either local or remote devices.
      * @param remote the remote
@@ -102,7 +107,7 @@ public class DeviceScreensDescription {
     			devices.addDevice(device);
     		}
     	}
-    	
+
         return devices;
     }
 
@@ -111,10 +116,10 @@ public class DeviceScreensDescription {
         try {
             return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return e.toString();
         } catch (SAXException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return e.toString();
         }
     }

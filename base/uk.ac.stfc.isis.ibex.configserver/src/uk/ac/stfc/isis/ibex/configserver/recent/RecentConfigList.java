@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -22,9 +22,9 @@
  *
  * This file is part of the Instrument Control Project at ISIS.
  *
- * This code and information are provided "as is" without warranty of any 
+ * This code and information are provided "as is" without warranty of any
  * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
+ * implied warranties of merchantability and/or fitness for a particular
  * purpose.
  */
 package uk.ac.stfc.isis.ibex.configserver.recent;
@@ -39,6 +39,8 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Class to manage the list of recently used configurations.
@@ -68,7 +70,7 @@ public class RecentConfigList {
 
     /**
      * Add an item.
-     * 
+     *
      * @param item
      *            the configuration item to add to the list
      */
@@ -100,7 +102,7 @@ public class RecentConfigList {
     /**
      * Allows to convert a list of configuration names to a collection of
      * information on the configurations.
-     * 
+     *
      * @param configNames
      *            The list of configuration names.
      * @param configsInServer
@@ -124,7 +126,7 @@ public class RecentConfigList {
 
     /**
      * Gets the history of the passed configuration.
-     * 
+     *
      * @param config
      *            The configuration whose history we want to know about.
      * @return The history.
@@ -136,7 +138,7 @@ public class RecentConfigList {
     /**
      * Gets the date at which the passed configuration was last modified. This
      * is the last date in it's history.
-     * 
+     *
      * @param config
      *            The configuration which we want to know about.
      * @return The time stamp of when the configuration was last modified.
@@ -164,7 +166,7 @@ public class RecentConfigList {
     /**
      * Returns the list of recently used configuration names without the current
      * configuration.
-     * 
+     *
      * @param configsInServer
      *            The collection of information on the configurations in the
      *            server.
@@ -180,7 +182,7 @@ public class RecentConfigList {
     /**
      * Returns the list of time stamps of the recently used configuration
      * without that of the current configuration.
-     * 
+     *
      * @param configsInServer
      *            The collection of information on the configurations in the
      *            server.
@@ -199,7 +201,7 @@ public class RecentConfigList {
 
     /**
      * Returns the list of recently used configuration names.
-     * 
+     *
      * @return The list of recently used configuration names.
      */
     public List<String> getListOfRecentlyLoadedConfigs() {
@@ -209,7 +211,7 @@ public class RecentConfigList {
     /**
      * Removes an item from list of recently used configuration names and time
      * stamps of when they were last loaded.
-     * 
+     *
      * @param item
      *            The item to remove.
      */
@@ -238,7 +240,7 @@ public class RecentConfigList {
         try {
             mruPrefs.flush();
         } catch (BackingStoreException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
     }
 
@@ -255,7 +257,7 @@ public class RecentConfigList {
                 listOfRecentlyLoadedConfigs.add(mruPrefs.get(names[i], ""));
             }
         } catch (BackingStoreException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
     }
 }

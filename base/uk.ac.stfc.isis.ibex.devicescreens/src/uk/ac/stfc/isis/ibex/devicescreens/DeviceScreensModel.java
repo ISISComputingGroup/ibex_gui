@@ -76,10 +76,10 @@ public class DeviceScreensModel extends ModelObject {
             }
         };
 
-        this.writableDeviceScreenDescriptions.writeTo(writableDeviceScreenDescriptions);
+        this.writableDeviceScreenDescriptions.subscribe(writableDeviceScreenDescriptions);
         writableDeviceScreenDescriptions.subscribe(this.writableDeviceScreenDescriptions);
 
-        observableDeviceScreensDescription.addObserver(new BaseObserver<DeviceScreensDescription>() {
+        observableDeviceScreensDescription.subscribe(new BaseObserver<DeviceScreensDescription>() {
 
             @Override
             public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {

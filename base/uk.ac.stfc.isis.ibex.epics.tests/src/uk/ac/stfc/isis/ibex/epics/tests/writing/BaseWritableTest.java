@@ -158,7 +158,7 @@ public class BaseWritableTest {
         Exception exception = new Exception();
 
         // Act
-        returnedSubscription.removeObserver();
+        returnedSubscription.cancelSubscription();
 
         // Assert
         writable.error(exception);

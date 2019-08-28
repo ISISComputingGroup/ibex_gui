@@ -23,8 +23,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An enum representing the unit of time used by the time channel.
+ */
 public enum TimeUnit {
+    
+    /**
+     * Time unit "Microseconds (default for neutron instruments)".
+     */
     MICROSECONDS("Microseconds (default for neutron instruments)"),
+    
+    /**
+     * Time unit is "Nanoseconds (default for muon instruments)".
+     */
     NANOSECONDS("Nanoseconds (default for muon instruments)");
 
 	private String text;
@@ -37,10 +48,20 @@ public enum TimeUnit {
 		}
 	}
 	
+	/**
+	 * Instantiates a new time unit.
+	 *
+	 * @param text the text
+	 */
 	TimeUnit(String text) {
 		this.text = text;
 	}
 	
+	/**
+	 * Gets all of the time units as a list of strings.
+	 *
+	 * @return the list
+	 */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}

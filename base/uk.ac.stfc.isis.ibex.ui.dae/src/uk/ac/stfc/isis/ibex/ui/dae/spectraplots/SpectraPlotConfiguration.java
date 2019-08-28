@@ -64,6 +64,11 @@ public class SpectraPlotConfiguration {
     	specMode.setInitialValueAndSubscribeToChanges();
     }
     
+    /**
+     * Gets the macros.
+     *
+     * @return the macros
+     */
     public Map<String, String> getMacros() {
     	Map<String, String> res = new HashMap<>();
     	res.put("SPECTRUM_PV" + plotNumber, specNum.getPVAddress());

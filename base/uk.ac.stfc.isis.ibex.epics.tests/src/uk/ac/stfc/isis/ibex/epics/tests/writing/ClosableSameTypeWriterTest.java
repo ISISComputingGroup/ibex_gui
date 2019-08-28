@@ -89,7 +89,7 @@ public class ClosableSameTypeWriterTest {
         writer.close();
 
         // Assert
-        verify(mockSubscription, times(1)).removeObserver();
+        verify(mockSubscription, times(1)).cancelSubscription();
     }
 
     @Test

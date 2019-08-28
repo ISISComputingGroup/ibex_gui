@@ -28,6 +28,9 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+/**
+ * The workbench advisor for the application.
+ */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;

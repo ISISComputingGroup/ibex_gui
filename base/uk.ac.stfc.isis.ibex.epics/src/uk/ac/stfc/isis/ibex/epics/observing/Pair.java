@@ -29,9 +29,22 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public class Pair<T1, T2> {
 
+    /**
+     * The first item in the pair.
+     */
 	public final T1 first;
+	
+	/**
+	 * The second item in the pair.
+	 */
 	public final T2 second;
 	
+	/**
+	 * Constructs a pair.
+	 * 
+	 * @param first the first item in the pair.
+	 * @param second the second item in the pair.
+	 */
 	public Pair(T1 first, T2 second) {
 		this.first = first;
 		this.second = second;
