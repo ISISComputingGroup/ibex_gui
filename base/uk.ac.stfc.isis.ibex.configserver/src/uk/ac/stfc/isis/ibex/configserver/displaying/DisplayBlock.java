@@ -85,12 +85,12 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     /**
      * Specifies the block state, such as disconnected or under major alarm.
      */
-    private BlockState blockState = BlockState.DEFAULT;
+    private PvState blockState = PvState.DEFAULT;
 
     /**
      * Saves the last alarm state (to restore after disconnect).
      */
-    private BlockState lastBlockState = BlockState.DEFAULT;
+    private PvState lastBlockState = PvState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -108,7 +108,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
             setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");
-                setBlockState(BlockState.DISCONNECTED);
+                setBlockState(PvState.DISCONNECTED);
             } else {
                 setBlockState(lastBlockState);
             }
@@ -140,13 +140,13 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         @Override
         public void onValue(AlarmState value) {
-            BlockState state = BlockState.DEFAULT;
+            PvState state = PvState.DEFAULT;
             if (value.name().equals("MINOR")) {
-                state = BlockState.MINOR_ALARM;
+                state = PvState.MINOR_ALARM;
             } else if (value.name().equals("MAJOR")) {
-                state = BlockState.MAJOR_ALARM;
+                state = PvState.MAJOR_ALARM;
             } else if (value.name().equals("INVALID")) {
-                state = BlockState.DISCONNECTED;
+                state = PvState.DISCONNECTED;
             }
 
             lastBlockState = state;
@@ -155,7 +155,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         @Override
         public void onError(Exception e) {
-            BlockState state = BlockState.MINOR_ALARM;
+            PvState state = PvState.DISCONNECTED;
             lastBlockState = state;
             setBlockState(state);
         }
@@ -380,7 +380,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     /**
      * @return the overall block status.
      */
-    public BlockState getBlockState() {
+    public PvState getBlockState() {
         return blockState;
     }
 
@@ -463,7 +463,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         firePropertyChange("runControlEnabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
     }
 
-    private void setBlockState(BlockState blockState) {
+    private void setBlockState(PvState blockState) {
         firePropertyChange("blockState", this.blockState, this.blockState = blockState);
     }
 

@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.blocks.groups;
+package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.graphics.Color;
@@ -25,26 +25,27 @@ import org.eclipse.swt.graphics.Color;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.ui.PvStateColour;
 
+
 /**
  * This is a converter for converting the colour of a border around a label
- * based on the state of the associated block.
+ * based on the state of the associated PV.
  * 
  * Used for data-binding.
  * 
  */
-public class BlockStatusBorderColourConverter extends Converter {
+public class PvStatusBorderColourConverter extends Converter {
 
     /**
      * Instantiates the converter.
      */
-    public BlockStatusBorderColourConverter() {
+    public PvStatusBorderColourConverter() {
         super(PvState.class, Color.class);
     }
 
     /**
-     * Specifies how the converter should react to possible block states.
+     * Specifies how the converter should react to possible PV states.
      * 
-     * @param fromObject the block state to convert
+     * @param fromObject the PV state to convert
      * @return the converted border colour
      */
     @Override
@@ -58,7 +59,7 @@ public class BlockStatusBorderColourConverter extends Converter {
             case MINOR_ALARM:
                 return PvStateColour.ORANGE;
             default:
-                return PvStateColour.WHITE;
+                return PvStateColour.GREY;
         }
     }
 

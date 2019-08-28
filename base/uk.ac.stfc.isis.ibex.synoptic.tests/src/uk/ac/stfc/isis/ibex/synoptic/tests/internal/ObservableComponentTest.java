@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -113,6 +113,7 @@ public class ObservableComponentTest {
 		
 		Variables mockVariables = mock(Variables.class);
         when(mockVariables.defaultReaderRemote(addressSuffix)).thenReturn(mockObservable);
+        when(mockVariables.defaultReaderRemoteAlarm(addressSuffix)).thenReturn(mock(ForwardingObservable.class));
 		
 		obsComp = new ObservableComponent(mockCompDesc, mockVariables);
 	}
