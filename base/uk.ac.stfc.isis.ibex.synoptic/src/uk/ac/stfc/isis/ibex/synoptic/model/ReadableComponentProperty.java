@@ -55,7 +55,7 @@ public class ReadableComponentProperty extends ComponentProperty {
                 }
             }
         };
-        alarmObservable.addObserver(alarmAdapter);
+        alarmObservable.subscribe(alarmAdapter);
     }
 
     /**
