@@ -2166,11 +2166,11 @@
       </value>
     </entry>
     <entry>
-      <key>NIMROD Oerlikon Centre-One Pressure Gauge</key>
+      <key>Oerlikon Centre-One Pressure Gauge</key>
       <value>
       	<type>PRESSURE_GAUGE</type>
       	<path>oercone.opi</path>
-      	<description>The OPI for the NIMROD Oerlikon Centre-One Pressure Gauge</description>
+      	<description>The OPI for the Oerlikon Centre-One Pressure Gauge</description>
         <categories>
           <category>Pressure sensors</category>
         </categories>
