@@ -6,13 +6,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -30,7 +32,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
  * Contains the display logic for the SynopticSelection widget.
  */
 public class SynopticSelectionViewModel extends ModelObject {
-    
+
 	/**
 	 * Property name for binding to synoptic list changes.
 	 */
@@ -40,7 +42,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 	 * Property name for binding to selected synoptic changes.
 	 */
     public static final String SELECTED = "selected";
-    
+
 
 	/**
 	 * Property name for binding to synoptic control enablement changes.
@@ -53,7 +55,7 @@ public class SynopticSelectionViewModel extends ModelObject {
     public static final int DATABINDING_WAIT_TIME_MS = 100;
 
 	private static Synoptic synoptic = Synoptic.getInstance();
-	
+
     private SynopticInfo lastSetDefaultSynoptic = new SynopticInfo("", "", false);
 
     private Collection<SynopticInfo> synopticList = new ArrayList<>();
@@ -61,7 +63,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 
     private boolean enabled;
 	private String selected;
-	
+
 	private final BaseObserver<Collection<SynopticInfo>> availableSynopticsObserver = new BaseObserver<Collection<SynopticInfo>>() {
 		@Override
 		public void onValue(Collection<SynopticInfo> value) {
@@ -87,12 +89,12 @@ public class SynopticSelectionViewModel extends ModelObject {
 			}
         }
 	};
-	
+
 	/**
 	 * Get the view model for the synoptic selector.
 	 */
     public SynopticSelectionViewModel() {
-        synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
+        synoptic.availableSynopticsInfo().subscribe(availableSynopticsObserver);
     }
 
     /**
@@ -104,7 +106,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 
     /**
      * Put a new set of synoptics in the list of available synoptics.
-     * 
+     *
      * @param value The new set of available synoptics.
      */
     private void updateSynopticList(Collection<SynopticInfo> value) {
@@ -120,7 +122,7 @@ public class SynopticSelectionViewModel extends ModelObject {
         try {
             Thread.sleep(DATABINDING_WAIT_TIME_MS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
 
         setDefaultSynoptic();
@@ -141,7 +143,7 @@ public class SynopticSelectionViewModel extends ModelObject {
             lastSetDefaultSynoptic = newDefaultSynoptic;
         }
     }
-    
+
     /**
      * Set the selected synoptic to be the synoptic identified as the latest default.
      */
@@ -158,7 +160,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 
     /**
      * Sets the selected synoptic from the UI.
-     * 
+     *
      * @param selected
      *            The string name of the synoptic to set
      */
@@ -166,14 +168,14 @@ public class SynopticSelectionViewModel extends ModelObject {
         synoptic.setViewerSynoptic(selected);
         firePropertyChange(SELECTED, this.selected, this.selected = selected);
     }
-	
+
     /**
      * @return A list of names of currently available synoptics
      */
 	public ArrayList<String> getSynopticList() {
         return synopticNamesList;
 	}
-	
+
 	/**
 	 * Refresh the currently selected synoptic.
 	 */
@@ -196,5 +198,5 @@ public class SynopticSelectionViewModel extends ModelObject {
     public void setEnabled(boolean enabled) {
         firePropertyChange(ENABLED, this.enabled, this.enabled = enabled);
     }
-	
+
 }

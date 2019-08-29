@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.model;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -76,7 +76,7 @@ public class DaeViewModel extends Closer {
 		
 		isRunning = new UpdatedObservableAdapter<>(model.isRunning());
 		
-		model.simulationMode().addObserver(new BaseObserver<Boolean>() {
+		model.simulationMode().subscribe(new BaseObserver<Boolean>() {
 			@Override
 			public void onValue(Boolean value) {
 				if (value) {

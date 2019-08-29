@@ -24,8 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupport;
 
+/**
+ * Provides support for editing the binary output in the period table.
+ */
 public class BinaryOutputEditingSupport extends IntegerEditingSupport<Period> {
 
+    /**
+     * Constructor.
+     * @param viewer the ColumnViewer
+     * @param rowType the type of the rows
+     */
 	public BinaryOutputEditingSupport(ColumnViewer viewer, Class<Period> rowType) {
 		super(viewer, rowType);
 	}

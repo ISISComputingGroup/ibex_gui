@@ -31,6 +31,10 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
  * 
  */
 public class RunControlSymbolConverter extends Converter {
+    
+    /**
+     * Constructor.
+     */
     public RunControlSymbolConverter() {
         super(RuncontrolState.class, String.class);
     }

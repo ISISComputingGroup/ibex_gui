@@ -33,6 +33,9 @@ import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageSql;
 
+/**
+ * Class which queries the log message database.
+ */
 public class LogMessageQuery {
     private static final LogMessageFieldsSql[] SQL_SELECT_FIELDS = {
 	    LogMessageFieldsSql.CREATE_TIME, LogMessageFieldsSql.EVENT_TIME,

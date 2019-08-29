@@ -41,7 +41,7 @@ public class TransformingWriterTest {
         writer.associate(INPUT_VALUE, OUTPUT_VALUE);
         
         Writable<String> mockWritable = mock(Writable.class);
-        writer.writeTo(mockWritable);
+        writer.subscribe(mockWritable);
         
         verify(mockWritable, never()).write(anyString());
 
@@ -60,7 +60,7 @@ public class TransformingWriterTest {
         writer.associate(INPUT_VALUE, null);
 
         Writable<String> mockWritable = mock(Writable.class);
-        writer.writeTo(mockWritable);
+        writer.subscribe(mockWritable);
 
         // Act
         writer.write(INPUT_VALUE);

@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * A dialog for searching and looking up an RB number.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupDialog extends Dialog {
 
@@ -22,6 +25,12 @@ public class RBLookupDialog extends Dialog {
 	private DataBindingContext bindingContext;
 	private RBLookupViewModel viewModel;
 	
+	/**
+	 * Creates a new RB lookup dialog.
+	 *
+	 * @param parentShell the parent shell
+	 * @param viewModel the view model
+	 */
 	public RBLookupDialog(Shell parentShell, RBLookupViewModel viewModel) {
 		super(parentShell);
 		this.viewModel = viewModel;
@@ -67,6 +76,9 @@ public class RBLookupDialog extends Dialog {
 		setModel();
 	}
 	
+	/**
+	 * Sets the model and binds all of the values.
+	 */
 	public void setModel() {
 		bindingContext = new DataBindingContext();
 

@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
-import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableModel;
+import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableExperimentDetailsModel;
 
 /**
  * The Activator for the experimentdetails plugin.
@@ -35,7 +35,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	private static ExperimentDetails instance;
 	
 	private ExperimentDetailsVariables variables; 
-	private Model model;
+	private ExperimentDetailsModel model;
 	private SearchModel searchModel;
 
     /**
@@ -53,7 +53,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	public ExperimentDetails() {
 		instance = this;		
         variables = new ExperimentDetailsVariables();
-		model = new ObservableModel(variables);
+		model = new ObservableExperimentDetailsModel(variables);
 		searchModel = new SearchModel();
 	}
 	
@@ -67,7 +67,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	/**
 	 * @return The model for reading and writing the current experiment details information.
 	 */
-	public Model model() {
+	public ExperimentDetailsModel model() {
 		return model;
 	}
 

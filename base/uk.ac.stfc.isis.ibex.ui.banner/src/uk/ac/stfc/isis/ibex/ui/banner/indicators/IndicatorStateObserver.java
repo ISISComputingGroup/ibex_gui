@@ -63,7 +63,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		color = new SettableUpdatedValue<>();
 		bool = new SettableUpdatedValue<>();
 		availability = new SettableUpdatedValue<>();
-		sourceSubscription = source.addObserver(sourceObserver);
+		sourceSubscription = source.subscribe(sourceObserver);
 	}	
 	
 	public UpdatedValue<String> text() {
@@ -84,7 +84,7 @@ public class IndicatorStateObserver<T> implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.removeObserver();
+		sourceSubscription.cancelSubscription();
 	}	
 	
 	protected void setState(T value) {

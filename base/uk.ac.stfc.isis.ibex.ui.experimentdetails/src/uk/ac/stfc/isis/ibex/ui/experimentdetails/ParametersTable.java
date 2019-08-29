@@ -52,6 +52,12 @@ public class ParametersTable extends DataboundTable<Parameter> {
 		}
 	};
 	
+	/**
+	 * Create a paramters table.
+	 * 
+	 * @param parent the parent composite.
+	 * @param style the SWT style
+	 */
     public ParametersTable(Composite parent, int style) {
         super(parent, style, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);
 		initialise();
@@ -82,6 +88,11 @@ public class ParametersTable extends DataboundTable<Parameter> {
 		});		
 	}
 	
+	/**
+	 * Enables or disables editing of the parameters table.
+	 * 
+	 * @param enabled true if editing should be enabled, false otherwise
+	 */
 	public void enableEditing(boolean enabled) {
 		valueEditingSupport.setEnabled(enabled);
 	}

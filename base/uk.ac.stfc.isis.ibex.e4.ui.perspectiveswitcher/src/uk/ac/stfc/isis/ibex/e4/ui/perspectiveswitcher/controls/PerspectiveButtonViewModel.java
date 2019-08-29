@@ -24,7 +24,7 @@ public class PerspectiveButtonViewModel extends ButtonViewModel {
      *            String: label for the button
      */
     public PerspectiveButtonViewModel(String buttonLabel) {
-        super();
+        super(buttonLabel);
         setText(buttonLabel);
         setActive(active);
     }

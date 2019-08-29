@@ -25,7 +25,19 @@ package uk.ac.stfc.isis.ibex.epics.switching;
  * synoptic.
  */
 public enum OnInstrumentSwitch {
+    
+    /**
+     * Do nothing on instrument switch.
+     */
     NOTHING,
+    
+    /**
+     * Close on instrument switch.
+     */
     CLOSE,
+    
+    /**
+     * Switch on instrument switch.
+     */
     SWITCH
 }

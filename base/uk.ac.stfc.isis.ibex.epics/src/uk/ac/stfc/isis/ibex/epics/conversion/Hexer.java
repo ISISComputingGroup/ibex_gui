@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import org.apache.commons.codec.binary.Hex;
 
+/**
+ * A converter which encodes a byte array as hex.
+ */
 public class Hexer extends Converter<byte[], char[]> {
 
 	@Override

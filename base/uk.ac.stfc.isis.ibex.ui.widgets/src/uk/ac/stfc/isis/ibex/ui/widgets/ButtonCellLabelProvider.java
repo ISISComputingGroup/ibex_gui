@@ -40,6 +40,7 @@ public abstract class ButtonCellLabelProvider<T> extends ControlCellLabelProvide
 		super(attributeMaps);
 	}
 
+	@Override
 	protected Button createControl(final ViewerCell cell, int style) {
 		Button button = new Button(composite(cell), style);
 		button.setText("");

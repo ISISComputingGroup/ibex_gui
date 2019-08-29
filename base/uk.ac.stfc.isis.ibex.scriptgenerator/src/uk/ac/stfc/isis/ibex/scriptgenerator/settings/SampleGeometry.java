@@ -23,13 +23,34 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
  * Options for what a sample can be contained in, as used in the Sample Geometry setting.
  */
 public enum SampleGeometry {
+    
+    /**
+     * The sample has disc geometry.
+     */
 	DISC("Disc"),
+	
+	/**
+     * The sample has cylindrical geometry.
+     */
 	CYLINDRICAL("Cylindrical"),
+	
+	/**
+     * The sample has flat plate geometry.
+     */
 	FLATPLATE("Flat Plate"),
+	
+	/**
+     * The sample has single crystal geometry.
+     */
 	SINGLECRYSTAL("Single Crystal");
 	
 	private String name;
 	
+	/**
+	 * Instantiates a new sample geometry.
+	 *
+	 * @param displayName the display name
+	 */
 	SampleGeometry(String displayName) {
 		this.name = displayName;
 	}
