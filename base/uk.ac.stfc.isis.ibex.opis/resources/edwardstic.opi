@@ -548,26 +548,26 @@ $(pv_value)</tooltip>
       <plot_area_background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </plot_area_background_color>
-      <pv_name>$(PV_ROOT):GAUGE2:P</pv_name>
+      <pv_name>$(PV_ROOT):GAUGE1:PRESSURE</pv_name>
       <pv_value />
       <rules>
         <rule name="Gauge1Visibility" prop_id="trace_0_visible" out_exp="false">
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):GAUGE1VISIBLE.VAL</pv>
+          <pv trig="true">$(PV_ROOT):GAUGE1VISIBLE</pv>
         </rule>
         <rule name="Gauge2Visibility" prop_id="trace_1_visible" out_exp="false">
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):GAUGE2VISIBLE.VAL</pv>
+          <pv trig="true">$(PV_ROOT):GAUGE2VISIBLE</pv>
         </rule>
         <rule name="Gauge3Visibility" prop_id="trace_2_visible" out_exp="false">
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):GAUGE3VISIBLE.VAL</pv>
+          <pv trig="true">$(PV_ROOT):GAUGE3VISIBLE</pv>
         </rule>
         <rule name="Gauge1DisablePV" prop_id="trace_0_y_pv" out_exp="false">
           <exp bool_exp="pv0==0">
@@ -585,7 +585,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>$(PV_ROOT):DISABLE</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):GAUGE2VISIBLE</pv>
+          <pv trig="true">$(PV_ROOT):GAUGE3VISIBLE</pv>
         </rule>
       </rules>
       <scale_options>
@@ -622,7 +622,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_0_x_pv></trace_0_x_pv>
       <trace_0_x_pv_value />
       <trace_0_y_axis_index>1</trace_0_y_axis_index>
-      <trace_0_y_pv>$(PV_ROOT):GAUGE1:P</trace_0_y_pv>
+      <trace_0_y_pv>$(PV_ROOT):GAUGE1:PRESSURE</trace_0_y_pv>
       <trace_0_y_pv_value />
       <trace_1_anti_alias>true</trace_1_anti_alias>
       <trace_1_buffer_size>1000</trace_1_buffer_size>
@@ -643,7 +643,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_1_x_pv></trace_1_x_pv>
       <trace_1_x_pv_value />
       <trace_1_y_axis_index>1</trace_1_y_axis_index>
-      <trace_1_y_pv>$(PV_ROOT):GAUGE2:P</trace_1_y_pv>
+      <trace_1_y_pv>$(PV_ROOT):GAUGE2:PRESSURE</trace_1_y_pv>
       <trace_1_y_pv_value />
       <trace_2_anti_alias>true</trace_2_anti_alias>
       <trace_2_buffer_size>1000</trace_2_buffer_size>
@@ -664,7 +664,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_2_x_pv></trace_2_x_pv>
       <trace_2_x_pv_value />
       <trace_2_y_axis_index>1</trace_2_y_axis_index>
-      <trace_2_y_pv>$(PV_ROOT):GAUGE3:P</trace_2_y_pv>
+      <trace_2_y_pv>$(PV_ROOT):GAUGE3:PRESSURE</trace_2_y_pv>
       <trace_2_y_pv_value />
       <trace_count>3</trace_count>
       <transparent>true</transparent>
