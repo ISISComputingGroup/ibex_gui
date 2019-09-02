@@ -225,7 +225,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>2</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):GAUGE1:P</pv_name>
+      <pv_name>$(PV_ROOT):GAUGE1:PRESSURE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -319,7 +319,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>2</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):GAUGE2:P</pv_name>
+      <pv_name>$(PV_ROOT):GAUGE2:PRESSURE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -413,7 +413,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>2</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT):GAUGE3:P</pv_name>
+      <pv_name>$(PV_ROOT):GAUGE3:PRESSURE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
