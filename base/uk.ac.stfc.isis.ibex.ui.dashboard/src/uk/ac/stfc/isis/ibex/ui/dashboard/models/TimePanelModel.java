@@ -26,26 +26,43 @@ import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * The model which holds the variables for the dashboard time panel.
+ */
 public class TimePanelModel extends Closer {
 
 	private final UpdatedValue<String> instrumentTime;
 	private final UpdatedValue<String> runTime;
 	private final UpdatedValue<String> period;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param observables the DashboardObservables
+	 */
 	public TimePanelModel(DashboardObservables observables) {
 		instrumentTime = registerForClose(new TextUpdatedObservableAdapter(observables.instrumentTime));
 		runTime = registerForClose(new TextUpdatedObservableAdapter(observables.dae.runTime));
 		period = createPeriod(observables);
 	}
 	
+	/**
+	 * @return an UpdatedValue containing the current time according to the instrument.
+	 */
 	public UpdatedValue<String> instrumentTime() {
 		return instrumentTime;
 	}
 	
+	/**
+     * @return an UpdatedValue containing the run time..
+     */
 	public UpdatedValue<String> runTime() {
 		return runTime;
 	}
 	
+	/**
+     * @return an UpdatedValue containing the current and total period of the run.
+     */
 	public UpdatedValue<String> period() {
 		return period;
 	}

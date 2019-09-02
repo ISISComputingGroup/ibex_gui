@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
@@ -34,7 +36,7 @@ public final class EditBlockHandler extends EditConfigHandler {
 
     /**
      * Create the handler for opening the editor on one block.
-     * 
+     *
      * @param blockName The block to edit
      */
     public EditBlockHandler(String blockName) {
@@ -44,11 +46,12 @@ public final class EditBlockHandler extends EditConfigHandler {
 
     /**
      * Open the edit block dialogue.
-     * 
+     *
      * @param shell shell to open
+     * @throws TimeoutException
      */
 	@Override
-	public void safeExecute(Shell shell) {
+	public void safeExecute(Shell shell) throws TimeoutException {
         new EditBlockHelper(shell, SERVER).createDialog(blockName);
     }
 

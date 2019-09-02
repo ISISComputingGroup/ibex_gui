@@ -53,7 +53,7 @@ public class SwitchableObservableTest {
 
 		// The real observable to test
         switchableObservable = new SwitchableObservable<>(mockObservableReturnsValue);
-		switchableObservable.addObserver(mockObserver);
+		switchableObservable.subscribe(mockObserver);
 	}
 
 	@Test

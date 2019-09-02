@@ -26,7 +26,7 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.experimentdetails.Model;
+import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 /**
  * A model for holding the current experiment details that is linked to a set of observables.
  */
-public class ObservableModel extends Model {
+public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
 	
 	private List<Parameter> sampleParameters = new ArrayList<>();
 	private List<Parameter> beamParameters = new ArrayList<>();
@@ -71,10 +71,10 @@ public class ObservableModel extends Model {
 	 * The constructor for the concrete Observable Model.
 	 * @param variables The set of observables that this model should be linked to.
 	 */
-	public ObservableModel(ExperimentDetailsVariables variables) {
-		variables.userDetails.addObserver(userDetailsObserver);
-		variables.sampleParameters.addObserver(sampleParametersObserver);
-		variables.beamParameters.addObserver(beamParametersObserver);
+	public ObservableExperimentDetailsModel(ExperimentDetailsVariables variables) {
+		variables.userDetails.subscribe(userDetailsObserver);
+		variables.sampleParameters.subscribe(sampleParametersObserver);
+		variables.beamParameters.subscribe(beamParametersObserver);
 		this.variables = variables;
 	}
 

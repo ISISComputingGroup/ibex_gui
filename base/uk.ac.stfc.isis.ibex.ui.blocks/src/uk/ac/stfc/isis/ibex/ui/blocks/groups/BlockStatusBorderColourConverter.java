@@ -1,6 +1,6 @@
 
-/**
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+/*
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -20,11 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.conversion.Converter;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
+import uk.ac.stfc.isis.ibex.ui.PvStateColour;
 
 /**
  * This is a converter for converting the colour of a border around a label
@@ -34,16 +33,12 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
  * 
  */
 public class BlockStatusBorderColourConverter extends Converter {
-    private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-    private static final Color MAGENTA = SWTResourceManager.getColor(SWT.COLOR_MAGENTA);
-    private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
-    private static final Color ORANGE = SWTResourceManager.getColor(255, 128, 0);
 
     /**
      * Instantiates the converter.
      */
     public BlockStatusBorderColourConverter() {
-        super(BlockState.class, Color.class);
+        super(PvState.class, Color.class);
     }
 
     /**
@@ -54,16 +49,16 @@ public class BlockStatusBorderColourConverter extends Converter {
      */
     @Override
     public Object convert(Object fromObject) {
-        BlockState state = (BlockState) fromObject;
+        PvState state = (PvState) fromObject;
         switch (state) {
             case DISCONNECTED:
-                return MAGENTA;
+                return PvStateColour.MAGENTA;
             case MAJOR_ALARM:
-                return RED;
+                return PvStateColour.RED;
             case MINOR_ALARM:
-                return ORANGE;
+                return PvStateColour.ORANGE;
             default:
-                return WHITE;
+                return PvStateColour.WHITE;
         }
     }
 

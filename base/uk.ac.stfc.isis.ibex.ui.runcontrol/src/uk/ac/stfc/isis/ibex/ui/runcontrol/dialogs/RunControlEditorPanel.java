@@ -185,7 +185,7 @@ public class RunControlEditorPanel extends Composite {
         parent.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				saveAsSubscription.removeObserver();
+				saveAsSubscription.cancelSubscription();
 			}
 		});
 	}

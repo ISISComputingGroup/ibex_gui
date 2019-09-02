@@ -66,6 +66,9 @@ public class MinimalMotorViewModel extends ModelObject {
     private Font font;
     private Color color;
 	
+    /**
+     * Constructor.
+     */
     public MinimalMotorViewModel() {
     	DisplayPreferences displayPrefsModel = DisplayPreferences.getInstance();
     	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {

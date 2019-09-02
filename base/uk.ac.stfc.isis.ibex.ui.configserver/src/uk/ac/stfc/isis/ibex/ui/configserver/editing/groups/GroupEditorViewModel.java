@@ -19,7 +19,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;

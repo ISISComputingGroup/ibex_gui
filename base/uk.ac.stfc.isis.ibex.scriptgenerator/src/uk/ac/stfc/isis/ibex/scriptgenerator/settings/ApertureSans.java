@@ -24,12 +24,28 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
  */
 public enum ApertureSans {
 
+    /**
+     * Large aperture.
+     */
 	LARGE("Large = ?, ? mm"),
+	
+	/**
+	 * Medium aperture.
+	 */
 	MEDIUM("Medium = 20, 14 mm"),
+	
+	/**
+	 * Small aperture.
+	 */
 	SMALL("Small = ?, ? mm");
 	
 	private String name;
 	
+	/**
+	 * Instantiates a new aperture sans.
+	 *
+	 * @param displayName the display name
+	 */
 	ApertureSans(String displayName) {
 		this.name = displayName;
 	}

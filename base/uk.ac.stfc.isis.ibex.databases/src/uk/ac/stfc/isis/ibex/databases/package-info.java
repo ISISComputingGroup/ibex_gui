@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the classes used to connect to databases from accross the GUI.
+ * Provides the classes used to connect to databases from across the GUI.
  */
 package uk.ac.stfc.isis.ibex.databases;

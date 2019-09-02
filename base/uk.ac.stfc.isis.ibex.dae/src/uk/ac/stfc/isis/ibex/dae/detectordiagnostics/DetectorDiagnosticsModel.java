@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -50,11 +50,11 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * The Detector diagnostics model, which provides connections 
+ * The Detector diagnostics model, which provides connections
  * to the PVs holding the detector diagnostics data.
  */
 public final class DetectorDiagnosticsModel extends ModelObject {
-    
+
     /** convert seconds to ms */
     private static final int S_TO_MS = 1000;
 
@@ -64,17 +64,17 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(DetectorDiagnosticsModel.class);
 
     private static DetectorDiagnosticsModel instance;
-    
+
     /**
      * The observable for count rates.
      */
     public ForwardingObservable<double[]> countRate;
-    
+
     /**
      * The observable for the maximum spectrum bin count.
      */
     public ForwardingObservable<int[]> maxSpecBinCount;
-    
+
     /**
      * The observable for the integral.
      */
@@ -84,7 +84,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     private WritableFactory writableFactory;
     private ObservableFactory observableFactory;
-    
+
     private Writable<Integer> diagnosticsEnabled;
     private Writable<Integer> spectraToDisplay;
     private Writable<Integer> period;
@@ -93,7 +93,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     private Writable<Double> integralTimeRangeTo;
     private Writable<Double> integralTimeRangeFrom;
     private Writable<Integer> maxFrames;
-    
+
     private Observable<Integer> numberOfSpectraThatMatchedCriteria;
 
     private ClosableObservable<Integer> maxFramesObservable;
@@ -122,7 +122,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     /**
      * Constructor.
-     * 
+     *
      * @param viewModel the view model
      */
     private DetectorDiagnosticsModel() {
@@ -144,20 +144,20 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     }
 
     private void setUpWritables() {
-        
+
         writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
-        
+
         diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(),
                 InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:FOR"));
         spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
         period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
-        startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
+        startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));
         numberOfSpectra = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));
         integralTimeRangeTo = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));
         integralTimeRangeFrom = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));
         maxFrames = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));
     }
-    
+
     /**
      * Creates a detector diagnostics job. The job will periodically tell the
      * server that the client is using the detector diagnostics and so they
@@ -185,7 +185,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         };
         rescheduleDetectorDiagnosticJobOnCanWriteChange();
     }
-    
+
     /**
      * Sets the spectra to display.
      *
@@ -198,7 +198,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the period.
      *
@@ -211,7 +211,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the starting spectrum number.
      *
@@ -224,7 +224,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the number of spectra.
      *
@@ -237,7 +237,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the integral time range from.
      *
@@ -250,7 +250,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the integral time range to.
      *
@@ -263,7 +263,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Sets the max frames.
      *
@@ -276,24 +276,24 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             handleWriteException(e);
         }
     }
-    
+
     /**
      * Bind the view model to the model.
-     * 
+     *
      * @param viewModel
      *            the view model to bind to
      */
     public void bind(final IDetectorDiagnosticsViewModelBinding viewModel) {
-        
+
         observableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
-        
-        diagnosticsEnabledObservable = observableFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLED"));       
-        diagnosticsEnabledObservable.addObserver(new SpectrumObserver<Boolean>() {
+
+        diagnosticsEnabledObservable = observableFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLED"));
+        diagnosticsEnabledObservable.subscribe(new SpectrumObserver<Boolean>() {
             @Override
             public void onNonNullValue(Boolean value) {
                 viewModel.setDiagnosticsViewEnabled(value);
-            }  
-            
+            }
+
             @Override
             public void onConnectionStatus(boolean isConnected) {
                 if (!isConnected) {
@@ -301,117 +301,117 @@ public final class DetectorDiagnosticsModel extends ModelObject {
                 }
             }
         });
-          
-        spectrumNumbers = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));       
-        spectrumNumbers.addObserver(new SpectrumObserver<int[]>() {
+
+        spectrumNumbers = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));
+        spectrumNumbers.subscribe(new SpectrumObserver<int[]>() {
             @Override
             public void onNonNullValue(int[] values) {
-                viewModel.updateSpectrumNumbers(convertPrimitiveIntArrayToList(values)); 
-            }         
+                viewModel.updateSpectrumNumbers(convertPrimitiveIntArrayToList(values));
+            }
         });
-            
-        countRate = observableFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));       
-        countRate.addObserver(new SpectrumObserver<double[]>() {
+
+        countRate = observableFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
+        countRate.subscribe(new SpectrumObserver<double[]>() {
             @Override
             public void onNonNullValue(double[] values) {
-                viewModel.updateCountRates(convertPrimitiveDoubleArrayToList(values)); 
-            }         
+                viewModel.updateCountRates(convertPrimitiveDoubleArrayToList(values));
+            }
         });
-        
-        integral = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SUM"));       
-        integral.addObserver(new SpectrumObserver<int[]>() {
+
+        integral = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SUM"));
+        integral.subscribe(new SpectrumObserver<int[]>() {
             @Override
             public void onNonNullValue(int[] values) {
-                viewModel.updateIntegrals(convertPrimitiveIntArrayToList(values)); 
-            }         
+                viewModel.updateIntegrals(convertPrimitiveIntArrayToList(values));
+            }
         });
-        
-        maxSpecBinCount = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));       
-        maxSpecBinCount.addObserver(new SpectrumObserver<int[]>() {
+
+        maxSpecBinCount = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));
+        maxSpecBinCount.subscribe(new SpectrumObserver<int[]>() {
             @Override
             public void onNonNullValue(int[] values) {
-                viewModel.updateMaxSpecBinCount(convertPrimitiveIntArrayToList(values)); 
-            }         
+                viewModel.updateMaxSpecBinCount(convertPrimitiveIntArrayToList(values));
+            }
         });
-        
-        numberOfSpectraThatMatchedCriteria = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:MATCH"));      
-        numberOfSpectraThatMatchedCriteria.addObserver(new SpectrumObserver<Integer>() {
+
+        numberOfSpectraThatMatchedCriteria = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:MATCH"));
+        numberOfSpectraThatMatchedCriteria.subscribe(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
                 viewModel.updateSpectraCount(value);
-            }  
+            }
         });
-        
-        maxFramesObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));      
-        maxFramesObservable.addObserver(new SpectrumObserver<Integer>() {
+
+        maxFramesObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));
+        maxFramesObservable.subscribe(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
                 viewModel.setMaxFrames(value);
-            }  
+            }
         });
-        
-        integralLowLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));      
-        integralLowLimitObservable.addObserver(new SpectrumObserver<Double>() {
+
+        integralLowLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));
+        integralLowLimitObservable.subscribe(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
                 viewModel.setIntegralTimeRangeFrom(value.toString());
-            }  
+            }
         });
-        
-        integralHighLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));      
-        integralHighLimitObservable.addObserver(new SpectrumObserver<Double>() {
+
+        integralHighLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));
+        integralHighLimitObservable.subscribe(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
                 viewModel.setIntegralTimeRangeTo(value.toString());
-            }  
+            }
         });
-        
-        numberOfSpectraObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));      
-        numberOfSpectraObservable.addObserver(new SpectrumObserver<Integer>() {
+
+        numberOfSpectraObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));
+        numberOfSpectraObservable.subscribe(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
                 viewModel.setNumberOfSpectra(value);
-            }  
+            }
         });
-        
-        startingSpectrumNumberObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));      
-        startingSpectrumNumberObservable.addObserver(new SpectrumObserver<Integer>() {
+
+        startingSpectrumNumberObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));
+        startingSpectrumNumberObservable.subscribe(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
                 viewModel.setStartingSpectrumNumber(value);
-            }  
+            }
         });
-        
-        spectraPeriodsObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));      
-        spectraPeriodsObservable.addObserver(new SpectrumObserver<Integer>() {
+
+        spectraPeriodsObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
+        spectraPeriodsObservable.subscribe(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
                 viewModel.setPeriod(value);
-            }  
+            }
         });
-        
-        spectraTypeObservable = observableFactory.getSwitchableObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));      
-        spectraTypeObservable.addObserver(new SpectrumObserver<SpectraToDisplay>() {
+
+        spectraTypeObservable = observableFactory.getSwitchableObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));
+        spectraTypeObservable.subscribe(new SpectrumObserver<SpectraToDisplay>() {
             @Override
             public void onNonNullValue(SpectraToDisplay value) {
                 viewModel.setSpectraType(value.ordinal());
-            }  
+            }
         });
-        
+
     }
-    
+
     /**
      * Close the model, use close instance instead
      */
     private void close() {
         setDetectorDiagnosticsEnabled(false);
-        diagnosticsEnabledSubscription.removeObserver();
+        diagnosticsEnabledSubscription.cancelSubscription();
         spectrumNumbers.close();
         countRate.close();
         integral.close();
         maxSpecBinCount.close();
     }
-    
+
     private List<Double> convertPrimitiveDoubleArrayToList(final double[] array) {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
@@ -421,7 +421,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         }
         return valuesList;
     }
-    
+
     private List<Integer> convertPrimitiveIntArrayToList(final int[] array) {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
@@ -431,19 +431,19 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         }
         return valuesList;
     }
-    
+
     /**
      * Logs an exception when a write to a PV failed.
-     * 
+     *
      * This should not be able to happen as the controls get greyed out when the PVs are unavailable.
-     * 
+     *
      * @param error - the exception generated by the failed write
      */
     private void handleWriteException(Throwable error) {
         if (error == null) {
             return;
         }
-        
+
         // Only log errors if we should be able to write to the instrument.
         if (diagnosticsEnabled.canWrite()) {
             LOG.error(error.getMessage(), error);
@@ -452,7 +452,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     /**
      * Enable or disable the detector diagnostics.
-     * 
+     *
      * @param enabled
      *            true to enable the diagnostics; false to disable
      */
@@ -476,7 +476,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     /**
      * Set the error that occurred when trying to write to Enable Diagnostic
      * Error; blank for no error.
-     * 
+     *
      * @param error
      *            the last error that happened when Enable Diagnostics was
      *            written to; blank for no error
@@ -501,7 +501,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
      * This means that the detector diagnostics will be immediately enabled if
      * possible instead of having to wait for the scheduled job to run. This
      * will happen on instrument change.
-     * 
+     *
      */
     private void rescheduleDetectorDiagnosticJobOnCanWriteChange() {
         diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new ConfigurableWriter<Integer, Integer>() {
@@ -538,8 +538,13 @@ public final class DetectorDiagnosticsModel extends ModelObject {
             }
 
             @Override
-            public Subscription writeTo(Writable<Integer> writable) {
+            public Subscription subscribe(Writable<Integer> writable) {
                 return null;
+            }
+
+            @Override
+            public void unsubscribe(Writable<Integer> writable) {
+
             }
         });
     }

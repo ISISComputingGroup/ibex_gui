@@ -53,7 +53,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
      *            The schema to check the synoptic against.
      */
     public SynopticWriter(Writable<String> destination, Observable<String> schema) {
-		writeTo(destination);
+		subscribe(destination);
 		canSave.setValue(destination.canWrite());
 		destination.subscribe(this);
         this.schema = schema;

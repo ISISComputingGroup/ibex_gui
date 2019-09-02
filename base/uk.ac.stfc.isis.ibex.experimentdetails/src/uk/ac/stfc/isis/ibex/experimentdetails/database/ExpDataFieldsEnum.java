@@ -23,14 +23,44 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
  * An enum to improve the readability of the column names in the database.
  */
 public enum ExpDataFieldsEnum {
+    /**
+     * The ID of the experiment (same as the RB number).
+     */
 	EXPERIMENT_ID("experimentID"),
+	
+	/**
+	 * The ID of the user.
+	 */
 	USER_ID("userID"),
+	
+	/**
+	 * The ID of the role.
+	 */
 	ROLE_ID("roleID"),
 	
+	/**
+	 * The name of a person.
+	 */
 	NAME("name"),
+	
+	/**
+	 * The organisation a person is associated with.
+	 */
 	ORGANISATION("organisation"),
+	
+	/**
+	 * The priority.
+	 */
     PRIORITY("priority"),
+    
+    /**
+     * The starting date of the experiment.
+     */
     STARTDATE("startDate"),
+    
+    /**
+     * The duration of the experiment.
+     */
     DURATION("duration");
 
     private final String representation;

@@ -32,22 +32,49 @@ public class RunControlAddresses {
 
 	private final PVAddress blockRoot;
 
+	/**
+	 * Constructor.
+	 */
 	public RunControlAddresses() {
 		blockRoot = PVAddress.startWith("CS").append("SB");
 	}
 
+	/**
+	 * Gets the low limit PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the low limit PV
+	 */
 	public String getLowLimitPv(String blockName) {
 		return blockRoot.append(blockName).endWith(LOW_LIMIT);
 	}
 
+	/**
+	 * Gets the high limit PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the high limit PV
+	 */
 	public String getHighLimitPv(String blockName) {
 		return blockRoot.append(blockName).endWith(HIGH_LIMIT);
 	}
 
+	/**
+	 * Gets the enable PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the enable PV
+	 */
 	public String getEnablePv(String blockName) {
 		return blockRoot.append(blockName).endWith(ENABLE);
 	}
 
+	/**
+	 * Gets the in range PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the in range PV
+	 */
 	public String getInRangePv(String blockName) {
 		return blockRoot.append(blockName).endWith(INRANGE);
 	}
