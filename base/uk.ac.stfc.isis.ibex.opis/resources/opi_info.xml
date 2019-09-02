@@ -2183,5 +2183,23 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Edwards Turbo Instrument Controller</key>
+      <value>
+      	<type>PUMP</type>
+      	<path>edwardstic.opi</path>
+      	<description>The OPI for the Edwards Turbo Instrument Controller</description>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>EDTIC</name>
+            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+          	<default>EDTIC_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
