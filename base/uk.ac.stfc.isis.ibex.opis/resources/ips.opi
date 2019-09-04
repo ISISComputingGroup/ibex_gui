@@ -803,7 +803,7 @@ $(pv_value)</tooltip>
         <border_color>
           <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
-        <border_style>0</border_style>
+        <border_style>1</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
@@ -812,7 +812,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_Red" red="255" green="0" blue="0" />
         </foreground_color>
-        <height>61</height>
+        <height>73</height>
         <horizontal_alignment>0</horizontal_alignment>
         <name>Label_15</name>
         <rules>
@@ -849,9 +849,9 @@ $(pv_value)</tooltip>
           <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
-        <border_style>0</border_style>
+        <border_style>1</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
@@ -860,12 +860,12 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_Red" red="255" green="0" blue="0" />
         </foreground_color>
-        <height>139</height>
+        <height>121</height>
         <horizontal_alignment>0</horizontal_alignment>
         <name>Label</name>
         <rules>
           <rule name="Display If Clamped" prop_id="visible" out_exp="false">
-            <exp bool_exp="pvStr0 == Clamped">
+            <exp bool_exp="pvStr0 == &quot;Clamped&quot;">
               <value>true</value>
             </exp>
             <pv trig="true">$(PV_ROOT):ACTIVITY</pv>
@@ -888,11 +888,11 @@ Please let your local contact know in the first instance, and they will request 
         <vertical_alignment>1</vertical_alignment>
         <visible>false</visible>
         <widget_type>Label</widget_type>
-        <width>271</width>
+        <width>307</width>
         <wrap_words>true</wrap_words>
         <wuid>4bb81a55:16cfbee5c77:-7f52</wuid>
         <x>18</x>
-        <y>234</y>
+        <y>252</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
