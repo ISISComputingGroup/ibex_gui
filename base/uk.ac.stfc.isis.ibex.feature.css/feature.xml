@@ -16,44 +16,6 @@
       [Enter License Description here.]
    </license>
 
-   <includes
-         id="org.csstudio.core.utility.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.archive.reader.rdb.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.core.base.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.core.platform.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.thirdparty.all.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.applications.pvmanager.diag.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.applications.utility.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.csstudio.trends.databrowser2.feature"
-         version="0.0.0"
-         search-location="both"/>
-
-   <includes
-         id="org.csstudio.trends.databrowser2.opiwidget.feature"
-         version="0.0.0"
-         search-location="both"/>
-
    <plugin
          id="org.csstudio.logging"
          download-size="0"
@@ -63,13 +25,6 @@
 
    <plugin
          id="org.epics.jca"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.security"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -105,13 +60,6 @@
 
    <plugin
          id="org.csstudio.apputil"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.csdata"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -195,20 +143,6 @@
 
    <plugin
          id="org.csstudio.workspace"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.ui.menu.app"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.ui.menu"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -338,21 +272,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.product"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.product.default"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
@@ -651,20 +570,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.logbook"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.singlesource"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.mail.glassfish"
          download-size="0"
          install-size="0"
@@ -679,13 +584,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.security.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.opibuilder"
          download-size="0"
          install-size="0"
@@ -694,27 +592,6 @@
 
    <plugin
          id="org.csstudio.opibuilder.widgets"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.pvmanager.ui.toolbox"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.pvmanager.widgets"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.pvmanager.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -750,13 +627,6 @@
 
    <plugin
          id="org.csstudio.opibuilder"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.simplepv"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -855,13 +725,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.data"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.trends.databrowser2"
          download-size="0"
          install-size="0"
@@ -891,13 +754,6 @@
 
    <plugin
          id="org.csstudio.platform.libs.hibernate"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.singlesource.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -981,21 +837,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.utility.speech"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.diirt.datasource-formula"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.diirt.datasource-extra"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1038,13 +880,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.utility.singlesource.rcp.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.diirt.util"
          download-size="0"
          install-size="0"
@@ -1060,20 +895,6 @@
 
    <plugin
          id="org.csstudio.alarm.beast.ui.alarmtree"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.pvmanager.widgets.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.utility.singlesource.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1109,13 +930,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.csstudio.opibuilder.widgets.extra"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.opibuilder.widgets.rcp"
          download-size="0"
          install-size="0"
@@ -1125,13 +939,6 @@
 
    <plugin
          id="org.csstudio.opibuilder.widgets.symbol"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.simplepv.pvmanager"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1153,13 +960,6 @@
 
    <plugin
          id="org.csstudio.opibuilder.validation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.simplepv.vtypepv"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1251,28 +1051,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.diirt.datasource-loc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.trends.databrowser2.opiwidget"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.swt.widgets.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
@@ -1281,6 +1059,90 @@
 
    <plugin
          id="org.eclipse.fx.ui.workbench3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource-extra"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.swt.rtplot"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.simplepv"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.security"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.singlesource"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.singlesource.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.csdata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.security.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.logbook"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.utility.product"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.data"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.ui.menu.app"
          download-size="0"
          install-size="0"
          version="0.0.0"
