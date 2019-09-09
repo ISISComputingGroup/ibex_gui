@@ -4,7 +4,7 @@ Bundle-Name: Utils
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.activemq;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.activemq.ActiveMQ
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.activemq,
  uk.ac.stfc.isis.ibex.activemq.message
@@ -17,3 +17,4 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
 Bundle-ClassPath: .,
  lib/activemq-all-5.15.7.jar
 Import-Package: org.apache.logging.log4j
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.activemq

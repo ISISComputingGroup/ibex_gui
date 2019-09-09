@@ -13,8 +13,9 @@
    <launcherArgs>
       <programArgs>--launcher.XXMaxPermSize
 256M
+-clearPersistedState
       </programArgs>
-      <vmArgs>-Xms40m
+      <vmArgs>-Xms40m 
 -Xmx512m
 -Dpython.console.encoding=UTF-8
 -XX:+CreateMinidumpOnCrash
@@ -33,7 +34,7 @@
    </launcher>
 
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <plugins>

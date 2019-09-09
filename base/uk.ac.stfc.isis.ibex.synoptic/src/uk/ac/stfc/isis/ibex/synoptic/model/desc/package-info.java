@@ -19,8 +19,13 @@
 
 @XmlSchema(
     namespace = "http://www.isis.stfc.ac.uk//instrument", 
-    elementFormDefault = XmlNsForm.QUALIFIED) 
+    elementFormDefault = XmlNsForm.QUALIFIED,
+    
+	xmlns={
+        @XmlNs(prefix="", namespaceURI="http://www.isis.stfc.ac.uk//instrument")
+    }) 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;
  
+import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;
 import javax.xml.bind.annotation.XmlSchema;

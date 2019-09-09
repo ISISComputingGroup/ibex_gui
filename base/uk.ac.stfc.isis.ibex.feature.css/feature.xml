@@ -264,7 +264,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.ui.workbench3"
+         id="org.eclipse.fx.javafx"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -316,7 +316,7 @@
          id="org.apache.batik.util.gui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.7.0.v200903091627"
          unpack="false"/>
 
    <plugin
@@ -680,13 +680,6 @@
 
    <plugin
          id="javax.activation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.csstudio.swt.rtplot"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1265,49 +1258,36 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.equinox.http.servlet"
+         id="org.diirt.datasource-loc"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jetty.http"
+         id="org.csstudio.trends.databrowser2.opiwidget"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jetty.io"
+         id="org.csstudio.swt.widgets.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jetty.security"
+         id="org.apache.batik.util"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.7.0.v201011041433"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jetty.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.servlet"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jetty.util"
+         id="org.eclipse.fx.ui.workbench3"
          download-size="0"
          install-size="0"
          version="0.0.0"

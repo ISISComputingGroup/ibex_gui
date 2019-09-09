@@ -33,10 +33,10 @@ import uk.ac.stfc.isis.ibex.managermode.PasswordHasher;
 /**
  *
  */
-public class PasswordHasherTests {
+public class PasswordHasherTest {
 
     private static final String TEST_PASSWORD = "this is the test password";
-    private static final String TEST_PASSWORD_HASH = "qwvi4z4BQkUZ9ghTxqI4LJvE8xxkFMtldhl5UWPsp4A=";
+    private static final String TEST_PASSWORD_HASH = "Os4hwvkDKnmToljDNblajyvTTy09s7SzU/3p0L1G14g=";
 
     private PasswordHasher hasher;
 
