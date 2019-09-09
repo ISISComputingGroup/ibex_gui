@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.3.0</tycho.version>
+		<tycho.version>1.4.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
 		<photon-repo.url>http://download.eclipse.org/releases/photon</photon-repo.url>
 		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.10</photon-updates-repo.url>
@@ -98,6 +98,7 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
+					<!-- <consoleOutput>true</consoleOutput> -->
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
 					<failOnViolation>false</failOnViolation>
