@@ -98,7 +98,6 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
-					<!-- <consoleOutput>true</consoleOutput> -->
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
 					<failOnViolation>false</failOnViolation>
