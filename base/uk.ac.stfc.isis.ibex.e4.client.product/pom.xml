@@ -35,21 +35,4 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-  <!-- https://mvnrepository.com/artifact/org.jacorb/jacorb-omgapi -->
-	<dependency>
-	    <groupId>org.jacorb</groupId>
-	    <artifactId>jacorb-omgapi</artifactId>
-	    <version>3.9</version>
-	</dependency>
-  </dependencies>
-  <dependencyManagement>
-  	<dependencies>
-  		<dependency>
-  			<groupId>org.jacorb</groupId>
-  			<artifactId>jacorb-omgapi</artifactId>
-  			<version>3.9</version>
-  		</dependency>
-  	</dependencies>
-  </dependencyManagement>
 </project>
