@@ -22,10 +22,12 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -89,14 +91,23 @@ public final class XMLUtil {
     	// we need different classloaders to be used. Try them all until
     	// one doesn't error. This is hacky but it's the best way I've found
     	// to get around JAXB's limitations so far.
-    	List<ClassLoader> classloaders = List.of(
+    	List<ClassLoader> classloaders = new ArrayList<>(List.of(
     			clazz.getClassLoader(),
     			XMLUtil.class.getClassLoader(),
     			JAXBContextFactory.class.getClassLoader(),
     			Thread.currentThread().getContextClassLoader(),
     			ClassLoader.getPlatformClassLoader(),
     			ClassLoader.getSystemClassLoader()
-    	);
+    	));
+    	
+    	// Try every single class loader for all active threads.
+    	classloaders.addAll(
+			Thread.getAllStackTraces().keySet()
+			    .stream()
+			    .map(Thread::getContextClassLoader)
+			    .collect(Collectors.toList()
+			)
+		);
     	
     	Map<String, Throwable> errors = new HashMap<>();
     	
@@ -104,25 +115,25 @@ public final class XMLUtil {
     		LOG.info(String.format("Classloader %s loads JAXBContext from %s", classloader, classloader.getResource("javax/xml/bind/JAXBContext.class")));
     		try {
         		return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), classloader);
-        	} catch (Exception | NoClassDefFoundError e) {
+        	} catch (Throwable e) {
         		errors.put(String.format("used classloader %s", classloader), e);
         	}
     		
     		try {
         		return JAXBContextFactory.createContext(new Class[] {clazz}, null);
-        	} catch (Exception | NoClassDefFoundError e) {
+        	} catch (Throwable e) {
         		errors.put(String.format("used raw class moxy %s", clazz), e);
         	}
     		
     		try {
         		return JAXBContext.newInstance(clazz);
-        	} catch (Exception | NoClassDefFoundError e) {
+        	} catch (Throwable e) {
         		errors.put(String.format("used raw class %s", clazz), e);
         	}
     		
     		try {
         		return JAXBContext.newInstance(clazz.getPackageName(), classloader);
-        	} catch (Exception | NoClassDefFoundError e) {
+        	} catch (Throwable e) {
         		errors.put(String.format("used package name %s with classloader %s", clazz.getPackageName(), classloader), e);
         	}
     	}
