@@ -9,16 +9,16 @@
 	<properties>
 		<tycho.version>1.4.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen</oxygen-repo.url>
-		<oxygen-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.8</oxygen-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/photon</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.10</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>oxygen-updates</id>
+			<id>photon-updates</id>
 			<layout>p2</layout>
-			<url>${oxygen-updates-repo.url}</url>
+			<url>${photon-updates-repo.url}</url>
 		</repository>
 	</repositories>
 
