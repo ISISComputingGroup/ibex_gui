@@ -44,6 +44,11 @@
 							<ws>win32</ws>
 							<arch>x86_64</arch>
 						</environment>
+					        <environment>
+					                <os>linux</os>
+					                <ws>gtk</ws>
+					                <arch>x86_64</arch>
+					        </environment>
 					</environments>
 					<target>
 						<artifact>
@@ -53,21 +58,8 @@
 							<classifier>../uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
 						</artifact>
 					</target>
-					<!--workaround bug 532302: set EE to JavASE-11 to make sure we resolve Import-Package: javax.annoation against bundle javax.annotation 
-			         (as opposed to system package from bundle's BREE JavaSE-1.8) -->
-			         <executionEnvironment>JavaSE-11</executionEnvironment> 
 				</configuration>
 			</plugin>
-			
-			<plugin>
-	            <groupId>org.eclipse.tycho</groupId>
-	            <artifactId>tycho-surefire-plugin</artifactId>
-	            <version>${tycho.version}</version>
-	            <configuration>
-	                <!-- Need this flag for tests - couldn't figure out how to do with with explicit dependencies -->
-	                <argLine>--add-modules ALL-SYSTEM</argLine>
-	            </configuration>
-	         </plugin>
 
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -85,6 +77,33 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<compilerArgument>-err:-forbidden</compilerArgument>
+					
+				</configuration>
+			</plugin>
+
+			<!-- Run CheckStyle checks as part of the build. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceDirectories>
+						<sourceDirectory>src</sourceDirectory>
+					</sourceDirectories>
+					<!-- <consoleOutput>true</consoleOutput> -->
+					<configLocation>checkstyle.xml</configLocation>
+                    <suppressionsLocation>suppressions.xml</suppressionsLocation>
+					<failOnViolation>false</failOnViolation>
+					<failsOnError>false</failsOnError>
+					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
 
@@ -107,7 +126,7 @@
 											tycho-packaging-plugin
 										</artifactId>
 										<versionRange>
-											[${tycho.version},)
+											[0.20.0,)
 										</versionRange>
 										<goals>
 											<goal>validate-version</goal>
