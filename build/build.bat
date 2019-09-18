@@ -1,3 +1,5 @@
+python -m pip install six
+
 call python get_java.py
 if %errorlevel% neq 0 exit /b %errorlevel%
 

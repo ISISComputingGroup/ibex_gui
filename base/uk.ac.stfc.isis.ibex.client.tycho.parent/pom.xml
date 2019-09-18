@@ -231,15 +231,11 @@
 		<module>../uk.ac.stfc.isis.ibex.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer</module>
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
 	</modules>
 </project>
 
