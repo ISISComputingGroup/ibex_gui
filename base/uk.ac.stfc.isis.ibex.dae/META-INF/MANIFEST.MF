@@ -14,7 +14,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  org.diirt.vtype;bundle-version="3.1.5",
  com.google.guava,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- org.apache.log4j,
  org.eclipse.core.runtime;bundle-version="3.15.100",
  org.eclipse.ui;bundle-version="3.111.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11

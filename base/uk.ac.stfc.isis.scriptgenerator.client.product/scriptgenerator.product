@@ -17,7 +17,7 @@
       <vmArgs>-Xms40m
 -Xmx512m
 -Dpython.console.encoding=UTF-8
--XX:+CreateMinidumpOnCrash
+-XX:+CreateCoredumpOnCrash
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -25,9 +25,7 @@
 
    <windowImages i16="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif" i32="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif" i48="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif" i64="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif" i128="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif" i256="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif"/>
 
-
    <launcher name="ibex-script-generator">
-      <solaris/>
       <win useIco="true">
          <ico path="/uk.ac.stfc.isis.scriptgenerator.client.product/icons/scriptgen.ico"/>
          <bmp/>
@@ -36,19 +34,18 @@
 
 
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="uk.ac.stfc.isis.scriptgenerator.feature.base" version="1.0.0.qualifier"/>
+      <feature id="uk.ac.stfc.isis.scriptgenerator.feature.base" installMode="root"/>
    </features>
 
    <configurations>
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
-      <plugin id="org.eclipse.e4.ui.workbench" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
