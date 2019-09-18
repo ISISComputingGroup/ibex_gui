@@ -1,4 +1,4 @@
-robocopy "\\isis\inst$\Kits$\CompGroup\ICP\JDK_11" "%~dp0\jdk" /E /PURGE /R:2 /LOG:"%~dp0\jdk\install.log" /MT /XF "install.log" /NFL /NDL /NP
+robocopy "\\isis\inst$\Kits$\CompGroup\ICP\JDK_11" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
@@ -8,7 +8,7 @@ if %errcode% GEQ 4 (
 	exit /b %errcode%
 )
 
-for /D %%I in ( "%~dp0\jdk" ) do SET "JAVA_HOME=%%I"
+for /D %%I in ( %~dp0jdk\* ) do SET "JAVA_HOME=%%I"
  
 call python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
