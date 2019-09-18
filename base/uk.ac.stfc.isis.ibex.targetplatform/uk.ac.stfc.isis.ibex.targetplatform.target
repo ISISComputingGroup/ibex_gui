@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="254">
+<?pde version="3.8"?>
+<target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="254">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.201804011600"/>
@@ -50,10 +51,6 @@
 <unit id="org.eclipse.rcp.feature.group" version="4.8.0.v20180611-0656"/>
 <unit id="org.eclipse.rcp.source.feature.group" version="4.8.0.v20180611-0656"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.8"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20190227-1016"/>
-<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
@@ -107,6 +104,10 @@
 <unit id="org.epics.pvdata.source" version="6.1.1"/>
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/maven-osgi-bundles/repository/target/repository/"/>
 </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
+		<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20190917-1740"/>
+	</location>
 </locations>
 <environment>
 <os>win32</os>
