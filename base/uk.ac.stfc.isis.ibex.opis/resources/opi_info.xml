@@ -2119,6 +2119,22 @@
       </value>
     </entry>
     <entry>
+      <key>CP2800</key>
+      <value>
+        <categories/>
+        <type>CP2800</type>
+        <path>cp2800.opi</path>
+        <description>The OPI for the CP2800</description>
+        <macros>
+          <macro>
+            <name>CP2800</name>
+            <description>The CP2800 PV prefix (e.g. CP2800_01)</description>
+            <default>CP2800_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>TTI355</key>
       <value>
         <categories>
