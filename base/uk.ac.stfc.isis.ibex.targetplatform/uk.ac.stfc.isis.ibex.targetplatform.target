@@ -127,9 +127,9 @@
         <unit id="org.eclipse.rcp.source.feature.group" version="4.12.0.v20190605-1801"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://pydev.org/update_sites/7.3.0"/>
-        <unit id="org.python.pydev.feature.feature.group" version="7.3.0.201908161924"/>
-        <unit id="org.python.pydev.feature.source.feature.group" version="7.3.0.201908161924"/>
+        <repository location="http://www.pydev.org/update_sites/5.9.2"/>
+        <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
+        <unit id="org.python.pydev.feature.source.feature.group" version="5.9.2.201708151115"/>
     </location>
 </locations>
 <environment>
