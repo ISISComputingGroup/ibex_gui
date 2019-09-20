@@ -42,6 +42,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+
 /**
  * The Class Search Control to allow searching within the log.
  */
@@ -64,7 +66,7 @@ public class SearchInput extends Composite {
     private Spinner spinnerFromNumber, spinnerToNumber;
     private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
     private DateTime dtFromDate, dtFromTime, dtToDate, dtToTime;
-
+    private JournalViewModel model;
     private Combo cmbFilterType;
 
     /**
@@ -73,8 +75,9 @@ public class SearchInput extends Composite {
      * @param parent
      *            the parent in which this control resides
      */
-    public SearchInput(Composite parent) {
+    public SearchInput(Composite parent, JournalViewModel model) {
         super(parent, SWT.NONE);
+        this.model = model;
         Composite grpFilter = new Composite(parent, SWT.NONE);
         grpFilter.setLayout(null);
 
@@ -163,6 +166,8 @@ public class SearchInput extends Composite {
                 .setTabList(new Control[] {cmpRunNumber, cmpTextSearch, cmpTimePicker, cmpTextSearch, cmpTextSearch});
 
         addListeners();
+        bind();
+
     }
 
     /**
@@ -244,6 +249,22 @@ public class SearchInput extends Composite {
         });
     }
 
+    private void bind() {
+        spinnerFromNumber.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                model.setFromNumber(spinnerFromNumber.getSelection());
+            }
+        });
+        spinnerToNumber.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                model.setToNumber(spinnerToNumber.getSelection());
+            }
+        });
+    }
     private void addListeners() {
         chkTimeFrom.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -252,6 +273,7 @@ public class SearchInput extends Composite {
                 dtFromTime.setEnabled(chkTimeFrom.getSelection());
             }
         });
+
 
         chkTimeTo.addSelectionListener(new SelectionAdapter() {
             @Override

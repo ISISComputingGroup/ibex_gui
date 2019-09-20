@@ -48,6 +48,9 @@ public class JournalViewModel extends ModelObject {
     private String message;
     private List<JournalRow> runs;
     private String lastUpdate;
+    private int ToNumber = 0;
+    private int FromNumber = 0;
+    private String errorMessage = "                 ";
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -242,4 +245,30 @@ public class JournalViewModel extends ModelObject {
         return model.sortBy(field);
     }
     
+    public void setToNumber(int ToNumber) {
+        this.ToNumber = ToNumber;
+        String errorMessage = "       ";
+        if (ToNumber < FromNumber) {
+            errorMessage = "Error";
+        }
+        setValidRange(errorMessage);
+    }
+
+    public void setFromNumber(int FromNumber) {
+        this.FromNumber = FromNumber;
+        String errorMessage = "       ";
+        if (ToNumber < FromNumber) {
+            errorMessage = "Error";
+        }
+        setValidRange(errorMessage);
+    }
+
+    public String getValidRange() {
+        return errorMessage;
+    }
+
+    public void setValidRange(String message) {
+        firePropertyChange("validRange", this.errorMessage, this.errorMessage = message);
+    }
+
 }

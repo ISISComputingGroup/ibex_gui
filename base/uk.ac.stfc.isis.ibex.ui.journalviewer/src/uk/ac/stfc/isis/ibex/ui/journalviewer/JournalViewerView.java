@@ -72,6 +72,7 @@ public class JournalViewerView {
 
     private Label lblError;
     private Label lblLastUpdate;
+    private Label warning;
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
@@ -88,6 +89,7 @@ public class JournalViewerView {
     private Composite searchControls;
     private Button btnClear;
     private Composite basicControls;
+
 
     /**
      * Create contents of the view part.
@@ -139,7 +141,7 @@ public class JournalViewerView {
         rlSearchControls.center = true;
         searchControls.setLayout(rlSearchControls);
 
-        searchInput = new SearchInput(searchControls);
+        searchInput = new SearchInput(searchControls, model);
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
         searchInput.setLayout(rlFilterControl);
 
@@ -153,6 +155,10 @@ public class JournalViewerView {
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
+
+        warning = new Label(searchControls, SWT.NONE);
+        warning.setText("             ");
+
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -306,6 +312,9 @@ public class JournalViewerView {
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(warning),
+                BeanProperties.value("validRange").observe(model));
+        
 
         spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
             @Override
