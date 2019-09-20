@@ -1,4 +1,4 @@
-robocopy "\\isis\inst$\Kits$\CompGroup\ICP\JDK_11" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
+robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
@@ -8,7 +8,7 @@ if %errcode% GEQ 4 (
 	exit /b %errcode%
 )
 
-for /D %%I in ( %~dp0jdk\* ) do SET "JAVA_HOME=%%I"
+SET "JAVA_HOME=%~dp0\jdk"
  
 call python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
