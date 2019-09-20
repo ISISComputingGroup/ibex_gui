@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
- * An observable used to control the motors.
+ * An observable used to control custom behaviour such as motors.
  */
 public class ObservableCustomControl extends ModelAdapter {
 

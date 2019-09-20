@@ -87,5 +87,24 @@ public final class Utils {
 
         return activeWorkbenchWindow.getActivePage();
     }
+    
+    /**
+     * Takes a value and if that value is in the range min_value to max_value returns that value
+     * If it is outside that range the return is constrained to be the closest of either min_value or max_value
+     * 
+     * @param value The value to constrain
+     * @param min_value The lower bound to constrain value to
+     * @param max_value The upper bound to constrain value to
+     * @return The constrained value
+     */
+    public static int constrainIntToRange(int value, int min_value, int max_value) {
+    	if (value < min_value) {
+            return min_value;
+        } else if (value > max_value) {
+            return max_value;
+        } else {
+            return value;
+        }
+    }
 
 }

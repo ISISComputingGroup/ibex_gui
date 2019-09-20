@@ -31,6 +31,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.StringUtils;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * Model containing banner item status as updated values used for display in
@@ -120,13 +121,7 @@ public class BannerItemModel extends ModelObject {
      * @return the width of the indicator
      */
     public int width() {
-        if (width < MIN_WIDTH) {
-            return MIN_WIDTH;
-        } else if (width > MAX_WIDTH) {
-            return MAX_WIDTH;
-        } else {
-            return width;
-        }
+    	return Utils.constrainIntToRange(width, MIN_WIDTH, MAX_WIDTH);
     }
     
     /**

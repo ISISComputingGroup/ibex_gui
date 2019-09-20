@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.banner.ObservableCustomControl;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * The model for custom buttons in the banner.
@@ -110,39 +111,21 @@ public class CustomControlModel extends ModelObject {
      * @return the font size
      */
     public int fontSize() {
-        if (fontSize < MIN_FONT) {
-            return MIN_FONT;
-        } else if (fontSize > MAX_FONT) {
-            return MAX_FONT;
-        } else {
-            return fontSize;
-        }
+    	return Utils.constrainIntToRange(fontSize, MIN_FONT, MAX_FONT);
     }
 
     /**
      * @return the width of the button
      */
     public int width() {
-        if (width < MIN_WIDTH) {
-            return MIN_WIDTH;
-        } else if (width > MAX_WIDTH) {
-            return MAX_WIDTH;
-        } else {
-            return width;
-        }
+    	return Utils.constrainIntToRange(width, MIN_WIDTH, MAX_WIDTH);
     }
 
     /**
      * @return the height of the button
      */
     public int height() {
-        if (height < MIN_HEIGHT) {
-            return MIN_HEIGHT;
-        } else if (height > MAX_HEIGHT) {
-            return MAX_HEIGHT;
-        } else {
-            return height;
-        }
+        return Utils.constrainIntToRange(height, MIN_HEIGHT, MAX_HEIGHT);
     }
 
 }

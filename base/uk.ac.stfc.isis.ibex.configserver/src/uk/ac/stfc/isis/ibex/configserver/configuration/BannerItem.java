@@ -141,7 +141,6 @@ public class BannerItem extends ModelObject {
      * @return the alarm status of this banner item.
      */
     public AlarmState alarm() {
-        System.out.println(name + ": " + currentAlarmState);
         return currentAlarmState;
     }
     
