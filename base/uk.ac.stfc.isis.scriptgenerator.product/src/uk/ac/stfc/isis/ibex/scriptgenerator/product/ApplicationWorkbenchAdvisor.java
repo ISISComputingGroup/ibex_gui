@@ -27,9 +27,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;
 	
-	private static final String DIALOG_BOX_TITLE = "Close the application?";
-	private static final String DIALOG_QUESTION = "Are you sure you want to close this application?";
-	
     @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         return new WorkbenchWindowAdvisor(configurer);

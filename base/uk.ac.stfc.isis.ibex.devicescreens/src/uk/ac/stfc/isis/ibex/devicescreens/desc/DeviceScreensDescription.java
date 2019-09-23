@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.logging.log4j.Logger;
-import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -41,7 +40,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
-@XmlRootElement(name = "devices")
+@XmlRootElement(name = "devices", namespace="")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 
@@ -116,9 +115,6 @@ public class DeviceScreensDescription {
         try {
             return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
-            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-            return e.toString();
-        } catch (SAXException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return e.toString();
         }

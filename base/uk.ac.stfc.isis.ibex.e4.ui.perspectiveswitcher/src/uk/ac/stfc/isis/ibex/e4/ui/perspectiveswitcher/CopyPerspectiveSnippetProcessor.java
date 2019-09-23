@@ -56,7 +56,7 @@ public class CopyPerspectiveSnippetProcessor {
         // perspective into the main PerspectiveStack
         boolean isFirst = true;
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            if (!PreferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
+            if (!new PreferenceSupplier().perspectivesToHide().contains(perspective.getElementId())) {
                 perspectiveStack.getChildren().add(perspective);
                 if (isFirst) {
                     perspectiveStack.setSelectedElement(perspective);

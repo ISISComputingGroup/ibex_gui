@@ -7,11 +7,11 @@
     <property name="applicationXMI" value="uk.ac.stfc.isis.scriptgenerator.client/Application.e4xmi"> </property>
     <property
           name="aboutImage"
-          value="../uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
+          value="platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
     </property>
     <property
           name="windowImages"
-          value="../uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
+          value="platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif,platform:/plugin/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif">
     </property>
     <property
           name="applicationCSS"

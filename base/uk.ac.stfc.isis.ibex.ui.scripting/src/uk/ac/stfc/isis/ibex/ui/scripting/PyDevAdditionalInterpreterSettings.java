@@ -37,7 +37,8 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntriesAdapter {
 	
 	private static final String PREFERENCE_STORE_ID_FOR_EPICS_LIBS = "org.csstudio.platform.libs.epics";
-	final IPreferencesService prefs;
+	private final IPreferencesService preferenceService;
+	private final PreferenceSupplier preferenceSupplier;
 	Instrument instrumentBundle;
 	
 	/**
@@ -48,8 +49,9 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 * @param iPreferencesService the iPreferences service to use
 	 * @param instrumentBundle the instrument bundle to use to get details from
 	 */
-	public PyDevAdditionalInterpreterSettings(IPreferencesService iPreferencesService, Instrument instrumentBundle) {
-		prefs = iPreferencesService;
+	public PyDevAdditionalInterpreterSettings(IPreferencesService preferenceService, Instrument instrumentBundle) {
+		this.preferenceService = preferenceService;
+		this.preferenceSupplier = new PreferenceSupplier(preferenceService);
 		this.instrumentBundle = instrumentBundle;
 	}
 	
@@ -86,12 +88,12 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	private String epicsBasePath() {
-        return "PATH=" + toOSPath(PreferenceSupplier.epicsBase()) + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath())
+        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) + ";" + toOSPath(preferenceSupplier.epicsUtilsPath())
                 + ";" + System.getenv("PATH");
 	}
 
 	private String geniePythonPath() {
-		return toOSPath(PreferenceSupplier.geniePythonPath());
+		return toOSPath(preferenceSupplier.geniePythonPath());
 	}
 	
 	private void addEpicsEnvironment(List<String> entries) {
@@ -105,17 +107,17 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 *  
 	 * @return list of environment variables and their settings
 	 */
-	private List<String> epicsEnvironment() {
+	public List<String> epicsEnvironment() {
 		List<String> epicsEnv = new ArrayList<String>();
 
-        final String addList = prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
+        final String addList = preferenceService.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
         epicsEnv.add("EPICS_CA_ADDR_LIST=" + addList);
         
-        final String autoAddr = prefs.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
+        final String autoAddr = preferenceService.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
         epicsEnv.add("EPICS_CA_AUTO_ADDR_LIST=" + autoAddr);
         
         final String maxArrayBytes =
-                prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
+        		preferenceService.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
         epicsEnv.add("EPICS_CA_MAX_ARRAY_BYTES=" + maxArrayBytes);
         
         return epicsEnv;

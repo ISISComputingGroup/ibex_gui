@@ -31,6 +31,6 @@ public class PythonInterpreterProviderFactory extends AbstractInterpreterProvide
 	
 	@Override
 	public IInterpreterProvider[] getInterpreterProviders(InterpreterType type) {
-		return AlreadyInstalledInterpreterProvider.create(INTERPRETER_PROVIDER_ID, PreferenceSupplier.pythonInterpreterPath());
+		return AlreadyInstalledInterpreterProvider.create(INTERPRETER_PROVIDER_ID, new PreferenceSupplier().pythonInterpreterPath());
 	}
 }

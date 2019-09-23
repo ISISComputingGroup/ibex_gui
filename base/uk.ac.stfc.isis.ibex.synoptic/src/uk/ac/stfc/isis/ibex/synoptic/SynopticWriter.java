@@ -68,7 +68,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
         }
 		try {
             return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
-		} catch (JAXBException | SAXException e) {
+		} catch (JAXBException e) {
 			onError(e);
 		}
 		

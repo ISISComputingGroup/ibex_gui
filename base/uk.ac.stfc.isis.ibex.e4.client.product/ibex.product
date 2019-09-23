@@ -13,11 +13,12 @@
    <launcherArgs>
       <programArgs>--launcher.XXMaxPermSize
 256M
+-clearPersistedState
       </programArgs>
-      <vmArgs>-Xms40m
+      <vmArgs>-Xms40m 
 -Xmx512m
 -Dpython.console.encoding=UTF-8
--XX:+CreateMinidumpOnCrash
+-XX:+CreateCoredumpOnCrash
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -33,7 +34,7 @@
    </launcher>
 
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
 
    <plugins>
@@ -46,11 +47,6 @@
    </features>
 
    <configurations>
-      <plugin id="org.csstudio.archive.rdb" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader.channelarchiver" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.archive.reader.rdb" autoStart="true" startLevel="0" />
-      <plugin id="org.csstudio.platform.libs.jdbc" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />

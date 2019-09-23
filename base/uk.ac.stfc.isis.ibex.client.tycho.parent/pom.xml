@@ -7,22 +7,23 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.2.0</tycho.version>
+		<tycho.version>1.4.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen</oxygen-repo.url>
-		<oxygen-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.8</oxygen-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2019-06</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.12</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>oxygen-updates</id>
+			<id>photon-updates</id>
 			<layout>p2</layout>
-			<url>${oxygen-updates-repo.url}</url>
+			<url>${photon-updates-repo.url}</url>
 		</repository>
 	</repositories>
 
 	<build>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -30,44 +31,19 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.2</version>
-              <executions>
-                <execution>
-                  <id>pre-unit-test</id>
-                  <goals>
-                    <goal>prepare-agent</goal>
-                  </goals>
-                </execution>
-                <execution>
-                  <id>post-unit-test</id>
-                  <phase>test</phase>
-                  <goals>
-                    <goal>report</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
             
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
+					
 					<environments>
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
 							<arch>x86_64</arch>
 						</environment>
-					        <environment>
-					                <os>linux</os>
-					                <ws>gtk</ws>
-					                <arch>x86_64</arch>
-					        </environment>
 					</environments>
 					<target>
 						<artifact>
@@ -96,6 +72,7 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<compilerArgument>-err:-forbidden</compilerArgument>
+					
 				</configuration>
 			</plugin>
 
@@ -172,12 +149,10 @@
 		<module>../uk.ac.stfc.isis.ibex.e4.product</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.help</module>
 		<module>../uk.ac.stfc.isis.ibex.beamstatus</module>
 		<module>../uk.ac.stfc.isis.ibex.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.dashboard</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.dae</module>
 		<module>../uk.ac.stfc.isis.ibex.log</module>
 		<module>../uk.ac.stfc.isis.ibex.logger</module>
@@ -185,7 +160,6 @@
 		<module>../uk.ac.stfc.isis.ibex.opis</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
@@ -194,7 +168,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>
@@ -206,7 +179,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.epics</module>
 		<module>../uk.ac.stfc.isis.ibex.epics.switching</module>
@@ -217,14 +189,11 @@
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.experimentdetails</module>
         <module>../uk.ac.stfc.isis.ibex.epics.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.runcontrol.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.runcontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting</module>
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
 		<module>../uk.ac.stfc.isis.ibex.validators</module>
@@ -238,7 +207,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.mainmenu.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
@@ -249,7 +217,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.motor.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
@@ -258,12 +225,19 @@
 		<module>../uk.ac.stfc.isis.ibex.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer</module>
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
+		
+		<!-- The following plugins are temporarily disabled from running in maven, see https://github.com/ISISComputingGroup/IBEX/issues/4759
+		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
+		-->
 	</modules>
 </project>
 
