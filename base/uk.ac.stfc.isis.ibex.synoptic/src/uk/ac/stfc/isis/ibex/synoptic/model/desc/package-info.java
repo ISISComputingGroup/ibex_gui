@@ -17,12 +17,15 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
+/**
+ * Describes the synoptic model.
+ */
 @XmlSchema(
     namespace = "http://www.isis.stfc.ac.uk//instrument", 
     elementFormDefault = XmlNsForm.QUALIFIED,
     
 	xmlns={
-        @XmlNs(prefix="", namespaceURI="http://www.isis.stfc.ac.uk//instrument")
+        @XmlNs(prefix = "", namespaceURI = "http://www.isis.stfc.ac.uk//instrument")
     }) 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;
  

@@ -34,10 +34,17 @@ public class PreferenceSupplier {
 	
 	private final IPreferencesService preferenceService;
 	
+	/**
+	 * Instantiate a new preference supplier.
+	 */
 	public PreferenceSupplier() {
 		this(Platform.getPreferencesService());
 	}
 	
+	/**
+	 * Instantiate a new preference supplier based on a specific preferenceSerivice.
+	 * @param preferenceService the preference serice to use
+	 */
 	public PreferenceSupplier(IPreferencesService preferenceService) {
 		this.preferenceService = preferenceService;
 	}

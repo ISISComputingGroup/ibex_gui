@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
-
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
