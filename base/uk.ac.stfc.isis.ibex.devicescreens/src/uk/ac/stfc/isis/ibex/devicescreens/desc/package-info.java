@@ -25,7 +25,7 @@
     elementFormDefault = XmlNsForm.QUALIFIED,
     
 	xmlns={
-        @XmlNs(prefix="", namespaceURI="http://epics.isis.rl.ac.uk/schema/screens/1.0/")
+        @XmlNs(prefix = "", namespaceURI = "http://epics.isis.rl.ac.uk/schema/screens/1.0/")
     }) 
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
  

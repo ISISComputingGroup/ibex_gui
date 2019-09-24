@@ -46,7 +46,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 * 
 	 * This constructor is usually used for testing only
 	 *
-	 * @param iPreferencesService the iPreferences service to use
+	 * @param preferenceService the iPreferences service to use
 	 * @param instrumentBundle the instrument bundle to use to get details from
 	 */
 	public PyDevAdditionalInterpreterSettings(IPreferencesService preferenceService, Instrument instrumentBundle) {

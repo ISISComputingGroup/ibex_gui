@@ -24,10 +24,10 @@
     elementFormDefault = XmlNsForm.QUALIFIED,
     
 	xmlns={
-        @XmlNs(prefix="", namespaceURI="")
+        @XmlNs(prefix = "", namespaceURI = "")
     }) 
 package uk.ac.stfc.isis.ibex.opis.desc;
 
 import javax.xml.bind.annotation.XmlNs;
-import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;
