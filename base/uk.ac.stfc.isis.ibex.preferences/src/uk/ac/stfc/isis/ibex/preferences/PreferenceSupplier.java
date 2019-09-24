@@ -42,7 +42,7 @@ public class PreferenceSupplier {
 	}
 	
 	/**
-	 * Instantiate a new preference supplier based on a specific preferenceSerivice.
+	 * Instantiate a new preference supplier based on a specific preferenceService.
 	 * @param preferenceService the preference serice to use
 	 */
 	public PreferenceSupplier(IPreferencesService preferenceService) {
