@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * though the status will return error (but with no message displayed).
  *
  */
-public class MacroValueValidator extends ModelObject implements IValidator {
+public class MacroValueValidator extends ModelObject implements IValidator<String> {
     /**
      * Property change that is fired when the name validity changes.
      */
@@ -80,7 +80,7 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	}
 	
 	@Override
-	public IStatus validate(Object text) {
+	public IStatus validate(String text) {
 		IStatus returnStatus;
 		
 		setShowWarningIcon(false);
@@ -90,7 +90,7 @@ public class MacroValueValidator extends ModelObject implements IValidator {
                 returnStatus = setError(NO_MESSAGE);
             } else if (text.equals("")) {
                 returnStatus = setNoError();
-            } else if (!matchesPattern((String) text)) {
+            } else if (!matchesPattern(text)) {
 				setShowWarningIcon(true);
 				returnStatus = setError(PATTERN_MISMATCH_MESSAGE);
 			} else {

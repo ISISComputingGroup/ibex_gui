@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.PvStateColour;
  * Used for data-binding.
  * 
  */
-public class BlockStatusBorderColourConverter extends Converter {
+public class BlockStatusBorderColourConverter extends Converter<PvState, Color> {
 
     /**
      * Instantiates the converter.
@@ -44,12 +44,11 @@ public class BlockStatusBorderColourConverter extends Converter {
     /**
      * Specifies how the converter should react to possible block states.
      * 
-     * @param fromObject the block state to convert
+     * @param state the block state to convert
      * @return the converted border colour
      */
     @Override
-    public Object convert(Object fromObject) {
-        PvState state = (PvState) fromObject;
+    public Color convert(PvState state) {
         switch (state) {
             case DISCONNECTED:
                 return PvStateColour.MAGENTA;
