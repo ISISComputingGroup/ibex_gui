@@ -1182,18 +1182,6 @@
       </value>
     </entry>
     <entry>
-      <key>XY Beam-stop</key>
-      <value>
-        <type>BEAMSTOP</type>
-        <path>beamstop.opi</path>
-        <description>The OPI for the XY beam-stop. No properties required.</description>
-        <macros/>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Live View</key>
       <value>
         <type>DAE</type>
