@@ -2016,14 +2016,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)RESET</pv_name>
       <pv_value />
-      <rules>
-        <rule name="Rule" prop_id="visible" out_exp="false">
-          <exp bool_exp="pvStr0 == &quot;RKNPS&quot;">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)DEV_TYPE</pv>
-        </rule>
-      </rules>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -2035,7 +2028,7 @@ $(pv_value)</tooltip>
       <toggle_button>false</toggle_button>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Action Button</widget_type>
       <width>90</width>
       <wuid>1e7638b8:16a07c5b47e:-7df5</wuid>
