@@ -84,12 +84,11 @@ public class TitlePanel extends Composite {
 	}
 
 	private void bind(TitlePanelModel model) {
-        UpdateValueStrategy literalAmpersands =
-                new UpdateValueStrategy().setConverter(new Converter(String.class, String.class) {
+        UpdateValueStrategy<String, String> literalAmpersands =
+                new UpdateValueStrategy<String,String>().setConverter(new Converter<String,String>(String.class, String.class) {
             @Override
-            public Object convert(Object fromObject) {
-                String in = (String) fromObject;
-                return in.replaceAll("&", "&&");
+            public String convert(String fromObject) {
+                return fromObject.replaceAll("&", "&&");
             }
         });
 
