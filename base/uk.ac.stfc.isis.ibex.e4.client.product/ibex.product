@@ -18,6 +18,7 @@
       <vmArgs>-Xms40m 
 -Xmx512m
 -Dpython.console.encoding=UTF-8
+-Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
