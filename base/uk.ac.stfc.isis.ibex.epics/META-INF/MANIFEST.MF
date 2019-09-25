@@ -40,5 +40,4 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.pv,
  uk.ac.stfc.isis.ibex.epics.pvmanager,
  uk.ac.stfc.isis.ibex.epics.writing
- 
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics
