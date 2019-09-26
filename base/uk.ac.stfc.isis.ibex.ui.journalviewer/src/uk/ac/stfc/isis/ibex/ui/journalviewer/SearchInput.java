@@ -44,11 +44,14 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 
+
 /**
  * The Class Search Control to allow searching within the log.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchInput extends Composite {
+
+    private final int runNumberIndex = 0, startTimeIndex = 2, users = 4;
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
     private Composite cmpSearch;
@@ -66,7 +69,7 @@ public class SearchInput extends Composite {
     private Spinner spinnerFromNumber, spinnerToNumber;
     private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
     private DateTime dtFromDate, dtFromTime, dtToDate, dtToTime;
-    private JournalViewModel model;
+    private JournalViewModel viewModel;
     private Combo cmbFilterType;
 
     /**
@@ -75,9 +78,9 @@ public class SearchInput extends Composite {
      * @param parent
      *            the parent in which this control resides
      */
-    public SearchInput(Composite parent, JournalViewModel model) {
+    public SearchInput(Composite parent, JournalViewModel viewModel) {
         super(parent, SWT.NONE);
-        this.model = model;
+        this.viewModel = viewModel;
         Composite grpFilter = new Composite(parent, SWT.NONE);
         grpFilter.setLayout(null);
 
@@ -245,32 +248,83 @@ public class SearchInput extends Composite {
                 dtToDate.setEnabled(false);
                 dtFromTime.setEnabled(false);
                 dtToTime.setEnabled(false);
+
+
+                // get new values from the fields once it is is cleared and let the model know
+                viewModel.setFromNumber(spinnerFromNumber.getSelection());
+                viewModel.setToNumber(spinnerToNumber.getSelection());
+
+                viewModel.setToTime(dtToTime);
+                viewModel.setFromTime(dtFromTime);
+                viewModel.setToDate(dtToDate);
+                viewModel.setFromDate(dtFromDate);
+
+
+
             }
         });
     }
 
+    /**
+     * bind all the Search type fields to the JournalViewModel for which warning message needs 
+     * to be displayed on the GUI i.e. run number and start time
+     */
     private void bind() {
         spinnerFromNumber.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
 
-                model.setFromNumber(spinnerFromNumber.getSelection());
+                viewModel.setFromNumber(spinnerFromNumber.getSelection());
             }
         });
         spinnerToNumber.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
 
-                model.setToNumber(spinnerToNumber.getSelection());
+                viewModel.setToNumber(spinnerToNumber.getSelection());
             }
         });
+
+        dtFromDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setFromDate(dtFromDate);
+            }
+        });
+
+        dtFromTime.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setFromTime(dtFromTime);
+            }
+        });
+
+        dtToDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setToDate(dtToDate);
+            }
+        });
+
+        dtToTime.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setToTime(dtToTime);
+            }
+
+        });
+
     }
+
     private void addListeners() {
         chkTimeFrom.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 dtFromDate.setEnabled(chkTimeFrom.getSelection());
                 dtFromTime.setEnabled(chkTimeFrom.getSelection());
+                
+                viewModel.setInitialFromDateTime(dtFromTime, dtFromDate);
+                viewModel.setInitialToDateTime(dtToTime, dtToDate);
             }
         });
 
@@ -280,6 +334,9 @@ public class SearchInput extends Composite {
             public void widgetSelected(SelectionEvent e) {
                 dtToDate.setEnabled(chkTimeTo.getSelection());
                 dtToTime.setEnabled(chkTimeTo.getSelection());
+
+                viewModel.setInitialFromDateTime(dtFromTime, dtFromDate);
+                viewModel.setInitialToDateTime(dtToTime, dtToDate);
             }
         });
 
@@ -303,6 +360,27 @@ public class SearchInput extends Composite {
                 DISPLAY.asyncExec(() -> {
                     stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
                     cmpSearch.layout();
+
+                    viewModel.clearMessage();
+
+                    int index = cmbFilterType.getSelectionIndex();
+                    if (index == runNumberIndex) {
+                        // when run number is selected from the drop down, send
+                        // the run number that is already present in the field
+                        // to the viewModel
+                        viewModel.setFromNumber(spinnerFromNumber.getSelection());
+                        viewModel.setToNumber(spinnerToNumber.getSelection());
+                    } else if ((index == startTimeIndex) && (dtToTime != null)) {
+                        // when start is selected from the drop down, send the
+                        // date that is already present in the field to the view
+                        // viewModel
+                        viewModel.setToTime(dtToTime);
+                        viewModel.setFromTime(dtFromTime);
+                        viewModel.setToDate(dtToDate);
+                        viewModel.setFromDate(dtFromDate);
+
+                    }
+
                 });
             }
         });

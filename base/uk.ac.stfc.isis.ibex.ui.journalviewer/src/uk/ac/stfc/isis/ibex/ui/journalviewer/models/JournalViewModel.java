@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.DateTime;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
 import uk.ac.stfc.isis.ibex.journal.JournalModel;
@@ -43,14 +44,24 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * The viewmodel providing data for the journal viewer view.
  */
 public class JournalViewModel extends ModelObject {
-
+    
+    enum DateTimeValidation {
+        TRUE,
+        FALSE,
+        EQUAL
+    }
     private JournalModel model;
     private String message;
     private List<JournalRow> runs;
     private String lastUpdate;
-    private int ToNumber = 0;
-    private int FromNumber = 0;
-    private String errorMessage = "                 ";
+    private int toNumber = 0;
+    private int fromNumber = 0;
+    private String noError = "                                                                                  ";
+    private String runNumberError = "Run number in incorrect order";
+    private String dateTimeError  = "Date/Time in wrong order";
+    private String errorMessage = noError;
+    private DateTime fromDate, toDate, fromTime, toTime;
+    private Boolean setButtonEnable = true;
 
     PropertyChangeListener listener = new PropertyChangeListener() {
         @Override
@@ -244,31 +255,203 @@ public class JournalViewModel extends ModelObject {
     public CompletableFuture<Void> sortBy(JournalField field) {
         return model.sortBy(field);
     }
-    
-    public void setToNumber(int ToNumber) {
-        this.ToNumber = ToNumber;
-        String errorMessage = "       ";
-        if (ToNumber < FromNumber) {
-            errorMessage = "Error";
+
+    /**
+     * set new end number
+     * @param ToNumber
+     */
+    public void setToNumber(int toNumber) {
+        this.toNumber = toNumber;
+        String errorMessage = noError;
+        if (toNumber < fromNumber) {
+            errorMessage = runNumberError;
+            
         }
-        setValidRange(errorMessage);
+        setErrorMessage(errorMessage);
+        
     }
 
-    public void setFromNumber(int FromNumber) {
-        this.FromNumber = FromNumber;
-        String errorMessage = "       ";
-        if (ToNumber < FromNumber) {
-            errorMessage = "Error";
+    /**
+     * set new from number
+     * @param fromNumber new from number
+     */
+    public void setFromNumber(int fromNumber) {
+        this.fromNumber = fromNumber;
+        String errorMessage = noError;
+        if (toNumber < fromNumber) {
+            errorMessage = runNumberError;
+            
         }
-        setValidRange(errorMessage);
+        setErrorMessage(errorMessage);
+        
     }
 
-    public String getValidRange() {
+    /**
+     * set error message
+     * @return error message
+     */
+    public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setValidRange(String message) {
-        firePropertyChange("validRange", this.errorMessage, this.errorMessage = message);
+    /**
+     * sets the new error message
+     * @param message new message
+     */
+    public void setErrorMessage(String message) {
+        firePropertyChange("errorMessage", this.errorMessage, this.errorMessage = message);
+        setEnableDisableButton();
     }
 
+    /**
+     * decides whether the error message needs to be displayed or not
+     * @return the new error message
+     */
+    public String GetErrorMessageForDateTime() {
+        String errorMessage = dateTimeError;
+        if (validateYear() == DateTimeValidation.TRUE) {
+            errorMessage = noError;
+        } else if ((validateYear() == DateTimeValidation.EQUAL) && (validateTime() == DateTimeValidation.TRUE)) {
+            errorMessage = noError;
+        }
+        return errorMessage;
+
+    }
+    /**
+     * update to new start date
+     * @param fromDate new start date
+     */
+    public void setFromDate(DateTime fromDate) {
+        this.fromDate = fromDate;
+        String errorMessage = GetErrorMessageForDateTime();
+        setErrorMessage(errorMessage);
+    }
+
+
+    /**
+     * update to new end date
+     * @param toDate new end date
+     */
+    public void setToDate(DateTime toDate) {
+        this.toDate = toDate;
+        String errorMessage = GetErrorMessageForDateTime();
+        setErrorMessage(errorMessage);
+    }
+
+    /**
+     * update to new start date
+     * @param fromTime new start time
+     */
+    public void setFromTime(DateTime fromTime) {
+        this.fromTime = fromTime;
+        String errorMessage = GetErrorMessageForDateTime();
+        setErrorMessage(errorMessage);
+    }
+
+    /**
+     * update new end time
+     * @param toTime new to time for start time
+     */
+
+    public void setToTime(DateTime toTime) {
+        this.toTime = toTime;
+        String errorMessage = GetErrorMessageForDateTime();
+        setErrorMessage(errorMessage);
+    }
+
+    /**
+     * validate whether the date is the right way or not
+     * 
+     * @return true if the date is entered right way
+     */
+    public DateTimeValidation validateYear() {
+
+        DateTimeValidation retVal = DateTimeValidation.TRUE;
+        int fromYear = fromDate.getYear(), fromMonth = fromDate.getYear(), fromDay = fromDate.getDay();
+        int toYear = toDate.getYear(), toMonth = toDate.getYear(), toDay = toDate.getDay();
+
+        int fromDateTotal = 12 * fromYear + fromMonth;
+        int toDateTotal = 12 * toYear + toMonth;
+
+        if (fromDateTotal > toDateTotal) {
+            retVal = DateTimeValidation.FALSE;
+        } else if ((fromDateTotal == toDateTotal) && (fromDay == toDay)) {
+            retVal = DateTimeValidation.EQUAL;
+        } else if ((fromDateTotal == toDateTotal) && (fromDay > toDay)) {
+            retVal = DateTimeValidation.FALSE;
+        }
+        return retVal;
+    }
+
+
+    /**
+     * sets start date and time
+     * @param fromDate sets start date
+     * @param fromTime set start time
+     */
+    public void setInitialFromDateTime(DateTime fromDate, DateTime fromTime) {
+        this.fromTime = fromTime;
+        this.fromDate = fromDate;
+    }
+
+    /**
+     * sets end date and time  
+     * @param toDate end date
+     * @param toTime end time
+     */
+    public void setInitialToDateTime(DateTime toDate, DateTime toTime) {
+        this.toDate = toDate;
+        this.toTime = toTime;
+    }
+
+    /**
+     * checks whether the time is in correct order
+     * @return true or false 
+     */
+    public DateTimeValidation validateTime() {
+
+        DateTimeValidation retVal = DateTimeValidation.TRUE;
+
+        int fromHour = fromTime.getHours(), fromMinutes = fromTime.getMinutes(), fromSeconds = fromTime.getSeconds();
+        int toHour = toTime.getHours(), toMinutes = toTime.getMinutes(), toSeconds = toTime.getSeconds();
+
+        int hoursInSeconds   = 3600;
+        int minutesInSeconds = 60;
+
+        int fromTimeInSeconds = (hoursInSeconds * fromHour) + (minutesInSeconds * fromMinutes) + fromSeconds;
+        int toTimeInSeconds   = (hoursInSeconds * toHour) + (minutesInSeconds * toMinutes) + toSeconds;
+
+        if (fromTimeInSeconds > toTimeInSeconds) {
+            retVal = DateTimeValidation.FALSE;
+        }
+        return retVal;
+    }
+
+    /**
+     * Clears Error message on the screen
+     */
+    public void clearMessage() {
+        if (this.message != noError) {
+            setErrorMessage(noError);
+            
+        }
+    }
+
+    /**
+     * checks if button needs to be enabled or disabled
+     */
+    public void setEnableDisableButton() {
+        Boolean val = true;
+
+        if (this.errorMessage != noError) {
+            val = false;
+        }
+        firePropertyChange("enableDisableButton", this.setButtonEnable, this.setButtonEnable = val);
+    }
+    /**
+     * @return if button needs to be enabled or disabled
+     */
+    public Boolean getEnableDisableButton() {
+        return this.setButtonEnable;
+    }
 }

@@ -72,7 +72,7 @@ public class JournalViewerView {
 
     private Label lblError;
     private Label lblLastUpdate;
-    private Label warning;
+    private Label error;
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
@@ -156,8 +156,10 @@ public class JournalViewerView {
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
 
-        warning = new Label(searchControls, SWT.NONE);
-        warning.setText("             ");
+        error = new Label(searchControls, SWT.NONE);
+        error.setSize(30, 10);
+        error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+
 
 
         for (final JournalField property : JournalField.values()) {
@@ -312,9 +314,11 @@ public class JournalViewerView {
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(warning),
-                BeanProperties.value("validRange").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(error),
+                BeanProperties.value("errorMessage").observe(model));
         
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
+                BeanProperties.value("enableDisableButton").observe(model));
 
         spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
             @Override
