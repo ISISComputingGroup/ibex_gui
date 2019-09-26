@@ -167,6 +167,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.log</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.blocks.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.blocks.presentation</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
