@@ -24,9 +24,6 @@ import java.util.Locale;
 
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
