@@ -176,7 +176,7 @@ public class SummaryPanel extends Composite {
      * #2527.
      */
     private void bindSynopticList() {
-        Synoptic.getInstance().availableSynopticsInfo().addObserver(new Observer<Collection<SynopticInfo>>() {
+        Synoptic.getInstance().availableSynopticsInfo().subscribe(new Observer<Collection<SynopticInfo>>() {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {

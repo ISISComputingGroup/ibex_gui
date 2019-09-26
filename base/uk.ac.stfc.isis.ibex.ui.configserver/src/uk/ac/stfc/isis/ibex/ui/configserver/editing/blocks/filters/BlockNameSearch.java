@@ -32,6 +32,11 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 public class BlockNameSearch extends ViewerFilter {
 	private String searchString = ".*";
 	
+	/**
+	 * Set the search text.
+	 * 
+	 * @param s the search text to set
+	 */
 	public void setSearchText(String s) {
 	    // ensure that the value can be used for matching 
 	    this.searchString = ".*" + s + ".*";

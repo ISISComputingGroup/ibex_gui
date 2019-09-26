@@ -29,7 +29,14 @@ import com.google.common.base.Joiner;
  */
 public final class PVAddress {
 	
+    /**
+     * The colon character used in PV addresses.
+     */
 	public static final String COLON = ":";
+	
+	/**
+	 * A dot character used in PV addresses.
+	 */
 	public static final String DOT = ".";
 	
 	private final String separator;
@@ -49,22 +56,52 @@ public final class PVAddress {
 		terms.add(term);
 	}
 	
+	/**
+	 * Creates a PV address that starts with a prefix.
+	 * 
+	 * @param prefix the prefix for the address to start with.
+	 * @return a new PVAddress with a prefix
+	 */
 	public static PVAddress startWith(String prefix) {
 		return new PVAddress(prefix);
 	}
 	
+	/**
+	 * Appends a term to the PV address.
+	 * 
+	 * @param term to term to append to the address.
+	 * @return the new PV Address with the term appended to it.
+	 */
 	public PVAddress append(String term) {
 		return new PVAddress(this.toString(), this.separator, term);
 	}
 	
+	/**
+	 * Appends a field to a PV address.
+	 * 
+	 * @param value the field to append.
+	 * @return the new PV address with a field appended to it.
+	 */
 	public PVAddress field(String value) {
 		return changeSeparator(DOT).append(value).changeSeparator(separator);
 	}
 	
+	/**
+	 * Appends a term to the PV address and returns it as a string.
+	 * 
+	 * @param term the term to append to the address.
+	 * @return the complete PV address as a string.
+	 */
 	public String endWith(String term) {
 		return append(term).toString();
 	}
 
+	/**
+     * Appends a field to the PV address and returns it as a string.
+     * 
+     * @param term the field to append to the address.
+     * @return the complete PV address as a string.
+     */
 	public String endWithField(String term) {
 		return field(term).toString();
 	}

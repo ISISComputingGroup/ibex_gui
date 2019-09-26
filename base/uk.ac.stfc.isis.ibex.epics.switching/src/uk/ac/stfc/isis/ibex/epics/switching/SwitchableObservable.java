@@ -7,13 +7,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -22,11 +22,13 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This is class allows the source observable in ForwardingObservable to be
  * switched. The old observable is closed when it does so.
- * 
+ *
  * @param <T>
  *            The type of the value that you are observing.
  */
@@ -37,7 +39,7 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
 
     /**
      * Sets up a switchable observable with a closable source.
-     * 
+     *
      * @param source the source observable
      */
     public SwitchableObservable(ClosableObservable<T> source) {
@@ -68,7 +70,7 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
 
     /**
      * Currently only used for testing.
-     * 
+     *
      * @return The source observable.
      */
     public ClosableObservable<T> getSource() {
@@ -77,30 +79,28 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
 
     /**
      * Set a new source to observe.
-     * 
+     *
      * There is a type conversion issue here. If the type is wrong then the new
      * source will not be set.
-     * 
+     *
      * @param newSource
      *            The source to observe
      */
     @SuppressWarnings("unchecked")
     @Override
     public void setSource(Closable newSource) {
-        
+
         ClosableObservable<T> castNewSource;
 
         try {
             castNewSource = (ClosableObservable<T>) newSource;
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
             return;
         }
-        
+
         super.setSource(castNewSource);
         source.close();
         this.source = castNewSource;
     }
-
-
 }

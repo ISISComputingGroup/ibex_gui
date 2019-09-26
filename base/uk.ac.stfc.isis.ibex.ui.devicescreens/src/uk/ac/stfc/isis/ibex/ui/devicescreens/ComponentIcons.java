@@ -150,6 +150,7 @@ public final class ComponentIcons {
             case GAS_EXCHANGE:
                 return "gas_exchange";
             case CRYO_LEVEL_GAUGE:
+            case CP2800:
                 return "cryo_level_gauge";
             case OSCILLATING_COLLIMATOR:
                 return "oscillating_collimator";
@@ -179,6 +180,8 @@ public final class ComponentIcons {
             	return "water_bath_valve";
             case REFLECTOMETRY:
             	return "reflectometry";
+            case SENSOR:
+            	return "sensor";
             case FILM_FABRICATION:
             	return "film_fabrication";
             case OBIS_LASER_REMOTE:

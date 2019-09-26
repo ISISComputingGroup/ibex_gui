@@ -28,6 +28,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * A table displaying the run control settings.
+ */
 @SuppressWarnings({ "checkstyle:magicnumber" })
 public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 

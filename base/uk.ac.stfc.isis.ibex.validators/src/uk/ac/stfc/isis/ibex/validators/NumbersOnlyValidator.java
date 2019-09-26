@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.IStatus;
 /**
  * Validates that a field may only contain numeric characters.
  */
-public class NumbersOnlyValidator implements IValidator {
+public class NumbersOnlyValidator implements IValidator<String> {
 
     private final Pattern numbersOnly = Pattern.compile("\\d*");
 
@@ -43,8 +43,8 @@ public class NumbersOnlyValidator implements IValidator {
      * @param value The object to validate
      * @return The status of the validation
      */
-    public IStatus validate(Object value) {
-        if (value != null && numbersOnly.matcher(value.toString()).matches()) {
+    public IStatus validate(String value) {
+        if (value != null && numbersOnly.matcher(value).matches()) {
             return ValidationStatus.ok();
         }
         return ValidationStatus.error(value + " contains a non-numeric!");

@@ -21,8 +21,16 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.beamline;
 
 import org.eclipse.swt.SWT;
 
+/**
+ * An alternating dashed and dotted line for displaying the beamline in the synoptic view.
+ */
 public class DotDashedLine extends Line {
 
+    /**
+     * Create a DotDashedLine with the specified width.
+     * 
+     * @param width the width of the line
+     */
 	public DotDashedLine(int width) {
 		super(width);
 	}

@@ -22,18 +22,10 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 /**
  * The root interface in the Observable hierarchy. Defines that implementors can
  * be subscribed to and should keep a cached copy of its values.
- * 
+ *
  * @param <T> The type of the value being observed.
  */
-public interface Observable<T> {
-
-    /**
-     * Adds an observer that should be notified of changes.
-     *
-     * @param observer the observer
-     * @return the subscription; allowing the observer to stop observing
-     */
-    Subscription addObserver(Observer<T> observer);
+public interface Observable<T> extends Subscribable<Observer<T>> {
 
     /**
      * Gets the value of the observer. Often has a special value if the

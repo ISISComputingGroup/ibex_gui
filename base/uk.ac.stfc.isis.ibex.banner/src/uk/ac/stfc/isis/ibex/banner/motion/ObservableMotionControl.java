@@ -43,7 +43,7 @@ public class ObservableMotionControl extends ModelAdapter {
      *            The writable to write to so as to stop all motion.
      */
 	public ObservableMotionControl(Writable<Long> stop) {
-		this.stop.writeTo(stop);
+		this.stop.subscribe(stop);
 		stop.subscribe(new SameTypeWriter<Long>() {
 			@Override
 			public void onCanWriteChanged(boolean canwrite) {

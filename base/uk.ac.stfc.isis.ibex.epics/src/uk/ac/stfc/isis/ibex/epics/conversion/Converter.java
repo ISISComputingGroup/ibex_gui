@@ -29,7 +29,15 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
  *            The type to convert to.
  */
 public abstract class Converter<A, B> {
-			
+	
+    /**
+     * Apply one converter to another to create a converter with multiple stages.
+     * Apply a converter from B to C to a converted form A to B to get a converter from A to C.
+     * 
+     * @param <C> the type to convert to
+     * @param converter a converter from B to C
+     * @return a converter from A to C
+     */
 	public <C> Converter<A, C> apply(final Converter<B, C> converter) {
 		final Converter<A, B> self = this;
 		return new Converter<A, C>() {
@@ -40,6 +48,13 @@ public abstract class Converter<A, B> {
 		};
 	}
 	
+	/**
+	 * Convert A into B.
+	 * 
+	 * @param value the value to convert
+	 * @return the converted value
+	 * @throws ConversionException if a conversion error occurs
+	 */
 	public abstract B convert(A value) throws ConversionException;
 }
    

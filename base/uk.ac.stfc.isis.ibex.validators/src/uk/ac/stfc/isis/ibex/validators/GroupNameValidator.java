@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * Validator to ensure that group names are correct.
  */
-public class GroupNameValidator implements IValidator {
+public class GroupNameValidator implements IValidator<String> {
     
     /** Source to use in the Message displayer. */
     private static final String ERROR_MESSAGE_SOURCE = "GroupNameValidator";
@@ -85,7 +85,7 @@ public class GroupNameValidator implements IValidator {
      * @return error with message if group name is invalid; ok otherwise
      */
 	@Override
-	public IStatus validate(Object text) {
+	public IStatus validate(String text) {
         
         if (groupRules == null) {
             LOG.error("Group rules are null and should not be");
@@ -97,7 +97,7 @@ public class GroupNameValidator implements IValidator {
             return setErrorAndReturnStatus(ValidationStatus.ok());
         }
 	    
-        IStatus status = groupRules.validate((String) text, WHAT_IS_BEING_VALIDATED);
+        IStatus status = groupRules.validate(text, WHAT_IS_BEING_VALIDATED);
         if (!status.isOK()) {
 
             return setErrorAndReturnStatus(status);
@@ -111,11 +111,11 @@ public class GroupNameValidator implements IValidator {
                 }
             }
 
-            if (isDuplicateName((String) text)) {
+            if (isDuplicateName(text)) {
                 status = ValidationStatus.error(DUPLICATE_GROUP_MESSAGE);
                 return setErrorAndReturnStatus(status);
             }
-            if (isNameOther((String) text)) {
+            if (isNameOther(text)) {
                 status = ValidationStatus.error(OTHER_NAME_MESSAGE);
                 return setErrorAndReturnStatus(status);
             }

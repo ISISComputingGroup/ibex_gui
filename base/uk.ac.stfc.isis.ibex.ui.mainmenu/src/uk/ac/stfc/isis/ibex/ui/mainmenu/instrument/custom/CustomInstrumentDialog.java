@@ -51,6 +51,12 @@ public class CustomInstrumentDialog extends TitleAreaDialog {
     private PropertyChangeListener errorListener;
     private Button okButton;
 
+    /**
+     * Create the dialog.
+     * 
+     * @param parentShell the parent shell of the dialog
+     * @param instrumentName the name of the instrument
+     */
     public CustomInstrumentDialog(Shell parentShell, String instrumentName) {
         super(parentShell);
 
@@ -59,6 +65,9 @@ public class CustomInstrumentDialog extends TitleAreaDialog {
         configViewModel.addPropertyChangeListener("error", errorListener);
     }
 
+    /**
+     * @return the selected instrument
+     */
     public InstrumentInfo getSelectedCustomInstrument() {
         return selectedCustomInstrument;
     }

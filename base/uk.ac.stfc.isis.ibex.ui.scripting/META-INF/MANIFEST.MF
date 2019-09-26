@@ -4,12 +4,13 @@ Bundle-Name: Scripting
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.scripting;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.scripting.Consoles
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.scripting
-Require-Bundle: org.eclipse.swt;bundle-version="3.104.2",
+Require-Bundle: javax.annotation;bundle-version="1.2.0",
+ javax.activation;bundle-version="1.1.0",
  javax.inject;bundle-version="1.0.0",
- javax.annotation;bundle-version="1.2.0",
+ org.eclipse.swt;bundle-version="3.104.2",
  uk.ac.stfc.isis.ibex.e4.ui;bundle-version="1.0.0",
  org.eclipse.e4.ui.model.workbench,
  org.eclipse.e4.core.contexts,
@@ -33,4 +34,8 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.104.2",
  org.python.pydev.shared_ui;bundle-version="5.2.0",
  org.eclipse.e4.core.services,
  org.eclipse.osgi.services,
- uk.ac.stfc.isis.ibex.ui.graphing
+ uk.ac.stfc.isis.ibex.ui.graphing,
+ javax.xml.bind;bundle-version="2.2.12",
+ org.eclipse.e4.core.di;bundle-version="1.7.100",
+ org.apache.commons.lang;bundle-version="2.6.0"
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scripting

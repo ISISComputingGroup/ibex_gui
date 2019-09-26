@@ -30,15 +30,17 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
  * Used for data-binding.
  * 
  */
-public class RunControlSymbolConverter extends Converter {
+public class RunControlSymbolConverter extends Converter<RuncontrolState, String> {
+    
+    /**
+     * Constructor.
+     */
     public RunControlSymbolConverter() {
         super(RuncontrolState.class, String.class);
     }
 
     @Override
-    public Object convert(Object fromObject) {
-        RuncontrolState state = (RuncontrolState) fromObject;
-
+    public String convert(RuncontrolState state) {
         if (state == RuncontrolState.ENABLED_IN_RANGE) {
             // Checkmark
             return "\u2713";

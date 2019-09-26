@@ -66,6 +66,9 @@ public class IocParameters {
      * Whether this ioc is running.
      * @return - true if ioc is running
      */
+    /**
+     * @return true if the IOC is running, false otherwise.
+     */
 	public boolean isRunning() {
 		return running;
 	}

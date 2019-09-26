@@ -112,7 +112,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b93</wuid>
       <x>0</x>
-      <y>12</y>
+      <y>24</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -154,7 +154,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b92</wuid>
       <x>0</x>
-      <y>42</y>
+      <y>54</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -196,7 +196,7 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b91</wuid>
       <x>0</x>
-      <y>72</y>
+      <y>84</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -238,7 +238,47 @@
       <width>261</width>
       <wuid>28840e26:169d9726b77:-7b90</wuid>
       <x>0</x>
-      <y>102</y>
+      <y>114</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <group_name></group_name>
+      <height>20</height>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Linking Container</name>
+      <opi_file>../set_point_column_labels.opi</opi_file>
+      <resize_behaviour>1</resize_behaviour>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <tooltip></tooltip>
+      <visible>true</visible>
+      <widget_type>Linking Container</widget_type>
+      <width>182</width>
+      <wuid>-166f7f1c:16bdb17a9a5:-73c6</wuid>
+      <x>70</x>
+      <y>5</y>
     </widget>
   </widget>
 </display>

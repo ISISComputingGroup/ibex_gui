@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CSS ISIS
+Bundle-SymbolicName: uk.ac.stfc.isis.scriptgenerator.product;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.scriptgenerator.product
+Require-Bundle: org.eclipse.ui;bundle-version="3.111.0",
+ org.eclipse.core.runtime;bundle-version="3.15.100",
+ org.eclipse.core.resources;bundle-version="3.13.200",
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"

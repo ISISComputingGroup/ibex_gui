@@ -22,11 +22,39 @@ package uk.ac.stfc.isis.ibex.model;
 import java.beans.PropertyChangeListener;
 
 public interface IModelObject {
+    /**
+     * Adds a property change listener.
+     * 
+     * @param listener
+     *            the listener
+     */
 	void addPropertyChangeListener(PropertyChangeListener listener);
 
+	/**
+     * Remove a property change listener.
+     * 
+     * @param listener
+     *            the listener
+     */
 	void removePropertyChangeListener(PropertyChangeListener listener);
 
+	/**
+     * Adds a property change listener.
+     * 
+     * @param propertyName
+     *            the property name
+     * @param listener
+     *            the listener
+     */
 	void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
+	/**
+     * Removes a property change listener.
+     * 
+     * @param propertyName
+     *            the property name
+     * @param listener
+     *            the listener
+     */
     void removePropertyChangeListener(String propertyName, PropertyChangeListener listener); 
 }

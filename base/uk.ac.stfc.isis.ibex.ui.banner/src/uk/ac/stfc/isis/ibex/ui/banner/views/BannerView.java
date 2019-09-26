@@ -90,7 +90,7 @@ public class BannerView {
         glBannerItemPanel.marginHeight = 3;
         glBannerItemPanel.horizontalSpacing = 15;
 
-        banner.observables().bannerDescription.addObserver(modelAdapter);
+        banner.observables().bannerDescription.subscribe(modelAdapter);
         
         Indicator currentConfig = new Indicator(parent, SWT.NONE, new CurrentConfigModel(), ALARM_FONT);
         GridData gdCurrentConfig = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
