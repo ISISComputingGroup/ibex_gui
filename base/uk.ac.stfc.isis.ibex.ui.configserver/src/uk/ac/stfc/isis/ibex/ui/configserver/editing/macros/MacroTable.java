@@ -34,8 +34,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
@@ -47,11 +45,11 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
  * The table for editing IOC macros.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class MacroTable extends DataboundTable<Macro> {
+public class MacroTable extends DataboundTable<MacroViewModel> {
 	
-    private final CellDecorator<Macro> rowDecorator = new MacroRowCellDecorator();
+    private final CellDecorator<MacroViewModel> rowDecorator = new MacroRowCellDecorator();
     private MacroValueValidator valueValidator;
-    private StringEditingSupport<Macro> editingSupport;
+    private StringEditingSupport<MacroViewModel> editingSupport;
     private boolean canEdit;
     private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
     
@@ -72,7 +70,7 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	@Override
-	public void setRows(Collection<Macro> rows) {
+	public void setRows(Collection<MacroViewModel> rows) {
 		super.setRows(rows);
 	}
 
@@ -87,23 +85,23 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void name() {
-		createColumn("Macro name", 5, new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+		createColumn("Macro name", 5, new DataboundCellLabelProvider<MacroViewModel>(observeProperty("name")) {
 			@Override
-			protected String stringFromRow(Macro row) {
+			protected String stringFromRow(MacroViewModel row) {
 				return row.getName();
 			}
 		});
 	}
 	
 	private void value() {
-		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<Macro>(observeProperty("value"), Arrays.asList(rowDecorator)) {
+		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<MacroViewModel>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
-			protected String stringFromRow(Macro row) {
+			protected String stringFromRow(MacroViewModel row) {
 			    return row.getValueDisplay();
 			}
 		});
 		
-		editingSupport = new StringEditingSupport<Macro>(viewer(), Macro.class) {
+		editingSupport = new StringEditingSupport<MacroViewModel>(viewer(), MacroViewModel.class) {
             
             @Override
             protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
@@ -117,13 +115,13 @@ public class MacroTable extends DataboundTable<Macro> {
             }
 
             @Override
-            protected String valueFromRow(Macro row) {
+            protected String valueFromRow(MacroViewModel row) {
                 // This is called when the user clicks on a cell to edit it.
                 return row.getEditCellValue();
             }
 
             @Override
-            protected void setValueForRow(Macro row, String value) {
+            protected void setValueForRow(MacroViewModel row, String value) {
                 if (valueValidator.validate(value) == ValidationStatus.ok()) {
                     row.setValue(Optional.of(value));
                 } else {
@@ -136,52 +134,52 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void useDefault() {
-	    createColumn("Use Default?", 3, false, new CheckboxLabelProvider<Macro>(observeProperty("useDefault")) {
+	    createColumn("Use Default?", 3, false, new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault")) {
 
 	        @Override
-	        protected boolean checked(Macro macro) {
+	        protected boolean checked(MacroViewModel macro) {
 	            return macro.getUseDefault();
 	        }
 	        
 	        @Override
-	        protected void setChecked(Macro macro, boolean checked) {
-	            macro.updateFromUseDefaultCheck(checked);
+	        protected void setChecked(MacroViewModel macro, boolean checked) {
+	            macro.setUseDefault(checked);
 	        }
 	        
             @Override
-            protected boolean isEditable(Macro model) {
+            protected boolean isEditable(MacroViewModel model) {
                 return canEdit;
             }
 	    });
 	}
 	
 	private void defaultValue() {
-	    createColumn("Default", 5, new DataboundCellLabelProvider<Macro>(observeProperty("defaultValue")) {
+	    createColumn("Default", 5, new DataboundCellLabelProvider<MacroViewModel>(observeProperty("defaultValue")) {
 	        @Override
 	        public void update(ViewerCell cell) {
 	            super.update(cell);
 	            cell.setForeground(READONLY_COLOR);
 	        }
             @Override
-            protected String stringFromRow(Macro row) {
+            protected String stringFromRow(MacroViewModel row) {
                 return row.getDefaultDisplay();
             }
         });
     }
 	
 	private void description() {
-		createColumn("Description", 12, new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
+		createColumn("Description", 12, new DataboundCellLabelProvider<MacroViewModel>(observeProperty("description")) {
 			@Override
-			protected String stringFromRow(Macro row) {
+			protected String stringFromRow(MacroViewModel row) {
 				return row.getDescription();
 			}
 		});	
 	}
 	
 	private void pattern() {
-		createColumn("Pattern", 6, new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
+		createColumn("Pattern", 6, new DataboundCellLabelProvider<MacroViewModel>(observeProperty("pattern")) {
 			@Override
-			protected String stringFromRow(Macro row) {
+			protected String stringFromRow(MacroViewModel row) {
 				return row.getPattern();
 			}
 		});	

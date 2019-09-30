@@ -24,13 +24,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
 /**
  * The cell decorator used to display values in grey if they are default.
  */
-public class MacroRowCellDecorator extends CellDecorator<Macro> {
+public class MacroRowCellDecorator extends CellDecorator<MacroViewModel> {
 	
 	private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
 	private static final Color DEFAULT_COLOR = ResourceManager.getColor(SWT.COLOR_BLACK);

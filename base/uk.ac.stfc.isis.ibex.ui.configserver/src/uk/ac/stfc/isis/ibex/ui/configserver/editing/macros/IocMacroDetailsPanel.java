@@ -20,13 +20,11 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -36,7 +34,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
@@ -52,7 +49,6 @@ public class IocMacroDetailsPanel extends Composite {
 	private MacroValueValidator valueValidator;
 	private Label macroValueErrorLabel;
 	
-	private Macro macro;
 	private Label errorIconLabel;
     private Image scaled;
     
@@ -72,16 +68,7 @@ public class IocMacroDetailsPanel extends Composite {
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
-        displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent arg0) {
-                IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-                if (selection.size() > 0) {
-                    Macro macro = (Macro) selection.getFirstElement();
-                    setSelectedMacro(macro);
-                }
-            }
-        });
+        displayMacrosTable.addSelectionChangedListener(arg0 -> setSelectedMacro(displayMacrosTable.firstSelectedRow()));
 
         Composite cmpSelectedPv = new Composite(this, SWT.NONE);
         cmpSelectedPv.setLayout(new GridLayout(3, false));
@@ -115,12 +102,11 @@ public class IocMacroDetailsPanel extends Composite {
      *            If the IOC is editable
      */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
-		this.macro = null;
 		displayMacrosTable.setCanEdit(canEdit);
 		
         DataBindingContext bindingContext = new DataBindingContext();
 
-		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
+		valueValidator = new MacroValueValidator(null, macroValueErrorLabel);
 		
 		valueValidator.validate("");
 		displayMacrosTable.setValidator(valueValidator);
@@ -128,19 +114,17 @@ public class IocMacroDetailsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
 				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
 		
-		displayMacrosTable.setRows(macros);
+		displayMacrosTable.setRows(macros.stream().map(macro -> new MacroViewModel(macro)).collect(Collectors.toList()));
 		displayMacrosTable.deselectAll();
 	}
 	
 	/**
 	 * Set a new selected macro.
 	 * 
-	 * @param macro The macro to set
+	 * @param macroViewModel The macro to set
 	 */
-	public void setSelectedMacro(Macro macro) {		
-		this.macro = macro;
-		
-		valueValidator.setMacro(macro);
+	public void setSelectedMacro(MacroViewModel macroViewModel) {			
+		valueValidator.setMacro(macroViewModel);
 	}
 
     @Override

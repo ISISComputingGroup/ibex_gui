@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver.tests.editing;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.tests;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -35,7 +35,8 @@ import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroValueValidator;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroViewModel;
 
 @SuppressWarnings("checkstyle:methodname")
 public class MacroValueValidatorTest {
@@ -52,6 +53,9 @@ public class MacroValueValidatorTest {
 	
 	Macro macro;
 	Macro macroWithInvalidPattern;
+	
+	MacroViewModel macroViewModel;
+	MacroViewModel macroWithInvalidPatternViewModel;
 
 	@Captor
 	private ArgumentCaptor<PropertyChangeEvent> changeCaptor;
@@ -65,10 +69,12 @@ public class MacroValueValidatorTest {
 		showWarningIconListener = mock(PropertyChangeListener.class);
 		
 		macro = new Macro("name", "value", "description", PATTERN, "", null);
+		macroViewModel = new MacroViewModel(macro);
 		macroWithInvalidPattern = new Macro("name", "value", "description", INVALID_PATTERN, "", null);
+		macroWithInvalidPatternViewModel = new MacroViewModel(macroWithInvalidPattern);
 	}
 	
-	public MacroValueValidator getValidator(Macro macro) {
+	public MacroValueValidator getValidator(MacroViewModel macro) {
 		MacroValueValidator validator = new MacroValueValidator(macro, messageDisplayer);
 		
 		validator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
@@ -129,7 +135,7 @@ public class MacroValueValidatorTest {
 	@Test
     public void if_validation_string_empty_then_OK() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate("");
@@ -141,7 +147,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_empty_then_showWarningIcon_property_left_as_false() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		macroValidator.validate("");
@@ -153,7 +159,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_valid_then_OK() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(VALID_VALUE);
@@ -165,7 +171,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_valid_then_blank_warning_message() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(VALID_VALUE);
@@ -177,7 +183,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_valid_then_nameIsValid_property_stays_as_true() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		macroValidator.validate(VALID_VALUE);
@@ -189,7 +195,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_valid_then_showWarningIcon_property_stays_as_false() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		macroValidator.validate(VALID_VALUE);
@@ -201,7 +207,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_invalid_then_not_OK() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
@@ -213,7 +219,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_invalid_then_blank_warning_message() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
@@ -225,7 +231,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_invalid_then_nameIsValid_property_change_to_false() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
@@ -238,7 +244,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_validation_string_invalid_then_showWarningIcon_property_change_to_true() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+		MacroValueValidator macroValidator = getValidator(macroViewModel);
 		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
@@ -251,7 +257,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_pattern_invalid_invalid_then_not_OK() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPatternViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
@@ -263,7 +269,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_pattern_invalid_then_blank_warning_message() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPatternViewModel);
 		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
@@ -275,7 +281,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_pattern_invalid_then_nameIsValid_property_change_to_false() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPatternViewModel);
 		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
@@ -288,7 +294,7 @@ public class MacroValueValidatorTest {
 	@Test
 	public void if_pattern_invalid_then_showWarningIcon_property_change_to_true() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPatternViewModel);
 		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
