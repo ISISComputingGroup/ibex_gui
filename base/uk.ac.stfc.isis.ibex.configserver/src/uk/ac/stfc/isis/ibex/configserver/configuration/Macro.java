@@ -36,7 +36,7 @@ public class Macro extends ModelObject {
      */
 	private String name;
 	/**
-	 * The currently set value of the macro.
+	 * The currently set value of the macro. If this is null the default is used.
 	 */
 	private String value;
 	/**
@@ -55,10 +55,6 @@ public class Macro extends ModelObject {
 	 * Whether the macro has a default value or not (or if it is unknown).
 	 */
 	private HasDefault hasDefault;
-	/**
-	 * Whether the default value should be used or not.
-	 */
-	private transient boolean useDefault;
 	
 	/**
 	 * An enum representing the existence or not of a default value.
@@ -99,8 +95,7 @@ public class Macro extends ModelObject {
 	 * @param other exiting Macro to clone
 	 */
 	public Macro(Macro other) {
-		this(other.getName(), other.getValue().isPresent() ? other.getValue().get() : null,
-		        other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault());
+		this(other.getName(), other.getValue(), other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault());
 	}
 
 	/**
@@ -125,7 +120,7 @@ public class Macro extends ModelObject {
 	/**
      * @return if the macro has a default, does not have a default, or unknown. 
      */
-    protected HasDefault getHasDefault() {
+    public HasDefault getHasDefault() {
         return hasDefault;
     }
 
@@ -150,35 +145,15 @@ public class Macro extends ModelObject {
 	 * 
 	 * @param value new Macro value
 	 */
-	public void setValue(Optional<String> value) {
-	    Optional<String> oldValue = getValue();
-	    this.value = value.isPresent() ? value.get() : null;
-		firePropertyChange("value", oldValue, value);
+	public void setValue(String value) {
+		firePropertyChange("value", this.value, this.value = value);
 	}
 
 	 /**
      * @return macro value
      */
-	public Optional<String> getValue() {
-		return Optional.ofNullable(value);
-	}
-	
-	/**
-	 * @return macro value for displaying to the user
-	 */
-	public String getValueDisplay() {
-	    return getValue().orElse("(default)");
-	}
-	
-	/**
-	 * @return macro value to put in the cell when the user clicks on it to edit it
-	 */
-	public String getEditCellValue() {
-	    if (useDefault) {
-	        setUseDefault(false);
-	        setValue(Optional.of(""));
-	    }
-	    return getValueDisplay();
+	public String getValue() {
+		return value;
 	}
 
 	/**
@@ -219,47 +194,6 @@ public class Macro extends ModelObject {
      */
     public String getDefaultValue() {
         return defaultValue;
-    }
-    
-    /**
-     * @return default macro value for displaying to the user
-     */
-    public String getDefaultDisplay() {
-        if (hasDefault == HasDefault.YES) {
-            return defaultValue.equals("") ? "(default is the empty string)" : defaultValue;
-        } else if (hasDefault == HasDefault.NO) {
-            return "(no default)";
-        } else {
-            return "(default unknown)";
-        }
-    }
-    
-    /**
-     * @return whether the default value should be used or not
-     */
-    public boolean getUseDefault() {
-        return useDefault;
-    }
-
-    /**
-     * @param useDefault whether the default value should be used or not
-     */
-    public void setUseDefault(boolean useDefault) {
-        firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
-    }
-    
-    /**
-     * Updates the useDefault and the value of the macro given the 'Use Default?' checkbox being checked or unchecked.
-     * 
-     * @param checked if the checkbox is checked or not
-     */
-    public void updateFromUseDefaultCheck(boolean checked) {
-        setUseDefault(checked);
-        if (checked) {
-            setValue(Optional.empty());
-        } else {
-            setValue(Optional.of(""));
-        }
     }
 
 	@Override

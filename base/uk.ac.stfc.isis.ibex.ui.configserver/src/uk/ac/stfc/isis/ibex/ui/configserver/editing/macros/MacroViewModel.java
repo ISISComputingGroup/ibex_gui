@@ -3,10 +3,18 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class MacroViewModel extends ModelObject {
 	private final Macro macro;
+	
+	private String displayDefault;
+	
+	/**
+	 * Whether the default value should be used or not.
+	 */
+	private boolean useDefault;
 	
 	public MacroViewModel(Macro macro) {
 		this.macro = macro;
@@ -14,8 +22,9 @@ public class MacroViewModel extends ModelObject {
 		macro.addPropertyChangeListener("description", passThrough());
 		macro.addPropertyChangeListener("pattern", passThrough());
 		macro.addPropertyChangeListener("value", passThrough());
-		macro.addPropertyChangeListener("useDefault", passThrough());
-		macro.addPropertyChangeListener("defaultValue", passThrough());
+		macro.addPropertyChangeListener("defaultValue", arg0 -> setDisplayDefault(macro.getDefaultValue()));
+
+		setUseDefault(macro.getValue() == null);
 	}
 	
 	public String getDescription() {
@@ -27,35 +36,78 @@ public class MacroViewModel extends ModelObject {
 	}
 	
 	public void setValue(Optional<String> value) {
-		macro.setValue(value);
+		macro.setValue(value.isPresent() ? value.get() : null);
 	}
 	
 	public Optional<String> getValue() {
-		return macro.getValue();
+		return Optional.ofNullable(macro.getValue());
 	}
 	
 	public String getPattern() {
 		return macro.getPattern();
 	}
 
-	public boolean getUseDefault() {
-		return macro.getUseDefault();
+    /**
+     * @return whether the default value should be used or not
+     */
+    public boolean getUseDefault() {
+        return useDefault;
+    }
+
+    /**
+     * @param useDefault whether the default value should be used or not
+     */
+    public void setUseDefault(boolean useDefault) {
+        firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
+    }
+	
+    /**
+     * @return default macro value for displaying to the user
+     */
+    public String getDisplayDefault() {
+    	HasDefault hasDefault = macro.getHasDefault();
+        if (hasDefault == HasDefault.YES) {
+            return getValue().get().equals("") ? "(default is the empty string)" : macro.getDefaultValue();
+        } else if (hasDefault == HasDefault.NO) {
+            return "(no default)";
+        } else {
+            return "(default unknown)";
+        }
+    }
+    
+	private void setDisplayDefault(String displayDefault) {
+		firePropertyChange("displayDefault", this.displayDefault, this.displayDefault = getDisplayDefault());
 	}
 	
-	public void setUseDefault(boolean checked) {
-		macro.setUseDefault(checked);
-	}
-	
-	public String getDefaultDisplay() {
-		return macro.getDefaultDisplay();
-	}
-	
+	/**
+	 * @return macro value to put in the cell when the user clicks on it to edit it
+	 */
 	public String getEditCellValue() {
-		return macro.getEditCellValue();
+	    if (getUseDefault()) {
+	        setUseDefault(false);
+	        setValue(Optional.of(""));
+	    }
+	    return getDisplayValue();
 	}
 	
-	public String getValueDisplay() {
-		return macro.getValueDisplay();
+	/**
+	 * @return macro value for displaying to the user
+	 */
+	public String getDisplayValue() {
+	    return getValue().orElse("(default)");
 	}
 	
+    /**
+     * Updates the useDefault and the value of the macro given the 'Use Default?' checkbox being checked or unchecked.
+     * 
+     * @param checked if the checkbox is checked or not
+     */
+    public void updateFromUseDefaultCheck(boolean checked) {
+        setUseDefault(checked);
+        if (checked) {
+            setValue(Optional.empty());
+        } else {
+            setValue(Optional.of(""));
+        }
+    }
 }

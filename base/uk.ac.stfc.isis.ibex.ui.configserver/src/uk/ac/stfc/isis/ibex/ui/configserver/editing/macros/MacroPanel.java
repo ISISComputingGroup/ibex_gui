@@ -139,10 +139,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			displayMacros.add(displayMacro);
 			
 			displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
-			
-			if (!displayMacro.getValue().isPresent()) {
-			    displayMacro.setUseDefault(true);
-			}
 		}
 		
 		return displayMacros;
@@ -154,7 +150,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			public void propertyChange(PropertyChangeEvent newValue) {
 			    Optional<Macro> existingMacro = setMacros.stream().filter(m -> m.getName().equals(displayMacro.getName())).findFirst();
 			    if (existingMacro.isPresent()) {
-			        if (displayMacro.getValue().isPresent()) {
+			        if (displayMacro.getValue() != null) {
 			            existingMacro.get().setValue(displayMacro.getValue());
 			        } else {
 			            setMacros.remove(existingMacro.get());

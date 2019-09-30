@@ -97,7 +97,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 		TableViewerColumn value = createColumn("Value", 5, new DecoratedCellLabelProvider<MacroViewModel>(observeProperty("value"), Arrays.asList(rowDecorator)) {
 			@Override
 			protected String stringFromRow(MacroViewModel row) {
-			    return row.getValueDisplay();
+			    return row.getDisplayValue();
 			}
 		});
 		
@@ -143,7 +143,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	        
 	        @Override
 	        protected void setChecked(MacroViewModel macro, boolean checked) {
-	            macro.setUseDefault(checked);
+	            macro.updateFromUseDefaultCheck(checked);
 	        }
 	        
             @Override
@@ -162,7 +162,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	        }
             @Override
             protected String stringFromRow(MacroViewModel row) {
-                return row.getDefaultDisplay();
+                return row.getDisplayDefault();
             }
         });
     }

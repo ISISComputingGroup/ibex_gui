@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver.tests.configuration;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.tests;
 
 import static org.junit.Assert.*;
 
@@ -26,15 +26,17 @@ import java.util.Optional;
 import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroViewModel;
 
 @SuppressWarnings("checkstyle:methodname")
-public class MacroTest {
+public class MacroViewModelTest {
     
     @Test
     public void test_GIVEN_macro_with_default_WHEN_get_default_display_THEN_default_returned() {
         Macro m = new Macro("name", "value", "description", "pattern", "defaultValue", HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
         
-        String defaultText = m.getDefaultDisplay();
+        String defaultText = macroViewModel.getDisplayDefault();
         
         assertEquals("defaultValue", defaultText);
     }
@@ -42,8 +44,9 @@ public class MacroTest {
     @Test
     public void test_GIVEN_macro_with_empty_string_default_WHEN_get_default_display_THEN_empty_string_message_returned() {
         Macro m = new Macro("name", "value", "description", "pattern", "", HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
         
-        String defaultText = m.getDefaultDisplay();
+        String defaultText = macroViewModel.getDisplayDefault();
         
         assertEquals("(default is the empty string)", defaultText);
     }
@@ -51,8 +54,9 @@ public class MacroTest {
     @Test
     public void test_GIVEN_macro_with_no_default_WHEN_get_default_display_THEN_no_default_message_returned() {
         Macro m = new Macro("name", "value", "description", "pattern", null, HasDefault.NO);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
         
-        String defaultText = m.getDefaultDisplay();
+        String defaultText = macroViewModel.getDisplayDefault();
         
         assertEquals("(no default)", defaultText);
     }
@@ -60,62 +64,10 @@ public class MacroTest {
     @Test
     public void test_GIVEN_macro_with_unknown_default_WHEN_get_default_display_THEN_unknown_default_message_returned() {
         Macro m = new Macro("name", "value", "description", "pattern", null, HasDefault.UNKNOWN);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
         
-        String defaultText = m.getDefaultDisplay();
+        String defaultText = macroViewModel.getDisplayDefault();
         
         assertEquals("(default unknown)", defaultText);
     }
-	
-	@Test
-	public void test_WHEN_creating_a_macro_with_string_parameters_THEN_macro_has_correct_parameters() {
-		// Arrange
-		// Act
-		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "", null);
-		
-		// Assert
-		assertEquals(m.getName(), "macro1");
-		assertEquals(m.getValue().get(), "value1");
-		assertEquals(m.getDescription(), "a test macro");
-		assertEquals(m.getPattern(), ".+");
-	}
-	
-	@Test
-	public void test_GIVEN_a_macro_WHEN_setting_a_new_value_THEN_value_is_set() {
-		// Arrange
-		Macro m = new Macro("macro1", "value1", "a test macro", ".+", "", null);
-		
-		// Act
-		m.setValue(Optional.of("new value"));
-		
-		// Assert
-		assertEquals(m.getValue().get(), "new value");
-	}
-	
-	@Test
-	public void test_GIVEN_a_macro_WHEN_create_new_macro_with_copy_constructor_THEN_new_macro_has_correct_parameters() {
-		// Arrange
-		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "", null);
-		
-		// Act
-		Macro m = new Macro(n);
-		
-		// Assert
-		assertEquals(m.getName(), "macro1");
-		assertEquals(m.getValue().get(), "value1");
-		assertEquals(m.getDescription(), "a test macro");
-		assertEquals(m.getPattern(), ".+");
-	}
-	
-	@Test
-	public void test_GIVEN_a_copied_macro_WHEN_setting_a_new_value_THEN_value_is_set() {
-		// Arrange
-		Macro n = new Macro("macro1", "value1", "a test macro", ".+", "", null);
-		Macro m = new Macro(n);
-		
-		// Act
-		m.setValue(Optional.of("new value"));
-		
-		// Assert
-		assertEquals(m.getValue().get(), "new value");
-	}
 }
