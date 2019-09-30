@@ -51,8 +51,7 @@ public class PyDevAdditionalInterpreterSettingsTest {
     public void GIVEN_auto_addr_list_is_false_WHEN_get_env_THEN_it_is_no() {
     	when(mockPreferencesService.getBoolean(anyString(), anyString(), anyBoolean(), (IScopeContext[]) any())).thenReturn(false);
     	   	
-    	
-    	Collection<String> vars = settings.getAdditionalEnvVariables();
+    	Collection<String> vars = settings.epicsEnvironment();
     	String result = getEnvironmentVariableValue(vars, "EPICS_CA_AUTO_ADDR_LIST=");
     	
         // Assert
@@ -63,10 +62,9 @@ public class PyDevAdditionalInterpreterSettingsTest {
     public void GIVEN_auto_addr_list_is_true_WHEN_get_env_THEN_it_is_no() {
     	when(mockPreferencesService.getBoolean(anyString(), anyString(), anyBoolean(), (IScopeContext[]) any())).thenReturn(true);
     	   	
-    	
-    	Collection<String> vars = settings.getAdditionalEnvVariables();
+    	Collection<String> vars = settings.epicsEnvironment();
     	String result = getEnvironmentVariableValue(vars, "EPICS_CA_AUTO_ADDR_LIST=");
-    	
+
         // Assert
         assertEquals("YES", result);
     }

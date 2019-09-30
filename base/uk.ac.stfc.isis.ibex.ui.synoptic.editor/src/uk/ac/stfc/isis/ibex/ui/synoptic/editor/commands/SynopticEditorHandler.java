@@ -48,7 +48,7 @@ public abstract class SynopticEditorHandler {
 	private boolean canExecute;
 	
 	public SynopticEditorHandler() {
-		synopticService.writeTo(SYNOPTIC.delete());
+		synopticService.subscribe(SYNOPTIC.delete());
 		SYNOPTIC.delete().subscribe(synopticService);
 		
 		canExecute = synopticService.canWrite();

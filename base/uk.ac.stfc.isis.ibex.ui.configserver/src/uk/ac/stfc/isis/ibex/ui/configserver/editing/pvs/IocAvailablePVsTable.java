@@ -79,6 +79,11 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 		});	
 	}
 	
+	/**
+	 * Sets the search filter and refreshes the table.
+	 * 
+	 * @param search the text to search for.
+	 */
 	public void setFilter(String search) {
 		filter.setSearchText(search);
 		this.viewer().refresh();

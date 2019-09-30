@@ -19,32 +19,56 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * A component property that writes its value to a PV.
+ */
 public class WritableComponentProperty extends ComponentProperty {
 
 	private final SameTypeWriter<String> writer = new SameTypeWriter<>();
 
 	private final ReadableComponentProperty valueSource;
 	
+	/**
+     * @param displayName display name of the component property
+     * @param source an observable for the source PV
+     * @param sourceAlarm an observable for the source PV's alarm
+     * @param destination a writer to the destination PV
+     */
 	public WritableComponentProperty(
 			String displayName, 
 			ForwardingObservable<String> source,
+			ForwardingObservable<AlarmState> sourceAlarm,
 			Writable<String> destination) {
 		super(displayName);
-		valueSource = new ReadableComponentProperty(displayName, source);
-		writer.writeTo(destination);	
+		valueSource = new ReadableComponentProperty(displayName, source, sourceAlarm);
+		writer.subscribe(destination);	
 	}
 	
+	/**
+	 * @return the writer to the destination PV
+	 */
 	public Writer<String> writer() {
 		return writer;
 	}
 	
+	/**
+     * @return String an UpdatedValue containing the value
+     */
 	public UpdatedValue<String> value() {
-		return valueSource.value();
+		return valueSource.getValue();
+	}
+	
+	/**
+	 * @return the ReadableComponentProperty associated with this PV
+	 */
+	public ReadableComponentProperty sourceReadableProperty() {
+	    return valueSource;
 	}
 }

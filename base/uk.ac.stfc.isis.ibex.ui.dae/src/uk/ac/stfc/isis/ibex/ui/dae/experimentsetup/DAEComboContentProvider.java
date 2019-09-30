@@ -44,7 +44,7 @@ public class DAEComboContentProvider {
      */
     public DAEComboContentProvider(ForwardingObservable<String> dir) {
         this.dir = dir.getValue();
-        dir.addObserver(dirAdapter);
+        dir.subscribe(dirAdapter);
         
     }
 

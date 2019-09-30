@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

@@ -38,6 +38,9 @@ import org.eclipse.swt.SWT;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
+/**
+ * A comparator for sorting log messages.
+ */
 public class LogMessageComparator extends ViewerComparator implements Comparator<LogMessage> {
 	private LogMessageFields messageField;
 	
@@ -49,10 +52,18 @@ public class LogMessageComparator extends ViewerComparator implements Comparator
 	  	direction = DESCENDING;
 	}
 
+	/**
+	 * @return the sort direction.
+	 */
 	public int getDirection() {
 	    return direction == 1 ? SWT.DOWN : SWT.UP;
 	}
 
+	/**
+	 * Sets the column to sort.
+	 * 
+	 * @param column a column
+	 */
 	public void setColumn(LogMessageFields column) {
 	    if (column == this.messageField) {
 	    	// Same column as last sort; toggle the direction

@@ -23,11 +23,24 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
  * Data recording methods for use in the Collection Mode combo box within the settings.
  */
 public enum CollectionMode {
+    
+    /**
+     * Histogram collection mode.
+     */
 	HISTOGRAM("Histogram"),
+	
+	/**
+	 * Events colleciton mode.
+	 */
 	EVENTS("Events");
 	
 	private String name;
 	
+	/**
+	 * Instantiates a new collection mode.
+	 *
+	 * @param displayName the display name
+	 */
 	CollectionMode(String displayName) {
 		this.name = displayName;
 	}

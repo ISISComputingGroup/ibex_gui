@@ -51,6 +51,9 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class PreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
+    /**
+     * Constructor.
+     */
 	public PreferencePage() {
 		super(GRID);
 		setPreferenceStore(IsisLog.getDefault().getPreferenceStore());

@@ -19,8 +19,23 @@
 
 package uk.ac.stfc.isis.ibex.motor;
 
+/**
+ * An enum for the direction of a motor.
+ */
 public enum MotorDirection {
+    
+    /**
+     * The motor direction is unknown.
+     */
 	UNKNOWN,
+	
+	/**
+	 * Positive motor direction.
+	 */
 	NEGATIVE,
+	
+	/**
+	 * Negative motor direction.
+	 */
 	POSITIVE
 }

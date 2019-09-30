@@ -21,32 +21,59 @@ package uk.ac.stfc.isis.ibex.experimentdetails;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A parameter with a name, units, and a value.
+ */
 public class Parameter extends ModelObject {
 
 	private String name;
 	private String units;
 	private String value;
 
+	/**
+	 * @return the name of the parameter
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Sets the name of the parameter.
+	 * 
+	 * @param name the name to set
+	 */
 	protected void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 	
+	/**
+     * @return the units of the parameter
+     */
 	public String getUnits() {
 		return units;
 	}
 	
+	/**
+	 * Sets the units of the parameter.
+	 * 
+	 * @param units the units to set
+	 */
 	protected void setUnits(String units) {
 		firePropertyChange("units", this.units, this.units = units);
 	}
 	
+	/**
+     * @return the value of the parameter
+     */
 	public String getValue() {
 		return value;
 	}
 	
+	/**
+	 * Sets the value of the parameter.
+	 * 
+	 * @param value the value to set.
+	 */
 	public void setValue(String value) {
 		firePropertyChange("value", this.value, this.value = value);
 	}

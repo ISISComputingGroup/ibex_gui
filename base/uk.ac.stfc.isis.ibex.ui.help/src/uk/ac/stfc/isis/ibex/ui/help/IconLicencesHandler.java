@@ -23,7 +23,7 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
-/*
+/**
  * The handler for opening the icon licences information panel. 
  */
 public class IconLicencesHandler {

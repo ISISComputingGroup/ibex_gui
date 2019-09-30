@@ -98,7 +98,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		forwardingWriter.onCanWriteChanged(destination.canWrite());
 		
         readingSubscription = destination.subscribe(forwardingWriter);
-		writingSubsciption = forwardingWriter.writeTo(destination);
+		writingSubsciption = forwardingWriter.subscribe(destination);
 
         closeResource();
         resource = destination;
@@ -116,11 +116,11 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
 	private void cancelSubscriptions() {
         if (readingSubscription != null) {
-            readingSubscription.removeObserver();
+            readingSubscription.cancelSubscription();
         }
 
 		if (writingSubsciption != null) {
-			writingSubsciption.removeObserver();
+			writingSubsciption.cancelSubscription();
 		}
 	}
 

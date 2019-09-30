@@ -24,7 +24,24 @@ import java.util.Calendar;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 public interface ISearchModel {
+    
+    /**
+     * Performs a search, returning all log messages that match the request
+     * parameters.
+     * 
+     * @param field The log message field to search by.
+     * @param value Search the 'searchField' field of every record for this
+     *            string value
+     * @param from Consider only messages that occurred after this time (null =
+     *            no limit).
+     * @param to Consider only messages that occurred before this time (null =
+     *            no limit).
+     */
 	void search(LogMessageFields field, String value, Calendar from, Calendar to);
 
+	/**
+     * Clear search results and return to the 'live message' view (i.e. display
+     * messages in the cache).
+     */
 	void clearSearch();
 }

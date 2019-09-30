@@ -7,17 +7,19 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
+
+import java.util.concurrent.TimeoutException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -48,13 +50,13 @@ public class ConfigEditorPanel extends Composite {
 	private final ComponentEditorPanel components;
 	private final SummaryPanel summary;
     private TabItem blocksTab;
-	
+
     private TabFolder editorTabs;
 
     /**
      * The constructor for the overall panel that is used for editing and
      * viewing a configuration.
-     * 
+     *
      * @param parent
      *            The composite that holds this panel.
      * @param style
@@ -66,6 +68,7 @@ public class ConfigEditorPanel extends Composite {
      * @param configurationViewModels
      *            A class holding a number of view models for displaying
      *            configuration data to the user.
+     * @throws TimeoutException
      */
     public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, EditableConfiguration config,
             ConfigurationViewModels configurationViewModels) {
@@ -76,13 +79,13 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.marginHeight = 0;
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
-		
+
         summary = new SummaryPanel(this, SWT.NONE, dialog);
 		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
+
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
 		editorTabs.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -103,33 +106,33 @@ public class ConfigEditorPanel extends Composite {
         }
 
 		iocs = new IocOverviewPanel(editorTabs, SWT.NONE, dialog);
-		
+
 		TabItem iocsTab = new TabItem(editorTabs, SWT.NONE);
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
-		
+
         blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText("Blocks");
-		
+
 		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE, new BlocksEditorViewModel(config));
 		blocksTab.setControl(blocks);
-		
+
 		TabItem groupsTab = new TabItem(editorTabs, SWT.NONE);
 		groupsTab.setText("Groups");
-		
+
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
-		
+
 		setConfigToEdit(config);
 	}
 
     /**
      * Set which EditableConfiguration the dialog is editing.
-     * 
+     *
      * @param config
      *            The configuration to edit.
      */
-	private void setConfigToEdit(EditableConfiguration config) {		
+	private void setConfigToEdit(EditableConfiguration config) {
 		iocs.setConfig(config);
 		blocks.setConfig(config);
 		if (components != null) {
@@ -137,7 +140,7 @@ public class ConfigEditorPanel extends Composite {
 		}
 		summary.setConfig(config);
 	}
-	
+
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);

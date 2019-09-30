@@ -47,7 +47,7 @@ public class LoggingObserverTest {
 		loggingObserver = new LoggingObserver<>(mockLogger, ID);
 		
 		testableObservable = new TestableObservable<>();
-		testableObservable.addObserver(loggingObserver);
+		testableObservable.subscribe(loggingObserver);
 	}
 	
 	@Test

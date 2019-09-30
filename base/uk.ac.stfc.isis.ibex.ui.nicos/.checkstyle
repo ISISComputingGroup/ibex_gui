@@ -4,7 +4,7 @@
   <local-check-config name="IBEX_checks" location="C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.client.tycho.parent\checkstyle.xml" type="external" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="IBEX_checks" local="true">
+  <fileset name="all" enabled="true" check-config-name="IBEX Checks" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
 </fileset-config>

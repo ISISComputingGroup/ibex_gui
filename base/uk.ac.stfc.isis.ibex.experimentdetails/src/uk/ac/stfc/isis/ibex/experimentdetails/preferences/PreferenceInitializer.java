@@ -28,12 +28,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
-     * initializeDefaultPreferences()
-     */
+    @Override
     public void initializeDefaultPreferences() {
 		IPreferenceStore store = ExperimentDetails.getInstance().getPreferenceStore();
 		

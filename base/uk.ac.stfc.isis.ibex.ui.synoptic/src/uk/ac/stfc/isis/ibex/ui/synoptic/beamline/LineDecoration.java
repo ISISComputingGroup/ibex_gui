@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
-/*
+/**
  * Allows a horizontal line to be drawn across a control 
  * and any child controls. The vertical offset for the line
  * should be specified with respect to the parent control.
@@ -50,6 +50,11 @@ public class LineDecoration {
 		this.verticalOffset = verticalOffset;
 	}
 	
+	/**
+	 * Adds a line to a control.
+	 * 
+	 * @param control an SWT control.
+	 */
 	public void addLineTo(final Control control) {
 		control.addPaintListener(linePainter);
 
@@ -61,6 +66,11 @@ public class LineDecoration {
 		}
 	}
 	
+	/**
+     * Removes a line from a control.
+     * 
+     * @param control an SWT control.
+     */
 	public void removeLineFrom(final Control control) {
 		control.removePaintListener(linePainter);
 		

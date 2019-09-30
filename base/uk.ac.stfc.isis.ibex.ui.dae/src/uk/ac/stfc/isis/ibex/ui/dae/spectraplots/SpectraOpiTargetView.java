@@ -88,6 +88,9 @@ public class SpectraOpiTargetView extends OpiTargetView {
         }
     }
     
+    /**
+     * Initialises the macros.
+     */
     public void initializeMacros() {
         plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
     }

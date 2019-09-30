@@ -26,6 +26,12 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
  */
 public class SqlWhereLikeClause extends SqlWhereClause {
 	
+    /**
+     * Create a new where-like clause.
+     * 
+     * @param lhs the left hand side of the where clause
+     * @param rhs the right hand side of the where clause
+     */
 	public SqlWhereLikeClause(ExpDataField lhs, String rhs) {
 		super(lhs.toString(), rhs);
 	}

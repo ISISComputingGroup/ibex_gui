@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
@@ -39,7 +40,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Class to hold information about the state of an IOC.
- * 
+ *
  * Implementation note: this class represents an immutable instance of the state
  * of an IOC at a particular time.
  */
@@ -71,7 +72,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
 
     /**
      * Gets the name of the IOC corresponding to this IOCState.
-     * 
+     *
      * @return the name
      */
     @Override
@@ -81,7 +82,7 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
 
     /**
      * Gets whether this IOC is running or not.
-     * 
+     *
      * @return true if it is running; false otherwise
      */
     public boolean getIsRunning() {
@@ -101,13 +102,13 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * Gets whether or not the IOC is in the current configuration or in any
      * selected components. The result is calculated at run-time so that it is
      * as up to date as possible with the actual configuration being used.
-     * 
+     *
      * Can't easily use listeners here because it will cause a memory leak
      * (#3425). The reason for this is that instances of this class are
      * recreated any time any item in the ioc list changes. If we register an
      * observer with the current configs observable, it will have a reference
      * back to this class and hence can never be garbage collected.
-     * 
+     *
      * @return true if it is in the current configuration; false otherwise.
      */
     public boolean getInCurrentConfig() {

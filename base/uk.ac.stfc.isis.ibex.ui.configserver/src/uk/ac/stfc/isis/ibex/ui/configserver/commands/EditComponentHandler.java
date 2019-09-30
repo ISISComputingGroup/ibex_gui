@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -29,7 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
  * The handler class for editing components.
- * 
+ *
  * It sets the menu labels, and opens the dialogue for editing or viewing the
  * components.
  */
@@ -42,7 +44,7 @@ public class EditComponentHandler extends EditConfigurationsHandler {
      */
     public EditComponentHandler() {
         super(SERVER.saveAsComponent());
-        SERVER.currentConfig().addObserver(configObserver);
+        SERVER.currentConfig().subscribe(configObserver);
     }
 
     /**
@@ -52,7 +54,7 @@ public class EditComponentHandler extends EditConfigurationsHandler {
      *            the shell to user
      */
     @Override
-    public void safeExecute(Shell shell) {
+    public void safeExecute(Shell shell) throws TimeoutException {
         ConfigHelper helper;
         String titleText;
         if (canWrite) {

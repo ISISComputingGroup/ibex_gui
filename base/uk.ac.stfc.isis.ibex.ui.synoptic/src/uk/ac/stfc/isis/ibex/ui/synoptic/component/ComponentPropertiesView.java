@@ -33,6 +33,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
+/**
+ * Displays the properties below the component.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ComponentPropertiesView extends Composite {
     

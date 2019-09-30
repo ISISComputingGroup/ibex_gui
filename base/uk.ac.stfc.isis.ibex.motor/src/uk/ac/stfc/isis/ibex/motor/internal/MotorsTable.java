@@ -29,6 +29,9 @@ import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
 
+/**
+ * A table containing information about the motors.
+ */
 public class MotorsTable extends Closer {
 	
 	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
@@ -37,6 +40,14 @@ public class MotorsTable extends Closer {
 	
 	private List<Motor> motors = new ArrayList<>();
 	
+	/**
+	 * Create the table.
+	 * 
+	 * @param instrument the instrument
+	 * @param numberCrates the number of controllers (crates) in each table. of crates
+	 * @param numberMotors the number of motors for each controller
+	 * @param startCrate the crate to start on
+	 */
 	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors, int startCrate) {
 		this.numberMotors = numberMotors;
 		this.numberCrates = numberCrates;
@@ -60,10 +71,16 @@ public class MotorsTable extends Closer {
 		return String.format(MOTOR_NAME_FORMAT, row, column);
 	}
 	
+	/**
+	 * @return the number of motors per controller/crate
+	 */
 	public int getNumMotors() {
 		return numberMotors;
 	}
 	
+	/**
+     * @return the number of crates/controllers
+     */
 	public int getNumCrates() {
 		return numberCrates;
 	}
