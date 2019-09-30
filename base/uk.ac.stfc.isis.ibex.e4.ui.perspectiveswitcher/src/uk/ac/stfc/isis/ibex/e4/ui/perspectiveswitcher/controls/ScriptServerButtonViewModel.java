@@ -16,7 +16,7 @@ import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
  */
 public final class ScriptServerButtonViewModel extends PerspectiveButtonViewModel {
 	
-	private static final Color SCRIPT_COLOR = SWTResourceManager.getColor(150, 250, 170);
+	private static final Color SCRIPT_BUTTON_COLOR = SWTResourceManager.getColor(150, 250, 170);
 	private final FlashingButton flash;
 	private ScriptStatus status = ScriptStatus.IDLE;
 	private String Label;
@@ -34,7 +34,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	public ScriptServerButtonViewModel(NicosModel model, String buttonLabel) {
 		super(buttonLabel);
 		// TODO Auto-generated constructor stub
-		flash = new FlashingButton(this, SCRIPT_COLOR);
+		flash = new FlashingButton(this, SCRIPT_BUTTON_COLOR);
 		flash.setDefaultColour(DEFOCUSSED);
 		Label = buttonLabel;
 		
@@ -51,7 +51,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	 */
 	protected void setButtonColor() {
 		if (status == ScriptStatus.RUNNING) {
-			setColor(SCRIPT_COLOR);
+			setColor(SCRIPT_BUTTON_COLOR);
 		}
 		
 	}
