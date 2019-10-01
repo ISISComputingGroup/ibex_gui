@@ -8,6 +8,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_P4Pu4GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.switchinstrument" label="Switch instrument" command="_QRQe4JojEeeX2q28a93CXA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_SiBNgGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.managermode" label="Manager mode" command="_5YCA0JxFEeeX2q28a93CXA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_5Zx98KkiEeePZ9uSg3-JRA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.exit" label="Exit IBEX Client" tooltip="Exits the IBEX client" command="_BQbKEKkjEeePZ9uSg3-JRA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_UaoKcOODEemqa61T7hP03Q" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.resetlayout" label="Reset Layout" command="_NufGcJZmEeilnu5vNzjU3w"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_9gU0oGbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="Configuration" mnemonics="C">
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_6I3jYHkQEeeB_6PupPeR6A" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.0" label="View or Edit Current Configuration (set by menu item)" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler"/>
