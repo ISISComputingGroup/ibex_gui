@@ -18,8 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-import java.util.Optional;
-
 import com.google.gson.annotations.SerializedName;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -37,6 +35,7 @@ public class Macro extends ModelObject {
 	private String name;
 	/**
 	 * The currently set value of the macro. If this is null the default is used.
+	 * Ideally an Optional should be here but GSON doesn't understand optionals :(
 	 */
 	private String value;
 	/**
