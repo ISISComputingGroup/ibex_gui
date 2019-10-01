@@ -6,6 +6,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * View model for the macro, mainly deals with the logic of having a default.
+ */
 public class MacroViewModel extends ModelObject {
 	private final Macro macro;
 	
@@ -14,6 +17,10 @@ public class MacroViewModel extends ModelObject {
 	 */
 	private boolean useDefault;
 	
+	/**
+	 * Constructor. Sets the use default based on provided macro.
+	 * @param macro The underlying macro for this view model.
+	 */
 	public MacroViewModel(Macro macro) {
 		this.macro = macro;
 		macro.addPropertyChangeListener("value", passThrough());
@@ -21,18 +28,32 @@ public class MacroViewModel extends ModelObject {
 		setUseDefault(macro.getValue() == null);
 	}
 	
+	 /**
+     * @return macro description
+     */
 	public String getDescription() {
 		return macro.getDescription();
 	}
 	
+	/**
+	 * @return macro name
+	 */
 	public String getName() {
 		return macro.getName();
 	}
 	
+	/**
+	 * Set Macro value.
+	 * 
+	 * @param value new Macro value
+	 */
 	public void setValue(String value) {
 		macro.setValue(value);
 	}
 	
+	/**
+     * @return macro regex pattern
+     */
 	public String getPattern() {
 		return macro.getPattern();
 	}

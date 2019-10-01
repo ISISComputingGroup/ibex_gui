@@ -140,36 +140,17 @@ public class Macro extends ModelObject {
 	}
 
 	 /**
-     * @return macro value
+     * @return macro value, null indicates the default value is being used
      */
 	public String getValue() {
 		return value;
 	}
 
-	/**
-	 * Set macro description.
-	 * 
-	 * @param description new macro description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	 /**
-     * 
      * @return macro description
      */
 	public String getDescription() {
 		return description;
-	}
-
-	/**
-	 * Set macro regex pattern.
-	 * 
-	 * @param pattern new regex pattern
-	 */
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
 	}
 
 	/**
