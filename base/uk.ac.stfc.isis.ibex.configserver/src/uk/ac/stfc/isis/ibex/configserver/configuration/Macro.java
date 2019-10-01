@@ -124,15 +124,6 @@ public class Macro extends ModelObject {
         return hasDefault;
     }
 
-    /**
-	 * Set Macro name and fire a property change.
-	 * 
-	 * @param name new Macro name
-	 */
-	public void setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
-	}
-
 	/**
 	 * @return macro name
 	 */

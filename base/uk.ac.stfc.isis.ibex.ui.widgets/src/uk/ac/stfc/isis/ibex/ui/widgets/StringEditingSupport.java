@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
@@ -38,10 +39,18 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
 		canEdit = enabled;
 	}
 	
-	protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
-	    return new TextCellEditor((Composite) viewer.getControl());
-	}
+    private TextCellEditor createTextCellEditor(ColumnViewer viewer) {
+        return new TextCellEditor((Composite) viewer.getControl()) {
+            @Override
+            protected void editOccured(ModifyEvent e) {
+                super.editOccured(e);
+                onModify(e, text.getText());
+            }
+        };
+    }
 
+    protected void onModify(ModifyEvent e, String newValue) {} 
+    
 	@Override
 	protected boolean canEdit(Object element) {
 		return canEdit;

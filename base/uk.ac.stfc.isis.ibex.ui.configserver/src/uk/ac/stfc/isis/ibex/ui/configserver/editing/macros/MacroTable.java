@@ -21,12 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 
 import org.eclipse.core.databinding.validation.ValidationStatus;
-import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -103,27 +100,22 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 		
 		editingSupport = new StringEditingSupport<MacroViewModel>(viewer(), MacroViewModel.class) {
             
-            @Override
-            protected TextCellEditor createTextCellEditor(ColumnViewer viewer) {
-                return new TextCellEditor((Composite) viewer.getControl()) {
-                    @Override
-                    protected void editOccured(ModifyEvent e) {
-                        super.editOccured(e);
-                        valueValidator.validate(text.getText());
-                    }
-                };
-            }
+			@Override
+			protected void onModify(ModifyEvent e, String newValue) {
+				valueValidator.validate(newValue);
+			}
 
             @Override
             protected String valueFromRow(MacroViewModel row) {
-                // This is called when the user clicks on a cell to edit it.
-                return row.getEditCellValue();
+                // If the user is editing the value then no longer need to use the default.
+        		row.setUseDefault(false);
+        	    return row.getDisplayValue();
             }
 
             @Override
             protected void setValueForRow(MacroViewModel row, String value) {
                 if (valueValidator.validate(value) == ValidationStatus.ok()) {
-                    row.setValue(Optional.of(value));
+                    row.setValue(value);
                 } else {
                     valueValidator.validate("");
                 }
@@ -143,7 +135,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	        
 	        @Override
 	        protected void setChecked(MacroViewModel macro, boolean checked) {
-	            macro.updateFromUseDefaultCheck(checked);
+	            macro.setUseDefault(checked);
 	        }
 	        
             @Override

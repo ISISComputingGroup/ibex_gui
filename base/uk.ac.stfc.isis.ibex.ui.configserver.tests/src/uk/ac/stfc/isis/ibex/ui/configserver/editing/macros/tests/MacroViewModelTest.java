@@ -70,4 +70,106 @@ public class MacroViewModelTest {
         
         assertEquals("(default unknown)", defaultText);
     }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_null_WHEN_view_model_created_THEN_display_value_is_default() {
+    	Macro m = new Macro("name", null, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        String defaultText = macroViewModel.getDisplayValue();
+        
+        assertEquals("(default)", defaultText);
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_null_WHEN_view_model_created_THEN_use_default_is_true() {
+    	Macro m = new Macro("name", null, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        boolean useDefault = macroViewModel.getUseDefault();
+        
+        assertTrue(useDefault);
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_empty_string_WHEN_view_model_created_THEN_use_default_is_false() {
+    	Macro m = new Macro("name", "", "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        boolean useDefault = macroViewModel.getUseDefault();
+        
+        assertFalse(useDefault);
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_WHEN_view_model_created_THEN_use_default_is_false() {
+    	Macro m = new Macro("name", "A_VALUE", "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        boolean useDefault = macroViewModel.getUseDefault();
+        
+        assertFalse(useDefault);
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_WHEN_view_model_created_THEN_display_value_is_value() {
+    	String expectedMacroValue = "A_VALUE";
+    	Macro m = new Macro("name", expectedMacroValue, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        String macroValue = macroViewModel.getDisplayValue();
+        
+        assertEquals(expectedMacroValue, macroValue);
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_WHEN_use_default_set_THEN_macro_value_set_to_null() {
+    	Macro m = new Macro("name", "value", "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        macroViewModel.setUseDefault(true);
+        
+        assertEquals(null, m.getValue());
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_WHEN_use_default_set_false_THEN_macro_value_unchanged() {
+    	String expectedMacroValue = "A_VALUE";
+    	Macro m = new Macro("name", expectedMacroValue, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        macroViewModel.setUseDefault(false);
+        
+        assertEquals(expectedMacroValue, m.getValue());
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_null_WHEN_use_default_set_false_THEN_macro_value_set_to_empty_string() {
+    	Macro m = new Macro("name", null, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        macroViewModel.setUseDefault(false);
+        
+        assertEquals("", m.getValue());
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_null_WHEN_use_default_set_true_THEN_macro_value_still_null() {
+    	Macro m = new Macro("name", null, "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        macroViewModel.setUseDefault(true);
+        
+        assertEquals(null, m.getValue());
+    }
+    
+    @Test
+    public void test_GIVEN_macro_with_value_of_null_WHEN_value_text_box_entered_THEN_macro_value_set_to_empty_string_and_use_default_enabled() {
+    	Macro m = new Macro("name", "value", "description", "pattern", null, HasDefault.YES);
+        MacroViewModel macroViewModel = new MacroViewModel(m);
+        
+        macroViewModel.setUseDefault(true);
+        
+        assertEquals(null, m.getValue());
+    }
 }
