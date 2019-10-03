@@ -17,6 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
+
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
