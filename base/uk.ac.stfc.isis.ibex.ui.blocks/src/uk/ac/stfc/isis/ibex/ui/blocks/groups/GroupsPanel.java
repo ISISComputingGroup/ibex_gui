@@ -56,7 +56,7 @@ public class GroupsPanel extends Composite {
     protected static final Font MESSAGE_FONT = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
     private static final String DISCONNECTED_MESSAGE = "IBEX SERVER DISCONNECTED\nPlease talk to your point of contact";
     private static final String CONNECTED_NO_GROUPS_MESSAGE =
-            "IBEX SERVER CONNECTED:\nNo Groups Present\nNew Blocks can be added by going to Configuration->Edit Current Configuration->Blocks->Add Blocks";
+            "IBEX SERVER CONNECTED:\nNo Groups Present\nNew Blocks can be added by going to\n Configuration->Edit Current Configuration->Blocks->Add Blocks";
     
     private enum ConnectionStatus {
     	EMPTY(-1), DISCONNECTED(0), CONNECTED_NO_GROUPS(1);
