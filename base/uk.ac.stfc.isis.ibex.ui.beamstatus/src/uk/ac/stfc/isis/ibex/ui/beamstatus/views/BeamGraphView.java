@@ -98,6 +98,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/** Number of milliseconds in a day. */
 	private static final long MILLISECONDS_IN_DAY = MILLISECONDS_IN_HOUR * 24;
 
+	/** Number of milliseconds in a week */
 	private static final long MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
 	/** Current plot time span in milliseconds. */
 	private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
