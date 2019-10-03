@@ -90,7 +90,9 @@ public abstract class SynopticEditorHandler {
      */
 	protected void openDialog(Shell shell, SynopticDescription synoptic, String title, boolean isBlank) {
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
-        String subtitle = "Editing the " + viewModel.getSynoptic().name() + " synoptic";
+        String SynopticName = (viewModel.getSynoptic().name() == null) ?  
+        		"current" : viewModel.getSynoptic().name();
+        String subtitle = "Editing the " + SynopticName + " synoptic";
         EditSynopticDialog editDialog =
                 new EditSynopticDialog(shell, title, subtitle, isBlank, viewModel);
 		if (editDialog.open() == Window.OK) {
