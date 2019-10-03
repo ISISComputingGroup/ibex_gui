@@ -20,7 +20,9 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument,
  com.google.gson,
  org.eclipse.swt,
+ javax.annotation;bundle-version="1.2.0",
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard.views
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dashboard

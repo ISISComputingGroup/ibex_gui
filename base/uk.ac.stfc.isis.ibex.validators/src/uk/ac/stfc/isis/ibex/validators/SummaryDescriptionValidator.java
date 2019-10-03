@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * Validator for the description on a summary of a configuration.
  */
-public class SummaryDescriptionValidator implements IValidator {
+public class SummaryDescriptionValidator implements IValidator<String> {
 
     /** The logger. */
     private static final Logger LOG = IsisLog.getLogger(SummaryDescriptionValidator.class);
@@ -61,9 +61,9 @@ public class SummaryDescriptionValidator implements IValidator {
 	}
 	
 	@Override
-    public IStatus validate(Object text) {
+    public IStatus validate(String text) {
 
-        String descriptionToValidate = text.toString().trim();
+        String descriptionToValidate = text.trim();
         IStatus status = this.descriptionValidator.validate(descriptionToValidate, "Description");
         
         return setErrorAndReturnStatus(status);

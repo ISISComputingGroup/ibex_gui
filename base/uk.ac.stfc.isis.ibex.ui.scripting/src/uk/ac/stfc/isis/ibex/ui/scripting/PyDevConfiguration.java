@@ -42,7 +42,7 @@ public final class PyDevConfiguration {
 	public static void configure() {
 		IInterpreterManager iMan = PydevPlugin.getPythonInterpreterManager(true);
 		NullProgressMonitor monitor = new NullProgressMonitor();
-		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.pythonInterpreterPath(),
+		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
 				monitor, false);
 		iMan.setInfos(new IInterpreterInfo[] {interpreterInfo}, Collections.<String>emptySet(), monitor);
 	}
