@@ -1,10 +1,31 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ToyModel extends ModelObject {
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorTable;
+
+public class ScriptGeneratorSingleton extends ModelObject {
 	private Integer iteratedNumber = 0;
 	private String iteratedNumberString;
+	
+	private ScriptGeneratorTable scriptGeneratorTable;
+	
+	public ScriptGeneratorSingleton() {
+		List<ColumnDescription> columnDescriptions = new ArrayList<ColumnDescription>();
+		
+		columnDescriptions.add(new ColumnDescription("ColumnName"));
+		columnDescriptions.add(new ColumnDescription("COde is cool"));
+		
+		scriptGeneratorTable = new ScriptGeneratorTable(columnDescriptions);
+		
+	}
+	
+	public ScriptGeneratorTable getScriptGeneratorTable() {
+		return scriptGeneratorTable;
+	}
+	
 	
 	/**
 	 * Adds one to the toy model's value.

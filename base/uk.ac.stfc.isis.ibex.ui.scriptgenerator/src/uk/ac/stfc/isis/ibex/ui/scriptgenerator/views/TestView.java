@@ -36,7 +36,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ToyModel;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorTable;
 
 /**
  * Provides settings to control the script generator.
@@ -44,9 +45,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ToyModel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class TestView {
 
-	private ToyModel toyModel;
+	private ScriptGeneratorSingleton toyModel;
 	private Label lblOrder;
 	private DataBindingContext bindingContext;
+	private ScriptGeneratorTable scriptGeneratorTable;
+	private TargetPropertiesTable table;
+	private static final Display DISPLAY = Display.getCurrent();
 	
 	/**
 	 * A basic framework to hold the toy interface.
@@ -57,6 +61,10 @@ public class TestView {
 	public void createPartControl(Composite parent) {
 		
 		this.toyModel = Activator.getModel();
+		
+        scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
+		table = new TargetPropertiesTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
+        
 		
 		Group grpSettings = new Group(parent, SWT.NULL);
 		grpSettings.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
@@ -78,12 +86,19 @@ public class TestView {
 		});
 		
 		bind();
+		
+		scriptGeneratorTable.set_rows();
 	}
 
 	private void bind() {
 		bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 				BeanProperties.value("iteratedNumber").observe(toyModel));
+		
+		this.scriptGeneratorTable.addPropertyChangeListener("rows", e -> 
+        DISPLAY.asyncExec(() -> {
+                this.table.setRows(this.scriptGeneratorTable.getRows());
+        }));
 	}
 	
 
