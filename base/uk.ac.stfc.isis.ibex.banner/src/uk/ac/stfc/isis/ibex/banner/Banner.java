@@ -45,7 +45,7 @@ public class Banner implements BundleActivator {
         instance = this;
         observables = new Observables();
 
-        observables.bannerDescription.addObserver(descriptionAdapter);
+        observables.bannerDescription.subscribe(descriptionAdapter);
     }
 
     /**

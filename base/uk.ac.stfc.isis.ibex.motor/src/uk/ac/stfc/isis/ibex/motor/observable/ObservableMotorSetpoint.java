@@ -38,8 +38,8 @@ public class ObservableMotorSetpoint extends MotorSetpoint {
 		value = adapt(variables.value, "value");
 		setpoint = adapt(variables.setPoint, "setpoint");
 		canHome = adapt(variables.canHome, "canHome");
-		home.writeTo(variables.homeSetter);
-		setSetpoint.writeTo(variables.setPointSetter);
+		home.subscribe(variables.homeSetter);
+		setSetpoint.subscribe(variables.setPointSetter);
 	}
 
 	@Override

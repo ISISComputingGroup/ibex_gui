@@ -11,7 +11,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -31,7 +31,7 @@
           <macro>
             <name>INST_PREFIX</name>
             <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -131,37 +131,37 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MA</name>
             <description>The internal number for the first channel (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MB</name>
             <description>The internal number for the second channel (e.g. 2).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MAHVCHAN</name>
             <description>CAEN HV channel for A (e.g. 0).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MBHVCHAN</name>
             <description>CAEN HV channel for B (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MAHVSLOT</name>
             <description>CAEN HV slot for A (e.g. 0).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MBHVSLOT</name>
             <description>CAEN HV slot for B (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -273,7 +273,7 @@
           <macro>
             <name>PH</name>
             <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
@@ -341,7 +341,7 @@
           <macro>
             <name>S</name>
             <description>The name to display for the stage</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
@@ -400,7 +400,7 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
@@ -661,7 +661,7 @@
           <macro>
             <name>PGC</name>
             <description>The name of the device, as defined in the positions look-up file (e.g. PGC))</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
@@ -685,12 +685,12 @@
           <macro>
             <name>IOC_NUM</name>
             <description>PSU IOC Number, two digits (e.g. 01).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>PS_NUM</name>
             <description>Number of the unit within the IOC (e.g. 3).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -708,17 +708,17 @@
           <macro>
             <name>MAX_CRATES</name>
             <description>The maximum number of crates to display (default: 2, max: 15)</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MAX_SLOTS</name>
             <description>The maximum number of slots to display per crate (default: 5)</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MAX_CHANNELS</name>
             <description>The maximum number of channels per slot per crate to display (default: 25)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -796,7 +796,7 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>M1</name>
@@ -834,7 +834,7 @@
           <macro>
             <name>IP</name>
             <description>The IP address of the oscilloscope.</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -852,12 +852,12 @@
           <macro>
             <name>NUMBER</name>
             <description>The chopper number (e.g. CH1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>INST_PREFIX</name>
             <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -898,7 +898,7 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1080,42 +1080,42 @@
           <macro>
             <name>AXIS_PV_1</name>
             <description>The axis PV for motor 1</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_2</name>
             <description>The axis PV for motor 2</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_3</name>
             <description>The axis PV for motor 3</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_4</name>
             <description>The axis PV for motor 4</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_5</name>
             <description>The axis PV for motor 5</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_6</name>
             <description>The axis PV for motor 6</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_7</name>
             <description>The axis PV for motor 7</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_8</name>
             <description>The axis PV for motor 8</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1182,18 +1182,6 @@
       </value>
     </entry>
     <entry>
-      <key>XY Beam-stop</key>
-      <value>
-        <type>BEAMSTOP</type>
-        <path>beamstop.opi</path>
-        <description>The OPI for the XY beam-stop. No properties required.</description>
-        <macros/>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Live View</key>
       <value>
         <type>DAE</type>
@@ -1203,7 +1191,7 @@
           <macro>
             <name>DET</name>
             <description>Detector number (1 is first)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1279,17 +1267,17 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MHVCHAN</name>
             <description>CAEN HV channel for the monitor (default: 0).</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MHVSLOT</name>
             <description>CAEN HV slot for the monitor (default: 0).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1422,7 +1410,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The motion setpoint to display (e.g. LKUP:LSR)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1579,7 +1567,7 @@
           <macro>
             <name>XYSHUTTERARMBEAMSTOP</name>
             <description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1597,7 +1585,7 @@
           <macro>
             <name>Q</name>
             <description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories/>
@@ -1676,7 +1664,7 @@
           <macro>
             <name>DEFAULT_ACTIVE_TAB</name>
             <description>The tab which is displayed when the OPI is opened (1 to 5).</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1712,7 +1700,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
-            <default></default>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1750,7 +1738,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
-            <default></default>
+            <default/>
           </macro>
           <macro>
             <name>MOTOR</name>
@@ -2024,7 +2012,7 @@
           </macro>
         </macros>
       </value>
-    </entry> 
+    </entry>
     <entry>
       <key>Keyence LK-G laser positioning sensor</key>
       <value>
@@ -2040,8 +2028,8 @@
           </macro>
         </macros>
       </value>
-    </entry>           
-      <entry>
+    </entry>
+    <entry>
       <key>Lakeshore 340</key>
       <value>
         <categories>
@@ -2071,7 +2059,7 @@
         </categories>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Nimrod jaw set</key>
       <value>
         <type>JAWS</type>
@@ -2119,6 +2107,22 @@
       </value>
     </entry>
     <entry>
+      <key>CP2800</key>
+      <value>
+        <categories/>
+        <type>CP2800</type>
+        <path>cp2800.opi</path>
+        <description>The OPI for the CP2800</description>
+        <macros>
+          <macro>
+            <name>CP2800</name>
+            <description>The CP2800 PV prefix (e.g. CP2800_01)</description>
+            <default>CP2800_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>TTI355</key>
       <value>
         <categories>
@@ -2151,6 +2155,54 @@
         <categories>
           <category>Gas and liquid handling systems</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>NIMROD Gas Panel</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>nimrod_gas_panel.opi</path>
+        <description>The OPI for the NIMROD Gas Panel</description>
+        <macros/>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Oerlikon Centre-One Pressure Gauge</key>
+      <value>
+      	<type>PRESSURE_GAUGE</type>
+      	<path>oercone.opi</path>
+      	<description>The OPI for the Oerlikon Centre-One Pressure Gauge</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>OERCONE</name>
+            <description>The OERCONE PV prefix (e.g. OERCONE_01)</description>
+          	<default>OERCONE_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Edwards Turbo Instrument Controller</key>
+      <value>
+      	<type>PUMP</type>
+      	<path>edwardstic.opi</path>
+      	<description>The OPI for the Edwards Turbo Instrument Controller</description>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>EDTIC</name>
+            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+          	<default>EDTIC_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>

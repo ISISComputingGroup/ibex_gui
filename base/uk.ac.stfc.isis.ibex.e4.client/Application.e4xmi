@@ -207,7 +207,7 @@
     <children xmi:id="_FCSpgIQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialog" name="dialog"/>
     <children xmi:id="_Hvhr0IQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.window" name="window"/>
   </rootContext>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_32x24.png" tooltip="The device alarms on the instrument">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms" label="Alarms" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.alarm/icons/alarm_bell_24x24.png" tooltip="The device alarms on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
       <children xsi:type="basic:PartSashContainer" xmi:id="_RgW1QojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.2" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_RgW1Q4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="35">
@@ -228,7 +228,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_-Y_6EIctEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam Status" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.beamstatus/icons/status_32x24.png" tooltip="The status of the beam and MCR news">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_-Y_6EIctEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus" label="Beam Status" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.beamstatus/icons/status_24x24.png" tooltip="The status of the beam and MCR news">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ENhdcIcuEeeB45r8U07FRg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.3">
       <children xsi:type="basic:PartSashContainer" xmi:id="_orVuIojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.21" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_orVuI4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.23" containerData="35">
@@ -257,7 +257,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_btLvUIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" label="DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_32x24.png" tooltip="Control and feedback from the data acquisition electronics">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_btLvUIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae" label="DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.dae/icons/server16_24x24.png" tooltip="Control and feedback from the data acquisition electronics">
     <children xsi:type="basic:PartSashContainer" xmi:id="_ohPQoIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.6">
       <children xsi:type="basic:PartSashContainer" xmi:id="_pg6EMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.22" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_pg6EM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.24" containerData="35">
@@ -281,7 +281,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_C5KekKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens" label="Device Screens" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.devicescreens/icons/screen_32x24.png" tooltip="Individual control screens for specific devices">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_C5KekKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.devicescreens" label="Device Screens" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.devicescreens/icons/screen_24x24.png" tooltip="Individual control screens for specific devices">
     <children xsi:type="basic:PartSashContainer" xmi:id="_S27i0KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_TT6ZwKjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_ZrBs0KjYEeePOP-D9NVFxg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -305,7 +305,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.experimentdetails/icons/file148_32x24.png" tooltip="Information relating to the experiment and who is conducting it">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_gJqk0JxOEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.experimentdetails" label="Experiment Details" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.experimentdetails/icons/file148_24x24.png" tooltip="Information relating to the experiment and who is conducting it">
     <children xsi:type="basic:PartSashContainer" xmi:id="_kv6hwJxPEeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Tlr_gJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.10" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_Ux1pkJxREeeX2q28a93CXA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.6" containerData="35">
@@ -336,7 +336,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_jl-k8KjWEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic" label="Synoptic" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.synoptic/icons/earth16_32x24.png" tooltip="An overall view of the whole instrument">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_jl-k8KjWEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.perspective.synoptic" label="Synoptic" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.synoptic/icons/earth16_24x24.png" tooltip="An overall view of the whole instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="_MvPBQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Nt8sQKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_SvbCEKjXEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -366,7 +366,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="Script Server" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_server_32x24.png" tooltip="Control and feedback from the script server">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_LDBvYKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.nicos" label="Script Server" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.nicos/icons/script_server_24x24.png" tooltip="Control and feedback from the script server">
     <children xsi:type="basic:PartSashContainer" xmi:id="_41mgMKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_5khbsKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_7JTBIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -400,7 +400,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="__53Z4KjtEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.ui.scripting.perspective" selectedElement="_6GVfkKjuEeeNfrob_9kcDA" label="Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scripting/icons/script_32x24.png" tooltip="Console to control the instrument via scripts">
+  <snippets xsi:type="advanced:Perspective" xmi:id="__53Z4KjtEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.ui.scripting.perspective" selectedElement="_6GVfkKjuEeeNfrob_9kcDA" label="Scripting" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scripting/icons/script_24x24.png" tooltip="Console to control the instrument via scripts">
     <children xsi:type="basic:PartSashContainer" xmi:id="_6GVfkKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7" selectedElement="_krh18KkREeeNfrob_9kcDA">
       <children xsi:type="basic:PartSashContainer" xmi:id="_63_mAKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="__UCTgKjuEeeNfrob_9kcDA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -424,7 +424,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" selectedElement="_OcdgIIf-EeeTH-lQyXhh9A" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_32x24.png" tooltip="Links to useful web pages">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_y8wCsIf9EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" selectedElement="_OcdgIIf-EeeTH-lQyXhh9A" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_24x24.png" tooltip="Links to useful web pages">
     <children xsi:type="basic:PartSashContainer" xmi:id="_OcdgIIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
       <children xsi:type="basic:PartSashContainer" xmi:id="_rBCaMojKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.23" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_rBCaM4jKEee8_tONW2Z5Qw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.25" containerData="35">
@@ -443,7 +443,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_vR5b4KkKEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter" accessibilityPhrase="Log Plotter" label="Log Plotter" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.logplotter/icons/stocks2_32x24.png" tooltip="View graphed logs">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_vR5b4KkKEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter" accessibilityPhrase="Log Plotter" label="Log Plotter" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.logplotter/icons/stocks2_24x24.png" tooltip="View graphed logs">
     <children xsi:type="basic:PartSashContainer" xmi:id="_NmT1kKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_WqnHoKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.8" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_fHGLwKkLEeeMv9D6qSjWOQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -462,7 +462,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_9lXG4Kp9Eeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors" label="Motors" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.motor/icons/gears6_32x24.png" tooltip="A view of all motors on the instrument">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_9lXG4Kp9Eeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.motors" label="Motors" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.motor/icons/gears6_24x24.png" tooltip="A view of all motors on the instrument">
     <children xsi:type="basic:PartSashContainer" xmi:id="__zMkcKjdEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.18">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Bhbn4KjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.20" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_MOx7YKjeEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.20" containerData="35">
@@ -516,7 +516,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_tAK8kKjYEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ioclog" label="IOC Log" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.log/icons/log_32x24.png" tooltip="Logs of any messages coming from individual devices">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_tAK8kKjYEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ioclog" label="IOC Log" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.log/icons/log_24x24.png" tooltip="Logs of any messages coming from individual devices">
     <children xsi:type="basic:PartSashContainer" xmi:id="_U9TkAKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_tBPeIKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_vivxkKjZEeelm7I_usJ7RQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -535,7 +535,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_EEs1QAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer" label="Journal Viewer" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.journalviewer/icons/journal_viewer_32x24.png" tooltip="View data on previous experiments">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_EEs1QAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.journalviewer" label="Journal Viewer" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.journalviewer/icons/journal_viewer_24x24.png" tooltip="View data on previous experiments">
     <children xsi:type="basic:PartSashContainer" xmi:id="_QZEw8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.17">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Rqjm8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">

@@ -54,7 +54,7 @@ public class ComponentDependenciesModel {
      */
     public ComponentDependenciesModel(ConfigServer server) {
         this.server = server;
-        server.componentsInfo().addObserver(componentAdapter);
+        server.componentsInfo().subscribe(componentAdapter);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ComponentDependenciesModel {
         observerRegister.clear();
         for (final String name : names) {
             String pv = getPV(name);
-            server.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
+            server.dependencies(pv).subscribe(new BaseObserver<Collection<String>>() {
                 @Override
                 public void onValue(Collection<String> value) {
                     updateDependency(name, value);

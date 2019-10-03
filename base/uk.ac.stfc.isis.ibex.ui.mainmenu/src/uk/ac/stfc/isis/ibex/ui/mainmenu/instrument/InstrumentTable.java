@@ -65,14 +65,29 @@ public class InstrumentTable extends Composite {
         viewer.addFilter(search);
     }
 
+    /**
+     * Adds a listener for selection changes to the instrument table viewer.
+     * 
+     * @param listener a selection changed listener
+     */
     public void addSelectionChangedListener(ISelectionChangedListener listener) {
         viewer.addSelectionChangedListener(listener);
     }
 
+    /**
+     * Removes the given selection change listener from the instrument table viewer.
+     *
+     * @param listener a selection changed listener
+     */
     public void removeSelectionChangedListener(ISelectionChangedListener listener) {
         viewer.removeSelectionChangedListener(listener);
     }
 
+    /**
+     * Sets the text to search for and refreshes the table.
+     * 
+     * @param searchText the text to search for
+     */
     public void setSearch(String searchText) {
         search.setSearchText(searchText);
         viewer.refresh();

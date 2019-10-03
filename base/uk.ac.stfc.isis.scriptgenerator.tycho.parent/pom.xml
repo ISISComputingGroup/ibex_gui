@@ -7,18 +7,18 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.2.0</tycho.version>
+		<tycho.version>1.4.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen</oxygen-repo.url>
-		<oxygen-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.8</oxygen-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2019-06</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.12</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>oxygen-updates</id>
+			<id>photon-updates</id>
 			<layout>p2</layout>
-			<url>${oxygen-updates-repo.url}</url>
+			<url>${photon-updates-repo.url}</url>
 		</repository>
 	</repositories>
 
@@ -30,27 +30,6 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.2</version>
-              <executions>
-                <execution>
-                  <id>pre-unit-test</id>
-                  <goals>
-                    <goal>prepare-agent</goal>
-                  </goals>
-                </execution>
-                <execution>
-                  <id>post-unit-test</id>
-                  <phase>test</phase>
-                  <goals>
-                    <goal>report</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
             
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -63,11 +42,6 @@
 							<ws>win32</ws>
 							<arch>x86_64</arch>
 						</environment>
-					        <environment>
-					                <os>linux</os>
-					                <ws>gtk</ws>
-					                <arch>x86_64</arch>
-					        </environment>
 					</environments>
 					<target>
 						<artifact>
@@ -163,23 +137,14 @@
 	</build>
 
 	<modules>
-		
-		
-		
 
-		
-		
-		
-		
 		<module>../uk.ac.stfc.isis.scriptgenerator.feature.base</module>
 		<module>../uk.ac.stfc.isis.scriptgenerator.product</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.scriptgenerator.client</module>
 		<module>../uk.ac.stfc.isis.ibex.logger</module>
 		
-		<module>
-			../uk.ac.stfc.isis.scriptgenerator.client.product
-		</module>
+		<module>../uk.ac.stfc.isis.scriptgenerator.client.product</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>

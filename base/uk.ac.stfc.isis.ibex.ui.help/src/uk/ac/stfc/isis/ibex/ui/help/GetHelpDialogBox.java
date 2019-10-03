@@ -43,6 +43,7 @@ import com.google.common.io.Resources;
  * A dialog box that contains information about getting help
  * versions.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class GetHelpDialogBox extends TitleAreaDialog {
 
     private static final String GETHELP_FILE_PATH = "/resources/gethelp.txt";

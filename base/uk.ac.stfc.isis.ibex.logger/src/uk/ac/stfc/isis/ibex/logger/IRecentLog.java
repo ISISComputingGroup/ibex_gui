@@ -30,5 +30,8 @@
 package uk.ac.stfc.isis.ibex.logger;
 
 public interface IRecentLog {
+    /**
+     * @return the log text from file
+     */
 	String getLogText();
 }

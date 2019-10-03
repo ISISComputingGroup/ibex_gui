@@ -41,36 +41,78 @@ public class RunControlVariables {
     public RunControlVariables() {
 	}
 	
+	/**
+	 * Gets an observable looking at the run-control low limit PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the forwarding observable
+	 */
 	public ForwardingObservable<Double> blockRunControlLowLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
+	/**
+     * Gets an observable looking at the run-control high limit PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<Double> blockRunControlHighLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	
+	/**
+     * Gets an observable looking at the run-control in range PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<String> blockRunControlInRange(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getInRangePv(blockName)));
 	}
 	
+	/**
+     * Gets an observable looking at the run-control enabled PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<String> blockRunControlEnabled(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));
 	}
 	
+	/**
+	 * Gets a writable for the run-control low limit setter PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the writable
+	 */
 	public Writable<Double> blockRunControlLowLimitSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
+	/**
+     * Gets a writable for the run-control high limit setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
 	public Writable<Double> blockRunControlHighLimitSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	
+	/**
+     * Gets a writable for the run-control enabled setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
 	public Writable<String> blockRunControlEnabledSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new StringChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));

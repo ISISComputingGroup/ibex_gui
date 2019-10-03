@@ -35,6 +35,9 @@ public final class PVInfo<T> {
 		this.type = type; 
 	}
 	
+	/**
+	 * @return the PV address
+	 */
 	public String address() {
 		return pvAddress;
 	}

@@ -28,12 +28,10 @@ import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.MarshalException;
-
+import org.eclipse.persistence.exceptions.XMLMarshalException;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
@@ -61,7 +59,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
         try {
             XMLUtil.toXml(instrument, SynopticDescription.class, badSchema);
         } catch (MarshalException e) {
-            assertThat(e.getCause(), instanceOf(SAXParseException.class));
+            assertThat(e.getCause(), instanceOf(XMLMarshalException.class));
         } catch (Exception e) {
             fail(e.getMessage());
         }

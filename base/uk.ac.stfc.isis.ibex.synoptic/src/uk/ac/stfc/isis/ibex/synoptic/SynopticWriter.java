@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
-
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
@@ -53,7 +51,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
      *            The schema to check the synoptic against.
      */
     public SynopticWriter(Writable<String> destination, Observable<String> schema) {
-		writeTo(destination);
+		subscribe(destination);
 		canSave.setValue(destination.canWrite());
 		destination.subscribe(this);
         this.schema = schema;
@@ -68,7 +66,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
         }
 		try {
             return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
-		} catch (JAXBException | SAXException e) {
+		} catch (JAXBException e) {
 			onError(e);
 		}
 		

@@ -21,11 +21,34 @@ package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
 import java.util.HashMap;
 
+/**
+ * An enum representing the time regime modes.
+ */
 public enum TimeRegimeMode {
+    
+    /**
+     * Blank mode.
+     */
     BLANK("Blank"),
+    
+    /**
+     * Time regime mode of "dT = C".
+     */
     DT("dT = C"),
+    
+    /**
+     * Time regime mode of "dT/T = C".
+     */
     DTDIVT("dT/T = C"),
+    
+    /**
+     * Time regime mode of "dT/T**2 = C".
+     */
     DTDIVT2("dT/T**2 = C"),
+    
+    /**
+     * Time regime mode of "Shifted".
+     */
     SHIFTED("Shifted");
 		
 	private String mode;
@@ -38,10 +61,21 @@ public enum TimeRegimeMode {
 		}
 	}
 	
+	/**
+	 * Creates a TimeRegimeMode from a string representation.
+	 *
+	 * @param text the text
+	 * @return the time regime mode
+	 */
 	public static TimeRegimeMode fromString(String text) {
 		return lookup.containsKey(text) ? lookup.get(text) : BLANK;
 	}
 	
+	/**
+	 * Instantiates a new time regime mode.
+	 *
+	 * @param mode the mode
+	 */
 	TimeRegimeMode(String mode) {
 		this.mode = mode;
 	}

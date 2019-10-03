@@ -43,6 +43,9 @@ public class SqlStatement {
     private List<ExpDataField> groupBy;
     private ExpDataField orderBy;
 
+    /**
+     * Create a new SQL statement.
+     */
     public SqlStatement() {
     	try {
     		IPreferenceStore preferenceStore = ExperimentDetails.getInstance()

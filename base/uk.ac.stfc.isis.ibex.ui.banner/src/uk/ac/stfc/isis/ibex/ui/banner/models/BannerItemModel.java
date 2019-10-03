@@ -54,6 +54,8 @@ public class BannerItemModel extends ModelObject {
     private static final int MIN_WIDTH = 10;
     private static final int MAX_WIDTH = 500;
     
+    private static final int MAX_TEXT_LENGTH = 30;
+    
     /**
      * Instantiates model and converter.
      * 
@@ -88,7 +90,7 @@ public class BannerItemModel extends ModelObject {
     		setText = item.name() + ": " + item.value();
     	}
     	
-    	StringUtils.truncateWithEllipsis(setText, 30);
+    	StringUtils.truncateWithEllipsis(setText, MAX_TEXT_LENGTH);
     	
     	text.setValue(setText);
     }
