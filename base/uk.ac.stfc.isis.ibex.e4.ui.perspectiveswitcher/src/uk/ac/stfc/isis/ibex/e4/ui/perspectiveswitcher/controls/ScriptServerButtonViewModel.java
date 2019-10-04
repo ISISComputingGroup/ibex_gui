@@ -1,9 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -33,12 +29,10 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	 */
 	public ScriptServerButtonViewModel(NicosModel model, String buttonLabel) {
 		super(buttonLabel);
-		// TODO Auto-generated constructor stub
 		flash = new FlashingButton(this, SCRIPT_BUTTON_COLOR);
-		flash.setDefaultColour(DEFOCUSSED);
 		Label = buttonLabel;
 		
-		model.addPropertyChangeListener("scriptStatus", arg0->{
+		model.addPropertyChangeListener("scriptStatus", ignored->{
 			status = model.getScriptStatus();
 			setButtonColor();
 			updateFlashing();
@@ -50,26 +44,46 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	 * set Script server button colour for different states of script
 	 */
 	protected void setButtonColor() {
-		if (status == ScriptStatus.RUNNING) {
+		if (status == ScriptStatus.RUNNING && (!inFocus)) {
 			setColor(SCRIPT_BUTTON_COLOR);
+		} else if (active) {
+			setColor(ACTIVE);
 		}
-		
 	}
 	
 	/**
-	 * Flash when it is required
+	 * Flash when it is required, Flashing only used when Script is paused
 	 */
 	protected void updateFlashing() {
+		String label = Label;
 		if (status == ScriptStatus.RUNNING) {
-			flash.start();
-			setText(Label + PlayButton);
+			label = label + PlayButton;
 		} else if (status == ScriptStatus.INBREAK) {
-			flash.stop();
-			setText(Label + PauseButton);
+			flash.start();
+			label = label + PauseButton;
 		} else {
 			flash.stop();
-			setText(Label);
+			// once flashing is stopped set color for either activated or deactivated button
+			setButtonColor();
 		}
+		setText(label);
 	}
 	
+	/**
+	 * set if focus is in the current button or not, 
+	 * the way this button is represented(colors) also depends on focus 
+	 * @param inFocus if focus is in the current button or not i.e. Sript Server button
+	 */
+	@Override
+	public void setFocus(boolean inFocus) {
+        super.setFocus(inFocus);
+        if (flash != null) {
+            if (inFocus) {
+                flash.stop();
+            } else {
+                updateFlashing();
+            }
+        }
+        setButtonColor();
+    }
 }
