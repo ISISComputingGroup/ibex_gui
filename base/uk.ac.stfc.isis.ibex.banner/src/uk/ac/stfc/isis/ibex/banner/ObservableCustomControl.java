@@ -56,7 +56,7 @@ public class ObservableCustomControl extends ModelAdapter {
     }
 
     /**
-     * Sends a value to the PV to stop all motors.
+     * Sends a custom value to a custom PV to execute the custom action.
      */
     public void act() {
         act.uncheckedWrite(valueToWrite);
