@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
  * Provides settings to control the script generator.
@@ -48,7 +48,7 @@ public class TestView {
 	private ScriptGeneratorSingleton toyModel;
 	private Label lblOrder;
 	private DataBindingContext bindingContext;
-	private ScriptGeneratorTable scriptGeneratorTable;
+	private ActionsTable scriptGeneratorTable;
 	private TargetPropertiesTable table;
 	private static final Display DISPLAY = Display.getCurrent();
 	
@@ -87,7 +87,7 @@ public class TestView {
 		
 		bind();
 		
-		scriptGeneratorTable.set_rows();
+		scriptGeneratorTable.set_actions();
 	}
 
 	private void bind() {
@@ -95,9 +95,9 @@ public class TestView {
 		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 				BeanProperties.value("iteratedNumber").observe(toyModel));
 		
-		this.scriptGeneratorTable.addPropertyChangeListener("rows", e -> 
+		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
         DISPLAY.asyncExec(() -> {
-                this.table.setRows(this.scriptGeneratorTable.getRows());
+                this.table.setRows(this.scriptGeneratorTable.getActions());
         }));
 	}
 	

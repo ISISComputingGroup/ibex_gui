@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,10 +37,10 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ColumnDescription;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorRow;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -47,10 +48,9 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * A table that holds the properties for a target.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorRow> {
+public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorAction> {
 
-    private ScriptGeneratorTable scriptGeneratorTable;
-
+    private ActionsTable actionsTable;
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -62,22 +62,22 @@ public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorRow> {
      *            The SWT style of the table.
      * @param scriptGeneratorTable 
      */
-    public TargetPropertiesTable(Composite parent, int style, int tableStyle, ScriptGeneratorTable scriptGeneratorTable) {
+    public TargetPropertiesTable(Composite parent, int style, int tableStyle, ActionsTable actionsTable) {
         super(parent, style, tableStyle | SWT.BORDER);
-        this.scriptGeneratorTable = scriptGeneratorTable;
+        this.actionsTable = actionsTable;
         initialise();
     }
 
     @Override
     protected void addColumns() {    	
-        for (ColumnDescription column:this.scriptGeneratorTable.getColumns()) {
-        	createColumn(column.getName(), 2,
-        			new DataboundCellLabelProvider<ScriptGeneratorRow>(observeProperty("fixme")) {
+        for (ActionParameter actionParameter:this.actionsTable.getActionParameters()) {
+        	createColumn(actionParameter.getName(), 2,
+        			new DataboundCellLabelProvider<ScriptGeneratorAction>(this.observeProperty("john")) {
 
 				@Override
-				protected String stringFromRow(ScriptGeneratorRow row) {
+				protected String stringFromRow(ScriptGeneratorAction row) {
 					// TODO Auto-generated method stub
-					return row.getData();
+					return row.getData(actionParameter.getName());
 				}
 			});
         }

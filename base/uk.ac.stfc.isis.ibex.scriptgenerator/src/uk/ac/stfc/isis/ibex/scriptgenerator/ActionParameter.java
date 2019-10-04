@@ -1,11 +1,11 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 
-public class ColumnDescription {
+public class ActionParameter {
 
 	private String name;
 	
-	public ColumnDescription(String name) {
+	public ActionParameter(String name) {
 		this.name = name;
 	}
 

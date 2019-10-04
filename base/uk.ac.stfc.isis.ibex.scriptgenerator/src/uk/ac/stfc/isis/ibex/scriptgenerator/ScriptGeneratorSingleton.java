@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class ScriptGeneratorSingleton extends ModelObject {
 	private Integer iteratedNumber = 0;
 	private String iteratedNumberString;
 	
-	private ScriptGeneratorTable scriptGeneratorTable;
+	private ActionsTable scriptGeneratorTable;
 	
 	public ScriptGeneratorSingleton() {
-		List<ColumnDescription> columnDescriptions = new ArrayList<ColumnDescription>();
+		List<ActionParameter> actionParameters = new ArrayList<ActionParameter>();
 		
-		columnDescriptions.add(new ColumnDescription("ColumnName"));
-		columnDescriptions.add(new ColumnDescription("COde is cool"));
+		actionParameters.add(new ActionParameter("column name"));
+		actionParameters.add(new ActionParameter("code"));
 		
-		scriptGeneratorTable = new ScriptGeneratorTable(columnDescriptions);
+		scriptGeneratorTable = new ActionsTable(actionParameters);
 		
 	}
 	
-	public ScriptGeneratorTable getScriptGeneratorTable() {
+	public ActionsTable getScriptGeneratorTable() {
 		return scriptGeneratorTable;
 	}
 	
