@@ -119,15 +119,15 @@ public class IocButtonPanel extends Composite {
 
 
     private void bindStart(final IocState ioc) {
-		IConverter startConverter = new Converter(Boolean.class, Boolean.class) {
+		IConverter<Boolean, Boolean> startConverter = new Converter<Boolean, Boolean>(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {				
+			public Boolean convert(Boolean fromObject) {
 				return control.startIoc().getCanSend() && !ioc.getIsRunning();
 			}
 
 		};
 		
-		UpdateValueStrategy startStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<Boolean, Boolean> startStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		startStrategy.setConverter(startConverter);
 		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("canSend").observe(control.startIoc()), null, startStrategy);
@@ -135,15 +135,15 @@ public class IocButtonPanel extends Composite {
 	}
 
     private void bindStop(final IocState ioc) {
-		IConverter stopConverter = new Converter(Boolean.class, Boolean.class) {
+		IConverter<Boolean, Boolean> stopConverter = new Converter<Boolean, Boolean>(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {				
+			public Boolean convert(Boolean fromObject) {
 				return control.stopIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};
 		
-		UpdateValueStrategy stopStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<Boolean, Boolean> stopStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		stopStrategy.setConverter(stopConverter);
 		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("canSend").observe(control.stopIoc()), null, stopStrategy);
@@ -151,15 +151,15 @@ public class IocButtonPanel extends Composite {
 	}
 	
     private void bindRestart(final IocState ioc) {
-		IConverter restartConverter = new Converter(Boolean.class, Boolean.class) {
+		IConverter<Boolean, Boolean> restartConverter = new Converter<Boolean, Boolean>(Boolean.class, Boolean.class) {
 			@Override
-			public Object convert(Object arg0) {				
+			public Boolean convert(Boolean fromObject) {				
 				return control.restartIoc().getCanSend() && ioc.getIsRunning();
 			}
 
 		};
 		
-		UpdateValueStrategy restartStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<Boolean, Boolean> restartStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		restartStrategy.setConverter(restartConverter);
 		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("canSend").observe(control.restartIoc()), null, restartStrategy);

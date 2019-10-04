@@ -11,13 +11,22 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.databases,
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.activemq
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ uk.ac.stfc.isis.ibex.activemq,
+ javax.annotation;bundle-version="1.2.0",
+ org.hamcrest;bundle-version="1.1.0",
+ org.hamcrest.core;bundle-version="1.3.0",
+ org.hamcrest.generator;bundle-version="1.3.0",
+ org.hamcrest.integration;bundle-version="1.3.0",
+ org.hamcrest.library;bundle-version="1.3.0",
+ org.hamcrest.text;bundle-version="1.1.0",
+ org.csstudio.platform.libs.jms;bundle-version="5.4.2",
+ org.csstudio.platform.utility.jms;bundle-version="1.1.3"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.log,
  uk.ac.stfc.isis.ibex.log.message,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.log.rdb
 Bundle-ClassPath: .
 Bundle-ActivationPolicy: lazy
-Import-Package: javax.jms,
- org.apache.logging.log4j
+Import-Package: org.apache.logging.log4j
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.log

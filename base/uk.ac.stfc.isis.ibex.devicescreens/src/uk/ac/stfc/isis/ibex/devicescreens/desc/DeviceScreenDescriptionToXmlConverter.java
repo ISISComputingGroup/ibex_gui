@@ -24,8 +24,6 @@ package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
-
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
@@ -67,7 +65,7 @@ public class DeviceScreenDescriptionToXmlConverter extends Converter<DeviceScree
         }
         try {
             return XMLUtil.toXml(value, DeviceScreensDescription.class, schema.getValue());
-        } catch (JAXBException | SAXException e) {
+        } catch (JAXBException e) {
             throw new ConversionException("Error converting device screens to XML", e);
         }
     }

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
@@ -31,13 +32,25 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
 
 	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, String.class);
-		editor = new TextCellEditor((Composite) viewer.getControl());
+		editor = createTextCellEditor(viewer);
 	}
 	
 	public void setEnabled(boolean enabled) {
 		canEdit = enabled;
 	}
+	
+    private TextCellEditor createTextCellEditor(ColumnViewer viewer) {
+        return new TextCellEditor((Composite) viewer.getControl()) {
+            @Override
+            protected void editOccured(ModifyEvent e) {
+                super.editOccured(e);
+                onModify(e, text.getText());
+            }
+        };
+    }
 
+    protected void onModify(ModifyEvent e, String newValue) {} 
+    
 	@Override
 	protected boolean canEdit(Object element) {
 		return canEdit;
