@@ -3,7 +3,8 @@ package uk.ac.stfc.isis.ibex.ui.blocks.tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,15 +18,15 @@ import uk.ac.stfc.isis.ibex.ui.blocks.groups.HiddenGroupFilter;
 */
 public class HiddenGroupFilterTest {
     
-    private Collection<DisplayGroup> groups;
+    private List<DisplayGroup> groups;
     private DisplayGroup groupWithVisibleBlocks;
     private DisplayGroup groupWithoutVisibleBlocks;
     
     @Before
     public void setUp() {
-        
-        groups = new ArrayList<DisplayGroup>();
-        
+
+    	groups = new ArrayList<DisplayGroup>();
+
         groupWithVisibleBlocks = Mockito.mock(DisplayGroup.class);
         Mockito.when(groupWithVisibleBlocks.containsAnyVisibleBlocks()).thenReturn(true);
         
@@ -39,10 +40,10 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, false);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), false);
          
          // Assert
-         assertTrue(result.contains(groupWithVisibleBlocks));
+         assertTrue(result.get().contains(groupWithVisibleBlocks));
     }
     
     @Test
@@ -51,10 +52,10 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithoutVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, false);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), false);
          
          // Assert
-         assertFalse(result.contains(groupWithoutVisibleBlocks));
+         assertFalse(result.get().contains(groupWithoutVisibleBlocks));
     }
     
     @Test
@@ -64,11 +65,11 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithoutVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, false);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), false);
          
          // Assert
-         assertTrue(result.contains(groupWithVisibleBlocks));
-         assertFalse(result.contains(groupWithoutVisibleBlocks));
+         assertTrue(result.get().contains(groupWithVisibleBlocks));
+         assertFalse(result.get().contains(groupWithoutVisibleBlocks));
     }
     
     @Test
@@ -77,10 +78,10 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), true);
          
          // Assert
-         assertTrue(result.contains(groupWithVisibleBlocks));
+         assertTrue(result.get().contains(groupWithVisibleBlocks));
     }
 
     @Test
@@ -89,10 +90,10 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithoutVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), true);
          
          // Assert
-         assertTrue(result.contains(groupWithoutVisibleBlocks));
+         assertTrue(result.get().contains(groupWithoutVisibleBlocks));
     }
 
     @Test
@@ -102,10 +103,10 @@ public class HiddenGroupFilterTest {
          groups.add(groupWithoutVisibleBlocks);
          
          // Act
-         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         Optional<List<DisplayGroup>> result = HiddenGroupFilter.getVisibleGroups(Optional.of(groups), true);
          
          // Assert
-         assertTrue(result.contains(groupWithVisibleBlocks));
-         assertTrue(result.contains(groupWithoutVisibleBlocks));
+         assertTrue(result.get().contains(groupWithVisibleBlocks));
+         assertTrue(result.get().contains(groupWithoutVisibleBlocks));
     }
 }

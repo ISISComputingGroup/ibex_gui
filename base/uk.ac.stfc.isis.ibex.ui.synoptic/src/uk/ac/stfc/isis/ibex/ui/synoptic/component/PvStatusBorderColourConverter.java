@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.PvStateColour;
  * Used for data-binding.
  * 
  */
-public class PvStatusBorderColourConverter extends Converter {
+public class PvStatusBorderColourConverter extends Converter<PvState, Color> {
 
     /**
      * Instantiates the converter.
@@ -45,12 +45,11 @@ public class PvStatusBorderColourConverter extends Converter {
     /**
      * Specifies how the converter should react to possible PV states.
      * 
-     * @param fromObject the PV state to convert
+     * @param state the PV state to convert
      * @return the converted border colour
      */
     @Override
-    public Object convert(Object fromObject) {
-        PvState state = (PvState) fromObject;
+    public Color convert(PvState state) {
         switch (state) {
             case DISCONNECTED:
                 return PvStateColour.MAGENTA;

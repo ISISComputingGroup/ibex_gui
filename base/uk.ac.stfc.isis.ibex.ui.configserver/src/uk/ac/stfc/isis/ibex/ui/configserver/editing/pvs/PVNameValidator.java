@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 /**
  * Checks the validity of a name given to a default PV value.
  */
-public class PVNameValidator implements IValidator {
+public class PVNameValidator implements IValidator<String> {
 	private static final String DUPLICATE_GROUP_MESSAGE = "Duplicate PV name";
 	private static final String EMPTY_NAME_MESSAGE = "PV name must not be empty";
 	
@@ -55,7 +55,7 @@ public class PVNameValidator implements IValidator {
 	}
 	
 	@Override
-	public IStatus validate(Object text) {
+	public IStatus validate(String text) {
 		messageDisplayer.setErrorMessage("PVNameValidator", null);
 		
 		if (text.equals("")) {
@@ -78,7 +78,7 @@ public class PVNameValidator implements IValidator {
 		return ValidationStatus.error(message);	
 	}
 
-    private boolean nameIsDuplicated(Object text) {
+    private boolean nameIsDuplicated(String text) {
         for (PVDefaultValue pv : ioc.getPvs()) {
             if (isNotPVBeingEdited(pv) && pv.getName().equals(text)) {
                 return true;
