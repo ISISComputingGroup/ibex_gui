@@ -44,10 +44,14 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	 * set Script server button colour for different states of script
 	 */
 	protected void setButtonColor() {
-		if (status == ScriptStatus.RUNNING && (!inFocus)) {
+		if ((status == ScriptStatus.RUNNING) && (!active && !inFocus)) {
 			setColor(SCRIPT_BUTTON_COLOR);
 		} else if (active) {
 			setColor(ACTIVE);
+		} else if (inFocus) {
+			setColor(FOCUSSED);
+		} else {
+			setColor(DEFOCUSSED);
 		}
 	}
 	
