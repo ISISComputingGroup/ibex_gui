@@ -45,7 +45,7 @@ public class ObservableCustomControl extends ModelAdapter {
      *            The value to write to the PV to perform the action
      */
     public ObservableCustomControl(Writable<Long> act, Long valueToWrite) {
-        this.act.writeTo(act);
+        this.act.subscribe(act);
         act.subscribe(new SameTypeWriter<Long>() {
             @Override
             public void onCanWriteChanged(boolean canwrite) {
@@ -81,6 +81,6 @@ public class ObservableCustomControl extends ModelAdapter {
      * @param writable the writable to set
      */
     public void setWritable(Writable<Long> writable) {
-        act.writeTo(writable);
+        act.subscribe(writable);
     }
 }

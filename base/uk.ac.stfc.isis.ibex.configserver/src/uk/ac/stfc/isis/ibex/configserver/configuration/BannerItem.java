@@ -63,8 +63,8 @@ public class BannerItem extends ModelObject {
 
         pvObservable = observableFactory.getSwitchableObservable(new DefaultChannel(), pv);
         alarmObservable = observableFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class), pv + ".SEVR");
-        pvObservable.addObserver(valueAdapter);
-        alarmObservable.addObserver(alarmAdapter);
+        pvObservable.subscribe(valueAdapter);
+        alarmObservable.subscribe(alarmAdapter);
     }
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {

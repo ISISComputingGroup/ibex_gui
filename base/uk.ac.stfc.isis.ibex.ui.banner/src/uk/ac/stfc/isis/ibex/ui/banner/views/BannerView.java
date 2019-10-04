@@ -85,7 +85,7 @@ public class BannerView {
         glBannerItemPanel.marginHeight = 0;
         glBannerItemPanel.horizontalSpacing = 15;
 
-        banner.observables().bannerDescription.addObserver(modelAdapter);
+        banner.observables().bannerDescription.subscribe(modelAdapter);
 
     }
 

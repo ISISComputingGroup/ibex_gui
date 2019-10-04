@@ -120,28 +120,28 @@ public class BannerItemModel extends ModelObject {
     }
     
     /**
-     * @return the width of the indicator
+     * @return the width of the banner item
      */
     public int width() {
     	return Utils.constrainIntToRange(width, MIN_WIDTH, MAX_WIDTH);
     }
     
     /**
-     * @return Text model for indicator model.
+     * @return the text of this banner item
      */
 	public UpdatedValue<String> text() {
 		return text;
 	}
 
 	/**
-     * @return Colour model for indicator model.
+     * @return the colour of this banner item.
      */
 	public UpdatedValue<Color> color() {
 		return colour;
 	}
 
 	/**
-     * @return Boolean model for indicator model.
+     * @return the availability of this banner item.
      */
 	public UpdatedValue<Boolean> availability() {
 		return availability;
