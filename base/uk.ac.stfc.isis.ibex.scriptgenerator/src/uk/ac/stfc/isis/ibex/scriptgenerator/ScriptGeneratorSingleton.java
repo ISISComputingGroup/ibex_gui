@@ -35,8 +35,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public int iterateNumber() {
 
-		
 		iteratedNumber++;
+		this.scriptGeneratorTable.getActions().get(0).setActionParameterValue("code", iteratedNumber.toString());
 		setIteratedNumber(iteratedNumber.toString());
 		return iteratedNumber;
 	}

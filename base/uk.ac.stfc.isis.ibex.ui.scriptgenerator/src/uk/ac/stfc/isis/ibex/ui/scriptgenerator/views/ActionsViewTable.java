@@ -43,12 +43,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorAction> {
+public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 
     private ActionsTable actionsTable;
 	/**
@@ -62,7 +63,7 @@ public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorAction>
      *            The SWT style of the table.
      * @param scriptGeneratorTable 
      */
-    public TargetPropertiesTable(Composite parent, int style, int tableStyle, ActionsTable actionsTable) {
+    public ActionsViewTable(Composite parent, int style, int tableStyle, ActionsTable actionsTable) {
         super(parent, style, tableStyle | SWT.BORDER);
         this.actionsTable = actionsTable;
         initialise();
@@ -71,17 +72,38 @@ public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorAction>
     @Override
     protected void addColumns() {    	
         for (ActionParameter actionParameter:this.actionsTable.getActionParameters()) {
-        	createColumn(actionParameter.getName(), 2,
-        			new DataboundCellLabelProvider<ScriptGeneratorAction>(this.observeProperty("john")) {
-
-				@Override
-				protected String stringFromRow(ScriptGeneratorAction row) {
-					// TODO Auto-generated method stub
-					return row.getData(actionParameter.getName());
-				}
-			});
+        	addColumn(actionParameter);
         }
     }
+
+	private void addColumn(ActionParameter actionParameter) {
+		String columnName = actionParameter.getName();
+		TableViewerColumn column = createColumn(
+				columnName, 
+				2,
+				new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
+					@Override
+					protected String stringFromRow(ScriptGeneratorAction row) {
+						// TODO Auto-generated method stub
+						return row.getActionParameterValue(columnName);
+					}
+					
+				});
+		
+        column.setEditingSupport(new StringEditingSupport<ScriptGeneratorAction>(viewer(), ScriptGeneratorAction.class) {
+
+            @Override
+            protected String valueFromRow(ScriptGeneratorAction row) {
+                return row.getActionParameterValue(columnName);
+            }
+
+            @Override
+            protected void setValueForRow(ScriptGeneratorAction row, String value) {
+                row.setActionParameterValue(columnName, value);
+            }
+        });	
+		
+	}
 
 //    private void name() {
 //        createColumn("Name", 1, new DataboundCellLabelProvider<ScriptGeneratorSingleton>(observeProperty("iteratedNumber")) {
@@ -100,18 +122,7 @@ public class TargetPropertiesTable extends DataboundTable<ScriptGeneratorAction>
 //            }
 //        });
 //        
-//        value.setEditingSupport(new StringEditingSupport<PropertyDescription>(viewer(), PropertyDescription.class) {
 //
-//            @Override
-//            protected String valueFromRow(PropertyDescription row) {
-//                return row.getValue();
-//            }
-//
-//            @Override
-//            protected void setValueForRow(PropertyDescription row, String value) {
-//                row.setValue(value);
-//            }
-//        });
 //    }
 
 }

@@ -6,20 +6,20 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class ScriptGeneratorAction extends ModelObject {
 
-	private String data;
-	private HashMap<String, String > values;
+	private HashMap<String, String > actionParameterValues;
 
 	public ScriptGeneratorAction(HashMap<String, String> values) {
-		this.values = values;
+		this.actionParameterValues = values;
 	}
 	
-	public void setValue(String key, String value) {
-		values.replace(key, value);
+	public void setActionParameterValue(String key, String value) {
+		String oldValue = actionParameterValues.get(key); 
+		actionParameterValues.replace(key, value);
+		firePropertyChange(key, oldValue, value);
 	}
 	
-	public String getData(String parameterName) {
-		return values.get(parameterName);
-		
+	public String getActionParameterValue(String parameterName) {
+		return actionParameterValues.get(parameterName);		
 	}
 	
 }

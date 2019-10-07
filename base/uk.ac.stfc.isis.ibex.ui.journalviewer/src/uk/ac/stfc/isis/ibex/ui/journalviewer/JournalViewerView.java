@@ -20,11 +20,13 @@
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -245,7 +247,7 @@ public class JournalViewerView {
         for (final JournalField field : JournalField.values()) {
             if (model.getFieldSelected(field)) {
                 TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
-                        new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
+                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
                             @Override
                             protected String stringFromRow(JournalRow row) {
                                 return row.get(field);

@@ -17,13 +17,11 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.widgets.observable;
+package uk.ac.stfc.isis.ibex.epics.observing;
 
 import java.io.IOException;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;

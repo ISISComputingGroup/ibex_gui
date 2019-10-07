@@ -49,7 +49,7 @@ public class TestView {
 	private Label lblOrder;
 	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
-	private TargetPropertiesTable table;
+	private ActionsViewTable table;
 	private static final Display DISPLAY = Display.getCurrent();
 	
 	/**
@@ -63,7 +63,7 @@ public class TestView {
 		this.toyModel = Activator.getModel();
 		
         scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
-		table = new TargetPropertiesTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
+		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
         
 		
 		Group grpSettings = new Group(parent, SWT.NULL);
