@@ -273,7 +273,6 @@ public class SearchControl extends Canvas {
         dtFromTime.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	Calendar __test__ = dtFromTime.getDateTime();
                 viewModel.setFromTime(dtFromTime.getDateTime());
             }
         });
