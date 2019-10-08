@@ -36,13 +36,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
+import uk.ac.stfc.isis.ibex.ui.widgets.DateTimeWithCalendar;
 
 
 /**
@@ -51,7 +51,7 @@ import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchInput extends Composite {
 
-    private final int runNumberIndex = 0, startTimeIndex = 2, users = 4;
+    private final int runNumberIndex = 0, startTimeIndex = 2;
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
     private Composite cmpSearch;
@@ -68,7 +68,7 @@ public class SearchInput extends Composite {
 
     private Spinner spinnerFromNumber, spinnerToNumber;
     private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
-    private DateTime dtFromDate, dtFromTime, dtToDate, dtToTime;
+    private DateTimeWithCalendar dtFromDate, dtFromTime, dtToDate, dtToTime;
     private JournalViewModel viewModel;
     private Combo cmbFilterType;
 
@@ -143,10 +143,10 @@ public class SearchInput extends Composite {
         chkTimeFrom = new Button(cmpTimePicker, SWT.CHECK);
         chkTimeFrom.setText("From");
 
-        dtFromDate = new DateTime(cmpTimePicker, SWT.BORDER);
+        dtFromDate = new DateTimeWithCalendar(cmpTimePicker, SWT.BORDER);
         dtFromDate.setEnabled(false);
 
-        dtFromTime = new DateTime(cmpTimePicker, SWT.BORDER | SWT.TIME);
+        dtFromTime = new DateTimeWithCalendar(cmpTimePicker, SWT.BORDER | SWT.TIME);
         dtFromTime.setEnabled(false);
 
         Label lblSpacing1 = new Label(cmpTimePicker, SWT.NONE);
@@ -155,10 +155,10 @@ public class SearchInput extends Composite {
         chkTimeTo = new Button(cmpTimePicker, SWT.CHECK);
         chkTimeTo.setText("To");
 
-        dtToDate = new DateTime(cmpTimePicker, SWT.BORDER);
+        dtToDate = new DateTimeWithCalendar(cmpTimePicker, SWT.BORDER);
         dtToDate.setEnabled(false);
 
-        dtToTime = new DateTime(cmpTimePicker, SWT.BORDER | SWT.TIME);
+        dtToTime = new DateTimeWithCalendar(cmpTimePicker, SWT.BORDER | SWT.TIME);
         dtToTime.setEnabled(false);
 
         stackSearch.topControl = cmpRunNumber;
@@ -254,10 +254,10 @@ public class SearchInput extends Composite {
                 viewModel.setFromNumber(spinnerFromNumber.getSelection());
                 viewModel.setToNumber(spinnerToNumber.getSelection());
 
-                viewModel.setToTime(dtToTime);
-                viewModel.setFromTime(dtFromTime);
-                viewModel.setToDate(dtToDate);
-                viewModel.setFromDate(dtFromDate);
+                viewModel.setToTime(dtToTime.getDateTime());
+                viewModel.setFromTime(dtFromTime.getDateTime());
+                viewModel.setToDate(dtToDate.getDateTime());
+                viewModel.setFromDate(dtFromDate.getDateTime());
 
 
 
@@ -288,28 +288,28 @@ public class SearchInput extends Composite {
         dtFromDate.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setFromDate(dtFromDate);
+                viewModel.setFromDate(dtFromDate.getDateTime());
             }
         });
 
         dtFromTime.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setFromTime(dtFromTime);
+                viewModel.setFromTime(dtFromTime.getDateTime());
             }
         });
 
         dtToDate.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setToDate(dtToDate);
+                viewModel.setToDate(dtToDate.getDateTime());
             }
         });
 
         dtToTime.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setToTime(dtToTime);
+                viewModel.setToTime(dtToTime.getDateTime());
             }
 
         });
@@ -323,8 +323,8 @@ public class SearchInput extends Composite {
                 dtFromDate.setEnabled(chkTimeFrom.getSelection());
                 dtFromTime.setEnabled(chkTimeFrom.getSelection());
                 
-                viewModel.setInitialFromDateTime(dtFromTime, dtFromDate);
-                viewModel.setInitialToDateTime(dtToTime, dtToDate);
+                viewModel.setInitialFromDateTime(dtFromTime.getDateTime(), dtFromDate.getDateTime());
+                viewModel.setInitialToDateTime(dtToTime.getDateTime(), dtToDate.getDateTime());
             }
         });
 
@@ -335,8 +335,8 @@ public class SearchInput extends Composite {
                 dtToDate.setEnabled(chkTimeTo.getSelection());
                 dtToTime.setEnabled(chkTimeTo.getSelection());
 
-                viewModel.setInitialFromDateTime(dtFromTime, dtFromDate);
-                viewModel.setInitialToDateTime(dtToTime, dtToDate);
+                viewModel.setInitialFromDateTime(dtFromTime.getDateTime(), dtFromDate.getDateTime());
+                viewModel.setInitialToDateTime(dtToTime.getDateTime(), dtToDate.getDateTime());
             }
         });
 
@@ -374,10 +374,10 @@ public class SearchInput extends Composite {
                         // when start is selected from the drop down, send the
                         // date that is already present in the field to the view
                         // viewModel
-                        viewModel.setToTime(dtToTime);
-                        viewModel.setFromTime(dtFromTime);
-                        viewModel.setToDate(dtToDate);
-                        viewModel.setFromDate(dtFromDate);
+                        viewModel.setToTime(dtToTime.getDateTime());
+                        viewModel.setFromTime(dtFromTime.getDateTime());
+                        viewModel.setToDate(dtToDate.getDateTime());
+                        viewModel.setFromDate(dtFromDate.getDateTime());
 
                     }
 

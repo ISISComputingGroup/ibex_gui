@@ -155,12 +155,11 @@ public class JournalViewerView {
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
-
+        
         error = new Label(searchControls, SWT.NONE);
-        error.setSize(30, 10);
         error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
-
-
+        error.setLayoutData(new RowData(200, SWT.DEFAULT));
+        error.setText("placeholder");
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -318,7 +317,7 @@ public class JournalViewerView {
                 BeanProperties.value("errorMessage").observe(model));
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
-                BeanProperties.value("enableDisableButton").observe(model));
+                BeanProperties.value("enableOrDisableButton").observe(model));
 
         spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
             @Override
