@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver.editing;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -27,7 +27,6 @@ import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -62,7 +61,7 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
 	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
 	
 	private final Label messageDisplayer;
-	private Macro macro;
+	private MacroViewModel macro;
 	private boolean nameIsValid = true;
 	private boolean showWarningIcon = false;
 	
@@ -74,7 +73,7 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
      * @param messageDisplayer
      *            The label to display the error message on.
      */
-	public MacroValueValidator(Macro macro, Label messageDisplayer) {
+	public MacroValueValidator(MacroViewModel macro, Label messageDisplayer) {
 		this.messageDisplayer = messageDisplayer;
 		this.macro = macro;
 	}
@@ -133,7 +132,7 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
      * @param macro
      *            The macro to validate.
      */
-	public void setMacro(Macro macro) {
+	public void setMacro(MacroViewModel macro) {
 		this.macro = macro;
 	}
 	
