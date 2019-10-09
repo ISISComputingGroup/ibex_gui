@@ -1,8 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
