@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 
 /**
  * Composite that shows the options to set the PV details, and allows
@@ -169,7 +169,7 @@ public class PvDetailView extends Composite {
         bindingContext.bindValue(WidgetProperties.visible().observe(selectionComposite),
                 BeanProperties.value("selectionVisible").observe(model));
         bindingContext.bindValue(WidgetProperties.visible().observe(noSelectionComposite),
-                BeanProperties.value("selectionVisible").observe(model), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("selectionVisible").observe(model), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify),
                 BeanProperties.value("pvName").observe(model));
         bindingContext.bindValue(SWTObservables.observeText(txtAddress, SWT.Modify),

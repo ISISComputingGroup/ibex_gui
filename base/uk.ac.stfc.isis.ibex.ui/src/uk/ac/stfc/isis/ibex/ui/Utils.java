@@ -22,89 +22,35 @@
  */
 package uk.ac.stfc.isis.ibex.ui;
 
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-
 /**
- * Set of utility methods and constants for working with SWT.
+ * Set of general utility methods and constants used in the UI.
  */
 public final class Utils {
 
-    /** The mu unicode character. */
-    public static final String MU = "\u03BC";
+	/**
+	 * Takes a value and if that value is in the range min_value to max_value returns that value
+	 * If it is outside that range the return is constrained to be the closest of either min_value or max_value
+	 * If the max value is greater than the min value then the max value is returned
+	 * 
+	 * @param value The value to constrain
+	 * @param min_value The lower bound to constrain value to
+	 * @param max_value The upper bound to constrain value to
+	 * @return The constrained value
+	 */
+	public static int constrainIntToRange(int value, int min_value, int max_value) {
+		// Return max value if less than min value
+		if (max_value < min_value) {
+			return max_value;
+		}
+		// Constrain value between min and max
+		if (value > max_value) {
+	        return max_value;
+	    } else if (value < min_value) {
+	        return min_value;
+	    } else {
+	        return value;
+	    }
+	}
 
-    /**
-     * An update strategy for inverting an observed boolean value.
-     */
-    public static final UpdateValueStrategy NOT_CONVERTER = new UpdateValueStrategy() {
-        @Override
-        public Object convert(Object value) {
-            return !(Boolean) value;
-        }
-    };
-
-    private Utils() {
-
-    }
-
-    /**
-     * Sets the enabled flag on the input control and recursively on all its
-     * children.
-     * 
-     * @param control the top-level control
-     * @param enabled whether the control and all its children should be enabled
-     */
-    public static void recursiveSetEnabled(Control control, boolean enabled) {
-        if (control instanceof Composite) {
-            Composite composite = (Composite) control;
-            for (Control child : composite.getChildren()) {
-                recursiveSetEnabled(child, enabled);
-            }
-        }
-
-        control.setEnabled(enabled);
-    }
-
-    /**
-     * Gets the active page in the GUI. Checks that the workbench is running.
-     *
-     * @return the active page; or null if there is not one
-     */
-    public static IWorkbenchPage getActivePage() {
-        if (!PlatformUI.isWorkbenchRunning()) {
-            // workbench is not running yet so no perspectives open
-            return null;
-        }
-
-        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        if (activeWorkbenchWindow == null) {
-            return null;
-        }
-
-        return activeWorkbenchWindow.getActivePage();
-    }
-    
-    /**
-     * Takes a value and if that value is in the range min_value to max_value returns that value
-     * If it is outside that range the return is constrained to be the closest of either min_value or max_value
-     * 
-     * @param value The value to constrain
-     * @param min_value The lower bound to constrain value to
-     * @param max_value The upper bound to constrain value to
-     * @return The constrained value
-     */
-    public static int constrainIntToRange(int value, int min_value, int max_value) {
-    	if (value < min_value) {
-            return min_value;
-        } else if (value > max_value) {
-            return max_value;
-        } else {
-            return value;
-        }
-    }
 
 }

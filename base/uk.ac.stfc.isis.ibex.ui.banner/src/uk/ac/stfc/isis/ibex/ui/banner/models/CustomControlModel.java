@@ -111,21 +111,21 @@ public class CustomControlModel extends ModelObject {
      * @return the font size
      */
     public int fontSize() {
-    	return Utils.constrainIntToRange(fontSize, MIN_FONT, MAX_FONT);
+		return Utils.constrainIntToRange(fontSize, MIN_FONT, MAX_FONT);
     }
 
     /**
      * @return the width of the button
      */
     public int width() {
-    	return Utils.constrainIntToRange(width, MIN_WIDTH, MAX_WIDTH);
+		return Utils.constrainIntToRange(width, MIN_WIDTH, MAX_WIDTH);
     }
 
     /**
      * @return the height of the button
      */
     public int height() {
-        return Utils.constrainIntToRange(height, MIN_HEIGHT, MAX_HEIGHT);
+		return Utils.constrainIntToRange(height, MIN_HEIGHT, MAX_HEIGHT);
     }
 
 }

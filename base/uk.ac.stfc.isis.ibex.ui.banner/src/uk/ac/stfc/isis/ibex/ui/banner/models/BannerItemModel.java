@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.StringUtils;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 
+
 /**
  * Model containing banner item status as updated values used for display in
  * GUI.
@@ -55,6 +56,7 @@ public class BannerItemModel extends ModelObject {
     private static final int MAX_WIDTH = 500;
     
     private static final int MAX_TEXT_LENGTH = 30;
+    
     
     /**
      * Instantiates model and converter.
