@@ -29,8 +29,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -45,11 +43,11 @@ public class WritableObservingTextBox extends Composite {
 	private final Text textbox;
 	private final Button setButton;
 	
-	public WritableObservingTextBox(
-			Composite parent, 
-			int style, 
-			StringWritableObservableAdapter adapter) {
+	public WritableObservingTextBox(Composite parent, int style, 
+	        StringWritableObservableAdapter adapter) {
+	    
 		super(parent, style);
+		
 		int numCols = (style & SWT.UP) != 0 ? 1 : 2;
 		GridLayout gridLayout = new GridLayout(numCols, false);
 		gridLayout.marginWidth = 0;
@@ -76,13 +74,10 @@ public class WritableObservingTextBox extends Composite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(textbox), BeanProperties.value("value").observe(adapter.canSetText()));
 		bindingContext.bindValue(WidgetProperties.text().observe(textbox), BeanProperties.value("value").observe(adapter.text()));
 		
-		textbox.addListener(SWT.Traverse, new Listener() {
-	        @Override
-	        public void handleEvent(Event event) {
+		textbox.addListener(SWT.Traverse, event -> {
 	            if (event.detail == SWT.TRAVERSE_RETURN) {
 	                uncheckedSetText(adapter);
 	            }
-	        }
 	    });
 		
 		setButton.addSelectionListener(new SelectionAdapter() {
