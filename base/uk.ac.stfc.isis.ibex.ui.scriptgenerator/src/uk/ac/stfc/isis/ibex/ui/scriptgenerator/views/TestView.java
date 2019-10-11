@@ -133,12 +133,12 @@ public class TestView {
 		
 		//Button btnRowUp = createMoveRowButton(btnsComposite, "move_up.png", "up");
 		
-//		button.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				toyModel.iterateNumber();
-//			}
-//		});
+		btnInsertAction.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toyModel.addEmptyAction();
+			}
+		});
 		
 
         bind();

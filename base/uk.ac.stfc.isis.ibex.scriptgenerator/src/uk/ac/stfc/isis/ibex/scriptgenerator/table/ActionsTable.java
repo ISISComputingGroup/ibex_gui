@@ -31,38 +31,27 @@ public class ActionsTable extends ModelObject {
 	public void setActions() {
 		var actions = new ArrayList<ScriptGeneratorAction>(); 
 		var map = new HashMap<String, String>();
-		var map2 = new HashMap<String, String>();
-		var map3 = new HashMap<String, String>();
-		map.put("column name", "Value1");
-		map.put("code", "anothervalue1");
+		map.put("column name", "Value");
+		map.put("code", "anothervalue");
 		actions.add(new ScriptGeneratorAction(map));
-		map2.put("column name", "Value2");
-		map2.put("code", "anothervalue2");
-		actions.add(new ScriptGeneratorAction(map2));
-		map3.put("column name", "Value3");
-		map3.put("code", "anothervalue3");
-		actions.add(new ScriptGeneratorAction(map3));
+		actions.add(new ScriptGeneratorAction(map));
+		actions.add(new ScriptGeneratorAction(map));
 		
 		firePropertyChange("actions", this.actions, this.actions=actions);
 		
 	}
 
 	public void addEmptyAction(List<ActionParameter> actionParameters) {
-		var map = new HashMap<String, String>();
-		var actions = new ArrayList<ScriptGeneratorAction>(); 
+		var parametersMap = new HashMap<String, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (ActionParameter actionParameter: actionParameters) {
-			map.put(actionParameter.getName(), "empty");
+			parametersMap.put(actionParameter.getName(), actionParameter.getName()+Integer.toString(actions.size()));
 		}
 		
-		var newAction = new ScriptGeneratorAction(map);
-		// Add the new, empty action to the list
-		//actions.add(new ScriptGeneratorAction(map));
-		actions.add(newAction);
+		var newAction = new ScriptGeneratorAction(parametersMap);
 		
-		//this.actions.addAll(actions);
 				
-		firePropertyChange("actions", this.actions, this.actions.addAll(actions));
+		firePropertyChange("actions", this.actions, this.actions.add(newAction));
 	}
 		
 	
