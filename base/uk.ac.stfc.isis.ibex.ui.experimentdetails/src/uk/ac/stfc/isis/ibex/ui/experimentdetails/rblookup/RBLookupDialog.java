@@ -55,12 +55,6 @@ public class RBLookupDialog extends Dialog {
 		shell.setText("RB Number Lookup");
 	}
 	
-	//TODO: remove when done
-	@Override
-    protected boolean isResizable() {
-	    return true;
-	}
-	
 	@Override
 	protected Point getInitialSize() {
 		return new Point(550, 475);
