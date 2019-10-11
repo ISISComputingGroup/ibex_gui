@@ -38,9 +38,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 @SuppressWarnings("checkstyle:magicnumber")
 public class WritableObservingTextBox extends Composite {
 	
+    private static final String SEARCH_TIP_MESSAGE = "You can input your RB number for"
+            + " your scheduled or Xpress run directly here!";
+    
 	private DataBindingContext bindingContext;
 	
-	private final Text textbox;
+	private final Text textBox;
 	private final Button setButton;
 	
 	public WritableObservingTextBox(Composite parent, int style, 
@@ -53,9 +56,11 @@ public class WritableObservingTextBox extends Composite {
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
-		textbox = new Text(this, SWT.BORDER);
-		textbox.setFont(SWTResourceManager.getFont("Arial", 12, SWT.NORMAL));
-		textbox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));	
+		
+		textBox = new Text(this, SWT.BORDER);
+		textBox.setFont(SWTResourceManager.getFont("Arial", 12, SWT.NORMAL));
+		textBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));	
+		textBox.setToolTipText(SEARCH_TIP_MESSAGE);
 				
 		setButton = new Button(this, SWT.NONE);
 		GridData gdSetButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -71,10 +76,10 @@ public class WritableObservingTextBox extends Composite {
 	private void bind(final StringWritableObservableAdapter adapter) {
 		bindingContext = new DataBindingContext();	
 		bindingContext.bindValue(WidgetProperties.enabled().observe(setButton), BeanProperties.value("value").observe(adapter.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(textbox), BeanProperties.value("value").observe(adapter.canSetText()));
-		bindingContext.bindValue(WidgetProperties.text().observe(textbox), BeanProperties.value("value").observe(adapter.text()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(textBox), BeanProperties.value("value").observe(adapter.canSetText()));
+		bindingContext.bindValue(WidgetProperties.text().observe(textBox), BeanProperties.value("value").observe(adapter.text()));
 		
-		textbox.addListener(SWT.Traverse, event -> {
+		textBox.addListener(SWT.Traverse, event -> {
 	            if (event.detail == SWT.TRAVERSE_RETURN) {
 	                uncheckedSetText(adapter);
 	            }
@@ -90,6 +95,6 @@ public class WritableObservingTextBox extends Composite {
 	}
 	
 	private void uncheckedSetText(StringWritableObservableAdapter adapter) {
-		adapter.uncheckedSetText(textbox.getText());
+		adapter.uncheckedSetText(textBox.getText());
 	}
 }
