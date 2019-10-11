@@ -95,22 +95,25 @@ public class TestView {
         Button btnScriptDown = createMoveRowButton(moveComposite, "move_down.png", "down");
         
         
-        Composite actionsSendGrp = new Composite(parent, SWT.NONE);
-        actionsSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
+        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         GridLayout ssgLayout = new GridLayout(3, false);
         ssgLayout.marginHeight = 10;
         ssgLayout.marginWidth = 10;
-        actionsSendGrp.setLayout(ssgLayout);
+        actionsControlsGrp.setLayout(ssgLayout);
 		        
-        final Button btnCreateScript = new Button(actionsSendGrp, SWT.NONE);
-        btnCreateScript.setText("Add Action");
-        btnCreateScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
+        btnInsertAction.setText("Add Action");
+        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//        btnInsertAction.addListener(SWT.Selection, e -> (this.scriptGeneratorTable.get
+//        		//new QueueScriptDialog(shell, queueScriptViewModel)).open());
+
         
-        final Button btnDequeueScript = new Button(actionsSendGrp, SWT.NONE);
+        final Button btnDequeueScript = new Button(actionsControlsGrp, SWT.NONE);
         btnDequeueScript.setText("Delete Action");
         btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        final Button btnaDequeueScript = new Button(actionsSendGrp, SWT.NONE);
+        final Button btnaDequeueScript = new Button(actionsControlsGrp, SWT.NONE);
         btnaDequeueScript.setText("Duplicate Action");
         btnaDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -140,7 +143,8 @@ public class TestView {
 
         bind();
 		
-        scriptGeneratorTable.set_actions();
+        scriptGeneratorTable.setActions();
+        toyModel.addEmptyAction();
 	}
 
 	private void bind() {

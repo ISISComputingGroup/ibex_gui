@@ -12,20 +12,26 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private ActionsTable scriptGeneratorTable;
 	
+	private List<ActionParameter> actionParameters;
+	
 	public ScriptGeneratorSingleton() {
-		List<ActionParameter> actionParameters = new ArrayList<ActionParameter>();
+		//List<ActionParameter> actionParameters = new ArrayList<ActionParameter>();
+		actionParameters = new ArrayList<ActionParameter>();
 		
 		actionParameters.add(new ActionParameter("column name"));
 		actionParameters.add(new ActionParameter("code"));
 		
 		scriptGeneratorTable = new ActionsTable(actionParameters);
-		
 	}
 	
 	public ActionsTable getScriptGeneratorTable() {
 		return scriptGeneratorTable;
 	}
 	
+	
+	public void addEmptyAction() {
+		scriptGeneratorTable.addEmptyAction(actionParameters);
+	}
 	
 	/**
 	 * Adds one to the toy model's value.
