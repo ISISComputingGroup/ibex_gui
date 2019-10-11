@@ -86,20 +86,18 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         bind();
     }
 
-    /**
-     * @param parent
-     */
     private void experimentTeam(Composite parent) {
         lblRbNumber = new Label(parent, SWT.NONE);
 		lblRbNumber.setText("RB Number");
 		
         rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
         rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
+        
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
+        
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
