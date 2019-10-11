@@ -143,7 +143,6 @@ public class TestView {
 
         bind();
 		
-        scriptGeneratorTable.setActions();
         toyModel.addEmptyAction();
 	}
 

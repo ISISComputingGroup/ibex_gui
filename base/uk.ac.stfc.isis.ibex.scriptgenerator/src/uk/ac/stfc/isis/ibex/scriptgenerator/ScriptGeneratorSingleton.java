@@ -15,7 +15,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private List<ActionParameter> actionParameters;
 	
 	public ScriptGeneratorSingleton() {
-		//List<ActionParameter> actionParameters = new ArrayList<ActionParameter>();
 		actionParameters = new ArrayList<ActionParameter>();
 		
 		actionParameters.add(new ActionParameter("column name"));
