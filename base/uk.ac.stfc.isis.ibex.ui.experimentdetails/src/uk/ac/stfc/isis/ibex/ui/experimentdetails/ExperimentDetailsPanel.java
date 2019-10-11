@@ -62,12 +62,12 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 
 	private Label lblExperimentTeam;
 	private WritableObservingTextBox rbNumber;
-	private Button btnUpdateUserDetails;
+	private Button btnSetRBNumber;
+	private Button btnRBLookup;
 	private Button btnAddUserDetails;
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
 	private Button btnRemoveUserDetails;
-	private Button btnRBLookup;
 	
     @Inject
     public ExperimentDetailsPanel(Composite parent) {
@@ -167,15 +167,15 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		btnClearUserDetails.setText("Clear");
 		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
 		
-		btnUpdateUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnUpdateUserDetails.addSelectionListener(new SelectionAdapter() {
+		btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
+		btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 viewModel.model.sendUserDetails();
 			}
 		});
-        btnUpdateUserDetails.setText("Set");
-		btnUpdateUserDetails.setLayoutData(gdDetailsButtons);
+        btnSetRBNumber.setText("Set");
+		btnSetRBNumber.setLayoutData(gdDetailsButtons);
 		
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
@@ -186,7 +186,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnUpdateUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 	}
 	
 	private void updateUserDetails() {
