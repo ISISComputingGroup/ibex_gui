@@ -35,14 +35,19 @@ import org.eclipse.core.databinding.observable.map.IMapChangeListener;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
@@ -67,8 +72,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         super(parent, style, tableStyle | SWT.BORDER);
         this.actionsTable = actionsTable;
         initialise();
+        this.getSelectionIndex();
     }
 
+    
     @Override
     protected void addColumns() {    	
         for (ActionParameter actionParameter:this.actionsTable.getActionParameters()) {
@@ -105,6 +112,20 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		
 	}
 
+	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
+        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            }
+        };
+        return selectionAdapter;
+    }
+	
+	@Override
+	protected ColumnComparator<ScriptGeneratorAction> comparator() {
+		return new NullComparator<>();
+	}
+	
 //    private void name() {
 //        createColumn("Name", 1, new DataboundCellLabelProvider<ScriptGeneratorSingleton>(observeProperty("iteratedNumber")) {
 //            @Override

@@ -20,7 +20,6 @@ public class ActionsTable extends ModelObject {
 
 	public ActionsTable(List<ActionParameter> actionParameters) {
 		setActionParameters(actionParameters);
-		//this.actionParameters = actionParameters;
 	}
 
 	public void setActionParameters(List<ActionParameter> actionParameters) {

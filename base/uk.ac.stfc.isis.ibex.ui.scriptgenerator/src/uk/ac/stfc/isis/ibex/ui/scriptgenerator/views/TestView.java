@@ -82,6 +82,7 @@ public class TestView {
 		var actionParameters = new ArrayList<ActionParameter>();
 		actionParameters.add(new ActionParameter("column name"));
 		actionParameters.add(new ActionParameter("code"));
+		actionParameters.add(new ActionParameter("third column"));
 		
 		toyModel.setActionParameters(actionParameters);
 		
