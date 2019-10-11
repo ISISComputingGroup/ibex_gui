@@ -52,9 +52,9 @@ public class RunControlBackgroundColourConverter extends Converter<RuncontrolSta
             return GREEN;
         } else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
             return DARK_RED;
+        } else {
+            return WHITE;
         }
-
-        return WHITE;
     }
 
 }
