@@ -32,6 +32,11 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupPanel extends Composite {
+    
+    private static final String NAME_SEARCH_WARNING = "Warning! This dialog is only for searching "
+            + "for scheduled runs. For Xpress runs, you will have to \ntype in your RB number "
+            + "manually.";
+    
 	private Text txtName;
 	private ComboViewer cmboRole;
 	private UserDetailsTable experimentIDTable;
@@ -93,9 +98,10 @@ public class RBLookupPanel extends Composite {
 		
 		Label searchWarning = new Label(searchComposite, SWT.NONE);
 		searchWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
-		searchWarning.setText("Warning! This dialog is only for searching for scheduled runs. For Xpress runs, you will have to type in your RB number manually.");
+		searchWarning.setText(NAME_SEARCH_WARNING);
 		
-		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
+		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, 
+		        SWT.FULL_SELECTION | SWT.BORDER);
 		experimentIDTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 	
