@@ -115,13 +115,28 @@ public class TestView {
         final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
         btnInsertAction.setText("Add Action");
         btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-//        btnInsertAction.addListener(SWT.Selection, e -> (this.scriptGeneratorTable.get
-//        		//new QueueScriptDialog(shell, queueScriptViewModel)).open());
 
+		btnInsertAction.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toyModel.addEmptyAction();
+			}
+		});
         
-        final Button btnDequeueScript = new Button(actionsControlsGrp, SWT.NONE);
-        btnDequeueScript.setText("Delete Action");
-        btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
+        btnDeleteAction.setText("Delete Action");
+        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+		btnDeleteAction.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var index = table.getSelectionIndex();
+				if (index > 0) {
+					toyModel.deleteAction(index);
+				}
+			}
+		});
 
         final Button btnaDequeueScript = new Button(actionsControlsGrp, SWT.NONE);
         btnaDequeueScript.setText("Duplicate Action");
@@ -143,12 +158,10 @@ public class TestView {
 		
 		//Button btnRowUp = createMoveRowButton(btnsComposite, "move_up.png", "up");
 		
-		btnInsertAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				toyModel.addEmptyAction();
-			}
-		});
+
+		
+
+
 		
 
         bind();

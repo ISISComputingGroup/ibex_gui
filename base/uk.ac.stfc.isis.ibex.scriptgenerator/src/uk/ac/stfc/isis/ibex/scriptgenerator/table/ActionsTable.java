@@ -43,6 +43,11 @@ public class ActionsTable extends ModelObject {
 				
 		firePropertyChange("actions", this.actions, this.actions.add(newAction));
 	}
+
+	public void deleteAction(int index) {
+		firePropertyChange("actions", this.actions, this.actions.remove(index));
+		
+	}
 		
 	
 

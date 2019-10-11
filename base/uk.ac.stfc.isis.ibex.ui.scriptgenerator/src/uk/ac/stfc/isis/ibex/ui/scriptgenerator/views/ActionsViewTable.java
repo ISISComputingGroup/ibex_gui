@@ -72,7 +72,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         super(parent, style, tableStyle | SWT.BORDER);
         this.actionsTable = actionsTable;
         initialise();
-        this.getSelectionIndex();
     }
 
     
