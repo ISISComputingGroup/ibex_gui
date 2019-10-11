@@ -318,14 +318,14 @@ public class JournalViewModel extends ModelObject {
 
 	}
 
-
 	/**
 	 * update to new start date
 	 * 
 	 * @param fromDate new start date
 	 */
 	public void setFromDate(Calendar fromDate) {
-		this.fromDateTime.set(fromDate.get(Calendar.YEAR), fromDate.get(Calendar.MONTH), fromDate.get(Calendar.DAY_OF_MONTH));
+		this.fromDateTime.set(fromDate.get(Calendar.YEAR), fromDate.get(Calendar.MONTH),
+				fromDate.get(Calendar.DAY_OF_MONTH));
 		String errorMessage = GetErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}
@@ -336,7 +336,8 @@ public class JournalViewModel extends ModelObject {
 	 * @param toDate new end date
 	 */
 	public void setToDate(Calendar toDate) {
-		this.toDateTime.set(toDate.get(Calendar.YEAR), toDate.get(Calendar.MONTH), toDate.get(Calendar.DAY_OF_MONTH));
+		this.toDateTime.set(toDate.get(Calendar.YEAR), toDate.get(Calendar.MONTH),
+				toDate.get(Calendar.DAY_OF_MONTH));
 		String errorMessage = GetErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}

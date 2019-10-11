@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.DateTime;
 
 /**
  * Extended Datetime class so that we can pass calendar to viewModel rather than SWT DateTime 
- * It returns the calendar from where we can get date/time
+ * It returns the calendar from where we can get date/time.
  */
 public class DateTimeWithCalendar extends DateTime {
 
@@ -30,13 +30,14 @@ public class DateTimeWithCalendar extends DateTime {
 
 	@Override
 	protected void checkSubclass () {
-		/** Do nothing, overriding the function that checks if this is subclass or else 
-			eclipse will not allow to create subclass of DateTime
-		**/
+		/** 
+		 * Do nothing, overriding the function that checks if this is subclass or else 
+		 * eclipse will not allow to create subclass of DateTime.
+		 */
 	}
 	
 	/**
-	 * return date in Calendar format
+	 * return date in Calendar format.
 	 * @return returns whatever date is set by user
 	 */
 	public Calendar getDateTime() {

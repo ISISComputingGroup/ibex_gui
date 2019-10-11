@@ -139,8 +139,8 @@ public class JournalViewModelTest {
         Calendar calendar_1 = new GregorianCalendar(2013, 2, 12, 10, 2, 3);
         Calendar calendar_2 = new GregorianCalendar(2015, 2, 12, 15, 3, 4);
         
-        viewModel.setInitialFromDateTime(calendar_1, calendar_1);
-        viewModel.setInitialToDateTime(calendar_2, calendar_2);
+        viewModel.setInitialFromDateTime((Calendar)calendar_1.clone(), (Calendar)calendar_1.clone());
+        viewModel.setInitialToDateTime((Calendar)calendar_2.clone(), (Calendar)calendar_2.clone());
         
         viewModel.setFromDate(calendar_2);
         viewModel.setFromTime(calendar_2);
@@ -148,7 +148,6 @@ public class JournalViewModelTest {
         viewModel.setToDate(calendar_1);
         viewModel.setToTime(calendar_1);
         
-        viewModel.setErrorMessage(actual);
         String expected = viewModel.getErrorMessage();
         
         assertEquals(expected, actual);
@@ -165,8 +164,8 @@ public class JournalViewModelTest {
         
         viewModel = new JournalViewModel(model);
         
-        viewModel.setInitialFromDateTime(calendar_1, calendar_1);
-        viewModel.setInitialToDateTime(calendar_2, calendar_2);
+        viewModel.setInitialFromDateTime((Calendar)calendar_1.clone(), (Calendar)calendar_1.clone());
+        viewModel.setInitialToDateTime((Calendar)calendar_2.clone(), (Calendar)calendar_2.clone());
         
         viewModel.setFromDate(calendar_1);
         viewModel.setFromTime(calendar_1);
@@ -174,7 +173,6 @@ public class JournalViewModelTest {
         viewModel.setToDate(calendar_2);
         viewModel.setToTime(calendar_2);
         
-        viewModel.setErrorMessage(actual);
         String expected = viewModel.getErrorMessage();
         
         assertEquals(expected, actual);

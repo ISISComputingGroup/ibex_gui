@@ -159,7 +159,6 @@ public class JournalViewerView {
         error = new Label(searchControls, SWT.NONE);
         error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
         error.setLayoutData(new RowData(200, SWT.DEFAULT));
-        error.setText("placeholder");
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
