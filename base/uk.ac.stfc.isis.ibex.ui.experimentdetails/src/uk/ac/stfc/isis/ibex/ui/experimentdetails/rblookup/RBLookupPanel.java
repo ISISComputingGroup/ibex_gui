@@ -91,9 +91,12 @@ public class RBLookupPanel extends Composite {
 		btnSearch.setText("Search");
 		btnSearch.setFocus();
 		
+		Label searchWarning = new Label(searchComposite, SWT.NONE);
+		searchWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+		searchWarning.setText("Warning! This dialog is only for searching for scheduled runs. For Xpress runs, you will have to type in your RB number manually.");
+		
 		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
 		experimentIDTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
 	}
 	
 	/**

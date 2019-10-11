@@ -112,7 +112,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		});
 		
         lblExperimentTeam = new Label(parent, SWT.NONE);
-		lblExperimentTeam.setText("Experiment Team");
+		lblExperimentTeam.setText("Experiment Team:");
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
