@@ -18,12 +18,17 @@ public class ActionsTable extends ModelObject {
 		return actions;
 	}
 
-	public ActionsTable(List<ActionParameter> actionParameter) {
-		this.actionParameters = actionParameter;
+	public ActionsTable(List<ActionParameter> actionParameters) {
+		setActionParameters(actionParameters);
+		//this.actionParameters = actionParameters;
 	}
 
+	public void setActionParameters(List<ActionParameter> actionParameters) {
+		this.actionParameters = actionParameters;
+	}
+	
 	public List<ActionParameter> getActionParameters() {
-		return this.actionParameters;
+		return actionParameters;
 	}
 
 	public void addEmptyAction(List<ActionParameter> actionParameters) {

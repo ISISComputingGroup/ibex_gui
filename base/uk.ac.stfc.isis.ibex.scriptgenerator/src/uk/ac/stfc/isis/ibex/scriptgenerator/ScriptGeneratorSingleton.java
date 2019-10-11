@@ -10,17 +10,24 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private Integer iteratedNumber = 0;
 	private String iteratedNumberString;
 	
-	private ActionsTable scriptGeneratorTable;
+	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
-	private List<ActionParameter> actionParameters;
+	//private List<ActionParameter> actionParameters;
 	
-	public ScriptGeneratorSingleton() {
-		actionParameters = new ArrayList<ActionParameter>();
-		
-		actionParameters.add(new ActionParameter("column name"));
-		actionParameters.add(new ActionParameter("code"));
-		
-		scriptGeneratorTable = new ActionsTable(actionParameters);
+//	public ScriptGeneratorSingleton() {
+//		
+//		//actionParameters.add(new ActionParameter("column name"));
+//		//actionParameters.add(new ActionParameter("code"));
+//		
+//		//scriptGeneratorTable = new ActionsTable(actionParameters);
+//	}
+	
+	public void setActionParameters(ArrayList<ActionParameter> actionParameters) {
+		var newParameters = new ArrayList<ActionParameter>();
+		for (ActionParameter actionParameter:actionParameters) {
+			newParameters.add(actionParameter);
+		}
+		scriptGeneratorTable.setActionParameters(newParameters);
 	}
 	
 	public ActionsTable getScriptGeneratorTable() {
@@ -29,7 +36,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	
 	public void addEmptyAction() {
-		scriptGeneratorTable.addEmptyAction(actionParameters);
+		scriptGeneratorTable.addEmptyAction(scriptGeneratorTable.getActionParameters());
 	}
 	
 	/**

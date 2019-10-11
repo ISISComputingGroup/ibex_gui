@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.ArrayList;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
@@ -75,6 +78,12 @@ public class TestView {
 
 		this.toyModel = Activator.getModel();
 		scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
+		
+		var actionParameters = new ArrayList<ActionParameter>();
+		actionParameters.add(new ActionParameter("column name"));
+		actionParameters.add(new ActionParameter("code"));
+		
+		toyModel.setActionParameters(actionParameters);
 		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
