@@ -91,6 +91,10 @@ public class RBLookupPanel extends Composite {
 		btnSearch.setText("Search");
 		btnSearch.setFocus();
 		
+		Label scheduledWarning = new Label(searchComposite, SWT.WRAP);
+        scheduledWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        scheduledWarning.setText("Warning! The search function can only find scheduled experiments.\n For Express runs, you have will to put in the RB number manually!");
+        
 		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
 		experimentIDTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
