@@ -83,7 +83,6 @@ for file_path in file_iterator(OPI_folder):
         continue
 
     if check_widget_correct(last_widget):
-        print("Dummy widget correct for {}".format(filename))
         continue
 
     # Button must be contained in the bounding box of the OPI so let's put it in the top left
