@@ -2,6 +2,7 @@ from check_opi_format import file_iterator, DEFAULT_ROOT_DIR
 from lxml import etree
 from lxml.etree import LxmlError
 import six
+import os.path as path
 
 xml_parser = etree.XMLParser(remove_blank_text=True)
 
@@ -59,11 +60,12 @@ def check_widget_correct(widget_node):
 
 files_to_change = {}  # A dictionary of the file paths to change and their new content
 
-for filename in file_iterator(DEFAULT_ROOT_DIR):
-    print("Testing '{}'".format(filename))
+OPI_folder = path.join(path.dirname(path.abspath(__file__)), DEFAULT_ROOT_DIR)
+for file_path in file_iterator(OPI_folder):
+    filename = path.basename(file_path)
 
     try:
-        root = etree.parse(filename, xml_parser)
+        root = etree.parse(file_path, xml_parser)
     except LxmlError as e:
         print("{}: XML failed to parse {}".format(filename, e))
         continue
@@ -81,7 +83,7 @@ for filename in file_iterator(DEFAULT_ROOT_DIR):
         continue
 
     if check_widget_correct(last_widget):
-        print("Final widget is correct")
+        print("Dummy widget correct for {}".format(filename))
         continue
 
     # Button must be contained in the bounding box of the OPI so let's put it in the top left
@@ -102,11 +104,11 @@ for filename in file_iterator(DEFAULT_ROOT_DIR):
 
     display_element.append(dummy_widget)
 
-    files_to_change[filename] = root
+    files_to_change[file_path] = root
 
 if files_to_change:
-    for filename, root in six.iteritems(files_to_change):
-        with open(filename, "wb") as xml_file:
+    for file_path, root in six.iteritems(files_to_change):
+        with open(file_path, "wb") as xml_file:
             xml_file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
     print("Confirm dummy button has been added correctly and re-commit")
     exit(1)
