@@ -88,7 +88,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 
     private void experimentTeam(Composite parent) {
         lblRbNumber = new Label(parent, SWT.NONE);
-		lblRbNumber.setText("RB Number");
+		lblRbNumber.setText("RB Number:");
 		
         rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
         rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
