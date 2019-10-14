@@ -64,7 +64,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 
 
 	private Label lblExperimentTeam;
-	private WritableObservingTextBox rbNumber;
+	private WritableObservingTextBox rbNumberTextBox;
 	private Button btnSetRBNumber;
 	private Button btnRBLookup;
 	private Button btnAddUserDetails;
@@ -93,9 +93,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         lblRbNumber = new Label(parent, SWT.NONE);
 		lblRbNumber.setText("RB Number:");
 		
-        rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
-        rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        rbNumber.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
+        rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
+        rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
         
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
