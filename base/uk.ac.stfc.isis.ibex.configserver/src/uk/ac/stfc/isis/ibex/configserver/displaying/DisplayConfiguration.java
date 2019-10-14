@@ -47,6 +47,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private String name;
 	private String description;
 	private String defaultSynoptic;
+	private boolean isProtected;
 	private final List<DisplayGroup> groups = new ArrayList<>();
 	private Collection<DisplayBlock> displayBlocks;
 
@@ -61,7 +62,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 * @param configServer
 	 *                 The config server to which the config belongs.
 	 * @param runControlServer
-	 *                 The run control server cotrolling the state of the config.
+	 *                 The run control server controlling the state of the config.
 	 */
 	public DisplayConfiguration(ClosableObservable<Configuration> config, ConfigServer configServer,
 			RunControlServer runControlServer) {
@@ -75,6 +76,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		name = value.name();
 		description = value.description();
 		defaultSynoptic = value.synoptic();
+		isProtected = value.isProtected();
 		setDisplayBlocks(value.getBlocks());
 		setGroups(value.getGroups());
 		return this;
@@ -115,6 +117,15 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 */
 	public String defaultSynoptic() {
 		return Strings.nullToEmpty(defaultSynoptic);
+	}
+	
+	/**
+	*Returns if the protected flag is set or not 
+	*@return the protected flag
+	*
+	*/
+	public boolean isProtected() {
+		return isProtected;
 	}
 
 	/**
