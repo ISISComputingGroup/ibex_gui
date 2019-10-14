@@ -26,7 +26,7 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
+import uk.ac.stfc.isis.ibex.experimentdetails.AbstractExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 /**
  * A model for holding the current experiment details that is linked to a set of observables.
  */
-public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
+public class ObservableExperimentDetailsModel extends AbstractExperimentDetailsModel {
 	
 	private List<Parameter> sampleParameters = new ArrayList<>();
 	private List<Parameter> beamParameters = new ArrayList<>();
@@ -150,6 +150,11 @@ public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
 	@Override
 	public void clearUserDetails() {
 		setUserDetails(new ArrayList<>());
+	}
+	
+	@Override
+    public boolean hasUserDetails() {
+	    return userDetails.isEmpty();
 	}
 	
 	@Override

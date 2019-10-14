@@ -20,14 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
+import uk.ac.stfc.isis.ibex.experimentdetails.AbstractExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
 public class ExperimentDetailsViewModel {
 
     private static ExperimentDetailsViewModel instance;
 	
-	public final ExperimentDetailsModel model = ExperimentDetails.getInstance().model();
+	public final AbstractExperimentDetailsModel model = ExperimentDetails.getInstance().model();
 	
 	public final StringWritableObservableAdapter rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
 	

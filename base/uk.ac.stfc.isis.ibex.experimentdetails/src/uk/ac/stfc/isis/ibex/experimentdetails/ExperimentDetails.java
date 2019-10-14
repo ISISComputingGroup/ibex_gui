@@ -35,7 +35,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	private static ExperimentDetails instance;
 	
 	private ExperimentDetailsVariables variables; 
-	private ExperimentDetailsModel model;
+	private AbstractExperimentDetailsModel model;
 	private SearchModel searchModel;
 
     /**
@@ -67,7 +67,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	/**
 	 * @return The model for reading and writing the current experiment details information.
 	 */
-	public ExperimentDetailsModel model() {
+	public AbstractExperimentDetailsModel model() {
 		return model;
 	}
 
