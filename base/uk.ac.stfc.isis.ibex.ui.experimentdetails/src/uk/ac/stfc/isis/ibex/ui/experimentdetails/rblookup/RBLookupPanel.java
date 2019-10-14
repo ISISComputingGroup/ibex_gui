@@ -35,7 +35,7 @@ public class RBLookupPanel extends Composite {
     
     private static final String NAME_SEARCH_WARNING = "Warning! This dialog is only for searching "
             + "for scheduled runs. For Xpress runs, you will have to \ntype in your RB number "
-            + "manually.";
+            + "manually in the RB Number text box in Experiment Details.";
     
 	private Text txtName;
 	private ComboViewer cmboRole;
