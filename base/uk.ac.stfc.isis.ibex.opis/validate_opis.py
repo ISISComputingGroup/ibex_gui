@@ -1,6 +1,7 @@
 from check_opi_format import file_iterator, DEFAULT_ROOT_DIR
 from lxml import etree
 from lxml.etree import LxmlError
+import six
 
 xml_parser = etree.XMLParser(remove_blank_text=True)
 
@@ -56,8 +57,9 @@ def check_widget_correct(widget_node):
     return width == "1" and height == "1" and name == dummy_widget_name
 
 
-for filename in file_iterator(DEFAULT_ROOT_DIR):
+files_to_change = {}  # A dictionary of the file paths to change and their new content
 
+for filename in file_iterator(DEFAULT_ROOT_DIR):
     print("Testing '{}'".format(filename))
 
     try:
@@ -86,11 +88,6 @@ for filename in file_iterator(DEFAULT_ROOT_DIR):
     top_left_pixel = None
 
     for widget in root.xpath("/display/widget"):
-        if check_widget_correct(widget):
-            print("Dummy widget found but not at the end of the file, moving to the end")
-            display_element.append(widget)
-            continue
-
         widget_x_y = widget.find("x").text, widget.find("y").text
 
         if top_left_pixel is None:
@@ -105,6 +102,14 @@ for filename in file_iterator(DEFAULT_ROOT_DIR):
 
     display_element.append(dummy_widget)
 
-    with open(filename, "wb") as xml_file:
-        xml_file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
+    files_to_change[filename] = root
+
+if files_to_change:
+    for filename, root in six.iteritems(files_to_change):
+        with open(filename, "wb") as xml_file:
+            xml_file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
+    print("Confirm dummy button has been added correctly and re-commit")
+    exit(1)
+else:
+    exit(0)
 
