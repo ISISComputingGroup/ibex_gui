@@ -38,9 +38,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 @SuppressWarnings("checkstyle:magicnumber")
 public class WritableObservingTextBox extends Composite {
 	
-    private static final String SEARCH_TIP_MESSAGE = "You can input your RB number for"
-            + " your scheduled or Xpress run directly here!";
-    
 	private DataBindingContext bindingContext;
 	
 	private final Text textBox;
@@ -59,8 +56,7 @@ public class WritableObservingTextBox extends Composite {
 		
 		textBox = new Text(this, SWT.BORDER);
 		textBox.setFont(SWTResourceManager.getFont("Arial", 12, SWT.NORMAL));
-		textBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));	
-		textBox.setToolTipText(SEARCH_TIP_MESSAGE);
+		textBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 				
 		setButton = new Button(this, SWT.NONE);
 		GridData gdSetButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -71,6 +67,17 @@ public class WritableObservingTextBox extends Composite {
 		if (adapter != null) {
 			bind(adapter);
 		}
+	}
+	
+	/**
+	 * Sets the tool tip message of the text box. By default, the text box has 
+	 * no tool tip.
+	 * @param toolTipMsg A string that will be the message to appear in the tool
+	 * tip of the text box. If the argument is an empty string, no tool tip 
+	 * will appear.
+	 */
+	public void setToolTip(String toolTipMsg) {
+	    textBox.setToolTipText("");
 	}
 
 	private void bind(final StringWritableObservableAdapter adapter) {
