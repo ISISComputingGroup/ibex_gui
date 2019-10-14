@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * The model for the experiment details information.
  */
-public abstract class ExperimentDetailsModel extends ModelObject {
+public abstract class AbstractExperimentDetailsModel extends ModelObject {
 
     /**
      * @return the sample parameters
@@ -98,4 +98,10 @@ public abstract class ExperimentDetailsModel extends ModelObject {
 	 * Remove all user details from the model.
 	 */
 	public abstract void clearUserDetails();
+	
+	/**
+	 * Checks if there are any user details in the model.
+	 * @return True if there are user details in the model, false if not.
+	 */
+	public abstract boolean hasUserDetails();
 }
