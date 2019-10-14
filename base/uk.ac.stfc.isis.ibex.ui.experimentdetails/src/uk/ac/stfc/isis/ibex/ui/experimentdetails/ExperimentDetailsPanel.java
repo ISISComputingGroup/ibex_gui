@@ -187,9 +187,12 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	
 	private void bind() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 	}
 	
