@@ -82,9 +82,12 @@ public class WritableObservingTextBox extends Composite {
 
 	private void bind(final StringWritableObservableAdapter adapter) {
 		bindingContext = new DataBindingContext();	
-		bindingContext.bindValue(WidgetProperties.enabled().observe(setButton), BeanProperties.value("value").observe(adapter.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(textBox), BeanProperties.value("value").observe(adapter.canSetText()));
-		bindingContext.bindValue(WidgetProperties.text().observe(textBox), BeanProperties.value("value").observe(adapter.text()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(setButton),
+		        BeanProperties.value("value").observe(adapter.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(textBox),
+		        BeanProperties.value("value").observe(adapter.canSetText()));
+		bindingContext.bindValue(WidgetProperties.text().observe(textBox),
+		        BeanProperties.value("value").observe(adapter.text()));
 		
 		textBox.addListener(SWT.Traverse, event -> {
 	            if (event.detail == SWT.TRAVERSE_RETURN) {
