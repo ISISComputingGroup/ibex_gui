@@ -52,7 +52,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private static final String SEARCH_TIP_MESSAGE = "You can input your RB number for"
+    private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
     
     private final ExperimentDetailsViewModel viewModel = ExperimentDetailsViewModel.getInstance();
@@ -95,7 +95,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		
         rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
         rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        rbNumber.setToolTip(SEARCH_TIP_MESSAGE);
+        rbNumber.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
         
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
