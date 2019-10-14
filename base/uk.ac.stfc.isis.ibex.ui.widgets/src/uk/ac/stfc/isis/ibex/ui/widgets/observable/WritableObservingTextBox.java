@@ -77,7 +77,7 @@ public class WritableObservingTextBox extends Composite {
 	 * will appear.
 	 */
 	public void setToolTip(String toolTipMsg) {
-	    textBox.setToolTipText("");
+	    textBox.setToolTipText(toolTipMsg);
 	}
 
 	private void bind(final StringWritableObservableAdapter adapter) {
