@@ -99,8 +99,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
-//        new Label(parent, SWT.NONE);
-//        new Label(parent, SWT.NONE);
         
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -121,11 +119,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
         manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
         manualUserEntryWarning.setVisible(false);
-        
-//        new Label(parent, SWT.NONE);
-//        new Label(parent, SWT.NONE);
-//        new Label(parent, SWT.NONE);
-//        new Label(parent, SWT.NONE);
 		
         userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
         userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -184,9 +177,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		});
         btnSetRBNumber.setText("Set");
 		btnSetRBNumber.setLayoutData(gdDetailsButtons);
-		
-//        new Label(parent, SWT.NONE);
-//        new Label(parent, SWT.NONE);
     }
 	
 	private void bind() {
