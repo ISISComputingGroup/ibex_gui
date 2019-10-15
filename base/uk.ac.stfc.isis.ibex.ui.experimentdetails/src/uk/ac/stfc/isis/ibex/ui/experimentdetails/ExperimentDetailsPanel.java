@@ -197,11 +197,8 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	}
 	
 	private void updateUserDetails() {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				userDetails.setRows(viewModel.model.getUserDetails());
-			}	
+		Display.getDefault().asyncExec( () -> {
+		    userDetails.setRows(viewModel.model.getUserDetails());
 		});
 	}
 }
