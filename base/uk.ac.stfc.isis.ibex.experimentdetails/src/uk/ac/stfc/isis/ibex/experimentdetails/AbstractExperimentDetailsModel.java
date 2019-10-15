@@ -103,5 +103,5 @@ public abstract class AbstractExperimentDetailsModel extends ModelObject {
 	 * Checks if there are any user details in the model.
 	 * @return True if there are user details in the model, false if not.
 	 */
-	public abstract boolean hasUserDetails();
+	public abstract boolean isUserDetailsEmpty();
 }

@@ -52,6 +52,11 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
     private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
     
+    private static final String MANUAL_USER_ENTRY_MESSAGE = "The current RB Number can not be found "
+            + "in the database! This means the number is not for a scheduled run, so users will have "
+            + "to be entered manually.\n Alternatively, you can try to find a valid scheduled run "
+            + "RB number.";
+    
     private final ExperimentDetailsViewModel viewModel = ExperimentDetailsViewModel.getInstance();
 	
 	private final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
@@ -59,11 +64,11 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
     private UserDetailsTable userDetails;
 	private Label lblRbNumber;
 
-
 	private Label lblExperimentTeam;
 	private WritableObservingTextBox rbNumberTextBox;
 	private Button btnSetRBNumber;
 	private Button btnRBLookup;
+	private Label manualUserEntryWarning;
 	private Button btnAddUserDetails;
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
@@ -110,6 +115,11 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 			}
 		});
 		
+		manualUserEntryWarning = new Label(parent, SWT.NONE);
+		manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
+		manualUserEntryWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
+		manualUserEntryWarning.setVisible(false);
+		
         lblExperimentTeam = new Label(parent, SWT.NONE);
 		lblExperimentTeam.setText("Experiment Team:");
         new Label(parent, SWT.NONE);
@@ -122,8 +132,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		
 		updateUserDetails();
 		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
-		    updateUserDetails();				
-			
+		    updateUserDetails();					
 		});
 		
         experimentTeamButtons = new Composite(parent, SWT.NONE);
@@ -194,6 +203,12 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private void updateUserDetails() {
 		Display.getDefault().asyncExec(() -> {
 		    userDetails.setRows(viewModel.model.getUserDetails());
+		    
+		    if(viewModel.model.isUserDetailsEmpty()) {
+		        manualUserEntryWarning.setVisible(true);
+		    } else {
+		        manualUserEntryWarning.setVisible(false);
+		    }
 		});
 	}
 }

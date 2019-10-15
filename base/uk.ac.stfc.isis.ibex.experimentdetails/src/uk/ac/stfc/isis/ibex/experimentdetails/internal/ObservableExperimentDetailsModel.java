@@ -153,7 +153,7 @@ public class ObservableExperimentDetailsModel extends AbstractExperimentDetailsM
 	}
 	
 	@Override
-    public boolean hasUserDetails() {
+    public boolean isUserDetailsEmpty() {
 	    return userDetails.isEmpty();
 	}
 	
