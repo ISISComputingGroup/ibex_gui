@@ -52,10 +52,8 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
     private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
     
-    private static final String MANUAL_USER_ENTRY_MESSAGE = "The current RB Number can not be found "
-            + "in the database! This means the number is not for a scheduled run, so users will have "
-            + "to be entered manually.\n Alternatively, you can try to find a valid scheduled run "
-            + "RB number.";
+    private static final String MANUAL_USER_ENTRY_MESSAGE = "No users found! Please enter users "
+            + "manually!";
     
     private final ExperimentDetailsViewModel viewModel = ExperimentDetailsViewModel.getInstance();
 	
@@ -84,7 +82,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(5, false));
+        composite.setLayout(new GridLayout(3, false));
         experimentTeam(composite);
         setContent(composite);
 
@@ -101,8 +99,8 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
         
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -115,17 +113,19 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 			}
 		});
 		
-		manualUserEntryWarning = new Label(parent, SWT.NONE);
-		manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
-		manualUserEntryWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
-		manualUserEntryWarning.setVisible(false);
-		
         lblExperimentTeam = new Label(parent, SWT.NONE);
 		lblExperimentTeam.setText("Experiment Team:");
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+		
+		manualUserEntryWarning = new Label(parent, SWT.NONE);
+        manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
+        manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
+        manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        manualUserEntryWarning.setVisible(false);
+        
+//        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
 		
         userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
         userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -185,8 +185,8 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         btnSetRBNumber.setText("Set");
 		btnSetRBNumber.setLayoutData(gdDetailsButtons);
 		
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
+//        new Label(parent, SWT.NONE);
     }
 	
 	private void bind() {
