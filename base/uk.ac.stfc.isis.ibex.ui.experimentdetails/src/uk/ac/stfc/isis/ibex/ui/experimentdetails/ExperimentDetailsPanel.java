@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -124,11 +121,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		updateUserDetails();
-		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				updateUserDetails();				
-			}
+		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
+		    updateUserDetails();				
+			
 		});
 		
         experimentTeamButtons = new Composite(parent, SWT.NONE);
@@ -197,7 +192,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	}
 	
 	private void updateUserDetails() {
-		Display.getDefault().asyncExec( () -> {
+		Display.getDefault().asyncExec(() -> {
 		    userDetails.setRows(viewModel.model.getUserDetails());
 		});
 	}
