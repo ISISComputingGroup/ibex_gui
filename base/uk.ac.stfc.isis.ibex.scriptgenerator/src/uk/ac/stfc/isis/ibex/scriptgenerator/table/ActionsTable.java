@@ -54,7 +54,7 @@ public class ActionsTable extends ModelObject {
 		var actionToDuplicate = actions.get(index);
 		var newAction = new ScriptGeneratorAction(actionToDuplicate);
 		
-		this.actions.add(newAction);
+		this.actions.add(index+1, newAction);
 		
 		firePropertyChange("actions", null, null);
 		

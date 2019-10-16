@@ -132,7 +132,7 @@ public class TestView {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
-				if (index > 0) {
+				if (index >= 0) {
 					toyModel.deleteAction(index);
 				}
 			}
@@ -146,7 +146,7 @@ public class TestView {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
-				if (index > 0) {
+				if (index >= 0) {
 					toyModel.duplicateAction(index);
 				}
 			}
