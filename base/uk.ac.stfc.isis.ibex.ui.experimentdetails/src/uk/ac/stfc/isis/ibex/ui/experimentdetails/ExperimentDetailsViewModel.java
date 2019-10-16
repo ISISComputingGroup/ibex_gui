@@ -42,8 +42,6 @@ public class ExperimentDetailsViewModel extends ModelObject {
         });
     }
 
-    // TODO: Don't use a singleton here split this into three separate view
-    // models instead.
     public static ExperimentDetailsViewModel getInstance() {
         if (instance == null) {
             instance = new ExperimentDetailsViewModel(ExperimentDetails.getInstance().model());

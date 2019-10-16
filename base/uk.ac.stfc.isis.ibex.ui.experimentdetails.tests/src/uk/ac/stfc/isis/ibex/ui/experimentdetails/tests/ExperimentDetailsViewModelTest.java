@@ -99,5 +99,3 @@ public class ExperimentDetailsViewModelTest {
         assertEquals(captor.getValue().getNewValue(), false);
     }
 }
-
-//CHECKSTYLE:ON
