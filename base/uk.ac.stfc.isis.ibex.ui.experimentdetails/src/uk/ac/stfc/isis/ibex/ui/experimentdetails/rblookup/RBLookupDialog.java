@@ -26,8 +26,8 @@ public class RBLookupDialog extends Dialog {
 	/**
 	 * Creates a new RB lookup dialog.
 	 *
-	 * @param parentShell the parent shell
-	 * @param viewModel the view model
+	 * @param parentShell the parent shell.
+	 * @param viewModel the view model.
 	 */
 	public RBLookupDialog(Shell parentShell, RBLookupViewModel viewModel) {
 		super(parentShell);
@@ -78,7 +78,8 @@ public class RBLookupDialog extends Dialog {
 		bindingContext = new DataBindingContext();
 
 		Button okButton = getButton(IDialogConstants.OK_ID);
-		bindingContext.bindValue(WidgetProperties.enabled().observe(okButton), BeanProperties.value("okEnabled").observe(viewModel));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(okButton), 
+		        BeanProperties.value("okEnabled").observe(viewModel));
 		
 		panel.setModel(viewModel);
 	}

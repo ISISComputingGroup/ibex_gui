@@ -81,15 +81,20 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         setExpandVertical(true);
         setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 
-        Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(3, false));
-        experimentTeam(composite);
-        setContent(composite);
+        Composite prentComposite = new Composite(this, SWT.NONE);
+        prentComposite.setLayout(new GridLayout(3, false));
+        makeExperimentDetailsPanel(prentComposite);
+        setContent(prentComposite);
 
         bind();
     }
 
-    private void experimentTeam(Composite parent) {
+    /**
+     * Adds all the graphical elements such as labels and buttons to the parent 
+     * composite of the panel.
+     * @param parent The root composite of the panel.
+     */
+    private void makeExperimentDetailsPanel(Composite parent) {
         lblRbNumber = new Label(parent, SWT.NONE);
 		lblRbNumber.setText("RB Number:");
 		
@@ -175,6 +180,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
                 viewModel.model.sendUserDetails();
 			}
 		});
+		
         btnSetRBNumber.setText("Set");
 		btnSetRBNumber.setLayoutData(gdDetailsButtons);
     }
@@ -190,6 +196,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 	}
 	
+	/**Gets information from model and updates the user details GUI table. Also
+	 * makes the warning label visible or not based on whether the table is 
+	 * empty or not.*/
 	private void updateUserDetails() {
 		Display.getDefault().asyncExec(() -> {
 		    userDetails.setRows(viewModel.model.getUserDetails());

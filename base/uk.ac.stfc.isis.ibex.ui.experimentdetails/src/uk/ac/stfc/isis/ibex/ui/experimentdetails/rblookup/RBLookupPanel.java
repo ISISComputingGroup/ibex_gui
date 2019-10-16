@@ -28,7 +28,9 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 
 /**
- * A panel for looking up RB numbers.
+ * A panel for looking up RB numbers. It is a composite GUI element that is 
+ * the parent of all GUI elements used for searching RB numbers. This Panel 
+ * is meant to be but in a RBLookupDialog window.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupPanel extends Composite {
@@ -47,10 +49,10 @@ public class RBLookupPanel extends Composite {
 	private DataBindingContext bindingContext;
 	
 	/**
-	 * Creates an RB lookup panel.
+	 * Creates an RB lookup panel. Adds all labels, buttons, etc. to the panel.
 	 *
-	 * @param parent the parent composite
-	 * @param style the SWT style
+	 * @param parent the parent composite.
+	 * @param style the SWT style.
 	 */
 	public RBLookupPanel(Composite parent, int style) {
 		super(parent, style);
@@ -108,7 +110,7 @@ public class RBLookupPanel extends Composite {
 	/**
 	 * Sets the model and binds all of the values.
 	 * 
-	 * @param viewModel the view model
+	 * @param viewModel the view model.
 	 */
 	public void setModel(final RBLookupViewModel viewModel) {
 		bindingContext = new DataBindingContext();
@@ -156,5 +158,4 @@ public class RBLookupPanel extends Composite {
 		
 		bindingContext.updateModels();
 	}
-
 }

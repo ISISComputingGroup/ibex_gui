@@ -33,7 +33,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
- * A text box for displaying and editing a record.
+ * A text box for displaying and editing a record. This object also includes 
+ * a button for setting the new value of the record.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class WritableObservingTextBox extends Composite {
@@ -43,6 +44,12 @@ public class WritableObservingTextBox extends Composite {
 	private final Text textBox;
 	private final Button setButton;
 	
+	/**
+	 * Creates a new WritableObservingTextBox.
+	 * @param parent The parent composite of this text box.
+	 * @param style The style of the text box to construct.
+	 * @param adapter The adaptor used for linking this text box to a PV.
+	 */
 	public WritableObservingTextBox(Composite parent, int style, 
 	        StringWritableObservableAdapter adapter) {
 	    

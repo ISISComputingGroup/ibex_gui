@@ -56,5 +56,4 @@ public class RunControlBackgroundColourConverter extends Converter<RuncontrolSta
             return WHITE;
         }
     }
-
 }
