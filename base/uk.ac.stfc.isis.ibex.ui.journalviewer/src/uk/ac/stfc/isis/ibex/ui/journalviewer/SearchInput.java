@@ -51,7 +51,8 @@ import uk.ac.stfc.isis.ibex.ui.widgets.DateTimeWithCalendar;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchInput extends Composite {
 
-    private final int runNumberIndex = 0, startTimeIndex = 2;
+    private final int runNumberIndex = 0;
+    private final int startTimeIndex = 2;
 
     private ArrayList<Composite> cmpFilters = new ArrayList<Composite>();
     private Composite cmpSearch;
@@ -66,9 +67,18 @@ public class SearchInput extends Composite {
 
     private static final Display DISPLAY = Display.getCurrent();
 
-    private Spinner spinnerFromNumber, spinnerToNumber;
-    private Button chkNumberFrom, chkNumberTo, chkTimeFrom, chkTimeTo;
-    private DateTimeWithCalendar dtFromDate, dtFromTime, dtToDate, dtToTime;
+    private Spinner spinnerFromNumber;
+    private Spinner spinnerToNumber;
+    private Button chkNumberFrom; 
+    private Button chkNumberTo; 
+    private Button chkTimeFrom; 
+    private Button chkTimeTo;
+    
+    private DateTimeWithCalendar dtFromDate;
+    private DateTimeWithCalendar dtToTime;
+    private DateTimeWithCalendar dtToDate;
+    private DateTimeWithCalendar dtFromTime;  
+    
     private JournalViewModel viewModel;
     private Combo cmbFilterType;
 

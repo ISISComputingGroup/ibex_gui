@@ -50,11 +50,12 @@ public class JournalViewModel extends ModelObject {
 	private String lastUpdate;
 	private int toNumber = 0;
 	private int fromNumber = 0;
-	private String noError = "";
-	private String runNumberError = "Run number in incorrect order";
-	private String dateTimeError = "Date/Time in wrong order";
-	private String errorMessage = noError;
-	private Calendar fromDateTime, toDateTime;
+	private static final String NO_ERROR = "";
+	private static final String RUN_NUMBER_ERROR = "Run number in incorrect order";
+	private static final String DATE_TIME_ERROR = "Date/Time in wrong order";
+	private String errorMessage = NO_ERROR;
+	private Calendar fromDateTime;
+	private Calendar toDateTime;
 	private boolean setButtonEnable = true;
 
 	PropertyChangeListener listener = new PropertyChangeListener() {
@@ -254,15 +255,15 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * set new end number
+	 * Set new end number.
 	 * 
 	 * @param ToNumber
 	 */
 	public void setToNumber(int toNumber) {
 		this.toNumber = toNumber;
-		String errorMessage = noError;
+		String errorMessage = NO_ERROR;
 		if (toNumber < fromNumber) {
-			errorMessage = runNumberError;
+			errorMessage = RUN_NUMBER_ERROR;
 
 		}
 		setErrorMessage(errorMessage);
@@ -270,15 +271,15 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * set new from number
+	 * Set new from number.
 	 * 
 	 * @param fromNumber new from number
 	 */
 	public void setFromNumber(int fromNumber) {
 		this.fromNumber = fromNumber;
-		String errorMessage = noError;
+		String errorMessage = NO_ERROR;
 		if (toNumber < fromNumber) {
-			errorMessage = runNumberError;
+			errorMessage = RUN_NUMBER_ERROR;
 
 		}
 		setErrorMessage(errorMessage);
@@ -286,7 +287,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * set error message
+	 * Set error message.
 	 * 
 	 * @return error message
 	 */
@@ -295,7 +296,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * sets the new error message
+	 * Sets the new error message.
 	 * 
 	 * @param message new message
 	 */
@@ -305,21 +306,21 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * decides whether the error message needs to be displayed or not
+	 * Decides whether the error message needs to be displayed or not.
 	 * 
 	 * @return the new error message
 	 */
 	private String GetErrorMessageForDateTime() {
-		String errorMessage = dateTimeError;
+		String errorMessage = DATE_TIME_ERROR;
 		if (toDateTime.compareTo(fromDateTime) >= 0) {
-			errorMessage = noError;
+			errorMessage = NO_ERROR;
 		}
 		return errorMessage;
 
 	}
 
 	/**
-	 * update to new start date
+	 * Update to new start date.
 	 * 
 	 * @param fromDate new start date
 	 */
@@ -331,7 +332,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * update to new end date
+	 * Update to new end date.
 	 * 
 	 * @param toDate new end date
 	 */
@@ -343,7 +344,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * update to new start date
+	 * Update to new start date.
 	 * 
 	 * @param fromTime new start time
 	 */
@@ -354,7 +355,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * update new end time
+	 * Update new end time.
 	 * 
 	 * @param toTime new to time for start time
 	 */
@@ -366,7 +367,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * sets start date and time
+	 * Sets start date and time.
 	 * 
 	 * @param fromDate sets start date
 	 * @param fromTime set start time
@@ -377,7 +378,7 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * sets end date and time
+	 * Sets end date and time.
 	 * 
 	 * @param toDate end date
 	 * @param toTime end time
@@ -388,26 +389,27 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * Clears Error message on the screen
+	 * Clears Error message on the screen.
 	 */
 	public void clearMessage() {
-		if (this.message != noError) {
-			setErrorMessage(noError);
+		if (this.message != NO_ERROR) {
+			setErrorMessage(NO_ERROR);
 
 		}
 	}
 
 	/**
-	 * checks if button needs to be enabled or disabled
+	 * Checks if button needs to be enabled or disabled.
 	 */
 	private void setEnableOrDisableButton() {
 
-		boolean enableOrDisableVal = (this.errorMessage != noError) ? false : true;
+		boolean enableOrDisableVal = (this.errorMessage != NO_ERROR) ? false : true;
 
 		firePropertyChange("enableOrDisableButton", this.setButtonEnable, this.setButtonEnable = enableOrDisableVal);
 	}
 
 	/**
+	 * Gets if the button is currently on enabled or disabled state.
 	 * @return if button needs to be enabled or disabled
 	 */
 	public Boolean getEnableOrDisableButton() {

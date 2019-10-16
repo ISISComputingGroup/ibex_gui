@@ -97,11 +97,11 @@ public class SearchControl extends Canvas {
 	 * @param parent the parent in which this control resides
 	 * @param searcher a model to allow searching of log messages
 	 */
-	public SearchControl(LogDisplay parent, final ISearchModel searcher, LogDisplayModel model) {
+	public SearchControl(LogDisplay parent, final LogDisplayModel model) {
 		super(parent, SWT.NONE);
 		this.viewModel = model;
 		this.parent = parent;
-		this.searcher = searcher;
+		this.searcher = model;
 
         GridLayout gl = new GridLayout(1, false);
         setLayout(gl);
@@ -260,6 +260,9 @@ public class SearchControl extends Canvas {
         		
 	}
 	
+	/**
+	 * Start widget listeners so we can update the ViewModel.
+	 */
 	
 	public void startListeners() {   
         

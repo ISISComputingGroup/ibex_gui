@@ -302,7 +302,7 @@ public class LogDisplay extends Canvas {
 		setLayout(new GridLayout(1, false));
 
 		// Add the search box
-		searchControl = new SearchControl(this, model, model);
+		searchControl = new SearchControl(this, model);
 		searchControl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		searchControl.setSearcher(model);
 		
