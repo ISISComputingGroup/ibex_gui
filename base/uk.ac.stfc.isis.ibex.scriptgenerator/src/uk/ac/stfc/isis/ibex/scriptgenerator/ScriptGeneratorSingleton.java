@@ -31,8 +31,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	public void deleteAction(int index) {
 		scriptGeneratorTable.deleteAction(index);
-		
 	}
+	
+	public void duplicateAction(int index) {
+		scriptGeneratorTable.duplicateAction(index);
+	}
+
 	
 	/**
 	 * Adds one to the toy model's value.
@@ -68,5 +72,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 
 		firePropertyChange("iteratedNumber", this.iteratedNumberString, this.iteratedNumberString = newValue);
 	}
+
 
 }

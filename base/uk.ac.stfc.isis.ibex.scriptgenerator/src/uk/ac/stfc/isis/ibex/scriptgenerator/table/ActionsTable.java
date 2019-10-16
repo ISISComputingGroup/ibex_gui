@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,12 +41,22 @@ public class ActionsTable extends ModelObject {
 		
 		var newAction = new ScriptGeneratorAction(parametersMap);
 		
-				
-		firePropertyChange("actions", this.actions, this.actions.add(newAction));
+		this.actions.add(newAction);
+		firePropertyChange("actions", null, null);
 	}
 
 	public void deleteAction(int index) {
-		firePropertyChange("actions", this.actions, this.actions.remove(index));
+		this.actions.remove(index);
+		firePropertyChange("actions", null, null);
+	}
+
+	public void duplicateAction(int index) {
+		var actionToDuplicate = actions.get(index);
+		var newAction = new ScriptGeneratorAction(actionToDuplicate);
+		
+		this.actions.add(newAction);
+		
+		firePropertyChange("actions", null, null);
 		
 	}
 		

@@ -138,10 +138,20 @@ public class TestView {
 			}
 		});
 
-        final Button btnaDequeueScript = new Button(actionsControlsGrp, SWT.NONE);
-        btnaDequeueScript.setText("Duplicate Action");
-        btnaDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
+        btnDuplicateAction.setText("Duplicate Action");
+        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		btnDuplicateAction.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var index = table.getSelectionIndex();
+				if (index > 0) {
+					toyModel.duplicateAction(index);
+				}
+			}
+		});
+        
         //extra under here
 		
 //		Group grpTable = new Group(parent, SWT.NULL);
