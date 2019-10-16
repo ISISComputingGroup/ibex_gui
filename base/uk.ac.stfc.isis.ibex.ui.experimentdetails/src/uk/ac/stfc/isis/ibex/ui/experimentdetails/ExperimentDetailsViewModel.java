@@ -19,11 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.AbstractExperimentDetailsModel;
+import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
-public class ExperimentDetailsViewModel {
+public class ExperimentDetailsViewModel extends ModelObject {
 
     private static ExperimentDetailsViewModel instance;
 	
@@ -33,6 +34,11 @@ public class ExperimentDetailsViewModel {
 	
     private ExperimentDetailsViewModel() {
         instance = this;
+        
+        model.addPropertyChangeListener("userDetails", event -> {
+            firePropertyChange("userDetailsWarningVisible", !model.isUserDetailsEmpty(),
+                    model.isUserDetailsEmpty());
+        });
     }
 
     // TODO: Don't use a singleton here split this into three separate view
@@ -43,5 +49,9 @@ public class ExperimentDetailsViewModel {
         }
         return instance;
 	}
+    
+    public boolean getUserDetailsWarningVisible() {
+        return model.isUserDetailsEmpty();
+    }
 	
 }

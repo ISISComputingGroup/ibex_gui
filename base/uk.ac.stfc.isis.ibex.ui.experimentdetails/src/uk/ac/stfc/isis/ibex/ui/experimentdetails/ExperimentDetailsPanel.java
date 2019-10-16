@@ -193,7 +193,10 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
 		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+	    bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
+	            BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
 	}
 	
 	/**Gets information from model and updates the user details GUI table. Also
@@ -202,12 +205,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private void updateUserDetails() {
 		Display.getDefault().asyncExec(() -> {
 		    userDetails.setRows(viewModel.model.getUserDetails());
-		    
-		    if(viewModel.model.isUserDetailsEmpty()) {
-		        manualUserEntryWarning.setVisible(true);
-		    } else {
-		        manualUserEntryWarning.setVisible(false);
-		    }
 		});
 	}
 }
