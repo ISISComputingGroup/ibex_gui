@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import uk.ac.stfc.isis.ibex.experimentdetails.AbstractExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
+import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
@@ -28,16 +28,17 @@ public class ExperimentDetailsViewModel extends ModelObject {
 
     private static ExperimentDetailsViewModel instance;
 	
-	public final AbstractExperimentDetailsModel model = ExperimentDetails.getInstance().model();
+	public final ObservableExperimentDetailsModel model;
 	
-	public final StringWritableObservableAdapter rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
+	public final StringWritableObservableAdapter rbNumber;
 	
-    private ExperimentDetailsViewModel() {
+    public ExperimentDetailsViewModel(ObservableExperimentDetailsModel model) {
         instance = this;
+        this.model = model; 
         
+        rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
         model.addPropertyChangeListener("userDetails", event -> {
-            firePropertyChange("userDetailsWarningVisible", !model.isUserDetailsEmpty(),
-                    model.isUserDetailsEmpty());
+            setUserDetailsWarningVisible();
         });
     }
 
@@ -45,13 +46,19 @@ public class ExperimentDetailsViewModel extends ModelObject {
     // models instead.
     public static ExperimentDetailsViewModel getInstance() {
         if (instance == null) {
-            instance = new ExperimentDetailsViewModel();
+            instance = new ExperimentDetailsViewModel(ExperimentDetails.getInstance().model());
         }
         return instance;
 	}
     
+    /**
+     * @param model
+     */
+    public void setUserDetailsWarningVisible() {
+        firePropertyChange("userDetailsWarningVisible", !model.isUserDetailsEmpty(), model.isUserDetailsEmpty());
+    }
+    
     public boolean getUserDetailsWarningVisible() {
         return model.isUserDetailsEmpty();
     }
-	
 }
