@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.util.HashMap;
+
 public interface ActionWrapper {
-	public String getSomeString();
+	public HashMap<String, String> getParameters();
 }
