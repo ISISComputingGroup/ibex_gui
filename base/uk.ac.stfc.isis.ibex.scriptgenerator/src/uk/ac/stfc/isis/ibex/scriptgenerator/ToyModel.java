@@ -1,10 +1,16 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 
 public class ToyModel extends ModelObject {
 	private Integer iteratedNumber = 0;
 	private String iteratedNumberString;
+	private ConfigLoader config;
+	
+	public ToyModel() {
+		config = new ConfigLoader();
+	}
 	
 	/**
 	 * Adds one to the toy model's value.
@@ -13,7 +19,7 @@ public class ToyModel extends ModelObject {
 	 * @return Integer of the updated model value
 	 */
 	public int iterateNumber() {
-
+		config.print();
 		
 		iteratedNumber++;
 		setIteratedNumber(iteratedNumber.toString());
