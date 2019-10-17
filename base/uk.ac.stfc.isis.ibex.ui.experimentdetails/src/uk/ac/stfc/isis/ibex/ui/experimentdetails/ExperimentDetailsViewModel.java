@@ -50,7 +50,7 @@ public class ExperimentDetailsViewModel extends ModelObject {
 	}
     
     /**
-     * @param model
+     * Fires property change on the UserDetailsWarningVisible property of this view model.
      */
     public void setUserDetailsWarningVisible() {
         firePropertyChange("userDetailsWarningVisible", !model.isUserDetailsEmpty(), model.isUserDetailsEmpty());
