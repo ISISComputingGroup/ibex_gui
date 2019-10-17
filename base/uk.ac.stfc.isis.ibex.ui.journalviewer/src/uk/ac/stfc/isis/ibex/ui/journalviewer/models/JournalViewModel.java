@@ -310,7 +310,7 @@ public class JournalViewModel extends ModelObject {
 	 * 
 	 * @return the new error message
 	 */
-	private String GetErrorMessageForDateTime() {
+	private String getErrorMessageForDateTime() {
 		String errorMessage = DATE_TIME_ERROR;
 		if (toDateTime.compareTo(fromDateTime) >= 0) {
 			errorMessage = NO_ERROR;
@@ -327,7 +327,7 @@ public class JournalViewModel extends ModelObject {
 	public void setFromDate(Calendar fromDate) {
 		this.fromDateTime.set(fromDate.get(Calendar.YEAR), fromDate.get(Calendar.MONTH),
 				fromDate.get(Calendar.DAY_OF_MONTH));
-		String errorMessage = GetErrorMessageForDateTime();
+		String errorMessage = getErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}
 
@@ -339,7 +339,7 @@ public class JournalViewModel extends ModelObject {
 	public void setToDate(Calendar toDate) {
 		this.toDateTime.set(toDate.get(Calendar.YEAR), toDate.get(Calendar.MONTH),
 				toDate.get(Calendar.DAY_OF_MONTH));
-		String errorMessage = GetErrorMessageForDateTime();
+		String errorMessage = getErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}
 
@@ -350,7 +350,7 @@ public class JournalViewModel extends ModelObject {
 	 */
 	public void setFromTime(Calendar fromTime) {
 		this.fromDateTime.setTime(fromTime.getTime());
-		String errorMessage = GetErrorMessageForDateTime();
+		String errorMessage = getErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}
 
@@ -362,7 +362,7 @@ public class JournalViewModel extends ModelObject {
 
 	public void setToTime(Calendar toTime) {
 		this.toDateTime.setTime(toTime.getTime());
-		String errorMessage = GetErrorMessageForDateTime();
+		String errorMessage = getErrorMessageForDateTime();
 		setErrorMessage(errorMessage);
 	}
 
