@@ -129,7 +129,8 @@ public class EditableConfigurationTest {
 				Collections.<Block>emptyList(),
 				Collections.<Group>emptyList(),
 				Collections.<ComponentInfo>emptyList(),
-				Collections.<String>emptyList());
+				Collections.<String>emptyList(),
+				true);
 	}
 	
 	protected void populateConfig() {
@@ -143,7 +144,7 @@ public class EditableConfigurationTest {
 	}
 	
 	protected Configuration config() {
-		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history);
+		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true);
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {
@@ -199,4 +200,13 @@ public class EditableConfigurationTest {
     	assertFalse(config1.getAvailableIocs().equals(allIocs));
     	assertTrue(config2.getAvailableIocs().equals(allIocs));
     }
+    
+    @Test
+	public void WHEN_changed_is_protected_THEN_it_changes() {
+		EditableConfiguration config = edit(config());
+		config.setIsProtected(true);
+		assertTrue(config.getIsProtected());
+		config.setIsProtected(false);
+		assertFalse(config.getIsProtected());
+	}
 }
