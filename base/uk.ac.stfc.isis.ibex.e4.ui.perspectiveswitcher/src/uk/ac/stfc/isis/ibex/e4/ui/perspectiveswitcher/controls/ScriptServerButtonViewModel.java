@@ -41,7 +41,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	}
 	
 	/**
-	 * set Script server button colour for different states of script.
+	 * Set Script server button colour for different states of script.
 	 */
 	protected void setButtonColor() {
 		if ((status == ScriptStatus.RUNNING) && (!active && !inFocus)) {
@@ -74,7 +74,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	}
 	
 	/**
-	 * set if focus is in the current button or not, 
+	 * Set if focus is in the current button or not, 
 	 * the way this button is represented(colors) also depends on focus.
 	 * @param inFocus if focus is in the current button or not i.e. Sript Server button
 	 */
