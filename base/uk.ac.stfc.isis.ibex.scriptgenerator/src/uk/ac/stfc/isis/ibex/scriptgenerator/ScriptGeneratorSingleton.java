@@ -36,7 +36,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void duplicateAction(int index) {
 		scriptGeneratorTable.duplicateAction(index);
 	}
+	
+	public void moveActionUp(int index) {
+		scriptGeneratorTable.moveAction(index, index-1);
+	}
 
+	public void moveActionDown(int index) {
+		scriptGeneratorTable.moveAction(index, index+1);
+	}
 	
 	/**
 	 * Adds one to the toy model's value.

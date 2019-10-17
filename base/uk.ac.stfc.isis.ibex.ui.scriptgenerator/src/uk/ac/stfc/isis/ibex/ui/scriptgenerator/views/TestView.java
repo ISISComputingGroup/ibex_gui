@@ -101,8 +101,8 @@ public class TestView {
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
-        Button btnScriptUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-        Button btnScriptDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
         
         
         Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
@@ -152,6 +152,27 @@ public class TestView {
 			}
 		});
         
+
+		btnMoveActionUp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var index = table.getSelectionIndex();
+				if (index >= 0) {
+					toyModel.moveActionUp(index);
+				}
+			}
+		});
+		
+		btnMoveActionDown.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var index = table.getSelectionIndex();
+				if (index >= 0) {
+					toyModel.moveActionDown(index);
+				}
+			}
+		});
+		
         //extra under here
 		
 //		Group grpTable = new Group(parent, SWT.NULL);

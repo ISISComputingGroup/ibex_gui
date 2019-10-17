@@ -59,7 +59,18 @@ public class ActionsTable extends ModelObject {
 		firePropertyChange("actions", null, null);
 		
 	}
+
+	public void moveAction(int oldIndex, int newIndex) {
+		if (newIndex < 0) {
+			newIndex = 0;
+		} else if (newIndex >= this.actions.size()) {
+			newIndex = this.actions.size() - 1;
+		}
 		
+		Collections.swap(this.actions, oldIndex, newIndex);
+	
+		firePropertyChange("actions", null, null);
+	}
 	
 
 }
