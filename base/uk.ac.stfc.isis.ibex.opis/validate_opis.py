@@ -55,7 +55,7 @@ def check_widget_correct(widget_node):
     width = str(widget_node.find("width").text)
     height = str(widget_node.find("height").text)
     name = widget_node.find("name").text
-    return width == "1" and height == "1" and name == dummy_widget_name
+    return width == "1" and height == "1" and name.lower() == dummy_widget_name.lower()
 
 
 files_to_change = {}  # A dictionary of the file paths to change and their new content
