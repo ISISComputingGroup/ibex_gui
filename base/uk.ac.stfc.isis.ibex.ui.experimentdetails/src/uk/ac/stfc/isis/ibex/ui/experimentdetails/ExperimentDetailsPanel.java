@@ -81,10 +81,10 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         setExpandVertical(true);
         setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 
-        Composite prentComposite = new Composite(this, SWT.NONE);
-        prentComposite.setLayout(new GridLayout(3, false));
-        makeExperimentDetailsPanel(prentComposite);
-        setContent(prentComposite);
+        Composite parentComposite = new Composite(this, SWT.NONE);
+        parentComposite.setLayout(new GridLayout(3, false));
+        makeExperimentDetailsPanel(parentComposite);
+        setContent(parentComposite);
 
         bind();
     }
