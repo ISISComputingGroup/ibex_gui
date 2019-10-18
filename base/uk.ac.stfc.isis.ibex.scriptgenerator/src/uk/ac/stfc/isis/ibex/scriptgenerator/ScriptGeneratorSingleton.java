@@ -2,8 +2,10 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class ScriptGeneratorSingleton extends ModelObject {
@@ -11,6 +13,20 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private String iteratedNumberString;
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
+	
+	public ScriptGeneratorSingleton() {
+		reloadConfig();
+	}
+	
+	/**
+	 * Reloads the configuration
+	 * 
+	 * @return Integer of the updated model value
+	 */
+	public void reloadConfig() {
+		ConfigLoader config = new ConfigLoader();
+		setActionParameters(config.getActionParameters().collect(Collectors.toCollection(ArrayList::new)));
+	}
 	
 	public void setActionParameters(ArrayList<ActionParameter> actionParameters) {
 		var newParameters = new ArrayList<ActionParameter>();

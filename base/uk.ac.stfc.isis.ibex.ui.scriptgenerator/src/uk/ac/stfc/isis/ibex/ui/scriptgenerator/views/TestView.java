@@ -84,7 +84,7 @@ public class TestView {
 		actionParameters.add(new ActionParameter("code"));
 		actionParameters.add(new ActionParameter("third column"));
 		
-		toyModel.setActionParameters(actionParameters);
+		//toyModel.setActionParameters(actionParameters);
 		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;

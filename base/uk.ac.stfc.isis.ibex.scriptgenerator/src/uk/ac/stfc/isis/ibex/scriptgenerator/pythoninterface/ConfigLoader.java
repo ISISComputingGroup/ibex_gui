@@ -1,18 +1,17 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
-import java.util.Scanner;
+import java.util.stream.Stream;
 
 import py4j.ClientServer;
 import py4j.ClientServer.ClientServerBuilder;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 public class ConfigLoader {
 
-	ClientServer clientServer;
+	private final ClientServer clientServer;
+	private final Stream<ActionParameter> actionParameters;
 	
 	private int getFreeSocket() {
         try (ServerSocket socket = new ServerSocket(0)) {
@@ -39,14 +38,13 @@ public class ConfigLoader {
 			e.printStackTrace();
 		}
         
+        ActionWrapper actionWrapper = (ActionWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ActionWrapper.class });
+        
+        actionParameters = actionWrapper.getParameters().keySet().stream().map(name -> new ActionParameter(name));
 	}
 
-	public void print() {
-        // We get an entry point from the Python side
-		ActionWrapper hello = (ActionWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ActionWrapper.class });
-        // Java calls Python without ever having been called from Python
-        System.out.println(hello.getParameters());
-        //clientServer.shutdown();
-        
+	public Stream<ActionParameter> getActionParameters() {
+		return actionParameters;
 	}
+
 }
