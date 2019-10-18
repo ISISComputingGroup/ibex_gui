@@ -56,17 +56,17 @@ public class Activator implements BundleActivator {
 		Activator.context = null;
 	}
 	
-    private static ToyModel instance;
+    private static ScriptGeneratorSingleton instance;
 
 	/**
 	 * Gets the singleton instance of this class.
 	 * 
 	 * @return the singleton instance of this class
 	 */
-    public static ToyModel getModel() { 
+    public static ScriptGeneratorSingleton getModel() { 
     	return MODEL; 
     }
 
-    private static final ToyModel MODEL = new ToyModel();
+    private static final ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
 
 }

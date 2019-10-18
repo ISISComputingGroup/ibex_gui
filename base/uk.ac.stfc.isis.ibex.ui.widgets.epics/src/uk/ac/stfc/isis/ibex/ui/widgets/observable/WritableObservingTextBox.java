@@ -33,6 +33,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import uk.ac.stfc.isis.ibex.epics.observing.StringWritableObservableAdapter;
+
 
 /**
  * A text box for displaying and editing a record.
