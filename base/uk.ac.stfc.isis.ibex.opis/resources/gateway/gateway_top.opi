@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <macros>
@@ -6,22 +6,22 @@
   </macros>
   <wuid>-2937673e:14fbd136cb4:-7d16</wuid>
   <boy_version>3.1.4.201301231545</boy_version>
-  <scripts />
+  <scripts/>
   <show_ruler>true</show_ruler>
   <height>600</height>
-  <name></name>
+  <name/>
   <snap_to_geometry>true</snap_to_geometry>
   <show_grid>true</show_grid>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color red="240" green="240" blue="240"/>
   </background_color>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color red="192" green="192" blue="192"/>
   </foreground_color>
   <widget_type>Display</widget_type>
   <show_close_button>true</show_close_button>
   <width>800</width>
-  <rules />
+  <rules/>
   <show_edit_range>true</show_edit_range>
   <grid_space>6</grid_space>
   <auto_scale_widgets>
@@ -29,14 +29,14 @@
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <y>-1</y>
   <x>-1</x>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7ce9</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -45,12 +45,12 @@
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -62,13 +62,13 @@
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>30</y>
     <actions hook="false" hook_all="false">
@@ -79,7 +79,7 @@
           <GW>IN:LARMOR:CS:GATEWAY:EXTERNAL:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -90,7 +90,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7c51</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_1</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -99,12 +99,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -116,13 +116,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>156</y>
     <actions hook="false" hook_all="false">
@@ -133,7 +133,7 @@ $(pv_value)</tooltip>
           <GW>IN:IMAT:CS:GATEWAY:EXTERNAL:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -144,7 +144,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7c41</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_2</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -153,12 +153,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -170,13 +170,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>300</y>
     <actions hook="false" hook_all="false">
@@ -187,7 +187,7 @@ $(pv_value)</tooltip>
           <GW>IN:DEMO:CS:GATEWAY:EXTERNAL:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -198,7 +198,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7c05</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_3</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -207,12 +207,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -224,13 +224,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>30</y>
     <actions hook="false" hook_all="false">
@@ -241,7 +241,7 @@ $(pv_value)</tooltip>
           <GW>CS:GATEWAY:SITE:R3:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -252,7 +252,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7be6</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_5</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -261,12 +261,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -278,13 +278,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>90</y>
     <actions hook="false" hook_all="false">
@@ -295,7 +295,7 @@ $(pv_value)</tooltip>
           <GW>CS:GATEWAY:SITE:R55:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -306,7 +306,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7bc8</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_6</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -315,12 +315,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -332,13 +332,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>156</y>
     <actions hook="false" hook_all="false">
@@ -349,7 +349,7 @@ $(pv_value)</tooltip>
           <GW>CS:GATEWAY:SITE:R80:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -360,7 +360,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-2937673e:14fbd136cb4:-7bb0</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_7</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -369,12 +369,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -386,13 +386,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>222</y>
     <actions hook="false" hook_all="false">
@@ -403,7 +403,7 @@ $(pv_value)</tooltip>
           <GW>CS:GATEWAY:SITE:EXT:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -414,7 +414,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>a6ee86e:14fbd760ed8:-7f8f</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_8</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -423,12 +423,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -440,13 +440,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>90</y>
     <actions hook="false" hook_all="false">
@@ -457,7 +457,7 @@ $(pv_value)</tooltip>
           <GW>IN:LARMOR:CS:GATEWAY:BLOCKSERVER:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -468,7 +468,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>a6ee86e:14fbd760ed8:-7f83</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_9</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -477,12 +477,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -494,13 +494,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>222</y>
     <actions hook="false" hook_all="false">
@@ -511,7 +511,7 @@ $(pv_value)</tooltip>
           <GW>IN:IMAT:CS:GATEWAY:BLOCKSERVER:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -522,7 +522,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>a6ee86e:14fbd760ed8:-7f79</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button_10</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -531,12 +531,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -548,13 +548,13 @@ $(pv_value)</tooltip>
     <width>222</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>372</y>
     <actions hook="false" hook_all="false">
@@ -565,11 +565,51 @@ $(pv_value)</tooltip>
           <GW>IN:DEMO:CS:GATEWAY:BLOCKSERVER:</GW>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <x>24</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>24</x>
+    <y>156</y>
   </widget>
 </display>
