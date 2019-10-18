@@ -22,14 +22,12 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * Where attention is needed, a flashing button should help to draw attention.
  */
 public class FlashingButton implements Runnable, DisposeListener {
 
-    private static final Color ALARM = SWTResourceManager.getColor(250, 150, 150);
     private static final int SLEEP_TIME = 800;
 
     private final ButtonViewModel model;
@@ -45,13 +43,15 @@ public class FlashingButton implements Runnable, DisposeListener {
      * 
      * @param model
      *            the model for the button that will flash
+     * @param color
+     * 			  the color for the button to show when flashing
      */
-    public FlashingButton(final ButtonViewModel model) {
+    public FlashingButton(final ButtonViewModel model, Color color) {
         this.model = model;
         // this.display = display;
         flashOn = true;
 
-        on = ALARM;
+        on = color;
     }
 
     /**

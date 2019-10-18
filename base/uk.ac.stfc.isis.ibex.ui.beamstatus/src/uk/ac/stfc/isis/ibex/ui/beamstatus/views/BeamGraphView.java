@@ -98,6 +98,9 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/** Number of milliseconds in a day. */
 	private static final long MILLISECONDS_IN_DAY = MILLISECONDS_IN_HOUR * 24;
 
+	/** Number of milliseconds in a week */
+	private static final long MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
+	
 	/** Current plot time span in milliseconds. */
 	private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
@@ -177,8 +180,10 @@ public class BeamGraphView extends ModelListenerAdapter {
 	
 		createTSCurrentLabel(rowOne, 1);
 		createTSCurrentLabel(rowOne, 2);
+		
 		createButton(rowTwo, "Last 24 Hours", MILLISECONDS_IN_DAY);
 		createButton(rowTwo, "Last Hour", MILLISECONDS_IN_HOUR);
+		createButton(rowTwo, "Last Week", MILLISECONDS_IN_WEEK);
 
 	}
 	

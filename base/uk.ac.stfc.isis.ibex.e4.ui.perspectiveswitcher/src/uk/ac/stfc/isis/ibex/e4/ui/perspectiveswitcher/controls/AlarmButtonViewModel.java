@@ -1,8 +1,5 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -33,22 +30,18 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     public AlarmButtonViewModel(final AlarmCounter alarmCounter, String buttonLabel) {
         super(buttonLabel);
 
-        flash = new FlashingButton(this);
+        flash = new FlashingButton(this, ALARM_COLOR);
         flash.setDefaultColour(DEFOCUSSED);
 
-        alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
+        alarmCounter.addPropertyChangeListener("alarmCount", ignored -> {
                 alarmCount = alarmCounter.getCount();
                 if (!active) {
                     alarmSeen = false;
                 }
                 update();
                 updateFlashing();
-            }
         });
         update();
-
     }
 
     /**

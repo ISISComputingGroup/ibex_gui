@@ -219,7 +219,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <show_scrollbar>true</show_scrollbar>
       <tooltip/>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>557</width>
       <wuid>-2040ea02:1687b99c8e2:-7d17</wuid>
@@ -803,7 +803,7 @@ $(pv_value)</tooltip>
         <border_color>
           <color name="ISIS_Border" red="0" green="0" blue="0"/>
         </border_color>
-        <border_style>0</border_style>
+        <border_style>1</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
@@ -812,7 +812,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_Red" red="255" green="0" blue="0"/>
         </foreground_color>
-        <height>61</height>
+        <height>73</height>
         <horizontal_alignment>0</horizontal_alignment>
         <name>Label_15</name>
         <rules>
@@ -841,6 +841,58 @@ $(pv_value)</tooltip>
         <wuid>7c0be654:16b7ae8d3d5:-791c</wuid>
         <x>18</x>
         <y>174</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
+        </foreground_color>
+        <height>121</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Label</name>
+        <rules>
+          <rule name="Display If Clamped" prop_id="visible" out_exp="false">
+            <exp bool_exp="pvStr0 == &quot;Clamped&quot;">
+              <value>true</value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):ACTIVITY</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>Warning: The magnet is currently clamped.&#xD;
+&#xD;
+IBEX is unable to set fields when the magnet is in this configuration. &#xD;
+&#xD;
+Please let your local contact know in the first instance, and they will request help from cryogenics section.</text>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>false</visible>
+        <widget_type>Label</widget_type>
+        <width>307</width>
+        <wrap_words>true</wrap_words>
+        <wuid>4bb81a55:16cfbee5c77:-7f52</wuid>
+        <x>18</x>
+        <y>252</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -877,7 +929,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip/>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>557</width>
       <wuid>-2040ea02:1687b99c8e2:-7d15</wuid>

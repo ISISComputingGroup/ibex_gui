@@ -34,6 +34,8 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ScriptServerButtonViewModel;
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
  * The view containing the perspective buttons.
@@ -118,6 +120,8 @@ public class PerspectiveSwitcherView {
 			final PerspectiveButtonViewModel model;
 			if (perspective.getLabel().equals("Alarms")) {
 				model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
+			} else if (perspective.getLabel().equals("Script Server")) {
+				model = new ScriptServerButtonViewModel(Nicos.getDefault().getModel(), perspective.getLabel());
 			} else {
 				model = new PerspectiveButtonViewModel(perspective.getLabel());
 			}

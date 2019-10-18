@@ -72,6 +72,7 @@ public class JournalViewerView {
 
     private Label lblError;
     private Label lblLastUpdate;
+    private Label error;
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
@@ -88,6 +89,7 @@ public class JournalViewerView {
     private Composite searchControls;
     private Button btnClear;
     private Composite basicControls;
+
 
     /**
      * Create contents of the view part.
@@ -139,7 +141,7 @@ public class JournalViewerView {
         rlSearchControls.center = true;
         searchControls.setLayout(rlSearchControls);
 
-        searchInput = new SearchInput(searchControls);
+        searchInput = new SearchInput(searchControls, model);
         RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
         searchInput.setLayout(rlFilterControl);
 
@@ -153,6 +155,10 @@ public class JournalViewerView {
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
+        
+        error = new Label(searchControls, SWT.NONE);
+        error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+        error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -306,6 +312,11 @@ public class JournalViewerView {
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(error),
+                BeanProperties.value("errorMessage").observe(model));
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
+                BeanProperties.value("enableOrDisableButton").observe(model));
 
         spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
             @Override
