@@ -26,6 +26,12 @@ import javax.annotation.PostConstruct;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,6 +49,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -52,10 +60,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class TestView {
 
 	private ScriptGeneratorSingleton toyModel;
+	private ConfigLoader configLoader;
 	private Label lblOrder;
 	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
 	private ActionsViewTable table;
+	private ComboViewer configSelector;
 	private static final Display DISPLAY = Display.getCurrent();
 	
 	private Button createMoveRowButton(Composite parent, String icon, String direction) {
@@ -78,6 +88,7 @@ public class TestView {
 
 		this.toyModel = Activator.getModel();
 		scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
+		configLoader = toyModel.getConfigLoader();
 		
 		var actionParameters = new ArrayList<ActionParameter>();
 		actionParameters.add(new ActionParameter("column name"));
@@ -90,7 +101,32 @@ public class TestView {
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
 		parent.setLayout(new GridLayout(2, false));
-       
+		
+		Composite globalSettingsComposite = new Composite(parent, SWT.NONE);
+		globalSettingsComposite.setLayout(new GridLayout(2, false));
+		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		
+		Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
+		configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		configSelectorLabel.setText("Config:");
+
+		configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+
+		configSelector.setContentProvider(ArrayContentProvider.getInstance());
+		configSelector.setLabelProvider(new LabelProvider() {
+		    @Override
+		    public String getText(Object element) {
+		        if (element instanceof Config) {
+		        	Config actionWrapper = (Config) element;
+		            return actionWrapper.getInstrument();
+		        }
+		        return super.getText(element);
+		    }
+		});
+		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		configSelector.setInput(configLoader.getAvailableConfigs());
+		configSelector.getCombo().select(-1);
+		
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
@@ -204,6 +240,10 @@ public class TestView {
 		bindingContext = new DataBindingContext();
 //		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 //				BeanProperties.value("iteratedNumber").observe(toyModel));
+		
+		// Can't traditionally bind py4j weirdness
+		configSelector.addSelectionChangedListener(evt ->
+				configLoader.setConfig((Config) configSelector.getStructuredSelection().getFirstElement()));
 		
 		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
         DISPLAY.asyncExec(() -> {

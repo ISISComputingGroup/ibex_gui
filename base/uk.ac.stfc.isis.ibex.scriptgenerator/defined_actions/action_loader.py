@@ -1,44 +1,19 @@
-from cfgv import Map
-from numpy.core.tests.test_scalarinherit import D
 from py4j.java_gateway import JavaGateway, CallbackServerParameters, launch_gateway, get_java_class
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
-from py4j.java_collections import SetConverter, MapConverter, ListConverter
+from py4j.java_collections import MapConverter, ListConverter
 import inspect
-import six
 import argparse
-from abc import ABC, abstractmethod
+from action_interface import Action
+import os
 
 
-class Action(ABC):
-    @abstractmethod
-    def run(self, *args):
-        pass
-
-    @abstractmethod
-    def parameters_valid(self, *args):
-        pass
-
-
-class DoRun(Action):
-    def run(self, temperature: float, field: float, uamps: float):
-        g.cset("temperature", temperature)
-        g.cset("field", field)
-        g.begin()
-        g.waitfor_uamps(uamps)
-        g.end()
-
-    def parameters_valid(self, temperature: float, field: float, uamps: float):
-        if not 0.1 <= temperature <= 300:
-            return "Temperature outside range"
-        if not -5 <= field < 5:
-            return "Field outside range"
-        return ""
-
-
-class ActionWrapper(object):
-
-    def __init__(self, action: Action):
+class Config(object):
+    def __init__(self, instrument: str, action: Action):
         self.action = action
+        self.instrument = instrument
+
+    def getInstrument(self) -> str:
+        return self.instrument
 
     def getParameters(self):
         arguments = inspect.getfullargspec(self.action.run).annotations
@@ -58,7 +33,29 @@ class ActionWrapper(object):
         return self.action.parameters_valid(*list_of_arguments)
 
     class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionWrapper']
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
+
+
+class ConfigWrapper(object):
+    def __init__(self, available_actions: dict):
+        self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
+
+    def getActions(self) -> dict:
+        return ListConverter().convert(self.actions, gateway._gateway_client)
+
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
+
+
+def get_actions() -> dict:
+    """ Dynamically import all the Python modules in this module's sub directory. """
+    search_folder = "instruments"
+    this_file_path = os.path.split(__file__)[0]
+
+    [__import__(search_folder + "." + filename.split(".")[0]) for filename in
+     os.listdir(os.path.join(this_file_path, search_folder))]
+
+    return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in Action.__subclasses__()}
 
 
 if __name__ == '__main__':
@@ -68,9 +65,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    action_wrapper = ActionWrapper(DoRun())
+    config_wrapper = ConfigWrapper(get_actions())
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),
-        python_server_entry_point=action_wrapper)
+        python_server_entry_point=config_wrapper)
