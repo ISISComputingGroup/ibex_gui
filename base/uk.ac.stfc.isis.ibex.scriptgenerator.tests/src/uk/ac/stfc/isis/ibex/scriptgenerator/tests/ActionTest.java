@@ -13,13 +13,15 @@ public class ActionTest {
 
 	private ScriptGeneratorAction action;
 	
-	private String testParameterName = "Test value";
+	private String parameterOneName = "parameter one";
+	private String parameterTwoName = "parameter two";
 	
 	@Before
 	public void setUp() {
 		var testValues = new HashMap<String, String>();
 		
-		testValues.put(testParameterName, "1");
+		testValues.put(parameterOneName, "1");
+		testValues.put(parameterTwoName, "12.3");
 		
 		this.action = new ScriptGeneratorAction(testValues);
 	}
@@ -27,9 +29,20 @@ public class ActionTest {
 	@Test
 	public void test_GIVEN_action_WHEN_action_parameters_set_THEN_action_parameters_update() {
 		var updatedValue = "2";
-		action.setActionParameterValue("Test value", updatedValue);
+		action.setActionParameterValue(parameterOneName, updatedValue);
 		
-		assertEquals(action.getActionParameterValue(testParameterName), updatedValue);
+		assertEquals(action.getActionParameterValue(parameterOneName), updatedValue);
+	}
+	
+	@Test
+	public void test_GIVEN_action_as_constructor_argument_THEN_action_parameter_values_are_duplicated() {
+		var valueToTest = "new value";	
+		
+		action.setActionParameterValue(parameterTwoName, valueToTest);
+				
+		var duplicatedAction = new ScriptGeneratorAction(action);
+		
+		assertEquals(duplicatedAction.getAllActionParameters(), action.getAllActionParameters());
 	}
 	
 }

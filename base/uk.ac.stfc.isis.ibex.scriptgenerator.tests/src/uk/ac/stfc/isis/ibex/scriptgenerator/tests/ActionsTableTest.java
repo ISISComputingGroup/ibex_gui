@@ -25,13 +25,6 @@ public class ActionsTableTest {
 	private ActionsTable table;
 	private List<ActionParameter> actionParameters;
 	
-	private ScriptGeneratorAction createMockedAction(String actionId) {
-		ScriptGeneratorAction action = mock(ScriptGeneratorAction.class);
-				
-		when(action.getActionParameterValue(anyString())).thenReturn(actionId);
-		return action;
-	}
-	
 	@Before
 	public void setUp() {
 		table = new ActionsTable(new ArrayList<ActionParameter>());
@@ -52,6 +45,7 @@ public class ActionsTableTest {
 		
 
         assertTrue(numberOfActionsAfter > numberOfActionsBefore);
+        assertEquals(numberOfActionsAfter, 1);
 	}
 	
 	@Test
@@ -65,6 +59,29 @@ public class ActionsTableTest {
 		assertEquals(table.getActions().size(), 2);
 		
 		assertEquals(allActions.get(0).getAllActionParameters(), allActions.get(1).getAllActionParameters());
+	}
+	
+	@Test
+	public void test_GIVEN_action_in_table_WHEN_action_deleted_THEN_action_is_removed() {
+		table.addEmptyAction(actionParameters);
+
+		table.deleteAction(0);
+		
+		assertEquals(table.getActions().size(), 0);
+		
+	}
+	
+	@Test
+	public void test_GIVEN_action_in_table_WHEN_action_moved_THEN_action_moves_in_table() {
+		// Add two actions
+		table.addEmptyAction(actionParameters);
+		table.addEmptyAction(actionParameters);
+		
+		var secondAction = table.getActions().get(1);
+		
+		table.moveAction(1, 0);
+		
+		assertEquals(table.getActions().indexOf(secondAction), 0);
 	}
 	
 //	public void test_GIVEN_selected_action_is_not_at_bottom_of_list_WHEN_action_moved_up_THEN_action_moves_up() {
