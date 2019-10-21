@@ -34,7 +34,6 @@ public class ScriptGeneratorAction extends ModelObject {
 	
 	public HashMap<String, String> getAllActionParameters(){
 		return actionParameterValues;
-		// is it appropriate to get the action parameters map?
 	}
 	
 }

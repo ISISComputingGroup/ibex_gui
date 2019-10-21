@@ -21,18 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.databinding.observable.IChangeListener;
-import org.eclipse.core.databinding.observable.IDisposeListener;
-import org.eclipse.core.databinding.observable.IStaleListener;
-import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.map.IMapChangeListener;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -41,7 +29,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
@@ -124,25 +111,5 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	protected ColumnComparator<ScriptGeneratorAction> comparator() {
 		return new NullComparator<>();
 	}
-	
-//    private void name() {
-//        createColumn("Name", 1, new DataboundCellLabelProvider<ScriptGeneratorSingleton>(observeProperty("iteratedNumber")) {
-//            @Override
-//			protected String stringFromRow(ScriptGeneratorSingleton row) {
-//                return row.getIteratedNumber();
-//            }
-//        });
-//    }
-
-//    private void value() {
-//        TableViewerColumn value = createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
-//            @Override
-//			protected String stringFromRow(PropertyDescription row) {
-//                return row.getValue();
-//            }
-//        });
-//        
-//
-//    }
 
 }

@@ -151,7 +151,6 @@ public class TestView {
 				}
 			}
 		});
-        
 
 		btnMoveActionUp.addSelectionListener(new SelectionAdapter() {
 			@Override
