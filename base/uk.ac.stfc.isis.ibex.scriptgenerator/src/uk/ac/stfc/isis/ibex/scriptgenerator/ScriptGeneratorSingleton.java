@@ -90,4 +90,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		firePropertyChange("iteratedNumber", this.iteratedNumberString, this.iteratedNumberString = newValue);
 	}
 
+	public void cleanUp() {
+		configLoader.cleanUp();
+	}
 }

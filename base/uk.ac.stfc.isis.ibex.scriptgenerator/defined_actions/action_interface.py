@@ -1,8 +1,7 @@
 from abc import abstractmethod
-from yapsy.IPlugin import IPlugin
 
 
-class Action(IPlugin):
+class Action(object):
     @abstractmethod
     def run(self, *args):
         pass

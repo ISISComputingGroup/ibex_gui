@@ -1,10 +1,10 @@
-from py4j.java_gateway import JavaGateway, CallbackServerParameters, launch_gateway, get_java_class
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import MapConverter, ListConverter
 import inspect
 import argparse
 from action_interface import Action
 import os
+import sys
 
 
 class Config(object):
@@ -51,9 +51,12 @@ def get_actions() -> dict:
     """ Dynamically import all the Python modules in this module's sub directory. """
     search_folder = "instruments"
     this_file_path = os.path.split(__file__)[0]
-
-    [__import__(search_folder + "." + filename.split(".")[0]) for filename in
-     os.listdir(os.path.join(this_file_path, search_folder))]
+    for filename in os.listdir(os.path.join(this_file_path, search_folder)):
+        try:
+            __import__(search_folder + "." + filename.split(".")[0])
+        except Exception as e:
+            # Print any errors to stderr, Java will catch and throw to the user
+            print("Error loading {}: {}".format(filename, e), file=sys.stderr)
 
     return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in Action.__subclasses__()}
 
