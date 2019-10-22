@@ -39,7 +39,7 @@ public class ActionsTableTest {
 	public void test_GIVEN_empty_table_WHEN_action_added_THEN_action_appears_in_table() {
 		var numberOfActionsBefore = table.getActions().size();
 		
-		table.addEmptyAction(actionParameters);
+		table.addEmptyAction();
 		
 		var numberOfActionsAfter = table.getActions().size();
 		
@@ -50,7 +50,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
-		table.addEmptyAction(actionParameters);
+		table.addEmptyAction();
 		
 		table.duplicateAction(0);
 		
@@ -63,7 +63,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_action_in_table_WHEN_action_deleted_THEN_action_is_removed() {
-		table.addEmptyAction(actionParameters);
+		table.addEmptyAction();
 
 		table.deleteAction(0);
 		
@@ -74,8 +74,8 @@ public class ActionsTableTest {
 	@Test
 	public void test_GIVEN_action_in_table_WHEN_action_moved_THEN_action_moves_in_table() {
 		// Add two actions
-		table.addEmptyAction(actionParameters);
-		table.addEmptyAction(actionParameters);
+		table.addEmptyAction();
+		table.addEmptyAction();
 		
 		var secondAction = table.getActions().get(1);
 		

@@ -41,7 +41,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Adds a new action (row) to the ActionsTable, with default parameter values
 	 */
 	public void addEmptyAction() {
-		scriptGeneratorTable.addEmptyAction(scriptGeneratorTable.getActionParameters());
+		scriptGeneratorTable.addEmptyAction();
 	}
 	
 	/**
