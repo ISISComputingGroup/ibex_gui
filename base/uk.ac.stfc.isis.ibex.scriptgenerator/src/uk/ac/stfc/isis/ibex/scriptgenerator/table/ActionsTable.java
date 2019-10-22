@@ -54,9 +54,7 @@ public class ActionsTable extends ModelObject {
 
 	/**
 	 * Adds a new action with default parameters to the list of actions
-	 * @param actionParameters
 	 */
-	//public void addEmptyAction(List<ActionParameter> actionParameters) {
 	public void addEmptyAction() {
 		var parametersMap = new HashMap<String, String>();
 		// Make a parameter/string pair for each parameter in the action
@@ -71,11 +69,21 @@ public class ActionsTable extends ModelObject {
 		firePropertyChange("actions", null, null);
 	}
 
+	/**
+	 * Removes an action from the list in specified location
+	 * @param index
+	 * 		  	The index to remove from the actions list
+	 */
 	public void deleteAction(int index) {
 		this.actions.remove(index);
 		firePropertyChange("actions", null, null);
 	}
 
+	/**
+	 * Duplicates an action in the list at specified location
+	 * @param index
+	 * 			The index of the action to duplicate
+	 */
 	public void duplicateAction(int index) {
 		var actionToDuplicate = actions.get(index);
 		var newAction = new ScriptGeneratorAction(actionToDuplicate);
@@ -86,6 +94,13 @@ public class ActionsTable extends ModelObject {
 		
 	}
 
+	/**
+	 * Moves action to a new position in the table
+	 * @param oldIndex
+	 * 			The current index of the action to be moved
+	 * @param newIndex
+	 * 			The index to move the action to, if valid
+	 */
 	public void moveAction(int oldIndex, int newIndex) {
 		if (newIndex < 0) {
 			newIndex = 0;
