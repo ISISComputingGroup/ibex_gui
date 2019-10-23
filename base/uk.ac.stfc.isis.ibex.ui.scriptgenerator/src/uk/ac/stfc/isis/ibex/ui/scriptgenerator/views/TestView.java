@@ -51,7 +51,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public class TestView {
 
-	private ScriptGeneratorSingleton toyModel;
+	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private Label lblOrder;
 	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
@@ -76,15 +76,15 @@ public class TestView {
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 
-		this.toyModel = Activator.getModel();
-		scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
+		this.scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
 		
 		var actionParameters = new ArrayList<ActionParameter>();
 		actionParameters.add(new ActionParameter("column name"));
 		actionParameters.add(new ActionParameter("code"));
 		actionParameters.add(new ActionParameter("third column"));
 		
-		toyModel.setActionParameters(actionParameters);
+		scriptGeneratorModel.setActionParameters(actionParameters);
 		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
@@ -119,7 +119,7 @@ public class TestView {
 		btnInsertAction.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				toyModel.addEmptyAction();
+				scriptGeneratorModel.addEmptyAction();
 			}
 		});
         
@@ -133,7 +133,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.deleteAction(index);
+					scriptGeneratorModel.deleteAction(index);
 				}
 			}
 		});
@@ -147,7 +147,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.duplicateAction(index);
+					scriptGeneratorModel.duplicateAction(index);
 				}
 			}
 		});
@@ -157,7 +157,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.moveActionUp(index);
+					scriptGeneratorModel.moveActionUp(index);
 				}
 			}
 		});
@@ -167,7 +167,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.moveActionDown(index);
+					scriptGeneratorModel.moveActionDown(index);
 				}
 			}
 		});
@@ -196,7 +196,7 @@ public class TestView {
 
         bind();
 		
-        toyModel.addEmptyAction();
+        scriptGeneratorModel.addEmptyAction();
 	}
 
 	private void bind() {
