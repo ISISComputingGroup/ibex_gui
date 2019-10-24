@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  * Provides settings to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class TestView {
+public class ScriptGeneratorView {
 
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private Label lblOrder;
