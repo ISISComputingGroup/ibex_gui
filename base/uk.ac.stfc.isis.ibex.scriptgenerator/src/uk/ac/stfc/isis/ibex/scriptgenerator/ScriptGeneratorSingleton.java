@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
@@ -11,9 +10,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  *
  */
 public class ScriptGeneratorSingleton extends ModelObject {
-	private Integer iteratedNumber = 0;
-	private String iteratedNumberString;
-	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 
 	/**

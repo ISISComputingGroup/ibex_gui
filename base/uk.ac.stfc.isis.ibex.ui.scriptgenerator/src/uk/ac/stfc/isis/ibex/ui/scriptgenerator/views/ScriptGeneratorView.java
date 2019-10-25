@@ -31,14 +31,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
@@ -52,7 +49,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ScriptGeneratorView {
 
 	private ScriptGeneratorSingleton scriptGeneratorModel;
-	private Label lblOrder;
 	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
 	private ActionsViewTable table;
