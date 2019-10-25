@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -46,25 +43,34 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+/**
+ * A panel containing details of the experiment such as RB number and the experiment team.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private final ViewModel viewModel = ViewModel.getInstance();
+    private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
+            + " your scheduled or Xpress run directly here!";
+    
+    private static final String MANUAL_USER_ENTRY_MESSAGE = "No users found! Please enter users "
+            + "manually!";
+    
+    private final ExperimentDetailsViewModel viewModel = ExperimentDetailsViewModel.getInstance();
 	
 	private final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
     private UserDetailsTable userDetails;
 	private Label lblRbNumber;
 
-
 	private Label lblExperimentTeam;
-	private WritableObservingTextBox rbNumber;
-	private Button btnUpdateUserDetails;
+	private WritableObservingTextBox rbNumberTextBox;
+	private Button btnSetRBNumber;
+	private Button btnRBLookup;
+	private Label manualUserEntryWarning;
 	private Button btnAddUserDetails;
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
 	private Button btnRemoveUserDetails;
-	private Button btnRBLookup;
 	
     @Inject
     public ExperimentDetailsPanel(Composite parent) {
@@ -75,28 +81,30 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
         setExpandVertical(true);
         setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
 
-        Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(5, false));
-        experimentTeam(composite);
-        setContent(composite);
+        Composite parentComposite = new Composite(this, SWT.NONE);
+        parentComposite.setLayout(new GridLayout(3, false));
+        makeExperimentDetailsPanel(parentComposite);
+        setContent(parentComposite);
 
         bind();
     }
 
     /**
-     * @param parent
+     * Adds all the graphical elements such as labels and buttons to the parent 
+     * composite of the panel.
+     * @param parent The root composite of the panel.
      */
-    private void experimentTeam(Composite parent) {
+    private void makeExperimentDetailsPanel(Composite parent) {
         lblRbNumber = new Label(parent, SWT.NONE);
-		lblRbNumber.setText("RB Number");
+		lblRbNumber.setText("RB Number:");
 		
-        rbNumber = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
-        rbNumber.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
+        rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
+        rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
+        
         btnRBLookup = new Button(parent, SWT.NONE);
 		btnRBLookup.setText("Search");
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+        
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -109,21 +117,20 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		});
 		
         lblExperimentTeam = new Label(parent, SWT.NONE);
-		lblExperimentTeam.setText("Experiment Team");
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+		lblExperimentTeam.setText("Experiment Team:");
+		
+		manualUserEntryWarning = new Label(parent, SWT.NONE);
+        manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
+        manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
+        manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        manualUserEntryWarning.setVisible(false);
 		
         userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
         userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		updateUserDetails();
-		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				updateUserDetails();				
-			}
+		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
+		    updateUserDetails();					
 		});
 		
         experimentTeamButtons = new Composite(parent, SWT.NONE);
@@ -166,34 +173,38 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		btnClearUserDetails.setText("Clear");
 		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
 		
-		btnUpdateUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnUpdateUserDetails.addSelectionListener(new SelectionAdapter() {
+		btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
+		btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 viewModel.model.sendUserDetails();
 			}
 		});
-        btnUpdateUserDetails.setText("Set");
-		btnUpdateUserDetails.setLayoutData(gdDetailsButtons);
 		
-        new Label(parent, SWT.NONE);
-        new Label(parent, SWT.NONE);
+        btnSetRBNumber.setText("Set");
+		btnSetRBNumber.setLayoutData(gdDetailsButtons);
     }
 	
 	private void bind() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnUpdateUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+	    bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
+	            BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
 	}
 	
+	/**Gets information from model and updates the user details GUI table. Also
+	 * makes the warning label visible or not based on whether the table is 
+	 * empty or not.*/
 	private void updateUserDetails() {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				userDetails.setRows(viewModel.model.getUserDetails());
-			}	
+		Display.getDefault().asyncExec(() -> {
+		    userDetails.setRows(viewModel.model.getUserDetails());
 		});
 	}
 }

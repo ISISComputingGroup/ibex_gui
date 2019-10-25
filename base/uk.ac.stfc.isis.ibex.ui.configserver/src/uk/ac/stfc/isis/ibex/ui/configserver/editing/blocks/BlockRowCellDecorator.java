@@ -30,6 +30,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
+/**
+ * A cell decorator for displaying non-editable blocks grey and italicised.
+ */
 public class BlockRowCellDecorator extends CellDecorator<EditableBlock> {
 	
 	private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
@@ -42,6 +45,10 @@ public class BlockRowCellDecorator extends CellDecorator<EditableBlock> {
     	}
    	}
 
+	/**
+	 * @param cell the cell to query
+	 * @return whether or not the cell can be edited
+	 */
 	public boolean isEditable(ViewerCell cell) {
 		return getRow(cell).isEditable();
 	}

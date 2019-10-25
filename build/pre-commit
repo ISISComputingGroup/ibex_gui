@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python base/uk.ac.stfc.isis.ibex.opis/validate_opis.py

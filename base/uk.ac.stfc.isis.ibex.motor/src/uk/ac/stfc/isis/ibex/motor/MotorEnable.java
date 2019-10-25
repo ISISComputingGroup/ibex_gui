@@ -19,8 +19,23 @@
 
 package uk.ac.stfc.isis.ibex.motor;
 
+/**
+ * An enum representing whether the motor is enabled.
+ */
 public enum MotorEnable {
+    
+    /**
+     * It is unknown if the motor is enabled or not.
+     */
 	UNKNOWN,
+	
+	/**
+	 * The motor is enabled.
+	 */
 	ENABLE,
+	
+	/**
+	 * The motor is disabled.
+	 */
 	DISABLE
 }

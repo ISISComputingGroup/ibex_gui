@@ -39,7 +39,7 @@ public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Clos
      *            The place where this writer will write to
      */
     public ClosableSameTypeWriter(Writable<T> destination) {
-		writeTo(destination);
+		subscribe(destination);
 		destinationSubscription = destination.subscribe(this);
     }
 	
@@ -58,6 +58,6 @@ public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Clos
 	
 	@Override
 	public void close() {
-		destinationSubscription.removeObserver();
+		destinationSubscription.cancelSubscription();
 	}
 }

@@ -41,6 +41,7 @@ public class Configuration extends ModelObject {
 	private String description;
 	private String synoptic;
 	private String pv;
+	private boolean isProtected; 
 	
 	private List<Ioc> iocs = new ArrayList<>();
 	private List<Block> blocks = new ArrayList<>();
@@ -89,11 +90,13 @@ public class Configuration extends ModelObject {
 			Collection<Block> blocks, 
 			Collection<Group> groups, 
 			Collection<ComponentInfo> components, 
-			Collection<String> history) {
+			Collection<String> history,
+			boolean isProtected) {
 		this.name = name;
 		this.description = description;
 		this.synoptic = defaultSynoptic == null || defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME : defaultSynoptic;
 		this.pv = "";
+		this.isProtected = isProtected;
 		
 		for (Ioc ioc : iocs) {
 			this.iocs.add(new Ioc(ioc));
@@ -123,7 +126,7 @@ public class Configuration extends ModelObject {
      *            The other configuration.
      */
 	public Configuration(Configuration other) {
-		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(), other.getComponents(), other.getHistory());
+		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(), other.getComponents(), other.getHistory(), other.isProtected);
 		this.pv = other.pv;
 	}
 	
@@ -153,6 +156,13 @@ public class Configuration extends ModelObject {
      */
 	public String pv() {
 		return pv;
+	}
+	
+	/**
+	 * @return The configuration's protected status
+	 */
+	public boolean isProtected() {
+		return isProtected;
 	}
 	
     /**

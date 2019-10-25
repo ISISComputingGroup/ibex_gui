@@ -100,12 +100,7 @@ public class ConsoleLogDialog extends TitleAreaDialog {
 	}
 
 	private void setText(final String str) {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				text.setText(str);
-			}
-		});
+		Display.getDefault().asyncExec(() -> text.setText(str));
 	}
 
 	/**

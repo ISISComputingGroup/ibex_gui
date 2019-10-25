@@ -39,10 +39,20 @@ public enum PeriodType {
 		}
 	}
 	
+	/**
+	 * Instantiates a new period type.
+	 *
+	 * @param text the text
+	 */
 	PeriodType(String text) {
 		this.text = text;
 	}
 	 
+	/**
+	 * Gets all values as a string.
+	 *
+	 * @return the list
+	 */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}

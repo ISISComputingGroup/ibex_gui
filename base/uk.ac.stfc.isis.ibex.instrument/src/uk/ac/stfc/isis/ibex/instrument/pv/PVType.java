@@ -30,11 +30,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "pvtype")
 @XmlEnum(String.class)
 public enum PVType {
+    
+    /**
+     * The PV is local to the instrument.
+     */
     LOCAL_PV("Local PV"),
+    
+    /**
+     * The PV is remote.
+     */
     REMOTE_PV("Remote PV");
 	
 	private String displayName;
 	
+	/**
+	 * Instantiates a new PV type.
+	 *
+	 * @param displayName the display name
+	 */
 	PVType(String displayName) {
 		this.displayName = displayName;
 	}

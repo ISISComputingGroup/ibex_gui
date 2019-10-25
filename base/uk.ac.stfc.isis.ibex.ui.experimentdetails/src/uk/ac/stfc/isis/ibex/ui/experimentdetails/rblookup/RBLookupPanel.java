@@ -27,8 +27,18 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 
+/**
+ * A panel for looking up RB numbers. It is a composite GUI element that is 
+ * the parent of all GUI elements used for searching RB numbers. This Panel 
+ * is meant to be but in a RBLookupDialog window.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupPanel extends Composite {
+    
+    private static final String NAME_SEARCH_WARNING = "Warning! This dialog is only for searching "
+            + "for scheduled runs. For Xpress runs, you will have to \ntype in your RB number "
+            + "manually in the RB Number text box in Experiment Details.";
+    
 	private Text txtName;
 	private ComboViewer cmboRole;
 	private UserDetailsTable experimentIDTable;
@@ -38,6 +48,12 @@ public class RBLookupPanel extends Composite {
 	
 	private DataBindingContext bindingContext;
 	
+	/**
+	 * Creates an RB lookup panel. Adds all labels, buttons, etc. to the panel.
+	 *
+	 * @param parent the parent composite.
+	 * @param style the SWT style.
+	 */
 	public RBLookupPanel(Composite parent, int style) {
 		super(parent, style);
 		
@@ -82,11 +98,20 @@ public class RBLookupPanel extends Composite {
 		btnSearch.setText("Search");
 		btnSearch.setFocus();
 		
-		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
-		experimentIDTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Label searchWarning = new Label(searchComposite, SWT.NONE);
+		searchWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+		searchWarning.setText(NAME_SEARCH_WARNING);
 		
+		experimentIDTable = new UserDetailsWithExperimentsTable(this, SWT.NONE, 
+		        SWT.FULL_SELECTION | SWT.BORDER);
+		experimentIDTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 	
+	/**
+	 * Sets the model and binds all of the values.
+	 * 
+	 * @param viewModel the view model.
+	 */
 	public void setModel(final RBLookupViewModel viewModel) {
 		bindingContext = new DataBindingContext();
 		
@@ -133,5 +158,4 @@ public class RBLookupPanel extends Composite {
 		
 		bindingContext.updateModels();
 	}
-
 }

@@ -236,17 +236,19 @@ public class JsonConvertersTest {
 	}
 	
 	@Test
-	public void conversion_config_to_string() throws ConversionException {
+	public void conversion_config_to_string() throws ConversionException {		
 		//Arrange
 		Converter<Configuration, String> conv = new JsonConverters().configToString();
 		Configuration testConfig = new Configuration(configName, configDescription);
-		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
+		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
 		
 		//Act
 		String test = conv.convert(testConfig);
 		
+		
 		//Assert
 		assertEquals(expected, test);
+			
 	}
 
     @Test(expected = NullPointerException.class)

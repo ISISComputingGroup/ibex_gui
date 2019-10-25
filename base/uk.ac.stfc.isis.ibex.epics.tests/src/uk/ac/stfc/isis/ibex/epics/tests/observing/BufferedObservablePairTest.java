@@ -70,7 +70,7 @@ public class BufferedObservablePairTest {
 		
         bufferedObservablePair =
                 new BufferedObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
-        bufferedObservablePair.addObserver(mockObserver);
+        bufferedObservablePair.subscribe(mockObserver);
 	}
 	
 	@Test

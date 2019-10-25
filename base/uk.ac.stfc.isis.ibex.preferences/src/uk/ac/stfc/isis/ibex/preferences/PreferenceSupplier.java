@@ -19,19 +19,35 @@
 
 package uk.ac.stfc.isis.ibex.preferences;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IScopeContext;
-import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 /**
  * Supplies the details for the IBEX preference page.
  */
 public class PreferenceSupplier {
+	
+	private final IPreferencesService preferenceService;
+	
+	/**
+	 * Instantiate a new preference supplier.
+	 */
+	public PreferenceSupplier() {
+		this(Platform.getPreferencesService());
+	}
+	
+	/**
+	 * Instantiate a new preference supplier based on a specific preferenceService.
+	 * @param preferenceService the preference serice to use
+	 */
+	public PreferenceSupplier(IPreferencesService preferenceService) {
+		this.preferenceService = preferenceService;
+	}
 	
     /**
      * The preference setting for the location of EPICS base.
@@ -93,8 +109,8 @@ public class PreferenceSupplier {
      * 
      * @return the preferences string, or the default if it was not present.
      */
-	private static String getString(String name, String def) {
-		return Platform.getPreferencesService().getString(PREFERENCE_NODE, name, def, null);
+	private String getString(String name, String def) {
+		return preferenceService.getString(PREFERENCE_NODE, name, def, null);
 	}
 		
     /**
@@ -102,7 +118,7 @@ public class PreferenceSupplier {
      * 
      * @return the setting (uses default if not set)
      */
-	public static String epicsBase() {
+	public String epicsBase() {
 		return getString(EPICS_BASE_DIRECTORY, DEFAULT_EPICS_BASE_DIRECTORY);
 	}
 	
@@ -111,7 +127,7 @@ public class PreferenceSupplier {
      * 
      * @return the setting (uses default if not set)
      */
-	public static String pythonInterpreterPath() {
+	public String pythonInterpreterPath() {
 		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
 	}
 	
@@ -120,12 +136,12 @@ public class PreferenceSupplier {
      * 
      * @return a list of perspective IDs which should not be shown (may be empty, but never null).
      */
-	public static List<String> perspectivesToHide() {
+	public List<String> perspectivesToHide() {
 		String preferencesString = getString(PERSPECTIVES_TO_HIDE, DEFAULT_PERSPECTIVES_TO_HIDE);
 		if (preferencesString == null || preferencesString.isEmpty()) {
-			return Collections.<String>emptyList();
+			return new ArrayList<>();
 		}
-		return Arrays.asList(preferencesString.split(",")).stream().map(s -> s.trim()).collect(Collectors.toList());
+		return Arrays.asList(preferencesString.split(",")).stream().map(String::trim).collect(Collectors.toList());
 	}
 	
 	/**
@@ -133,7 +149,7 @@ public class PreferenceSupplier {
      * 
      * @return the setting (uses default if not set)
      */
-	public static String geniePythonPath() {
+	public String geniePythonPath() {
 		return getString(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY);
 	}
 	
@@ -142,7 +158,7 @@ public class PreferenceSupplier {
      * 
      * @return the setting (uses default if not set)
      */
-	public static String epicsUtilsPath() {
+	public String epicsUtilsPath() {
 		return getString(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
 	}
 }

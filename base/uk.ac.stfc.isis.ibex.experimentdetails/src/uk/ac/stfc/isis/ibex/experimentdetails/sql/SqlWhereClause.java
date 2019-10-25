@@ -26,6 +26,12 @@ public abstract class SqlWhereClause {
 	protected final String lhs;
 	protected final String rhs;
 	
+	/**
+	 * Create a new where clause.
+	 * 
+	 * @param lhs the left hand side of the where clause
+	 * @param rhs the right hand side of the where clause
+	 */
 	public SqlWhereClause(String lhs, String rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;

@@ -41,14 +41,12 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Font;
-
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -100,6 +98,9 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/** Number of milliseconds in a day. */
 	private static final long MILLISECONDS_IN_DAY = MILLISECONDS_IN_HOUR * 24;
 
+	/** Number of milliseconds in a week */
+	private static final long MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
+	
 	/** Current plot time span in milliseconds. */
 	private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
@@ -179,8 +180,10 @@ public class BeamGraphView extends ModelListenerAdapter {
 	
 		createTSCurrentLabel(rowOne, 1);
 		createTSCurrentLabel(rowOne, 2);
+		
 		createButton(rowTwo, "Last 24 Hours", MILLISECONDS_IN_DAY);
 		createButton(rowTwo, "Last Hour", MILLISECONDS_IN_HOUR);
+		createButton(rowTwo, "Last Week", MILLISECONDS_IN_WEEK);
 
 	}
 	
