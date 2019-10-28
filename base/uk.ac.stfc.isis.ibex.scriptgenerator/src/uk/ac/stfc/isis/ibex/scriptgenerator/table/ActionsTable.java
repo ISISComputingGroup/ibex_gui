@@ -39,7 +39,7 @@ public class ActionsTable extends ModelObject {
 	 * 		  		The list of parameters used to define each action
 	 */
 	public void setActionParameters(List<ActionParameter> actionParameters) {
-		this.actionParameters = actionParameters;
+		firePropertyChange("actionParameters", this.actionParameters, this.actionParameters = actionParameters);
 	}
 	
 	/**

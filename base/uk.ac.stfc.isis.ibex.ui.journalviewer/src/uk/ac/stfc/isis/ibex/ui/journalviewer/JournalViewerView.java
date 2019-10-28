@@ -174,7 +174,18 @@ public class JournalViewerView {
 		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
 			protected void addColumns() {
-				changeTableColumns();
+		        for (final JournalField field : JournalField.values()) {
+		            if (model.getFieldSelected(field)) {
+		                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
+		                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
+		                            @Override
+		                            protected String stringFromRow(JournalRow row) {
+		                                return row.get(field);
+		                            }
+		                        });
+		                col.getColumn().setText(field.getFriendlyName());
+		            }
+		        }
 			}
 			
 			@Override
@@ -185,7 +196,7 @@ public class JournalViewerView {
 			// Sort table by selected column when a column header is clicked
 			@Override
 			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
-		        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		        return new SelectionAdapter() {
 		            @Override
 		            public void widgetSelected(SelectionEvent e) {
 		                JournalField field = JournalField.getFieldFromFriendlyName(column.getText());
@@ -193,7 +204,6 @@ public class JournalViewerView {
 	                    model.sortBy(field).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		            }
 		        };
-		        return selectionAdapter;
 		    }
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -236,45 +246,6 @@ public class JournalViewerView {
         setProgressIndicatorsVisible(true);
         model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
     }
-
-    private void changeTableColumns() {
-        // Dispose all the columns and re-add them, otherwise the columns may
-        // not be in the expected order.
-        for (TableColumn col : table.table().getColumns()) {
-            col.dispose();
-        }
-
-        for (final JournalField field : JournalField.values()) {
-            if (model.getFieldSelected(field)) {
-                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
-                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
-                            @Override
-                            protected String stringFromRow(JournalRow row) {
-                                return row.get(field);
-                            }
-                        });
-                col.getColumn().setText(field.getFriendlyName());
-
-            }
-        }
-
-        forceResizeTable();
-        updateSortIndicator();
-    }
-
-    /**
-     * Forces the table to display the columns correctly.
-     * 
-     * This is a dirty hack but is the only way I found to ensure the columns
-     * displayed properly.
-     */
-    private void forceResizeTable() {
-        table.setRedraw(false);
-        Point prevSize = table.getSize();
-        table.setSize(prevSize.x, prevSize.y - 1);
-        table.setSize(prevSize);
-        table.setRedraw(true);
-    }
     
     /**
      * Updates the sort indicator arrow to the currently sorted column
@@ -309,45 +280,32 @@ public class JournalViewerView {
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageNumberMax").observe(model));
 
-        spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        spinnerPageNumber.addListener(SWT.Selection, e -> {
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
         
-        btnRefresh.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                resetPageNumber();
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        btnRefresh.addListener(SWT.Selection, e -> {
+            resetPageNumber();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
         
-        btnSearch.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                search();
-            }
-        });
+        btnSearch.addListener(SWT.Selection, e -> search());
         
-        btnClear.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                resetPageNumber();
-                searchInput.clearInput();
-                model.resetActiveSearch();
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        btnClear.addListener(SWT.Selection, e -> {
+            resetPageNumber();
+            searchInput.clearInput();
+            model.resetActiveSearch();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         model.addPropertyChangeListener("runs", e -> 
         DISPLAY.asyncExec(() -> {
                 setProgressIndicatorsVisible(true);
-                changeTableColumns();
+                table.updateTableColumns();
+                updateSortIndicator();
                 table.setRows(model.getRuns());
                 setProgressIndicatorsVisible(false);
         }));

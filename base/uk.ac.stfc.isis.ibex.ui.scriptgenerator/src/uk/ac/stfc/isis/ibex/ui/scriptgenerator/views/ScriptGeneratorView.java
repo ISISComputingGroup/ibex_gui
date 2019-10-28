@@ -80,8 +80,6 @@ public class ScriptGeneratorView {
 		actionParameters.add(new ActionParameter("code"));
 		actionParameters.add(new ActionParameter("third column"));
 		
-		scriptGeneratorModel.setActionParameters(actionParameters);
-		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
@@ -89,6 +87,8 @@ public class ScriptGeneratorView {
        
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		scriptGeneratorModel.setActionParameters(actionParameters);
 		
 		//table.addSelectionChangedListener(e -> queueScriptViewModel.setSelectedScript(queuedScriptsViewer.firstSelectedRow()));
 		//addDragAndDrop(queuedScriptsViewer.viewer());
