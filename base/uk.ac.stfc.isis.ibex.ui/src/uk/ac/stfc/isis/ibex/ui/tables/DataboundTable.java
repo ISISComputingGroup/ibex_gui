@@ -451,9 +451,10 @@ public abstract class DataboundTable<TRow> extends Composite {
 		return comparator;
 	}
 	
+	/**
+	 * Disposes and re-adds the columns so that they update from the model again. 
+	 */
 	public void updateTableColumns() {
-        // Dispose all the columns and re-add them, otherwise the columns may
-        // not be in the expected order.
         for (TableColumn col : table().getColumns()) {
             col.dispose();
         }
