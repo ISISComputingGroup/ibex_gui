@@ -37,16 +37,12 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
@@ -57,11 +53,9 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  * Provides settings to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class TestView {
-
-	private ScriptGeneratorSingleton toyModel;
+public class ScriptGeneratorView {
 	private ConfigLoader configLoader;
-	private Label lblOrder;
+	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
 	private ActionsViewTable table;
@@ -85,18 +79,10 @@ public class TestView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
+		scriptGeneratorModel = Activator.getModel();
+		configLoader = scriptGeneratorModel.getConfigLoader();
+		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
 
-		this.toyModel = Activator.getModel();
-		scriptGeneratorTable = this.toyModel.getScriptGeneratorTable();
-		configLoader = toyModel.getConfigLoader();
-		
-		var actionParameters = new ArrayList<ActionParameter>();
-		actionParameters.add(new ActionParameter("column name"));
-		actionParameters.add(new ActionParameter("code"));
-		actionParameters.add(new ActionParameter("third column"));
-		
-		//toyModel.setActionParameters(actionParameters);
-		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
@@ -129,9 +115,6 @@ public class TestView {
 		
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		//table.addSelectionChangedListener(e -> queueScriptViewModel.setSelectedScript(queuedScriptsViewer.firstSelectedRow()));
-		//addDragAndDrop(queuedScriptsViewer.viewer());
         
 		Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
@@ -155,7 +138,7 @@ public class TestView {
 		btnInsertAction.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				toyModel.addEmptyAction();
+				scriptGeneratorModel.addEmptyAction();
 			}
 		});
         
@@ -169,7 +152,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.deleteAction(index);
+					scriptGeneratorModel.deleteAction(index);
 				}
 			}
 		});
@@ -183,18 +166,17 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.duplicateAction(index);
+					scriptGeneratorModel.duplicateAction(index);
 				}
 			}
 		});
-        
 
 		btnMoveActionUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.moveActionUp(index);
+					scriptGeneratorModel.moveActionUp(index);
 				}
 			}
 		});
@@ -204,7 +186,7 @@ public class TestView {
 			public void widgetSelected(SelectionEvent e) {
 				var index = table.getSelectionIndex();
 				if (index >= 0) {
-					toyModel.moveActionDown(index);
+					scriptGeneratorModel.moveActionDown(index);
 				}
 			}
 		});
@@ -233,7 +215,7 @@ public class TestView {
 
         bind();
 		
-        toyModel.addEmptyAction();
+        scriptGeneratorModel.addEmptyAction();
 	}
 
 	private void bind() {

@@ -21,27 +21,15 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.databinding.observable.IChangeListener;
-import org.eclipse.core.databinding.observable.IDisposeListener;
-import org.eclipse.core.databinding.observable.IStaleListener;
-import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.map.IMapChangeListener;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
@@ -72,43 +60,41 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         super(parent, style, tableStyle | SWT.BORDER);
         this.actionsTable = actionsTable;
         initialise();
+        
+        actionsTable.addPropertyChangeListener("actionParameters", e -> Display.getCurrent().asyncExec(
+        		() -> updateTableColumns()));
     }
 
     
     @Override
     protected void addColumns() {    	
-        for (ActionParameter actionParameter:this.actionsTable.getActionParameters()) {
-        	addColumn(actionParameter);
+        for (ActionParameter actionParameter: actionsTable.getActionParameters()) {
+			String columnName = actionParameter.getName();
+			TableViewerColumn column = createColumn(
+					columnName, 
+					2,
+					new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
+						@Override
+						protected String stringFromRow(ScriptGeneratorAction row) {
+							// TODO Auto-generated method stub
+							return row.getActionParameterValue(columnName);
+						}
+						
+					});
+			
+	        column.setEditingSupport(new StringEditingSupport<ScriptGeneratorAction>(viewer(), ScriptGeneratorAction.class) {
+	
+	            @Override
+	            protected String valueFromRow(ScriptGeneratorAction row) {
+	                return row.getActionParameterValue(columnName);
+	            }
+	
+	            @Override
+	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
+	                row.setActionParameterValue(columnName, value);
+	            }
+	        });	
         }
-    }
-
-	private void addColumn(ActionParameter actionParameter) {
-		String columnName = actionParameter.getName();
-		TableViewerColumn column = createColumn(
-				columnName, 
-				2,
-				new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
-					@Override
-					protected String stringFromRow(ScriptGeneratorAction row) {
-						// TODO Auto-generated method stub
-						return row.getActionParameterValue(columnName);
-					}
-					
-				});
-		
-        column.setEditingSupport(new StringEditingSupport<ScriptGeneratorAction>(viewer(), ScriptGeneratorAction.class) {
-
-            @Override
-            protected String valueFromRow(ScriptGeneratorAction row) {
-                return row.getActionParameterValue(columnName);
-            }
-
-            @Override
-            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-                row.setActionParameterValue(columnName, value);
-            }
-        });	
-		
 	}
 
 	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
@@ -125,24 +111,4 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return new NullComparator<>();
 	}
 	
-//    private void name() {
-//        createColumn("Name", 1, new DataboundCellLabelProvider<ScriptGeneratorSingleton>(observeProperty("iteratedNumber")) {
-//            @Override
-//			protected String stringFromRow(ScriptGeneratorSingleton row) {
-//                return row.getIteratedNumber();
-//            }
-//        });
-//    }
-
-//    private void value() {
-//        TableViewerColumn value = createColumn("Value", 4, new DataboundCellLabelProvider<PropertyDescription>(observeProperty("value")) {
-//            @Override
-//			protected String stringFromRow(PropertyDescription row) {
-//                return row.getValue();
-//            }
-//        });
-//        
-//
-//    }
-
 }
