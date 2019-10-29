@@ -1,5 +1,5 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
-from py4j.java_collections import MapConverter, ListConverter
+from py4j.java_collections import ListConverter
 import inspect
 import argparse
 from action_interface import Action
@@ -8,6 +8,9 @@ import sys
 
 
 class Config(object):
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
+
     def __init__(self, instrument: str, action: Action):
         self.action = action
         self.instrument = instrument
@@ -17,14 +20,7 @@ class Config(object):
 
     def getParameters(self):
         arguments = inspect.getfullargspec(self.action.run).annotations
-        type_conversion = {float: "java.lang.Double", int: "java.lang.Integer", str: "java.lang.String",
-                           bool: "java.lang.Boolean"}
-        for arg, arg_type in arguments.items():
-            try:
-                arguments[arg] = gateway.jvm.Class.forName(type_conversion[arg_type])
-            except KeyError as e:
-                print("Type {} not recognised".format(arg_type))
-        return MapConverter().convert(arguments, gateway._gateway_client)
+        return ListConverter().convert(arguments.keys(), gateway._gateway_client)
 
     def doAction(self, list_of_arguments):
         self.action.run(*list_of_arguments)
@@ -32,19 +28,16 @@ class Config(object):
     def parametersValid(self, list_of_arguments):
         return self.action.parameters_valid(*list_of_arguments)
 
-    class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
-
 
 class ConfigWrapper(object):
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
+
     def __init__(self, available_actions: dict):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
 
-    def getActions(self) -> dict:
+    def getActions(self):
         return ListConverter().convert(self.actions, gateway._gateway_client)
-
-    class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
 
 
 def get_actions() -> dict:

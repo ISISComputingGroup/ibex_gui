@@ -28,7 +28,6 @@ public class ConfigLoader extends ModelObject {
 	private List<Config> availableConfigs;
 	private Config selectedConfig;
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
-	private Thread processListeningThread;
 	
 	private int getFreeSocket() throws IOException {
         try (ServerSocket socket = new ServerSocket(0)) {
@@ -89,7 +88,7 @@ public class ConfigLoader extends ModelObject {
 
 	public void setConfig(Config action) {
 		selectedConfig = action;
-		ArrayList<ActionParameter> parameters = action.getParameters().keySet().stream()
+		ArrayList<ActionParameter> parameters = action.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
 		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
 	}
@@ -105,7 +104,6 @@ public class ConfigLoader extends ModelObject {
 	public void cleanUp() {
 		try {
 			pythonProcess.destroy();
-			processListeningThread.join();
 		} catch (InterruptedException e) {
 			LOG.warn(e);
 		}
