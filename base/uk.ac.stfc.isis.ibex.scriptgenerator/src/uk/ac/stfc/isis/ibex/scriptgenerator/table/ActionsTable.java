@@ -111,5 +111,10 @@ public class ActionsTable extends ModelObject {
 		firePropertyChange("actions", null, null);
 	}
 	
-
+	/**
+	 * Clears the list of actions.
+	 */
+	public void clearActions() {
+		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+	}
 }

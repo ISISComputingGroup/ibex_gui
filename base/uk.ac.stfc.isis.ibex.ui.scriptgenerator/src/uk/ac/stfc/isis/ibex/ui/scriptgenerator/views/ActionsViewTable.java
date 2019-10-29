@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -111,4 +113,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return new NullComparator<>();
 	}
 	
+	@Override
+	public void updateTableColumns() {
+		super.updateTableColumns();
+		setRows(new ArrayList<ScriptGeneratorAction>());
+	}
 }

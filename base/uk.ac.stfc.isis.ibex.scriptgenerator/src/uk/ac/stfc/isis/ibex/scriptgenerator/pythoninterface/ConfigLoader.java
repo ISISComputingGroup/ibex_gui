@@ -102,11 +102,6 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	public void cleanUp() {
-		try {
-			pythonProcess.destroy();
-		} catch (InterruptedException e) {
-			LOG.warn(e);
-		}
+		pythonProcess.destroy();
 	}
-	
 }

@@ -111,7 +111,7 @@ public class ScriptGeneratorView {
 		});
 		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		configSelector.setInput(configLoader.getAvailableConfigs());
-		configSelector.getCombo().select(-1);
+		configSelector.getCombo().select(0);
 		
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -223,7 +223,7 @@ public class ScriptGeneratorView {
 //		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 //				BeanProperties.value("iteratedNumber").observe(toyModel));
 		
-		// Can't traditionally bind py4j weirdness
+		// Can't traditionally bind due to py4j weirdness
 		configSelector.addSelectionChangedListener(evt ->
 				configLoader.setConfig((Config) configSelector.getStructuredSelection().getFirstElement()));
 		

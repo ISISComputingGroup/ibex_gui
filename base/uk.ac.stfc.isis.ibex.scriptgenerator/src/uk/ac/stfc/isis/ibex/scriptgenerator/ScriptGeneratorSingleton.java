@@ -17,8 +17,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	public ScriptGeneratorSingleton() {
 		configLoader = new ConfigLoader();
-		configLoader.addPropertyChangeListener("parameters", evt ->
-				setActionParameters(configLoader.getParameters()));
+		configLoader.addPropertyChangeListener("parameters", evt -> {
+			setActionParameters(configLoader.getParameters());
+		});
+				
 		setActionParameters(configLoader.getParameters());
 	}
 
@@ -38,6 +40,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			newParameters.add(actionParameter);
 		}
 		scriptGeneratorTable.setActionParameters(newParameters);
+		scriptGeneratorTable.clearActions();
 	}
 	
 	/**
