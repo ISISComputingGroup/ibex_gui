@@ -40,14 +40,20 @@ public class ConfigLoader extends ModelObject {
         }
 	}
 	
-	private String relativePathToString(String relativePath) throws IOException {
+	/**
+	 * Gets the full path to a file given the path relative to this plugin.
+	 * @param relativePath The path of the file relative to this plugin.
+	 * @return The full path.
+	 * @throws IOException if the file could not be found.
+	 */
+	private String relativePathToFull(String relativePath) throws IOException {
 		URL resourcePath = getClass().getResource(relativePath);
 		String fullPath = FileLocator.resolve(resourcePath).getPath();
 		return Path.forWindows(fullPath).toOSString();
 	}
 	
 	/**
-	 * Forwards errors in the python process.
+	 * Forwards errors from the python process.
 	 */
 	private Runnable listenToErrors = () -> {
         try {        
@@ -67,6 +73,11 @@ public class ConfigLoader extends ModelObject {
 		}
 	};
 	
+	/**
+	 * Creates the connection that will be used to communicate with the Python configuration.
+	 * @return The client server connection.
+	 * @throws IOException if the connection could not be made.
+	 */
 	private ClientServer createClientServer() throws IOException {
         ClientServerBuilder clientServerBuilder = new ClientServerBuilder();
         return clientServerBuilder.pythonPort(getFreeSocket()).javaPort(getFreeSocket()).build();		
@@ -75,11 +86,14 @@ public class ConfigLoader extends ModelObject {
 	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath) throws IOException {
         Integer javaPort = clientServer.getJavaServer().getPort();
         Integer pythonPort = clientServer.getPythonClient().getPort();
-        String absoluteFilePath = relativePathToString(filePath);
+        String absoluteFilePath = relativePathToFull(filePath);
         ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(), pythonPort.toString());
 		return builder.start();
 	}
 	
+	/**
+	 * Constructor for the config loader, initialises the connection with python and reads the configurations.
+	 */
 	public ConfigLoader() {
         try {
         	clientServer = createClientServer();
@@ -96,10 +110,17 @@ public class ConfigLoader extends ModelObject {
 		}
 	}
 
+	/**
+	 * @return all found configurations.
+	 */
 	public List<Config> getAvailableConfigs() {
 		return availableConfigs;
 	}
 
+	/**
+	 * Set which configuration is currently loaded.
+	 * @param config The currently loaded configuration.
+	 */
 	public void setConfig(Config config) {
 		ArrayList<ActionParameter> parameters = config.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
@@ -107,14 +128,23 @@ public class ConfigLoader extends ModelObject {
 		firePropertyChange("config", this.selectedConfig, this.selectedConfig = config);
 	}
 	
+	/**
+	 * @return the currently loaded configuration.
+	 */
 	public Config getConfig() {
 		return selectedConfig;
 	}
 	
+	/**
+	 * @return the parameters for the current configuration.
+	 */
 	public ArrayList<ActionParameter> getParameters() {
 		return parameters;
 	}
 	
+	/**
+	 * Cleans up all resources.
+	 */
 	public void cleanUp() {
 		pythonProcess.destroy();
 	}
