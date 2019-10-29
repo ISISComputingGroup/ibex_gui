@@ -36,7 +36,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 *  Adds the new action parameters to the empty ActionsTable
+	 *  Adds the new action parameters to the empty ActionsTable.
 	 * @param actionParameters
 	 */
 	public void setActionParameters(ArrayList<ActionParameter> actionParameters) {
@@ -58,14 +58,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Adds a new action (row) to the ActionsTable, with default parameter values
+	 * Adds a new action (row) to the ActionsTable, with default parameter values.
 	 */
 	public void addEmptyAction() {
 		scriptGeneratorTable.addEmptyAction();
 	}
 	
 	/**
-	 * Removes action at position index from ActionsTable
+	 * Removes action at position index from ActionsTable.
 	 * @param index
 	 */
 	public void deleteAction(int index) {
@@ -74,7 +74,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Duplicates action at position index in ActionsTable
+	 * Duplicates action at position index in ActionsTable.
 	 * @param index
 	 */
 	public void duplicateAction(int index) {
@@ -82,7 +82,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Moves action one row up in table
+	 * Moves action one row up in table.
 	 * @param index
 	 */
 	public void moveActionUp(int index) {
@@ -90,7 +90,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 * Moves action one row down in table
+	 * Moves action one row down in table.
 	 * @param index
 	 */
 	public void moveActionDown(int index) {

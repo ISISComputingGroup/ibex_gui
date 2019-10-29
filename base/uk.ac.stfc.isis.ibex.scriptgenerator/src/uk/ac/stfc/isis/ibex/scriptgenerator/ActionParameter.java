@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 /**
- * Data type for an action parameter
+ * Data type for an action parameter.
  * 
  */
 public class ActionParameter {
@@ -9,7 +9,7 @@ public class ActionParameter {
 	private String name;
 	
 	/**
-	 * This class holds the name (and other information) about an action parameter
+	 * This class holds the name (and other information) about an action parameter.
 	 * @param name
 	 */
 	public ActionParameter(String name) {
@@ -17,7 +17,7 @@ public class ActionParameter {
 	}
 
 	/**
-	 * @return The name of this parameter
+	 * @return The name of this parameter.
 	 */
 	public String getName() {
 		return name;
