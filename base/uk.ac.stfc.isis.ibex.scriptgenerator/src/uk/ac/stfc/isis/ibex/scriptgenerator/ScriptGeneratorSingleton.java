@@ -15,6 +15,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private final ConfigLoader configLoader;
 	
+	/**
+	 * The constructor, will create a config loader and load an initial config.
+	 */
 	public ScriptGeneratorSingleton() {
 		configLoader = new ConfigLoader();
 		configLoader.addPropertyChangeListener("parameters", evt -> {
@@ -24,6 +27,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(configLoader.getParameters());
 	}
 
+	/**
+	 * Get the config loader.
+	 * @return The class responsible for loading a new table configuration.
+	 */
 	public ConfigLoader getConfigLoader() {
 		return configLoader;
 	}
@@ -90,6 +97,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptGeneratorTable.moveAction(index, index+1);
 	}
 
+	/**
+	 * Clean up resources when the plugin is destroyed.
+	 */
 	public void cleanUp() {
 		configLoader.cleanUp();
 	}

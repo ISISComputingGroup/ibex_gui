@@ -26,9 +26,13 @@ public class ConfigLoader extends ModelObject {
 	private ClientServer clientServer;
 	private Process pythonProcess;
 	private List<Config> availableConfigs;
-	private Config selectedConfig;
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
+	private Config selectedConfig;
 	
+	/**
+	 * @return The next free socket on the machine.
+	 * @throws IOException if a free socket cannot be found
+	 */
 	private int getFreeSocket() throws IOException {
         try (ServerSocket socket = new ServerSocket(0)) {
             socket.setReuseAddress(true);
@@ -42,6 +46,9 @@ public class ConfigLoader extends ModelObject {
 		return Path.forWindows(fullPath).toOSString();
 	}
 	
+	/**
+	 * Forwards errors in the python process.
+	 */
 	private Runnable listenToErrors = () -> {
         try {        
         	InputStreamReader isr = new InputStreamReader(pythonProcess.getErrorStream());
@@ -60,16 +67,23 @@ public class ConfigLoader extends ModelObject {
 		}
 	};
 	
+	private ClientServer createClientServer() throws IOException {
+        ClientServerBuilder clientServerBuilder = new ClientServerBuilder();
+        return clientServerBuilder.pythonPort(getFreeSocket()).javaPort(getFreeSocket()).build();		
+	}
+	
+	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath) throws IOException {
+        Integer javaPort = clientServer.getJavaServer().getPort();
+        Integer pythonPort = clientServer.getPythonClient().getPort();
+        String absoluteFilePath = relativePathToString(filePath);
+        ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(), pythonPort.toString());
+		return builder.start();
+	}
+	
 	public ConfigLoader() {
         try {
-            ClientServerBuilder clientServerBuilder = new ClientServerBuilder();
-            clientServer = clientServerBuilder.pythonPort(getFreeSocket()).javaPort(getFreeSocket()).build();
-            Integer javaPort = clientServer.getJavaServer().getPort();
-            Integer pythonPort = clientServer.getPythonClient().getPort();
-            String pythonPath = "C:\\Instrument\\Apps\\Python3\\python.exe";
-            String filePath = relativePathToString("/defined_actions/action_loader.py");
-            ProcessBuilder builder = new ProcessBuilder().command(pythonPath, filePath, javaPort.toString(), pythonPort.toString());
-			pythonProcess = builder.start();
+        	clientServer = createClientServer();
+        	pythonProcess = startPythonProcess(clientServer, "C:\\Instrument\\Apps\\Python3\\python.exe", "/defined_actions/action_loader.py");
             new Thread(listenToErrors).start();
             
             ConfigWrapper configWrapper = (ConfigWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });
@@ -86,19 +100,19 @@ public class ConfigLoader extends ModelObject {
 		return availableConfigs;
 	}
 
-	public void setConfig(Config action) {
-		selectedConfig = action;
-		ArrayList<ActionParameter> parameters = action.getParameters().stream()
+	public void setConfig(Config config) {
+		ArrayList<ActionParameter> parameters = config.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
 		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
-	}
-	
-	public ArrayList<ActionParameter> getParameters() {
-		return parameters;
+		firePropertyChange("config", this.selectedConfig, this.selectedConfig = config);
 	}
 	
 	public Config getConfig() {
 		return selectedConfig;
+	}
+	
+	public ArrayList<ActionParameter> getParameters() {
+		return parameters;
 	}
 	
 	public void cleanUp() {

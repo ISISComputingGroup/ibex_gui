@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.util.ArrayList;
-
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -29,9 +27,8 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -104,14 +101,14 @@ public class ScriptGeneratorView {
 		    public String getText(Object element) {
 		        if (element instanceof Config) {
 		        	Config actionWrapper = (Config) element;
-		            return actionWrapper.getInstrument();
+		            return actionWrapper.getName();
 		        }
 		        return super.getText(element);
 		    }
 		});
 		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		configSelector.setInput(configLoader.getAvailableConfigs());
-		configSelector.getCombo().select(0);
+		configSelector.setSelection(new StructuredSelection(configLoader.getConfig()));
 		
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -223,10 +220,9 @@ public class ScriptGeneratorView {
 //		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
 //				BeanProperties.value("iteratedNumber").observe(toyModel));
 		
-		// Can't traditionally bind due to py4j weirdness
-		configSelector.addSelectionChangedListener(evt ->
-				configLoader.setConfig((Config) configSelector.getStructuredSelection().getFirstElement()));
-		
+		bindingContext.bindValue(ViewersObservables.observeSingleSelection(configSelector), 
+				BeanProperties.value("config").observe(configLoader));
+
 		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
         DISPLAY.asyncExec(() -> {
                 this.table.setRows(this.scriptGeneratorTable.getActions());

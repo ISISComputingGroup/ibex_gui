@@ -11,12 +11,12 @@ class Config(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
 
-    def __init__(self, instrument: str, action: Action):
+    def __init__(self, name: str, action: Action):
         self.action = action
-        self.instrument = instrument
+        self.name = name
 
-    def getInstrument(self) -> str:
-        return self.instrument
+    def getName(self) -> str:
+        return self.name
 
     def getParameters(self):
         arguments = inspect.getfullargspec(self.action.run).annotations
@@ -28,6 +28,9 @@ class Config(object):
     def parametersValid(self, list_of_arguments):
         return self.action.parameters_valid(*list_of_arguments)
 
+    def equals(self, other_config):
+        return other_config.getName() == self.name
+    
 
 class ConfigWrapper(object):
     class Java:
