@@ -20,9 +20,9 @@ public interface Config {
 	/**
 	 * Performs the check that the arguments are valid.
 	 * @param arguments The current argument values.
-	 * @return True if the current values are valid.
+	 * @return The error if the arguments are not valid.
 	 */
-	public Boolean parametersValid(Object... arguments);
+	public String parametersValid(Object... arguments);
 	
 	/**
 	 * @return The name of this configuration.
