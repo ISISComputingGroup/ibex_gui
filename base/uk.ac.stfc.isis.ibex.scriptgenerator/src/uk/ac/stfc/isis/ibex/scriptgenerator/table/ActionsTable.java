@@ -9,7 +9,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
- * This class holds the script actions and their positions in the script
+ * This class holds the script actions and their positions in the script.
  *
  */
 public class ActionsTable extends ModelObject {
@@ -19,14 +19,14 @@ public class ActionsTable extends ModelObject {
 	
 	/**
 	 * 
-	 * @return List of actions in the ActionsTable
+	 * @return List of actions in the ActionsTable.
 	 */
 	public List<ScriptGeneratorAction> getActions() {
 		return actions;
 	}
 
 	/**
-	 * The actions table holds each action and its parameter values in an ordered list
+	 * The actions table holds each action and its parameter values in an ordered list.
 	 * @param actionParameters
 	 */
 	public ActionsTable(List<ActionParameter> actionParameters) {
@@ -34,16 +34,16 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Sets the parameters for the actions represented in this table
+	 * Sets the parameters for the actions represented in this table.
 	 * @param actionParameters
-	 * 		  		The list of parameters used to define each action
+	 * 		  		The list of parameters used to define each action.
 	 */
 	public void setActionParameters(List<ActionParameter> actionParameters) {
 		firePropertyChange("actionParameters", this.actionParameters, this.actionParameters = actionParameters);
 	}
 	
 	/**
-	 * @return The action parameters used in this table
+	 * @return The action parameters used in this table.
 	 * 
 	 */
 	public List<ActionParameter> getActionParameters() {
@@ -51,7 +51,7 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Adds a new action with default parameters to the list of actions
+	 * Adds a new action with default parameters to the list of actions.
 	 */
 	public void addEmptyAction() {
 		var parametersMap = new HashMap<String, String>();
@@ -68,9 +68,9 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Removes an action from the list in specified location
+	 * Removes an action from the list in specified location.
 	 * @param index
-	 * 		  	The index to remove from the actions list
+	 * 		  	The index to remove from the actions list.
 	 */
 	public void deleteAction(int index) {
 		this.actions.remove(index);
@@ -78,9 +78,9 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Duplicates an action in the list at specified location
+	 * Duplicates an action in the list at specified location.
 	 * @param index
-	 * 			The index of the action to duplicate
+	 * 			The index of the action to duplicate.
 	 */
 	public void duplicateAction(int index) {
 		var actionToDuplicate = actions.get(index);
@@ -93,11 +93,11 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Moves action to a new position in the table
+	 * Moves action to a new position in the table.
 	 * @param oldIndex
-	 * 			The current index of the action to be moved
+	 * 			The current index of the action to be moved.
 	 * @param newIndex
-	 * 			The index to move the action to, if valid
+	 * 			The index to move the action to, if valid.
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
 		if (newIndex < 0) {

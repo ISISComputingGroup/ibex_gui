@@ -65,9 +65,9 @@ public class ScriptGeneratorView {
 	}
 	
 	/**
-	 * A basic framework to hold the toy interface.
+	 * Container for the UI objects.
 	 * 
-	 * @param parent the parent composite
+	 * @param parent the parent composite.
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
@@ -89,9 +89,6 @@ public class ScriptGeneratorView {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		scriptGeneratorModel.setActionParameters(actionParameters);
-		
-		//table.addSelectionChangedListener(e -> queueScriptViewModel.setSelectedScript(queuedScriptsViewer.firstSelectedRow()));
-		//addDragAndDrop(queuedScriptsViewer.viewer());
         
 		Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
@@ -168,28 +165,6 @@ public class ScriptGeneratorView {
 			}
 		});
 		
-        //extra under here
-		
-//		Group grpTable = new Group(parent, SWT.NULL);
-//		grpTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-//		grpTable.setLayout(new RowLayout(SWT.VERTICAL));
-//		grpTable.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_DARK_RED));
-
-//		this.lblOrder = new Label(parent, SWT.NONE);
-//		this.lblOrder.setText("test");
-//		
-//		
-//		Button button = new Button(grpTable, SWT.NONE);
-//		button.setText("Press me!");
-		
-		//Button btnRowUp = createMoveRowButton(btnsComposite, "move_up.png", "up");
-		
-
-		
-
-
-		
-
         bind();
 		
         scriptGeneratorModel.addEmptyAction();
@@ -197,8 +172,6 @@ public class ScriptGeneratorView {
 
 	private void bind() {
 		bindingContext = new DataBindingContext();
-//		bindingContext.bindValue(WidgetProperties.text().observe(lblOrder), 
-//				BeanProperties.value("iteratedNumber").observe(toyModel));
 		
 		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
         DISPLAY.asyncExec(() -> {

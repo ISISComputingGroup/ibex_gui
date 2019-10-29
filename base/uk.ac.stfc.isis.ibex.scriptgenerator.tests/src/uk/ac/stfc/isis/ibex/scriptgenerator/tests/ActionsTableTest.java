@@ -17,7 +17,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * 
- * This class tests the ActionsTable class, which holds the data for the script generator
+ * This class tests the ActionsTable class, which holds the data for the script generator.
  *
  */
 public class ActionsTableTest {
