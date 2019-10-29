@@ -86,8 +86,8 @@ public class ConfigLoader extends ModelObject {
 	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath) throws IOException {
         Integer javaPort = clientServer.getJavaServer().getPort();
         Integer pythonPort = clientServer.getPythonClient().getPort();
-        String absoluteFilePath = relativePathToFull(filePath);
-        ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(), pythonPort.toString());
+        ProcessBuilder builder = new ProcessBuilder().command(relativePathToFull(pythonPath), 
+        		relativePathToFull(filePath), javaPort.toString(), pythonPort.toString());
 		return builder.start();
 	}
 	
