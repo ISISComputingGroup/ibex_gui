@@ -84,8 +84,30 @@ public class ActionsTableTest {
 		assertEquals(table.getActions().indexOf(secondAction), 0);
 	}
 	
-//	public void test_GIVEN_selected_action_is_not_at_bottom_of_list_WHEN_action_moved_up_THEN_action_moves_up() {
-//		table.setActionParameters(actionParameters);
-//	}
-//	
+	@Test
+	public void test_GIVEN_action_at_top_of_table_WHEN_action_moved_up_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var firstAction = table.getActions().get(0);
+		
+		table.moveAction(0, -1);
+		
+		assertEquals(table.getActions().indexOf(firstAction), 0);
+	}
+	
+	@Test
+	public void test_GIVEN_action_at_bottom_of_table_WHEN_action_moved_down_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var secondAction = table.getActions().get(1);
+		
+		table.moveAction(1, 2);
+		
+		assertEquals(table.getActions().indexOf(secondAction), 1);
+	}
+
 }
