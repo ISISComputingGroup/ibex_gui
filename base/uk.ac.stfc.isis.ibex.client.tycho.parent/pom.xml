@@ -240,7 +240,9 @@
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 		-->
-		
+		<module>
+			../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests
+		</module>
 	</modules>
 </project>
 
