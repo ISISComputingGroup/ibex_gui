@@ -97,7 +97,7 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader() {
         try {
         	clientServer = createClientServer();
-        	pythonProcess = startPythonProcess(clientServer, "C:\\Instrument\\Apps\\Python3\\python.exe", "/defined_actions/action_loader.py");
+        	pythonProcess = startPythonProcess(clientServer, "/python/python.exe", "/defined_actions/action_loader.py");
             new Thread(listenToErrors).start();
             
             ConfigWrapper configWrapper = (ConfigWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });

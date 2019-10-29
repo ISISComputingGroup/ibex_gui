@@ -13,6 +13,12 @@ SET "JAVA_HOME=%~dp0\jdk"
 call python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python
+if not exist %PYCOPYPATH% (
+    mklink /D %PYCOPYPATH% %PYTHON3DIR%
+    if %errorlevel% neq 0 exit /b %errorlevel%
+)
+
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify
