@@ -15,20 +15,19 @@ def copy_pvs(this_display, this_pvs):
         None
     """
     # Make sure this has been triggered, then reset the trigger
+    print 
     actioned = PVUtil.getDouble(this_pvs[0]) == 1
     this_pvs[0].setValue(0)
     if actioned:
-        these_pvs = iter(this_pvs)
         # Skip the trigger PV
-        these_pvs.next()
+        # Copying every other PV to the next one
+        this_pvs[2].setValue(PVUtil.getDouble(this_pvs[1]))
+        this_pvs[4].setValue(PVUtil.getDouble(this_pvs[3]))
+        this_pvs[6].setValue(PVUtil.getDouble(this_pvs[5]))
+        this_pvs[8].setValue(PVUtil.getDouble(this_pvs[7]))
 
-        # Iterate through PVs, copying every other PV to the next one
-        for value in these_pvs:
-            these_pvs.next().setValue(PVUtil.getDouble(value))
-    
 
-if __name__ == "__main__":
-    # PVs
-    # pv[0] = loc://GEM:JAWS:FWD:TO:BEAMSCRAPER, triggered
-    # pv[1-16] = $(P)GEMJAWSET:SAMPLE:HGAP:SP,$(P)MOT:JAWS6:HGAP:SP
-    copy_pvs(display, pvs)
+# PVs
+# pv[0] = loc://GEM:JAWS:FWD:TO:BEAMSCRAPER, triggered
+# pv[1-16] = $(P)GEMJAWSET:SAMPLE:HGAP:SP,$(P)MOT:JAWS6:HGAP:SP
+copy_pvs(display, pvs)
