@@ -95,7 +95,10 @@ public class ScriptGeneratorView {
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
         Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionUp(table.getSelectionIndex()));
+        
         Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionDown(table.getSelectionIndex()));
         
         
         Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
@@ -109,67 +112,24 @@ public class ScriptGeneratorView {
         btnInsertAction.setText("Add Action");
         btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		btnInsertAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				scriptGeneratorModel.addEmptyAction();
-			}
-		});
+        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorModel.addEmptyAction());
         
         
         final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDeleteAction.setText("Delete Action");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-		btnDeleteAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.deleteAction(index);
-				}
-			}
-		});
+        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorModel.deleteAction(table.getSelectionIndex()));
 
         final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		btnDuplicateAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.duplicateAction(index);
-				}
-			}
-		});
-
-		btnMoveActionUp.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.moveActionUp(index);
-				}
-			}
-		});
-		
-		btnMoveActionDown.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.moveActionDown(index);
-				}
-			}
-		});
+        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
 		
         bind();
 		
         scriptGeneratorModel.addEmptyAction();
 	}
-
+	
 	private void bind() {
 		bindingContext = new DataBindingContext();
 		
