@@ -15,7 +15,6 @@ def copy_pvs(this_display, this_pvs):
         None
     """
     # Make sure this has been triggered, then reset the trigger
-    print 
     actioned = PVUtil.getDouble(this_pvs[0]) == 1
     this_pvs[0].setValue(0)
     if actioned:
