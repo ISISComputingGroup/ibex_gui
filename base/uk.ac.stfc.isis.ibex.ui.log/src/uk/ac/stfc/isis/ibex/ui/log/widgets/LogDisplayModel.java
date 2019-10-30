@@ -72,6 +72,9 @@ public class LogDisplayModel extends ModelObject
      */
 	private boolean usingSearch;
 	
+	private Calendar fromDateTime, toDateTime;
+	
+	private boolean errorVisibility;
     /**
      * The constructor.
      * 
@@ -262,6 +265,32 @@ public class LogDisplayModel extends ModelObject
 		firePropertyChange("message", null, liveMessageCache);
 		firePropertyChange("displayMode", null, latestSearchResults);
 	}
+	
+	/**
+	 * sets start date and time
+	 * 
+	 * @param fromDate sets start date
+	 * @param fromTime set start time
+	 */
+	public void setInitialFromDateTime(Calendar fromDate, Calendar fromTime) {
+		
+		this.fromDateTime = fromDate;
+		this.fromDateTime.setTime(fromTime.getTime());
+			
+	}
+
+	/**
+	 * sets end date and time
+	 * 
+	 * @param toDate end date
+	 * @param toTime end time
+	 */
+	public void setInitialToDateTime(Calendar toDate, Calendar toTime) {
+		
+		this.toDateTime = toDate;
+		this.toDateTime.setTime(toTime.getTime());
+	}
+
 
     /**
      * Rerun the update task for the live message cache.
@@ -270,5 +299,74 @@ public class LogDisplayModel extends ModelObject
     public void reQueueTask() {
         firePropertyChange("message", null, liveMessageCache);
     }
-
+    
+    /**
+     * Set new from date
+     * @param fromDate new from date
+     */
+    public void setFromDate(Calendar fromDate) {
+    	this.fromDateTime.set(fromDate.get(Calendar.YEAR), fromDate.get(Calendar.MONTH), fromDate.get(Calendar.DAY_OF_MONTH));
+    	// if date and time is valid then error visibility should be the opposite
+    	setErrorVisibility(!validateDateAndTime());
+    }
+   
+    
+    /**
+     * sets new from time
+     * @param fromTime new from time
+     */
+    public void setFromTime(Calendar fromTime) {
+    	this.fromDateTime.setTime(fromTime.getTime());
+    	// if date and time is valid then error visibility should be the opposite
+    	setErrorVisibility(!validateDateAndTime());
+    }
+    
+    /**
+     * set new to time
+     * @param toTime new to time
+     */
+    public void setToTime(Calendar toTime) {
+    	this.toDateTime.setTime(toTime.getTime());
+    	// if date and time is valid then error visibility should be the opposite
+    	setErrorVisibility(!validateDateAndTime());
+    }
+    
+    /**
+     * set new to date
+     * @param toDate new to Date
+     */
+    public void setToDate(Calendar toDate) {
+    	this.toDateTime.set(toDate.get(Calendar.YEAR), toDate.get(Calendar.MONTH), toDate.get(Calendar.DAY_OF_MONTH));
+    	// if date and time is valid then error visibility should be the opposite
+    	setErrorVisibility(!validateDateAndTime());
+    }
+    
+    /**
+     * sets the visibility of error on the screen
+     * @param isVisible if error should be visibile or not
+     */
+    public void setErrorVisibility(boolean isVisible) {	
+    	firePropertyChange("errorVisibility", this.errorVisibility, this.errorVisibility = isVisible);
+    }
+    
+    /**
+     * Checks if the date entered are on the correct order in the date fields
+     * @return true if dates are entered right way
+     */
+    public boolean validateDateAndTime() {
+    	boolean isCorrect = false;
+    	if (toDateTime.compareTo(fromDateTime) >= 0) {
+    		isCorrect = true;
+    	}
+		return isCorrect;
+	
+    }
+    
+    /**
+     * return the visibility of error message
+     * @return true if error message needs to be visible
+     */
+    public boolean geterrorVisibility() {
+    	return errorVisibility;
+    }
 }

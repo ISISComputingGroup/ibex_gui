@@ -4,16 +4,11 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Python27
-set PYTHON_HOME=C:\Python27
-set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
-set GENIEPYTHONDIR=c:\Installers\genie_python
+set PYTHON=C:\Instrument\Apps\Python
+set PYTHON_HOME=C:\Instrument\Apps\Python
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
-
-REM Find latest Java 7 version
-for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
@@ -121,6 +116,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-REM build MSI kit
-REM call build_msi.bat %INSTALLDIR%

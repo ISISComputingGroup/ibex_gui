@@ -21,27 +21,42 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import uk.ac.stfc.isis.ibex.epics.observing.StringWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
+import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class ExperimentDetailsViewModel {
+public class ExperimentDetailsViewModel extends ModelObject {
 
     private static ExperimentDetailsViewModel instance;
 	
-	public final ExperimentDetailsModel model = ExperimentDetails.getInstance().model();
+	public final ObservableExperimentDetailsModel model;
 	
-	public final StringWritableObservableAdapter rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
+	public final StringWritableObservableAdapter rbNumber;
 	
-    private ExperimentDetailsViewModel() {
+    public ExperimentDetailsViewModel(ObservableExperimentDetailsModel model) {
         instance = this;
+        this.model = model; 
+        
+        rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
+        model.addPropertyChangeListener("userDetails", event -> {
+            setUserDetailsWarningVisible();
+        });
     }
 
-    // TODO: Don't use a singleton here split this into three separate view
-    // models instead.
     public static ExperimentDetailsViewModel getInstance() {
         if (instance == null) {
-            instance = new ExperimentDetailsViewModel();
+            instance = new ExperimentDetailsViewModel(ExperimentDetails.getInstance().model());
         }
         return instance;
 	}
-	
+    
+    /**
+     * Fires property change on the UserDetailsWarningVisible property of this view model.
+     */
+    public void setUserDetailsWarningVisible() {
+        firePropertyChange("userDetailsWarningVisible", !model.isUserDetailsEmpty(), model.isUserDetailsEmpty());
+    }
+    
+    public boolean getUserDetailsWarningVisible() {
+        return model.isUserDetailsEmpty();
+    }
 }
