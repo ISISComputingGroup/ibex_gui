@@ -62,8 +62,7 @@ public class ActionsTable extends ModelObject {
 		
 		var newAction = new ScriptGeneratorAction(parametersMap);
 		
-		this.actions.add(newAction);
-		firePropertyChange("actions", null, null);
+		firePropertyChange("actions", actions, actions.add(newAction));
 	}
 
 	/**
@@ -73,8 +72,7 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void deleteAction(int index) {
 		if (isValidIndex(index)) {
-			this.actions.remove(index);
-			firePropertyChange("actions", null, null);
+			firePropertyChange("actions", actions, actions.remove(index));
 		}
 	}
 
@@ -87,10 +85,13 @@ public class ActionsTable extends ModelObject {
 		if (isValidIndex(index)) {
 			var actionToDuplicate = actions.get(index);
 			var newAction = new ScriptGeneratorAction(actionToDuplicate);
+			var newActions = new ArrayList<ScriptGeneratorAction>();
 			
-			this.actions.add(index+1, newAction);
+			newActions.addAll(actions);
 			
-			firePropertyChange("actions", null, null);
+			newActions.add(index+1, newAction);
+			
+			firePropertyChange("actions", actions, this.actions = newActions);
 		}
 	}
 
@@ -102,15 +103,19 @@ public class ActionsTable extends ModelObject {
 	 * 			The index to move the action to, if valid.
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
+		var newActions = new ArrayList<ScriptGeneratorAction>();
+		
+		newActions.addAll(actions);
+		
 		if (newIndex < 0) {
 			newIndex = 0;
 		} else if (newIndex >= this.actions.size()) {
 			newIndex = this.actions.size() - 1;
 		}
 		
-		Collections.swap(this.actions, oldIndex, newIndex);
+		Collections.swap(newActions, oldIndex, newIndex);
 	
-		firePropertyChange("actions", null, null);
+		firePropertyChange("actions", actions, actions = newActions);
 	}
 	
 	/**
