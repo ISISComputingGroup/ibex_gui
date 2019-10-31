@@ -57,14 +57,12 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<String, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (ActionParameter actionParameter: this.actionParameters) {
-			// TODO: Add a sensible default for the action parameter
 			parametersMap.put(actionParameter.getName(), actionParameter.getName()+Integer.toString(actions.size()));
 		}
 		
 		var newAction = new ScriptGeneratorAction(parametersMap);
 		
-		this.actions.add(newAction);
-		firePropertyChange("actions", null, null);
+		firePropertyChange("actions", actions, actions.add(newAction));
 	}
 
 	/**
@@ -73,8 +71,9 @@ public class ActionsTable extends ModelObject {
 	 * 		  	The index to remove from the actions list.
 	 */
 	public void deleteAction(int index) {
-		this.actions.remove(index);
-		firePropertyChange("actions", null, null);
+		if (isValidIndex(index)) {
+			firePropertyChange("actions", actions, actions.remove(index));
+		}
 	}
 
 	/**
@@ -83,13 +82,17 @@ public class ActionsTable extends ModelObject {
 	 * 			The index of the action to duplicate.
 	 */
 	public void duplicateAction(int index) {
-		var actionToDuplicate = actions.get(index);
-		var newAction = new ScriptGeneratorAction(actionToDuplicate);
-		
-		this.actions.add(index+1, newAction);
-		
-		firePropertyChange("actions", null, null);
-		
+		if (isValidIndex(index)) {
+			var actionToDuplicate = actions.get(index);
+			var newAction = new ScriptGeneratorAction(actionToDuplicate);
+			var newActions = new ArrayList<ScriptGeneratorAction>();
+			
+			newActions.addAll(actions);
+			
+			newActions.add(index+1, newAction);
+			
+			firePropertyChange("actions", actions, this.actions = newActions);
+		}
 	}
 
 	/**
@@ -100,15 +103,19 @@ public class ActionsTable extends ModelObject {
 	 * 			The index to move the action to, if valid.
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
+		var newActions = new ArrayList<ScriptGeneratorAction>();
+		
+		newActions.addAll(actions);
+		
 		if (newIndex < 0) {
 			newIndex = 0;
 		} else if (newIndex >= this.actions.size()) {
 			newIndex = this.actions.size() - 1;
 		}
 		
-		Collections.swap(this.actions, oldIndex, newIndex);
+		Collections.swap(newActions, oldIndex, newIndex);
 	
-		firePropertyChange("actions", null, null);
+		firePropertyChange("actions", actions, actions = newActions);
 	}
 	
 	/**
@@ -116,5 +123,23 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void clearActions() {
 		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+	}
+	/**
+	 * Checks if the supplied index is a valid position in the table.
+	 * @param index
+	 * 			The index to test.
+	 * @return isValid
+	 * 			true if index is a valid position in the table.
+	 */
+	private Boolean isValidIndex(int index) {
+		Boolean isValid;
+		if (index >= 0 && index <= this.actions.size()) {
+			isValid = true;
+		} else {
+			isValid = false;
+		}
+		
+		return isValid;
+		
 	}
 }

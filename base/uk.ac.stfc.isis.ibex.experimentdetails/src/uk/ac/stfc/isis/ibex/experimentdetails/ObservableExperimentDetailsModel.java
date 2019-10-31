@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.experimentdetails.internal;
+package uk.ac.stfc.isis.ibex.experimentdetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,15 +26,15 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetailsModel;
-import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
-import uk.ac.stfc.isis.ibex.experimentdetails.Role;
-import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
+import uk.ac.stfc.isis.ibex.experimentdetails.internal.CollectionObserver;
+import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
+import uk.ac.stfc.isis.ibex.experimentdetails.internal.UserDetailsConverter;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * A model for holding the current experiment details that is linked to a set of observables.
  */
-public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
+public class ObservableExperimentDetailsModel extends ModelObject {
 	
 	private List<Parameter> sampleParameters = new ArrayList<>();
 	private List<Parameter> beamParameters = new ArrayList<>();
@@ -78,47 +78,70 @@ public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
 		this.variables = variables;
 	}
 
-	@Override
-	public Collection<Parameter> getSampleParameters() {
+    /**
+     * @return the sample parameters
+     */
+    public Collection<Parameter> getSampleParameters() {
 		return new ArrayList<>(sampleParameters);
 	}
 
-	@Override
+	/**
+     * Sets the sample parameters.
+     * 
+     * @param sampleParameters the sample parameters to set.
+     */
 	protected void setSampleParameters(Collection<Parameter> sampleParameters) {
 		firePropertyChange("sampleParameters", this.sampleParameters, this.sampleParameters = new ArrayList<>(sampleParameters));
 	}
 
-	@Override
+	/**
+     * @return the beam parameters
+     */
 	public Collection<Parameter> getBeamParameters() {
 		return new ArrayList<>(beamParameters);
 	}
 
-	@Override
+	/**
+     * Sets the beam parameters.
+     * 
+     * @param beamParameters the beam parameters to set.
+     */
 	protected void setBeamParameters(Collection<Parameter> beamParameters) {
 		firePropertyChange("beamParameters", this.beamParameters, this.beamParameters = new ArrayList<>(beamParameters));
 	}
 
-	@Override
+	/**
+     * @return An observable that tracks the RB number
+     */
     public ClosableObservable<String> rbNumber() {
 		return variables.rbNumber;
 	}
 
-	@Override
+	/**
+     * @return A writable for setting the RB number
+     */
 	public Writable<String> rbNumberSetter() {
 		return variables.rbNumberSetter;
 	}
 
-	@Override
+	/**
+     * @return The current user details in the model
+     */
 	public Collection<UserDetails> getUserDetails() {
 		return new ArrayList<>(userDetails);
 	}
 	
-	@Override
+	/**
+     * Set the user details for the model.
+     * @param userDetails The new user details.
+     */
 	public void setUserDetails(Collection<UserDetails> values) {
 		firePropertyChange("userDetails", this.userDetails, this.userDetails = new ArrayList<>(values));
 	}
 
-	@Override
+	/**
+     * Send user details on to the DAE.
+     */
 	public void sendUserDetails() {
 		variables.userDetailsSetter.uncheckedWrite(UserDetailsConverter.combineSameUsers(userDetails).toArray(new UserDetails[0]));
 	}
@@ -140,22 +163,38 @@ public class ObservableExperimentDetailsModel extends ExperimentDetailsModel {
 		return defaultName;
 	}
 	
-	@Override
+	/**
+     * Add a new user to the model.
+     * The user will be added with default name etc.
+     */
 	public void addDefaultUser() {
 		ArrayList<UserDetails> newUsers = new ArrayList<>(userDetails);		
 		newUsers.add(new UserDetails(getDefaultUser(), defaultOrg, Role.USER));
 		setUserDetails(newUsers);
 	}
-
-	@Override
-	public void clearUserDetails() {
-		setUserDetails(new ArrayList<>());
-	}
 	
-	@Override
+	/**
+     * Remove a specific group of users from the model.
+     * @param toRemove The users to remove.
+     */
 	public void removeUsers(List<UserDetails> toRemove) {
 		ArrayList<UserDetails> newUsers = new ArrayList<>(userDetails);
 		newUsers.removeAll(toRemove);
 		setUserDetails(newUsers);
 	}
+	
+	/**
+     * Remove all user details from the model.
+     */
+    public void clearUserDetails() {
+        setUserDetails(new ArrayList<>());
+    }
+    
+	/**
+     * Checks if there are any user details in the model.
+     * @return True if there aren't user details in the model, false if there are.
+     */
+    public boolean isUserDetailsEmpty() {
+        return userDetails.isEmpty();
+    }
 }

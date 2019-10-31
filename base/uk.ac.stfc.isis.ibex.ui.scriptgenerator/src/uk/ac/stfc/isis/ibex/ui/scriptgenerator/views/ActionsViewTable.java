@@ -68,6 +68,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     }
 
     
+    /**
+     * Adds a parameter to this actions table.
+     */
     @Override
     protected void addColumns() {    	
         for (ActionParameter actionParameter: actionsTable.getActionParameters()) {
@@ -78,7 +81,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
 						@Override
 						protected String stringFromRow(ScriptGeneratorAction row) {
-							// TODO Auto-generated method stub
 							return row.getActionParameterValue(columnName);
 						}
 						
@@ -98,16 +100,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	        });	
         }
 	}
-
-	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
-        SelectionAdapter selectionAdapter = new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            }
-        };
-        return selectionAdapter;
-    }
 	
+    /**
+     * Using a null comparator here stops the columns getting reordered in the UI.
+     */
 	@Override
 	protected ColumnComparator<ScriptGeneratorAction> comparator() {
 		return new NullComparator<>();
