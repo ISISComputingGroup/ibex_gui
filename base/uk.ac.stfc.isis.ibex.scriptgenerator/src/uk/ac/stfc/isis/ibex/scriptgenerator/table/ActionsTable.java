@@ -126,15 +126,7 @@ public class ActionsTable extends ModelObject {
 	 * 			true if index is a valid position in the table.
 	 */
 	private Boolean isValidIndex(int index) {
-		Boolean isValid;
-		if (index >= 0 && index <= this.actions.size()) {
-			isValid = true;
-		} else {
-			isValid = false;
-		}
-		
-		return isValid;
-		
+		return index >= 0 && index <= this.actions.size();
 	}
 	
 	
