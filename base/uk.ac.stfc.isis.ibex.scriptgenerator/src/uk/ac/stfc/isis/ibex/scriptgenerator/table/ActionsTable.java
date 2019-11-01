@@ -103,19 +103,21 @@ public class ActionsTable extends ModelObject {
 	 * 			The index to move the action to, if valid.
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
-		var newActions = new ArrayList<ScriptGeneratorAction>();
+		if (isValidIndex(oldIndex)) {
+			var newActions = new ArrayList<ScriptGeneratorAction>();
+			
+			newActions.addAll(actions);
+			
+			if (newIndex < 0) {
+				newIndex = 0;
+			} else if (newIndex >= this.actions.size()) {
+				newIndex = this.actions.size() - 1;
+			}
+			
+			Collections.swap(newActions, oldIndex, newIndex);
 		
-		newActions.addAll(actions);
-		
-		if (newIndex < 0) {
-			newIndex = 0;
-		} else if (newIndex >= this.actions.size()) {
-			newIndex = this.actions.size() - 1;
+			firePropertyChange("actions", actions, actions = newActions);
 		}
-		
-		Collections.swap(newActions, oldIndex, newIndex);
-	
-		firePropertyChange("actions", actions, actions = newActions);
 	}
 	
 	/**
@@ -132,14 +134,6 @@ public class ActionsTable extends ModelObject {
 	 * 			true if index is a valid position in the table.
 	 */
 	private Boolean isValidIndex(int index) {
-		Boolean isValid;
-		if (index >= 0 && index <= this.actions.size()) {
-			isValid = true;
-		} else {
-			isValid = false;
-		}
-		
-		return isValid;
-		
+		return index >= 0 && index <= this.actions.size();
 	}
 }
