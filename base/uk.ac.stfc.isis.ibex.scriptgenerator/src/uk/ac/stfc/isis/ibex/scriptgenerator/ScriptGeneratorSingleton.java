@@ -6,7 +6,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
- * Acts as a permanent reference to the ActionsTable
+ * Acts as a permanent reference to the ActionsTable.
  *
  */
 public class ScriptGeneratorSingleton extends ModelObject {

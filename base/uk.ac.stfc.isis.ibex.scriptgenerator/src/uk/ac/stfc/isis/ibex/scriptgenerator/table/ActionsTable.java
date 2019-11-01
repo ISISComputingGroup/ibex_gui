@@ -103,19 +103,21 @@ public class ActionsTable extends ModelObject {
 	 * 			The index to move the action to, if valid.
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
-		var newActions = new ArrayList<ScriptGeneratorAction>();
+		if (isValidIndex(oldIndex)) {
+			var newActions = new ArrayList<ScriptGeneratorAction>();
+			
+			newActions.addAll(actions);
+			
+			if (newIndex < 0) {
+				newIndex = 0;
+			} else if (newIndex >= this.actions.size()) {
+				newIndex = this.actions.size() - 1;
+			}
+			
+			Collections.swap(newActions, oldIndex, newIndex);
 		
-		newActions.addAll(actions);
-		
-		if (newIndex < 0) {
-			newIndex = 0;
-		} else if (newIndex >= this.actions.size()) {
-			newIndex = this.actions.size() - 1;
+			firePropertyChange("actions", actions, actions = newActions);
 		}
-		
-		Collections.swap(newActions, oldIndex, newIndex);
-	
-		firePropertyChange("actions", actions, actions = newActions);
 	}
 	
 	/**
