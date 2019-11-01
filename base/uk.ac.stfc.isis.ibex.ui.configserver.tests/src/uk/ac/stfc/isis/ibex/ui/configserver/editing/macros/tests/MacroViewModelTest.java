@@ -98,7 +98,7 @@ public class MacroViewModelTest {
         
         boolean useDefault = macroViewModel.getUseDefault();
         
-        assertFalse(useDefault);
+        assertTrue(useDefault);
     }
     
     @Test
@@ -129,7 +129,7 @@ public class MacroViewModelTest {
         
         macroViewModel.setUseDefault(true);
         
-        assertEquals(null, m.getValue());
+        assertEquals("", m.getValue());
     }
     
     @Test
@@ -160,7 +160,7 @@ public class MacroViewModelTest {
         
         macroViewModel.setUseDefault(true);
         
-        assertEquals(null, m.getValue());
+        assertEquals("", m.getValue());
     }
     
     @Test
@@ -170,6 +170,6 @@ public class MacroViewModelTest {
         
         macroViewModel.setUseDefault(true);
         
-        assertEquals(null, m.getValue());
+        assertEquals("", m.getValue());
     }
 }

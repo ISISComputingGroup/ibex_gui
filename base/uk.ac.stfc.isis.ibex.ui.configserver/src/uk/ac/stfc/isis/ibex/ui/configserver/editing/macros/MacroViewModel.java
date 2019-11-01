@@ -11,37 +11,37 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class MacroViewModel extends ModelObject {
 	private final Macro macro;
-	
+
 	/**
 	 * Whether the default value should be used or not.
 	 */
 	private boolean useDefault;
-	
+
 	/**
 	 * Constructor. Sets the use default based on provided macro.
+	 * 
 	 * @param macro The underlying macro for this view model.
 	 */
 	public MacroViewModel(Macro macro) {
 		this.macro = macro;
 		macro.addPropertyChangeListener("value", passThrough());
-
-		setUseDefault(macro.getValue() == null);
+		setUseDefault((macro.getValue() == null) || (macro.getValue().equals("")));
 	}
-	
-	 /**
-     * @return macro description
-     */
+
+	/**
+	 * @return macro description
+	 */
 	public String getDescription() {
 		return macro.getDescription();
 	}
-	
+
 	/**
 	 * @return macro name
 	 */
 	public String getName() {
 		return macro.getName();
 	}
-	
+
 	/**
 	 * Set Macro value.
 	 * 
@@ -50,57 +50,58 @@ public class MacroViewModel extends ModelObject {
 	public void setValue(String value) {
 		macro.setValue(value);
 	}
-	
+
 	/**
-     * @return macro regex pattern
-     */
+	 * @return macro regex pattern
+	 */
 	public String getPattern() {
 		return macro.getPattern();
 	}
 
-    /**
-     * @return whether the default value should be used or not
-     */
-    public boolean getUseDefault() {
-        return useDefault;
-    }
+	/**
+	 * @return whether the default value should be used or not
+	 */
+	public boolean getUseDefault() {
+		return useDefault;
+	}
 
-    /**
-     * Sets whether the default value is being used. 
-     * 
-     * The underlying macro value must be set to null if the default is being used.
-     * If we were using the default and now we're not set the value to empty string.
-     * 
-     * @param useDefault whether the default value should be used or not
-     */
-    public void setUseDefault(boolean useDefault) {
-    	if (useDefault) {
-    		macro.setValue(null);
-    	} else if (this.useDefault) {
-    		macro.setValue("");
-    	}
-        firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
-    }
-	
-    /**
-     * @return default macro value for displaying to the user
-     */
-    public String getDisplayDefault() {
-    	HasDefault hasDefault = macro.getHasDefault();
-    	String macroDefaultValue = macro.getDefaultValue();
-        if (hasDefault == HasDefault.YES) {
-            return macroDefaultValue.equals("") ? "(default is the empty string)" : macroDefaultValue;
-        } else if (hasDefault == HasDefault.NO) {
-            return "(no default)";
-        } else {
-            return "(default unknown)";
-        }
-    }
-	
+	/**
+	 * 
+	 * Sets whether the default value should be used or not
+	 * If the value is null we now need to set it to empty string or else it will not be
+	 * sent over to the block server.
+	 * @param useDefault whether the default value should be used or not
+	 */
+	public void setUseDefault(boolean useDefault) {
+		if (useDefault) {
+			macro.setValue("");
+		}
+		firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
+	}
+
+	/**
+	 * @return default macro value for displaying to the user
+	 */
+	public String getDisplayDefault() {
+		HasDefault hasDefault = macro.getHasDefault();
+		String macroDefaultValue = macro.getDefaultValue();
+		if (hasDefault == HasDefault.YES) {
+			return macroDefaultValue.equals("") ? "(default is the empty string)" : macroDefaultValue;
+		} else if (hasDefault == HasDefault.NO) {
+			return "(no default)";
+		} else {
+			return "(default unknown)";
+		}
+	}
+
 	/**
 	 * @return macro value for displaying to the user
 	 */
 	public String getDisplayValue() {
-	    return Optional.ofNullable(macro.getValue()).orElse("(default)");
+		String macroDispalyVal = "(default)";
+		if (macro.getValue() != "") {
+			macroDispalyVal = macro.getValue();
+		}
+		return macroDispalyVal;
 	}
 }
