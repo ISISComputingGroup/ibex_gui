@@ -23,18 +23,12 @@ import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -49,7 +43,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ScriptGeneratorView {
 
 	private ScriptGeneratorSingleton scriptGeneratorModel;
-	private DataBindingContext bindingContext;
 	private ActionsTable scriptGeneratorTable;
 	private ActionsViewTable table;
 	private static final Display DISPLAY = Display.getCurrent();
@@ -131,7 +124,6 @@ public class ScriptGeneratorView {
 	}
 	
 	private void bind() {
-		bindingContext = new DataBindingContext();
 		
 		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
         DISPLAY.asyncExec(() -> {
