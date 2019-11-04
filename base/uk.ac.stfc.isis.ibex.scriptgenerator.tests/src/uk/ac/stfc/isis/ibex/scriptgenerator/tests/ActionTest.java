@@ -7,18 +7,19 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ActionTest {
 
 	private ScriptGeneratorAction action;
 	
-	private String parameterOneName = "parameter one";
-	private String parameterTwoName = "parameter two";
+	private ActionParameter parameterOneName = new ActionParameter("parameter one");
+	private ActionParameter parameterTwoName = new ActionParameter("parameter two");
 	
 	@Before
 	public void setUp() {
-		var testValues = new HashMap<String, String>();
+		var testValues = new HashMap<ActionParameter, String>();
 		
 		testValues.put(parameterOneName, "1");
 		testValues.put(parameterTwoName, "12.3");
