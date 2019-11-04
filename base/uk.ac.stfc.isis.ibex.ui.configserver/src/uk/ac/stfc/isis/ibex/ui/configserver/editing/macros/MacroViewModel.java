@@ -50,6 +50,13 @@ public class MacroViewModel extends ModelObject {
 	public void setValue(String value) {
 		macro.setValue(value);
 	}
+	
+	/**
+	 * @return macro value.
+	 */
+	public String getValue() {
+		return macro.getValue();
+	}
 
 	/**
 	 * @return macro regex pattern
