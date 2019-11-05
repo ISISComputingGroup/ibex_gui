@@ -78,7 +78,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
 						@Override
 						protected String stringFromRow(ScriptGeneratorAction row) {
-							return row.getActionParameterValue(columnName);
+							return row.getActionParameterValue(actionParameter);
 						}
 						
 					});
@@ -87,12 +87,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	            @Override
 	            protected String valueFromRow(ScriptGeneratorAction row) {
-	                return row.getActionParameterValue(columnName);
+	                return row.getActionParameterValue(actionParameter);
 	            }
 	
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-	                row.setActionParameterValue(columnName, value);
+	                row.setActionParameterValue(actionParameter, value);
 	            }
 	        });	
         }

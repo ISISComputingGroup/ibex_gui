@@ -54,10 +54,10 @@ public class ActionsTable extends ModelObject {
 	 * Adds a new action with default parameters to the list of actions.
 	 */
 	public void addEmptyAction() {
-		var parametersMap = new HashMap<String, String>();
+		var parametersMap = new HashMap<ActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (ActionParameter actionParameter: this.actionParameters) {
-			parametersMap.put(actionParameter.getName(), actionParameter.getName()+Integer.toString(actions.size()));
+			parametersMap.put(actionParameter, actionParameter.getName()+Integer.toString(actions.size()));
 		}
 		
 		var newAction = new ScriptGeneratorAction(parametersMap);
