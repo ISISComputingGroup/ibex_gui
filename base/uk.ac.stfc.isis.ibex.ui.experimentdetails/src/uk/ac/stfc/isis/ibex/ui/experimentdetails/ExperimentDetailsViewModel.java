@@ -19,10 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
+import uk.ac.stfc.isis.ibex.epics.observing.StringWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
 public class ExperimentDetailsViewModel extends ModelObject {
 
