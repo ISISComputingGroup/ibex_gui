@@ -3,6 +3,7 @@ from py4j.java_collections import ListConverter
 import inspect
 import argparse
 from action_interface import Action
+from typing import Dict
 import os
 import sys
 
@@ -36,14 +37,14 @@ class ConfigWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
 
-    def __init__(self, available_actions: dict):
+    def __init__(self, available_actions: Dict):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
 
     def getActions(self):
         return ListConverter().convert(self.actions, gateway._gateway_client)
 
 
-def get_actions() -> dict:
+def get_actions() -> Dict:
     """ Dynamically import all the Python modules in this module's sub directory. """
     search_folder = "instruments"
     this_file_path = os.path.split(__file__)[0]
