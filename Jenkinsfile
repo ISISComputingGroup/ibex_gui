@@ -21,6 +21,15 @@ pipeline {
     
     stage("Build") {
       steps {
+        bat """
+            set PYTHON3DIR=%~dp0\
+            if not exist "%PYTHON3DIR%" (
+                git clone https://github.com/ISISComputingGroup/genie_python.git "%PYTHON3DIR%"
+                %PYTHON3DIR%\package_builder\dev_build_python.bat 3
+                if %errorlevel% neq 0 exit /b %errorlevel%
+            )
+            """
+
         script {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
