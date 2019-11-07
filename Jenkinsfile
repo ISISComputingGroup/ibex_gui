@@ -22,7 +22,7 @@ pipeline {
     stage("Build") {
       steps {
         bat """
-            set PYTHON3DIR=%~dp0\
+            set PYTHON3DIR=%~dp0\\python3
             if not exist "%PYTHON3DIR%" (
                 git clone https://github.com/ISISComputingGroup/genie_python.git "%PYTHON3DIR%"
                 %PYTHON3DIR%\\package_builder\\dev_build_python.bat 3
