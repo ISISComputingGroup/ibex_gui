@@ -84,7 +84,6 @@ public class ZMQSession {
         synchronized (zmq.getLock()) {
         	zmq.connect(connectionString);
         }
-        LOG.info("Connected to NICOS at " + connectionString);
     }
 
     private String createConnectionURI(InstrumentInfo instrument) {
@@ -137,7 +136,6 @@ public class ZMQSession {
         String resp = zmq.receiveString();
         
         if (status == null || resp == null || Objects.equals(status, "")) {
-            LOG.warn("No response from server after sending " + sentMessage.toString());
             return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }
         

@@ -60,10 +60,14 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
     public static Stream<DataBrowserEditor> getCurrentDataBrowsers() {
         // clone to avoid potential ConcurrentModificationException
         return Arrays.stream(PlatformUI.getWorkbench().getWorkbenchWindows().clone())
-                .filter(window -> window != null).map(IWorkbenchWindow::getActivePage).filter(page -> page != null)
-                .map(IWorkbenchPage::getEditorReferences).flatMap(Arrays::stream)
+                .filter(window -> window != null)
+                .map(IWorkbenchWindow::getActivePage)
+                .filter(page -> page != null)
+                .map(IWorkbenchPage::getEditorReferences)
+                .flatMap(Arrays::stream)
                 .map(editorReference -> editorReference.getEditor(false))
-                .filter(editor -> editor instanceof DataBrowserEditor).map(editor -> (DataBrowserEditor) editor);
+                .filter(DataBrowserEditor.class::isInstance)
+                .map(editor -> (DataBrowserEditor) editor);
     }
 
     /**
@@ -157,16 +161,13 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
      * @return The created axis.
      */
     private AxisConfig createNewAxis(final String displayName, Model model) {
-        AxisConfig axis;
-        // If an existing axis has not been specified, create a new one
-        axis = new AxisConfig(displayName);
+        final AxisConfig axis = new AxisConfig(displayName);
         axis.setAutoScale(true);
         model.addAxis(axis);
 
         model.addListener(new ModelListenerAdapter() {
             private int dataCount = 0;
             private static final int DATA_COUNT_LIMIT = 10;
-            private boolean autoscale = true;
 
             // This listener is triggered every time that a data point
             // is added to the graph,
@@ -177,13 +178,14 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
             public void selectedSamplesChanged() {
                 if (dataCount < DATA_COUNT_LIMIT) {
                     dataCount++;
-                } else if (autoscale) {
+                } else {
                     Display.getDefault().asyncExec(() -> axis.setAutoScale(false));
-                    autoscale = false;
+                    model.removeListener(this);  // No need for this listener to stay around after this point.
                 }
             }
 
         });
+        
         return axis;
     }
 

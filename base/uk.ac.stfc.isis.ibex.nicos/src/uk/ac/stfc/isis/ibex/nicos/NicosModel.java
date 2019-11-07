@@ -141,7 +141,6 @@ public class NicosModel extends ModelObject {
 
     private void failConnection(String message) {
         setError(NicosErrorState.CONNECTION_FAILED);
-        LOG.error(message);
         connectionJob.setRunning(true);
         updateStatusJob.setRunning(false);
     }
@@ -232,7 +231,6 @@ public class NicosModel extends ModelObject {
     private void setError(NicosErrorState error, String additionalInformation) {
     	firePropertyChange("error", this.error, this.error = error);
     	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
-            LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
     	}
     }
 

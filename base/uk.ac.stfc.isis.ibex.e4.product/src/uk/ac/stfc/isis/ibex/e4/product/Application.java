@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.e4.product;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
@@ -41,7 +44,9 @@ public class Application implements IApplication {
 		// If you get an error here, you need to go (in Eclipse) to:
 		// window -> Preferences -> Java -> compiler
 		// and change workspace compliance to Java 11.
-		@SuppressWarnings("unused") final var java11Check = new Object(); 
+		@SuppressWarnings("unused") final var java11Check = new Object();
+		
+		Logger.getGlobal().getParent().getHandlers()[0].setLevel(Level.FINER);
 		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
