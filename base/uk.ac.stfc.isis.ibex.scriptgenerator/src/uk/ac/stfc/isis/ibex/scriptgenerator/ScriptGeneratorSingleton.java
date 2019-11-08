@@ -36,10 +36,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 *  Adds the new action parameters to the empty ActionsTable.
+	 * Adds the new action parameters to the empty ActionsTable.
+	 * 
 	 * @param actionParameters
 	 */
-	public void setActionParameters(ArrayList<ActionParameter> actionParameters) {
+	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
 		// Setting new action parameters drops the whole table
 		//this.scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 		var newParameters = new ArrayList<ActionParameter>();
@@ -51,7 +52,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * @return ScriptGeneratorTable
+	 * Get the actions table containing the parameters for the script.
+	 * 
+	 * @return the scriptGeneratorTable.
 	 */
 	public ActionsTable getScriptGeneratorTable() {		
 		return scriptGeneratorTable;
@@ -66,7 +69,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Removes action at position index from ActionsTable.
-	 * @param index
+	 * 
+	 * @param the index to delete.
 	 */
 	public void deleteAction(int index) {
 		scriptGeneratorTable.deleteAction(index);
@@ -74,7 +78,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Duplicates action at position index in ActionsTable.
-	 * @param index
+	 * 
+	 * @param the index to duplicate.
 	 */
 	public void duplicateAction(int index) {
 		scriptGeneratorTable.duplicateAction(index);
@@ -82,7 +87,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Moves action one row up in table.
-	 * @param index
+	 * 
+	 * @param the index to move.
 	 */
 	public void moveActionUp(int index) {
 		scriptGeneratorTable.moveAction(index, index-1);
@@ -90,7 +96,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 
 	/**
 	 * Moves action one row down in table.
-	 * @param index
+	 * 
+	 * @param the index to move.
 	 */
 	public void moveActionDown(int index) {
 		scriptGeneratorTable.moveAction(index, index+1);

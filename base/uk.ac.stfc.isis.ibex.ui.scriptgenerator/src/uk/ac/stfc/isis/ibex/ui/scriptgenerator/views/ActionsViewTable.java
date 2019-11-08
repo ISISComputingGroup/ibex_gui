@@ -106,6 +106,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return new NullComparator<>();
 	}
 	
+	/**
+	 * Updates the table columns after a config change.
+	 */
 	@Override
 	public void updateTableColumns() {
 		super.updateTableColumns();
