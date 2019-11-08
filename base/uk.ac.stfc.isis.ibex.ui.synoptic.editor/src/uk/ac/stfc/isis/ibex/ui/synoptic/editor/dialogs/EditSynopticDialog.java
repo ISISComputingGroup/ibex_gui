@@ -51,6 +51,7 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 public class EditSynopticDialog extends TitleAreaDialog {
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
+	private final String subtitle;
 	
 	private EditorPanel editor;
 	private boolean isBlank;
@@ -74,11 +75,12 @@ public class EditSynopticDialog extends TitleAreaDialog {
      * @param synopticViewModel
      *            The view model describing the logic of the synoptic editor
      */
-    public EditSynopticDialog(Shell parentShell, String title, boolean isBlank,
+    public EditSynopticDialog(Shell parentShell, String title, String subtitle, boolean isBlank,
             SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
+		this.subtitle = subtitle;
 		this.isBlank = isBlank;
         this.synopticViewModel = synopticViewModel;
         this.synopticValidator = new SynopticValidator(synopticViewModel.getSynoptic());
@@ -88,6 +90,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
         editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        setTitle(subtitle);
 		return editor;
 	}
 

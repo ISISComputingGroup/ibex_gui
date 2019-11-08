@@ -22,7 +22,8 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences,
  org.eclipse.e4.ui.di,
  uk.ac.stfc.isis.ibex.dae;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.dae
+ uk.ac.stfc.isis.ibex.ui.dae,
+ uk.ac.stfc.isis.ibex.nicos
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher

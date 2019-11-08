@@ -1,6 +1,6 @@
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+import com.google.gson.annotations.SerializedName;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -27,12 +29,54 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  */
 public class Macro extends ModelObject {
+    /**
+     * The name of the macro.
+     */
 	private String name;
-	private String value;
-	private String description;
-	private String pattern;
-
 	/**
+	 * The currently set value of the macro. If this is null the default is used.
+	 * Ideally an Optional should be here but GSON doesn't understand optionals :(
+	 */
+	private String value;
+	/**
+	 * The description of the macro.
+	 */
+	private String description;
+	/**
+	 * The regex pattern that the value needs to match.
+	 */
+	private String pattern;
+	/**
+	 * The default value of the macro which is used when no value has been set.
+	 */
+	private String defaultValue;
+	/**
+	 * Whether the macro has a default value or not (or if it is unknown).
+	 */
+	private HasDefault hasDefault;
+	
+	/**
+	 * An enum representing the existence or not of a default value.
+	 */
+	public enum HasDefault {
+	    /**
+	     * The macro has a default.
+	     */
+	    @SerializedName("YES")
+	    YES,
+	    /**
+	     * The macro does not have a default.
+	     */
+	    @SerializedName("NO")
+	    NO,
+	    /**
+         * Whether the macro has a default or not is unknown.
+         */
+	    @SerializedName("UNKNOWN")
+	    UNKNOWN
+	}
+
+    /**
 	 * GSON requires the default constructor to create the macro properly from
 	 * JSON.
 	 * 
@@ -40,7 +84,7 @@ public class Macro extends ModelObject {
 	 * create the object. This mean the parent class's constructor is NOT called.
 	 * GSON does not care if this is private.
 	 */
-	@SuppressWarnings("unused")
+    @SuppressWarnings("unused")
 	private Macro() {
 	}
 
@@ -50,8 +94,7 @@ public class Macro extends ModelObject {
 	 * @param other exiting Macro to clone
 	 */
 	public Macro(Macro other) {
-		this(other.getName(), other.getValue(), other.getDescription(), other
-				.getPattern());
+		this(other.getName(), other.getValue(), other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault());
 	}
 
 	/**
@@ -61,25 +104,26 @@ public class Macro extends ModelObject {
 	 * @param value macro value
 	 * @param description macro description
 	 * @param pattern Regex pattern macro value should follow
+	 * @param defaultValue the default value of the macro
+	 * @param hasDefault if the macro has a default, does not, or unknown
 	 */
-	public Macro(String name, String value, String description, String pattern) {
+	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault) {
 		this.name = name;
 		this.value = value;
 		this.description = description;
 		this.pattern = pattern;
+		this.defaultValue = defaultValue;
+		this.hasDefault = hasDefault;
 	}
 
 	/**
-	 * Set Macro name and fire a property change.
-	 * 
-	 * @param name new Macro name
-	 */
-	public void setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
-	}
+     * @return if the macro has a default, does not have a default, or unknown. 
+     */
+    public HasDefault getHasDefault() {
+        return hasDefault;
+    }
 
 	/**
-	 * 
 	 * @return macro name
 	 */
 	public String getName() {
@@ -96,24 +140,13 @@ public class Macro extends ModelObject {
 	}
 
 	 /**
-     * 
-     * @return macro value
+     * @return macro value, null indicates the default value is being used
      */
 	public String getValue() {
 		return value;
 	}
 
-	/**
-	 * Set macro description.
-	 * 
-	 * @param description new macro description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	 /**
-     * 
      * @return macro description
      */
 	public String getDescription() {
@@ -121,21 +154,18 @@ public class Macro extends ModelObject {
 	}
 
 	/**
-	 * Set macro regex pattern.
-	 * 
-	 * @param pattern new regex pattern
-	 */
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
-	}
-
-	/**
-     * 
      * @return macro regex pattern
      */
 	public String getPattern() {
 		return pattern;
 	}
+
+    /**
+     * @return default macro value
+     */
+    public String getDefaultValue() {
+        return defaultValue;
+    }
 
 	@Override
 	public String toString() {
@@ -160,4 +190,5 @@ public class Macro extends ModelObject {
 	public int hashCode() {
 		return name.hashCode();
 	}
+
 }

@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -62,6 +63,8 @@ public class SummaryPanel extends Composite {
     private ComboViewer cmboSynoptic;
     private EditableConfiguration config;
     private final MessageDisplayer messageDisplayer;
+    private Button protectedCheckBox;
+    private Label protectLabel;
 
     /**
      * Constructor for the general information about the configuration.
@@ -104,7 +107,15 @@ public class SummaryPanel extends Composite {
         cmboSynoptic = new ComboViewer(cmpSummary, SWT.READ_ONLY);
         cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmboSynoptic.setContentProvider(new ArrayContentProvider());
-
+        
+        
+        protectLabel = new Label(cmpSummary,  SWT.NONE);
+        protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        protectLabel.setText("Protected:");
+        
+        protectedCheckBox = new Button(cmpSummary, SWT.CHECK);
+        protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));     
+        
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
         lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDateCreated.setText("Date Created:");
@@ -135,8 +146,8 @@ public class SummaryPanel extends Composite {
         UpdateValueStrategy descValidator = new UpdateValueStrategy();
         // Set validator if not saving a new config
         if (!config.getIsNew()) {
-            BlockServerNameValidator configDescriptionRules = Configurations.getInstance()
-                    .variables().configDescriptionRules.getValue();
+        	 BlockServerNameValidator configDescriptionRules = Configurations.getInstance()
+                     .variables().configDescriptionRules.getValue();
             descValidator
                     .setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescriptionRules));
         }
@@ -159,6 +170,8 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("dateCreated").observe(config));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField),
                 BeanProperties.value("dateModified").observe(config));
+        bindingContext.bindValue(WidgetProperties.selection().observe(protectedCheckBox),
+                BeanProperties.value("isProtected").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
                 BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);

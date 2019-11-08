@@ -93,6 +93,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private final EditableComponents editableComponents;
     /** Dates when the configuration has been changed. */
     private List<String> history = new ArrayList<>();
+    /** if the config is protected or not */
+    private boolean isProtected;
 
     /** Available PVs. */
     private final List<PV> pvs;
@@ -125,6 +127,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
     };
 
+
     /**
      * @param config
      *            The root configuration to derive the editable configuration
@@ -144,7 +147,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.name = config.name();
 		this.description = config.description();
 		this.synoptic = config.synoptic();
-		
+		this.isProtected = config.isProtected();
 		this.allIocs = new ArrayList<>();
 		
 		for (EditableIoc ioc : iocs) {
@@ -265,6 +268,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
+     * @return if the config is protected or not by manager mode
+     */
+    public boolean getIsProtected() {
+        return isProtected;
+    }
+    /**
      * @param name
      *            The new configuration name
      */
@@ -286,6 +295,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void setSynoptic(String synoptic) {
         firePropertyChange("synoptic", this.synoptic, this.synoptic = synoptic);
+    }
+    
+    /**
+     * 
+     * @param isProtected
+     * 				Whether the configuration is protected to only be editable in manager mode or not
+     */
+    public void setIsProtected(boolean isProtected) {
+    	firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
     }
 
     /**
@@ -568,7 +586,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Configuration asConfiguration() {
         Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-                transformGroups(), transformComponents(), getHistory());
+                transformGroups(), transformComponents(), getHistory(), getIsProtected());
         return new ComponentFilteredConfiguration(config);
     }
 
@@ -581,7 +599,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
         Configuration config = asConfiguration();
         return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-                config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory());
+                config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected());
     }
 
     /**

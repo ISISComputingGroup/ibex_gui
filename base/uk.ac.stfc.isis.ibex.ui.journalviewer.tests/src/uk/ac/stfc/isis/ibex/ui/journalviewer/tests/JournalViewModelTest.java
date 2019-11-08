@@ -25,8 +25,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.EnumSet;
-
+import java.util.GregorianCalendar;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
@@ -128,5 +129,53 @@ public class JournalViewModelTest {
     	
     	assertFalse(viewModel.getFieldSelected(JournalField.TITLE));
     }
-
+    
+    @Test
+    public void GIVEN_incorrect_date_from_UI_WHEN_validate_date_time_THEN_validation_fail() {
+        // Arrange
+    	
+    	String actual = "Date/Time in wrong order" ; 
+    	viewModel = new JournalViewModel(model);
+        Calendar calendar_1 = new GregorianCalendar(2013, 2, 12, 10, 2, 3);
+        Calendar calendar_2 = new GregorianCalendar(2015, 2, 12, 15, 3, 4);
+        
+        viewModel.setInitialFromDateTime((Calendar)calendar_1.clone(), (Calendar)calendar_1.clone());
+        viewModel.setInitialToDateTime((Calendar)calendar_2.clone(), (Calendar)calendar_2.clone());
+        
+        viewModel.setFromDate(calendar_2);
+        viewModel.setFromTime(calendar_2);
+        
+        viewModel.setToDate(calendar_1);
+        viewModel.setToTime(calendar_1);
+        
+        String expected = viewModel.getErrorMessage();
+        
+        assertEquals(expected, actual);
+     
+    }
+    
+    @Test
+    public void GIVEN_correct_date_from_UI_WHEN_validate_date_time_THEN_validation_pass() {
+        // Arrange
+    	
+    	String actual = "" ; 
+        Calendar calendar_1 = new GregorianCalendar(2013, 2, 12, 10, 2, 3);
+        Calendar calendar_2 = new GregorianCalendar(2015, 2, 12, 15, 3, 4);
+        
+        viewModel = new JournalViewModel(model);
+        
+        viewModel.setInitialFromDateTime((Calendar)calendar_1.clone(), (Calendar)calendar_1.clone());
+        viewModel.setInitialToDateTime((Calendar)calendar_2.clone(), (Calendar)calendar_2.clone());
+        
+        viewModel.setFromDate(calendar_1);
+        viewModel.setFromTime(calendar_1);
+        
+        viewModel.setToDate(calendar_2);
+        viewModel.setToTime(calendar_2);
+        
+        String expected = viewModel.getErrorMessage();
+        
+        assertEquals(expected, actual);
+     
+    }
 }

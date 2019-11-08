@@ -231,6 +231,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
 		
 		<!-- The following plugins are temporarily disabled from running in maven, see https://github.com/ISISComputingGroup/IBEX/issues/4759
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
@@ -239,6 +240,10 @@
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 		-->
+
+		<module>
+			../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests
+		</module>
 	</modules>
 </project>
 

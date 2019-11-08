@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <show_close_button>true</show_close_button>
-  <rules />
+  <rules/>
   <wuid>-69d7811d:14d7b00e209:-7f32</wuid>
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
@@ -35,7 +35,7 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color red="240" green="240" blue="240"/>
   </background_color>
   <width>640</width>
   <x>-1</x>
@@ -45,9 +45,9 @@
   <y>-1</y>
   <snap_to_geometry>true</snap_to_geometry>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color red="192" green="192" blue="192"/>
   </foreground_color>
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
     <border_style>0</border_style>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -55,16 +55,16 @@
     <horizontal_fill>true</horizontal_fill>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-6e6a</wuid>
     <transparent>false</transparent>
-    <pv_value />
+    <pv_value/>
     <alpha>255</alpha>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
-    <scripts />
+    <scripts/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>283</height>
     <border_width>1</border_width>
@@ -74,20 +74,20 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <gradient>false</gradient>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <anti_alias>true</anti_alias>
     <line_style>0</line_style>
     <widget_type>Rectangle</widget_type>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <width>289</width>
     <x>66</x>
@@ -95,14 +95,14 @@ $(pv_value)</tooltip>
     <y>54</y>
     <fill_level>0.0</fill_level>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -112,15 +112,15 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7bf1</wuid>
     <transparent>false</transparent>
-    <pv_value />
+    <pv_value/>
     <auto_size>false</auto_size>
     <text>######</text>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <show_units>true</show_units>
     <height>41</height>
@@ -134,7 +134,7 @@ $(pv_value)</tooltip>
     <pv_name>$(P)LKUP:$(PH):POSN:SP:RBV</pv_name>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <precision_from_pv>true</precision_from_pv>
     <widget_type>Text Update</widget_type>
@@ -142,16 +142,16 @@ $(pv_value)</tooltip>
     <wrap_words>false</wrap_words>
     <format_type>0</format_type>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <width>175</width>
     <x>444</x>
     <name>TargetPosition</name>
     <y>54</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
@@ -163,15 +163,15 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7b45</wuid>
     <transparent>false</transparent>
-    <pv_value />
+    <pv_value/>
     <auto_size>false</auto_size>
     <text>######</text>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <show_units>true</show_units>
     <height>41</height>
@@ -185,7 +185,7 @@ $(pv_value)</tooltip>
     <pv_name>$(P)LKUP:$(PH):POSN</pv_name>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <precision_from_pv>true</precision_from_pv>
     <widget_type>Text Update</widget_type>
@@ -193,16 +193,16 @@ $(pv_value)</tooltip>
     <wrap_words>false</wrap_words>
     <format_type>0</format_type>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <width>175</width>
     <x>444</x>
     <name>CurrentPosition</name>
     <y>156</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
@@ -212,16 +212,16 @@ $(pv_value)</tooltip>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <rules />
+    <rules/>
     <effect_3d>true</effect_3d>
     <bit>-1</bit>
     <enabled>true</enabled>
     <wuid>4e9517e9:14df687cb86:-7e5f</wuid>
     <on_color>
-      <color red="0" green="255" blue="0" />
+      <color red="0" green="255" blue="0"/>
     </on_color>
-    <pv_value />
-    <scripts />
+    <pv_value/>
+    <scripts/>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <height>25</height>
     <on_label>ON</on_label>
@@ -234,15 +234,15 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <pv_name>$(P)LKUP:$(PH):POSITIONED</pv_name>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>LED</widget_type>
     <off_color>
-      <color red="0" green="100" blue="0" />
+      <color red="0" green="100" blue="0"/>
     </off_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <square_led>false</square_led>
     <width>25</width>
@@ -251,9 +251,9 @@ $(pv_value)</tooltip>
     <data_type>0</data_type>
     <y>246</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <show_boolean_label>false</show_boolean_label>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
@@ -267,12 +267,12 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7f28</wuid>
-    <pv_value />
+    <pv_value/>
     <text>View Motor</text>
-    <scripts />
+    <scripts/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>30</height>
     <border_width>1</border_width>
@@ -281,23 +281,23 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+      <color name="ISIS_Standard_Button" red="187" green="187" blue="187"/>
     </background_color>
     <width>120</width>
     <x>471</x>
     <name>ViewMotor</name>
     <y>342</y>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
@@ -307,7 +307,7 @@ $(pv_value)</tooltip>
           <M>$(MM)</M>
         </macros>
         <replace>1</replace>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -316,15 +316,15 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
+    <tooltip/>
     <horizontal_alignment>1</horizontal_alignment>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>4e9517e9:14df687cb86:-7dec</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
     <text>Move Complete</text>
-    <scripts />
+    <scripts/>
     <height>20</height>
     <border_width>1</border_width>
     <scale_options>
@@ -335,21 +335,21 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Label</widget_type>
     <wrap_words>true</wrap_words>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <width>88</width>
     <x>471</x>
     <name>MoveCompleteLabel</name>
     <y>249</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <show_scrollbar>false</show_scrollbar>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
@@ -362,12 +362,12 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-4fb46c11:14ff514886e:-7e3d</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Reload Positions File</text>
-    <scripts />
+    <scripts/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>30</height>
     <border_width>1</border_width>
@@ -376,11 +376,11 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Button</widget_type>
     <width>80</width>
@@ -388,20 +388,20 @@ $(pv_value)</tooltip>
     <name>ReloadPositions</name>
     <y>390</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
         <value>1</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
         <value>0</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -416,15 +416,15 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7b4a</wuid>
     <next_focus>0</next_focus>
-    <pv_value />
+    <pv_value/>
     <auto_size>false</auto_size>
     <read_only>true</read_only>
     <text>Target Position</text>
-    <scripts />
+    <scripts/>
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>25</height>
@@ -436,18 +436,18 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <precision_from_pv>true</precision_from_pv>
     <widget_type>Text</widget_type>
-    <confirm_message></confirm_message>
+    <confirm_message/>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <format_type>0</format_type>
     <limits_from_pv>false</limits_from_pv>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <password_input>false</password_input>
     <name>TargetPositionLabel</name>
@@ -455,9 +455,9 @@ $(pv_value)</tooltip>
     <x>444</x>
     <y>24</y>
     <maximum>1.7976931348623157E308</maximum>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <minimum>-1.7976931348623157E308</minimum>
     <font>
@@ -472,15 +472,15 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7b44</wuid>
     <next_focus>0</next_focus>
-    <pv_value />
+    <pv_value/>
     <auto_size>false</auto_size>
     <read_only>true</read_only>
     <text>Current Position</text>
-    <scripts />
+    <scripts/>
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>25</height>
@@ -492,18 +492,18 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <precision_from_pv>true</precision_from_pv>
     <widget_type>Text</widget_type>
-    <confirm_message></confirm_message>
+    <confirm_message/>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <format_type>0</format_type>
     <limits_from_pv>false</limits_from_pv>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <password_input>false</password_input>
     <name>CurrentPositionLabel</name>
@@ -511,9 +511,9 @@ $(pv_value)</tooltip>
     <x>444</x>
     <y>120</y>
     <maximum>1.7976931348623157E308</maximum>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <minimum>-1.7976931348623157E308</minimum>
     <font>
@@ -525,10 +525,10 @@ $(pv_value)</tooltip>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7c98</wuid>
-    <pv_value />
+    <pv_value/>
     <scripts>
       <path pathString="Scripts/Initialise.js" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">loc://useToInit(1)</pv>
@@ -546,21 +546,21 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <pv_name>loc://Mode("Running")</pv_name>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Combo</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <width>163</width>
     <x>24</x>
     <name>Mode Selector</name>
     <y>22</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <items>
       <s>Running</s>
       <s>Loading</s>
@@ -571,8 +571,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-710f</wuid>
@@ -595,13 +595,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -618,9 +618,9 @@ $(pv_value)</tooltip>
     <name>RAct-0</name>
     <y>73</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -631,8 +631,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-70a4</wuid>
@@ -655,13 +655,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -678,9 +678,9 @@ $(pv_value)</tooltip>
     <name>RAct-1</name>
     <y>109</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -691,8 +691,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-709c</wuid>
@@ -715,13 +715,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -738,9 +738,9 @@ $(pv_value)</tooltip>
     <name>RAct-2</name>
     <y>199</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -751,8 +751,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7098</wuid>
@@ -775,13 +775,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -798,9 +798,9 @@ $(pv_value)</tooltip>
     <name>RAct-3</name>
     <y>239</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -811,8 +811,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7094</wuid>
@@ -835,13 +835,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -858,9 +858,9 @@ $(pv_value)</tooltip>
     <name>RAct-4</name>
     <y>199</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -871,8 +871,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7090</wuid>
@@ -895,13 +895,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -918,9 +918,9 @@ $(pv_value)</tooltip>
     <name>RAct-5</name>
     <y>109</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -931,8 +931,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7074</wuid>
@@ -955,13 +955,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -978,9 +978,9 @@ $(pv_value)</tooltip>
     <name>LAct-0</name>
     <y>157</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -991,8 +991,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-706c</wuid>
@@ -1015,13 +1015,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1038,9 +1038,9 @@ $(pv_value)</tooltip>
     <name>LAct-1</name>
     <y>84</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1051,8 +1051,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7068</wuid>
@@ -1075,13 +1075,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1098,9 +1098,9 @@ $(pv_value)</tooltip>
     <name>LAct-2</name>
     <y>84</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1111,8 +1111,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7064</wuid>
@@ -1135,13 +1135,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1158,9 +1158,9 @@ $(pv_value)</tooltip>
     <name>LAct-3</name>
     <y>157</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1171,8 +1171,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7060</wuid>
@@ -1195,13 +1195,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1218,9 +1218,9 @@ $(pv_value)</tooltip>
     <name>LAct-4</name>
     <y>230</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1231,8 +1231,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-705c</wuid>
@@ -1255,13 +1255,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1278,9 +1278,9 @@ $(pv_value)</tooltip>
     <name>LAct-5</name>
     <y>230</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1291,8 +1291,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7044</wuid>
@@ -1314,13 +1314,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1337,9 +1337,9 @@ $(pv_value)</tooltip>
     <name>LActive</name>
     <y>156</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1350,8 +1350,8 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-73b6</wuid>
@@ -1373,13 +1373,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1396,9 +1396,9 @@ $(pv_value)</tooltip>
     <name>RActive</name>
     <y>72</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>false</stretch_to_fit>
@@ -1409,14 +1409,14 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
     <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
+    <tooltip/>
+    <rules/>
     <crop_left>0</crop_left>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-6f94</wuid>
     <auto_size>false</auto_size>
     <image_file>outline.png</image_file>
-    <scripts />
+    <scripts/>
     <height>260</height>
     <border_width>1</border_width>
     <scale_options>
@@ -1428,13 +1428,13 @@ $(pv_value)</tooltip>
     <crop_bottom>0</crop_bottom>
     <degree>0</degree>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <no_animation>false</no_animation>
     <widget_type>Image</widget_type>
     <flip_horizontal>false</flip_horizontal>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <permutation_matrix>
       <row>
@@ -1451,9 +1451,9 @@ $(pv_value)</tooltip>
     <name>Outline</name>
     <y>64</y>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <crop_top>0</crop_top>
     <crop_right>0</crop_right>
     <stretch_to_fit>true</stretch_to_fit>
@@ -1469,10 +1469,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 0</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1487,30 +1487,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>46</x>
     <name>Running_Button_0</name>
     <y>354</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>0</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1524,10 +1524,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 1</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1542,30 +1542,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>162</x>
     <name>Running_Button_1</name>
     <y>354</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>2</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1579,10 +1579,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 2</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1597,30 +1597,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>282</x>
     <name>Running_Button_2</name>
     <y>354</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>4</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1634,10 +1634,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 3</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1652,30 +1652,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>46</x>
     <name>Running_Button_3</name>
     <y>402</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>6</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1689,10 +1689,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 4</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1707,30 +1707,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>162</x>
     <name>Running_Button_4</name>
     <y>402</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>8</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1744,10 +1744,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fba</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Position 5</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
@@ -1762,30 +1762,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>281</x>
     <name>Running_Button_5</name>
     <y>402</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>10</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1799,10 +1799,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 0</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -1817,30 +1817,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>46</x>
     <name>Loading_Button_0</name>
     <y>383</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>1</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1854,10 +1854,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 1</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -1872,30 +1872,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>162</x>
     <name>Loading_Button_1</name>
     <y>383</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>3</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1909,10 +1909,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 2</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -1927,30 +1927,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>282</x>
     <name>Loading_Button_2</name>
     <y>383</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>5</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -1964,10 +1964,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 3</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -1982,30 +1982,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>46</x>
     <name>Loading_Button_3</name>
     <y>431</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>7</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -2019,10 +2019,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 4</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -2037,30 +2037,30 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>162</x>
     <name>Loading_Button_4</name>
     <y>431</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>9</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
@@ -2074,10 +2074,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
-    <rules />
+    <rules/>
     <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fba</wuid>
-    <pv_value />
+    <pv_value/>
     <text>Load 5</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
@@ -2092,34 +2092,74 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <image></image>
+    <image/>
     <visible>true</visible>
-    <pv_name></pv_name>
+    <pv_name/>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <widget_type>Action Button</widget_type>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <width>100</width>
     <x>281</x>
     <name>Loading_Button_5</name>
     <y>431</y>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
         <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
         <value>11</value>
         <timeout>10</timeout>
-        <description></description>
+        <description/>
       </action>
     </actions>
     <font>
       <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
     </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>101</x>
+    <y>109</y>
   </widget>
 </display>
