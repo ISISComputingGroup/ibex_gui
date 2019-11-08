@@ -14,5 +14,5 @@ class DoRun(Action):
             return "Temperature outside range"
         if not -5 <= field < 5:
             return "Field outside range"
-        return ""
+        return None
 
