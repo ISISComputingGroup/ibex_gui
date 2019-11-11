@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * This class is needed to display OPI PVs in the databrowser.
  */
-public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser2.OpenDataBrowserPopup {
+public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser3.OpenDataBrowserPopup {
 	
 	private static final String LOG_PLOTTER_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 

@@ -132,6 +132,21 @@
         <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
         <unit id="org.python.pydev.feature.source.feature.group" version="5.9.2.201708151115"/>
     </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_4722/org.csstudio.display.builder/repository/target/repository/"/>
+		<unit id="org.csstudio.display.builder.feature.feature.group" version="0.1.0.201903051343"/>
+		<unit id="org.csstudio.trends.databrowser3.bobwidget.feature.feature.group" version="1.0.0.201812121123"/>
+		<unit id="org.csstudio.trends.databrowser3.feature.feature.group" version="4.1.0.201911111109"/>
+		<unit id="org.csstudio.trends.databrowser3.opiwidget.feature.feature.group" version="3.2.0.201805011755"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
+		<unit id="org.eclipse.fx.core.feature.feature.group" version="3.6.1.201909200827"/>
+		<unit id="org.eclipse.fx.nl.feature.feature.group" version="3.6.1.201909200827"/>
+		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.6.1.201909200827"/>
+		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.6.1.201909200822"/>
+		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.6.0.201907240201"/>
+	</location>
 </locations>
 <environment>
 <os>win32</os>

@@ -26,15 +26,15 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.csstudio.swt.rtplot.RTTimePlot;
-import org.csstudio.trends.databrowser2.model.ArchiveRescale;
-import org.csstudio.trends.databrowser2.model.AxisConfig;
-import org.csstudio.trends.databrowser2.model.Model;
-import org.csstudio.trends.databrowser2.model.ModelListenerAdapter;
-import org.csstudio.trends.databrowser2.model.PVItem;
-import org.csstudio.trends.databrowser2.preferences.Preferences;
-import org.csstudio.trends.databrowser2.ui.Controller;
-import org.csstudio.trends.databrowser2.ui.ModelBasedPlot;
+import org.csstudio.javafx.rtplot.RTTimePlot;
+import org.csstudio.trends.databrowser3.model.ArchiveRescale;
+import org.csstudio.trends.databrowser3.model.AxisConfig;
+import org.csstudio.trends.databrowser3.model.Model;
+import org.csstudio.trends.databrowser3.model.ModelListenerAdapter;
+import org.csstudio.trends.databrowser3.model.PVItem;
+import org.csstudio.trends.databrowser3.preferences.Preferences;
+import org.csstudio.trends.databrowser3.ui.ControllerSWT;
+import org.csstudio.trends.databrowser3.ui.ModelBasedPlot;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -90,7 +90,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	private Model model;
 
 	/** Controller that links model and plot. */
-	private Controller controller;
+	private ControllerSWT controller;
 
 	/** Number of milliseconds in an hour. */
 	private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
@@ -146,7 +146,11 @@ public class BeamGraphView extends ModelListenerAdapter {
 		Composite plotComposite = new Composite(parent, SWT.NONE);
 		plotComposite.setLayout(new GridLayout(1, false));
 		plotComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		modelPlot = new ModelBasedPlot(plotComposite);
+		try {
+			modelPlot = new ModelBasedPlot(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		for (String pv : Arrays.asList(TS1_BEAM_CURRENT_PV, TS2_BEAM_CURRENT_PV, SYNCH_BEAM_CURRENT_PV)) {
 			addTrace(generatePVItem(pv));
@@ -154,7 +158,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 		// Create and start controller
 		try {
-			controller = new Controller(parent.getShell(), model, modelPlot);
+			controller = new ControllerSWT(parent.getShell(), model, modelPlot);
 			controller.start();
 		} catch (Exception ex) {
 			onError(ex);
@@ -277,11 +281,11 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	private void createBeamStatusPlot() {
 		RTTimePlot rtPlot = modelPlot.getPlot();
-		rtPlot.setTitle(Optional.of(PLOT_TITLE));
-		rtPlot.setEnabled(false);
+		rtPlot.setTitle(PLOT_TITLE);
+		// rtPlot.setEnabled(false);
 		rtPlot.showToolbar(false);
 		rtPlot.showLegend(false);
-		rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		// rtPlot.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	}
 
 	/**
@@ -295,7 +299,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 		axisConfig.useAxisName(true);
 		axisConfig.setRange(CURRENT_LOWER, CURRENT_UPPER);
 		axisConfig.setAutoScale(false);
-		axisConfig.setColor(BLACK);
+		// axisConfig.setColor(BLACK);
 	}
 
 	private void configureModel() {
@@ -338,7 +342,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 				displayName = newItem.getDisplayName();
 			}
 			newItem.setDisplayName(displayName);
-			newItem.setColor(rgb);
+			// newItem.setColor(rgb);
 			return newItem;
 		} catch (Exception ex) {
 			onError(ex);

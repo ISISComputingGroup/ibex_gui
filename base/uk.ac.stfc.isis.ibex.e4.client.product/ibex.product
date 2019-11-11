@@ -20,6 +20,8 @@
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
 -Djava.net.preferIPv4Stack=true
+-Dosgi.framework.extensions=org.eclipse.fx.osgi
+-Dorg.osgi.framework.bundle.parent=ext
 -XX:+CreateCoredumpOnCrash
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
@@ -49,11 +51,12 @@
    </features>
 
    <configurations>
+      <plugin id="org.csstudio.csdata.clipboard" autoStart="false" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
-      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.osgi" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />

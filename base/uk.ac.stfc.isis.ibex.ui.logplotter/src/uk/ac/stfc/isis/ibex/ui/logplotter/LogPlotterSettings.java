@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
 
-import org.csstudio.trends.databrowser2.Activator;
-import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.csstudio.trends.databrowser3.Activator;
+import org.csstudio.trends.databrowser3.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
