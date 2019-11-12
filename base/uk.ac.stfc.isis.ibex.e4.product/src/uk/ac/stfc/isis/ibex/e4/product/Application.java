@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import javafx.application.Platform;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 import uk.ac.stfc.isis.ibex.javafx.DummyJFXApplication;
 import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
@@ -53,7 +54,13 @@ public class Application implements IApplication {
 		
 		Display display = PlatformUI.createDisplay();
 		try {
-			JFXBackgroundTask.start();
+//			try {
+//				JFXBackgroundTask.start().await();
+//				Platform.runLater(() -> System.out.println("JAVAFX platform is UP"));
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//				return PlatformUI.RETURN_UNSTARTABLE;
+//			};
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
 			if (returnCode == PlatformUI.RETURN_RESTART) {
 				return IApplication.EXIT_RESTART;

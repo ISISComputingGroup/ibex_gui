@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.logplotter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
+
 /**
  * The activator class controls the plug-in life cycle.
  */

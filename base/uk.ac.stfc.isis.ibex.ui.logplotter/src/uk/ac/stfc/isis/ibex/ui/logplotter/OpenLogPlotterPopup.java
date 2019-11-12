@@ -25,6 +25,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**

@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.beamstatus;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
+
 /**
  * The plugin entry point for the back end of the beam status display.
  */

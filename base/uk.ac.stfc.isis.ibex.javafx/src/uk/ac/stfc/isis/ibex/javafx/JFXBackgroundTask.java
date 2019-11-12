@@ -5,6 +5,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.eclipse.swt.widgets.Display;
+
+import javafx.application.Application;
 import javafx.application.Platform;
 
 public class JFXBackgroundTask {
@@ -24,16 +27,15 @@ public class JFXBackgroundTask {
     	System.out.println("Start task");
     	Platform.setImplicitExit(false);
     	System.out.println("Set exit");
-    	DummyJFXApplication.launch();
+    	Application.launch(DummyJFXApplication.class);
     	System.out.println("Done launch");
     }
     
     public static CountDownLatch start() {
-    	JFX_THREAD.submit(JFXBackgroundTask::startJFX);
+    	Platform.setImplicitExit(false);
+    	Platform.startup(() -> {
+    		JFX_INITIALIZATION_LATCH.countDown();
+    	});
     	return JFX_INITIALIZATION_LATCH;
-    }
-    
-    public static void waitForJavaFxToBeReady() throws InterruptedException {
-    	JFX_INITIALIZATION_LATCH.await();
     }
 }
