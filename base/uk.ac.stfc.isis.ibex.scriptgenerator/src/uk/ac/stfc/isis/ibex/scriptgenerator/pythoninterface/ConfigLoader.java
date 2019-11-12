@@ -18,6 +18,7 @@ import py4j.ClientServer.ClientServerBuilder;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.python.Python;
 
 public class ConfigLoader extends ModelObject {
 	
@@ -83,10 +84,10 @@ public class ConfigLoader extends ModelObject {
         return clientServerBuilder.pythonPort(getFreeSocket()).javaPort(getFreeSocket()).build();		
 	}
 	
-	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath) throws IOException {
+	private Process startPythonProcess(ClientServer clientServer, String filePath) throws IOException {
         Integer javaPort = clientServer.getJavaServer().getPort();
         Integer pythonPort = clientServer.getPythonClient().getPort();
-        ProcessBuilder builder = new ProcessBuilder().command(relativePathToFull(pythonPath), 
+        ProcessBuilder builder = new ProcessBuilder().command(Python.getPythonPath(), 
         		relativePathToFull(filePath), javaPort.toString(), pythonPort.toString());
 		return builder.start();
 	}
@@ -97,7 +98,7 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader() {
         try {
         	clientServer = createClientServer();
-        	pythonProcess = startPythonProcess(clientServer, "/python/python.exe", "/defined_actions/action_loader.py");
+        	pythonProcess = startPythonProcess(clientServer, "/defined_actions/action_loader.py");
             new Thread(listenToErrors).start();
             
             ConfigWrapper configWrapper = (ConfigWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });

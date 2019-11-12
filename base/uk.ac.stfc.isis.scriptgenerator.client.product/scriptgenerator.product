@@ -25,6 +25,7 @@
 
    <windowImages i16="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web16.gif" i32="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web32.gif" i48="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web48.gif" i64="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web64.gif" i128="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web128.gif" i256="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif"/>
 
+
    <launcher name="ibex-script-generator">
       <win useIco="true">
          <ico path="/uk.ac.stfc.isis.scriptgenerator.client.product/icons/scriptgen.ico"/>
@@ -32,9 +33,11 @@
       </win>
    </launcher>
 
+
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
+
 
    <plugins>
    </plugins>

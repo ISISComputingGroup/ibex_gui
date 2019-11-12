@@ -1,5 +1,5 @@
-set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python
+set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.python
 if not exist %PYCOPYPATH% (
-    mklink /D %PYCOPYPATH% %PYTHON3DIR%
+    xcopy %PYTHON3DIR% %PYCOPYPATH% /isekryj
     if %errorlevel% neq 0 exit /b %errorlevel%
 )
