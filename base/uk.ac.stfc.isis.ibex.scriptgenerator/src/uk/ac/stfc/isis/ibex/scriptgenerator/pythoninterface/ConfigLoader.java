@@ -25,15 +25,9 @@ public class ConfigLoader extends ModelObject {
 	 * Constructor for the config loader, initialises the connection with python and reads the configurations.
 	 */
 	public ConfigLoader(PythonInterface pythonInterface) {
-        try {
-        	this.pythonInterface = pythonInterface;
-        	pythonInterface.setUpPythonThread();
-        	availableConfigs = pythonInterface.getActionDefinitions();
-            setConfig(availableConfigs.get(0));
-		} catch (IOException e) {
-			LOG.error("ConfigLoader could not start");
-			LOG.error(e);
-		}
+		this.pythonInterface = pythonInterface;
+	    availableConfigs = pythonInterface.getActionDefinitions();
+	    setConfig(availableConfigs.get(0));
 	}
 
 	/**

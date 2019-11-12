@@ -30,6 +30,12 @@ public class PythonInterface {
 	
 	public PythonInterface(String actionLoaderPythonScript) {
 		this.actionLoaderPythonScript = actionLoaderPythonScript;
+		try {
+			this.setUpPythonThread();
+		} catch (IOException e) {
+			LOG.error("Failed to set up py4j interface");
+			LOG.error(e);
+		}
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class PythonInterface {
 	 * Initialises
 	 */
  	
-	public List<Config> getActionDefinitions() throws IOException {
+	public List<Config> getActionDefinitions() {
 		return configWrapper.getActionDefinitions();
 	}
 	
