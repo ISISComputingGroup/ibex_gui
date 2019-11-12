@@ -50,6 +50,9 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Dialog panel for editing the settings of an IOC.
  */
 public class EditPanel extends Composite {
+	
+	// Don't show the remote PV prefix to the user until feature is ready 
+	private static final boolean ALLOW_REMOTE_PV_PREFIX_CHANGE = false;
 
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
@@ -120,13 +123,15 @@ public class EditPanel extends Composite {
         autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoRestart.setText("Auto-Restart");
         
-        remotePvPrefixLbl = new Label(cmpIocDetails, SWT.NONE);
-        remotePvPrefixLbl.setText("Remote PV prefix: ");
-        remotePvPrefixLbl.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        
-        remotePvPrefixTxt = new Text(cmpIocDetails, SWT.BORDER);
-        remotePvPrefixTxt.setEditable(true);
-        remotePvPrefixTxt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLS - 1, 1));
+        if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
+	        remotePvPrefixLbl = new Label(cmpIocDetails, SWT.NONE);
+	        remotePvPrefixLbl.setText("Remote PV prefix: ");
+	        remotePvPrefixLbl.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+	        
+	        remotePvPrefixTxt = new Text(cmpIocDetails, SWT.BORDER);
+	        remotePvPrefixTxt.setEditable(true);
+	        remotePvPrefixTxt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLS - 1, 1));
+        }
 
         TabFolder iocSettings = new TabFolder(this, SWT.NONE);
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -186,7 +191,9 @@ public class EditPanel extends Composite {
                 BeanProperties.value("editable").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(simLevel.getCombo()),
                 BeanProperties.value("editable").observe(editableIoc));
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(remotePvPrefixTxt), 
+        if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
+        	bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(remotePvPrefixTxt), 
         		BeanProperties.value("remotePvPrefix").observe(editableIoc));
+        }
     }
 }
