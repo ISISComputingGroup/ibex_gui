@@ -16,6 +16,26 @@
       [Enter License Description here.]
    </license>
 
+   <includes
+         id="org.csstudio.display.builder.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.trends.databrowser3.bobwidget.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.trends.databrowser3.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.trends.databrowser3.opiwidget.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.csstudio.archive.reader.rdb.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.csstudio.logging"
          download-size="0"

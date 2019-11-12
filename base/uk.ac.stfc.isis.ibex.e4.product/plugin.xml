@@ -18,14 +18,6 @@
             name="IBEX">
       </product>
    </extension>
-   <extension
-         id="id1"
-         point="org.eclipse.e4.workbench.model">
-      <fragment
-            apply="always"
-            uri="org.eclipse.fx.osgi">
-      </fragment>
-   </extension>
 </plugin>
 
 

@@ -23,6 +23,9 @@
 -Dosgi.framework.extensions=org.eclipse.fx.osgi
 -Defxclipse.osgi.hook.debug=true
 -Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
+-Dorg.eclipse.update.reconcile=false
+-Dosgi.requiredJavaVersion=1.8
+-Declipse.p2.unsignedPolicy=allow
 -XX:+CreateCoredumpOnCrash
 --module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
       </vmArgs>
@@ -59,8 +62,7 @@
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
-      <plugin id="org.eclipse.fx.osgi" autoStart="true" startLevel="0" />
-      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="2" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
