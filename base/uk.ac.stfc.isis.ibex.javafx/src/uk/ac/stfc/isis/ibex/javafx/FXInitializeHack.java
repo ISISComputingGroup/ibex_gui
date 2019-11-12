@@ -1,9 +1,12 @@
 package uk.ac.stfc.isis.ibex.javafx;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.eclipse.fx.ui.workbench3.FXViewPart;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -24,7 +27,7 @@ public class FXInitializeHack extends FXViewPart {
         // NOP
     }
     
-    public static Stage initializeUI()
+    public static CountDownLatch initializeUI()
     {
         // Creating an FXCanvas results in a combined
         // SWT and JavaFX setup with common UI thread.
@@ -42,9 +45,14 @@ public class FXInitializeHack extends FXViewPart {
         hack.createPartControl(temp_shell);
         temp_shell.close();
 
-        final Stage stage = new Stage();
-        stage.setTitle("IBEX background JFX initialization");
+        final CountDownLatch latch = new CountDownLatch(1);
+        Platform.runLater(() -> {
+        	final Stage stage = new Stage();
+            stage.setTitle("IBEX background JFX initialization");
+            latch.countDown();
+        });
+        
 
-        return stage;
+        return latch;
     }
 }

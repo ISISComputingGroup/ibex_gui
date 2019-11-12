@@ -29,6 +29,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 import uk.ac.stfc.isis.ibex.javafx.FXInitializeHack;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * This class controls all aspects of the application's execution.
@@ -46,10 +47,6 @@ public class Application implements IApplication {
 		// and change workspace compliance to Java 11.
 		@SuppressWarnings("unused") final var java11Check = new Object();
 		
-	    var fxStage = Stage.class;
-	    var fxCanvas = FXCanvas.class;
-		FXInitializeHack.initializeUI();
-		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
 		
@@ -58,6 +55,12 @@ public class Application implements IApplication {
 		
 		Display display = PlatformUI.createDisplay();
 		try {
+			try {
+				FXInitializeHack.initializeUI().await();
+			} catch (InterruptedException e) {
+				IsisLog.getLogger(getClass()).fatal("Could not initialize JavaFX: " + e.getMessage());
+				return IApplication.EXIT_OK;
+			}
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
 			if (returnCode == PlatformUI.RETURN_RESTART) {
 				return IApplication.EXIT_RESTART;

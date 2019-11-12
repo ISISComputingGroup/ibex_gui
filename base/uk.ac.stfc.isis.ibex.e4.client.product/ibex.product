@@ -22,9 +22,9 @@
 -Dorg.osgi.framework.bundle.parent=ext
 -Dosgi.framework.extensions=org.eclipse.fx.osgi
 -Defxclipse.osgi.hook.debug=true
+-Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
 -XX:+CreateCoredumpOnCrash
 --module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
---add-modules=javafx.controls,javafx.fxml,javafx.base,javafx.graphics,javafx.media
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
