@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 
 import py4j.ClientServer;
 import py4j.ClientServer.ClientServerBuilder;
@@ -16,7 +19,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.python.Python;
-import uk.ac.stfc.isis.utils.Utils;
 
 public class ConfigLoader extends ModelObject {
 	
@@ -74,7 +76,7 @@ public class ConfigLoader extends ModelObject {
         Integer javaPort = clientServer.getJavaServer().getPort();
         Integer pythonPort = clientServer.getPythonClient().getPort();
         ProcessBuilder builder = new ProcessBuilder().command(new Python().getPythonPath(), 
-        		Utils.relativePathToFull(filePath, this), javaPort.toString(), pythonPort.toString());
+        		relativePathToFull(filePath), javaPort.toString(), pythonPort.toString());
 		return builder.start();
 	}
 	
@@ -134,5 +136,21 @@ public class ConfigLoader extends ModelObject {
 	 */
 	public void cleanUp() {
 		pythonProcess.destroy();
+	}
+	
+	/**
+	 * Gets the full path to a file given the path relative to this plugin.
+	 * @param relativePath The path of the file relative to this plugin.
+	 * @return The full path.
+	 * @throws IOException if the file could not be found.
+	 */
+	private static String relativePathToFull(String relativePath) throws IOException {
+		try {
+			URL resourcePath = ConfigLoader.class.getResource(relativePath);
+			String fullPath = FileLocator.resolve(resourcePath).getPath();
+			return Path.forWindows(fullPath).toOSString();
+		} catch(NullPointerException e) {
+			throw new IOException("Cannot find relative path: " + relativePath);
+		}
 	}
 }
