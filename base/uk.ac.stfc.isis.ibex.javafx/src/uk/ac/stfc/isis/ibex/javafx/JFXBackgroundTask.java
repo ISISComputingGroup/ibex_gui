@@ -5,30 +5,35 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import javafx.embed.swing.JFXPanel;
+import javafx.application.Platform;
 
 public class JFXBackgroundTask {
 	
-	private static final ThreadFactory JFX_THREAD_FACTORY = new ThreadFactory() {
+	public static final CountDownLatch JFX_INITIALIZATION_LATCH = new CountDownLatch(1);
+	
+    private static final ExecutorService JFX_THREAD = Executors.newSingleThreadExecutor(new ThreadFactory() {
 		@Override
 		public Thread newThread(Runnable task) {
 			Thread thread = new Thread(task, "IBEX GUI JavaFX worker thread");
 			thread.setDaemon(true);
 			return thread;
 		}
-	};
-	
-    private static final ExecutorService JFX_THREAD = Executors.newSingleThreadExecutor(JFX_THREAD_FACTORY);
+	});
     		
-    private static void startJFX(CountDownLatch latch) {
-    	JFXPanel backgroundPanel = new JFXPanel();
-    	backgroundPanel.setVisible(false);
-    	latch.countDown();
+    private static void startJFX() {
+    	System.out.println("Start task");
+    	Platform.setImplicitExit(false);
+    	System.out.println("Set exit");
+    	DummyJFXApplication.launch();
+    	System.out.println("Done launch");
     }
     
     public static CountDownLatch start() {
-    	final CountDownLatch latch = new CountDownLatch(1);
-    	JFX_THREAD.submit(() -> startJFX(latch));
-    	return latch;
+    	JFX_THREAD.submit(JFXBackgroundTask::startJFX);
+    	return JFX_INITIALIZATION_LATCH;
+    }
+    
+    public static void waitForJavaFxToBeReady() throws InterruptedException {
+    	JFX_INITIALIZATION_LATCH.await();
     }
 }

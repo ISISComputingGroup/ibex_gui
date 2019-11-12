@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics
-Import-Package: javafx.embed.swt,
+Import-Package: javafx.application,
+ javafx.embed.swt,
  javafx.stage,
  uk.ac.stfc.isis.ibex.javafx

@@ -21,7 +21,6 @@
 -Dpython.import.site=false
 -Dorg.osgi.framework.bundle.parent=ext
 -Dosgi.framework.extensions=org.eclipse.fx.osgi
--Defxclipse.osgi.hook.debug=true
 -Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
 -Dorg.eclipse.update.reconcile=false
 -Dosgi.requiredJavaVersion=1.8

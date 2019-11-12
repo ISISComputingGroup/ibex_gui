@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.e4.product;
 
-import javafx.embed.swt.FXCanvas;
-import javafx.stage.Stage;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
@@ -28,8 +26,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
-import uk.ac.stfc.isis.ibex.javafx.FXInitializeHack;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.javafx.DummyJFXApplication;
+import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
 
 /**
  * This class controls all aspects of the application's execution.
@@ -55,12 +53,7 @@ public class Application implements IApplication {
 		
 		Display display = PlatformUI.createDisplay();
 		try {
-			try {
-				FXInitializeHack.initializeUI().await();
-			} catch (InterruptedException e) {
-				IsisLog.getLogger(getClass()).fatal("Could not initialize JavaFX: " + e.getMessage());
-				return IApplication.EXIT_OK;
-			}
+			JFXBackgroundTask.start();
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
 			if (returnCode == PlatformUI.RETURN_RESTART) {
 				return IApplication.EXIT_RESTART;
