@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -19,7 +20,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The constructor, will create a config loader and load an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
-		configLoader = new ConfigLoader();
+		configLoader = new ConfigLoader(new PythonInterface());
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});

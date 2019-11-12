@@ -20,107 +20,24 @@ public class ConfigLoader extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ConfigLoader.class);
 	
-	private ClientServer clientServer;
-	private Process pythonProcess;
 	private List<Config> availableConfigs;
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
 	private Config selectedConfig;
-	
-	/**
-	 * @return The next free socket on the machine.
-	 * @throws IOException if a free socket cannot be found
-	 */
-	private int getFreeSocket() throws IOException {
-        try (ServerSocket socket = new ServerSocket(0)) {
-            socket.setReuseAddress(true);
-            return socket.getLocalPort();
-        }
-	}
-	
-	/**
-	 * Forwards errors from the python process.
-	 */
-	private Runnable listenToErrors = () -> {
-        try {        
-        	InputStreamReader isr = new InputStreamReader(pythonProcess.getErrorStream());
-	        BufferedReader br = new BufferedReader(isr);
-	        String line = null;
 
-			while ((line = br.readLine()) != null) {
-				if (!pythonProcess.isAlive()) {
-					break;
-				}
-				LOG.error("> " + line);
-			}
-		} catch (IOException e) {
-			LOG.warn("Could not forward process errors");
-			LOG.warn(e);
-		}
-	};
-	
-	/**
-	 * Creates the connection that will be used to communicate with the Python configuration.
-	 * @return The client server connection.
-	 * @throws IOException if the connection could not be made.
-	 */
-	private ClientServer createClientServer() throws IOException {
-        ClientServerBuilder clientServerBuilder = new ClientServerBuilder();
-        return clientServerBuilder.pythonPort(getFreeSocket()).javaPort(getFreeSocket()).build();		
-	}
-	
-	
-	/**
-	 * Spawns a python process in the operating system.
-	 * @param clientServer
-	 * 			Jython clientServer class.
-	 * @param pythonPath
-	 * 			Path to the python interpreter to be used.
-	 * @param filePath
-	 * 			Path to python script to be executed.
-	 * @return
-	 * 			The spawned python process.
-	 * @throws IOException
-	 */
-	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath) throws IOException {
-        Integer javaPort = clientServer.getJavaServer().getPort();
-        Integer pythonPort = clientServer.getPythonClient().getPort();
-        String absoluteFilePath = new ConfigUtils().relativePathToFull(filePath);
-        ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(), pythonPort.toString());
-		return builder.start();
-	}
-	
-	
+	private PythonInterface pythonInterface;	
 	
 	/**
 	 * Constructor for the config loader, initialises the connection with python and reads the configurations.
 	 */
-	public ConfigLoader() {
+	public ConfigLoader(PythonInterface pythonInterface) {
         try {
-        	get_script_generator_configurations();
+        	this.pythonInterface = pythonInterface;
+        	availableConfigs = pythonInterface.getActions();
             setConfig(availableConfigs.get(0));
 		} catch (IOException e) {
 			LOG.error("ConfigLoader could not start");
 			LOG.error(e);
 		}
-	}
-
-
-	private void get_script_generator_configurations() throws IOException {
-		clientServer = createClientServer();
-		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), "/defined_actions/action_loader.py");
-		new Thread(listenToErrors).start();
-		
-		ConfigWrapper configWrapper = (ConfigWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });
-		
-		availableConfigs = configWrapper.getActions();
-	}
-
-	/**
-	 * 
-	 * @return The path to the python 3 interpreter. This will be bundled with the GUI later.
-	 */
-	private String python3InterpreterPath() {
-		return "C:\\Instrument\\Apps\\Python3\\python.exe";
 	}
 
 	/**
@@ -159,6 +76,6 @@ public class ConfigLoader extends ModelObject {
 	 * Cleans up all resources.
 	 */
 	public void cleanUp() {
-		pythonProcess.destroy();
+		pythonInterface.cleanUp();
 	}
 }
