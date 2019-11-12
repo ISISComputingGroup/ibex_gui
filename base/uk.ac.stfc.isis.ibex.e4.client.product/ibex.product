@@ -19,10 +19,12 @@
 -Xmx512m
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
--Djava.net.preferIPv4Stack=true
--Dosgi.framework.extensions=org.eclipse.fx.osgi
 -Dorg.osgi.framework.bundle.parent=ext
+-Dosgi.framework.extensions=org.eclipse.fx.osgi
+-Defxclipse.osgi.hook.debug=true
 -XX:+CreateCoredumpOnCrash
+--module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
+--add-modules=javafx.controls,javafx.fxml,javafx.base,javafx.graphics,javafx.media
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -48,6 +50,7 @@
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css"/>
       <feature id="org.python.pydev.feature"/>
+      <feature id="org.eclipse.fx.runtime.min.feature" installMode="root"/>
    </features>
 
    <configurations>
@@ -56,7 +59,8 @@
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
-      <plugin id="org.eclipse.osgi" autoStart="false" startLevel="0" />
+      <plugin id="org.eclipse.fx.osgi" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />

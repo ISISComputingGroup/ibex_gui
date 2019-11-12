@@ -1169,13 +1169,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.glassfish.jakarta.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.glassfish.javax.json"
          download-size="0"
          install-size="0"
@@ -1353,13 +1346,6 @@
 
    <plugin
          id="net.sf.py4j"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.sf.py4j.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

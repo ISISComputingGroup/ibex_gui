@@ -140,12 +140,12 @@
 		<unit id="org.csstudio.trends.databrowser3.opiwidget.feature.feature.group" version="3.2.0.201805011755"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
-		<unit id="org.eclipse.fx.core.feature.feature.group" version="3.6.1.201909200827"/>
-		<unit id="org.eclipse.fx.nl.feature.feature.group" version="3.6.1.201909200827"/>
-		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.6.1.201909200827"/>
-		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.6.1.201909200822"/>
-		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.6.0.201907240201"/>
+		<repository location="http://download.eclipse.org/efxclipse/runtime-released/3.6.0/site"/>
+		<unit id="org.eclipse.fx.core.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.fx.nl.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="0.0.0"/>
 	</location>
 </locations>
 <environment>

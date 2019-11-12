@@ -24,9 +24,11 @@ Require-Bundle: org.eclipse.ui,
  org.csstudio.trends.databrowser3;bundle-version="4.2.3",
  org.csstudio.javafx;bundle-version="1.0.0",
  org.csstudio.javafx.rtplot;bundle-version="1.0.0",
- org.csstudio.javafx.swt;bundle-version="1.0.0"
+ org.csstudio.javafx.swt;bundle-version="1.0.0",
+ org.csstudio.display.builder.representation.javafx;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.eclipse.wb.swt
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.beamstatus
+Eclipse-BuddyPolicy: global

@@ -194,6 +194,8 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
      */
     @Override
     public void newDisplay(String pvAddress, final String displayName) {
+    	Class a = javafx.scene.Parent.class;
+    	Class b = javafx.scene.paint.Color.class;
         // Create new editor
         final DataBrowserEditor editor = DataBrowserEditor.createInstance(new EmptyEditorInput() {
             @Override
