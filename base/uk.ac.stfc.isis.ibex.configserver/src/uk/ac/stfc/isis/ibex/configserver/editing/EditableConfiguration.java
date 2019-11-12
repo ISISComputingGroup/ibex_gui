@@ -28,11 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -119,7 +116,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
             // Recreate the collection before the rename occurred.
             Collection<Block> blocksBeforeRename = transformBlocks();
-            Block renamed = getBlockByName(blocksBeforeRename, newName);
+            Block renamed = getBlockByName(blocksBeforeRename, newName).orElseThrow(NoSuchElementException::new);
             blocksBeforeRename.remove(renamed);
 
             Block oldBlock = new Block(renamed);
@@ -193,13 +190,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
         Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
         editableComponents = new EditableComponents(selectedComponents, components);
-        editableComponents.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateComponents();
-            }
-        });
+        editableComponents.addPropertyChangeListener(evt -> updateComponents());
 
         updateComponents();
     }
@@ -337,56 +328,37 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return True if configuration is new.
      */
     public boolean getIsNew() {
-        boolean isNew = (history.size() == 0);
-        return isNew;
+        return (history.size() == 0);
     }
 
     /**
      * @return The blocks associated with the configuration
      */
     Collection<Block> transformBlocks() {
-        return Lists.newArrayList(Iterables.transform(allBlocks, new Function<EditableBlock, Block>() {
-            @Override
-            public Block apply(EditableBlock block) {
-                return block;
-            }
-        }));
+        return new ArrayList<Block>(allBlocks);
     }
 
     /**
      * @return The groups associated with the configuration
      */
     private Collection<Group> transformGroups() {
-        return Lists.newArrayList(Iterables.transform(getEditableGroups(), new Function<EditableGroup, Group>() {
-            @Override
-            public Group apply(EditableGroup group) {
-                return group;
-            }
-
-        }));
+        return new ArrayList<Group>(getEditableGroups());
     }
 
     /**
      * @return The IOCs associated with the configuration
      */
     private Collection<Ioc> transformIocs() {
-        return Lists.newArrayList(Iterables.transform(configIocs, new Function<EditableIoc, Ioc>() {
-            @Override
-            public Ioc apply(EditableIoc ioc) {
-                return ioc;
-            }
-        }));
+        return new ArrayList<Ioc>(configIocs);
     }
 
     /**
      * @return The components associated with the configuration
      */
 	private Collection<ComponentInfo> transformComponents() {
-        Collection<ComponentInfo> result = new ArrayList<ComponentInfo>();
-        for (Configuration compDetails : editableComponents.getSelected()) {
-            result.add(new ComponentInfo(compDetails));
-        }
-        return result;
+        return editableComponents.getSelected().stream()
+        		.map(ComponentInfo::new)
+        		.collect(Collectors.toCollection(ArrayList::new));
 	}
 	
     /**
@@ -528,12 +500,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return whether the name is unique as boolean
      */
     private boolean blockNameIsUnique(String name) {
-        for (EditableBlock existingBlock : allBlocks) {
-            if (existingBlock.getName().equals(name)) {
-                return false;
-            }
-        }
-        return true;
+        return !allBlocks.stream().map(Block::getName).anyMatch(name::equals);
     }
 
     /**
@@ -668,13 +635,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the name of the block in question
      * @return the Block object
      */
-    private static Block getBlockByName(Iterable<Block> blocks, final String name) {
-        return Iterables.find(blocks, new Predicate<Block>() {
-            @Override
-            public boolean apply(Block block) {
-                return block.getName().equals(name);
-            }
-        });
+    private static Optional<Block> getBlockByName(Collection<Block> blocks, final String name) {
+        return blocks.stream()
+        		.filter(block -> block.getName().equals(name))
+        		.findFirst();
     }
 
     /**
@@ -685,11 +649,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return the Block object
      */
     public Block getBlockByName(final String name) {
-        try {
-            return getBlockByName(transformBlocks(), name);
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+        return getBlockByName(transformBlocks(), name).orElse(null);
     }
 
     /**
@@ -709,12 +669,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     @Override
     public List<String> getGroupNames() {
-        List<String> names = new ArrayList<>();
-        for (Group group : transformGroups()) {
-            names.add(group.getName());
-        }
-
-        return names;
+        return transformGroups().stream()
+        		.map(Group::getName)
+        		.collect(Collectors.toCollection(ArrayList::new));
     }
     
     /**
