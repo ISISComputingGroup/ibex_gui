@@ -74,8 +74,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         WindowLayout windowLayout = getPreviousWindowSettings();
 
         shell.setMinimumSize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT);
-        shell.setLocation(windowLayout.windowX, windowLayout.windowY);
-        shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
+//        shell.setLocation(windowLayout.windowX, windowLayout.windowY);
+//        shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
         shell.setMaximized(windowLayout.windowMaximised);
     }
 

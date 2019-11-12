@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.e4.product;
 
+import javafx.embed.swt.FXCanvas;
+import javafx.stage.Stage;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
@@ -44,6 +46,8 @@ public class Application implements IApplication {
 		// and change workspace compliance to Java 11.
 		@SuppressWarnings("unused") final var java11Check = new Object();
 		
+	    var fxStage = Stage.class;
+	    var fxCanvas = FXCanvas.class;
 		FXInitializeHack.initializeUI();
 		
 		// Start a JMX server for remote diagnostics.
