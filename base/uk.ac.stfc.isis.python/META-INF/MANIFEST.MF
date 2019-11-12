@@ -4,7 +4,8 @@ Bundle-Name: Python
 Bundle-SymbolicName: uk.ac.stfc.isis.python
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.python.Activator
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ uk.ac.stfc.isis.utils;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.python
 Bundle-ActivationPolicy: lazy
