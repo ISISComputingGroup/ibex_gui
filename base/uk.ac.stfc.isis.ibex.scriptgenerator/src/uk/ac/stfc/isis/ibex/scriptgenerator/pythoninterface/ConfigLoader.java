@@ -1,17 +1,12 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
 
-import py4j.ClientServer;
-import py4j.ClientServer.ClientServerBuilder;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -32,7 +27,8 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader(PythonInterface pythonInterface) {
         try {
         	this.pythonInterface = pythonInterface;
-        	availableConfigs = pythonInterface.getActions();
+        	pythonInterface.setUpPythonThread();
+        	availableConfigs = pythonInterface.getActionDefinitions();
             setConfig(availableConfigs.get(0));
 		} catch (IOException e) {
 			LOG.error("ConfigLoader could not start");

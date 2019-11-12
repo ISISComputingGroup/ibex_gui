@@ -1,6 +1,6 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter
-from action_interface import Action
+from action_interface import ActionDefinition
 from typing import Dict, AnyStr, Union
 from inspect import signature
 import inspect
@@ -16,7 +16,7 @@ class Config(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
 
-    def __init__(self, name: str, action: Action):
+    def __init__(self, name: str, action: ActionDefinition):
         self.action = action
         self.name = name
 
@@ -73,7 +73,7 @@ class ConfigWrapper(object):
     def __init__(self, available_actions: Dict):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
 
-    def getActions(self) -> list:
+    def getActionDefinitions(self) -> list:
         """
         Returns a list of action names available locally
 
@@ -84,7 +84,7 @@ class ConfigWrapper(object):
         return ListConverter().convert(self.actions, gateway._gateway_client)
 
 
-def get_actions() -> Dict[AnyStr, Action]:
+def get_actions() -> Dict[AnyStr, ActionDefinition]:
     """ Dynamically import all the Python modules in this module's sub directory. """
     search_folder = "instruments"
     this_file_path = os.path.split(__file__)[0]
@@ -96,7 +96,7 @@ def get_actions() -> Dict[AnyStr, Action]:
             # Print any errors to stderr, Java will catch and throw to the user
             print("Error loading {}: {}".format(filename, e), file=sys.stderr)
 
-    return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in Action.__subclasses__()}
+    return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in ActionDefinition.__subclasses__()}
 
 
 if __name__ == '__main__':

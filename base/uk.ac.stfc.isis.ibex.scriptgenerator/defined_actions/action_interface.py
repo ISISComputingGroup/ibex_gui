@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 from typing import Union, AnyStr
 
 
-class Action(ABC):
+class ActionDefinition(ABC):
     @abstractmethod
     def run(self, *args) -> None:
         """

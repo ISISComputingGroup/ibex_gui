@@ -1,7 +1,7 @@
-from action_interface import Action
+from action_interface import ActionDefinition
 
 
-class DoRun(Action):
+class DoRun(ActionDefinition):
     def run(self, the: float, imat: float, fields: float, there: float, are: int, more: str):
         pass
 

@@ -1,7 +1,7 @@
-from action_interface import Action
+from action_interface import ActionDefinition
 
 
-class DoRun(Action):
+class DoRun(ActionDefinition):
     def run(self, temperature: float, field: float, uamps: float):
         g.cset("temperature", temperature)
         g.cset("field", field)

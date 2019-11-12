@@ -23,7 +23,15 @@ public class PythonInterface {
 	private Process pythonProcess;
 	
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
+		
+	public PythonInterface() {
+		this("/defined_actions/action_loader.py");
+	}
 	
+	public PythonInterface(String actionLoaderPythonScript) {
+		this.actionLoaderPythonScript = actionLoaderPythonScript;
+	}
+
 	/**
 	 * Forwards errors from the python process.
 	 */
@@ -44,18 +52,8 @@ public class PythonInterface {
 			LOG.warn(e);
 		}
 	};
-	private String action_loader_python_script;
+	private String actionLoaderPythonScript;
 	private ConfigWrapper configWrapper;
-	
-	
-	public PythonInterface() {
-		this("/defined_actions/action_loader.py");
-	}
-	
-	public PythonInterface(String action_loader_python_script) {
-		this.action_loader_python_script = action_loader_python_script;
-	}
-
 
 	/**
 	 * 
@@ -113,8 +111,8 @@ public class PythonInterface {
 	 * Initialises
 	 */
  	
-	public List<Config> getActions() throws IOException {
-		return configWrapper.getActions();
+	public List<Config> getActionDefinitions() throws IOException {
+		return configWrapper.getActionDefinitions();
 	}
 	
 	/**
@@ -125,7 +123,7 @@ public class PythonInterface {
 	 */
 	public void setUpPythonThread() throws IOException {
 		clientServer = createClientServer();
-		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), action_loader_python_script);
+		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), actionLoaderPythonScript);
 		new Thread(listenToErrors).start();
 		
 		ConfigWrapper configWrapper = (ConfigWrapper) clientServer.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });
