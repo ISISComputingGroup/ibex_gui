@@ -29,8 +29,8 @@ public class ConfigLoaderTest {
 	@Before
 	public void setUp() {
 		
-		mockedConfig1 = create_mock_config("Config1");
-		mockedConfig2 = create_mock_config("Config2");
+		mockedConfig1 = createMockConfig("Config1");
+		mockedConfig2 = createMockConfig("Config2");
 		
 		availableConfigs = new ArrayList<Config>();
 		availableConfigs.add(mockedConfig1);
@@ -43,7 +43,7 @@ public class ConfigLoaderTest {
 		configLoader = new ConfigLoader(mockPythonInterface);
 	}
 
-	private Config create_mock_config(String action_parameter_name) {
+	private Config createMockConfig(String action_parameter_name) {
 		Config mockedConfig = mock(Config.class);
 		
 		ArrayList<String> configParams = new ArrayList<String>();
@@ -56,14 +56,56 @@ public class ConfigLoaderTest {
 	}
 	
 	@Test
-	public void test_GIVEN_config_loader_WHEN_config_changed_THEN_action_parameters_and_config_update() {		
-		assertEquals(configLoader.getConfig(), mockedConfig1);
+	public void test_GIVEN_new_configLoader_THEN_loader_initialised_to_first_config() {
+		// Arrange (in setUp)
 		
+		// Assert
+		assertEquals(configLoader.getConfig(), mockedConfig1);
+	}
+	
+	@Test
+	public void test_GIVEN_config_loader_WHEN_config_changed_THEN_action_parameters_and_config_update() {		
+		// Arrange (in setUp)
+		
+		// Act
 		configLoader.setConfig(mockedConfig2);
 		
+		// Assert
 		assertEquals(mockedConfig2, configLoader.getConfig());
+		
+		// Compare the parameters in the mocked Config to the ActionParameter in the configLoader.
 		assertEquals(mockedConfig2.getParameters().get(0), configLoader.getParameters().get(0).getName());
 	}
 	
+	@Test
+	public void test_GIVEN_config_loader_WHEN_config_set_THEN_ActionParameters_generated_from_action_definition() {
+		// Arrange
+		Config mockedConfigManyParameters = mock(Config.class);
+		
+		ArrayList<String> configParams = new ArrayList<String>();
+		
+		String param1 = "parameter one";
+		String param2 = "parameter two";
+		String param3 = "parameter three";
+		
+		configParams.add(param1);
+		configParams.add(param2);
+		configParams.add(param3);
+		
+		when(mockedConfigManyParameters.getParameters()).thenReturn(configParams);
+		
+		ArrayList<ActionParameter> actionParamList = new ArrayList<ActionParameter>();
+		
+		actionParamList.add(new ActionParameter(param1));
+		actionParamList.add(new ActionParameter(param2));
+		actionParamList.add(new ActionParameter(param3));
+		
+		// Act
+		configLoader.setConfig(mockedConfigManyParameters);
+		
+		// Assert
+		assertEquals(actionParamList, configLoader.getParameters());
+		
+	}
 	
 }

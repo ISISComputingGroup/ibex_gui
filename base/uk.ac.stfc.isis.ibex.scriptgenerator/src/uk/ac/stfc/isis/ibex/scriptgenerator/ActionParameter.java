@@ -9,7 +9,7 @@ public class ActionParameter {
 	private String name;
 	
 	/**
-	 * This class holds the name (and other information) about an action parameter.
+	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 */
 	public ActionParameter(String name) {
@@ -23,5 +23,18 @@ public class ActionParameter {
 		return name;
 	}
 
+	
+	/**
+	 * Check to see if the ActionParameter's attributes are equal to provided object
+	 * @param The object to compare against
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this.getClass() != o.getClass()) return false;	
+		
+		ActionParameter actionParameter = (ActionParameter) o;
+		return actionParameter.getName() == this.getName();
+		
+	}
 
 }
