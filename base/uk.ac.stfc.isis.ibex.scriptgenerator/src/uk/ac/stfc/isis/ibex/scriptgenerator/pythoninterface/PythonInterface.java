@@ -16,9 +16,12 @@ import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Sets up the py4j interface.
+ *
+ */
 public class PythonInterface {
 
-	
 	private ClientServer clientServer;
 	private Process pythonProcess;
 	
