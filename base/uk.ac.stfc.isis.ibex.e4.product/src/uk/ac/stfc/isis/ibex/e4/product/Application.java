@@ -25,10 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import javafx.application.Platform;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
-import uk.ac.stfc.isis.ibex.javafx.DummyJFXApplication;
-import uk.ac.stfc.isis.ibex.javafx.JFXBackgroundTask;
 
 /**
  * This class controls all aspects of the application's execution.

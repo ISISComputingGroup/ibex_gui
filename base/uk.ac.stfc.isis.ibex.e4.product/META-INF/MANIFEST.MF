@@ -14,5 +14,4 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics
 Import-Package: javafx.application,
  javafx.embed.swt,
- javafx.stage,
- uk.ac.stfc.isis.ibex.javafx
+ javafx.stage

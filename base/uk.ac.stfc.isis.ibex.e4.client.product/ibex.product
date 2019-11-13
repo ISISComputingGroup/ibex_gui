@@ -23,7 +23,6 @@
 -Dosgi.framework.extensions=org.eclipse.fx.osgi
 -Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
 -Dorg.eclipse.update.reconcile=false
--Dosgi.requiredJavaVersion=1.8
 -Declipse.p2.unsignedPolicy=allow
 -XX:+CreateCoredumpOnCrash
 --module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
