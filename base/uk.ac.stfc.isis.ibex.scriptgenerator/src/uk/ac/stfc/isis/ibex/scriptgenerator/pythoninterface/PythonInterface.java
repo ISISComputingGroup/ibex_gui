@@ -24,17 +24,25 @@ public class PythonInterface {
 
 	private ClientServer clientServer;
 	private Process pythonProcess;
-	
+	private ConfigWrapper configWrapper;
+
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 		
+	/**
+	 * Constructor uses default action loader python script location.
+	 */
 	public PythonInterface() {
 		this("/defined_actions/action_loader.py");
 	}
 	
+	/**
+	 * Constructor starts the python given python script.
+	 * @param actionLoaderPythonScript
+	 * 			Path to the action loader python script to start.
+	 */
 	public PythonInterface(String actionLoaderPythonScript) {
-		this.actionLoaderPythonScript = actionLoaderPythonScript;
 		try {
-			this.setUpPythonThread();
+			this.setUpPythonThread(actionLoaderPythonScript);
 		} catch (IOException e) {
 			LOG.error("Failed to set up py4j interface");
 			LOG.error(e);
@@ -61,8 +69,7 @@ public class PythonInterface {
 			LOG.warn(e);
 		}
 	};
-	private String actionLoaderPythonScript;
-	private ConfigWrapper configWrapper;
+
 
 	/**
 	 * 
@@ -117,7 +124,7 @@ public class PythonInterface {
 
 	
 	/**
-	 * Initialises
+	 * Gets all available actions from the python script.
 	 */
  	
 	public List<Config> getActionDefinitions() {
@@ -126,11 +133,13 @@ public class PythonInterface {
 	
 	/**
 	 * 
-	 * NB should call clean up at some point
-	 * @return
+	 * Creates the py4j client/server and starts the python thread.
+	 * @param actionLoaderPythonScript 
+	 * 			Path to the script containing the Config and ConfigWrapper classes.
 	 * @throws IOException
+	 * 			If actionLoaderPythonScript not found.
 	 */
-	public void setUpPythonThread() throws IOException {
+	public void setUpPythonThread(String actionLoaderPythonScript) throws IOException {
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), actionLoaderPythonScript);
 		new Thread(listenToErrors).start();
