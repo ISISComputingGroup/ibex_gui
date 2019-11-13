@@ -108,4 +108,12 @@ public class ConfigLoaderTest {
 		
 	}
 	
+	@Test
+	public void test_GIVEN_instantiated_config_loader_WHEN_all_available_configs_requested_THEN_all_configs_returned() {
+		// Arrange (in setUp)
+		
+		// Assert
+		assertEquals(configLoader.getAvailableConfigs(), availableConfigs);
+	}
+	
 }
