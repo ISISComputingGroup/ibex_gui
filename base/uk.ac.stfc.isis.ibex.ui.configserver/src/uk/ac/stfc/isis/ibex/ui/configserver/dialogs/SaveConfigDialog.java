@@ -22,9 +22,11 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -45,6 +47,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
@@ -131,6 +135,12 @@ public class SaveConfigDialog extends TitleAreaDialog {
     private boolean switchToNewConfig;
     
     private boolean asComponentSelected;
+    
+    private Map<String, Boolean>configWithFlag;
+    
+    private Map<String, Boolean>compWithFlags;
+    
+    private final ManagerModeModel model;
 
     /**
      * Instantiates a new save configuration dialog.
@@ -155,7 +165,8 @@ public class SaveConfigDialog extends TitleAreaDialog {
      *            The name of the current configuration
      */
     public SaveConfigDialog(Shell parent, String currentName, String currentDesc, Collection<String> existingConfigs,
-            Collection<String> existingComponents, boolean isConfig, boolean hasComponents, String currentConfigName) {
+            Collection<String> existingComponents, boolean isConfig, boolean hasComponents, String currentConfigName,
+            Map<String, Boolean> configWithFlag, Map<String, Boolean> compWithFlag) {
         super(parent);
         setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         this.currentName = currentName;
@@ -165,6 +176,9 @@ public class SaveConfigDialog extends TitleAreaDialog {
         this.isConfig = isConfig;
         this.hasComponents = hasComponents;
         this.currentConfigName = currentConfigName;
+        this.configWithFlag = configWithFlag;
+        this.compWithFlags = compWithFlag;
+        this.model = ManagerModeModel.getInstance();
     }
 
     /**
@@ -496,6 +510,19 @@ public class SaveConfigDialog extends TitleAreaDialog {
         if (nameMatchesCurrentConfig(name)) {
             return "Name matches the current configuration";
         }
+        
+        try {
+			if (compInProtectionMode(name) && !model.isInManagerMode()) {
+				return "Component with the name already exisist, try again in Manager mode to overwrite it";
+			}
+			if (configInProtectionMode(name) && !model.isInManagerMode()) {
+	        	return "Configuration with the name already exsist, try again in Manager mode to overwrite it";
+	        }
+		} catch (ManagerModePvNotConnectedException e) {
+		    MessageDialog error = new MessageDialog(this.getShell(), "Error", null, e.getMessage(),
+                    MessageDialog.ERROR, new String[] {"OK"},0);
+            error.open();
+		}
 
         BlockServerNameValidator configDescritpionRules = Configurations.getInstance()
                 .variables().configDescriptionRules.getValue();
@@ -508,7 +535,32 @@ public class SaveConfigDialog extends TitleAreaDialog {
 
         return "";
     }
-
+    
+    /**
+     * Check if a configuration is saved as protected.
+     * @param name of the configuration
+     * @return
+     */
+    private Boolean configInProtectionMode(String name) {
+    	Boolean retVal = false;
+    	if (configWithFlag.containsKey(name)) {
+    		retVal = configWithFlag.get(name);
+    	}
+    	return retVal;
+    }
+    
+    /**
+     * Check if component is saved as protected.
+     * @param name of the config
+     * @return true or false
+     */
+    private Boolean compInProtectionMode(String name) {
+    	Boolean retVal = false;
+    	if (compWithFlags.containsKey(name)) {
+    		retVal = compWithFlags.get(name);
+    	}
+    	return retVal;
+    }
     /**
      * Get any warning messages associated with proposed name of the object.
      * 

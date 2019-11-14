@@ -24,8 +24,12 @@ import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.ui.configserver.DeleteComponentsViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
@@ -56,15 +60,32 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet());
         
         if (dialog.open() == Window.OK) {
+            Map <String, Boolean> compNamesWithFlags = SERVER.compNamesWithFlags();
+            
+
             Collection<String> toDelete = dialog.selectedConfigs();
             Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
-
             if (selectedDependencies.isEmpty()) {
                 configService.uncheckedWrite(toDelete);
             } else {
                 displayWarning(selectedDependencies, shell);
-                safeExecute(shell); // Re-open selection dialog.
+                safeExecute(shell);
             }
+            try {
+                if (!ManagerModeModel.getInstance().isInManagerMode()) {
+                    for (String item: dialog.selectedConfigs()) {
+                        if (compNamesWithFlags.get(item)) {
+                            dispalyError(shell);
+                            break;
+                        }
+                    }
+                }
+            } catch (ManagerModePvNotConnectedException e) {
+                MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
+                    MessageDialog.ERROR, new String[] {"OK"},0);
+                error.open();
+            }
+            
         }
     }
     
@@ -74,6 +95,13 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 .open();
     }
 
-
+    private void dispalyError(Shell shell) {
+        MessageBox errorMessage = null;
+        errorMessage = new MessageBox(shell, SWT.ICON_ERROR);
+        errorMessage.setText("Error");
+        errorMessage.setMessage("Cannot delete the selected components, make sure protected "
+                + "components are not selected or try again in Manager mode to delete it");
+        errorMessage.open();
+    }
 
 }

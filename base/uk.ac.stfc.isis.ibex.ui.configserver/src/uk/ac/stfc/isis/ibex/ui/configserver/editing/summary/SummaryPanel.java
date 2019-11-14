@@ -29,6 +29,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -64,6 +65,7 @@ public class SummaryPanel extends Composite {
     private final MessageDisplayer messageDisplayer;
     private Button protectedCheckBox;
     private Label protectLabel;
+    private Label warning;
 
     /**
      * Constructor for the general information about the configuration.
@@ -109,23 +111,30 @@ public class SummaryPanel extends Composite {
         
         
         protectLabel = new Label(cmpSummary,  SWT.NONE);
-        protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
         protectLabel.setText("Protected:");
         
         protectedCheckBox = new Button(cmpSummary, SWT.CHECK);
         protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));     
-        
+
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
         lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDateCreated.setText("Date Created:");
 
         lblDateCreatedField = new Label(cmpSummary, SWT.NONE);
-
+        
         lblDateModified = new Label(cmpSummary, SWT.NONE);
         lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDateModified.setText("Date Modified:");
 
         lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
+        
+        warning = new Label(cmpSummary, SWT.NONE);
+        warning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        warning.setText("Info : To modify/save a protected configuration/component you have to be in Manager Mode");
+        warning.setVisible(false);
+        warning.setForeground(new Color(getDisplay(),252, 169, 3));
+
     }
 
     /**
@@ -171,6 +180,8 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("dateModified").observe(config));
         bindingContext.bindValue(WidgetProperties.selection().observe(protectedCheckBox),
                 BeanProperties.value("isProtected").observe(config));
+        bindingContext.bindValue(WidgetProperties.visible().observe(warning),
+                BeanProperties.value("errorMessageVisibility").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
                 BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);

@@ -20,19 +20,28 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.Collection;
+import java.util.Map;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 
 /**
@@ -42,9 +51,11 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 public class EditConfigDialog extends ConfigDetailsDialog {
 
     private Button saveAsBtn;
+    private Button saveButton;
     private boolean editBlockFirst;
     private boolean switchConfigOnSaveAs;
     private boolean calledSwitchConfigOnSaveAs = false;
+    private String currentlyEditingConfigOrComp;
 
     private ConfigServer server = Configurations.getInstance().server();
 
@@ -70,6 +81,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
             boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
         this.editBlockFirst = editBlockFirst;
+        this.currentlyEditingConfigOrComp = title.split("\\s+")[1];
+        
+        
     }
 
     @Override
@@ -85,19 +99,25 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         if (!isBlank && !this.config.getName().isEmpty()) {
-            createButton(parent, IDialogConstants.OK_ID, "Save", true);
+            saveButton = createButton(parent, IDialogConstants.OK_ID, "Save", true);
         }
 
         saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
         saveAsBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+            	Map<String, Boolean> configNamesFlags = server.configNamesWithFlags();
+            	Map<String, Boolean> componentsNamesFlags = server.compNamesWithFlags();
+            	
                 Collection<String> configNames = server.configNames();
                 Collection<String> componentNames = server.componentNames();
+                
                 boolean hasComponents = !config.getEditableComponents().getSelected().isEmpty();
                 String currentConfigName = server.currentConfig().getValue().name();
+                checkIfSavingAsProtected();
                 SaveConfigDialog dlg = new SaveConfigDialog(null, config.getName(), config.getDescription(),
-                        configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
+                        configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName,
+                        configNamesFlags, componentsNamesFlags);
                 if (dlg.open() == Window.OK) {
                     switchConfigOnSaveAs = dlg.shouldSwitchConfig();
                     calledSwitchConfigOnSaveAs = true;
@@ -117,6 +137,29 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 
         // Show any error message and set buttons after creating those buttons
         super.showErrorMessage();
+        bind();
+    }
+    
+    private void createWarningDialog() {
+    	MessageBox warningDialog = new MessageBox(this.getParentShell(), SWT.ICON_WARNING);
+    	warningDialog.setText("Warning");
+    	warningDialog.setMessage("You need to be in Manager Mode to save a protected "
+    	        + currentlyEditingConfigOrComp);
+    	warningDialog.open();
+    	
+    }
+
+    private void checkIfSavingAsProtected() {
+    	try {
+			if (!ManagerModeModel.getInstance().isInManagerMode() && 
+					config.getIsProtected()) {
+				createWarningDialog();
+			}
+		} catch (ManagerModePvNotConnectedException e) {
+		    MessageDialog error = new MessageDialog(this.getShell(), "Error", null, e.getMessage(),
+                    MessageDialog.ERROR, new String[] {"OK"},0);
+            error.open();
+		}
     }
 
     @Override
@@ -155,5 +198,13 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      */
     public boolean calledSwitchConfigOnSaveAs() {
         return calledSwitchConfigOnSaveAs;
+    }
+    
+    public void bind() {
+    	DataBindingContext bindingContext = new DataBindingContext();
+    	if (saveButton != null) {
+    		bindingContext.bindValue(WidgetProperties.enabled().observe(saveButton),
+    				BeanProperties.value("enableOrDisableSaveButton").observe(config));
+    	}
     }
 }

@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -43,9 +45,11 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObservable;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
-
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to
  * this class.
@@ -98,12 +102,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private List<String> history = new ArrayList<>();
     /** if the config is protected or not */
     private boolean isProtected;
-
+    /** Manager mode model **/
+    private ManagerModeModel managerMode;
+    /** warning message to be visible or invisible **/
+    private boolean errorMessageVisibility;
+    /** to enable or disable save button **/
+    private boolean enableOrDisableSaveButton;
     /** Available PVs. */
     private final List<PV> pvs;
-    
     /** If this is a component. */
     private boolean isComponent;
+    /** Currently in manager mode or not **/
+    private Boolean inManagerMode;
+    /** Manager mode Observable **/
+    private ManagerModeObservable managerModePv; 
+    
 
     /** Holds general information for IOCs */
     private Map<String, EditableIoc> iocMap = new HashMap<>();
@@ -152,7 +165,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.synoptic = config.synoptic();
 		this.isProtected = config.isProtected();
 		this.allIocs = new ArrayList<>();
-		
+		this.managerMode = ManagerModeModel.getInstance();
+		this.enableOrDisableSaveButton = true;
+        this.errorMessageVisibility = false;
+        managerModePv = managerMode.getManagerModeObservable();
 		for (EditableIoc ioc : iocs) {
 			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
 			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
@@ -202,6 +218,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         });
 
         updateComponents();
+        setEnableOrDisableSaveButton();
+        addObserver();
     }
 
     private EditableIoc convertIoc(Ioc ioc) {
@@ -312,7 +330,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * 				Whether the configuration is protected to only be editable in manager mode or not
      */
     public void setIsProtected(boolean isProtected) {
-    	firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
+        firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
+        setEnableOrDisableSaveButton();
     }
 
     /**
@@ -746,5 +765,57 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             }
         }
         return result;
+    }
+    
+    /**
+     * Logic for whether to enable or disable save button .
+     */
+    public void setEnableOrDisableSaveButton() {
+    	if (inManagerMode == null) {
+    	    // Do nothing
+    	} else if (!inManagerMode && isProtected) {
+			firePropertyChange("errorMessageVisibility", errorMessageVisibility, this.errorMessageVisibility = true);
+            firePropertyChange("enableOrDisableSaveButton", enableOrDisableSaveButton, this.enableOrDisableSaveButton = false);
+		} else if ((!inManagerMode && !isProtected) || (inManagerMode)) {
+            firePropertyChange("errorMessageVisibility", errorMessageVisibility, this.errorMessageVisibility = false);
+			firePropertyChange("enableOrDisableSaveButton", enableOrDisableSaveButton, this.enableOrDisableSaveButton = true);
+		} 
+    }
+    
+    /**
+     * Whether to enable or disable save button.
+     * @return boolean value to disable or enable save button
+     */
+    public boolean getEnableOrDisableSaveButton() {
+    	return enableOrDisableSaveButton;
+    }
+    
+    /**
+     * returns boolean value, whether the warning should be shown or not.
+     * @return boolean
+     */
+    public boolean getErrorMessageVisibility() {
+        return errorMessageVisibility;
+    }
+    
+    /**
+     * Add observer to the observable.
+     */
+    private void addObserver() {
+        new ManagerModeObserver(managerModePv.observable) {
+
+            @Override
+            protected void setManagerMode(Boolean value) {
+                inManagerMode = value;
+                EditableConfiguration.this.setEnableOrDisableSaveButton();
+                
+             }
+
+            @Override
+            protected void setUnknown() {
+            	inManagerMode = null;
+            }
+
+        };
     }
 }
