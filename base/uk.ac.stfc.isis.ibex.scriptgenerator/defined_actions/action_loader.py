@@ -11,7 +11,8 @@ import sys
 
 class Config(object):
     """
-    Exposes the definition and validate functions of a single action.
+    Class containing the definition and validation functions of a single action
+    .
     """
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
@@ -61,11 +62,15 @@ class Config(object):
             bool, True if other_config is equal to this instance, otherwise False.
         """
         return other_config.getName() == self.name
-    
+
+    def hashCode(self) -> int:
+        """ Calculates the hash of the config"""
+        return hash(self.name)
+
 
 class ConfigWrapper(object):
     """
-    Exposes the actions which have been found locally
+    Exposes all Configs which have been found supplied to the constructor.
     """
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']

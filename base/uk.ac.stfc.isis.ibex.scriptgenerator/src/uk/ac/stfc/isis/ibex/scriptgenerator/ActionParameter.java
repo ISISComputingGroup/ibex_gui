@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.util.Objects;
+
 /**
  * Data type for an action parameter.
  * 
@@ -35,6 +37,14 @@ public class ActionParameter {
 		ActionParameter actionParameter = (ActionParameter) o;
 		return actionParameter.getName() == this.getName();
 		
+	}
+	
+	/**
+	 * Calculate the hash of the ActionParameter.
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.getName());
 	}
 
 }

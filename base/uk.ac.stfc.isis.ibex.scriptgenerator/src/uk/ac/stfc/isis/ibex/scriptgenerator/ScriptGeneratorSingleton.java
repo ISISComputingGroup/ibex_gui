@@ -39,11 +39,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Adds the new action parameters to the empty ActionsTable.
 	 * 
-	 * @param actionParameters
+	 * @param the action Parameters to set in the script generator table
 	 */
 	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
-		// Setting new action parameters drops the whole table
-		//this.scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
+		// Setting new action parameters drops the current table
 		var newParameters = new ArrayList<ActionParameter>();
 		for (ActionParameter actionParameter : actionParameters) {
 			newParameters.add(actionParameter);
@@ -55,7 +54,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Get the actions table containing the parameters for the script.
 	 * 
-	 * @return the scriptGeneratorTable.
+	 * @return the instance of the scriptGeneratorTable.
 	 */
 	public ActionsTable getScriptGeneratorTable() {		
 		return scriptGeneratorTable;

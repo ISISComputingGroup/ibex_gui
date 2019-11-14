@@ -1,6 +1,5 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,10 +10,25 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
+
+/**
+ * Handles the configurations imported by the python interface.
+ *
+ */
 public class ConfigLoader extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ConfigLoader.class);
 	
+	/**
+	 * @param availableConfigs
+	 * 			List of configs imported by the python interface.
+	 * @param parameters
+	 * 			The action parameters of the currently loaded config.
+	 * @param selectedConfig
+	 * 			The currently selected config
+	 * @param pythonInterface
+	 * 			The py4j interface handling the ConfigWrapper.
+	 */
 	private List<Config> availableConfigs;
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
 	private Config selectedConfig;
