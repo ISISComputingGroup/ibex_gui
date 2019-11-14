@@ -21,10 +21,6 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 
@@ -75,16 +71,10 @@ public class DisplayGroup {
     }
 
     private DisplayBlock block(final String name) {
-        return Iterables.find(allBlocks, nameMatches(name), null);
-    }
-
-    private Predicate<DisplayBlock> nameMatches(final String name) {
-        return new Predicate<DisplayBlock>() {
-            @Override
-            public boolean apply(DisplayBlock block) {
-                return block.getName().equals(name);
-            }
-        };
+        return allBlocks.stream()
+        		.filter(block ->block.getName().equals(name))
+        		.findFirst()
+        		.orElse(null);
     }
 
     /**
@@ -93,11 +83,6 @@ public class DisplayGroup {
      * @return - true if group contains at least one visible block, false otherwise.
      */
     public boolean containsAnyVisibleBlocks() {
-        for (DisplayBlock block : blocks) {
-            if (block.getIsVisible()) {
-                return true;
-            }
-        }
-        return false;
+        return blocks.stream().anyMatch(DisplayBlock::getIsVisible);
     }
 }
