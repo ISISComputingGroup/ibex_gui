@@ -44,6 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 
     private ActionsTable actionsTable;
+    
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -53,7 +54,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      *            The SWT style of the composite that this creates.
      * @param tableStyle
      *            The SWT style of the table.
-     * @param scriptGeneratorTable 
+     * @param actionsTable 
+     * 			  The table of actions (rows) to display/write data to.
      */
     public ActionsViewTable(Composite parent, int style, int tableStyle, ActionsTable actionsTable) {
         super(parent, style, tableStyle | SWT.BORDER);
