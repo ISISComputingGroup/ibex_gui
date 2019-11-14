@@ -423,7 +423,11 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * @return the value tooltip text.
      */
     public String getValueTooltipText() {
-        return value + System.lineSeparator() + description;
+        return String.format("%s%sValue: %s%sStatus: %s%s%s", 
+        		block.getName(), System.lineSeparator(),
+        		value, System.lineSeparator(), 
+        		blockState.getUserFriendlyName(), System.lineSeparator(), 
+        		description);
     }
 
     /**

@@ -29,21 +29,35 @@ public enum PvState {
     /**
      * The default block state.
      */
-    DEFAULT,
+    DEFAULT("No alarm"),
     /**
      * The block is in a minor alarm state.
      */
-    MINOR_ALARM,
+    MINOR_ALARM("Minor alarm"),
     /**
      * The block is in a major alarm state.
      */
-    MAJOR_ALARM,
+    MAJOR_ALARM("Major alarm"),
     /**
      * The block is in an invalid alarm state (e.g. the pv is accessible but the device is disconnected).
      */
-    INVALID,
+    INVALID("Invalid"),
     /**
      * The block is disconnected (i.e. the PV is not accessible).
      */
-    DISCONNECTED
+    DISCONNECTED("Disconnected");
+	
+	private final String userFriendlyName;
+    
+    private PvState(String userFriendlyName) {
+    	this.userFriendlyName = userFriendlyName;
+    }
+    
+    /**
+     * Gets a name for this state suitable for displaying on a user interface.
+     * @return the name
+     */
+    public String getUserFriendlyName() {
+    	return userFriendlyName;
+    }
 }
