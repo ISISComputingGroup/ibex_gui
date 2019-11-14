@@ -39,7 +39,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Adds the new action parameters to the empty ActionsTable.
 	 * 
-	 * @param the action Parameters to set in the script generator table
+	 * @param actionParameters
+	 * 			the action parameters to use in the script generator table
 	 */
 	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
 		// Setting new action parameters drops the current table
@@ -54,7 +55,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Get the actions table containing the parameters for the script.
 	 * 
-	 * @return the instance of the scriptGeneratorTable.
+	 * @return scriptGeneratorTable
+	 * 			The instance of the scriptGeneratorTable.
 	 */
 	public ActionsTable getScriptGeneratorTable() {		
 		return scriptGeneratorTable;
@@ -70,7 +72,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param the index to delete.
+	 * @param index
+	 * 			the index to delete.
 	 */
 	public void deleteAction(int index) {
 		scriptGeneratorTable.deleteAction(index);
@@ -79,7 +82,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Duplicates action at position index in ActionsTable.
 	 * 
-	 * @param the index to duplicate.
+	 * @param index
+	 * 			the index to duplicate.
 	 */
 	public void duplicateAction(int index) {
 		scriptGeneratorTable.duplicateAction(index);
@@ -88,19 +92,21 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Moves action one row up in table.
 	 * 
-	 * @param the index to move.
+	 * @param index
+	 * 			the index to move.
 	 */
 	public void moveActionUp(int index) {
-		scriptGeneratorTable.moveAction(index, index-1);
+		scriptGeneratorTable.moveAction(index, index - 1);
 	}
 
 	/**
 	 * Moves action one row down in table.
 	 * 
-	 * @param the index to move.
+	 * @param index
+	 * 			the index to move.
 	 */
 	public void moveActionDown(int index) {
-		scriptGeneratorTable.moveAction(index, index+1);
+		scriptGeneratorTable.moveAction(index, index + 1);
 	}
 
 	/**
