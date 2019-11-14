@@ -13,7 +13,8 @@ SET "JAVA_HOME=%~dp0\jdk"
 call python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call copy_python.bat
+REM This batch script is called with copy_python.bat for build machines and dev_python.bat for dev machines
+call %1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT

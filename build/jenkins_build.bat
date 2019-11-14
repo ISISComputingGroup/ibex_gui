@@ -12,7 +12,7 @@ set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call build.bat
+call build.bat copy_python.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on

@@ -8,7 +8,8 @@ import org.eclipse.core.runtime.Path;
 
 public class Python {
 	
-	private String pythonRelativePath = "/Python3/python.exe";
+	private static final String pythonRelativePath = "/Python3/python.exe";
+	private static final String devPythonPath = "C:/Instrument/Apps/Python3/python.exe";
 	
 	/**
 	 * Gets the python that's been bundled with the gui.
@@ -19,7 +20,7 @@ public class Python {
 		try {
 			return relativePathToFull(pythonRelativePath);
 		} catch(IOException e) {
-			return Path.forWindows("C:/Instrument/Apps" + pythonRelativePath).toOSString();
+			return Path.forWindows(devPythonPath).toOSString();
 		}
 	}
 	
