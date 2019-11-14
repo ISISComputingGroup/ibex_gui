@@ -39,7 +39,11 @@ public enum PvState {
      */
     MAJOR_ALARM,
     /**
-     * The block is disconnected.
+     * The block is in an invalid alarm state (e.g. the pv is accessible but the device is disconnected).
+     */
+    INVALID,
+    /**
+     * The block is disconnected (i.e. the PV is not accessible).
      */
     DISCONNECTED
 }

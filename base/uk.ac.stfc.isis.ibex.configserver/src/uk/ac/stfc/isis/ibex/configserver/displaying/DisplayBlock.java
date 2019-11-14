@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * Contains the functionality to display a Block's value and run-control
@@ -48,6 +49,8 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final Block block;
     private String value;
     private String description;
+    
+    private static final boolean SHOW_INVALID_BLOCK_VALUES = new PreferenceSupplier().showInvalidBlockValues();
 
     /**
      * Indicates whether the block is currently within run-control range.
@@ -102,6 +105,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         @Override
         public void onError(Exception e) {
             setValue("error");
+            setBlockState(PvState.DISCONNECTED);
         }
 
         @Override
@@ -147,7 +151,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
             } else if (value.name().equals("MAJOR")) {
                 state = PvState.MAJOR_ALARM;
             } else if (value.name().equals("INVALID")) {
-                state = PvState.DISCONNECTED;
+                state = PvState.INVALID;
             }
 
             lastBlockState = state;
@@ -302,7 +306,11 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * @return the block's current value
      */
     public String getValue() {
-        return value;
+    	if (SHOW_INVALID_BLOCK_VALUES || blockState != PvState.INVALID) {
+    		return value;
+    	} else {
+    		return "invalid";
+    	}
     }
 
     /**
@@ -465,7 +473,15 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
 
     private void setBlockState(PvState blockState) {
+    	final boolean isChanged = blockState != this.blockState;
+    	
         firePropertyChange("blockState", this.blockState, this.blockState = blockState);
+        
+        if (isChanged) {
+        	// Changing alarm status may update the value. Fire property change with old value of null
+        	// to force databinding to read a new value string.
+        	firePropertyChange("value", null, getValue());
+        }
     }
 
     private void setRuncontrolState(RuncontrolState state) {
