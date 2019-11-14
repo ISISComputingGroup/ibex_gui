@@ -33,6 +33,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -50,7 +52,18 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private String value;
     private String description;
     
-    private static final boolean SHOW_INVALID_BLOCK_VALUES = new PreferenceSupplier().showInvalidBlockValues();
+    private static boolean SHOW_INVALID_BLOCK_VALUES;
+    
+    static {
+    	try {
+    		SHOW_INVALID_BLOCK_VALUES = new PreferenceSupplier().showInvalidBlockValues();
+    	} catch (Exception e) {
+    		LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(DisplayBlock.class), 
+    				"Cannot get invalid block values preference", e);
+    		SHOW_INVALID_BLOCK_VALUES = false;
+    	}
+    }
+        
 
     /**
      * Indicates whether the block is currently within run-control range.
