@@ -67,16 +67,16 @@
 <unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="0.0.0"/>
 <unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.0"/>
 <unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="0.0.0"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_4722/cs-studio/p2repo"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio/p2repo"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.epics.jca" version="0.0.0"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_4722/diirt/p2/target/repository/"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/diirt/p2/target/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.csstudio.thirdparty.all.feature.feature.group" version="0.0.0"/>
 <unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="0.0.0"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_4722/cs-studio-thirdparty/repository/target/repository"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio-thirdparty/repository/target/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.sun.jersey.bundle" version="0.0.0"/>
@@ -92,7 +92,7 @@
 <unit id="org.epics.jca.source" version="0.0.0"/>
 <unit id="org.epics.pvaccess.source" version="0.0.0"/>
 <unit id="org.epics.pvdata.source" version="0.0.0"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_4722/maven-osgi-bundles/repository/target/repository/"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/maven-osgi-bundles/repository/target/repository/"/>
 </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository"/>
