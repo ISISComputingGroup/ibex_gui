@@ -121,6 +121,13 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
+	 * Clears the list of actions.
+	 */
+	public void clearActions() {
+		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+	}
+
+	/**
 	 * Checks if the supplied index is a valid position in the table.
 	 * @param index
 	 * 			The index to test.
@@ -129,12 +136,5 @@ public class ActionsTable extends ModelObject {
 	 */
 	private Boolean isValidIndex(int index) {
 		return index >= 0 && index <= this.actions.size();
-	}
-	
-	/**
-	 * Clears the list of actions.
-	 */
-	public void clearActions() {
-		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
 	}
 }
