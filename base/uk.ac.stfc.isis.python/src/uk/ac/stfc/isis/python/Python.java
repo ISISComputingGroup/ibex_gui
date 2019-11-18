@@ -18,9 +18,7 @@ public class Python {
 	 */
 	public String getPythonPath() {
 		try {
-			var pythonPath = relativePathToFull(pythonRelativePath);
-			System.out.println(pythonPath);
-			return pythonPath;
+			return relativePathToFull(pythonRelativePath);
 		} catch(IOException e) {
 			return Path.forWindows(devPythonPath).toOSString();
 		}
