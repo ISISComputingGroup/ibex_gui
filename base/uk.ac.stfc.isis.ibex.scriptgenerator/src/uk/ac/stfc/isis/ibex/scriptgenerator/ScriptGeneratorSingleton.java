@@ -7,7 +7,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
- * Acts as a permanent reference to the ActionsTable
+ * Acts as a permanent reference to the ActionsTable.
  *
  */
 public class ScriptGeneratorSingleton extends ModelObject {
@@ -69,7 +69,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param index
 	 */
 	public void deleteAction(int index) {
-		
 		scriptGeneratorTable.deleteAction(index);
 	}
 	

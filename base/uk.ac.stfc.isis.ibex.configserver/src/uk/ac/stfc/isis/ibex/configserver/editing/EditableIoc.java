@@ -70,7 +70,7 @@ public class EditableIoc extends Ioc {
      *            The Editable IOC whose properties to match
      */
 	public EditableIoc(EditableIoc other) {
-        this(other, other.description);
+        this(other, other.getDescription());
 		
 		for (Macro macro : other.getAvailableMacros()) {
 			availableMacros.add(new Macro(macro));

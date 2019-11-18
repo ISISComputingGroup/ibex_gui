@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -18,6 +18,8 @@
 */
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
+
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 
@@ -40,6 +42,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
@@ -112,13 +115,18 @@ public class ScriptGeneratorView {
 		
 		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		scriptGeneratorModel.setActionParameters(actionParameters);
         
 		Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
         Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionUp(table.getSelectionIndex()));
+        
         Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionDown(table.getSelectionIndex()));
         
         
         Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
@@ -132,67 +140,24 @@ public class ScriptGeneratorView {
         btnInsertAction.setText("Add Action");
         btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		btnInsertAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				scriptGeneratorModel.addEmptyAction();
-			}
-		});
+        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorModel.addEmptyAction());
         
         
         final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDeleteAction.setText("Delete Action");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-		btnDeleteAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.deleteAction(index);
-				}
-			}
-		});
+        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorModel.deleteAction(table.getSelectionIndex()));
 
         final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		btnDuplicateAction.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.duplicateAction(index);
-				}
-			}
-		});
-
-		btnMoveActionUp.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.moveActionUp(index);
-				}
-			}
-		});
-		
-		btnMoveActionDown.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				var index = table.getSelectionIndex();
-				if (index >= 0) {
-					scriptGeneratorModel.moveActionDown(index);
-				}
-			}
-		});
+        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
 		
         bind();
 		
         scriptGeneratorModel.addEmptyAction();
 	}
-
+	
 	private void bind() {
 		bindingContext = new DataBindingContext();
 		

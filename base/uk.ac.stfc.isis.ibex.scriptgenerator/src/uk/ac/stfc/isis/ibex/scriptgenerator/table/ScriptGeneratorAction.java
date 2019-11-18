@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * Class defines one action or 'step' in the script.
@@ -12,12 +13,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class ScriptGeneratorAction extends ModelObject {
 
-	private HashMap<String, String > actionParameterValues;
+	private HashMap<ActionParameter, String > actionParameterValues;
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
 	 */
-	public ScriptGeneratorAction(HashMap<String, String> values) {
+	public ScriptGeneratorAction(HashMap<ActionParameter, String> values) {
 		this.actionParameterValues = values;
 	}
 	
@@ -26,24 +27,24 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @param actionToCopy
 	 */
 	public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy) {
-		this.actionParameterValues = new HashMap<String, String>();
+		this.actionParameterValues = new HashMap<ActionParameter, String>();
 		// Add all Parameter/value pairs to the hash map
-		for (Map.Entry<String, String> entry: actionToCopy.getAllActionParameters().entrySet()) {
+		for (Map.Entry<ActionParameter, String> entry: actionToCopy.getAllActionParameters().entrySet()) {
 			setActionParameterValue(entry.getKey(), entry.getValue());
 		}
 	}
 	
 	/**
 	 * Sets an action parameter value.
-	 * @param key
+	 * @param actionParameter
 	 * 			The name of the parameter to set.
 	 * @param value
 	 * 			The new value to set the parameter to.
 	 */
-	public void setActionParameterValue(String key, String value) {
-		String oldValue = actionParameterValues.get(key); 
-		actionParameterValues.put(key, value);
-		firePropertyChange(key, oldValue, value);
+	public void setActionParameterValue(ActionParameter actionParameter, String value) {
+		String oldValue = actionParameterValues.get(actionParameter); 
+		actionParameterValues.put(actionParameter, value);
+		firePropertyChange(actionParameter.getName(), oldValue, value);
 	}
 	
 	/**
@@ -53,8 +54,8 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @return
 	 * 			The value of the parameter.
 	 */
-	public String getActionParameterValue(String parameterName) {
-		return actionParameterValues.get(parameterName);		
+	public String getActionParameterValue(ActionParameter parameter) {
+		return actionParameterValues.get(parameter);
 	}
 	
 	/**
@@ -62,7 +63,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @return
 	 * 			HashMap of parameter, value pairs.
 	 */
-	public HashMap<String, String> getAllActionParameters(){
+	public HashMap<ActionParameter, String> getAllActionParameters(){
 		return actionParameterValues;
 	}
 	

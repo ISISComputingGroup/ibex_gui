@@ -10,7 +10,7 @@ public class ActionParameter {
 	
 	/**
 	 * This class holds the name (and other information) about an action parameter.
-	 * @param name
+	 * @param name The name of the action parameter (column header)
 	 */
 	public ActionParameter(String name) {
 		this.name = name;

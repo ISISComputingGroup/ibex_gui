@@ -25,11 +25,8 @@ import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -68,6 +65,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     }
 
     
+    /**
+     * Adds a parameter to this actions table.
+     */
     @Override
     protected void addColumns() {    	
         for (ActionParameter actionParameter: actionsTable.getActionParameters()) {
@@ -78,8 +78,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
 						@Override
 						protected String stringFromRow(ScriptGeneratorAction row) {
-							// TODO Auto-generated method stub
-							return row.getActionParameterValue(columnName);
+							return row.getActionParameterValue(actionParameter);
 						}
 						
 					});
@@ -88,26 +87,20 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	            @Override
 	            protected String valueFromRow(ScriptGeneratorAction row) {
-	                return row.getActionParameterValue(columnName);
+	                return row.getActionParameterValue(actionParameter);
 	            }
 	
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-	                row.setActionParameterValue(columnName, value);
+	                row.setActionParameterValue(actionParameter, value);
 	            }
 	        });	
         }
 	}
-
-	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
-        SelectionAdapter selectionAdapter = new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            }
-        };
-        return selectionAdapter;
-    }
 	
+    /**
+     * Using a null comparator here stops the columns getting reordered in the UI.
+     */
 	@Override
 	protected ColumnComparator<ScriptGeneratorAction> comparator() {
 		return new NullComparator<>();
