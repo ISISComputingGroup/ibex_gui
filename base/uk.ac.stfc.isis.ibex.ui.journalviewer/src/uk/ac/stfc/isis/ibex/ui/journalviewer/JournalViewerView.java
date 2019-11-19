@@ -20,11 +20,13 @@
 package uk.ac.stfc.isis.ibex.ui.journalviewer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -32,7 +34,6 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -178,7 +179,18 @@ public class JournalViewerView {
 		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
 			protected void addColumns() {
-				changeTableColumns();
+		        for (final JournalField field : JournalField.values()) {
+		            if (model.getFieldSelected(field)) {
+		                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
+		                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
+		                            @Override
+		                            protected String stringFromRow(JournalRow row) {
+		                                return row.get(field);
+		                            }
+		                        });
+		                col.getColumn().setText(field.getFriendlyName());
+		            }
+		        }
 			}
 			
 			@Override
@@ -189,7 +201,7 @@ public class JournalViewerView {
 			// Sort table by selected column when a column header is clicked
 			@Override
 			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
-		        SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		        return new SelectionAdapter() {
 		            @Override
 		            public void widgetSelected(SelectionEvent e) {
 		                JournalField field = JournalField.getFieldFromFriendlyName(column.getText());
@@ -197,7 +209,6 @@ public class JournalViewerView {
 	                    model.sortBy(field).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		            }
 		        };
-		        return selectionAdapter;
 		    }
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -240,45 +251,6 @@ public class JournalViewerView {
         setProgressIndicatorsVisible(true);
         model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
     }
-
-    private void changeTableColumns() {
-        // Dispose all the columns and re-add them, otherwise the columns may
-        // not be in the expected order.
-        for (TableColumn col : table.table().getColumns()) {
-            col.dispose();
-        }
-
-        for (final JournalField field : JournalField.values()) {
-            if (model.getFieldSelected(field)) {
-                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
-                        new DataboundCellLabelProvider<JournalRow>(table.observeProperty("row")) {
-                            @Override
-                            protected String stringFromRow(JournalRow row) {
-                                return row.get(field);
-                            }
-                        });
-                col.getColumn().setText(field.getFriendlyName());
-
-            }
-        }
-
-        forceResizeTable();
-        updateSortIndicator();
-    }
-
-    /**
-     * Forces the table to display the columns correctly.
-     * 
-     * This is a dirty hack but is the only way I found to ensure the columns
-     * displayed properly.
-     */
-    private void forceResizeTable() {
-        table.setRedraw(false);
-        Point prevSize = table.getSize();
-        table.setSize(prevSize.x, prevSize.y - 1);
-        table.setSize(prevSize);
-        table.setRedraw(true);
-    }
     
     /**
      * Updates the sort indicator arrow to the currently sorted column
@@ -318,45 +290,32 @@ public class JournalViewerView {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
 
-        spinnerPageNumber.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        spinnerPageNumber.addListener(SWT.Selection, e -> {
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
         
-        btnRefresh.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                resetPageNumber();
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        btnRefresh.addListener(SWT.Selection, e -> {
+            resetPageNumber();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
         
-        btnSearch.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                search();
-            }
-        });
+        btnSearch.addListener(SWT.Selection, e -> search());
         
-        btnClear.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                resetPageNumber();
-                searchInput.clearInput();
-                model.resetActiveSearch();
-                setProgressIndicatorsVisible(true);
-                model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            }
+        btnClear.addListener(SWT.Selection, e -> {
+            resetPageNumber();
+            searchInput.clearInput();
+            model.resetActiveSearch();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         model.addPropertyChangeListener("runs", e -> 
         DISPLAY.asyncExec(() -> {
                 setProgressIndicatorsVisible(true);
-                changeTableColumns();
+                table.updateTableColumns();
+                updateSortIndicator();
                 table.setRows(model.getRuns());
                 setProgressIndicatorsVisible(false);
         }));

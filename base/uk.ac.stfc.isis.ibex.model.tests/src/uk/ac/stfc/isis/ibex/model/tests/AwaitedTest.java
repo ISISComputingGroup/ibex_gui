@@ -91,7 +91,7 @@ public class AwaitedTest {
         new Awaited<String>(mockValue, mockLatch);
 
         // Assert
-        verify(mockValue, times(1)).addPropertyChangeListener(any());
+        verify(mockValue, times(1)).addPropertyChangeListener(any(PropertyChangeListener.class));
     }
     
     @Test
