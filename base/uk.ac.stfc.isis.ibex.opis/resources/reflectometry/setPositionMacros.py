@@ -12,6 +12,8 @@ def _set_opi(widget, param_type):
     widget.setPropertyValue("opi_file", "null.opi")
     if param_type == "correction":
         widget.setPropertyValue("opi_file", "correction.opi")
+    elif param_type == "align":
+        widget.setPropertyValue("opi_file", "param_align.opi")        
     elif param_type == "in_out":
         widget.setPropertyValue("opi_file", "param_inout.opi")
     else:
@@ -50,6 +52,8 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
         else:
             widget.setPropertyValue("visible", False)
 
+sort_out_list(pvs[2], "align_", "PARAM", True, 32)
 sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
 sort_out_list(pvs[0], "pos_", "PARAM", True, 22)
+
 
