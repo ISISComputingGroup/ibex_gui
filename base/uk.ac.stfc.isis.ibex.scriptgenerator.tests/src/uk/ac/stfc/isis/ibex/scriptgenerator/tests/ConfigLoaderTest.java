@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,7 +13,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ConfigLoaderTest {
 
@@ -36,7 +34,7 @@ public class ConfigLoaderTest {
 		availableConfigs.add(mockedConfig1);
 		availableConfigs.add(mockedConfig2);
 		
-		PythonInterface mockPythonInterface = mock(PythonInterface.class);
+		mockPythonInterface = mock(PythonInterface.class);
 		
 		when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
 		

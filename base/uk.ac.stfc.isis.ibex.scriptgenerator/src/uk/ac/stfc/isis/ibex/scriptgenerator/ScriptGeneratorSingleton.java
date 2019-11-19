@@ -62,11 +62,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
 		// Setting new action parameters drops the current table
-		var newParameters = new ArrayList<ActionParameter>();
-		for (ActionParameter actionParameter : actionParameters) {
-			newParameters.add(actionParameter);
-		}
-		scriptGeneratorTable.setActionParameters(newParameters);
+		scriptGeneratorTable.setActionParameters(actionParameters);
 		scriptGeneratorTable.clearActions();
 	}
 	
