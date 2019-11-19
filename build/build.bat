@@ -9,6 +9,10 @@ if %errcode% GEQ 4 (
 )
 
 SET "JAVA_HOME=%~dp0\jdk"
+
+REM This batch script is called with copy_python.bat for build machines and dev_python.bat for dev machines
+call %1
+if %errorlevel% neq 0 exit /b %errorlevel%
  
 call python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%

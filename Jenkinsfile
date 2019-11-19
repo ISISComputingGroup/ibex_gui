@@ -25,7 +25,7 @@ pipeline {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
-			}
+			      }
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
