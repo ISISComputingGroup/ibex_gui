@@ -50,10 +50,10 @@ public class ActionParameter {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this.getClass() != o.getClass()) return false;	
+		if (o instanceof ActionParameter) return false;	
 		
 		ActionParameter actionParameter = (ActionParameter) o;
-		return actionParameter.getName() == this.getName();
+		return this.getName().equals(actionParameter.getName());
 		
 	}
 	
