@@ -320,7 +320,9 @@ public class LogDisplay extends Canvas {
 		// Add JMS connection status notification
 		jmsStatusLabel = new Label(this, SWT.BORDER);
 		jmsStatusLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		setConnectionStatus(model.getConnectionStatus());
+		if (model != null) {
+			setConnectionStatus(model.getConnectionStatus());
+		}
 
 		// Layout the table columns and link them to the correct properties of
 		// the LogMessage object.
@@ -505,7 +507,7 @@ public class LogDisplay extends Canvas {
 
 		boolean anyItems = tableViewer.getTable().getItemCount() > 0;
 		boolean anySelected = selection.size() > 0;
-		boolean clearAllEnabled = anyItems && !model.isSearchMode();
+		boolean clearAllEnabled = anyItems && model!=null && !model.isSearchMode();
 
 		mnuClearRecent.setEnabled(clearAllEnabled);
 		mnuClearSelected.setEnabled(anySelected);
@@ -578,7 +580,9 @@ public class LogDisplay extends Canvas {
 			msgs.add((LogMessage) msg);
 		}
 
-		model.removeMessagesFromCurrentView(msgs);
+		if (model != null) {
+			model.removeMessagesFromCurrentView(msgs);
+		}
 	}
 
     /**
