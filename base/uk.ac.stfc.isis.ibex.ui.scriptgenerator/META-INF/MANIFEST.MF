@@ -20,3 +20,4 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.preferences
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scriptgenerator
 Import-Package: uk.ac.stfc.isis.ibex.ui.widgets
+Bundle-ActivationPolicy: lazy

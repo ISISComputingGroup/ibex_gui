@@ -13,10 +13,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  */
 public class ScriptGeneratorAction extends ModelObject {
 
-	private HashMap<ActionParameter, String > actionParameterValues;
+	private HashMap<ActionParameter, String> actionParameterValues;
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
+	 * @param values
+	 * 			The user-set value (string) for the specified ActionParameter.
 	 */
 	public ScriptGeneratorAction(HashMap<ActionParameter, String> values) {
 		this.actionParameterValues = values;
@@ -25,6 +27,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	/**
 	 * Constructor sets the parameter/value pairs to copy an existing ScriptGeneratorAction.
 	 * @param actionToCopy
+	 * 			The action to copy.
 	 */
 	public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy) {
 		this.actionParameterValues = new HashMap<ActionParameter, String>();
@@ -51,7 +54,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * Gets an action parameter value.
 	 * @param parameterName
 	 * 			The name of the parameter to get.
-	 * @return
+	 * @return 
 	 * 			The value of the parameter.
 	 */
 	public String getActionParameterValue(ActionParameter parameter) {
@@ -63,7 +66,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @return
 	 * 			HashMap of parameter, value pairs.
 	 */
-	public HashMap<ActionParameter, String> getAllActionParameters(){
+	public HashMap<ActionParameter, String> getAllActionParameters() {
 		return actionParameterValues;
 	}
 	
