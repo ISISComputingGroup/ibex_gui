@@ -28,6 +28,7 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * The actions table holds each action and its parameter values in an ordered list.
 	 * @param actionParameters
+	 * 			The parameters taken from the config to use in this table.
 	 */
 	public ActionsTable(List<ActionParameter> actionParameters) {
 		setActionParameters(actionParameters);
@@ -57,7 +58,7 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<ActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (ActionParameter actionParameter: this.actionParameters) {
-			parametersMap.put(actionParameter, actionParameter.getName()+Integer.toString(actions.size()));
+			parametersMap.put(actionParameter, actionParameter.getName() + Integer.toString(actions.size()));
 		}
 		
 		var newAction = new ScriptGeneratorAction(parametersMap);
@@ -89,7 +90,7 @@ public class ActionsTable extends ModelObject {
 			
 			newActions.addAll(actions);
 			
-			newActions.add(index+1, newAction);
+			newActions.add(index + 1, newAction);
 			
 			firePropertyChange("actions", actions, this.actions = newActions);
 		}
@@ -121,6 +122,12 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
+	 * Clears the list of actions.
+	 */
+	public void clearActions() {
+		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+	}
+	/**
 	 * Checks if the supplied index is a valid position in the table.
 	 * @param index
 	 * 			The index to test.
@@ -130,6 +137,4 @@ public class ActionsTable extends ModelObject {
 	private Boolean isValidIndex(int index) {
 		return index >= 0 && index <= this.actions.size();
 	}
-	
-	
 }
