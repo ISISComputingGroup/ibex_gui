@@ -507,7 +507,7 @@ public class LogDisplay extends Canvas {
 
 		boolean anyItems = tableViewer.getTable().getItemCount() > 0;
 		boolean anySelected = selection.size() > 0;
-		boolean clearAllEnabled = anyItems && model!=null && !model.isSearchMode();
+		boolean clearAllEnabled = anyItems && model != null && !model.isSearchMode();
 
 		mnuClearRecent.setEnabled(clearAllEnabled);
 		mnuClearSelected.setEnabled(anySelected);
