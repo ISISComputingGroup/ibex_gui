@@ -4,9 +4,9 @@ pushd \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP
 
 set KITS_ICP_PATH=%cd%
 
-if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
-	for /f %%i in ( %KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt ) do (
-	    set LATEST_PYTHON_DIR=%KITS_ICP_PATH%\genie_python_3\BUILD-%%i\Python
+if exist "%KITS_ICP_PATH%\genie_python\LATEST_BUILD.txt" (
+	for /f %%i in ( %KITS_ICP_PATH%\genie_python\LATEST_BUILD.txt ) do (
+	    set LATEST_PYTHON_DIR=%KITS_ICP_PATH%\genie_python\BUILD-%%i\Python
 	)
 ) else (
 	@echo Could not access LATEST_BUILD.txt
@@ -14,8 +14,7 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	exit /b 1
 )
 
-set PYCOPYPATH=%1\Python3
-rmdir %PYCOPYPATH% /s /q
+set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.python\Python3
 mkdir %PYCOPYPATH%
 xcopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /i /e /k /y /j
 

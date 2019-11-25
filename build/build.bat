@@ -10,11 +10,8 @@ if %errcode% GEQ 4 (
 
 SET "JAVA_HOME=%~dp0\jdk"
 
-SET CLIENT = %~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
-
-REM If COPY_PYTHON is an arg copy python into the client
-if "%1" == "COPY_PYTHON" ( call %1 %CLIENT% ) 
-if "%2" == "COPY_PYTHON" ( call %2 %CLIENT% ) 
+REM This batch script is called with copy_python.bat for build machines and dev_python.bat for dev machines
+call %1
 if %errorlevel% neq 0 exit /b %errorlevel%
  
 call python .\check_build.py ..\base\
@@ -25,5 +22,5 @@ if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-@echo Client built in %CLIENT%
+@echo Client built in %~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
 pause
