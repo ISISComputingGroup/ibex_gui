@@ -15,6 +15,8 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.python.Python;
+
 
 /**
  * Sets up the py4j interface.
@@ -76,7 +78,7 @@ public class PythonInterface {
 	 * @return The path to the python 3 interpreter. This will be bundled with the GUI later.
 	 */
 	private String python3InterpreterPath() {
-		return "C:\\Instrument\\Apps\\Python3\\python.exe";
+		return new Python().getPythonPath();
 	}
 
 	
@@ -107,7 +109,17 @@ public class PythonInterface {
         Integer pythonPort = clientServer.getPythonClient().getPort();
         String absoluteFilePath = relativePathToFull(filePath);
         ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(), pythonPort.toString());
-		return builder.start();
+        pythonProcess = builder.start();
+        try {
+	        if (!pythonProcess.isAlive() || pythonProcess.exitValue() != 0) {
+	        	String message = "Python process did not start correctly. Exit value: " + pythonProcess.exitValue();
+	        	LOG.error(message);
+	        	throw new IOException(message);
+	        }
+        } catch (IllegalThreadStateException e) {
+        	// Thrown by exitValue() if python process is still running (which is good)
+        }
+		return pythonProcess;
 	}
 
 	
@@ -168,7 +180,6 @@ public class PythonInterface {
 		URL resourcePath = getClass().getResource(relativePath);
 		
 		String fullPath = FileLocator.resolve(resourcePath).getPath();
-		//TODOD DELTEE 
 		
 		return Path.forWindows(fullPath).toOSString();
 	}
