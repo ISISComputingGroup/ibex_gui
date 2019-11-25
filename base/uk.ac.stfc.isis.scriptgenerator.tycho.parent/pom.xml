@@ -132,6 +132,29 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				 
+				<plugin>
+			        <artifactId>maven-resources-plugin</artifactId>
+			        <version>3.1.0</version>
+			        <executions>
+			          <execution>
+			            <id>copy-resources</id>
+			            <phase>validate</phase>
+			            <goals>
+			              <goal>copy-resources</goal>
+			            </goals>
+			            <configuration>
+			              <outputDirectory>../uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.python_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
+			              <resources>          
+			                <resource>
+			                  <directory>../uk.ac.stfc.isis.python/resources/Python3</directory>
+			                  <filtering>true</filtering>
+			                </resource>
+			              </resources>              
+			            </configuration>            
+			          </execution>
+			        </executions>
+			      </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Python
 Bundle-SymbolicName: uk.ac.stfc.isis.python;singleton:=true

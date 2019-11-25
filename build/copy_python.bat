@@ -14,7 +14,7 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	exit /b 1
 )
 
-set PYCOPYPATH=%1\Python3
+set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.python\resources\Python3
 rmdir %PYCOPYPATH% /s /q
 mkdir %PYCOPYPATH%
 xcopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /i /e /k /y /j
