@@ -78,7 +78,7 @@ public class PythonInterface {
 	 * @return The path to the python 3 interpreter. This will be bundled with the GUI later.
 	 */
 	private String python3InterpreterPath() {
-		return new Python().getPythonPath();
+		return Python.getPythonPath();
 	}
 
 	
@@ -138,10 +138,10 @@ public class PythonInterface {
 	/**
 	 * Gets all available actions from the python script.
 	 */
- 	
 	public List<Config> getActionDefinitions() {
 		return configWrapper.getActionDefinitions();
 	}
+	
 	
 	/**
 	 * 
