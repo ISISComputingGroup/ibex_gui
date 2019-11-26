@@ -56,6 +56,7 @@ public class DisplayBlockTest {
                 inRangeObservable, // inRange
 				mock(ForwardingObservable.class),  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit
+				mock(ForwardingObservable.class),  // suspendOnInvalid
                 enabledObservable, // enabled
                 "");
 	}

@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 /**
  * An exception indicating duplicate block names.
  */
+@SuppressWarnings("serial")
 public class DuplicateBlockNameException extends Exception {
 
     /**

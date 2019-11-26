@@ -42,12 +42,12 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
  */
 public class EditRunControlDialog extends TitleAreaDialog {
 
-	private static final Point INITIAL_SIZE = new Point(650, 500);
+	private static final Point INITIAL_SIZE = new Point(1000, 500);
 	private final String title;
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
-	RunControlSettingsPanel editor;
-	RunControlViewModel viewModel;
+	private RunControlSettingsPanel editor;
+	private final RunControlViewModel viewModel;
 	
 	/**
 	 * Creates a dialog for configuring the run-control settings.
@@ -78,6 +78,9 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
         setTitle("Configure Run Control");
@@ -88,17 +91,26 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		return editor;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.CANCEL_ID, "Close", false);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(title);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Point getInitialSize() {
 		return INITIAL_SIZE;
