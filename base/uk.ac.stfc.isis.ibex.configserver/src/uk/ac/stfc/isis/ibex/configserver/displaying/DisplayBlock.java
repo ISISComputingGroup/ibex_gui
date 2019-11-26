@@ -86,6 +86,11 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * what is set in the configuration.
      */
     private double highlimit;
+    
+    /**
+     * True if runcontrol should be suspended if the block goes into invalid alarm, false otherwise.
+     */
+    private boolean suspendIfInvalid;
 
     /**
      * Specifies whether the block is currently under run-control. This can be
@@ -222,6 +227,18 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         }
     };
 
+    private final BaseObserver<Boolean> suspendIfInvalidAdapter = new BaseObserver<Boolean>() {
+        @Override
+        public void onValue(Boolean value) {
+            setSuspendIfInvalid(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+        	setSuspendIfInvalid(null);
+        }
+    };
+
     private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
@@ -265,6 +282,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
             ForwardingObservable<String> inRangeSource,
             ForwardingObservable<Double> lowLimitSource,
             ForwardingObservable<Double> highLimitSource,
+            ForwardingObservable<Boolean> suspendIfInvalidSource,
             ForwardingObservable<String> enabledSource, String blockServerAlias) {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
@@ -276,6 +294,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         	inRangeSource,
         	lowLimitSource,
         	highLimitSource,
+        	suspendIfInvalidSource,
         	enabledSource
         );
 
@@ -286,6 +305,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 		    inRangeSource.subscribe(inRangeAdapter),
 		    lowLimitSource.subscribe(lowLimitAdapter),
 		    highLimitSource.subscribe(highLimitAdapter),
+		    suspendIfInvalidSource.subscribe(suspendIfInvalidAdapter),
 		    enabledSource.subscribe(enabledAdapter)
         );
     }
@@ -361,6 +381,14 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     @Override
     public Double getRunControlHighLimit() {
         return highlimit;
+    }
+    
+    /**
+     * @return the current high limit for run-control.
+     */
+    @Override
+    public Boolean getSuspendIfInvalid() {
+        return suspendIfInvalid;
     }
 
     /**
@@ -479,6 +507,14 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     @Override
     public synchronized void setRunControlHighLimit(Double limit) {
         firePropertyChange("runControlHighLimit", this.highlimit, this.highlimit = limit);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized void setSuspendIfInvalid(Boolean suspendIfInvalid) {
+        firePropertyChange("suspendIfInvalid", this.suspendIfInvalid, this.suspendIfInvalid = suspendIfInvalid);
     }
 
     /**

@@ -116,32 +116,40 @@ public class GroupRow extends Composite {
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblStatus),
                 BeanProperties.<DisplayBlock, String>value("runControlEnabled").observe(block));
+        
+        final UpdateValueStrategy<RuncontrolState, String> runcontrolTooltipStrategy = new UpdateValueStrategy<>();
+        
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblStatus), 
+        		BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, runcontrolTooltipStrategy);
 
-        UpdateValueStrategy<RuncontrolState, String> symbolStrategy = new UpdateValueStrategy<>();
+        final UpdateValueStrategy<RuncontrolState, String> symbolStrategy = new UpdateValueStrategy<>();
         symbolStrategy.setConverter(new RunControlSymbolConverter());
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
                 BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, symbolStrategy);
         
-        UpdateValueStrategy<RuncontrolState, Color> fgColourStrategy = new UpdateValueStrategy<>();
+        final UpdateValueStrategy<RuncontrolState, Color> fgColourStrategy = new UpdateValueStrategy<>();
         fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblStatus),
                 BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, fgColourStrategy);
 
-        UpdateValueStrategy<RuncontrolState, Color> bgColourStrategy = new UpdateValueStrategy<>();
+        final UpdateValueStrategy<RuncontrolState, Color> bgColourStrategy = new UpdateValueStrategy<>();
         bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(lblStatus),
                 BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, bgColourStrategy);
 
-        UpdateValueStrategy<PvState, Color> borderStrategy = new UpdateValueStrategy<>();
+        final UpdateValueStrategy<PvState, Color> borderStrategy = new UpdateValueStrategy<>();
         borderStrategy.setConverter(new BlockStatusBorderColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
                 BeanProperties.<DisplayBlock, PvState>value("blockState").observe(block), null, borderStrategy);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMenu(Menu menu) {
         super.setMenu(menu);
@@ -152,11 +160,8 @@ public class GroupRow extends Composite {
 
     private Label statusLabelMaker(Composite composite, int style, String description) {
         Label label = new Label(composite, style);
-
         label.setBackground(WHITE);
-
         label.setToolTipText(description);
-
         return label;
     }
     

@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -81,7 +81,7 @@ public class BlockRunControlPanel extends Composite {
 	private void setModel(BlockRunControlViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnEnabled),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimit),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));

@@ -44,11 +44,14 @@ public class RunControlForegroundColourConverter extends Converter<RuncontrolSta
 
     @Override
     public Color convert(RuncontrolState state) {
-        if (state == RuncontrolState.ENABLED_IN_RANGE) {
-            return BLACK;
+        switch (state) {
+	        case ENABLED_IN_RANGE:
+	        	return BLACK;
+	        case DISCONNECTED:
+	        	return WHITE;
+	        default:
+	        	return WHITE;
         }
-
-        return WHITE;
     }
 
 }

@@ -66,9 +66,13 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
             e.getValue().setLowLimit(e.getKey().getConfigurationLowLimit());
             e.getValue().setHighLimit(e.getKey().getConfigurationHighLimit());
             e.getValue().setEnabled(e.getKey().getConfigurationEnabled());
+            e.getValue().setSuspendIfInvalid(e.getKey().getSuspendIfInvalid());
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
 	public void resetFromSource() {
     	Optional<DisplayBlock> sourceBlock = setters.keySet().stream()
@@ -79,6 +83,7 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
     		setRunControlHighLimit(sourceBlock.get().getConfigurationHighLimit());
     		setRunControlLowLimit(sourceBlock.get().getConfigurationHighLimit());
     		setRunControlEnabled(sourceBlock.get().getConfigurationEnabled());
+    		setSuspendIfInvalid(sourceBlock.get().getSuspendIfInvalid());
     	}
     }
     
@@ -91,6 +96,7 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
     		setter.setLowLimit(getRunControlLowLimit());
     		setter.setHighLimit(getRunControlHighLimit());
     		setter.setEnabled(getRunControlEnabled());
+    		setter.setSuspendIfInvalid(getSuspendIfInvalid());
     	}
     	setSendEnabled(false);
     }
