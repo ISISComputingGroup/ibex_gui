@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.python.Python;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 
 /**
@@ -78,7 +78,7 @@ public class PythonInterface {
 	 * @return The path to the python 3 interpreter. This will be bundled with the GUI later.
 	 */
 	private String python3InterpreterPath() {
-		return Python.getPythonPath();
+		return new PreferenceSupplier().pythonInterpreterPath();
 	}
 
 	
