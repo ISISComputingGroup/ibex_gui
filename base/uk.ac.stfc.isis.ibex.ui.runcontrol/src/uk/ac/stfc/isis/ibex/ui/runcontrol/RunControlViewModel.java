@@ -20,11 +20,16 @@
 package uk.ac.stfc.isis.ibex.ui.runcontrol;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.AbstractRunControlViewModel;
@@ -35,7 +40,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.AbstractRunControlVie
  */
 public class RunControlViewModel extends AbstractRunControlViewModel {
 
-    private Map<DisplayBlock, RunControlSetter> setters = new HashMap<>();
+    private final Map<DisplayBlock, RunControlSetter> setters;
+    
+    private static final Logger LOG = IsisLog.getLogger(RunControlViewModel.class);
 
     private boolean sendEnabled;
 
@@ -52,9 +59,8 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
      *            The object for creating the PV names for run control.
      */
     public RunControlViewModel(Collection<DisplayBlock> blocks, final RunControlServer runControlServer) {
-        for (DisplayBlock block : blocks) {
-            setters.put(block, new RunControlSetter(block.getName(), runControlServer));
-        }
+        setters = Collections.unmodifiableMap(blocks.stream()
+                .collect(Collectors.toMap(block -> block, block -> new RunControlSetter(block.getName(), runControlServer))));
     }
 
     /**
@@ -62,11 +68,20 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
      * control settings.
      */
     public void resetAllRunControlSettings() {
-        for (Map.Entry<DisplayBlock, RunControlSetter> e : setters.entrySet()) {
-            e.getValue().setLowLimit(e.getKey().getConfigurationLowLimit());
-            e.getValue().setHighLimit(e.getKey().getConfigurationHighLimit());
-            e.getValue().setEnabled(e.getKey().getConfigurationEnabled());
-            e.getValue().setSuspendIfInvalid(e.getKey().getSuspendIfInvalid());
+    	LOG.info("Resetting all run control settings");
+        for (Map.Entry<DisplayBlock, RunControlSetter> entry : setters.entrySet()) {
+	        try {
+	        	final DisplayBlock block = entry.getKey();
+	        	final RunControlSetter setter = entry.getValue();
+	        	LOG.info("Resetting run control settings for block " + block);
+	        	
+	        	setter.setLowLimit(block.getConfigurationLowLimit());
+	        	setter.setHighLimit(block.getConfigurationHighLimit());
+	        	setter.setEnabled(block.getConfigurationEnabled());
+	        	setter.setSuspendIfInvalid(block.getConfigurationSuspendIfInvalid());
+	        } catch (Exception ex) {
+	        	LoggerUtils.logErrorWithStackTrace(LOG, ex.getMessage(), ex);
+	        }
         }
     }
     
@@ -75,15 +90,23 @@ public class RunControlViewModel extends AbstractRunControlViewModel {
      */
     @Override
 	public void resetFromSource() {
-    	Optional<DisplayBlock> sourceBlock = setters.keySet().stream()
-    			.filter(block -> (block == source))
+    	Optional<DisplayBlock> optionalSourceBlock = setters.keySet().stream()
+    			.filter(source::equals)
     			.findFirst();
     	
-    	if (sourceBlock.isPresent()) {
-    		setRunControlHighLimit(sourceBlock.get().getConfigurationHighLimit());
-    		setRunControlLowLimit(sourceBlock.get().getConfigurationHighLimit());
-    		setRunControlEnabled(sourceBlock.get().getConfigurationEnabled());
-    		setSuspendIfInvalid(sourceBlock.get().getSuspendIfInvalid());
+    	if (optionalSourceBlock.isPresent()) {
+    		try {
+	    		final DisplayBlock sourceBlock = optionalSourceBlock.get();
+	    		LOG.info("Resetting run control settings for block " + sourceBlock);
+	    		setRunControlHighLimit(sourceBlock.getConfigurationHighLimit());
+	    		setRunControlLowLimit(sourceBlock.getConfigurationLowLimit());
+	    		setRunControlEnabled(sourceBlock.getConfigurationEnabled());
+	    		setSuspendIfInvalid(sourceBlock.getConfigurationSuspendIfInvalid());
+    		} catch (Exception ex) {
+    			LoggerUtils.logErrorWithStackTrace(LOG, ex.getMessage(), ex);
+    		}
+    	} else {
+    		LOG.error(String.format("Attempting to reset block %s from source failed because the block was not found.", source));
     	}
     }
     

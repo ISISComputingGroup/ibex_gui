@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
+import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.base.Strings;
@@ -69,11 +70,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * Indicates whether the block is currently within run-control range.
      */
     private boolean inRange;
-
-    /**
-     * Indicates whether the block is currently disconnected.
-     */
-    private boolean disconnected;
 
     /**
      * The current low limit run-control setting. This can be different from
@@ -128,14 +124,12 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
-            setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");
                 setBlockState(PvState.DISCONNECTED);
             } else {
                 setBlockState(lastBlockState);
             }
-            setRuncontrolState(checkRuncontrolState());
         }
     };
 
@@ -187,19 +181,28 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            if (value.equals("NO")) {
+            if (Objects.equals(value, "NO")) {
                 setInRange(false);
-            } else {
-                // If in doubt set to true
+                setRuncontrolState(checkRuncontrolState());
+            } else if (Objects.equals(value, "YES")) {
                 setInRange(true);
+                setRuncontrolState(checkRuncontrolState());
+            } else {
+            	// e.g. value is null or empty string
+            	setRuncontrolState(RuncontrolState.DISCONNECTED);
             }
-            setRuncontrolState(checkRuncontrolState());
         }
 
         @Override
         public void onError(Exception e) {
-            // If in doubt set to true
-            setInRange(true);
+        	setRuncontrolState(RuncontrolState.DISCONNECTED);
+        }
+        
+        @Override
+        public void onConnectionStatus(boolean connected) {
+        	if (!connected) {
+        		setRuncontrolState(RuncontrolState.DISCONNECTED);
+        	}
         }
     };
 
@@ -242,19 +245,30 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            if (value.equals("YES")) {
+        	System.out.println("enabled: " + value);
+            if (Objects.equals(value, "YES")) {
                 setRunControlEnabled(true);
-            } else {
-                // If in doubt set to false
+                setRuncontrolState(checkRuncontrolState());
+            } else if (Objects.equals(value, "NO")) {
                 setRunControlEnabled(false);
+                setRuncontrolState(checkRuncontrolState());
+            } else {    
+             // e.g. value is null or empty string
+            	setRuncontrolState(RuncontrolState.DISCONNECTED);
             }
-            setRuncontrolState(checkRuncontrolState());
         }
 
         @Override
         public void onError(Exception e) {
-            // If in doubt set to false
-            setRunControlEnabled(false);
+        	System.out.println("enabled error");
+        	setRuncontrolState(RuncontrolState.DISCONNECTED);
+        }
+        
+        @Override
+        public void onConnectionStatus(boolean connected) {
+        	if (!connected) {
+        		setRuncontrolState(RuncontrolState.DISCONNECTED);
+        	}
         }
     };
 
@@ -276,14 +290,16 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * @param enabledSource the observable holding the block's enabled status
      * @param blockServerAlias the PVs alias on the block server
      */
-    public DisplayBlock(Block block, ForwardingObservable<String> valueSource,
+    public DisplayBlock(Block block, 
+    		ForwardingObservable<String> valueSource,
             ForwardingObservable<String> descriptionSource,
             ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
             ForwardingObservable<Double> lowLimitSource,
             ForwardingObservable<Double> highLimitSource,
             ForwardingObservable<Boolean> suspendIfInvalidSource,
-            ForwardingObservable<String> enabledSource, String blockServerAlias) {
+            ForwardingObservable<String> enabledSource, 
+            String blockServerAlias) {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
 
@@ -419,6 +435,14 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     public Boolean getConfigurationEnabled() {
         return block.getRunControlEnabled();
     }
+    
+    /**
+     * @return whether run-control is enabled in the configuration.
+     */
+    public Boolean getConfigurationSuspendIfInvalid() {
+        return block.getSuspendIfInvalid();
+    }
+
 
     /**
      * @return the overall run-control status.
@@ -485,10 +509,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         return block.getName() + ":"  + System.lineSeparator() + description;
     }
 
-    private synchronized void setDisconnected(Boolean disconnected) {
-        this.disconnected = disconnected;
-    }
-
     private synchronized void setInRange(Boolean inRange) {
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
@@ -543,10 +563,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
 
     private RuncontrolState checkRuncontrolState() {
-        if (disconnected) {
-            return RuncontrolState.DISCONNECTED;
-        }
-
         if (!runcontrolEnabled) {
             return RuncontrolState.DISABLED;
         }
@@ -556,5 +572,32 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         } else {
             return RuncontrolState.ENABLED_OUT_RANGE;
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+    	if (other == null || !(other instanceof DisplayBlock)) {
+    		return false;
+    	}
+    	return Objects.equals(((DisplayBlock) other).getName(), getName());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+    	return Objects.hash(getName());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+    	return String.format("DisplayBlock (name=%s)", getName());
     }
 }

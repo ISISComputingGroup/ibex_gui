@@ -27,19 +27,19 @@ public enum RuncontrolState {
     /**
      * The run control is disabled.
      */
-    DISABLED("Runcontrol is not enabled"),
+    DISABLED("Runcontrol is not enabled for this value."),
     /**
      * The run control is enabled and in range.
      */
-    ENABLED_IN_RANGE("Runcontrol is enabled and value is within specified range"),
+    ENABLED_IN_RANGE("Runcontrol is enabled and the value is within the specified range."),
     /**
      * The run control is enabled but out of range.
      */
-    ENABLED_OUT_RANGE("Runcontrol is enabled and value is outside specified range"),
+    ENABLED_OUT_RANGE("Runcontrol is enabled and the value is outside the specified range."),
     /**
      * The run control is disconnected.
      */
-    DISCONNECTED("Runcontrol for this item is disconnected");
+    DISCONNECTED("Runcontrol status is unknown; there was a problem reading the status of runcontrol for this item.");
 	
 	private final String name;
 	

@@ -38,6 +38,7 @@ public class RunControlBackgroundColourConverter extends Converter<RuncontrolSta
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
     private static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
+    private static final Color ORANGE = SWTResourceManager.getColor(255, 154, 46);
 
     /**
      * Instantiates a new RunControlBackgroundColourConverter.
@@ -54,7 +55,7 @@ public class RunControlBackgroundColourConverter extends Converter<RuncontrolSta
         	case ENABLED_OUT_RANGE:
         		return DARK_RED;
         	case DISCONNECTED:
-        		return DARK_RED;
+        		return ORANGE;
         	default:
         		return WHITE;
         }

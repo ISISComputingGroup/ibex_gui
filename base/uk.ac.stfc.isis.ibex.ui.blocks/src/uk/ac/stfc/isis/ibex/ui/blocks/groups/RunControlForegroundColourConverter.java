@@ -48,7 +48,7 @@ public class RunControlForegroundColourConverter extends Converter<RuncontrolSta
 	        case ENABLED_IN_RANGE:
 	        	return BLACK;
 	        case DISCONNECTED:
-	        	return WHITE;
+	        	return BLACK;
 	        default:
 	        	return WHITE;
         }
