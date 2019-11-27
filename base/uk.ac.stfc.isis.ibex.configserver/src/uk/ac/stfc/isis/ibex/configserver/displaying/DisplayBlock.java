@@ -245,7 +245,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-        	System.out.println("enabled: " + value);
             if (Objects.equals(value, "YES")) {
                 setRunControlEnabled(true);
                 setRuncontrolState(checkRuncontrolState());
@@ -260,7 +259,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         @Override
         public void onError(Exception e) {
-        	System.out.println("enabled error");
         	setRuncontrolState(RuncontrolState.DISCONNECTED);
         }
         
