@@ -2205,5 +2205,23 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>ICE Oxford dilution refrigerator</key>
+      <value>
+      	<type>DILUTION_FRIDGE</type>
+      	<path>icefrdge.opi</path>
+      	<description>The OPI for the ICE Oxford dilution fridge IOCr</description>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ICEFRDGE</name>
+            <description>The ICE diution fridge PV prefix (e.g. ICEFRDGE)</description>
+          	<default>ICEFRDGE_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
