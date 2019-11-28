@@ -10,8 +10,11 @@ import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
  */
 public class InterruptScript extends AbstractHandler {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	public Void execute(ExecutionEvent event) throws ExecutionException {
 		ScriptConsole.getActiveScriptConsole().interrupt();
 		return null;
 	}

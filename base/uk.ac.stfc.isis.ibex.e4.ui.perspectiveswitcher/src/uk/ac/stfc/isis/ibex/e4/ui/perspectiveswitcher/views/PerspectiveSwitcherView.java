@@ -153,7 +153,7 @@ public class PerspectiveSwitcherView {
 	    ResetLayoutButtonViewModel model = new ResetLayoutButtonViewModel();
 	    buttonModels.add(model);
 	    
-	    ResetLayoutButton button = new ResetLayoutButton(parent, perspectivesProvider, model);
+	    ResetLayoutButton button = new ResetLayoutButton(parent, model);
 	    button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
