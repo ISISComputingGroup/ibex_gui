@@ -14,6 +14,5 @@ base/uk.ac.stfc.isis.ibex.opis/check_OPI_format_logs
 *$py.class
 build/jdk
 build/jdk.zip
-*Python3*
 *.idea
-build/current_python_build.txt
+*Python3*

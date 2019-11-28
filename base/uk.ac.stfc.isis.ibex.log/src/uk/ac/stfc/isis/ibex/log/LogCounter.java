@@ -45,7 +45,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     private final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
     
     public LogCounter() {
-    	UI.plugin.addStopWaitPropertyChangeListener(this);
+    	UI.getDefault().addStopWaitPropertyChangeListener(this);
     }
 
     /**

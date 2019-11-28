@@ -63,7 +63,7 @@ public final class AlarmReloadManager implements PropertyChangeListener {
         if (instance == null) {
             instance = new AlarmReloadManager();
         }
-        UI.plugin.addStopWaitPropertyChangeListener(instance);
+        UI.getDefault().addStopWaitPropertyChangeListener(instance);
         return instance;
     }
 

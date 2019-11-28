@@ -17,29 +17,11 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	exit /b 1
 )
 
-REM Do not copy if the current build is the same as the latest build
-set current_build_file=%~dp0current_python_build.txt
-if exist "%current_build_file%" (
-	for /f %%i in ("%current_build_file%") do set CURRENT_BUILD="%%i"
-	if !CURRENT_BUILD! neq %LATEST_BUILD% (
-		call :copy_python
-	)
-) else (
-	call :copy_python
+robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
+
+popd
+
+if not exist %PYCOPYPATH%\python.exe (
+	exit /b 1
 )
-
-GOTO :clean_up
-
-:copy_python
-    robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
-	@echo %LATEST_BUILD%> %current_build_file%
-exit /b
-
-:clean_up
-	popd
-
-	if not exist %PYCOPYPATH%\python.exe (
-		exit /b 1
-	)
-	if %errorlevel% neq 0 exit /b %errorlevel%
-exit /b
+if %errorlevel% neq 0 exit /b %errorlevel%

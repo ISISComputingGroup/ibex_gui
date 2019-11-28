@@ -85,7 +85,7 @@ public class PerspectiveSwitcher {
 
 					// Restart counter if switching to or from IOC log
 					if (isLogPerspective(perspectiveID)) {
-						UI.plugin.switchIOCLog();
+						UI.getDefault().switchIOCLog();
 					}
 
 					workbench.showPerspective(perspectiveID, workbenchWindow);

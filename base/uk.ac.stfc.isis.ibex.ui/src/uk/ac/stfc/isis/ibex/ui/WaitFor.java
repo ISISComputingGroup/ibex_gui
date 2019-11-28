@@ -122,7 +122,7 @@ public class WaitFor {
 			dialog.setCursor(SWT.CURSOR_ARROW);
 			dialog.close();
         }
-		UI.plugin.stopWait();
+		UI.getDefault().stopWait();
 	}
 	
 	/**
