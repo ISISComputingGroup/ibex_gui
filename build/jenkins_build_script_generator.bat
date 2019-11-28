@@ -4,8 +4,8 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Python27
-set PYTHON_HOME=C:\Python27
+set PYTHON=C:\Instrument\Apps\Python
+set PYTHON_HOME=C:\Instrument\Apps\Python
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 set GENIEPYTHONDIR=c:\Installers\genie_python
 
