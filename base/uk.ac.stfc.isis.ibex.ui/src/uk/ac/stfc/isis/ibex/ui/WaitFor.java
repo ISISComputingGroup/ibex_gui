@@ -36,10 +36,10 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
+import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * The Class WaitFor which is a handler which will show and hide the wait for the server dialogue.
@@ -52,9 +52,8 @@ public class WaitFor {
 		
 	private final Collection<Waiting> waiters = new ArrayList<>();
 	
-	private IEclipseContext context;
-	
-	
+	private IEclipseContext context;	
+		
 	/**
 	 * Sets the up wait for dialogue.
 	 *
@@ -123,7 +122,7 @@ public class WaitFor {
 			dialog.setCursor(SWT.CURSOR_ARROW);
 			dialog.close();
         }
-        AlarmReloadManager.getInstance().queueDelayedUpdate();
+		UI.plugin.stopWait();
 	}
 	
 	/**

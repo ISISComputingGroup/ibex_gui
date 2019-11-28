@@ -113,10 +113,10 @@
 		              <goal>copy-resources</goal>
 		            </goals>
 		            <configuration>
-			          <outputDirectory>../uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.python_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
+			          <outputDirectory>../uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.ibex.preferences_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
 		              <resources>          
 		                <resource>
-			              <directory>../uk.ac.stfc.isis.python/resources/Python3</directory>
+			              <directory>../uk.ac.stfc.isis.ibex.preferences/resources/Python3</directory>
 		                  <filtering>true</filtering>
 		                </resource>
 		              </resources>              
@@ -254,7 +254,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
-		<module>../uk.ac.stfc.isis.python</module>
 		
 		<!-- The following plugins are temporarily disabled from running in maven, see https://github.com/ISISComputingGroup/IBEX/issues/4759
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>

@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
@@ -36,10 +39,10 @@ public class UI extends AbstractUIPlugin implements IStartup {
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui"; //$NON-NLS-1$	
 
 	// The shared instance
-	private static UI plugin;
+	public static UI plugin;
 
 	@SuppressWarnings("unused")
 	private WaitFor waiting;
@@ -49,6 +52,62 @@ public class UI extends AbstractUIPlugin implements IStartup {
      */
 	public UI() {
 	}
+	
+	private final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
+	
+	private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	
+	/**
+	 * Add a property change support listener for stopWait changes.
+	 * 
+	 * @param listener To listen for property changes.
+	 */
+	public void addSwitchIOCLogPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(switchToOrFromIOCLogProperty, listener);
+    }
+
+	/**
+	 * Remove a property change support listener for stopWait changes.
+	 * 
+	 * @param listener That will no longer listen to property support changes.
+	 */
+    public void removeSwitchIOCLogPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(switchToOrFromIOCLogProperty, listener);
+    }
+    
+    /**
+     * Called when PerspectiveSwitcher switches to or from the IOC log.
+     */
+    public void switchIOCLog() {
+    	propertyChangeSupport.firePropertyChange(switchToOrFromIOCLogProperty, null, null);
+    }
+    
+    private final String stopWaitProperty = "stopWait";
+	
+	/**
+	 * Add a property change support listener for stopWait changes.
+	 * 
+	 * @param listener To listen for property changes.
+	 */
+	public void addStopWaitPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(stopWaitProperty, listener);
+    }
+
+	/**
+	 * Remove a property change support listener for stopWait changes.
+	 * 
+	 * @param listener That will no longer listen to property support changes.
+	 */
+    public void removeStopWaitPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(stopWaitProperty, listener);
+    }
+    
+    /**
+     * Called when WaitFor stopWait occurs.
+     */
+    public void stopWait() {
+    	propertyChangeSupport.firePropertyChange(stopWaitProperty, null, null);
+    }
 	
 	/**
 	 * Switch perspectives.
@@ -62,7 +121,6 @@ public class UI extends AbstractUIPlugin implements IStartup {
 				IWorkbench workbench = PlatformUI.getWorkbench();	   
 				IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
 				PerspectiveSwitcher switcher = new PerspectiveSwitcher(workbench, workbenchWindow);
-				
 				switcher.switchTo(perspectiveID).run();		    
 			}
 		});

@@ -10,9 +10,8 @@ if %errcode% GEQ 4 (
 
 SET "JAVA_HOME=%~dp0\jdk"
 
-REM If COPY_PYTHON is an arg copy python into the client
-if "%1" == "COPY_PYTHON" ( call %1 ) 
-if "%2" == "COPY_PYTHON" ( call %2 ) 
+REM Copy python into the client
+call copy_python.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
  
 call python .\check_build.py ..\base\

@@ -16,3 +16,4 @@ build/jdk
 build/jdk.zip
 *Python3*
 *.idea
+build/current_python_build.txt

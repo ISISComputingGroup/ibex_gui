@@ -18,17 +18,21 @@
 
 package uk.ac.stfc.isis.ibex.log;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * A Counter that consumes log messages and counts how many there have been.
  */
-public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage> {
+public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage>, PropertyChangeListener {
 
     private static final String MAJOR = "MAJOR";
     private static final String MINOR = "MINOR";
@@ -37,6 +41,12 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
 
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
+    
+    private final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
+    
+    public LogCounter() {
+    	UI.plugin.addStopWaitPropertyChangeListener(this);
+    }
 
     /**
      * Starts the counter running.
@@ -100,4 +110,11 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     public void clearMessages() {
         this.resetCount();
     }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals(switchToOrFromIOCLogProperty)) {
+			start();
+		}
+	}
 }
