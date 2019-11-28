@@ -67,10 +67,6 @@ public class ConsoleLengthMonitor extends WorkbenchWindowControlContribution {
 
 	private void updateButtonText() {
 		final String text = getText();
-		Display.getCurrent().asyncExec(() -> {
-		    if (!button.isDisposed()) {
-		    	button.setText(text);
-		    }
-		});
+		Display.getCurrent().asyncExec(() -> button.setText(text));
 	}
 }

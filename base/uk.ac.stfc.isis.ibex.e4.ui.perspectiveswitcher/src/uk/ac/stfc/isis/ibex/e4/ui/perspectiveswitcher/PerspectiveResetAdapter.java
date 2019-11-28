@@ -1,10 +1,8 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -12,11 +10,20 @@ import org.eclipse.ui.PlatformUI;
  */
 public class PerspectiveResetAdapter extends SelectionAdapter {
 
-	/**
-	 * {@inheritDoc}
-	 */
+    private final PerspectivesProvider provider;
+
+    /**
+     * Constructor.
+     * 
+     * @param provider
+     *            PerspectivesProvider
+     */
+    public PerspectiveResetAdapter(PerspectivesProvider provider) {
+        this.provider = provider;
+    }
+
     @Override
-    public void widgetSelected(final SelectionEvent event_ignored) {
+    public void widgetSelected(SelectionEvent event) {
         resetPerspective();
     }
 
@@ -24,17 +31,9 @@ public class PerspectiveResetAdapter extends SelectionAdapter {
      * Method that resets the current perspective.
      */
     public void resetPerspective() {
-        final IWorkbench workbench_before = PlatformUI.getWorkbench();
-        final IWorkbenchWindow window_before = workbench_before.getActiveWorkbenchWindow();
-        System.out.println("Window before is " + window_before);
-        final IWorkbenchPage page_before = window_before.getActivePage();
-        
-        page_before.resetPerspective();
-        
-        final IWorkbench workbench_after = PlatformUI.getWorkbench();
-        final IWorkbenchWindow window_after = workbench_after.getActiveWorkbenchWindow();
-        final IWorkbenchPage page_after = window_after.getActivePage();
-        
-        System.out.println(page_before + ", " + page_after);
+        MPerspectiveStack perspectiveStack = provider.getTopLevelStack();
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().resetPerspective();
+        perspectiveStack.getSelectedElement().setVisible(true);
+        perspectiveStack.setVisible(true);
     }
 }

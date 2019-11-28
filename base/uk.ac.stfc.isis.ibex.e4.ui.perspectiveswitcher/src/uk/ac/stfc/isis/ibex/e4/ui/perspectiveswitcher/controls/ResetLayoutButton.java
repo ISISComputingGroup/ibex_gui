@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 
 /**
  * Reset Layout button. Sits apart from the Perspective Buttons.
@@ -10,7 +11,8 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveResetAdapter;
  */
 public class ResetLayoutButton extends Button {
 
-    private final PerspectiveResetAdapter resetAdapter = new PerspectiveResetAdapter();
+    private final PerspectiveResetAdapter resetAdapter;
+    private final ResetLayoutButtonViewModel model;
     private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 
     /**
@@ -23,8 +25,10 @@ public class ResetLayoutButton extends Button {
      * @param model
      *            ResetLayoutButtonViewModel
      */
-    public ResetLayoutButton(Composite parent, ResetLayoutButtonViewModel model) {
+    public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider, ResetLayoutButtonViewModel model) {
         super(parent, RESET_PERSPECTIVE_URI, "Reset Layout: Sets the layout of the current perspective back to its default", model);
+        resetAdapter = new PerspectiveResetAdapter(perspectivesProvider);
+        this.model = model;
     }
 
     @Override
