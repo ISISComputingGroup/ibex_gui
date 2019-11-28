@@ -39,7 +39,7 @@ public class UI extends AbstractUIPlugin implements IStartup {
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui"; //$NON-NLS-1$	
+	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static UI plugin;
