@@ -3,6 +3,7 @@ REM Get the latest genie python build with LATEST_PYTHON and LATEST_PYTHON_DIR a
 pushd \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP
 
 set KITS_ICP_PATH=%cd%
+set PYCOPYPATH=%1
 
 REM Get latest build
 if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
@@ -18,7 +19,6 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 
 REM Do not copy if the current build is the same as the latest build
 set current_build_file=%~dp0current_python_build.txt
-echo "%current_build_file%"
 if exist "%current_build_file%" (
 	for /f %%i in ("%current_build_file%") do set CURRENT_BUILD="%%i"
 	if !CURRENT_BUILD! neq %LATEST_BUILD% (
@@ -31,10 +31,7 @@ if exist "%current_build_file%" (
 GOTO :clean_up
 
 :copy_python
-    set PYCOPYPATH=%~dp0..\base\uk.ac.stfc.isis.ibex.preferences\resources\Python3
-    rmdir %PYCOPYPATH% /s /q
-    mkdir %PYCOPYPATH%
-    xcopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /i /e /k /y /j
+    robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
 	@echo %LATEST_BUILD%> %current_build_file%
 exit /b
 
@@ -45,3 +42,4 @@ exit /b
 		exit /b 1
 	)
 	if %errorlevel% neq 0 exit /b %errorlevel%
+exit /b

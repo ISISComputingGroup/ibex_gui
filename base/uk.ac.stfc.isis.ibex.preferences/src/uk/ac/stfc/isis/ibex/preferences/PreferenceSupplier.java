@@ -28,6 +28,10 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
@@ -35,6 +39,8 @@ import org.eclipse.core.runtime.Path;
  * Supplies the details for the IBEX preference page.
  */
 public class PreferenceSupplier {
+	
+	private static final Logger LOG = IsisLog.getLogger(PreferenceSupplier.class);
 	
 	private final IPreferencesService preferenceService;
 	
@@ -71,7 +77,7 @@ public class PreferenceSupplier {
     /**
      * The relative path to python.
      */
-    private static final String PYTHON_RELATIVE_PATH = "/Python3/python.exe";
+    private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
     
     /**
      * The path to the developer's genie python.
@@ -87,9 +93,13 @@ public class PreferenceSupplier {
 	 */
 	private static String getDefaultPythonPath() {
 		try {
+			String pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+			LOG.error(pythonPath);
 			return relativePathToFull(PYTHON_RELATIVE_PATH);
 		} catch (IOException e) {
-			return Path.forWindows(DEV_PYTHON_PATH).toOSString();
+			String pythonPath = Path.forWindows(DEV_PYTHON_PATH).toOSString();
+			LOG.error(pythonPath);
+			return pythonPath;
 		}
 	}
 
@@ -103,8 +113,11 @@ public class PreferenceSupplier {
 	 */
 	private static String relativePathToFull(String relativePath) throws IOException {
 		try {
+			LOG.info(relativePath);
 			URL resourcePath = PreferenceSupplier.class.getResource(relativePath);
+			LOG.info(resourcePath);
 			String fullPath = FileLocator.resolve(resourcePath).getPath();
+			LOG.info(fullPath);
 			return Path.forWindows(fullPath).toOSString();
 		} catch (NullPointerException e) {
 			throw new IOException("Cannot find python on relative path: " + relativePath);
