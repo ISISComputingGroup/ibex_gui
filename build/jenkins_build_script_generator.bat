@@ -14,7 +14,7 @@ set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_script_generator_jre
 
 set PATH=%M2%;%PYTHON%;%PATH%
 
-call build_script_generator.bat COPY_PYTHON
+call build_script_generator.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
