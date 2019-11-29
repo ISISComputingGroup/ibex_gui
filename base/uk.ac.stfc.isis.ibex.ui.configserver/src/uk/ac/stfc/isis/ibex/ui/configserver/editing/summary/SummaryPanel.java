@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
@@ -128,7 +129,7 @@ public class SummaryPanel extends Composite {
 
         lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
         
-        warning = new Label(cmpSummary, SWT.NONE);
+        warning = new Label(cmpSummary, SWT.WRAP | SWT.NONE);
         GridData gd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
         gd.widthHint = 800;
         warning.setLayoutData(gd);
@@ -203,13 +204,14 @@ public class SummaryPanel extends Composite {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
-                updateSynopticNamesInComboBox(value);
+            	Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             @Override
             public void onValue(Collection<SynopticInfo> value) {
-                updateSynopticNamesInComboBox(value);
-
+            	// The event comes from PV manager's threadpool but the method
+            	// needs to manipulate UI elements so need to explicitly run on UI thread.
+                Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             /**
