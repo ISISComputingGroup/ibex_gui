@@ -248,6 +248,13 @@
 		<module>
 			../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests
 		</module>
+		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
+		
+		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
+		
 	</modules>
 </project>
 
