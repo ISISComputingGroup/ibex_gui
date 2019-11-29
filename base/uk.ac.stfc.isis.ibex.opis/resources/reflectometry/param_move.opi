@@ -288,14 +288,13 @@ $(pv_value)</tooltip>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
-        <rule name="WHEN value changing or at target THEN change background colour" prop_id="background_color" out_exp="false">
+        <rule name="WHEN value changing THEN change background colour" prop_id="background_color" out_exp="false">
           <exp bool_exp="pv0==1">
             <value>
               <color red="149" green="255" blue="149" />
             </value>
           </exp>
           <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGING</pv>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):RBV:AT_SP</pv>
         </rule>
       </rules>
       <scale_options>
