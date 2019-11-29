@@ -513,10 +513,10 @@ public class SaveConfigDialog extends TitleAreaDialog {
         
         try {
 			if (compInProtectionMode(name) && !model.isInManagerMode()) {
-				return "Component with the name already exisist, try again in Manager mode to overwrite it";
+				return "Component with the name already exist, try again in Manager mode to overwrite it";
 			}
 			if (configInProtectionMode(name) && !model.isInManagerMode()) {
-	        	return "Configuration with the name already exsist, try again in Manager mode to overwrite it";
+	        	return "Configuration with the name already exist, try again in Manager mode to overwrite it";
 	        }
 		} catch (ManagerModePvNotConnectedException e) {
 		    MessageDialog error = new MessageDialog(this.getShell(), "Error", null, e.getMessage(),

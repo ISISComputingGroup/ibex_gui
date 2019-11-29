@@ -55,8 +55,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     private boolean editBlockFirst;
     private boolean switchConfigOnSaveAs;
     private boolean calledSwitchConfigOnSaveAs = false;
-    private String currentlyEditingConfigOrComp;
-
     private ConfigServer server = Configurations.getInstance().server();
 
     /**
@@ -81,9 +79,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
             boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
         this.editBlockFirst = editBlockFirst;
-        this.currentlyEditingConfigOrComp = title.split("\\s+")[1];
-        
-        
     }
 
     @Override
@@ -114,7 +109,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
                 
                 boolean hasComponents = !config.getEditableComponents().getSelected().isEmpty();
                 String currentConfigName = server.currentConfig().getValue().name();
-                checkIfSavingAsProtected();
+                
                 SaveConfigDialog dlg = new SaveConfigDialog(null, config.getName(), config.getDescription(),
                         configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName,
                         configNamesFlags, componentsNamesFlags);
@@ -138,28 +133,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         // Show any error message and set buttons after creating those buttons
         super.showErrorMessage();
         bind();
-    }
-    
-    private void createWarningDialog() {
-    	MessageBox warningDialog = new MessageBox(this.getParentShell(), SWT.ICON_WARNING);
-    	warningDialog.setText("Warning");
-    	warningDialog.setMessage("You need to be in Manager Mode to save a protected "
-    	        + currentlyEditingConfigOrComp);
-    	warningDialog.open();
-    	
-    }
-
-    private void checkIfSavingAsProtected() {
-    	try {
-			if (!ManagerModeModel.getInstance().isInManagerMode() && 
-					config.getIsProtected()) {
-				createWarningDialog();
-			}
-		} catch (ManagerModePvNotConnectedException e) {
-		    MessageDialog error = new MessageDialog(this.getShell(), "Error", null, e.getMessage(),
-                    MessageDialog.ERROR, new String[] {"OK"},0);
-            error.open();
-		}
     }
 
     @Override
@@ -200,11 +173,20 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         return calledSwitchConfigOnSaveAs;
     }
     
+    /**
+     * Binding for save and save as button.
+     */
     public void bind() {
     	DataBindingContext bindingContext = new DataBindingContext();
     	if (saveButton != null) {
     		bindingContext.bindValue(WidgetProperties.enabled().observe(saveButton),
     				BeanProperties.value("enableOrDisableSaveButton").observe(config));
     	}
+
+        if (saveAsBtn != null) {
+            bindingContext.bindValue(WidgetProperties.enabled().observe(saveAsBtn),
+                BeanProperties.value("enableSaveAsButton").observe(config));
+        }
     }
+    
 }

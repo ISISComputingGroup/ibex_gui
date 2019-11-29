@@ -21,9 +21,11 @@ package uk.ac.stfc.isis.ibex.ui.dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -156,6 +158,27 @@ public abstract class BasicSelectionDialog extends Dialog {
     protected abstract Table createTable(Composite parent, int style);
 
     /**
+     * Sets a list of names as items in the selection table specifically for deleting config dialog.
+     * 
+     * @param names
+     *            The names
+     *            
+     * @param configNamesWithFlags
+     *            Names of the configuration and its protection flag
+     */
+    protected void setItems(String[] names, Map <String, Boolean> configNamesWithFlags) {
+        this.items.clearAll();
+        for (String name : names) {
+            TableItem item = new TableItem(this.items, SWT.NONE);
+            item.setText(name);
+            if (configNamesWithFlags.get(name)) {
+                item.setImage(JFaceResources.
+                        getImage(DLG_IMG_MESSAGE_WARNING));   
+            }
+        }
+    }
+    
+    /**
      * Sets a list of names as items in the selection table.
      * 
      * @param names
@@ -166,6 +189,6 @@ public abstract class BasicSelectionDialog extends Dialog {
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);
             item.setText(name);
+            }
         }
     }
-}

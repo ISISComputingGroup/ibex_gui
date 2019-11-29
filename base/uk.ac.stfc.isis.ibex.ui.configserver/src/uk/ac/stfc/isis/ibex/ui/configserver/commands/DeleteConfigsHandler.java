@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -52,14 +53,13 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 	 */
 	@Override
 	public void safeExecute(Shell shell) {
+	    Map<String, Boolean> configNamesWithFlags = SERVER.configNamesWithFlags();
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell, "Delete Configurations",
-                SERVER.configsInfo().getValue(), false, false);
-
+                SERVER.configsInfo().getValue(), configNamesWithFlags, false, false);
 		if (dialog.open() == Window.OK) {
-			Map<String, Boolean> configNamesWithFlags = SERVER.configNamesWithFlags();
-			configService.uncheckedWrite((dialog.selectedConfigs()));
-			boolean noError = true;
-		    try {
+		    try {		        
+		        configService.write(dialog.selectedConfigs());
+	            boolean noError = true;
 		    	if (!ManagerModeModel.getInstance().isInManagerMode()) {
 		    		for (String item: dialog.selectedConfigs()) {
 		    			if (configNamesWithFlags.get(item)) {
@@ -76,9 +76,9 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 					}
 				}
 					
-		    } catch (ManagerModePvNotConnectedException e) {
+		    } catch (ManagerModePvNotConnectedException|IOException e) {
 				MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
-						MessageDialog.ERROR, new String[] {"OK"},0);
+						MessageDialog.ERROR, new String[] {"OK"}, 0);
 				error.open();
 			}
 		    
@@ -87,7 +87,6 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 	
 	/**
 	 * opens and error dialog if there is an error
-	 * @param doNotDisplayError if dialog needs to be created or not
 	 * @param shell the shell
 	 */
 	private void displayErrorDialog(Shell shell) {

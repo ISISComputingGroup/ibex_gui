@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -56,31 +57,29 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 	@Override
 	public void safeExecute(Shell shell) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());
-        MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell, 
-                SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet());
+        Map <String, Boolean> compNamesWithFlags = SERVER.compNamesWithFlags();
         
+        MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell, 
+                SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet(), compNamesWithFlags);
         if (dialog.open() == Window.OK) {
-            Map <String, Boolean> compNamesWithFlags = SERVER.compNamesWithFlags();
-            
-
             Collection<String> toDelete = dialog.selectedConfigs();
             Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
-            if (selectedDependencies.isEmpty()) {
-                configService.uncheckedWrite(toDelete);
-            } else {
-                displayWarning(selectedDependencies, shell);
-                safeExecute(shell);
-            }
             try {
+                if (selectedDependencies.isEmpty()) {
+                    configService.write(toDelete);
+                } else {
+                    displayWarning(selectedDependencies, shell);
+                    safeExecute(shell);
+                }
                 if (!ManagerModeModel.getInstance().isInManagerMode()) {
                     for (String item: dialog.selectedConfigs()) {
                         if (compNamesWithFlags.get(item)) {
-                            dispalyError(shell);
+                            displayError(shell);
                             break;
                         }
                     }
                 }
-            } catch (ManagerModePvNotConnectedException e) {
+            } catch (ManagerModePvNotConnectedException|IOException e) {
                 MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
                     MessageDialog.ERROR, new String[] {"OK"},0);
                 error.open();
@@ -95,7 +94,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 .open();
     }
 
-    private void dispalyError(Shell shell) {
+    private void displayError(Shell shell) {
         MessageBox errorMessage = null;
         errorMessage = new MessageBox(shell, SWT.ICON_ERROR);
         errorMessage.setText("Error");

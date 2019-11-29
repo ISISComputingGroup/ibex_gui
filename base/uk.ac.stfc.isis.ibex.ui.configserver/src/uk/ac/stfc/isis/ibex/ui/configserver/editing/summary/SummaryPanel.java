@@ -29,7 +29,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -130,10 +129,11 @@ public class SummaryPanel extends Composite {
         lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
         
         warning = new Label(cmpSummary, SWT.NONE);
-        warning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        warning.setText("Info : To modify/save a protected configuration/component you have to be in Manager Mode");
-        warning.setVisible(false);
-        warning.setForeground(new Color(getDisplay(),252, 169, 3));
+        GridData gd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd.widthHint = 800;
+        warning.setLayoutData(gd);
+        warning.setText("");
+        warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 
     }
 
@@ -180,13 +180,13 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("dateModified").observe(config));
         bindingContext.bindValue(WidgetProperties.selection().observe(protectedCheckBox),
                 BeanProperties.value("isProtected").observe(config));
-        bindingContext.bindValue(WidgetProperties.visible().observe(warning),
-                BeanProperties.value("errorMessageVisibility").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
                 BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
+        bindingContext.bindValue(WidgetProperties.text().observe(warning),
+                BeanProperties.value("errorMessage").observe(config));
 
     }
 
