@@ -21,7 +21,7 @@ robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /mt /XF "install.log" /
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
-	echo robocopy error
+	@echo robocopy error
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
 	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log
     if not "%1" == "NOLOG" start %INSTALLDIR%install.log
@@ -33,6 +33,7 @@ if %errcode% GEQ 4 (
 popd
 
 if not exist %PYCOPYPATH%\python.exe (
+	@echo Python not copied correctly>>%INSTALLDIR%install.log
+	@echo Python not copied correctly
 	exit /b 1
 )
-if %errorlevel% neq 0 exit /b %errorlevel%
