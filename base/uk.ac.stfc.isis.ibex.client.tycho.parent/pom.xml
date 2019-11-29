@@ -232,29 +232,16 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
 		
-		<!-- The following plugins are temporarily disabled from running in maven, see https://github.com/ISISComputingGroup/IBEX/issues/4759
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
-		-->
 		
-		<!-- These tests currently fail in surefire because the python interface is loaded on class instantiation
+		<!-- This tests currently fails because the python interface is loaded on class instantiation
 		     This is a fundamental issue but the solution needs to be considered.
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
         -->
-
-		<module>
-			../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests
-		</module>
-		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
-		
-		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
-		
 	</modules>
 </project>
 
