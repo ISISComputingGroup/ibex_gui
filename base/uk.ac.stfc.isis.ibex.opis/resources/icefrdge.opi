@@ -62,7 +62,7 @@
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>ICE Oxford Muon dilution fridge</text>
+    <text>ICE Oxford Dilution Refrigerator</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -2368,7 +2368,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>idk</name>
+        <name>Temperature sensors</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2381,7 +2381,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>190</width>
+        <width>199</width>
         <wuid>5b350f2:16eb2c4b43a:-7957</wuid>
         <x>6</x>
         <y>6</y>
@@ -2404,7 +2404,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T1 Label</name>
           <rules />
           <scale_options>
@@ -2414,7 +2414,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>MC Cernox</text>
+          <text>MC Cernox:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2423,7 +2423,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7956</wuid>
-          <x>0</x>
+          <x>-6</x>
           <y>12</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -2497,7 +2497,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T2 Label</name>
           <rules />
           <scale_options>
@@ -2507,7 +2507,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>MC RuO</text>
+          <text>MC RuO:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2516,7 +2516,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7954</wuid>
-          <x>0</x>
+          <x>-6</x>
           <y>48</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -2590,7 +2590,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T3 Label</name>
           <rules />
           <scale_options>
@@ -2600,7 +2600,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Still Temp</text>
+          <text>Still Temp:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2609,7 +2609,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7952</wuid>
-          <x>0</x>
+          <x>-6</x>
           <y>84</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -2724,7 +2724,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Tset Label</name>
           <rules />
           <scale_options>
@@ -2734,7 +2734,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Temp</text>
+          <text>Temp:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2743,7 +2743,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7890</wuid>
-          <x>6</x>
+          <x>10</x>
           <y>18</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -2874,7 +2874,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 P Label</name>
           <rules />
           <scale_options>
@@ -2884,7 +2884,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>P</text>
+          <text>P:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2893,7 +2893,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-788d</wuid>
-          <x>6</x>
+          <x>10</x>
           <y>54</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3024,7 +3024,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 I Label</name>
           <rules />
           <scale_options>
@@ -3034,7 +3034,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>I</text>
+          <text>I:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -3043,7 +3043,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-788a</wuid>
-          <x>6</x>
+          <x>10</x>
           <y>90</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3283,7 +3283,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label</name>
           <rules />
           <scale_options>
@@ -3293,16 +3293,16 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Heater range</text>
+          <text>Heater range:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>91</width>
+          <width>79</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7885</wuid>
-          <x>6</x>
+          <x>1</x>
           <y>162</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -3324,7 +3324,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 I Label_1</name>
           <rules />
           <scale_options>
@@ -3334,7 +3334,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>D</text>
+          <text>D:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -3343,7 +3343,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7884</wuid>
-          <x>6</x>
+          <x>10</x>
           <y>126</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3405,7 +3405,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
-          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_alarm_sensitive>false</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -3459,7 +3459,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>37</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label_1</name>
           <rules />
           <scale_options>
@@ -3469,16 +3469,16 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Heater Percentage</text>
+          <text>Heater Percentage:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>91</width>
+          <width>73</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-77df</wuid>
-          <x>6</x>
+          <x>7</x>
           <y>198</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3552,7 +3552,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label_2</name>
           <rules />
           <scale_options>
@@ -3562,7 +3562,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Still Output</text>
+          <text>Still Output:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -3571,7 +3571,7 @@ $(pv_value)</tooltip>
           <width>70</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-77c3</wuid>
-          <x>6</x>
+          <x>10</x>
           <y>246</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3645,7 +3645,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>37</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label_3</name>
           <rules />
           <scale_options>
@@ -3655,16 +3655,16 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Exc Voltage Range</text>
+          <text>Exc Voltage Range:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>91</width>
+          <width>67</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-75fc</wuid>
-          <x>192</x>
+          <x>183</x>
           <y>282</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
@@ -3674,7 +3674,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
-          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_alarm_sensitive>false</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -3728,7 +3728,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>37</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label_4</name>
           <rules />
           <scale_options>
@@ -3738,16 +3738,16 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Exc Voltage Channel 5</text>
+          <text>Exc Voltage Channel 5:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>91</width>
+          <width>67</width>
           <wrap_words>true</wrap_words>
           <wuid>5b0e7d80:16eb6508e01:-7fa7</wuid>
-          <x>6</x>
+          <x>13</x>
           <y>282</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -3821,7 +3821,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>37</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label_5</name>
           <rules />
           <scale_options>
@@ -3831,16 +3831,16 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Exc Voltage Channel 6</text>
+          <text>Exc Voltage Channel 6:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>91</width>
+          <width>67</width>
           <wrap_words>true</wrap_words>
           <wuid>5b0e7d80:16eb6508e01:-7f7e</wuid>
-          <x>6</x>
+          <x>13</x>
           <y>335</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
