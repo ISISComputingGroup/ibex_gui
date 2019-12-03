@@ -73,7 +73,7 @@ public class UI extends AbstractUIPlugin implements IStartup {
     	propertyChangeSupport.firePropertyChange(switchToOrFromIOCLogProperty, null, null);
     }
     
-    private final String stopWaitProperty = "stopWait";
+    private static final String stopWaitProperty = "stopWait";
 	
 	/**
 	 * Add a property change support listener for stopWait changes.
