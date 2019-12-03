@@ -289,9 +289,9 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     }
 
     /**
-     * Sets the high limit for run-control.
+     * Sets whether run control will suspend if invalid.
      * 
-     * @param rchigh the new high limit for run-control
+     * @param suspendIfInvalid true if run control will suspend if invalid
      */
     @Override
 	public void setSuspendIfInvalid(Boolean suspendIfInvalid) {
@@ -299,9 +299,9 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     }
     
     /**
-     * Gets the high limit for run-control.
+     * Gets whether run control will suspend if invalid.
      * 
-     * @return the high limit for run-control
+     * @return Whether run control will suspend if invalid
      */
     @Override
 	public Boolean getSuspendIfInvalid() {
