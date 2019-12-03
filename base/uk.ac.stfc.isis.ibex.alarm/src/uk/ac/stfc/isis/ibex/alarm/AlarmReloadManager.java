@@ -52,6 +52,7 @@ public final class AlarmReloadManager implements PropertyChangeListener {
      * Private constructor, use getInstance() instead.
      */
     private AlarmReloadManager() {
+    	UI.getDefault().addStopWaitPropertyChangeListener(instance);
     }
 
     /**
@@ -63,7 +64,6 @@ public final class AlarmReloadManager implements PropertyChangeListener {
         if (instance == null) {
             instance = new AlarmReloadManager();
         }
-        UI.getDefault().addStopWaitPropertyChangeListener(instance);
         return instance;
     }
 
