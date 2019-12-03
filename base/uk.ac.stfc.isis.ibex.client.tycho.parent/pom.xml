@@ -238,11 +238,7 @@
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
-		
-		<!-- This tests currently fails because the python interface is loaded on class instantiation
-		     This is a fundamental issue but the solution needs to be considered.
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
-        -->
 	</modules>
 </project>
 

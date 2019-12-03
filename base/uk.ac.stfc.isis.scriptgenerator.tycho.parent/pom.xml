@@ -152,6 +152,7 @@
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
 		
+		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
 	</modules>
 </project>
 

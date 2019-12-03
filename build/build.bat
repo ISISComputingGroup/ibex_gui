@@ -22,5 +22,10 @@ REM Copy python into the client
 call copy_python.bat %~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64\plugins\uk.ac.stfc.isis.ibex.preferences_1.0.0.SNAPSHOT\resources\Python3
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-@echo Client built in %~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+REM Copy built client into a sensible directory to run it
+set built_client="%~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64"
+set sensible_build_dir="%~dp0..\built_client"
+robocopy %built_client% %sensible_build_dir% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
+
+@echo Client built in %sensible_build_dir%
 pause
