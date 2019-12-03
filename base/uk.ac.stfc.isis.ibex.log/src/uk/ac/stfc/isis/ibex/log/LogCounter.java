@@ -20,6 +20,7 @@ package uk.ac.stfc.isis.ibex.log;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -68,7 +69,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     /**
      * Get how many messages have been counted.
      * 
-     * @return The number of counted messsages.
+     * @return The number of counted messages.
      */
     public long getCount() {
         return counter.countsForSeverity(MAJOR) + optionalMinorCount();
