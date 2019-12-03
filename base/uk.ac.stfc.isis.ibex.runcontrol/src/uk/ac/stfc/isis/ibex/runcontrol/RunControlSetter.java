@@ -77,13 +77,13 @@ public class RunControlSetter {
 	}
     
     /**
-     * Enable run control on the block.
+     * Set run control to suspend if invalid or not 
      *
-     * @param enabled
-     *            whether or not to enable the run control
+     * @param suspendIfInvalid
+     *            whether or not to suspend the run on invalid
      */
-    public void setSuspendIfInvalid(boolean enabled) {
-        invalidSetter.uncheckedWrite(enabled ? "YES" : "NO");
+    public void setSuspendIfInvalid(boolean suspendIfInvalid) {
+        invalidSetter.uncheckedWrite(suspendIfInvalid ? "YES" : "NO");
 	}
 
 }
