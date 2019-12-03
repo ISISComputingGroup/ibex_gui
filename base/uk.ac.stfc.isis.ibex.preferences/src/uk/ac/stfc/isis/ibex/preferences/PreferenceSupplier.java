@@ -94,11 +94,11 @@ public class PreferenceSupplier {
 	private static String getDefaultPythonPath() {
 		try {
 			String pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
-			LOG.error(pythonPath);
+			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			return relativePathToFull(PYTHON_RELATIVE_PATH);
 		} catch (IOException e) {
 			String pythonPath = Path.forWindows(DEV_PYTHON_PATH).toOSString();
-			LOG.error(pythonPath);
+			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			return pythonPath;
 		}
 	}
@@ -113,11 +113,8 @@ public class PreferenceSupplier {
 	 */
 	private static String relativePathToFull(String relativePath) throws IOException {
 		try {
-			LOG.info(relativePath);
 			URL resourcePath = PreferenceSupplier.class.getResource(relativePath);
-			LOG.info(resourcePath);
 			String fullPath = FileLocator.resolve(resourcePath).getPath();
-			LOG.info(fullPath);
 			return Path.forWindows(fullPath).toOSString();
 		} catch (NullPointerException e) {
 			throw new IOException("Cannot find python on relative path: " + relativePath);
