@@ -54,7 +54,7 @@ public class ActionParameter {
 		if (!(o instanceof ActionParameter)) return false;	
 		
 		ActionParameter actionParameter = (ActionParameter) o;
-		return this.getName().equals(actionParameter.getName());
+		return Objects.equals(this.getName(), actionParameter.getName());
 		
 	}
 	
