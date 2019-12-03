@@ -187,7 +187,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	 */
 	@Override
 	public void setSuspendIfInvalid(Boolean suspendIfInvalid) {
-		firePropertyChange("suspendIfInvalid", this.suspendIfInvalid, this.suspendIfInvalid = suspendIfInvalid);
+		firePropertyChange(SUSPEND_ON_INVALID_BINDING_NAME, this.suspendIfInvalid, this.suspendIfInvalid = suspendIfInvalid);
 		updateErrors();
 	}
 }
