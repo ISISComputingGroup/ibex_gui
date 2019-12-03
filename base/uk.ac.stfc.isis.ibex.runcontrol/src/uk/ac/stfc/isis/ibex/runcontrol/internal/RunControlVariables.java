@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
@@ -61,6 +62,17 @@ public class RunControlVariables {
 	public ForwardingObservable<Double> blockRunControlHighLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DoubleChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
+	}
+	
+	/**
+     * Gets an observable looking at the run-control high limit PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
+	public ForwardingObservable<Boolean> blockRunControlSuspendIfInvalid(String blockName) {
+        return obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix(runControlAddresses.getSuspendOnInvalidPv(blockName)));
 	}
 	
 	/**
@@ -116,6 +128,17 @@ public class RunControlVariables {
 	public Writable<String> blockRunControlEnabledSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new StringChannel(),
                 InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));
+	}
+	
+	/**
+     * Gets a writable for the run-control enabled setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
+	public Writable<String> blockRunControlSuspendIfInvalidSetter(String blockName) {
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                InstrumentUtils.addPrefix(runControlAddresses.getSuspendOnInvalidPv(blockName)));
 	}
 
 }

@@ -38,6 +38,7 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.Event;
@@ -52,6 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 /**
  * The activator class controls the plug-in life cycle.
  */
+@SuppressWarnings("restriction")
 public class Consoles extends AbstractUIPlugin {
 
 	/**
@@ -172,11 +174,22 @@ public class Consoles extends AbstractUIPlugin {
 	 * Create a new pydev console based on the current instrument.
 	 */
 	public void createConsole() {
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!anyActive()) {
 					LOG.info("No scripting consoles active; creating new scripting console.");
+					// Adding this forces the console view to be created in the correct perspective.
+					// Even if PyDEV takes a few seconds to initialise it's console and the perspective
+					// is switched in the meantime, the console will still be created in the correct place.
+					//
+					// Unfortunately it does cause eclipse to throw an exception (in a different thread) as
+					// ConsoleManager calls:
+					//     consoleView.getSite()
+					// which, in E4, returns null and so throws a NullPointerException. We can't catch this
+					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
+					// that follows the scripting console getting accidentally opened in the wrong perspective.
+					new ConsoleView();
 					GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
 				}
 			}

@@ -155,6 +155,12 @@ public class PreferenceSupplier {
      * Defines which perspectives to hide by default.
      */
     private static final String DEFAULT_PERSPECTIVES_TO_HIDE = "";
+    
+    /**
+     * Defines whether to show the values of blocks in an invalid alarm.
+     * True means show the value, False means show N/A
+     */
+    private static final String SHOW_VALUES_OF_INVALID_BLOCKS = "show_values_of_invalid_blocks";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -212,5 +218,14 @@ public class PreferenceSupplier {
      */
 	public String epicsUtilsPath() {
 		return getString(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
+	}
+	
+	/**
+	 * Whether the values of invalid blocks should be shown
+	 * @return true if invalid blocks should be shown with their current value and the relevant alarm border, 
+	 * false if invalid blocks should be shown with placeholder text and an alarm border
+	 */
+	public boolean showInvalidBlockValues() {
+		return preferenceService.getBoolean(PREFERENCE_NODE, SHOW_VALUES_OF_INVALID_BLOCKS, false, null);
 	}
 }
