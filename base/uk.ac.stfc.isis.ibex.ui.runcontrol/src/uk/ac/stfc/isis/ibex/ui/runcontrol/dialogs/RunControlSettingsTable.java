@@ -61,6 +61,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
         addEnabled();
         addLowLimit();
         addHighLimit();
+        addSuspendIfInvalid();
     }
 
     private void addName() {
@@ -130,6 +131,19 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 			public String stringFromRow(DisplayBlock setting) {
                 if (setting != null) {
                     return setting.getRunControlHighLimit().toString();
+                }
+                return "";
+            }
+        });
+    }
+    
+    private void addSuspendIfInvalid() {
+        createColumn("Suspend if invalid", 2, new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("suspendIfInvalid"),
+                Arrays.asList(rowDecorator)) {
+            @Override
+			public String stringFromRow(DisplayBlock setting) {
+                if (setting != null) {
+                    return setting.getSuspendIfInvalid().toString();
                 }
                 return "";
             }

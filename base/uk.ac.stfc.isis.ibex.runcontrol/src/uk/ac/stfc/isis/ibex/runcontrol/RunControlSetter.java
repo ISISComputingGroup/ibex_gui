@@ -28,6 +28,7 @@ public class RunControlSetter {
     private final Writer<Double> lowLimitSetter;
     private final Writer<Double> highLimitSetter;
     private final Writer<String> enabledSetter;
+    private final Writer<String> invalidSetter;
 
     /**
      * Creates a setter for the given block. The PVs are created at this time as
@@ -42,6 +43,7 @@ public class RunControlSetter {
         lowLimitSetter = runControlServer.blockRunControlLowLimitSetter(blockName);
         highLimitSetter = runControlServer.blockRunControlHighLimitSetter(blockName);
         enabledSetter = runControlServer.blockRunControlEnabledSetter(blockName);
+        invalidSetter = runControlServer.blockRunControlSuspendIfInvalidSetter(blockName);
 	}
 
     /**
@@ -72,6 +74,16 @@ public class RunControlSetter {
      */
     public void setEnabled(boolean enabled) {
         enabledSetter.uncheckedWrite(enabled ? "YES" : "NO");
+	}
+    
+    /**
+     * Set run control to suspend if invalid or not 
+     *
+     * @param suspendIfInvalid
+     *            whether or not to suspend the run on invalid
+     */
+    public void setSuspendIfInvalid(boolean suspendIfInvalid) {
+        invalidSetter.uncheckedWrite(suspendIfInvalid ? "YES" : "NO");
 	}
 
 }

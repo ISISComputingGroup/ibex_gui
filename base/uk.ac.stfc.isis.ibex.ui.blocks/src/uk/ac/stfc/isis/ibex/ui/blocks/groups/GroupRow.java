@@ -19,10 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
+import java.util.Optional;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -35,6 +37,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 
 /**
  * Class for grouping information on a single block into one composite.
@@ -70,7 +74,7 @@ public class GroupRow extends Composite {
         this.setBackground(WHITE);
         this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         
-        lblName = boundLabelMaker(this, SWT.NONE, block.getName(), block, "nameTooltipText");
+        lblName = boundLabelMaker(this, SWT.NONE, Optional.ofNullable(block.getName()), block, "nameTooltipText");
         GridData gdLblName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
         gdLblName.widthHint = NAME_WIDTH;
         lblName.setLayoutData(gdLblName);
@@ -90,7 +94,7 @@ public class GroupRow extends Composite {
         gdValueContainer.heightHint = VALUE_HEIGHT + VALUE_HEIGHT_MARGIN;
         valueContainer.setLayoutData(gdValueContainer);
 
-        lblValue = boundLabelMaker(valueContainer, SWT.RIGHT, block.getValue(), block, "valueTooltipText");
+        lblValue = boundLabelMaker(valueContainer, SWT.RIGHT, Optional.ofNullable(block.getValue()), block, "valueTooltipText");
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;
         lblValue.setLayoutData(gdValue);
@@ -108,36 +112,44 @@ public class GroupRow extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblValue),
-                BeanProperties.value("value").observe(block));
+                BeanProperties.<DisplayBlock, String>value("value").observe(block));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblStatus),
-                BeanProperties.value("runControlEnabled").observe(block));
+                BeanProperties.<DisplayBlock, String>value("runControlEnabled").observe(block));
+        
+        final UpdateValueStrategy<RuncontrolState, String> runcontrolTooltipStrategy = new UpdateValueStrategy<>();
+        
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblStatus), 
+        		BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, runcontrolTooltipStrategy);
 
-        UpdateValueStrategy symbolStrategy = new UpdateValueStrategy();
+        final UpdateValueStrategy<RuncontrolState, String> symbolStrategy = new UpdateValueStrategy<>();
         symbolStrategy.setConverter(new RunControlSymbolConverter());
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
-                BeanProperties.value("runcontrolState").observe(block), null, symbolStrategy);
+                BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, symbolStrategy);
         
-        UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
+        final UpdateValueStrategy<RuncontrolState, Color> fgColourStrategy = new UpdateValueStrategy<>();
         fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 
         bindingContext.bindValue(WidgetProperties.foreground().observe(lblStatus),
-                BeanProperties.value("runcontrolState").observe(block), null, fgColourStrategy);
+                BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, fgColourStrategy);
 
-        UpdateValueStrategy bgColourStrategy = new UpdateValueStrategy();
+        final UpdateValueStrategy<RuncontrolState, Color> bgColourStrategy = new UpdateValueStrategy<>();
         bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(lblStatus),
-                BeanProperties.value("runcontrolState").observe(block), null, bgColourStrategy);
+                BeanProperties.<DisplayBlock, RuncontrolState>value("runcontrolState").observe(block), null, bgColourStrategy);
 
-        UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
+        final UpdateValueStrategy<PvState, Color> borderStrategy = new UpdateValueStrategy<>();
         borderStrategy.setConverter(new BlockStatusBorderColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
-                BeanProperties.value("blockState").observe(block), null, borderStrategy);
+                BeanProperties.<DisplayBlock, PvState>value("blockState").observe(block), null, borderStrategy);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMenu(Menu menu) {
         super.setMenu(menu);
@@ -148,24 +160,21 @@ public class GroupRow extends Composite {
 
     private Label statusLabelMaker(Composite composite, int style, String description) {
         Label label = new Label(composite, style);
-
         label.setBackground(WHITE);
-
         label.setToolTipText(description);
-
         return label;
     }
     
-    private Label boundLabelMaker(Composite composite, int style, String text, DisplayBlock block, String propertyName) {
+    private Label boundLabelMaker(Composite composite, int style, Optional<String> text, DisplayBlock block, String propertyName) {
         Label label = new Label(composite, style);
-        if (text != null) {
-            label.setText(text);
-        }
+
+        text.ifPresent(label::setText);
 
         label.setBackground(WHITE);
 
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.tooltipText().observe(label), BeanProperties.value(propertyName).observe(block));
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(label), 
+        		BeanProperties.<DisplayBlock, String>value(propertyName).observe(block));
 
         return label;
     }

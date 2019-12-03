@@ -20,6 +20,20 @@ public interface IRuncontrol {
     void setRunControlEnabled(Boolean enabled);
     
     /**
+     * Gets whether run-control is suspended if the block goes invalid.
+     * 
+     * @return whether run-control is suspended if the block goes invalid.
+     */
+    Boolean getSuspendIfInvalid();
+	
+    /**
+     * Sets whether run-control is suspended if the block goes invalid.
+     * 
+     * @param enabled whether run-control is suspended if the block goes invalid.
+     */
+    void setSuspendIfInvalid(Boolean enabled);
+    
+    /**
      * Gets the low limit for run-control.
      * 
      * @return the low limit for run-control

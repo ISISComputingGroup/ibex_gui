@@ -41,14 +41,16 @@ public class RunControlSymbolConverter extends Converter<RuncontrolState, String
 
     @Override
     public String convert(RuncontrolState state) {
-        if (state == RuncontrolState.ENABLED_IN_RANGE) {
-            // Checkmark
-            return "\u2713";
-        } else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
-            return "X";
+        switch (state) {
+	        case ENABLED_IN_RANGE:
+	        	return "\u2713";  // Checkmark
+	        case ENABLED_OUT_RANGE:
+	        	return "X";
+	        case DISCONNECTED:
+	        	return "!";
+	        default:
+	        	return "";
         }
-
-        return "";
     }
 
 }
