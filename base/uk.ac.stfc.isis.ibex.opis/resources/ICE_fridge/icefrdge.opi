@@ -317,7 +317,7 @@
         <scripts />
         <stretch_to_fit>true</stretch_to_fit>
         <tooltip></tooltip>
-        <transparency>false</transparency>
+        <transparency>true</transparency>
         <visible>true</visible>
         <widget_type>Image</widget_type>
         <width>769</width>
