@@ -65,15 +65,6 @@ public class UI extends AbstractUIPlugin implements IStartup {
 	public void addSwitchIOCLogPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(switchToOrFromIOCLogProperty, listener);
     }
-
-	/**
-	 * Remove a property change support listener for stopWait changes.
-	 * 
-	 * @param listener That will no longer listen to property support changes.
-	 */
-    public void removeSwitchIOCLogPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(switchToOrFromIOCLogProperty, listener);
-    }
     
     /**
      * Called when PerspectiveSwitcher switches to or from the IOC log.
