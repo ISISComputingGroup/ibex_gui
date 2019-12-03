@@ -398,7 +398,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
     
     /**
-     * @return the current high limit for run-control.
+     * @return whether run control will suspend on invalid, true if it will suspend.
      */
     @Override
     public Boolean getSuspendIfInvalid() {
@@ -435,7 +435,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
     
     /**
-     * @return whether run-control is enabled in the configuration.
+     * @return whether run control is set to suspend on invalid in the configuration.
      */
     public Boolean getConfigurationSuspendIfInvalid() {
         return block.getSuspendIfInvalid();
