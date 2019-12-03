@@ -83,15 +83,6 @@ public class UI extends AbstractUIPlugin implements IStartup {
 	public void addStopWaitPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(stopWaitProperty, listener);
     }
-
-	/**
-	 * Remove a property change support listener for stopWait changes.
-	 * 
-	 * @param listener That will no longer listen to property support changes.
-	 */
-    public void removeStopWaitPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(stopWaitProperty, listener);
-    }
     
     /**
      * Called when WaitFor stopWait occurs.
