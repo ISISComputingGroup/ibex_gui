@@ -42,7 +42,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
     
-    private final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
+    private static final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
     
     public LogCounter() {
     	UI.getDefault().addStopWaitPropertyChangeListener(this);
