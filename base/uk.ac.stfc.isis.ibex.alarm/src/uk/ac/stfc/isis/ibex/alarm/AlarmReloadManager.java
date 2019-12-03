@@ -47,6 +47,11 @@ public final class AlarmReloadManager implements PropertyChangeListener {
      * The instance of this singleton.
      */
     private static AlarmReloadManager instance;
+    
+    /**
+     * The stopWait property string identifier.
+     */
+    private static final String STOP_WAIT_PROPERTY_IDENTIFIER = "stopWait";
 
     /**
      * Private constructor, use getInstance() instead.
@@ -110,7 +115,7 @@ public final class AlarmReloadManager implements PropertyChangeListener {
      */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("stopWait")) {
+		if (evt.getPropertyName().equals(STOP_WAIT_PROPERTY_IDENTIFIER)) {
 			queueDelayedUpdate();
 		}
 	}
