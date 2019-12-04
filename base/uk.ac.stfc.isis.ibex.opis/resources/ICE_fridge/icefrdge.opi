@@ -488,7 +488,7 @@
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7c6f</wuid>
         <x>762</x>
-        <y>240</y>
+        <y>246</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
