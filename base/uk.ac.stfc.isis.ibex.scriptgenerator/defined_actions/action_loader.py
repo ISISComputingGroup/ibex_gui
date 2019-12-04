@@ -1,7 +1,8 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap
+from py4j.protocol import Py4JError
 from action_interface import ActionDefinition
-from typing import Dict, AnyStr, Union
+from typing import Dict, AnyStr, Union, List
 from inspect import signature
 import inspect
 import argparse
@@ -53,7 +54,7 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(*list_of_arguments)
+        return self.action.parameters_valid(list_of_arguments)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -82,8 +83,8 @@ class Generator(object):
         current_list_of_arguments = 0
         validityCheck = ""
         for list_of_arguments in list_of_list_of_arguments:
-            singleActionValidityCheck = config.parametersValid(**list_of_arguments)
-            if singleActionValidityCheck != "":
+            singleActionValidityCheck = config.parametersValid(list_of_arguments[0])
+            if singleActionValidityCheck != None:
                 validityCheck += "Action {} invalid: {}, {}\n".format(current_list_of_arguments, list_of_list_of_arguments[current_list_of_arguments], singleActionValidityCheck)
             current_list_of_arguments += 1
         return validityCheck if validityCheck != "" else None
@@ -129,8 +130,13 @@ class ConfigWrapper(object):
         Returns:
            generator: The generator to create python scripts with.
         """
-        sys.stderr.write(str(self.generator))
         self.generator
+    
+    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+        return self.generator.areParamsValid(list_of_list_of_arguments, config)
+
+    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+        return self.generator.generate(list_of_list_of_arguments, config)
 
 
 def get_actions() -> Dict[AnyStr, ActionDefinition]:

@@ -66,5 +66,21 @@ public class GeneratorContext {
 			throw new UnsupportedLanguageException("Language " + generatedLanguage + " not supported");
 		}
 	}
+	
+	/**
+	 * Get the validity errors returned when checking validity.
+	 * 
+	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param config The instrument config to validate the script against.
+	 * @return a string of validity errors or null if no errors.
+	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 */
+	public String getValidityErrorsString(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+		if (generatorStrategies.containsKey(generatedLanguage)) {
+			return generatorStrategies.get(generatedLanguage).getValidityErrorsString(actionsTable, config);
+		} else {
+			throw new UnsupportedLanguageException("Language " + generatedLanguage + " not supported");
+		}
+	}
 
 }

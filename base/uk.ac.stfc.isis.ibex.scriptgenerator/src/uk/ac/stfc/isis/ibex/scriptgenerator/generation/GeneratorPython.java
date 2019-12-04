@@ -38,7 +38,7 @@ public class GeneratorPython implements GeneratorInterface {
 	public boolean areParamsValid(ActionsTable actionsTable, Config config) {
 		String errorMessages = ScriptGeneratorSingleton.getPythonInterface().areParamsValid(actionsTable, config);
 		// Python returns None if there is no error
-		return Objects.isNull(errorMessages);
+		return ! Objects.isNull(errorMessages);
 	}
 
 	/**

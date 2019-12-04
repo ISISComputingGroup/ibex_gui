@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.Objects;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -143,6 +145,7 @@ public class ScriptGeneratorView {
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
         
         final Button generateScriptButton = createGenerateScriptButton(parent);
+        final Button validateScriptButton = createValidateScriptParametersButton(parent);
 		
         bind();
 		
@@ -196,6 +199,27 @@ public class ScriptGeneratorView {
 			}
 		});
 		return generateScriptButton;
+	}
+	
+	private Button createValidateScriptParametersButton(Composite parent) {
+		Button validateScriptButton =  new Button(parent, SWT.NONE);
+		validateScriptButton.setText("Validate Script");
+		validateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		validateScriptButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				switch(e.type) {
+				case SWT.Selection:
+					String errorsString = GeneratorFacade.getValidityErrorsString(scriptGeneratorTable, configLoader.getConfig());
+					if (Objects.isNull(errorsString)) {
+						validateScriptButton.setText("Valid");
+					} else {
+						validateScriptButton.setText(errorsString);
+					}
+					break;
+				}
+			}
+		});
+		return validateScriptButton;
 	}
 	
 	/**

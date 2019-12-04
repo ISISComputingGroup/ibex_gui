@@ -198,7 +198,7 @@ public class PythonInterface {
 	 */
 	public String areParamsValid(ActionsTable actionsTable, Config config) {
 		List<Map<String, String>> scriptGenContent = convertActionsTableToPythonRepr(actionsTable);
-		return configWrapper.getGenerator().areParamsValid(scriptGenContent, config);
+		return configWrapper.areParamsValid(scriptGenContent, config);
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class PythonInterface {
 	 */
 	public String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
 		List<Map<String, String>> scriptGenContent = convertActionsTableToPythonRepr(actionsTable);
-		String generatedScript = configWrapper.getGenerator().generate(scriptGenContent, config);
+		String generatedScript = configWrapper.generate(scriptGenContent, config);
 		if (Objects.isNull(generatedScript)) {
 			throw new InvalidParamsException("Script generator content is invalid");
 		}

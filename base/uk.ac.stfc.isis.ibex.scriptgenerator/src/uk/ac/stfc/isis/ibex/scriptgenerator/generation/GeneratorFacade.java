@@ -32,8 +32,6 @@ public class GeneratorFacade {
 	 * @param config The instrument config to generate the script with.
 	 * @return The path to the generated script.
 	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported 
-	 * 		(this will not happen here as we do support python).
 	 */
 	public static String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
 		try {
@@ -64,11 +62,14 @@ public class GeneratorFacade {
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param config The instrument config to check the parameters are valid against.
 	 * @return true if the contents are valid, false if not.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported 
-	 * 		(this will not happen here as we do support python).
 	 */
-	public static boolean areParamsValid(ActionsTable actionsTable, Config config) throws UnsupportedLanguageException {
-		return areParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
+	public static boolean areParamsValid(ActionsTable actionsTable, Config config) {
+		try {
+			return areParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
+		} catch(UnsupportedLanguageException e) {
+			LOG.error("Unsupported language when trying to generate script: " + e);
+			return false;
+		}
 	}
 	
 	/**
@@ -82,5 +83,33 @@ public class GeneratorFacade {
 	 */
 	public static boolean areParamsValid(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return generatorContext.areParamsValid(actionsTable, config, generatedLanguage);
+	}
+	
+	/**
+	 * Get the validity errors returned when checking validity.
+	 * 
+	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param config The instrument config to validate the script against.
+	 * @return a string of validity errors or null if no errors.
+	 */
+	public static String getValidityErrorsString(ActionsTable actionsTable, Config config) {
+		try {
+			return getValidityErrorsString(actionsTable, config, GeneratedLanguage.PYTHON);
+		} catch(UnsupportedLanguageException e) {
+			LOG.error("Unsupported language when trying to generate script: " + e);
+			return null;
+		}
+	}
+	
+	/**
+	 * Get the validity errors returned when checking validity.
+	 * 
+	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param config The instrument config to validate the script against.
+	 * @return a string of validity errors or null if no errors.
+	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 */
+	public static String getValidityErrorsString(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+		return generatorContext.getValidityErrorsString(actionsTable, config, generatedLanguage);
 	}
 }
