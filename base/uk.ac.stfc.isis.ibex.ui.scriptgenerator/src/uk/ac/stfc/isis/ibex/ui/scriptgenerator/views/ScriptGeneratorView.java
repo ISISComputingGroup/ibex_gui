@@ -25,6 +25,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -35,11 +36,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
@@ -133,6 +141,8 @@ public class ScriptGeneratorView {
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
+        
+        final Button generateScriptButton = createGenerateScriptButton(parent);
 		
         bind();
 		
@@ -166,6 +176,26 @@ public class ScriptGeneratorView {
 		configSelector.setSelection(new StructuredSelection(configLoader.getConfig()));
 		
 		return configSelector;
+	}
+	
+	private Button createGenerateScriptButton(Composite parent) {
+		Button generateScriptButton =  new Button(parent, SWT.NONE);
+		generateScriptButton.setText("Generate Script");
+		generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		generateScriptButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				switch(e.type) {
+				case SWT.Selection:
+					try {
+						GeneratorFacade.generate(scriptGeneratorTable, configLoader.getConfig());
+					} catch (InvalidParamsException e1) {
+						MessageDialog.openError(new Shell(new Display()), "Script generation error", "Failed to generate script, parameters are invalid\n"+e1);
+					}
+					break;
+				}
+			}
+		});
+		return generateScriptButton;
 	}
 	
 	/**

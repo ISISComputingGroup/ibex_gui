@@ -28,4 +28,5 @@ public interface Config {
 	 * @return The name of this configuration.
 	 */
 	public String getName();
+	
 }

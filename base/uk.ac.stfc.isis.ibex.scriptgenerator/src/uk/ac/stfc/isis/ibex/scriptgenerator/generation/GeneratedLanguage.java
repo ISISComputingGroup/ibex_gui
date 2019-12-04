@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.generation;
+package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 /**
  * The language to generate a script in (currently only Python)

@@ -1,5 +1,5 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
-from py4j.java_collections import ListConverter
+from py4j.java_collections import ListConverter, JavaList, JavaMap
 from action_interface import ActionDefinition
 from typing import Dict, AnyStr, Union
 from inspect import signature
@@ -67,6 +67,39 @@ class Config(object):
         """ Calculates the hash of the config"""
         return hash(self.name)
 
+class Generator(object):
+
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
+
+    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+        """
+        Checks if a list of parameters are valid for the configuration
+
+        Returns:
+            None if all parameters are valid, otherwise a String containing the error messages.
+        """
+        current_list_of_arguments = 0
+        validityCheck = ""
+        for list_of_arguments in list_of_list_of_arguments:
+            singleActionValidityCheck = config.parametersValid(**list_of_arguments)
+            if singleActionValidityCheck != "":
+                validityCheck += "Action {} invalid: {}, {}\n".format(current_list_of_arguments, list_of_list_of_arguments[current_list_of_arguments], singleActionValidityCheck)
+            current_list_of_arguments += 1
+        return validityCheck if validityCheck != "" else None
+
+    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+        """
+        Generates a script from a list of parameters and configuration
+
+        Returns:
+           None if parameters are invalid, otherwise a string of a generated script.
+        """
+        if self.areParamsValid(list_of_list_of_arguments, config):
+            return "Generated python script"
+        else:
+            return None
+
 
 class ConfigWrapper(object):
     """
@@ -75,8 +108,9 @@ class ConfigWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
 
-    def __init__(self, available_actions: Dict):
+    def __init__(self, available_actions: Dict, generator: Generator):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
+        self.generator = generator
 
     def getActionDefinitions(self) -> list:
         """
@@ -87,6 +121,16 @@ class ConfigWrapper(object):
 
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
+
+    def getGenerator(self) -> Generator:
+        """
+        Returns the generator to create python scripts.
+
+        Returns:
+           generator: The generator to create python scripts with.
+        """
+        sys.stderr.write(str(self.generator))
+        self.generator
 
 
 def get_actions() -> Dict[AnyStr, ActionDefinition]:
@@ -111,7 +155,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    config_wrapper = ConfigWrapper(get_actions())
+    config_wrapper = ConfigWrapper(get_actions(), Generator())
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),

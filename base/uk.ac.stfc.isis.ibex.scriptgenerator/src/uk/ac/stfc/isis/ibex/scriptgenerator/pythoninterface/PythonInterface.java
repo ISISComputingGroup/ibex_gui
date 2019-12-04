@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import py4j.ClientServer;
 import py4j.ClientServer.ClientServerBuilder;
@@ -15,6 +17,9 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
  * Sets up the py4j interface.
@@ -171,6 +176,46 @@ public class PythonInterface {
 		//TODOD DELTEE 
 		
 		return Path.forWindows(fullPath).toOSString();
+	}
+	
+	/**
+	 * Converts ActionsTable to a suitable representation for py4j to understand.
+	 * 
+	 * @param actionsTable The table to convert.
+	 * @return A suitable python representation.
+	 */
+	private List<Map<String, String>> convertActionsTableToPythonRepr(ActionsTable actionsTable) {
+		return actionsTable.getActions().stream().
+				map(action -> action.getAllActionParametersAsStrings()).collect(Collectors.toList());
+	}
+	
+	/**
+	 * Use python to check the validity of the parameters.
+	 * 
+	 * @param actionsTable The script generator content to validate.
+	 * @param config The config to validate against.
+	 * @return A string of validity errors or null if valid.
+	 */
+	public String areParamsValid(ActionsTable actionsTable, Config config) {
+		List<Map<String, String>> scriptGenContent = convertActionsTableToPythonRepr(actionsTable);
+		return configWrapper.getGenerator().areParamsValid(scriptGenContent, config);
+	}
+
+	/**
+	 * Generate a script from the script generator contents (actionsTable) against the config.
+	 * 
+	 * @param actionsTable The contents to generate the script with.
+	 * @param config The config to generate the script with.
+	 * @return The generated script as a string
+	 * @throws InvalidParamsException Thrown if the contents (actionsTable) are invalid.
+	 */
+	public String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
+		List<Map<String, String>> scriptGenContent = convertActionsTableToPythonRepr(actionsTable);
+		String generatedScript = configWrapper.getGenerator().generate(scriptGenContent, config);
+		if (Objects.isNull(generatedScript)) {
+			throw new InvalidParamsException("Script generator content is invalid");
+		}
+		return generatedScript;
 	}
 	
 }

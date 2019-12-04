@@ -33,12 +33,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
 	private final ConfigLoader configLoader;
+	private static final PythonInterface pythonInterface = new PythonInterface();
 	
 	/**
 	 * The constructor, will create a config loader and load an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
-		configLoader = new ConfigLoader(new PythonInterface());
+		configLoader = new ConfigLoader(pythonInterface);
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
@@ -52,6 +53,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public ConfigLoader getConfigLoader() {
 		return configLoader;
+	}
+	
+	/**
+	 * Get the python interface.
+	 * 
+	 * @return The class responsible for interfacing with python.
+	 */
+	public static PythonInterface getPythonInterface() {
+		return pythonInterface;
 	}
 
 	/**
