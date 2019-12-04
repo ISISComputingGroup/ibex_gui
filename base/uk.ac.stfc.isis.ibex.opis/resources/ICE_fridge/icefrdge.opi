@@ -227,7 +227,7 @@
     <width>811</width>
     <wuid>5b350f2:16eb2c4b43a:-7ac6</wuid>
     <x>18</x>
-    <y>108</y>
+    <y>114</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -294,8 +294,8 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>433</height>
-        <image_file>mimic_outline.bmp</image_file>
+        <height>451</height>
+        <image_file>mimic_outline.png</image_file>
         <name>Image</name>
         <no_animation>false</no_animation>
         <permutation_matrix>
@@ -317,13 +317,13 @@
         <scripts />
         <stretch_to_fit>true</stretch_to_fit>
         <tooltip></tooltip>
-        <transparency>true</transparency>
+        <transparency>false</transparency>
         <visible>true</visible>
         <widget_type>Image</widget_type>
-        <width>769</width>
-        <wuid>30bf5da1:16ecbea354a:-7e51</wuid>
+        <width>805</width>
+        <wuid>-6154bf38:16ed055d1b6:-7dad</wuid>
         <x>0</x>
-        <y>0</y>
+        <y>6</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -363,8 +363,8 @@
         <width>49</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7d41</wuid>
-        <x>300</x>
-        <y>282</y>
+        <x>317</x>
+        <y>300</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -404,8 +404,8 @@
         <width>73</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7d23</wuid>
-        <x>288</x>
-        <y>384</y>
+        <x>305</x>
+        <y>405</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -446,7 +446,7 @@
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7ce1</wuid>
         <x>10</x>
-        <y>265</y>
+        <y>285</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -487,8 +487,8 @@
         <width>19</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7c6f</wuid>
-        <x>726</x>
-        <y>228</y>
+        <x>762</x>
+        <y>240</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -528,8 +528,8 @@
         <width>37</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7c5b</wuid>
-        <x>228</x>
-        <y>60</y>
+        <x>240</x>
+        <y>69</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -569,8 +569,8 @@
         <width>73</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7bec</wuid>
-        <x>288</x>
-        <y>55</y>
+        <x>305</x>
+        <y>66</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -610,8 +610,8 @@
         <width>37</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a81</wuid>
-        <x>210</x>
-        <y>392</y>
+        <x>220</x>
+        <y>413</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -651,8 +651,8 @@
         <width>42</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7aaf</wuid>
-        <x>672</x>
-        <y>378</y>
+        <x>703</x>
+        <y>405</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -692,8 +692,8 @@
         <width>42</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a73</wuid>
-        <x>169</x>
-        <y>336</y>
+        <x>174</x>
+        <y>354</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -733,8 +733,8 @@
         <width>42</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a67</wuid>
-        <x>270</x>
-        <y>150</y>
+        <x>276</x>
+        <y>162</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -774,7 +774,7 @@
         <width>42</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a5b</wuid>
-        <x>60</x>
+        <x>66</x>
         <y>6</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -815,8 +815,8 @@
         <width>62</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a4d</wuid>
-        <x>366</x>
-        <y>24</y>
+        <x>384</x>
+        <y>36</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -856,8 +856,8 @@
         <width>62</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a41</wuid>
-        <x>366</x>
-        <y>102</y>
+        <x>384</x>
+        <y>116</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -897,8 +897,8 @@
         <width>62</width>
         <wrap_words>true</wrap_words>
         <wuid>30bf5da1:16ecbea354a:-7a35</wuid>
-        <x>652</x>
-        <y>102</y>
+        <x>693</x>
+        <y>116</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
