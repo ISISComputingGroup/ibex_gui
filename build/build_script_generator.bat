@@ -9,7 +9,7 @@ if %errcode% GEQ 4 (
 )
 
 REM Copy python into the client
-call copy_python.bat %~dp0..\base\uk.ac.stfc.isis.ibex.preferences\resources\Python3
+call copy_python.bat %~dp0..\base\uk.ac.stfc.isis.ibex.preferences\src\main\resources\Python3
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 SET "JAVA_HOME=%~dp0\jdk"
