@@ -77,7 +77,7 @@ public class RunControlSetter {
 	}
     
     /**
-     * Set run control to suspend if invalid or not 
+     * Set run control to suspend if invalid or not.
      *
      * @param suspendIfInvalid
      *            whether or not to suspend the run on invalid
