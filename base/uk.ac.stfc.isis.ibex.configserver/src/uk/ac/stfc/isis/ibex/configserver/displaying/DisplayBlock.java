@@ -285,6 +285,8 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      *            variable
      * @param highLimitSource the observable holding the block's high limit
      *            variable
+     * @param suspendIfInvalidSource the observable holding whether the block
+     *  should suspend if invalid
      * @param enabledSource the observable holding the block's enabled status
      * @param blockServerAlias the PVs alias on the block server
      */
