@@ -48,7 +48,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     private boolean runcontrol;
     private double lowlimit;
     private double highlimit;
-    private boolean suspendOnInvalid;
+    private boolean suspend_on_invalid;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -98,7 +98,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
         this.log_deadband = logDeadband;
         this.log_periodic = logPeriodic;
         this.log_rate = logRate;
-        this.suspendOnInvalid = suspendOnInvalid;
+        this.suspend_on_invalid = suspendOnInvalid;
 	}
 	
     /**
@@ -107,7 +107,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param other the block to be copied
      */
 	public Block(Block other) {
-        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit, other.suspendOnInvalid, 
+        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit, other.suspend_on_invalid, 
                 other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
@@ -295,7 +295,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
     @Override
 	public void setSuspendIfInvalid(Boolean suspendIfInvalid) {
-        firePropertyChange("suspendOnInvalid", this.suspendOnInvalid, this.suspendOnInvalid = suspendIfInvalid);
+        firePropertyChange("suspendOnInvalid", this.suspend_on_invalid, this.suspend_on_invalid = suspendIfInvalid);
     }
     
     /**
@@ -305,7 +305,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
     @Override
 	public Boolean getSuspendIfInvalid() {
-        return suspendOnInvalid;
+        return suspend_on_invalid;
     }
 
     /**
