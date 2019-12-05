@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
@@ -36,9 +37,9 @@ public class GeneratorPython implements GeneratorInterface {
 	 * @return true if the contents are valid, false if not.
 	 */
 	public boolean areParamsValid(ActionsTable actionsTable, Config config) {
-		String errorMessages = ScriptGeneratorSingleton.getPythonInterface().areParamsValid(actionsTable, config);
-		// Python returns None if there is no error
-		return ! Objects.isNull(errorMessages);
+		HashMap<Integer, String> errorMessages = ScriptGeneratorSingleton.getPythonInterface().
+				areParamsValid(actionsTable, config);
+		return errorMessages.isEmpty();
 	}
 
 	/**
@@ -46,10 +47,10 @@ public class GeneratorPython implements GeneratorInterface {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a string of validity errors or null if no errors.
+	 * @return a hashmap of validity errors.
 	 */
 	@Override
-	public String getValidityErrorsString(ActionsTable actionsTable, Config config) {
+	public HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
 		return ScriptGeneratorSingleton.getPythonInterface().areParamsValid(actionsTable, config);
 	}
 	

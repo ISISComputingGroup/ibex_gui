@@ -8,6 +8,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Objects;
+
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -90,14 +95,14 @@ public class GeneratorFacade {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a string of validity errors or null if no errors.
+	 * @return a hashmap of validity errors.
 	 */
-	public static String getValidityErrorsString(ActionsTable actionsTable, Config config) {
+	public static HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
 		try {
-			return getValidityErrorsString(actionsTable, config, GeneratedLanguage.PYTHON);
+			return getValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
 		} catch(UnsupportedLanguageException e) {
 			LOG.error("Unsupported language when trying to generate script: " + e);
-			return null;
+			return new HashMap<>();
 		}
 	}
 	
@@ -109,7 +114,7 @@ public class GeneratorFacade {
 	 * @return a string of validity errors or null if no errors.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
-	public static String getValidityErrorsString(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		return generatorContext.getValidityErrorsString(actionsTable, config, generatedLanguage);
+	public static HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+		return generatorContext.getValidityErrors(actionsTable, config, generatedLanguage);
 	}
 }

@@ -18,18 +18,26 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Acts as a permanent reference to the ActionsTable.
  *
  */
-public class ScriptGeneratorSingleton extends ModelObject {
+public class ScriptGeneratorSingleton extends ModelObject implements PropertyChangeListener {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
 	private final ConfigLoader configLoader;
@@ -45,6 +53,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		});
 				
 		setActionParameters(configLoader.getParameters());
+		
+		scriptGeneratorTable.addPropertyChangeListener(this);
 	}
 
 	/**
@@ -138,5 +148,23 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public void cleanUp() {
 		configLoader.cleanUp();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(Objects.equals(evt.getPropertyName(), "actions")) {
+			HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig());
+			// If validity errors is null there are none
+			if (!Objects.isNull(validityErrors)) {
+				List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
+				for(int i = 0; i< scriptGenActions.size(); i++) {
+					if(validityErrors.containsKey(i)) {
+						scriptGenActions.get(i).setInvalid(validityErrors.get(i));
+					} else {
+						scriptGenActions.get(i).setValid();
+					}
+				}
+			}
+		}
 	}
 }

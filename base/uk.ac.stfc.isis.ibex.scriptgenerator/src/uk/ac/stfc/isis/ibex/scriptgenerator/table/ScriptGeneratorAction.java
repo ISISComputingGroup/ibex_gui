@@ -14,6 +14,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 public class ScriptGeneratorAction extends ModelObject {
 
 	private HashMap<ActionParameter, String> actionParameterValues;
+	private boolean valid = true;
+	private String invalidityReason = null;
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
@@ -81,6 +83,42 @@ public class ScriptGeneratorAction extends ModelObject {
 			actionParamStringValues.put(entry.getKey().getName(), entry.getValue());
 		}
 		return actionParamStringValues;
+	}
+	
+	/**
+	 * Set this action as valid.
+	 */
+	public void setValid() {
+		valid = true;
+		invalidityReason = null;
+	}
+	
+	/**
+	 * Set this action as invalid with a reason.
+	 * 
+	 * @param reason The reason for this being invalid.
+	 */
+	public void setInvalid(String reason) {
+		valid = false;
+		invalidityReason = reason;
+	}
+	
+	/**
+	 * True if the action is valid, false if not.
+	 * 
+	 * @return True if the action is valid, false if not.
+	 */
+	public boolean isValid() {
+		return valid;
+	}
+	
+	/**
+	 * Get the current reason for invalidity (may be null if valid).
+	 * 
+	 * @return String of reason if invalid. Null if valid.
+	 */
+	public String getInvalidityReason() {
+		return invalidityReason;
 	}
 	
 }

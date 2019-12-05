@@ -22,11 +22,14 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -115,5 +118,23 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	public void updateTableColumns() {
 		super.updateTableColumns();
 		setRows(new ArrayList<ScriptGeneratorAction>());
+	}
+
+	/**
+	 * Update the tables action rows to be coloured if invalid.
+	 */
+	public void updateValidityChecks() {
+		List<ScriptGeneratorAction> actions = actionsTable.getActions();
+		TableItem[] items = table().getItems();
+		var display = Display.getCurrent();
+		Color invalidColor = display.getSystemColor(SWT.COLOR_MAGENTA);
+		Color validColor = display.getSystemColor(SWT.COLOR_TRANSPARENT);
+		for (int i = 0; i < actions.size(); i++) {
+			if (actions.get(i).isValid()) {
+				items[i].setBackground(invalidColor);
+			} else {
+				items[i].setBackground(validColor);
+			}
+		}
 	}
 }

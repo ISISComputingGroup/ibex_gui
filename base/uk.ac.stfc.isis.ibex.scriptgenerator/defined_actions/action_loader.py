@@ -1,5 +1,5 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
-from py4j.java_collections import ListConverter, JavaList, JavaMap
+from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
 from action_interface import ActionDefinition
 from typing import Dict, AnyStr, Union, List
@@ -73,21 +73,21 @@ class Generator(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
 
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
         """
         Checks if a list of parameters are valid for the configuration
 
         Returns:
-            None if all parameters are valid, otherwise a String containing the error messages.
+            Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
         current_list_of_arguments = 0
-        validityCheck = ""
+        validityCheck: Dict[int, AnyStr] = {}
         for list_of_arguments in list_of_list_of_arguments:
             singleActionValidityCheck = config.parametersValid(list_of_arguments[0])
             if singleActionValidityCheck != None:
-                validityCheck += "Action {} invalid: {}, {}\n".format(current_list_of_arguments, list_of_list_of_arguments[current_list_of_arguments], singleActionValidityCheck)
+                validityCheck[current_list_of_arguments] = singleActionValidityCheck
             current_list_of_arguments += 1
-        return validityCheck if validityCheck != "" else None
+        return validityCheck
 
     def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
         """
@@ -132,8 +132,8 @@ class ConfigWrapper(object):
         """
         self.generator
     
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
-        return self.generator.areParamsValid(list_of_list_of_arguments, config)
+    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
+        return MapConverter().convert(self.generator.areParamsValid(list_of_list_of_arguments, config), gateway._gateway_client)
 
     def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
         return self.generator.generate(list_of_list_of_arguments, config)

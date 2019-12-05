@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,6 @@ public interface PythonGeneratorInterface {
 	 * @param config The instrument config to validate the script against.
 	 * @return true if the contents are valid, false if not.
 	 */
-	public String areParamsValid(List<Map<String, String>> actionsTable, Config config);
+	public HashMap<Integer, String> areParamsValid(List<Map<String, String>> actionsTable, Config config);
 
 }

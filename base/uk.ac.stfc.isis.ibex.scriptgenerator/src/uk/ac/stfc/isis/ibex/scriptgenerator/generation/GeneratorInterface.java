@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
+import java.util.HashMap;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
@@ -39,6 +41,6 @@ public interface GeneratorInterface {
 	 * @param config The instrument config to validate the script against.
 	 * @return a string of validity errors or null if no errors.
 	 */
-	public String getValidityErrorsString(ActionsTable actionsTable, Config config);
+	public HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config);
 	
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
 
 /**
  * This class holds the script actions and their positions in the script.
