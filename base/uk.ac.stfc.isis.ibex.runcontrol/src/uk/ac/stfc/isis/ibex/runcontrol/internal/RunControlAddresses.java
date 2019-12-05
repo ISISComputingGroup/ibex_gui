@@ -27,6 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 public class RunControlAddresses {
 	private static final String LOW_LIMIT = "RC:LOW";
 	private static final String HIGH_LIMIT = "RC:HIGH";
+	private static final String SUSPEND_ON_INVALID = "RC:SUSPEND_ON_INVALID";
 	private static final String ENABLE = "RC:ENABLE";
 	private static final String INRANGE = "RC:INRANGE";
 
@@ -57,6 +58,16 @@ public class RunControlAddresses {
 	 */
 	public String getHighLimitPv(String blockName) {
 		return blockRoot.append(blockName).endWith(HIGH_LIMIT);
+	}
+	
+	/**
+	 * Gets the suspend on invalid PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the high limit PV
+	 */
+	public String getSuspendOnInvalidPv(String blockName) {
+		return blockRoot.append(blockName).endWith(SUSPEND_ON_INVALID);
 	}
 
 	/**
