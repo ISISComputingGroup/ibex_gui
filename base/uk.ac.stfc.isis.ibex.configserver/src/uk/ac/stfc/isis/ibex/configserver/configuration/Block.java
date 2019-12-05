@@ -48,7 +48,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     private boolean runcontrol;
     private double lowlimit;
     private double highlimit;
-    private boolean suspend_on_invalid;
+    private boolean suspendOnInvalid;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -78,7 +78,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param component the component the block belongs to
      * @param lowLimit the low limit for run-control
      * @param highLimit the high limit for run-control
-     * @param suspend_on_invalid whether to suspend data collection if the block is in invalid alarm
+     * @param suspendOnInvalid whether to suspend data collection if the block is in invalid alarm
      * @param runcontrol whether run-control is enabled
      * @param logPeriodic whether the block is sampled periodically in the
      *            archiver
@@ -86,7 +86,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param logDeadband deadband for the block to be archived
      */
     public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
-            double highLimit, boolean suspend_on_invalid, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
+            double highLimit, boolean suspendOnInvalid, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -98,7 +98,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
         this.log_deadband = logDeadband;
         this.log_periodic = logPeriodic;
         this.log_rate = logRate;
-        this.suspend_on_invalid = suspend_on_invalid;
+        this.suspendOnInvalid = suspendOnInvalid;
 	}
 	
     /**
@@ -107,7 +107,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param other the block to be copied
      */
 	public Block(Block other) {
-        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit, other.suspend_on_invalid, 
+        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit, other.suspendOnInvalid, 
                 other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
@@ -295,7 +295,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
     @Override
 	public void setSuspendIfInvalid(Boolean suspendIfInvalid) {
-        firePropertyChange("suspendOnInvalid", this.suspend_on_invalid, this.suspend_on_invalid = suspendIfInvalid);
+        firePropertyChange("suspendOnInvalid", this.suspendOnInvalid, this.suspendOnInvalid = suspendIfInvalid);
     }
     
     /**
@@ -305,7 +305,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
     @Override
 	public Boolean getSuspendIfInvalid() {
-        return suspend_on_invalid;
+        return suspendOnInvalid;
     }
 
     /**
