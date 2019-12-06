@@ -2208,11 +2208,11 @@
         <entry>
       <key>Zero field magnetometer</key>
       <value>
-        <type>PUMP</type>
+        <type>ZERO_FIELD</type>
         <path>zero_field_controller/field_strength.opi</path>
         <description>OPI for zero field strength</description>
         <categories>
-          <category></category>
+          <category>Magnets</category>
         </categories>
         <macros>
           <macro>
