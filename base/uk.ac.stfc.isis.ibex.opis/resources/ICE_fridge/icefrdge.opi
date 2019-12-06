@@ -3178,7 +3178,7 @@ $(pv_value)</tooltip>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
+        <horizontal_alignment>1</horizontal_alignment>
         <name>Loop 1 Tset Label</name>
         <rules />
         <scale_options>
@@ -3194,10 +3194,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>20</width>
+        <width>38</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-74d9</wuid>
-        <x>64</x>
+        <x>58</x>
         <y>98</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -3276,7 +3276,7 @@ $(pv_value)</tooltip>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
+        <horizontal_alignment>1</horizontal_alignment>
         <name>Loop 1 Tset Label</name>
         <rules />
         <scale_options>
@@ -3292,10 +3292,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>27</width>
+        <width>38</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-74b1</wuid>
-        <x>516</x>
+        <x>507</x>
         <y>305</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -3393,7 +3393,7 @@ $(pv_value)</tooltip>
         <width>27</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7475</wuid>
-        <x>793</x>
+        <x>796</x>
         <y>67</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -3691,126 +3691,6 @@ $(pv_value)</tooltip>
         <x>507</x>
         <y>371</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolButton" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <align_to_nearest_second>false</align_to_nearest_second>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <bit>-1</bit>
-        <boolean_label_position>0</boolean_label_position>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <confirm_message>Are you sure you want to do this?</confirm_message>
-        <data_type>0</data_type>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>38</height>
-        <name>Image Boolean Button_12</name>
-        <no_animation>false</no_animation>
-        <off_image>p red valve.png</off_image>
-        <off_label>OFF</off_label>
-        <on_image>p green valve.png</on_image>
-        <on_label>ON</on_label>
-        <password></password>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT):PROPORTIONAL_VALVE1:_CALC</pv_name>
-        <pv_value />
-        <released_action_index>0</released_action_index>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_boolean_label>false</show_boolean_label>
-        <show_confirm_dialog>0</show_confirm_dialog>
-        <stretch_to_fit>true</stretch_to_fit>
-        <toggle_button>true</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <transparency>true</transparency>
-        <visible>true</visible>
-        <widget_type>Image Boolean Button</widget_type>
-        <width>38</width>
-        <wuid>-6c841481:16ed629c046:-7f39</wuid>
-        <x>58</x>
-        <y>117</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolButton" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <align_to_nearest_second>false</align_to_nearest_second>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <bit>-1</bit>
-        <boolean_label_position>0</boolean_label_position>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <confirm_message>Are you sure you want to do this?</confirm_message>
-        <data_type>0</data_type>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>38</height>
-        <name>Image Boolean Button_12</name>
-        <no_animation>false</no_animation>
-        <off_image>p red valve.png</off_image>
-        <off_label>OFF</off_label>
-        <on_image>p green valve.png</on_image>
-        <on_label>ON</on_label>
-        <password></password>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT):PROPORTIONAL_VALVE2:_CALC</pv_name>
-        <pv_value />
-        <released_action_index>0</released_action_index>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_boolean_label>false</show_boolean_label>
-        <show_confirm_dialog>0</show_confirm_dialog>
-        <stretch_to_fit>true</stretch_to_fit>
-        <toggle_button>true</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <transparency>true</transparency>
-        <visible>true</visible>
-        <widget_type>Image Boolean Button</widget_type>
-        <width>38</width>
-        <wuid>-6c841481:16ed629c046:-7d96</wuid>
-        <x>508</x>
-        <y>320</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
@@ -3864,6 +3744,114 @@ $(pv_value)</tooltip>
         <wuid>16754d09:16ed6fd1cd7:-7dc1</wuid>
         <x>760</x>
         <y>60</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <align_to_nearest_second>false</align_to_nearest_second>
+        <auto_size>false</auto_size>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <bit>-1</bit>
+        <boolean_label_position>0</boolean_label_position>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <data_type>0</data_type>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>38</height>
+        <name>Image Boolean Indicator_1</name>
+        <no_animation>false</no_animation>
+        <off_image>p red valve.png</off_image>
+        <off_label>OFF</off_label>
+        <on_image>p green valve.png</on_image>
+        <on_label>ON</on_label>
+        <pv_name>$(PV_ROOT):PROPORTIONAL_VALVE1:_CALC</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_boolean_label>false</show_boolean_label>
+        <stretch_to_fit>true</stretch_to_fit>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <transparency>true</transparency>
+        <visible>true</visible>
+        <widget_type>Image Boolean Indicator</widget_type>
+        <width>38</width>
+        <wuid>-7b7e010c:16eda674815:-7f61</wuid>
+        <x>58</x>
+        <y>115</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <align_to_nearest_second>false</align_to_nearest_second>
+        <auto_size>false</auto_size>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <bit>-1</bit>
+        <boolean_label_position>0</boolean_label_position>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <data_type>0</data_type>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>38</height>
+        <name>Image Boolean Indicator_1</name>
+        <no_animation>false</no_animation>
+        <off_image>p red valve.png</off_image>
+        <off_label>OFF</off_label>
+        <on_image>p green valve.png</on_image>
+        <on_label>ON</on_label>
+        <pv_name>$(PV_ROOT):PROPORTIONAL_VALVE2:_CALC</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_boolean_label>false</show_boolean_label>
+        <stretch_to_fit>true</stretch_to_fit>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <transparency>true</transparency>
+        <visible>true</visible>
+        <widget_type>Image Boolean Indicator</widget_type>
+        <width>38</width>
+        <wuid>-7b7e010c:16eda674815:-7f55</wuid>
+        <x>507</x>
+        <y>321</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
