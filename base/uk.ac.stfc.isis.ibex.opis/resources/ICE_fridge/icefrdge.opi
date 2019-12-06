@@ -1745,7 +1745,17 @@ $(pv_value)</tooltip>
         <push_action_index>0</push_action_index>
         <pv_name>$(PV_ROOT):MIMIC:START:SP.PROC</pv_name>
         <pv_value />
-        <rules />
+        <rules>
+          <rule name="Rule" prop_id="enabled" out_exp="false">
+            <exp bool_exp="pv0==1">
+              <value>true</value>
+            </exp>
+            <exp bool_exp="pv0!=1">
+              <value>false</value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):MIMIC:MODE:SP</pv>
+          </rule>
+        </rules>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
@@ -1847,104 +1857,6 @@ $(pv_value)</tooltip>
         <wuid>-6154bf38:16ed055d1b6:-78b7</wuid>
         <x>223</x>
         <y>469</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="EXECUTE_PYTHONSCRIPT">
-            <path>../Common Scripts/sendOne.py</path>
-            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-]]></scriptText>
-            <embedded>false</embedded>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <image></image>
-        <name>Button</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT):MIMIC:STOP:SP.PROC</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Stop</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>60</width>
-        <wuid>-6154bf38:16ed055d1b6:-78a7</wuid>
-        <x>427</x>
-        <y>471</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="EXECUTE_PYTHONSCRIPT">
-            <path>../Common Scripts/sendOne.py</path>
-            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-]]></scriptText>
-            <embedded>false</embedded>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <image></image>
-        <name>Button</name>
-        <push_action_index>0</push_action_index>
-        <pv_name>$(PV_ROOT):MIMIC:SKIP:SP.PROC</pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Skip</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>60</width>
-        <wuid>-6154bf38:16ed055d1b6:-7897</wuid>
-        <x>496</x>
-        <y>471</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolButton" version="1.0.0">
         <actions hook="false" hook_all="false">
@@ -4095,6 +4007,124 @@ $(pv_value)</tooltip>
         <wuid>-7b7e010c:16eda674815:-7b79</wuid>
         <x>562</x>
         <y>456</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="false">
+          <action type="EXECUTE_PYTHONSCRIPT">
+            <path>../Common Scripts/sendOne.py</path>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+            <embedded>false</embedded>
+            <description></description>
+          </action>
+        </actions>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>20</height>
+        <image></image>
+        <name>Button</name>
+        <push_action_index>0</push_action_index>
+        <pv_name>$(PV_ROOT):MIMIC:STOP:SP.PROC</pv_name>
+        <pv_value />
+        <rules>
+          <rule name="Rule" prop_id="enabled" out_exp="false">
+            <exp bool_exp="pv0==1">
+              <value>true</value>
+            </exp>
+            <exp bool_exp="pv0!=1">
+              <value>false</value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):MIMIC:MODE:SP</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <style>1</style>
+        <text>Stop</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Action Button</widget_type>
+        <width>60</width>
+        <wuid>-7b7e010c:16eda674815:-7b5b</wuid>
+        <x>428</x>
+        <y>471</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="false">
+          <action type="EXECUTE_PYTHONSCRIPT">
+            <path>../Common Scripts/sendOne.py</path>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+            <embedded>false</embedded>
+            <description></description>
+          </action>
+        </actions>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>20</height>
+        <image></image>
+        <name>Button</name>
+        <push_action_index>0</push_action_index>
+        <pv_name>$(PV_ROOT):MIMIC:SKIP:SP.PROC</pv_name>
+        <pv_value />
+        <rules>
+          <rule name="Rule" prop_id="enabled" out_exp="false">
+            <exp bool_exp="pv0==1">
+              <value>true</value>
+            </exp>
+            <exp bool_exp="pv0!=1">
+              <value>false</value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):MIMIC:MODE:SP</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <style>1</style>
+        <text>Skip</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Action Button</widget_type>
+        <width>60</width>
+        <wuid>-7b7e010c:16eda674815:-7b4f</wuid>
+        <x>498</x>
+        <y>471</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
