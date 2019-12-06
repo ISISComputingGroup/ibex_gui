@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,14 +16,14 @@ public interface Config {
 	 * Performs the defined action.
 	 * @param arguments The arguments for doing the action.
 	 */
-	public void doAction(Object... arguments);
+	public void doAction(HashMap<Integer, String> arguments);
 	
 	/**
 	 * Performs the check that the arguments are valid.
 	 * @param arguments The current argument values.
 	 * @return The error if the arguments are not valid.
 	 */
-	public String parametersValid(Object... arguments);
+	public String parametersValid(HashMap<Integer, String> arguments);
 	
 	/**
 	 * @return The name of this configuration.

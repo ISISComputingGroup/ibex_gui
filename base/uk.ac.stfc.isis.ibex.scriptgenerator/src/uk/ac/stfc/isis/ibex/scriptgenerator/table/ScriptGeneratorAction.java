@@ -16,6 +16,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	private HashMap<ActionParameter, String> actionParameterValues;
 	private boolean valid = true;
 	private String invalidityReason = null;
+	private static final String VALIDITY_PROPERTY = "validity";
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
@@ -89,6 +90,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * Set this action as valid.
 	 */
 	public void setValid() {
+		firePropertyChange(VALIDITY_PROPERTY, valid, true);
 		valid = true;
 		invalidityReason = null;
 	}
@@ -99,6 +101,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @param reason The reason for this being invalid.
 	 */
 	public void setInvalid(String reason) {
+		firePropertyChange(VALIDITY_PROPERTY, valid, false);
 		valid = false;
 		invalidityReason = reason;
 	}

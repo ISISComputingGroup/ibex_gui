@@ -20,11 +20,13 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -32,6 +34,7 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -43,14 +46,15 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Provides settings to control the script generator.
@@ -82,6 +86,7 @@ public class ScriptGeneratorView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
+
 		scriptGeneratorModel = Activator.getModel();
 		configLoader = scriptGeneratorModel.getConfigLoader();
 		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
@@ -89,11 +94,15 @@ public class ScriptGeneratorView {
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
-		parent.setLayout(new GridLayout(2, false));
+		parent.setLayout(new GridLayout(1, false));
 		
-		Composite globalSettingsComposite = new Composite(parent, SWT.NONE);
+		Composite topBarComposite = new Composite(parent, SWT.NONE);
+		topBarComposite.setLayout(new GridLayout(2, false));
+		topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
 		globalSettingsComposite.setLayout(new GridLayout(2, false));
-		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		
 		Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
 		configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -102,11 +111,26 @@ public class ScriptGeneratorView {
 		// Drop-down box to select between configs.
 		configSelector = setUpConfigSelector(globalSettingsComposite);
 		
-		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
+		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
+		validityComposite.setLayout(new GridLayout(1, false));
+		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		
+		// Button to check validity errors
+		final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
+        btnGetValidityErrors.setText("Get Validity Errors");
+        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btnGetValidityErrors.addListener(SWT.Selection, e -> displayValidityErrors());
+        btnGetValidityErrors.setBackground(new Color(DISPLAY, 255, 204, 203));
+        
+        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
+        tableContainerComposite.setLayout(new GridLayout(2, false));
+        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable, scriptGeneratorModel);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
 		// Composite for move action up/down buttons
-		Composite moveComposite = new Composite(parent, SWT.NONE);
+		Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
@@ -116,7 +140,6 @@ public class ScriptGeneratorView {
         
         Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
         btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionDown(table.getSelectionIndex()));
-        
         
         // Composite for laying out new/delete/duplicate action buttons
         Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
@@ -141,9 +164,7 @@ public class ScriptGeneratorView {
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
-        
-        final Button generateScriptButton = createGenerateScriptButton(parent);
-		
+        		
         bind();
 		
         scriptGeneratorModel.addEmptyAction();
@@ -178,26 +199,6 @@ public class ScriptGeneratorView {
 		return configSelector;
 	}
 	
-	private Button createGenerateScriptButton(Composite parent) {
-		Button generateScriptButton =  new Button(parent, SWT.NONE);
-		generateScriptButton.setText("Generate Script");
-		generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		generateScriptButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				switch(e.type) {
-				case SWT.Selection:
-					try {
-						GeneratorFacade.generate(scriptGeneratorTable, configLoader.getConfig());
-					} catch (InvalidParamsException e1) {
-						MessageDialog.openError(new Shell(new Display()), "Script generation error", "Failed to generate script, parameters are invalid\n"+e1);
-					}
-					break;
-				}
-			}
-		});
-		return generateScriptButton;
-	}
-	
 	/**
 	 * Binds the Script Generator Table and config selector models to their views.
 	 */
@@ -212,6 +213,10 @@ public class ScriptGeneratorView {
                 this.table.setRows(this.scriptGeneratorTable.getActions());
                 this.table.updateValidityChecks();
         }));
+	}
+	
+	public void displayValidityErrors() {
+		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", scriptGeneratorModel.getFirstNLinesOfInvalidityErrors(10));
 	}
 	
 

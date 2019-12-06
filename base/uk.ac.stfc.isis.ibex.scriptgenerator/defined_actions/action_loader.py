@@ -45,7 +45,7 @@ class Config(object):
 
     def doAction(self, list_of_arguments) -> None:
         """Executes the action with the parameters provided"""
-        self.action.run(*list_of_arguments)
+        self.action.run(*list_of_arguments.values())
 
     def parametersValid(self, list_of_arguments) -> Union[None, AnyStr]:
         """
@@ -54,7 +54,7 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(list_of_arguments)
+        return self.action.parameters_valid(**list_of_arguments)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -83,7 +83,7 @@ class Generator(object):
         current_list_of_arguments = 0
         validityCheck: Dict[int, AnyStr] = {}
         for list_of_arguments in list_of_list_of_arguments:
-            singleActionValidityCheck = config.parametersValid(list_of_arguments[0])
+            singleActionValidityCheck = config.parametersValid(list_of_arguments)
             if singleActionValidityCheck != None:
                 validityCheck[current_list_of_arguments] = singleActionValidityCheck
             current_list_of_arguments += 1

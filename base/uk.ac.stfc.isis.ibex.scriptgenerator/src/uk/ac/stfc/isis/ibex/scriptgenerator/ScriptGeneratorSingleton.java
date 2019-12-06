@@ -152,19 +152,50 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(Objects.equals(evt.getPropertyName(), "actions")) {
-			HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig());
-			// If validity errors is null there are none
-			if (!Objects.isNull(validityErrors)) {
-				List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
-				for(int i = 0; i< scriptGenActions.size(); i++) {
-					if(validityErrors.containsKey(i)) {
-						scriptGenActions.get(i).setInvalid(validityErrors.get(i));
-					} else {
-						scriptGenActions.get(i).setValid();
-					}
+		onTableChange();
+	}
+	
+	public void onTableChange() {
+		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig());
+		// If validity errors is null there are none
+		if (!Objects.isNull(validityErrors)) {
+			List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
+			for(int i = 0; i< scriptGenActions.size(); i++) {
+				if(validityErrors.containsKey(i)) {
+					scriptGenActions.get(i).setInvalid(validityErrors.get(i));
+				} else {
+					scriptGenActions.get(i).setValid();
 				}
 			}
 		}
+	}
+	
+	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
+		List<ScriptGeneratorAction> actions = scriptGeneratorTable.getActions();
+		int numOfLines = 0;
+		boolean limited = false;
+		StringBuilder errors = new StringBuilder();
+		for (int i = 0; i < actions.size(); i++) {
+			ScriptGeneratorAction action = actions.get(i);
+			if (!action.isValid()) {
+				String errorString = "Row: " + (i+1) + ", Reason: " + action.getInvalidityReason() + "\n";
+				for(String line : errorString.split("\n")) {
+					errors.append(line+"\n");
+					numOfLines++;
+					if (numOfLines > maxNumOfLines) {
+						limited = true;
+						break;
+					}
+				}
+			}
+			if(numOfLines > maxNumOfLines) {
+				limited = true;
+				break;
+			}
+		}
+		if(limited) {
+			errors.append("\nLimited to " + maxNumOfLines + " errors. To see the error for a specific row hover over it.");
+		}
+		return errors.toString();
 	}
 }

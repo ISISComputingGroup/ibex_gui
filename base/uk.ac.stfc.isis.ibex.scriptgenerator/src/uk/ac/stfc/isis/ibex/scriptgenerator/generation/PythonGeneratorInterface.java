@@ -22,7 +22,7 @@ public interface PythonGeneratorInterface {
 	 * @return The path to the generated script.
 	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
 	 */
-	public String generate(List<Map<String, String>> actionsTable, Config config) throws InvalidParamsException;
+	public String generate(List<List<String>> actionsTable, Config config) throws InvalidParamsException;
 	
 	/**
 	 * Check if the contents of the script generator (actionsTable) are valid against the config.
@@ -31,6 +31,6 @@ public interface PythonGeneratorInterface {
 	 * @param config The instrument config to validate the script against.
 	 * @return true if the contents are valid, false if not.
 	 */
-	public HashMap<Integer, String> areParamsValid(List<Map<String, String>> actionsTable, Config config);
+	public HashMap<Integer, String> areParamsValid(List<List<String>> actionsTable, Config config);
 
 }
