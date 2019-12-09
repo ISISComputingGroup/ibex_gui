@@ -148,14 +148,22 @@ public class ActionsTableTest {
 		table.setValidityErrors(validityErrors);
 		
 		// Assert
-		assertThat(table.getActions().get(0).isValid(), is(false));
-		assertThat(table.getActions().get(0).getInvalidityReason(), equalTo("invalid 1"));
-		assertThat(table.getActions().get(1).isValid(), is(true));
-		assertThat(table.getActions().get(1).getInvalidityReason(), nullValue());
-		assertThat(table.getActions().get(2).isValid(), is(false));
-		assertThat(table.getActions().get(2).getInvalidityReason(), equalTo("invalid 3"));
-		assertThat(table.getActions().get(3).isValid(), is(false));
-		assertThat(table.getActions().get(3).getInvalidityReason(), equalTo("invalid 2"));
+		assertThat("We set 0 to invalid so should not be valid", 
+				table.getActions().get(0).isValid(), is(false));
+		assertThat("We set 0 to invalid so should give same invalidity error string",
+				table.getActions().get(0).getInvalidityReason(), equalTo("invalid 1"));
+		assertThat("We did not set 1 to invalid so should be valid",
+				table.getActions().get(1).isValid(), is(true));
+		assertThat("As 1 is valid should return null",
+				table.getActions().get(1).getInvalidityReason(), nullValue());
+		assertThat("We set 2 to invalid so should not be valid",
+				table.getActions().get(2).isValid(), is(false));
+		assertThat("We set 2 to invalid so should give same invalidity error string",
+				table.getActions().get(2).getInvalidityReason(), equalTo("invalid 3"));
+		assertThat("We set 3 to invalid so should not be valid",
+				table.getActions().get(3).isValid(), is(false));
+		assertThat("We set 3 to invalid so should give same invalidity error string",
+				table.getActions().get(3).getInvalidityReason(), equalTo("invalid 2"));
 	}
 
 }
