@@ -10,19 +10,18 @@ class DoRun(ActionDefinition):
         g.end()
 
     def parameters_valid(self, temperature: str="0.0", field: str="0.0", uamps: str="0.0"):
-        # Cast the types
+        errors: str = ""
         try:
-            temperature = float(temperature)
+            if not 0.1 <= float(temperature) <= 300:
+                errors += "Temperature outside range\n"
         except ValueError:
-            return "Temperature not passed as float"
+            errors += "Temperature not passed as float\n"
         try:
-            field = float(field)
+            if not -5 <= int(field) < 5:
+                errors += "Field outside range"
         except ValueError:
-            return "Field not passed as float"
-        # Check the parameters are valid
-        if not 0.1 <= float(temperature) <= 300:
-            return "Temperature outside range"
-        if not -5 <= int(field) < 5:
-            return "Field outside range"
+            errors += "Field not passed as float"
+        if errors != "":
+            return errors
         return None
 
