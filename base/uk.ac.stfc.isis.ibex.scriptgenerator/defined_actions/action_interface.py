@@ -38,20 +38,21 @@ def cast_parameters_to(*args_casts, **keyword_casts):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
+            casting_failures: str = ""
             cast_kwargs={}
             for k, v in six.iteritems(kwargs):
                 try:
                     cast_kwargs[k] = keyword_casts[k](v)
                 except ValueError as e:
-                    return "Error: Cannot cast " + str(v) + " as " + str(k) + "\n" + str(e)
+                    casting_failures += str(e) + "\n"
             cast_args = []
             for i in range(0, len(args_casts)):
                 try:
                     cast_args[i] = args_casts[i](args[i])
                 except ValueError as e:
-                    return "Error: Cannot cast " + str(args[i]) + " as " + str(args_casts[i]) + "\n" + str(e)
-                except IndexError:
-                    return "Index: " + str(i)
+                    casting_failures += str(e) + "\n"
+            if casting_failures != "":
+                return casting_failures
             return func(self, *cast_args, **cast_kwargs)
         return wrapper
     return decorator
