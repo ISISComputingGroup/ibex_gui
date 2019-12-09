@@ -1,5 +1,8 @@
 from abc import abstractmethod, ABC
 from typing import Union, AnyStr
+import six
+import sys
+import functools
 
 
 class ActionDefinition(ABC):
@@ -30,3 +33,26 @@ class ActionDefinition(ABC):
 
         """
         pass
+
+def cast_parameters_to(*args_casts, **keyword_casts):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            cast_kwargs={}
+            for k, v in six.iteritems(kwargs):
+                try:
+                    cast_kwargs[k] = keyword_casts[k](v)
+                except ValueError as e:
+                    return "Error: Cannot cast " + str(v) + " as " + str(k) + "\n" + str(e)
+            cast_args = []
+            for i in range(0, len(args_casts)):
+                try:
+                    cast_args[i] = args_casts[i](args[i])
+                except ValueError as e:
+                    return "Error: Cannot cast " + str(args[i]) + " as " + str(args_casts[i]) + "\n" + str(e)
+                except IndexError:
+                    return "Index: " + str(i)
+            return func(self, *cast_args, **cast_kwargs)
+        return wrapper
+    return decorator
+
