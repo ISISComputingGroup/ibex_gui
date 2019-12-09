@@ -2,7 +2,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 

@@ -23,22 +23,23 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * Acts as a permanent reference to the ActionsTable.
  *
  */
 public class ScriptGeneratorSingleton extends ModelObject implements PropertyChangeListener {
-	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
+	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private final ConfigLoader configLoader;
 	private static final PythonInterface pythonInterface = new PythonInterface();
 	
@@ -141,6 +142,23 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	public void moveActionDown(int index) {
 		scriptGeneratorTable.moveAction(index, index + 1);
 	}
+	
+	/**
+	 * Get the list of actions in the ActionsTable.
+	 * 
+	 * @return List of actions in the ActionsTable.
+	 */
+	public List<ScriptGeneratorAction> getActions() {
+		return scriptGeneratorTable.getActions();
+	}
+	
+	/**
+	 * @return The action parameters used in this table.
+	 * 
+	 */
+	public List<ActionParameter> getActionParameters() {
+		return scriptGeneratorTable.getActionParameters();
+	}
 
 	/**
 	 * Clean up resources when the plugin is destroyed.
@@ -148,50 +166,54 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	public void cleanUp() {
 		configLoader.cleanUp();
 	}
+	
+	/**
+	 * Get a list of available configs.
+	 * 
+	 * @return A list of available configs.
+	 */
+	public List<Config> getAvailableConfigs() {
+		return configLoader.getAvailableConfigs();
+	}
+	
+	/**
+	 * Get the currently loaded configuration.
+	 * 
+	 * @return The currently loaded configuration.
+	 */
+	public Config getConfig() {
+		return configLoader.getConfig();
+	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		onTableChange();
 	}
 	
+	/**
+	 * What to do on the actions in the table changing.
+	 */
 	public void onTableChange() {
 		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
 				scriptGeneratorTable, configLoader.getConfig());
-		List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
-		for(int i = 0; i< scriptGenActions.size(); i++) {
-			if(validityErrors.containsKey(i)) {
-				scriptGenActions.get(i).setInvalid(validityErrors.get(i));
-			} else {
-				scriptGenActions.get(i).setValid();
-			}
-		}
+		scriptGeneratorTable.setValidityErrors(validityErrors);
 	}
 	
+	/**
+	 * Get the first maxNumOfLines of validity errors to display to a user.
+	 * 
+	 * @param maxNumOfLines The number of lines to limit the validity errors to.
+	 * @return The string of validity errors to display
+	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
-		List<ScriptGeneratorAction> actions = scriptGeneratorTable.getActions();
-		int numOfLines = 0;
-		boolean limited = false;
 		StringBuilder errors = new StringBuilder();
-		for (int i = 0; i < actions.size(); i++) {
-			ScriptGeneratorAction action = actions.get(i);
-			if (!action.isValid()) {
-				String errorString = "Row: " + (i+1) + ", Reason: " + action.getInvalidityReason() + "\n";
-				for(String line : errorString.split("\n")) {
-					errors.append(line+"\n");
-					numOfLines++;
-					if (numOfLines > maxNumOfLines) {
-						limited = true;
-						break;
-					}
-				}
-			}
-			if(numOfLines > maxNumOfLines) {
-				limited = true;
+		ArrayList<String> invalidityErrorLines = scriptGeneratorTable.getInvalidityErrorLines();
+		for (int i = 0; i < invalidityErrorLines.size(); i++) {
+			errors.append(invalidityErrorLines.get(i));
+			if (i >= 9) {
+				errors.append("\nLimited to " + maxNumOfLines + " lines. To see an error for a specific row hover over it.");
 				break;
 			}
-		}
-		if(limited) {
-			errors.append("\nLimited to " + maxNumOfLines + " errors. To see the error for a specific row hover over it.");
 		}
 		return errors.toString();
 	}

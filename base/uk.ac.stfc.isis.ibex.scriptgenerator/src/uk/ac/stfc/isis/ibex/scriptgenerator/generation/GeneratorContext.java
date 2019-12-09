@@ -9,6 +9,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -27,9 +28,10 @@ public class GeneratorContext {
 	
 	/**
 	 * Add each language's generator to the strategies.
+	 * @param pythonInterface 
 	 */
-	public GeneratorContext() {
-		generatorStrategies.put(GeneratedLanguage.PYTHON, new GeneratorPython());
+	public GeneratorContext(PythonInterface pythonInterface) {
+		generatorStrategies.put(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
 	}
 	
 	/**
