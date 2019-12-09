@@ -2,8 +2,14 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Before;
@@ -105,6 +111,51 @@ public class ActionsTableTest {
 		table.moveAction(1, 2);
 		
 		assertEquals(table.getActions().indexOf(secondAction), 1);
+	}
+	
+	@Test
+	public void test_WHEN_actions_invalid_THEN_errors_returned_are_correct() {
+		// Arrange
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.getActions().get(1).setInvalid("invalid 1");
+		table.getActions().get(3).setInvalid("invalid 2");
+		
+		// Act
+		ArrayList<String> actualValidityErrors = table.getInvalidityErrorLines();
+		
+		// Assert
+		String[] arrayExpectedValidityErrors = {"Row: 2, Reason: invalid 1\n", "Row: 4, Reason: invalid 2\n"};
+		List<String> expectedValidityErrors = Arrays.asList(arrayExpectedValidityErrors);
+		assertThat("We expect validity errors to match those set into actions", actualValidityErrors, equalTo(expectedValidityErrors));
+	}
+	
+	@Test
+	public void test_WHEN_setting_actions_as_invalid_THEN_correct_actions_are_invalid() {
+		// Arrange
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		HashMap<Integer, String> validityErrors = new HashMap<Integer, String>();
+		validityErrors.put(0, "invalid 1");
+		validityErrors.put(3, "invalid 2");
+		validityErrors.put(2, "invalid 3");
+		
+		// Act
+		table.setValidityErrors(validityErrors);
+		
+		// Assert
+		assertThat(table.getActions().get(0).isValid(), is(false));
+		assertThat(table.getActions().get(0).getInvalidityReason(), equalTo("invalid 1"));
+		assertThat(table.getActions().get(1).isValid(), is(true));
+		assertThat(table.getActions().get(1).getInvalidityReason(), nullValue());
+		assertThat(table.getActions().get(2).isValid(), is(false));
+		assertThat(table.getActions().get(2).getInvalidityReason(), equalTo("invalid 3"));
+		assertThat(table.getActions().get(3).isValid(), is(false));
+		assertThat(table.getActions().get(3).getInvalidityReason(), equalTo("invalid 2"));
 	}
 
 }
