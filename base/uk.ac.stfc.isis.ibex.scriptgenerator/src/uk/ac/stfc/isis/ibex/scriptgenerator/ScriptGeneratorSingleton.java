@@ -23,7 +23,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -156,16 +155,14 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	}
 	
 	public void onTableChange() {
-		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig());
-		// If validity errors is null there are none
-		if (!Objects.isNull(validityErrors)) {
-			List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
-			for(int i = 0; i< scriptGenActions.size(); i++) {
-				if(validityErrors.containsKey(i)) {
-					scriptGenActions.get(i).setInvalid(validityErrors.get(i));
-				} else {
-					scriptGenActions.get(i).setValid();
-				}
+		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
+				scriptGeneratorTable, configLoader.getConfig());
+		List<ScriptGeneratorAction> scriptGenActions = scriptGeneratorTable.getActions();
+		for(int i = 0; i< scriptGenActions.size(); i++) {
+			if(validityErrors.containsKey(i)) {
+				scriptGenActions.get(i).setInvalid(validityErrors.get(i));
+			} else {
+				scriptGenActions.get(i).setValid();
 			}
 		}
 	}
