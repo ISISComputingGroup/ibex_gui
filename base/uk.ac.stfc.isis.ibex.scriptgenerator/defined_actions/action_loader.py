@@ -45,7 +45,7 @@ class Config(object):
 
     def doAction(self, list_of_arguments) -> None:
         """Executes the action with the parameters provided"""
-        self.action.run(*list_of_arguments.values())
+        self.action.run(**list_of_arguments)
 
     def parametersValid(self, list_of_arguments) -> Union[None, AnyStr]:
         """
