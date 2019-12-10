@@ -21,17 +21,13 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
-import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
@@ -329,16 +325,11 @@ public class ConfigServerVariables extends Closer {
      * @return the PV name
      */
 	private String getConfigPV(final String configName) {
-		try {
-			return Iterables.find(configsInfo.getValue(), new Predicate<ConfigInfo>() {
-				@Override
-				public boolean apply(ConfigInfo info) {
-					return info.name().equals(configName);
-				}
-			}).pv();
-		} catch (NoSuchElementException e) {
-			return configName.toUpperCase(Locale.ENGLISH);
-		}
+		return configsInfo.getValue().stream()
+				.filter(info -> info.name().equals(configName))
+				.findFirst()
+				.map(ConfigInfo::pv)
+				.orElse(configName.toUpperCase(Locale.ENGLISH));
 	}
 
     /**
@@ -348,15 +339,10 @@ public class ConfigServerVariables extends Closer {
      * @return the PV name
      */
 	private String getComponentPV(final String componentName) {
-		try {
-			return Iterables.find(componentsInfo.getValue(), new Predicate<ConfigInfo>() {
-				@Override
-				public boolean apply(ConfigInfo info) {
-					return info.name().equals(componentName);
-				}
-			}).pv();
-		} catch (NoSuchElementException e) {
-			return componentName.toUpperCase(Locale.ENGLISH);
-		}
+		return componentsInfo.getValue().stream()
+				.filter(info -> info.name().equals(componentName))
+				.findFirst()
+				.map(ConfigInfo::pv)
+				.orElse(componentName.toUpperCase(Locale.ENGLISH));
 	}
 }

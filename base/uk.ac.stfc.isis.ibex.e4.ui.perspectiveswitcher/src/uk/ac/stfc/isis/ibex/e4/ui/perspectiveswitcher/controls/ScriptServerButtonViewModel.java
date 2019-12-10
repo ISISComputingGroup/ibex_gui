@@ -7,18 +7,18 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 
 /**
- * ViewModel to interact with the Script Server button and change its states
- *
+ * ViewModel to interact with the Script Server button and change its states.
+ * 
  */
 public final class ScriptServerButtonViewModel extends PerspectiveButtonViewModel {
 	
 	private static final Color SCRIPT_BUTTON_COLOR = SWTResourceManager.getColor(150, 250, 170);
 	private final FlashingButton flash;
 	private ScriptStatus status = ScriptStatus.IDLE;
-	private String Label;
+	private String label;
 	// Spacing to separate from the label
-	private String PlayButton = "     \u25B6";
-	private String PauseButton= "     \u23F8";
+	private String playButton = "     \u25B6";
+	private String pauseButton = "     \u23F8";
 	
 	/**
 	 * 
@@ -30,9 +30,9 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	public ScriptServerButtonViewModel(NicosModel model, String buttonLabel) {
 		super(buttonLabel);
 		flash = new FlashingButton(this, SCRIPT_BUTTON_COLOR);
-		Label = buttonLabel;
+		label = buttonLabel;
 		
-		model.addPropertyChangeListener("scriptStatus", ignored->{
+		model.addPropertyChangeListener("scriptStatus", ignored -> {
 			status = model.getScriptStatus();
 			setButtonColor();
 			updateFlashing();
@@ -41,7 +41,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	}
 	
 	/**
-	 * set Script server button colour for different states of script
+	 * Set Script server button colour for different states of script.
 	 */
 	protected void setButtonColor() {
 		if ((status == ScriptStatus.RUNNING) && (!active && !inFocus)) {
@@ -56,15 +56,15 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	}
 	
 	/**
-	 * Flash when it is required, Flashing only used when Script is paused
+	 * Flash when it is required, Flashing only used when Script is paused.
 	 */
 	protected void updateFlashing() {
-		String label = Label;
+		String label = this.label;
 		if (status == ScriptStatus.RUNNING) {
-			label = label + PlayButton;
+			label = label + playButton;
 		} else if (status == ScriptStatus.INBREAK) {
 			flash.start();
-			label = label + PauseButton;
+			label = label + pauseButton;
 		} else {
 			flash.stop();
 			// once flashing is stopped set color for either activated or deactivated button
@@ -74,8 +74,8 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 	}
 	
 	/**
-	 * set if focus is in the current button or not, 
-	 * the way this button is represented(colors) also depends on focus 
+	 * Set if focus is in the current button or not, 
+	 * the way this button is represented(colors) also depends on focus.
 	 * @param inFocus if focus is in the current button or not i.e. Sript Server button
 	 */
 	@Override

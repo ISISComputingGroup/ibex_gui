@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * Where attention is needed, a flashing button should help to draw attention.

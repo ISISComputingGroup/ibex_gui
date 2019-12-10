@@ -75,7 +75,7 @@ public class ReadableComponentProperty extends ComponentProperty {
             } else if (value.name().equals("MAJOR")) {
                 state = PvState.MAJOR_ALARM;
             } else if (value.name().equals("INVALID")) {
-                state = PvState.DISCONNECTED;
+                state = PvState.INVALID;
             }
 
             setPvState(state);

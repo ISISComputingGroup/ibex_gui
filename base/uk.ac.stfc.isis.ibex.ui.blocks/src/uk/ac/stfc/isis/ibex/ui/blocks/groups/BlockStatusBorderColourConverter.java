@@ -52,6 +52,8 @@ public class BlockStatusBorderColourConverter extends Converter<PvState, Color> 
         switch (state) {
             case DISCONNECTED:
                 return PvStateColour.MAGENTA;
+            case INVALID:
+            	return PvStateColour.MAGENTA;
             case MAJOR_ALARM:
                 return PvStateColour.RED;
             case MINOR_ALARM:

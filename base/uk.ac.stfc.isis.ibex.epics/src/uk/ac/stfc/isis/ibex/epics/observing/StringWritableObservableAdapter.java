@@ -17,13 +17,11 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.widgets.observable;
+package uk.ac.stfc.isis.ibex.epics.observing;
 
 import java.io.IOException;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -95,7 +93,7 @@ public class StringWritableObservableAdapter implements Closable {
      * @param text
      *            the new value
      */
-    public void uncheckedSetText(String text) {
+	public void uncheckedSetText(String text) {
         if (text != writer.lastWritten()) {
             writer.uncheckedWrite(text);
         }

@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <macros>
@@ -5,22 +6,22 @@
   </macros>
   <wuid>-3e043223:13e0e87519f:-4eee</wuid>
   <boy_version>3.1.2.20120830</boy_version>
-  <scripts />
+  <scripts/>
   <show_ruler>true</show_ruler>
   <height>60</height>
   <name>save_restoreStatus_tiny</name>
   <snap_to_geometry>false</snap_to_geometry>
   <show_grid>false</show_grid>
   <background_color>
-    <color name="Gray_3" red="200" green="200" blue="200" />
+    <color name="Gray_3" red="200" green="200" blue="200"/>
   </background_color>
   <foreground_color>
-    <color name="Gray_14" red="0" green="0" blue="0" />
+    <color name="Gray_14" red="0" green="0" blue="0"/>
   </foreground_color>
   <widget_type>Display</widget_type>
   <show_close_button>true</show_close_button>
   <width>400</width>
-  <rules />
+  <rules/>
   <show_edit_range>true</show_edit_range>
   <grid_space>10</grid_space>
   <auto_scale_widgets>
@@ -28,7 +29,7 @@
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <y>338</y>
   <x>165</x>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
@@ -36,13 +37,13 @@
     <visible>true</visible>
     <fill_level>100.0</fill_level>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <wuid>-3e043223:13e0e87519f:-4eed</wuid>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
-    <scripts />
+    <scripts/>
     <height>57</height>
     <anti_alias>true</anti_alias>
     <name>Rectangle</name>
@@ -54,17 +55,17 @@
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color red="30" green="144" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="Gray_0" red="255" green="255" blue="255" />
+      <color name="Gray_0" red="255" green="255" blue="255"/>
     </foreground_color>
     <widget_type>Rectangle</widget_type>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <font>
@@ -73,15 +74,15 @@
     <width>400</width>
     <line_style>0</line_style>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <line_width>0</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>0</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -93,7 +94,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-3e043223:13e0e87519f:-4eec</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>22</height>
     <name>Label</name>
     <scale_options>
@@ -104,29 +105,29 @@ $(pv_value)</tooltip>
     <transparent>true</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="Gray_14" red="0" green="0" blue="0" />
+      <color name="Gray_14" red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
     <text>save_restore status</text>
     <font>
-      <fontdata fontName="Sans" height="13" style="0" />
+      <fontdata fontName="Sans" height="13" style="0"/>
     </font>
     <width>300</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>-2</y>
     <wrap_words>true</wrap_words>
-    <tooltip></tooltip>
+    <tooltip/>
     <x>40</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
@@ -137,7 +138,7 @@ $(pv_value)</tooltip>
     <fill_level>100.0</fill_level>
     <wuid>-3e043223:13e0e87519f:-4eeb</wuid>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <arrows>0</arrows>
     <height>1</height>
     <anti_alias>true</anti_alias>
@@ -150,16 +151,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <points>
-      <point x="1" y="59" />
-      <point x="400" y="59" />
+      <point x="1" y="59"/>
+      <point x="400" y="59"/>
     </points>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color red="30" green="144" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="ioc_read_fg" red="10" green="0" blue="184" />
+      <color name="ioc_read_fg" red="10" green="0" blue="184"/>
     </foreground_color>
     <widget_type>Polyline</widget_type>
     <enabled>true</enabled>
@@ -170,15 +171,15 @@ $(pv_value)</tooltip>
     <width>400</width>
     <line_style>0</line_style>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <line_width>1</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>59</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -192,7 +193,7 @@ $(pv_value)</tooltip>
     <fill_level>100.0</fill_level>
     <wuid>-3e043223:13e0e87519f:-4eea</wuid>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <arrows>0</arrows>
     <height>1</height>
     <anti_alias>true</anti_alias>
@@ -205,16 +206,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <points>
-      <point x="1" y="23" />
-      <point x="400" y="23" />
+      <point x="1" y="23"/>
+      <point x="400" y="23"/>
     </points>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color red="30" green="144" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="ioc_read_fg" red="10" green="0" blue="184" />
+      <color name="ioc_read_fg" red="10" green="0" blue="184"/>
     </foreground_color>
     <widget_type>Polyline</widget_type>
     <enabled>true</enabled>
@@ -225,15 +226,15 @@ $(pv_value)</tooltip>
     <width>400</width>
     <line_style>0</line_style>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <line_width>1</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>23</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -244,7 +245,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-3e043223:13e0e87519f:-4ee9</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>10</height>
     <name>Label</name>
     <scale_options>
@@ -255,29 +256,29 @@ $(pv_value)</tooltip>
     <transparent>true</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="Gray_14" red="0" green="0" blue="0" />
+      <color name="Gray_14" red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
     <text>Recently:</text>
     <font>
-      <fontdata fontName="Sans" height="6" style="0" />
+      <fontdata fontName="Sans" height="6" style="0"/>
     </font>
     <width>55</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>45</y>
     <wrap_words>true</wrap_words>
-    <tooltip></tooltip>
+    <tooltip/>
     <x>5</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polygon" version="1.0">
@@ -285,11 +286,11 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <fill_level>100.0</fill_level>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <wuid>-3e043223:13e0e87519f:-4ee8</wuid>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>21</height>
     <anti_alias>true</anti_alias>
     <name>Polygon</name>
@@ -301,34 +302,34 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <points>
-      <point x="378" y="20" />
-      <point x="374" y="17" />
-      <point x="371" y="13" />
-      <point x="370" y="8" />
-      <point x="370" y="4" />
-      <point x="370" y="1" />
-      <point x="372" y="0" />
-      <point x="375" y="0" />
-      <point x="378" y="2" />
-      <point x="378" y="5" />
-      <point x="379" y="2" />
-      <point x="382" y="0" />
-      <point x="385" y="0" />
-      <point x="386" y="1" />
-      <point x="387" y="4" />
-      <point x="387" y="8" />
-      <point x="385" y="13" />
-      <point x="382" y="17" />
-      <point x="379" y="20" />
-      <point x="378" y="20" />
+      <point x="378" y="20"/>
+      <point x="374" y="17"/>
+      <point x="371" y="13"/>
+      <point x="370" y="8"/>
+      <point x="370" y="4"/>
+      <point x="370" y="1"/>
+      <point x="372" y="0"/>
+      <point x="375" y="0"/>
+      <point x="378" y="2"/>
+      <point x="378" y="5"/>
+      <point x="379" y="2"/>
+      <point x="382" y="0"/>
+      <point x="385" y="0"/>
+      <point x="386" y="1"/>
+      <point x="387" y="4"/>
+      <point x="387" y="8"/>
+      <point x="385" y="13"/>
+      <point x="382" y="17"/>
+      <point x="379" y="20"/>
+      <point x="378" y="20"/>
     </points>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color red="30" green="144" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="MEDM_COLOR_21" red="222" green="19" blue="9" />
+      <color name="MEDM_COLOR_21" red="222" green="19" blue="9"/>
     </foreground_color>
     <widget_type>Polygon</widget_type>
     <enabled>true</enabled>
@@ -350,14 +351,14 @@ $(pv_value)</tooltip>
         <pv trig="true">$(P)SR_heartbeat</pv>
       </rule>
     </rules>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <line_width>0</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>0</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -371,7 +372,7 @@ $(pv_value)</tooltip>
     <wuid>-3e043223:13e0e87519f:-4ee7</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>20</height>
     <name>Text Update</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -385,10 +386,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)SR_status</pv_name>
     <background_color>
-      <color name="Gray_0" red="255" green="255" blue="255" />
+      <color name="Gray_0" red="255" green="255" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="ioc_read_fg" red="10" green="0" blue="184" />
+      <color name="ioc_read_fg" red="10" green="0" blue="184"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -396,18 +397,18 @@ $(pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
     <font>
-      <fontdata fontName="Sans" height="11" style="0" />
+      <fontdata fontName="Sans" height="11" style="0"/>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>25</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -422,7 +423,7 @@ $(pv_value)</tooltip>
     <wuid>-3e043223:13e0e87519f:-4ee6</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>12</height>
     <name>Text Update</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -436,10 +437,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)SR_statusStr</pv_name>
     <background_color>
-      <color name="Gray_0" red="255" green="255" blue="255" />
+      <color name="Gray_0" red="255" green="255" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="ioc_read_fg" red="10" green="0" blue="184" />
+      <color name="ioc_read_fg" red="10" green="0" blue="184"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -447,18 +448,18 @@ $(pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
     <font>
-      <fontdata fontName="Sans" height="8" style="0" />
+      <fontdata fontName="Sans" height="8" style="0"/>
     </font>
     <width>210</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>32</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -473,7 +474,7 @@ $(pv_value)</tooltip>
     <wuid>-3e043223:13e0e87519f:-4ee5</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>12</height>
     <name>Text Update</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -487,10 +488,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)SR_recentlyStr</pv_name>
     <background_color>
-      <color name="Gray_0" red="255" green="255" blue="255" />
+      <color name="Gray_0" red="255" green="255" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="ioc_read_fg" red="10" green="0" blue="184" />
+      <color name="ioc_read_fg" red="10" green="0" blue="184"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -498,18 +499,18 @@ $(pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
     <font>
-      <fontdata fontName="Sans" height="8" style="0" />
+      <fontdata fontName="Sans" height="8" style="0"/>
     </font>
     <width>270</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>45</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -521,7 +522,7 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
     <wuid>-3e043223:13e0e87519f:-4ee4</wuid>
-    <scripts />
+    <scripts/>
     <height>20</height>
     <name>Menu Button</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -531,12 +532,12 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color name="callup_bg" red="40" green="147" blue="21" />
+      <color name="callup_bg" red="40" green="147" blue="21"/>
     </background_color>
     <foreground_color>
-      <color name="Gray_0" red="255" green="255" blue="255" />
+      <color name="Gray_0" red="255" green="255" blue="255"/>
     </foreground_color>
     <widget_type>Menu Button</widget_type>
     <enabled>true</enabled>
@@ -547,11 +548,11 @@ $(pv_value)</tooltip>
     <width>55</width>
     <border_style>6</border_style>
     <label>More</label>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <y>37</y>
     <actions hook="false" hook_all="false">
@@ -573,11 +574,11 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <fill_level>100.0</fill_level>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <wuid>-3e043223:13e0e87519f:-4ee3</wuid>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>21</height>
     <anti_alias>true</anti_alias>
     <name>Polygon</name>
@@ -589,34 +590,34 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <points>
-      <point x="358" y="20" />
-      <point x="354" y="17" />
-      <point x="351" y="13" />
-      <point x="350" y="8" />
-      <point x="350" y="4" />
-      <point x="350" y="1" />
-      <point x="352" y="0" />
-      <point x="355" y="0" />
-      <point x="358" y="2" />
-      <point x="358" y="5" />
-      <point x="359" y="2" />
-      <point x="362" y="0" />
-      <point x="365" y="0" />
-      <point x="366" y="1" />
-      <point x="367" y="4" />
-      <point x="367" y="8" />
-      <point x="365" y="13" />
-      <point x="362" y="17" />
-      <point x="359" y="20" />
-      <point x="358" y="20" />
+      <point x="358" y="20"/>
+      <point x="354" y="17"/>
+      <point x="351" y="13"/>
+      <point x="350" y="8"/>
+      <point x="350" y="4"/>
+      <point x="350" y="1"/>
+      <point x="352" y="0"/>
+      <point x="355" y="0"/>
+      <point x="358" y="2"/>
+      <point x="358" y="5"/>
+      <point x="359" y="2"/>
+      <point x="362" y="0"/>
+      <point x="365" y="0"/>
+      <point x="366" y="1"/>
+      <point x="367" y="4"/>
+      <point x="367" y="8"/>
+      <point x="365" y="13"/>
+      <point x="362" y="17"/>
+      <point x="359" y="20"/>
+      <point x="358" y="20"/>
     </points>
     <transparent>false</transparent>
-    <pv_name></pv_name>
+    <pv_name/>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color red="30" green="144" blue="255"/>
     </background_color>
     <foreground_color>
-      <color name="Gray_14" red="0" green="0" blue="0" />
+      <color name="Gray_14" red="0" green="0" blue="0"/>
     </foreground_color>
     <widget_type>Polygon</widget_type>
     <enabled>true</enabled>
@@ -638,17 +639,57 @@ $(pv_value)</tooltip>
         <pv trig="true">$(P)SR_deadIfZero</pv>
       </rule>
     </rules>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <line_width>0</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>0</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <x>350</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>0</x>
+    <y>-2</y>
   </widget>
 </display>

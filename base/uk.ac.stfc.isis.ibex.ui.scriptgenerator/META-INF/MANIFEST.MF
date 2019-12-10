@@ -15,5 +15,9 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator,
  org.eclipse.core.databinding,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.property,
- org.eclipse.core.databinding.beans
+ org.eclipse.core.databinding.beans,
+ uk.ac.stfc.isis.ibex.ui,
+ uk.ac.stfc.isis.ibex.preferences
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scriptgenerator
+Import-Package: uk.ac.stfc.isis.ibex.ui.widgets
+Bundle-ActivationPolicy: lazy

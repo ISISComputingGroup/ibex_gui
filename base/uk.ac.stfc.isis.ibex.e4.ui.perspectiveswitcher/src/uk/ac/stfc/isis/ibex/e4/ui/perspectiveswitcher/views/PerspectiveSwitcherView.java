@@ -120,7 +120,7 @@ public class PerspectiveSwitcherView {
 			final PerspectiveButtonViewModel model;
 			if (perspective.getLabel().equals("Alarms")) {
 				model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
-			} else if(perspective.getLabel().equals("Script Server")) {
+			} else if (perspective.getLabel().equals("Script Server")) {
 				model = new ScriptServerButtonViewModel(Nicos.getDefault().getModel(), perspective.getLabel());
 			} else {
 				model = new PerspectiveButtonViewModel(perspective.getLabel());
