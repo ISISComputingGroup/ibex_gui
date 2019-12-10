@@ -43,14 +43,14 @@ def cast_parameters_to(*args_casts, **keyword_casts):
             for k, v in six.iteritems(kwargs):
                 try:
                     cast_kwargs[k] = keyword_casts[k](v)
-                except ValueError as e:
-                    casting_failures += str(e) + "\n"
+                except ValueError:
+                    casting_failures += "Cannot convert {} from string to {}\n".format(str(v), str(keyword_casts[k]))
             cast_args = []
             for i in range(0, len(args_casts)):
                 try:
-                    cast_args[i] = args_casts[i](args[i])
-                except ValueError as e:
-                    casting_failures += str(e) + "\n"
+                    cast_args.append(args_casts[i](args[i]))
+                except ValueError:
+                    casting_failures += "Cannot convert {} from string to {}\n".format(args[i], str(args_casts[i]))
             if casting_failures != "":
                 return casting_failures
             return func(self, *cast_args, **cast_kwargs)
