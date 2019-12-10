@@ -64,6 +64,9 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		setUp();
 	}
 	
+	/**
+	 * Called by the constructors to set up the class.
+	 */
 	private void setUp() {
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
@@ -202,13 +205,16 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		return configLoader.getConfig();
 	}
 
+	/**
+	 * On a property change check the validity errors.
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		onTableChange();
 	}
 	
 	/**
-	 * What to do on the actions in the table changing.
+	 * What to do on the actions in the table changing (check the validity errors).
 	 */
 	public void onTableChange() {
 		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(

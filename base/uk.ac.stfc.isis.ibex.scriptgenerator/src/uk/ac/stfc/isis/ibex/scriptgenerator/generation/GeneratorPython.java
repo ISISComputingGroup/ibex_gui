@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 
 /**
- * Use to generate a python script from script generator contents.
+ * Use to generate a python script or check parameter validity from script generator contents.
  * 
  * @author James King
  *

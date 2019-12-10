@@ -142,7 +142,7 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * Set the validity errors for each action based on the hashmap.
 	 * 
-	 * @param validityErrors The hashmap to set validity errors based on
+	 * @param validityErrors The hashmap to set validity errors based on.
 	 */
 	public void setValidityErrors(HashMap<Integer, String> validityErrors) {
 		for(int i = 0; i< actions.size(); i++) {
@@ -155,7 +155,7 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
-	 * Get lines of invalidity errors.
+	 * Get strings of validity errors.
 	 * 
 	 * @return The strings of validity error lines to display.
 	 */

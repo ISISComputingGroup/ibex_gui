@@ -14,7 +14,7 @@ import java.util.HashMap;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Class to use to generate a script in a specified language.
+ * Class to use to generate a script or check parameters are valid in a specified language.
  * 
  * @author James King
  *
@@ -89,7 +89,7 @@ public class GeneratorFacade {
 	}
 	
 	/**
-	 * Get the validity errors returned when checking validity.
+	 * Get the validity errors returned when checking validity against python.
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
