@@ -45,6 +45,7 @@ public class BlockRunControlViewModel extends AbstractRunControlViewModel {
     	editingBlock.setRunControlHighLimit(getRunControlHighLimit());
     	editingBlock.setRunControlLowLimit(getRunControlLowLimit());
     	editingBlock.setRunControlEnabled(getRunControlEnabled());
+    	editingBlock.setSuspendIfInvalid(getSuspendIfInvalid());
     }
 
     /**
@@ -55,5 +56,6 @@ public class BlockRunControlViewModel extends AbstractRunControlViewModel {
 		setRunControlLowLimit(editingBlock.getRunControlLowLimit());
     	setRunControlHighLimit(editingBlock.getRunControlHighLimit());
     	setRunControlEnabled(editingBlock.getRunControlEnabled());
+    	setSuspendIfInvalid(editingBlock.getSuspendIfInvalid());
 	}
 }
