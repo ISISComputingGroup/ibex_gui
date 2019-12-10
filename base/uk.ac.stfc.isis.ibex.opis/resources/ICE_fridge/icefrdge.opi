@@ -391,47 +391,6 @@
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
-          <fontdata fontName="Segoe UI Semibold" height="8" style="0" pixels="false" />
-        </font>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>37</height>
-        <horizontal_alignment>1</horizontal_alignment>
-        <name>Label_3</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <text>Sealed Rotary Pump</text>
-        <tooltip></tooltip>
-        <transparent>true</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>73</width>
-        <wrap_words>true</wrap_words>
-        <wuid>30bf5da1:16ecbea354a:-7d23</wuid>
-        <x>305</x>
-        <y>405</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
-        <background_color>
-          <color name="Header Background" red="94" green="151" blue="230" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
           <fontdata fontName="" height="7" style="0" pixels="false" />
         </font>
         <foreground_color>
@@ -4159,6 +4118,91 @@ $(pv_value)</tooltip>
         <x>440</x>
         <y>516</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.BoolButton" version="1.0.0">
+        <actions hook="false" hook_all="true">
+          <action type="EXECUTE_PYTHONSCRIPT">
+            <path>../Common Scripts/binarySwitch.py</path>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+            <embedded>false</embedded>
+            <description></description>
+          </action>
+        </actions>
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="51" green="153" blue="255" />
+        </background_color>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <confirm_message>Are you sure you want to do this?</confirm_message>
+        <data_type>1</data_type>
+        <effect_3d>false</effect_3d>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>38</height>
+        <labels_from_pv>false</labels_from_pv>
+        <name>Boolean Button</name>
+        <off_color>
+          <color red="0" green="100" blue="200" />
+        </off_color>
+        <off_label>OFF</off_label>
+        <off_state></off_state>
+        <on_color>
+          <color red="0" green="255" blue="0" />
+        </on_color>
+        <on_label>ON</on_label>
+        <on_state></on_state>
+        <password></password>
+        <push_action_index>0</push_action_index>
+        <pv_name>$(PV_ROOT):ROOTS</pv_name>
+        <pv_value />
+        <released_action_index>0</released_action_index>
+        <rules>
+          <rule name="Rule" prop_id="background_color" out_exp="false">
+            <exp bool_exp="pv0 == 1">
+              <value>
+                <color red="0" green="255" blue="0" />
+              </value>
+            </exp>
+            <exp bool_exp="pv0 == 0">
+              <value>
+                <color red="51" green="153" blue="255" />
+              </value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):ROOTS</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>true</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_boolean_label>false</show_boolean_label>
+        <show_confirm_dialog>0</show_confirm_dialog>
+        <show_led>false</show_led>
+        <square_button>true</square_button>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Boolean Button</widget_type>
+        <width>56</width>
+        <wuid>75a16ce4:16eef328d86:-7f3e</wuid>
+        <x>638</x>
+        <y>404</y>
+      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <auto_size>false</auto_size>
@@ -4177,7 +4221,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
-        <height>21</height>
+        <height>27</height>
         <horizontal_alignment>1</horizontal_alignment>
         <name>Label_3</name>
         <rules />
@@ -4188,7 +4232,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Roots</text>
+        <text>Roots Pump</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -4197,8 +4241,8 @@ $(pv_value)</tooltip>
         <width>49</width>
         <wrap_words>true</wrap_words>
         <wuid>-51f316b9:16ee9d21dad:-7d11</wuid>
-        <x>642</x>
-        <y>410</y>
+        <x>640</x>
+        <y>409</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.BoolButton" version="1.0.0">
         <actions hook="false" hook_all="true">
@@ -4325,6 +4369,132 @@ $(pv_value)</tooltip>
         <wuid>30bf5da1:16ecbea354a:-7bec</wuid>
         <x>319</x>
         <y>70</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.BoolButton" version="1.0.0">
+        <actions hook="false" hook_all="true">
+          <action type="EXECUTE_PYTHONSCRIPT">
+            <path>../Common Scripts/binarySwitch.py</path>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+            <embedded>false</embedded>
+            <description></description>
+          </action>
+        </actions>
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="51" green="153" blue="255" />
+        </background_color>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <confirm_message>Are you sure you want to do this?</confirm_message>
+        <data_type>1</data_type>
+        <effect_3d>false</effect_3d>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>46</height>
+        <labels_from_pv>false</labels_from_pv>
+        <name>Boolean Button</name>
+        <off_color>
+          <color red="0" green="100" blue="200" />
+        </off_color>
+        <off_label>OFF</off_label>
+        <off_state></off_state>
+        <on_color>
+          <color red="0" green="255" blue="0" />
+        </on_color>
+        <on_label>ON</on_label>
+        <on_state></on_state>
+        <password></password>
+        <push_action_index>0</push_action_index>
+        <pv_name>$(PV_ROOT):HE3:PUMP</pv_name>
+        <pv_value />
+        <released_action_index>0</released_action_index>
+        <rules>
+          <rule name="Rule" prop_id="background_color" out_exp="false">
+            <exp bool_exp="pv0 == 1">
+              <value>
+                <color red="0" green="255" blue="0" />
+              </value>
+            </exp>
+            <exp bool_exp="pv0 == 0">
+              <value>
+                <color red="51" green="153" blue="255" />
+              </value>
+            </exp>
+            <pv trig="true">$(PV_ROOT):HE3:PUMP</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>true</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_boolean_label>false</show_boolean_label>
+        <show_confirm_dialog>0</show_confirm_dialog>
+        <show_led>false</show_led>
+        <square_button>true</square_button>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Boolean Button</widget_type>
+        <width>86</width>
+        <wuid>75a16ce4:16eef328d86:-7f32</wuid>
+        <x>298</x>
+        <y>403</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="Header Background" red="94" green="151" blue="230" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <fontdata fontName="Segoe UI Semibold" height="8" style="0" pixels="false" />
+        </font>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>37</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <name>Label_3</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>Sealed Rotary Pump</text>
+        <tooltip></tooltip>
+        <transparent>true</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>true</visible>
+        <widget_type>Label</widget_type>
+        <width>73</width>
+        <wrap_words>true</wrap_words>
+        <wuid>30bf5da1:16ecbea354a:-7d23</wuid>
+        <x>305</x>
+        <y>407</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
