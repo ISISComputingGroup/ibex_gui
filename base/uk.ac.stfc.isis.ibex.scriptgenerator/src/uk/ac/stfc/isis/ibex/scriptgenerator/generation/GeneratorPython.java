@@ -72,7 +72,7 @@ public class GeneratorPython implements GeneratorInterface {
 	 * @param actionsTable The table to convert.
 	 * @return A suitable python representation.
 	 */
-	private List<Map<String, String>> convertActionsTableToPythonRepr(ActionsTable actionsTable) {
+	public List<Map<String, String>> convertActionsTableToPythonRepr(ActionsTable actionsTable) {
 		return actionsTable.getActions().stream().
 				map(action -> action.getAllActionParametersAsStrings()).collect(Collectors.toList());
 	}

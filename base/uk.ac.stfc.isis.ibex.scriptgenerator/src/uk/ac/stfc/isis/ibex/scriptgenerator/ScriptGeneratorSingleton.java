@@ -41,13 +41,30 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private final ConfigLoader configLoader;
-	private static final PythonInterface pythonInterface = new PythonInterface();
+	private final PythonInterface pythonInterface;
 	
 	/**
 	 * The constructor, will create a config loader and load an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
+		pythonInterface = new PythonInterface();
 		configLoader = new ConfigLoader(pythonInterface);
+		setUp();
+	}
+	
+	/**
+	 * Pass a python interface to run with, then create a config loader and load an initial config.
+	 * 
+	 * @param pythonInterface The python interface to run with.
+	 */
+	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
+		this.pythonInterface = pythonInterface;
+		this.configLoader = configLoader;
+		this.scriptGeneratorTable = scriptGeneratorTable;
+		setUp();
+	}
+	
+	private void setUp() {
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
@@ -70,7 +87,7 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	 * 
 	 * @return The class responsible for interfacing with python.
 	 */
-	public static PythonInterface getPythonInterface() {
+	public PythonInterface getPythonInterface() {
 		return pythonInterface;
 	}
 
@@ -209,11 +226,11 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		StringBuilder errors = new StringBuilder();
 		ArrayList<String> invalidityErrorLines = scriptGeneratorTable.getInvalidityErrorLines();
 		for (int i = 0; i < invalidityErrorLines.size(); i++) {
-			errors.append(invalidityErrorLines.get(i));
-			if (i >= 9) {
+			if (maxNumOfLines <= i) {
 				errors.append("\nLimited to " + maxNumOfLines + " lines. To see an error for a specific row hover over it.");
 				break;
 			}
+			errors.append(invalidityErrorLines.get(i)+"\n");
 		}
 		return errors.toString();
 	}

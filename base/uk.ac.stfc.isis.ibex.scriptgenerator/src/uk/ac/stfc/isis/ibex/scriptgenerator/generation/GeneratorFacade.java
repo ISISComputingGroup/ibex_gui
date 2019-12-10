@@ -1,6 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
@@ -26,7 +26,7 @@ public class GeneratorFacade {
 	/**
 	 * Part of the strategy design pattern to generate based on which language to use.
 	 */
-	private static final GeneratorContext generatorContext = new GeneratorContext(ScriptGeneratorSingleton.getPythonInterface());	
+	private static final GeneratorContext generatorContext = new GeneratorContext(Activator.getModel().getPythonInterface());	
 	
 	/**
 	 * Generate a python script from the actionsTable passed.

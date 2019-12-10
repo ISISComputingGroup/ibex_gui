@@ -27,6 +27,16 @@ public class GeneratorContext {
 	private Map<GeneratedLanguage, GeneratorInterface> generatorStrategies = new HashMap<>();
 	
 	/**
+	 * Add a generator to use (will replace the languages generator with a new one if it matches).
+	 * 
+	 * @param generatedLanguage The language the new generator uses.
+	 * @param generator The generator to use.
+	 */
+	public void putGenerator(GeneratedLanguage generatedLanguage, GeneratorInterface generator) {
+		generatorStrategies.put(generatedLanguage, generator);
+	}
+	
+	/**
 	 * Add each language's generator to the strategies.
 	 * @param pythonInterface 
 	 */
