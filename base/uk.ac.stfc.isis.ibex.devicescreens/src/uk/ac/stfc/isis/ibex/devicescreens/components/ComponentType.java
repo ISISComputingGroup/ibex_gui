@@ -171,7 +171,10 @@ public enum ComponentType {
 	/** Thin film fabrication device. **/
 	FILM_FABRICATION,
 	/** Coherent OBIS Laser Remote. */
-	OBIS_LASER_REMOTE;
+	OBIS_LASER_REMOTE,
+	/** Zero field */
+	ZERO_FIELD;
+	
 	
 	private Target target;
 

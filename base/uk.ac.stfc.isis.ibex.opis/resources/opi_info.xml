@@ -2205,6 +2205,24 @@
         </macros>
       </value>
     </entry>
+        <entry>
+      <key>Zero field magnetometer</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/field_strength.opi</path>
+        <description>OPI for zero field strength</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ZFMAGFLD</name>
+            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+            <default>ZFMAGFLD_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>Zero field controller</key>
       <value>
