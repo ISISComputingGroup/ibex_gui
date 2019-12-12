@@ -189,6 +189,6 @@ public abstract class BasicSelectionDialog extends Dialog {
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);
             item.setText(name);
-            }
         }
     }
+}
