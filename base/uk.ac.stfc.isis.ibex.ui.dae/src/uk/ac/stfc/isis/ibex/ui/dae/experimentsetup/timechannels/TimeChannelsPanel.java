@@ -48,7 +48,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupCombo;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupRadioButton;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.PanelViewModel;
@@ -205,7 +205,7 @@ public class TimeChannelsPanel extends Composite {
 				}
 				
                 timeRegimesPanel.layout();
-                Utils.recursiveSetEnabled(timeRegimesPanel, timeRegimesPanel.getEnabled());
+                UIUtils.recursiveSetEnabled(timeRegimesPanel, timeRegimesPanel.getEnabled());
 			}
 		});
 

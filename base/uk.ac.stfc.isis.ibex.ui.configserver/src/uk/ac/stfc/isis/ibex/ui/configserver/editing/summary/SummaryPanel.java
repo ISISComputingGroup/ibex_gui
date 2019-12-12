@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
@@ -172,9 +172,9 @@ public class SummaryPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
-                BeanProperties.value("isNew").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
-                BeanProperties.value("isNew").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField),
                 BeanProperties.value("dateCreated").observe(config));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField),
@@ -183,11 +183,12 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("isProtected").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
-                BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(warning),
                 BeanProperties.value("errorMessage").observe(config));
+
 
     }
 

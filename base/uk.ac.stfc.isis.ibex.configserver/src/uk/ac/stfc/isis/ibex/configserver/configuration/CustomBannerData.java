@@ -1,5 +1,6 @@
+
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -16,7 +17,20 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
+package uk.ac.stfc.isis.ibex.configserver.configuration;
+
+import java.util.Collection;
+
 /**
- * Provides the classes needed for adding motion controllers to the banner.
+ * Class which holds banner customisation data.
  */
-package uk.ac.stfc.isis.ibex.banner.motion;
+public class CustomBannerData {
+    /**
+     * Instrument specific information displayed in the banner.
+     */
+    public Collection<BannerItem> items;
+    /**
+     * Instrument specific buttons in the banner.
+     */
+    public Collection<BannerButton> buttons;
+}

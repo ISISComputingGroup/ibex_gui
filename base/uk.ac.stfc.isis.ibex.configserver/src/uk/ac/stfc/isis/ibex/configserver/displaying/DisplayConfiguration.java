@@ -179,6 +179,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 					runControlServer.blockRunControlInRange(name),
 					runControlServer.blockRunControlLowLimit(name),
 					runControlServer.blockRunControlHighLimit(name),
+					runControlServer.blockRunControlSuspendIfInvalid(name),
 					runControlServer.blockRunControlEnabled(name),
 					configServer.blockServerAlias(name)
 				)

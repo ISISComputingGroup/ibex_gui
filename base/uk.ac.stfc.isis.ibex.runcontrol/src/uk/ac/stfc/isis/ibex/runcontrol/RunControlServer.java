@@ -61,6 +61,16 @@ public class RunControlServer extends Closer {
 	}
 	
 	/**
+     * Gets an observable looking at the run-control suspend if invalid PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
+	public ForwardingObservable<Boolean> blockRunControlSuspendIfInvalid(String blockName) {
+		return variables.blockRunControlSuspendIfInvalid(blockName);
+	}
+	
+	/**
      * Gets an observable looking at the run-control in range PV.
      *
      * @param blockName the name of the block
@@ -108,5 +118,17 @@ public class RunControlServer extends Closer {
      */
 	public Writer<String> blockRunControlEnabledSetter(String blockName) {
 		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlEnabledSetter(blockName)));
+	}
+	
+
+	
+	/**
+     * Gets a writable for the run-control enabled setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
+	public Writer<String> blockRunControlSuspendIfInvalidSetter(String blockName) {
+		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlSuspendIfInvalidSetter(blockName)));
 	}
 }
