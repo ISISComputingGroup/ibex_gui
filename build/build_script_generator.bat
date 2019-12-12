@@ -27,7 +27,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 REM Copy built client into a sensible directory to run it
 set built_client="%~dp0..\base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\scriptgenerator.product\win32\win32\x86_64"
 set sensible_build_dir="%~dp0..\built_script_gen"
-robocopy %built_client% %sensible_build_dir% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP>>nul
+robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
