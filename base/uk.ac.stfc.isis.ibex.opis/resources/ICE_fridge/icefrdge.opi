@@ -274,7 +274,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>826</width>
       <wuid>5b350f2:16eb2c4b43a:-7ac5</wuid>
@@ -4531,7 +4531,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>826</width>
       <wuid>5b350f2:16eb2c4b43a:-7ac1</wuid>
@@ -4596,7 +4596,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T1 Label</name>
           <rules />
           <scale_options>
@@ -4606,13 +4606,13 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>T1</text>
+          <text>T1:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>70</width>
+          <width>61</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7a13</wuid>
           <x>0</x>
@@ -4689,7 +4689,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T2 Label</name>
           <rules />
           <scale_options>
@@ -4699,13 +4699,13 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>T2</text>
+          <text>T2:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>70</width>
+          <width>61</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7a11</wuid>
           <x>0</x>
@@ -4782,7 +4782,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T3 Label</name>
           <rules />
           <scale_options>
@@ -4792,13 +4792,13 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>T3</text>
+          <text>T3:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>70</width>
+          <width>61</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7a0f</wuid>
           <x>0</x>
@@ -4875,7 +4875,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>T4 Label</name>
           <rules />
           <scale_options>
@@ -4885,13 +4885,13 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>T4</text>
+          <text>T4:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>70</width>
+          <width>61</width>
           <wrap_words>true</wrap_words>
           <wuid>5b350f2:16eb2c4b43a:-7a0d</wuid>
           <x>0</x>
@@ -5009,7 +5009,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Tset Label</name>
           <rules />
           <scale_options>
@@ -5019,7 +5019,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Set Point</text>
+          <text>Set Point:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5159,7 +5159,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 P Label</name>
           <rules />
           <scale_options>
@@ -5169,7 +5169,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>P</text>
+          <text>P:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5309,7 +5309,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 I Label</name>
           <rules />
           <scale_options>
@@ -5319,7 +5319,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>I</text>
+          <text>I:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5568,7 +5568,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 Ramp Rate Label</name>
           <rules />
           <scale_options>
@@ -5578,7 +5578,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Ramp Rate</text>
+          <text>Ramp Rate:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5609,7 +5609,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 1 I Label_1</name>
           <rules />
           <scale_options>
@@ -5619,7 +5619,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>D</text>
+          <text>D:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5800,7 +5800,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 2 Tset Label</name>
           <rules />
           <scale_options>
@@ -5810,7 +5810,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Set Point</text>
+          <text>Set Point:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -5950,7 +5950,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 2 P Label</name>
           <rules />
           <scale_options>
@@ -5960,7 +5960,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>P</text>
+          <text>P:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -6100,7 +6100,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 2 I Label</name>
           <rules />
           <scale_options>
@@ -6110,7 +6110,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>I</text>
+          <text>I:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -6359,7 +6359,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 2 Ramp Rate Label</name>
           <rules />
           <scale_options>
@@ -6369,7 +6369,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Ramp Rate</text>
+          <text>Ramp Rate:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -6400,7 +6400,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
+          <horizontal_alignment>2</horizontal_alignment>
           <name>Loop 2 D Label</name>
           <rules />
           <scale_options>
@@ -6410,7 +6410,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>D</text>
+          <text>D:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
