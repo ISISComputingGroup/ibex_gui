@@ -243,6 +243,8 @@
 		     This is a fundamental issue but the solution needs to be considered.
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
         -->
+		
+		<module>../uk.ac.stfc.isis.ibex.ui.reflectometry</module>
 	</modules>
 </project>
 

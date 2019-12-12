@@ -64,7 +64,8 @@ public class Consoles extends AbstractUIPlugin {
 	/**
 	 * The perspective ID.
 	 */
-	public static final String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	public static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	public static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
 
 	// The shared instance
 	private static Consoles plugin;
@@ -116,7 +117,8 @@ public class Consoles extends AbstractUIPlugin {
 					return;
 				}
 
-				if (((MPerspective) newValue).getElementId().equals(PERSPECTIVE_ID)) {
+				if (((MPerspective) newValue).getElementId().equals(SCRIPTING_PERSPECTIVE_ID) || 
+					((MPerspective) newValue).getElementId().equals(REFL_PERSPECTIVE_ID) ) {
 					createConsole();
 				}
 			}
