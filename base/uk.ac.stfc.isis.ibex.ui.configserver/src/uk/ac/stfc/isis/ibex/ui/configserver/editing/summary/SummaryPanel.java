@@ -185,7 +185,7 @@ public class SummaryPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
                 BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
-                BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(warning),
                 BeanProperties.value("errorMessage").observe(config));
 
