@@ -750,19 +750,24 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         String errorMessage = noError;
         if (inManagerMode == null) {
             // Do nothing
-        } else if ((this.originalProtectedFlag == true) && (inManagerMode) && (isProtected == false)) {
+        } else if ((this.originalProtectedFlag == true) && isProtected == false && inManagerMode) {
+
             String compOrConfName = isComponent ? "component" : "configuration";
             errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
                     + "will be downgraded to an unprotected " + compOrConfName;
-            firePropertyChange("EnableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+            
+        } else if ((this.originalProtectedFlag == true) && isProtected == false && !inManagerMode) {
+            errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
             
         } else if ((!inManagerMode && !isProtected) || (inManagerMode)) {
             errorMessage = this.noError;
-            firePropertyChange("EnableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
             
         } else {
             errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
-            firePropertyChange("EnableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
         }
         setErrorMessage(errorMessage);
     }
@@ -782,10 +787,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public void setEnableSaveAsButton() {
         if (inManagerMode == null) {
 
+        } else if ((this.originalProtectedFlag == true) && isProtected == false) {
+            firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+                
         } else if (isProtected && (!inManagerMode)) {
             firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = false);
+            
         } else if (inManagerMode || (!isProtected && !inManagerMode)) {
             firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+            
         }
     }
 

@@ -182,11 +182,11 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     		bindingContext.bindValue(WidgetProperties.enabled().observe(saveButton),
     				BeanProperties.value("enableOrDisableSaveButton").observe(config));
     	}
-
-        if (saveAsBtn != null) {
-            bindingContext.bindValue(WidgetProperties.enabled().observe(saveAsBtn),
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(saveAsBtn),
                 BeanProperties.value("enableSaveAsButton").observe(config));
-        }
+        
+
     }
     
 }
