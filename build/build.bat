@@ -14,18 +14,18 @@ REM Copy python into the client
 call copy_python.bat %~dp0..\base\uk.ac.stfc.isis.ibex.preferences\resources\Python3
 if %errorlevel% neq 0 exit /b %errorlevel%
  
-call python .\check_build.py ..\base\
+python .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
-call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify
-if %errorlevel% neq 0 exit /b %errorlevel%
+mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
+if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it
 set built_client="%~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64"
 set sensible_build_dir="%~dp0..\built_client"
-robocopy %built_client% %sensible_build_dir% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP>>nul
+robocopy %built_client% %sensible_build_dir% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (

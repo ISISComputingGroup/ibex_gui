@@ -50,7 +50,6 @@
               <resources>          
                 <resource>
                   <directory>${basedir}/../uk.ac.stfc.isis.ibex.preferences/resources/Python3</directory>
-                  <filtering>true</filtering>
                 </resource>
               </resources>              
             </configuration>            

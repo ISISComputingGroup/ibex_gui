@@ -108,17 +108,16 @@
 		          <execution>
 		            <id>copy-resources</id>
 		            <!-- here the phase you need -->
-		            <phase>validate</phase>
+		            <phase>package</phase>
 		            <goals>
 		              <goal>copy-resources</goal>
 		            </goals>
 		            <configuration>
 		              <skip>true</skip>
-		              <outputDirectory>${basedir}/../uk.ac.stfc.isis.scriptgenerator.client.product/target/products/scriptgenerator.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.ibex.preferences_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
+		              <outputDirectory>${basedir}/../uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.ibex.preferences_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
 		              <resources>          
 		                <resource>
-		                  <directory>${basedir}/resources/Python3</directory>
-		                  <filtering>true</filtering>
+		                  <directory>${basedir}/../uk.ac.stfc.isis.ibex.preferences/resources/Python3</directory>
 		                </resource>
 		              </resources>               
 		            </configuration>            

@@ -107,7 +107,7 @@
 		          <execution>
 		            <id>copy-resources</id>
 		            <!-- here the phase you need -->
-		            <phase>validate</phase>
+		            <phase>package</phase>
 		            <goals>
 		              <goal>copy-resources</goal>
 		            </goals>
@@ -117,7 +117,6 @@
 		              <resources>          
 		                <resource>
 		                  <directory>${basedir}/resources/Python3</directory>
-		                  <filtering>true</filtering>
 		                </resource>
 		              </resources>               
 		            </configuration>            
