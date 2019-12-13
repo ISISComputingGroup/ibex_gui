@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
@@ -136,5 +137,39 @@ public class ActionsTable extends ModelObject {
 	 */
 	private Boolean isValidIndex(int index) {
 		return index >= 0 && index <= this.actions.size();
+	}
+
+	/**
+	 * Set the validity errors for each action based on the hashmap.
+	 * 
+	 * @param validityErrors The hashmap to set validity errors based on.
+	 */
+	public void setValidityErrors(HashMap<Integer, String> validityErrors) {
+		for(int i = 0; i< actions.size(); i++) {
+			if(validityErrors.containsKey(i)) {
+				actions.get(i).setInvalid(validityErrors.get(i));
+			} else {
+				actions.get(i).setValid();
+			}
+		}
+	}
+	
+	/**
+	 * Get strings of validity errors.
+	 * 
+	 * @return The strings of validity error lines to display.
+	 */
+	public ArrayList<String> getInvalidityErrorLines() {
+		var errors = new ArrayList<String>();
+		for (int i = 0; i < actions.size(); i++) {
+			ScriptGeneratorAction action = actions.get(i);
+			if (!action.isValid()) {
+				String errorString = "Row: " + (i+1) + ", Reason: " + action.getInvalidityReason() + "\n";
+				for(String line : errorString.split("\n")) {
+					errors.add(line);
+				}
+			}
+		}
+		return errors;
 	}
 }

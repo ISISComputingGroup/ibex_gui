@@ -19,17 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -38,24 +37,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
-
 /**
  * Provides settings to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
-	private ConfigLoader configLoader;
-	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private DataBindingContext bindingContext;
-	private ActionsTable scriptGeneratorTable;
 	private ActionsViewTable table;
 	private ComboViewer configSelector;
 	private static final Display DISPLAY = Display.getCurrent();
+	private ScriptGeneratorViewModel scriptGeneratorViewModel;
 	
 	private Button createMoveRowButton(Composite parent, String icon, String direction) {
         Button moveButton =  new Button(parent, SWT.NONE);
@@ -74,18 +65,21 @@ public class ScriptGeneratorView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
-		scriptGeneratorModel = Activator.getModel();
-		configLoader = scriptGeneratorModel.getConfigLoader();
-		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
+		
+		scriptGeneratorViewModel = new ScriptGeneratorViewModel();
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
-		parent.setLayout(new GridLayout(2, false));
+		parent.setLayout(new GridLayout(1, false));
 		
-		Composite globalSettingsComposite = new Composite(parent, SWT.NONE);
+		Composite topBarComposite = new Composite(parent, SWT.NONE);
+		topBarComposite.setLayout(new GridLayout(2, false));
+		topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
 		globalSettingsComposite.setLayout(new GridLayout(2, false));
-		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		
 		Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
 		configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -94,21 +88,35 @@ public class ScriptGeneratorView {
 		// Drop-down box to select between configs.
 		configSelector = setUpConfigSelector(globalSettingsComposite);
 		
-		table = new ActionsViewTable(parent, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorTable);
+		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
+		validityComposite.setLayout(new GridLayout(1, false));
+		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		
+		// Button to check validity errors
+		final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
+        btnGetValidityErrors.setText("Get Validity Errors");
+        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btnGetValidityErrors.addListener(SWT.Selection, e -> displayValidityErrors());
+        btnGetValidityErrors.setBackground(new Color(DISPLAY, 255, 204, 203));
+        
+        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
+        tableContainerComposite.setLayout(new GridLayout(2, false));
+        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
 		// Composite for move action up/down buttons
-		Composite moveComposite = new Composite(parent, SWT.NONE);
+		Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
         
 	    // Make buttons to move an action up and down the list
         Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionUp(table.getSelectionIndex()));
+        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
         
         Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorModel.moveActionDown(table.getSelectionIndex()));
-        
+        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
         
         // Composite for laying out new/delete/duplicate action buttons
         Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
@@ -122,21 +130,21 @@ public class ScriptGeneratorView {
         final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
         btnInsertAction.setText("Add Action");
         btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorModel.addEmptyAction());
+        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
         
         final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDeleteAction.setText("Delete Action");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorModel.deleteAction(table.getSelectionIndex()));
+        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
 
         final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorModel.duplicateAction(table.getSelectionIndex()));
-		
+        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
+        		
         bind();
 		
-        scriptGeneratorModel.addEmptyAction();
+        scriptGeneratorViewModel.addEmptyAction();
 	}
 	
 	/**
@@ -150,20 +158,10 @@ public class ScriptGeneratorView {
 		configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
 
 		configSelector.setContentProvider(ArrayContentProvider.getInstance());
-		configSelector.setLabelProvider(new LabelProvider() {
-		    // Use getName method on python Config class to get labels.
-			@Override
-		    public String getText(Object element) {
-		        if (element instanceof Config) {
-		        	Config actionWrapper = (Config) element;
-		            return actionWrapper.getName();
-		        }
-		        return super.getText(element);
-		    }
-		});
+		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
 		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		configSelector.setInput(configLoader.getAvailableConfigs());
-		configSelector.setSelection(new StructuredSelection(configLoader.getConfig()));
+		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigs());
+		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig()));
 		
 		return configSelector;
 	}
@@ -174,13 +172,13 @@ public class ScriptGeneratorView {
 	private void bind() {
 		bindingContext = new DataBindingContext();
 		
-		bindingContext.bindValue(ViewersObservables.observeSingleSelection(configSelector), 
-				BeanProperties.value("config").observe(configLoader));
+		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector);
 
-		this.scriptGeneratorTable.addPropertyChangeListener("actions", e -> 
-        DISPLAY.asyncExec(() -> {
-                this.table.setRows(this.scriptGeneratorTable.getActions());
-        }));
+		scriptGeneratorViewModel.bindValidityChecks(table);
+	}
+	
+	public void displayValidityErrors() {
+		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10));
 	}
 	
 

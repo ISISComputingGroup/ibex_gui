@@ -15,19 +15,23 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 public class ConfigLoader extends ModelObject {
 	
 	/**
-	 * @param availableConfigs
-	 * 			List of configs imported by the python interface.
-	 * @param parameters
-	 * 			The action parameters of the currently loaded config.
-	 * @param selectedConfig
-	 * 			The currently selected config
-	 * @param pythonInterface
-	 * 			The py4j interface handling the ConfigWrapper.
+	 * List of configs imported by the python interface.
 	 */
 	private List<Config> availableConfigs;
+	
+	/**
+	 * The action parameters of the currently loaded config.
+	 */
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
+	
+	/**
+	 * The currently selected config.
+	 */
 	private Config selectedConfig;
-
+	
+	/**
+	 * The py4j interface handling the ConfigWrapper.
+	 */
 	private PythonInterface pythonInterface;	
 	
 	/**

@@ -18,32 +18,63 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * Acts as a permanent reference to the ActionsTable.
  *
  */
-public class ScriptGeneratorSingleton extends ModelObject {
-	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
+public class ScriptGeneratorSingleton extends ModelObject implements PropertyChangeListener {
 	
+	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private final ConfigLoader configLoader;
+	private final PythonInterface pythonInterface;
 	
 	/**
 	 * The constructor, will create a config loader and load an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
-		configLoader = new ConfigLoader(new PythonInterface());
+		pythonInterface = new PythonInterface();
+		configLoader = new ConfigLoader(pythonInterface);
+		setUp();
+	}
+	
+	/**
+	 * Pass a python interface to run with, then create a config loader and load an initial config.
+	 * 
+	 * @param pythonInterface The python interface to run with.
+	 */
+	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
+		this.pythonInterface = pythonInterface;
+		this.configLoader = configLoader;
+		this.scriptGeneratorTable = scriptGeneratorTable;
+		setUp();
+	}
+	
+	/**
+	 * Called by the constructors to set up the class.
+	 */
+	private void setUp() {
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
 				
 		setActionParameters(configLoader.getParameters());
+		
+		scriptGeneratorTable.addPropertyChangeListener(this);
 	}
 
 	/**
@@ -52,6 +83,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public ConfigLoader getConfigLoader() {
 		return configLoader;
+	}
+	
+	/**
+	 * Get the python interface.
+	 * 
+	 * @return The class responsible for interfacing with python.
+	 */
+	public PythonInterface getPythonInterface() {
+		return pythonInterface;
 	}
 
 	/**
@@ -122,11 +162,82 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void moveActionDown(int index) {
 		scriptGeneratorTable.moveAction(index, index + 1);
 	}
+	
+	/**
+	 * Get the list of actions in the ActionsTable.
+	 * 
+	 * @return List of actions in the ActionsTable.
+	 */
+	public List<ScriptGeneratorAction> getActions() {
+		return scriptGeneratorTable.getActions();
+	}
+	
+	/**
+	 * @return The action parameters used in this table.
+	 * 
+	 */
+	public List<ActionParameter> getActionParameters() {
+		return scriptGeneratorTable.getActionParameters();
+	}
 
 	/**
 	 * Clean up resources when the plugin is destroyed.
 	 */
 	public void cleanUp() {
 		configLoader.cleanUp();
+	}
+	
+	/**
+	 * Get a list of available configs.
+	 * 
+	 * @return A list of available configs.
+	 */
+	public List<Config> getAvailableConfigs() {
+		return configLoader.getAvailableConfigs();
+	}
+	
+	/**
+	 * Get the currently loaded configuration.
+	 * 
+	 * @return The currently loaded configuration.
+	 */
+	public Config getConfig() {
+		return configLoader.getConfig();
+	}
+
+	/**
+	 * On a property change check the validity errors.
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		onTableChange();
+	}
+	
+	/**
+	 * What to do on the actions in the table changing (check the validity errors).
+	 */
+	public void onTableChange() {
+		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
+				scriptGeneratorTable, configLoader.getConfig());
+		scriptGeneratorTable.setValidityErrors(validityErrors);
+	}
+	
+	/**
+	 * Get the first maxNumOfLines of validity errors to display to a user.
+	 * 
+	 * @param maxNumOfLines The number of lines to limit the validity errors to.
+	 * @return The string of validity errors to display
+	 */
+	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
+		StringBuilder errors = new StringBuilder();
+		ArrayList<String> invalidityErrorLines = scriptGeneratorTable.getInvalidityErrorLines();
+		for (int i = 0; i < invalidityErrorLines.size(); i++) {
+			if (maxNumOfLines <= i) {
+				errors.append("\nLimited to " + maxNumOfLines + " lines. To see an error for a specific row hover over it.");
+				break;
+			}
+			errors.append(invalidityErrorLines.get(i)+"\n");
+		}
+		return errors.toString();
 	}
 }
