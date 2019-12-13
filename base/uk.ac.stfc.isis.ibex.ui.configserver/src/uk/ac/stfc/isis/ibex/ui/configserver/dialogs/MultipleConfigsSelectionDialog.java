@@ -22,14 +22,19 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
+
 
 /**
  * Dialog for asking the user to select a multiple configurations or components.
@@ -62,6 +67,8 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      * template.
      */
     protected int extraListOptions;
+    
+    protected Map <String, Boolean> compOrConfigNamesWithFlags;
 
 	/**
      * @param parentShell The shell to create the dialog in.
@@ -76,12 +83,15 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
-            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
+            Collection<ConfigInfo> available,
+            Map<String, Boolean> compOrConfigNamesWithFlags,
+            boolean isComponent, boolean includeCurrent) {
 		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
         this.includeCurrent = includeCurrent;
         this.extraListOptions = SWT.MULTI;
+        this.compOrConfigNamesWithFlags = compOrConfigNamesWithFlags;
 	}
 
 	/**
@@ -99,6 +109,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 
 	@Override
     protected void createSelection(Composite container) {
+	    
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
@@ -110,9 +121,22 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
-        setItems(names);
-	}
+		
+		setItems(names, compOrConfigNamesWithFlags);
+		
+		Group group = new Group(container, SWT.SHADOW_IN);
+		group.setLayout(new RowLayout(SWT.HORIZONTAL));
+		        
+	    Label messageImageLabel = new Label(group, SWT.NONE);
+            messageImageLabel.setImage(JFaceResources.
+                getImage(DLG_IMG_MESSAGE_WARNING)); 
 
+        Label messageLabel = new Label(group, SWT.NONE);
+        messageLabel.setFont(JFaceResources.getDialogFont());
+        messageLabel.setText("Represents Protected " + getTypeString());
+			
+	}
+	
     /**
      * @return A string corresponding to the type of item in the list.
      */

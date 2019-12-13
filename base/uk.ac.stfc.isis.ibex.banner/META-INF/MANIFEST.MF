@@ -13,6 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.epics
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.banner,
- uk.ac.stfc.isis.ibex.banner.motion
+Export-Package: uk.ac.stfc.isis.ibex.banner
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.banner

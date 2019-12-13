@@ -24,10 +24,10 @@ import java.util.Locale;
 
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
@@ -115,8 +115,8 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Collection<IocState>> iocStates;
     /** Provides a list of IOCs that cannot be stopped or restarted. */
 	public final ForwardingObservable<Collection<String>> protectedIocs;
-    /** Provides the description for the spangle banner. */
-	public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
+	/** Provides the description for the spangle banner. */
+    public final ForwardingObservable<CustomBannerData> bannerDescription;
 
     /**
      * Default Constructor.
@@ -197,7 +197,7 @@ public class ConfigServerVariables extends Closer {
         iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
         protectedIocs =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
-        bannerDescription =
+        bannerDescription = 
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
                         converters.toBannerDescription());
 	}
