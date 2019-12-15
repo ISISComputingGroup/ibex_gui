@@ -43,6 +43,7 @@ def main():
     container = display.getWidget("TabContainer")
     count = populate_tabs(count, "temp", 4, container)
     count = populate_tabs(count, "level", 2, container)
+    count = populate_tabs(count, "pressure", 2, container)
     if count > 0:
     	container.setPropertyValue("tab_count", count)
     else:
