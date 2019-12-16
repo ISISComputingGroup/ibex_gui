@@ -2210,7 +2210,7 @@
       <value>
       	<type>DILUTION_FRIDGE</type>
       	<path>ICE_fridge/icefrdge.opi</path>
-      	<description>The OPI for the ICE Oxford dilution fridge IOCr</description>
+      	<description>The OPI for the ICE Oxford dilution fridge IOC</description>
         <categories>
           <category>Cryogenics</category>
         </categories>
