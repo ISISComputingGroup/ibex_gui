@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -40,8 +41,9 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
 	public ConfigSelectionDialog(
 			Shell parentShell, 
 			String title,
-            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
-        super(parentShell, title, available, isComponent, includeCurrent);
+            Collection<ConfigInfo> available, Map<String, Boolean> configNamesWithFlags,
+            boolean isComponent, boolean includeCurrent) {
+        super(parentShell, title, available, configNamesWithFlags, isComponent, includeCurrent);
         this.extraListOptions = 0;
 	}
 	
