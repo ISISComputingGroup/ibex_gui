@@ -82,12 +82,8 @@ class Generator(object):
         self.loader = FileSystemLoader(['{}/defined_actions/templates'.format(cwd), '{}defined_actions/{}'.format(cwd, search_folder),
             '{}/templates'.format(cwd), "{}/{}".format(cwd, search_folder)])
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
-        self.env.globals['include_file'] = self.include_file
         self.template = self.env.get_template('generator_template.py')
         self.search_folder = search_folder
-
-    def include_file(self, name):
-        return Markup(self.loader.get_source(self.env, name)[0])
 
     def checkParamValidity(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
         """
@@ -106,6 +102,12 @@ class Generator(object):
         return validityCheck
 
     def areParamsValid(self, list_of_list_of_arguments, config: Config) -> bool:
+        """
+        Check if all params are valid
+
+        Returns:
+            bool: true if valid. false if not
+        """
         for list_of_arguments in list_of_list_of_arguments:
             if config.parametersValid(list_of_arguments) is not None:
                 return False

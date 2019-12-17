@@ -57,11 +57,11 @@ class TestGenerator(unittest.TestCase):
         expected_script_lines: List[AnyStr] = [r"from genie_python import genie as g", r"", r"from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to", r"", 
             r"class DoRun\(ActionDefinition\):", r"", r"[\s]+@cast_parameters_to\(param1=float, param2=float\)", r"[\s]+def run\(self, param1=0\.0, param2=0\.0\):", r"[\s]+pass", r"",
             r"[\s]+@cast_parameters_to\(param1=float, param2=float\)", r"[\s]+def parameters_valid\(self, param1=0\.0, param2=0\.0\):", r"[\s]+reason = \"\"",
-            r"if param1 != 1\.0:", r"[\s]+reason \+= \"param1 is not 1\.0[\\n]\"",
-            r"if param2 != 2\.0:", r"[\s]+reason \+= \"param2 is not 2\.0[\\n]\"", r"[\s]+if reason != \"\":",
-            r"[\s]+return reason", r"[\s]+else:",  r"[\s]+return None", r"", r"", r"if __name__ == \"__main__\":",
-            r"[\s]+config = DoRun\(\)", r"[\s]+config\.run\(\*\*\{\"param1\": \"1\", \"param2\": \"2\"\}\)",
-            r"[\s]+config\.run\(\*\*\{\"param1\": \"1\", \"param2\": \"2\"\}\)", r""]
+            r"if param1 != 1\.0:", r"[\s]+reason \+= \"param1 is not 1\.0[\\\\]n\"",
+            r"if param2 != 2\.0:", r"[\s]+reason \+= \"param2 is not 2\.0[\\\\]n\"", r"[\s]+if reason != \"\":",
+            r"[\s]+return reason", r"[\s]+else:",  r"[\s]+return None", r"", r"", r"def do_run\(\):",
+            r"[\s]+config = DoRun\(\)", r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)",
+            r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)", r""]
         params = [{"param1": "1", "param2": "2"}, {"param1": "1", "param2": "2"}]
         config: Config = Config(name="valid_config", action=ValidDoRun())
         # Act
