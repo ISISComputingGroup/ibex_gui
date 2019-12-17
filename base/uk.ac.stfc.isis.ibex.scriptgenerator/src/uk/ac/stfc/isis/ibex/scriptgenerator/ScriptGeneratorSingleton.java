@@ -20,12 +20,20 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
@@ -239,5 +247,70 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 			errors.append(invalidityErrorLines.get(i)+"\n");
 		}
 		return errors.toString();
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @return The filepath the script is saved to.
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 */
+	public String generate() throws InvalidParamsException, IOException {
+		return generateTo("C:/Scripts/");
+	}
+	
+	/**
+	 * Generate a script and save it to file with the given prefix.
+	 * 
+	 * @return The filepath the script is saved to.
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 */
+	public String generateTo(String filepathPrefix) throws InvalidParamsException, IOException {
+		// Generate the script
+		String[] generatedScript = generateScript();
+		// Create the filename and file
+		String timestamp = getTimestamp();
+		int version = 0;
+		String filepath;
+		File file;
+		do {
+			if (version == 0) {
+				filepath = String.format("%s%s-%s.py", filepathPrefix, getConfig().getName(), timestamp);
+			} else {
+				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, getConfig().getName(), timestamp, version);
+			}
+			file = new File(filepath);
+			file.getParentFile().mkdirs();
+			version += 1;
+		} while(!file.createNewFile());
+		// Write the script to the file
+		BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(file));
+		for (String scriptLine : generatedScript) {
+			scriptWriter.write(scriptLine);
+			scriptWriter.newLine();
+		}
+		scriptWriter.flush();
+		scriptWriter.close();
+		return filepath;
+	}
+	
+	/**
+	 * Get the current timestamp to put in a filename. (Allows testing).
+	 * 
+	 * @return The timestamp as a string.
+	 */
+	public String getTimestamp() {
+		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	}
+	
+	/**
+	 * Get a generated script. (Allows testing).
+	 * 
+	 * @return The lines of the generated script.
+	 */
+	public String[] generateScript() throws InvalidParamsException {
+		return GeneratorFacade.generate(scriptGeneratorTable, getConfig());
 	}
 }

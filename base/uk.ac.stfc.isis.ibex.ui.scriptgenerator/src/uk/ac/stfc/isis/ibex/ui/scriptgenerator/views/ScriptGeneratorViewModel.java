@@ -1,10 +1,12 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -14,16 +16,23 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.MessageDialogWithCopy;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 
 public class ScriptGeneratorViewModel {
+	
+	private Logger logger = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	private static final Color invalidDarkColor = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
 	private static final Color invalidLightColor = new Color(Display.getCurrent(), 255, 204, 203);
@@ -284,6 +293,21 @@ public class ScriptGeneratorViewModel {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
     			e -> Display.getCurrent().asyncExec(() -> viewTable.updateTableColumns())
     	);
+    }
+    
+    /**
+     * Generate a script and display the file it was generated to. If fail display warnings.
+     */
+    public void generate() {
+    	try {
+			String confirmationMessage = String.format("Script generated at: %s", scriptGeneratorModel.generate());
+			MessageDialogWithCopy.openInformation(Display.getCurrent().getActiveShell(), "Script Generated", confirmationMessage);
+		} catch (InvalidParamsException e) {
+			MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Params Invalid", "Cannot generate script. Parameters are invalid.");
+		} catch (IOException e) {
+			logger.error(e);
+			MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Script write error", "Failed to write script to file");
+		}
     }
 	
 }

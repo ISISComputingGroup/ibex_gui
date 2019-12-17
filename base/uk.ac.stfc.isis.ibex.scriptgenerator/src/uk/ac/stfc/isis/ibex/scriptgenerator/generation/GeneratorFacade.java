@@ -36,7 +36,7 @@ public class GeneratorFacade {
 	 * @return The path to the generated script.
 	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
 	 */
-	public static String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
+	public static String[] generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
 		try {
 			return generate(actionsTable, config, GeneratedLanguage.PYTHON);
 		} catch(UnsupportedLanguageException e) {
@@ -55,8 +55,8 @@ public class GeneratorFacade {
 	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
-	public static String generate(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws InvalidParamsException, UnsupportedLanguageException {
-		return generatorContext.generate(actionsTable, config, generatedLanguage);
+	public static String[] generate(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws InvalidParamsException, UnsupportedLanguageException {
+		return generatorContext.generate(actionsTable, config, generatedLanguage).split("\n");
 	}
 	
 	/**

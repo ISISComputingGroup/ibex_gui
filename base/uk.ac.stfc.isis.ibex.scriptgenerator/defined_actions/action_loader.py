@@ -1,13 +1,14 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
-from action_interface import ActionDefinition
+from genie_python.genie_script_generator import ActionDefinition
 from typing import Dict, AnyStr, Union, List
 from inspect import signature
 import inspect
 import argparse
 import os
 import sys
+from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 
 
 class Config(object):
@@ -73,7 +74,22 @@ class Generator(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
 
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
+    def __init__(self, search_folder: str = "instruments"):
+        """
+        Set up the template to generate with
+        """
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        self.loader = FileSystemLoader(['{}/defined_actions/templates'.format(cwd), '{}defined_actions/{}'.format(cwd, search_folder),
+            '{}/templates'.format(cwd), "{}/{}".format(cwd, search_folder)])
+        self.env = Environment(loader=self.loader, keep_trailing_newline=True)
+        self.env.globals['include_file'] = self.include_file
+        self.template = self.env.get_template('generator_template.py')
+        self.search_folder = search_folder
+
+    def include_file(self, name):
+        return Markup(self.loader.get_source(self.env, name)[0])
+
+    def checkParamValidity(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
         """
         Checks if a list of parameters are valid for the configuration
 
@@ -89,6 +105,12 @@ class Generator(object):
             current_list_of_arguments += 1
         return validityCheck
 
+    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> bool:
+        for list_of_arguments in list_of_list_of_arguments:
+            if config.parametersValid(list_of_arguments) is not None:
+                return False
+        return True
+
     def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
@@ -97,9 +119,25 @@ class Generator(object):
            None if parameters are invalid, otherwise a string of a generated script.
         """
         if self.areParamsValid(list_of_list_of_arguments, config):
-            return "Generated python script"
+            config_file_path = "{}.py".format(config.getName())
+            config_template = self.env.get_template(config_file_path)
+            return self.template.render(inserted_config=config_template,
+                    script_generator_actions=list_of_list_of_arguments)
         else:
             return None
+    
+    def get_config_filepath(self, config: Config) -> str:
+        """
+        Find the absolute file path to the config
+
+        Parameters:
+            config: Config
+                The config to get the filepath for
+        Returns:
+            str: The absolute filepath to the config
+        """
+        return os.path.basename(config.action.get_file())
+
 
 
 class ConfigWrapper(object):
@@ -132,21 +170,21 @@ class ConfigWrapper(object):
         """
         self.generator
     
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
-        return MapConverter().convert(self.generator.areParamsValid(list_of_list_of_arguments, config), gateway._gateway_client)
+    def checkParamValidity(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
+        return MapConverter().convert(self.generator.checkParamValidity(list_of_list_of_arguments, config), gateway._gateway_client)
 
     def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
         return self.generator.generate(list_of_list_of_arguments, config)
 
 
-def get_actions() -> Dict[AnyStr, ActionDefinition]:
+def get_actions(search_folder: str = "instruments") -> Dict[AnyStr, ActionDefinition]:
     """ Dynamically import all the Python modules in this module's sub directory. """
-    search_folder = "instruments"
     this_file_path = os.path.split(__file__)[0]
     for filename in os.listdir(os.path.join(this_file_path, search_folder)):
         try:
             module_name = filename.split(".")[0]
             __import__("{folder}.{module}".format(folder=search_folder, module=module_name))
+            # TODO: importlib.import(...)
         except Exception as e:
             # Print any errors to stderr, Java will catch and throw to the user
             print("Error loading {}: {}".format(filename, e), file=sys.stderr)

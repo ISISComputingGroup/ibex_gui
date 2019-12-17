@@ -141,6 +141,21 @@ public class ScriptGeneratorView {
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
+        
+        // Composite for generate buttons
+        Composite generateButtonsGrp = new Composite(parent, SWT.NONE);
+        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        GridLayout gbgLayout = new GridLayout(1, false);
+        gbgLayout.marginHeight = 10;
+        gbgLayout.marginWidth = 10;
+        generateButtonsGrp.setLayout(gbgLayout);
+        
+        // Button to generate a script
+        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+        generateScriptButton.setText("Generate Script");
+        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
+        
         		
         bind();
 		
@@ -178,7 +193,13 @@ public class ScriptGeneratorView {
 	}
 	
 	public void displayValidityErrors() {
-		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10));
+		String validityErrors = scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10);
+		if (validityErrors.equals("")) {
+			validityErrors = "No validity errors. Your parameters are valid.";
+			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", validityErrors);
+		} else {
+			MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", validityErrors);
+		}
 	}
 	
 

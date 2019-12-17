@@ -184,7 +184,7 @@ public class PythonInterface {
 	 * @return A hashmap of validity errors.
 	 */
 	public HashMap<Integer, String> areParamsValid(List<Map<String, String>> scriptGenContent, Config config) {
-		return configWrapper.areParamsValid(scriptGenContent, config);
+		return configWrapper.checkParamValidity(scriptGenContent, config);
 	}
 
 	/**

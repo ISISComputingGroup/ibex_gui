@@ -13,6 +13,5 @@ public interface ConfigWrapper {
 
 	public String generate(List<Map<String, String>> scriptGenContent, Config config);
 
-	public HashMap<Integer, String> areParamsValid(List<Map<String, String>> scriptGenContent, Config config);
-	
+	public HashMap<Integer, String> checkParamValidity(List<Map<String, String>> scriptGenContent, Config config);
 }
