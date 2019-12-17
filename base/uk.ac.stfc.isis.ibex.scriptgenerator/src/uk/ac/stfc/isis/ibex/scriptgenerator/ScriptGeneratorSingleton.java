@@ -32,12 +32,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
-	private final ConfigLoader configLoader;
+	private ConfigLoader configLoader;
 	
 	/**
-	 * The constructor, will create a config loader and load an initial config.
+	 * Create a config loader and load an initial config.
 	 */
-	public ScriptGeneratorSingleton() {
+	public void startConfigLoader() {
 		configLoader = new ConfigLoader(new PythonInterface());
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());

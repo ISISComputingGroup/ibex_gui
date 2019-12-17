@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -74,6 +75,7 @@ public class ScriptGeneratorView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
+		Activator.startConfigLoader();
 		scriptGeneratorModel = Activator.getModel();
 		configLoader = scriptGeneratorModel.getConfigLoader();
 		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
