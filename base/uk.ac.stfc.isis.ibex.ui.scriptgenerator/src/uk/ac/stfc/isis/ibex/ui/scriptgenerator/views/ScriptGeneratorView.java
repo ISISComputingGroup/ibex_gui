@@ -75,9 +75,8 @@ public class ScriptGeneratorView {
 	 */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
-		Activator.startConfigLoader();
 		scriptGeneratorModel = Activator.getModel();
-		configLoader = scriptGeneratorModel.getConfigLoader();
+		configLoader = scriptGeneratorModel.createConfigLoader();
 		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);

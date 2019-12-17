@@ -67,15 +67,6 @@ public class Activator implements BundleActivator {
     public static ScriptGeneratorSingleton getModel() { 
     	return MODEL; 
     }
-    
-    /**
-	 * Set the singleton instance of this class.
-	 * 
-	 * @return the singleton instance of this class
-	 */
-    public static void startConfigLoader() { 
-    	MODEL.startConfigLoader();
-    }
 
     private static ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
 

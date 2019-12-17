@@ -36,21 +36,18 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Create a config loader and load an initial config.
+	 * You cannot do this in the instantiation of the class because the class is 
+	 * created when the plugin is and surefire tests will fail.
+	 * 
+	 * @return The config loader
 	 */
-	public void startConfigLoader() {
+	public ConfigLoader createConfigLoader() {
 		configLoader = new ConfigLoader(new PythonInterface());
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
 				
 		setActionParameters(configLoader.getParameters());
-	}
-
-	/**
-	 * Get the config loader.
-	 * @return The class responsible for loading a new table configuration.
-	 */
-	public ConfigLoader getConfigLoader() {
 		return configLoader;
 	}
 
