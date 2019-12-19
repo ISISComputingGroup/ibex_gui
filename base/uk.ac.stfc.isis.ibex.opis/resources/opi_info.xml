@@ -2217,7 +2217,7 @@
         <macros>
           <macro>
             <name>ZFMAGFLD</name>
-            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+            <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
             <default>ZFMAGFLD_01</default>
           </macro>
         </macros>
