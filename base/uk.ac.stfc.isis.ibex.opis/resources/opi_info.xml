@@ -2206,6 +2206,24 @@
       </value>
     </entry>
     <entry>
+      <key>Zero field magnetometer</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/field_strength.opi</path>
+        <description>OPI for zero field strength</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ZFMAGFLD</name>
+            <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
+            <default>ZFMAGFLD_01</default>
+            </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>ICE Oxford dilution refrigerator</key>
       <value>
       	<type>DILUTION_FRIDGE</type>
