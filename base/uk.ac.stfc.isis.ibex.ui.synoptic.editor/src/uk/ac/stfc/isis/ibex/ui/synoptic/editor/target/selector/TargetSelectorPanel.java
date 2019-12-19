@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -85,12 +85,12 @@ public class TargetSelectorPanel extends Composite {
         viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Utils.recursiveSetEnabled(TargetSelectorPanel.this, viewModel.isEnabled()); 
+                UIUtils.recursiveSetEnabled(TargetSelectorPanel.this, viewModel.isEnabled()); 
             }
         });
         
         // Have to do this here otherwise the binding overrides the default value in the model.
-        Utils.recursiveSetEnabled(this, viewModel.isEnabled());
+        UIUtils.recursiveSetEnabled(this, viewModel.isEnabled());
         
         bind();
     }

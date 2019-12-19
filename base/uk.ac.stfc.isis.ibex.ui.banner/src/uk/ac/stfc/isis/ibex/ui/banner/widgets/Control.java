@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,42 +22,55 @@ package uk.ac.stfc.isis.ibex.ui.banner.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 
+/**
+ * Holds a button which can be pressed to send a value to a PV.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Control extends Composite {
 
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
-	private Button btnLoremIpsum;
+	private Button controlButton;
 	
-	public Control(Composite parent, int style, ControlModel model, Font font) {
+	/**
+	 * Create a button which can be pressed to send a value to a PV.
+	 * @param parent Parent of control
+	 * @param style SWT Style.
+	 * @param model Control Model
+	 */
+	public Control(Composite parent, int style, CustomControlModel model) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		btnLoremIpsum = new Button(this, SWT.NONE);
-		btnLoremIpsum.setText("Lorem Ipsum");
-		btnLoremIpsum.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		controlButton = new Button(this, SWT.NONE);
+		controlButton.setText("Placeholder");
+		controlButton.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		
 		if (model != null) {
-			btnLoremIpsum.setText(model.text());
+			controlButton.setText(model.text());
+			controlButton.setForeground(new Color(Display.getCurrent(), model.textColour()));
+			controlButton.setBackground(new Color(Display.getCurrent(), model.buttonColour()));
+			controlButton.setFont(SWTResourceManager.getFont("Segoe UI", model.fontSize(), SWT.BOLD));
 			bind(model);
 		}
 	}
 
-	private void bind(final ControlModel model) {
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnLoremIpsum), BeanProperties.value("value").observe(model.enabled()));
+	private void bind(final CustomControlModel model) {
+		bindingContext.bindValue(WidgetProperties.enabled().observe(controlButton), BeanProperties.value("value").observe(model.enabled()));
 		
-		btnLoremIpsum.addSelectionListener(new SelectionAdapter() {
+		controlButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				model.click();

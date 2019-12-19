@@ -30,7 +30,7 @@ import com.google.gson.GsonBuilder;
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -184,7 +184,7 @@ public class JsonConverters implements Converters {
 			}
 		};
 	}
-	
+		
 	private static final Function<Configuration, Configuration> INIT_CONFIG = uninitialized -> new Configuration(uninitialized);
 
 	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
@@ -193,7 +193,7 @@ public class JsonConverters implements Converters {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Converter<String, Collection<BannerItem>> toBannerDescription() {
-		return new JsonDeserialisingConverter<>(BannerItem[].class).apply(Convert.<BannerItem>toCollection());
-	}
+	public Converter<String, CustomBannerData> toBannerDescription() {
+        return new JsonDeserialisingConverter<>(CustomBannerData.class);
+    }
 }

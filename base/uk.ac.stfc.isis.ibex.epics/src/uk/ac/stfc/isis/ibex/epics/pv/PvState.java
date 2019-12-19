@@ -49,7 +49,7 @@ public enum PvState {
 	
 	private final String userFriendlyName;
     
-    private PvState(String userFriendlyName) {
+    PvState(String userFriendlyName) {
     	this.userFriendlyName = userFriendlyName;
     }
     
