@@ -2241,5 +2241,17 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Zero field controller</key>
+      <value>
+      	<type>ZERO_FIELD</type>
+      	<path>zero_field_controller/zero_field_controller.opi</path>
+      	<description>OPI for the Muon Zero-field controller</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros />
+      </value>
+    </entry>
   </opis>
 </descriptions>
