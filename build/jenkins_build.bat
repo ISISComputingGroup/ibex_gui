@@ -15,6 +15,9 @@ set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 call build.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+REM set EXIT=YES will change error code to 1 if not set previously so store the current
+set build_error_level=%errorlevel%
+
 @echo on
 
 REM Whether to deploy
@@ -22,7 +25,7 @@ set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
 if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit
+if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
 REM Delete older versions?

@@ -26,9 +26,7 @@ REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
-
-if "%EXIT%" == "YES" exit /b build_error_level
-REM Exit if not deploying or releasing
+if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
 REM Delete older versions?
