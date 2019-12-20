@@ -2205,7 +2205,7 @@
         </macros>
       </value>
     </entry>
-        <entry>
+    <entry>
       <key>Zero field magnetometer</key>
       <value>
         <type>ZERO_FIELD</type>
@@ -2217,8 +2217,26 @@
         <macros>
           <macro>
             <name>ZFMAGFLD</name>
-            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+            <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
             <default>ZFMAGFLD_01</default>
+            </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>ICE Oxford dilution refrigerator</key>
+      <value>
+      	<type>DILUTION_FRIDGE</type>
+      	<path>ICE_fridge/icefrdge.opi</path>
+      	<description>The OPI for the ICE Oxford dilution fridge IOC</description>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ICEFRDGE</name>
+            <description>The ICE diution fridge PV prefix (e.g. ICEFRDGE)</description>
+          	<default>ICEFRDGE_01</default>
           </macro>
         </macros>
       </value>
