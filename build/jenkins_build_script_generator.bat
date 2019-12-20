@@ -14,16 +14,18 @@ set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_script_generator_jre
 
 set PATH=%M2%;%PYTHON%;%PATH%
 
-call build_script_generator.bat
-if %errorlevel% neq 0 exit /b %errorlevel%
-
 @echo on
 
 REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
+
+call build_script_generator.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 if "%EXIT%" == "YES" exit
+REM Exit if not deploying or releasing
 
 REM Copy zip to installs area
 REM Delete older versions?
