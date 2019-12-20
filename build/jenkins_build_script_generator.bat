@@ -16,15 +16,18 @@ set PATH=%M2%;%PYTHON%;%PATH%
 
 @echo on
 
+call build_script_generator.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+REM set EXIT=YES will change error code to 1 if not set previously so store the current
+set build_error_level=%errorlevel%
+
 REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
 
-call build_script_generator.bat
-if %errorlevel% neq 0 exit /b %errorlevel%
-
-if "%EXIT%" == "YES" exit
+if "%EXIT%" == "YES" exit /b build_error_level
 REM Exit if not deploying or releasing
 
 REM Copy zip to installs area
