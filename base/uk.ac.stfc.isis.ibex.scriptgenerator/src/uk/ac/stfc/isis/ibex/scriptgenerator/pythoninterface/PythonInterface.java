@@ -75,10 +75,10 @@ public class PythonInterface {
 
 	/**
 	 * 
-	 * @return The path to the python 3 interpreter. This will be bundled with the GUI later.
+	 * @return The path to the bundled python 3 interpreter.
 	 */
 	private String python3InterpreterPath() {
-		return new PreferenceSupplier().pythonInterpreterPath();
+		return PreferenceSupplier.getBundledPythonPath();
 	}
 
 	

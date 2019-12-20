@@ -82,7 +82,12 @@ public class PreferenceSupplier {
     /**
      * The path to the developer's genie python.
      */
-	private static final String DEV_PYTHON_PATH = "C:/Instrument/Apps/Python3/python.exe";
+	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:/Instrument/Apps/Python3/python.exe";
+	
+	/**
+     * The default for the location of Python.
+     */
+    private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
 
 	
 	/**
@@ -91,13 +96,13 @@ public class PreferenceSupplier {
 	 * @return The string path to the python executable.
 	 * @throws IOException if python could not be found.
 	 */
-	private static String getDefaultPythonPath() {
+	public static String getBundledPythonPath() {
 		try {
 			String pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			return relativePathToFull(PYTHON_RELATIVE_PATH);
 		} catch (IOException e) {
-			String pythonPath = Path.forWindows(DEV_PYTHON_PATH).toOSString();
+			String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			return pythonPath;
 		}
@@ -186,7 +191,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, getDefaultPythonPath());
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_2_INTERPRETER_PATH);
 	}
 	
     /**
