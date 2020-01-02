@@ -53,15 +53,15 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private String value;
     private String description;
     
-    private static boolean SHOW_INVALID_BLOCK_VALUES;
+    private static boolean showInvalidBlockValues;
     
     static {
     	try {
-    		SHOW_INVALID_BLOCK_VALUES = new PreferenceSupplier().showInvalidBlockValues();
+    		showInvalidBlockValues = new PreferenceSupplier().showInvalidBlockValues();
     	} catch (Exception e) {
     		LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(DisplayBlock.class), 
     				"Cannot get invalid block values preference", e);
-    		SHOW_INVALID_BLOCK_VALUES = false;
+    		showInvalidBlockValues = false;
     	}
     }
         
@@ -285,6 +285,8 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      *            variable
      * @param highLimitSource the observable holding the block's high limit
      *            variable
+     * @param suspendIfInvalidSource the observable holding whether the block
+     *  should suspend if invalid
      * @param enabledSource the observable holding the block's enabled status
      * @param blockServerAlias the PVs alias on the block server
      */
@@ -353,7 +355,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * @return the block's current value
      */
     public String getValue() {
-    	if (SHOW_INVALID_BLOCK_VALUES || blockState != PvState.INVALID) {
+    	if (showInvalidBlockValues || blockState != PvState.INVALID) {
     		return value;
     	} else {
     		return "invalid";

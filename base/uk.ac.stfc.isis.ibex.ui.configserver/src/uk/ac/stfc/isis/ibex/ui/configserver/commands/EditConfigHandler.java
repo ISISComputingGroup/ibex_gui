@@ -65,9 +65,10 @@ public class EditConfigHandler extends EditConfigurationsHandler {
             helper = new ViewConfigHelper(shell);
             titleText = viewTitle;
         }
-
+        
         ConfigSelectionDialog selectionDialog =
-                new ConfigSelectionDialog(shell, titleText, SERVER.configsInfo().getValue(), false, true);
+                new ConfigSelectionDialog(shell, titleText, SERVER.configsInfo().getValue(), SERVER.configNamesWithFlags(),
+                        false, true);
         if (selectionDialog.open() == Window.OK) {
             String configName = selectionDialog.selectedConfig();
             if (configName.equals(SERVER.currentConfig().getValue().name()) && canWrite) {

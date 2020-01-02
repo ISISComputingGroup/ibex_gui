@@ -22,7 +22,9 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -40,6 +42,7 @@ public class ConfigInfo {
     private final String pv;
     private String synoptic;
     private final List<String> history;
+    private final Boolean isProtected;
 
     /**
      * Constructor.
@@ -56,12 +59,13 @@ public class ConfigInfo {
      *            The history of the config.
      *  
      */
-    public ConfigInfo(String name, String description, String pv, String synoptic, Collection<String> history) {
+    public ConfigInfo(String name, boolean isProtected, String description, String pv, String synoptic, Collection<String> history) {
         this.name = name;
         this.description = description;
         this.pv = pv;
         this.synoptic = synoptic;
         this.history = new ArrayList<>(history);
+        this.isProtected = isProtected;
     }
 
     /**
@@ -126,11 +130,35 @@ public class ConfigInfo {
         }));
     }
     
-    
+    /**
+     * returns config/Component names and its protection status.
+     * @param infos
+     * @return collection of Pair i.e config/comp name and its proteciton flag
+     */
+    public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection <ConfigInfo>infos) {
+        if (infos == null) {
+            return Collections.emptyMap();
+        }
+        Map <String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
+        for (ConfigInfo config: infos) {
+            namesWithProtectionFlag.put(config.name(), config.isProtected());
+        }
+        
+        return namesWithProtectionFlag;
+    }
+
     /**
      * @return A collection of dates (as Strings) when the configuration was updated.
      */
     public Collection<String> getHistory() {
         return Collections.unmodifiableList(history);
+    }
+    
+    /**
+     * Returns if the config is protected or not.
+     * @return boolean value if a config is protected or not
+     */
+    public Boolean isProtected() {
+        return this.isProtected;
     }
 }

@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
@@ -228,9 +228,9 @@ public class ExperimentSetup {
      * @param enabled whether the contents should be enabled or not
      */
     public void setChildrenEnabled(boolean enabled) {
-        Utils.recursiveSetEnabled(timeChannels, enabled);
-        Utils.recursiveSetEnabled(dataAcquisition, enabled);
-        Utils.recursiveSetEnabled(periods, enabled);
+        UIUtils.recursiveSetEnabled(timeChannels, enabled);
+        UIUtils.recursiveSetEnabled(dataAcquisition, enabled);
+        UIUtils.recursiveSetEnabled(periods, enabled);
     }
 
     /**

@@ -6,8 +6,6 @@ set BASEDIR=%~dp0
 set M2=%MAVEN%bin
 set PYTHON=C:\Instrument\Apps\Python
 set PYTHON_HOME=C:\Instrument\Apps\Python
-set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
-set GENIEPYTHONDIR=c:\Installers\genie_python
 
 REM We bundle our own JRE with the script generator, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_script_generator_jre

@@ -60,8 +60,10 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
 	@Override
 	public void safeExecute(Shell shell) {
         updateObservers();
+        
         ConfigSelectionDialog dialog =
-                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), false, false);
+                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), 
+                        SERVER.configNamesWithFlags(), false, false);
 		if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
             

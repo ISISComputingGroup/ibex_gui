@@ -186,6 +186,8 @@ public final class ComponentIcons {
             	return "film_fabrication";
             case OBIS_LASER_REMOTE:
             	return "coherent_obis_laser_remote";
+            case ZERO_FIELD:
+            	return "zerofield";
             default:
                 return "cog";
         }
