@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -75,7 +76,7 @@ public class ScriptGeneratorView {
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		scriptGeneratorModel = Activator.getModel();
-		configLoader = scriptGeneratorModel.getConfigLoader();
+		configLoader = scriptGeneratorModel.createConfigLoader();
 		scriptGeneratorTable = this.scriptGeneratorModel.getScriptGeneratorTable();
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);

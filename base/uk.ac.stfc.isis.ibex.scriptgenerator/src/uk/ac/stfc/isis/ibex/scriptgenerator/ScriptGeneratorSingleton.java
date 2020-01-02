@@ -32,25 +32,22 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
-	private final ConfigLoader configLoader;
+	private ConfigLoader configLoader;
 	
 	/**
-	 * The constructor, will create a config loader and load an initial config.
+	 * Create a config loader and load an initial config.
+	 * You cannot do this in the instantiation of the class because the class is 
+	 * created when the plugin is and surefire tests will fail.
+	 * 
+	 * @return The config loader
 	 */
-	public ScriptGeneratorSingleton() {
+	public ConfigLoader createConfigLoader() {
 		configLoader = new ConfigLoader(new PythonInterface());
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
 				
 		setActionParameters(configLoader.getParameters());
-	}
-
-	/**
-	 * Get the config loader.
-	 * @return The class responsible for loading a new table configuration.
-	 */
-	public ConfigLoader getConfigLoader() {
 		return configLoader;
 	}
 
