@@ -41,16 +41,21 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private ConfigLoader configLoader;
-	private final PythonInterface pythonInterface;
+	private PythonInterface pythonInterface;
 	
 	/**
-	 * Create a config loader and load an initial config.
-	 * You cannot do this in the instantiation of the class because the class is 
-	 * created when the plugin is and surefire tests will fail.
+	 * Get the config loader.
 	 * 
 	 * @return The config loader
 	 */
-	public ConfigLoader createConfigLoader() {
+	public ConfigLoader getConfigLoader() {
+		return configLoader;
+	}
+	
+	/**
+	 * The constructor, will create a config loader and load an initial config.
+	 */
+	public ScriptGeneratorSingleton() {
 		pythonInterface = new PythonInterface();
 		configLoader = new ConfigLoader(pythonInterface);
 		setUp();
@@ -77,7 +82,6 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		});
 				
 		setActionParameters(configLoader.getParameters());
-		return configLoader;
 	}
 	
 	/**
