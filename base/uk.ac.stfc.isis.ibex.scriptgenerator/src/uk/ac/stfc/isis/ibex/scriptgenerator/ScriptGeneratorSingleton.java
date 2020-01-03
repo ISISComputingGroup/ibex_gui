@@ -40,13 +40,17 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 public class ScriptGeneratorSingleton extends ModelObject implements PropertyChangeListener {
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
-	private final ConfigLoader configLoader;
+	private ConfigLoader configLoader;
 	private final PythonInterface pythonInterface;
 	
 	/**
-	 * The constructor, will create a config loader and load an initial config.
+	 * Create a config loader and load an initial config.
+	 * You cannot do this in the instantiation of the class because the class is 
+	 * created when the plugin is and surefire tests will fail.
+	 * 
+	 * @return The config loader
 	 */
-	public ScriptGeneratorSingleton() {
+	public ConfigLoader createConfigLoader() {
 		pythonInterface = new PythonInterface();
 		configLoader = new ConfigLoader(pythonInterface);
 		setUp();
@@ -73,15 +77,6 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		});
 				
 		setActionParameters(configLoader.getParameters());
-		
-		scriptGeneratorTable.addPropertyChangeListener(this);
-	}
-
-	/**
-	 * Get the config loader.
-	 * @return The class responsible for loading a new table configuration.
-	 */
-	public ConfigLoader getConfigLoader() {
 		return configLoader;
 	}
 	

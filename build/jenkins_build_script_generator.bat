@@ -17,11 +17,14 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
 
+REM set EXIT=YES will change error code to 1 if not set previously so store the current
+set build_error_level=%errorlevel%
+
 REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit
+if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
 REM Delete older versions?

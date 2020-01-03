@@ -37,6 +37,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+
 /**
  * Provides settings to control the script generator.
  */
