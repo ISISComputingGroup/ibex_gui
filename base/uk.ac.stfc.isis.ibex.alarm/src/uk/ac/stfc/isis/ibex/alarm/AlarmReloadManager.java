@@ -21,12 +21,17 @@
  */
 package uk.ac.stfc.isis.ibex.alarm;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import uk.ac.stfc.isis.ibex.ui.UI;
+
 /**
  * This class is responsible for queuing a delayed update to the alarms view.
  * 
  * Updates are queued when a configuration finishes changing.
  */
-public final class AlarmReloadManager {
+public final class AlarmReloadManager implements PropertyChangeListener {
 
     private static final int MILLISECONDS_PER_SECOND = 1000;
 
@@ -42,11 +47,17 @@ public final class AlarmReloadManager {
      * The instance of this singleton.
      */
     private static AlarmReloadManager instance;
+    
+    /**
+     * The stopWait property string identifier.
+     */
+    private static final String STOP_WAIT_PROPERTY_IDENTIFIER = "stopWait";
 
     /**
      * Private constructor, use getInstance() instead.
      */
     private AlarmReloadManager() {
+    	UI.getDefault().addStopWaitPropertyChangeListener(instance);
     }
 
     /**
@@ -98,5 +109,15 @@ public final class AlarmReloadManager {
     private void reloadAlarms() {
         Alarm.getInstance().reload();
     }
+
+    /**
+     * Queue a delayed update on property change.
+     */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(STOP_WAIT_PROPERTY_IDENTIFIER)) {
+			queueDelayedUpdate();
+		}
+	}
 
 }

@@ -180,12 +180,12 @@ public final class ManagerModeModel extends ModelObject {
 
             @Override
             protected void setManagerMode(Boolean value) {
-                inManagerMode = value;
-            }
+                ManagerModeModel.this.inManagerMode = value;
+             }
 
             @Override
             protected void setUnknown() {
-                inManagerMode = null;
+                ManagerModeModel.this.inManagerMode = null;
             }
 
         };

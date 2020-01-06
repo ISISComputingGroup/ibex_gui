@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
@@ -65,6 +65,7 @@ public class SummaryPanel extends Composite {
     private final MessageDisplayer messageDisplayer;
     private Button protectedCheckBox;
     private Label protectLabel;
+    private Label warning;
 
     /**
      * Constructor for the general information about the configuration.
@@ -110,23 +111,31 @@ public class SummaryPanel extends Composite {
         
         
         protectLabel = new Label(cmpSummary,  SWT.NONE);
-        protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
         protectLabel.setText("Protected:");
         
         protectedCheckBox = new Button(cmpSummary, SWT.CHECK);
         protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));     
-        
+
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
         lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDateCreated.setText("Date Created:");
 
         lblDateCreatedField = new Label(cmpSummary, SWT.NONE);
-
+        
         lblDateModified = new Label(cmpSummary, SWT.NONE);
         lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblDateModified.setText("Date Modified:");
 
         lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
+        
+        warning = new Label(cmpSummary, SWT.WRAP | SWT.NONE);
+        GridData gd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+        gd.widthHint = 800;
+        warning.setLayoutData(gd);
+        warning.setText("");
+        warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+
     }
 
     /**
@@ -163,9 +172,9 @@ public class SummaryPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
-                BeanProperties.value("isNew").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
-                BeanProperties.value("isNew").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField),
                 BeanProperties.value("dateCreated").observe(config));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField),
@@ -174,9 +183,12 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("isProtected").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
-                BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
-                BeanProperties.value("isComponent").observe(config), null, Utils.NOT_CONVERTER);
+                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
+        bindingContext.bindValue(WidgetProperties.text().observe(warning),
+                BeanProperties.value("errorMessage").observe(config));
+
 
     }
 

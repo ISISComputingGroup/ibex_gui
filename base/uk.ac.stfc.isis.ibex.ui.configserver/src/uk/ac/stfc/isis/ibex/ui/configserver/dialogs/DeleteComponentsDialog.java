@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
@@ -45,8 +46,9 @@ public class DeleteComponentsDialog extends MultipleConfigsSelectionDialog {
      * @param compsAvailable The list of available components
      * @param compsInUse The list of components that are used in configurations
      */
-    public DeleteComponentsDialog(Shell parentShell, Collection<ConfigInfo> compsAvailable, Collection<String> compsInUse) {
-        super(parentShell, "Delete Components", compsAvailable, true, false);
+    public DeleteComponentsDialog(Shell parentShell, Collection<ConfigInfo> compsAvailable,
+            Collection<String> compsInUse, Map<String, Boolean> compNamesWithFlags) {
+        super(parentShell, "Delete Components", compsAvailable, compNamesWithFlags, true, false);
         this.compsInUse = compsInUse;
     }
 

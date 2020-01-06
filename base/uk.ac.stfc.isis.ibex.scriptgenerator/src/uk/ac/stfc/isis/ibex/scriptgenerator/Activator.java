@@ -68,6 +68,6 @@ public class Activator implements BundleActivator {
     	return MODEL; 
     }
 
-    private static final ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
+    private static ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
 
 }

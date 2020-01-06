@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
 /**
@@ -45,7 +45,7 @@ public class EditScriptDialog extends ScriptDialog {
 		errorLabel.setForeground(ERROR_COLOR);
 		
 		bindingContext.bindValue(WidgetProperties.visible().observe(errorLabel),
-				BeanProperties.value("updateButtonEnabled").observe(model), null, Utils.NOT_CONVERTER);
+				BeanProperties.value("updateButtonEnabled").observe(model), null, UIUtils.NOT_CONVERTER);
 		
 		actionButton = createButton(parent, IDialogConstants.OK_ID, "Update", false);
 		actionButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.alarm", "icons/refresh.png"));

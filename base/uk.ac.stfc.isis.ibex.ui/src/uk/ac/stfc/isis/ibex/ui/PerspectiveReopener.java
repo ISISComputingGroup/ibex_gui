@@ -58,7 +58,7 @@ public class PerspectiveReopener {
             @Override
             public void run() {
                 
-                final IWorkbenchPage activePage = Utils.getActivePage();
+                final IWorkbenchPage activePage = UIUtils.getActivePage();
         
                 if (activePage == null) {
                     // no active page so nothing to close

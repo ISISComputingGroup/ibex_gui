@@ -42,6 +42,9 @@ import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObservable;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
 
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to
@@ -105,6 +108,32 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** Holds general information for IOCs */
     private Map<String, EditableIoc> iocMap = new HashMap<>();
 
+    /** Manager mode model **/
+    private ManagerModeModel managerMode;
+    /** To enable or disable save button **/
+    private boolean isSaveButtonEnabled;
+    /** Flag for enabling/disabling save as button */
+    private boolean enableSaveAsButton;
+
+    /** Currently in manager mode or not **/
+    private Boolean inManagerMode;
+    /** Manager mode Observable **/
+    private ManagerModeObservable managerModePv;
+    /** Initial Flag of a config/component **/
+    final private boolean originalProtectedFlag;
+    /** Warning to be shown when saving protected config in non manager mode **/
+    private final String savingProtectedConfigWarning = "Info : To modify/save a protected "
+            + "configuration you have to be in Manager Mode";
+    /** Warning to be shown when saving protected component in non manager mode **/
+    private final String savingProtectedCompWarning = "Info : To modify/save a protected "
+            + "component you have to be in Manager Mode";
+    /** To show when no error **/
+    private final String noError = " ";
+    /** Current error message to be displayed **/
+    private String currentErrorMessage = noError;
+
+
+
     /**
      * Listener for block renaming events.
      */
@@ -140,21 +169,26 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The PVs available to the configuration
      */
     public EditableConfiguration(
-			Configuration config,
-			Collection<EditableIoc> iocs,
-            Collection<Configuration> components,
+            Configuration config,
+            Collection<EditableIoc> iocs,
+            Collection<Configuration> components, 
             Collection<PV> pvs) {
-		this.name = config.name();
-		this.description = config.description();
-		this.synoptic = config.synoptic();
-		this.isProtected = config.isProtected();
-		this.allIocs = new ArrayList<>();
-		
-		for (EditableIoc ioc : iocs) {
-			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
-			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
-			this.allIocs.add(newIoc);
-		}
+        this.name = config.name();
+        this.description = config.description();
+        this.synoptic = config.synoptic();
+        this.isProtected = config.isProtected();
+        originalProtectedFlag = this.isProtected;
+        this.allIocs = new ArrayList<>();
+        this.managerMode = ManagerModeModel.getInstance();
+        this.isSaveButtonEnabled = true;
+        this.enableSaveAsButton = true;
+        managerModePv = managerMode.getManagerModeObservable();
+
+        for (EditableIoc ioc : iocs) {
+            EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
+            newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
+            this.allIocs.add(newIoc);
+        }
 
         this.history = new ArrayList<>();
 
@@ -193,6 +227,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         editableComponents.addPropertyChangeListener(evt -> updateComponents());
 
         updateComponents();
+        setEnableSaveAsButton();
+        addObserver();
     }
 
     private EditableIoc convertIoc(Ioc ioc) {
@@ -304,6 +340,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void setIsProtected(boolean isProtected) {
     	firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
+        setEnableOrDisableSaveButton();
+        setEnableSaveAsButton();
     }
 
     /**
@@ -703,5 +741,108 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             }
         }
         return result;
+    }
+
+        /**
+     * Logic for whether to enable or disable save button .
+     */
+    public void setEnableOrDisableSaveButton() {
+        String errorMessage = noError;
+        if (inManagerMode == null) {
+            // Do nothing
+        } else if ((this.originalProtectedFlag == true) && isProtected == false && inManagerMode) {
+
+            String compOrConfName = isComponent ? "component" : "configuration";
+            errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
+                    + "will be downgraded to an unprotected " + compOrConfName;
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+            
+        } else if ((this.originalProtectedFlag == true) && isProtected == false && !inManagerMode) {
+            errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
+            
+        } else if ((!inManagerMode && !isProtected) || (inManagerMode)) {
+            errorMessage = this.noError;
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+            
+        } else {
+            errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
+            firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
+        }
+        setErrorMessage(errorMessage);
+    }
+    /**
+     * Sets error message.
+     * @param message to be displayed
+     *          
+     */
+    private void setErrorMessage(String message) {
+        firePropertyChange("errorMessage", this.currentErrorMessage, this.currentErrorMessage = message);
+
+    }
+    
+    /**
+     * Decides if save as Button needs to be enabled or disabled.
+     */
+    public void setEnableSaveAsButton() {
+        if (inManagerMode == null) {
+
+        } else if ((this.originalProtectedFlag == true) && isProtected == false) {
+            firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+                
+        } else if (isProtected && (!inManagerMode)) {
+            firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = false);
+            
+        } else if (inManagerMode || (!isProtected && !inManagerMode)) {
+            firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+            
+        }
+    }
+
+    /**
+     * Whether to enable or disable save button.
+     * 
+     * @return boolean value to disable or enable save button
+     */
+    public boolean getEnableOrDisableSaveButton() {
+        return isSaveButtonEnabled;
+    }
+    
+    /**
+     * Enabled or Disable Save Button.
+     * @return boolean value to enable or disable save as button
+     */
+    public boolean getEnableSaveAsButton() {
+        return enableSaveAsButton;
+    }
+
+    /**
+     * Add observer to the observable.
+     */
+    private void addObserver() {
+        new ManagerModeObserver(managerModePv.observable) {
+
+            @Override
+            protected void setManagerMode(Boolean value) {
+                inManagerMode = value;
+                EditableConfiguration.this.setEnableOrDisableSaveButton();
+                EditableConfiguration.this.setEnableSaveAsButton();
+
+            }
+
+            @Override
+            protected void setUnknown() {
+                inManagerMode = null;
+            }
+
+        };
+    }
+    
+    /**
+     * Gets current error message.
+     * @return current error message
+     */
+    public String getErrorMessage() {
+        return currentErrorMessage;
     }
 }

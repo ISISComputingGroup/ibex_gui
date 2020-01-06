@@ -26,9 +26,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.WorkbenchException;
 
-import uk.ac.stfc.isis.ibex.log.Log;
-import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * Oversees perspective switching.
@@ -41,8 +40,6 @@ public class PerspectiveSwitcher {
 	private final IWorkbenchWindow workbenchWindow;
 
 	private final Display display = Display.getDefault();
-
-	private static LogCounter counter = Log.getInstance().getCounter();
 
 	private static final Runnable DO_NOTHING = new Runnable() {
 		@Override
@@ -88,7 +85,7 @@ public class PerspectiveSwitcher {
 
 					// Restart counter if switching to or from IOC log
 					if (isLogPerspective(perspectiveID)) {
-						counter.start();
+						UI.getDefault().switchIOCLog();
 					}
 
 					workbench.showPerspective(perspectiveID, workbenchWindow);

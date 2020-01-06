@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
@@ -50,6 +53,45 @@ public class UI extends AbstractUIPlugin implements IStartup {
 	public UI() {
 	}
 	
+	private static final String SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY = "switchToOrFromIOCLog";
+	
+	private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	
+	/**
+	 * Add a property change support listener for stopWait changes.
+	 * 
+	 * @param listener To listen for property changes.
+	 */
+	public void addSwitchIOCLogPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY, listener);
+    }
+    
+    /**
+     * Called when PerspectiveSwitcher switches to or from the IOC log.
+     */
+    public void switchIOCLog() {
+    	propertyChangeSupport.firePropertyChange(SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY, null, null);
+    }
+    
+    private static final String STOP_WAIT_PROPERTY = "stopWait";
+	
+	/**
+	 * Add a property change support listener for stopWait changes.
+	 * 
+	 * @param listener To listen for property changes.
+	 */
+	public void addStopWaitPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(STOP_WAIT_PROPERTY, listener);
+    }
+    
+    /**
+     * Called when WaitFor stopWait occurs i.e. when the waiting dialogue is closed. 
+     * Notifies the property change listeners ({@link uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager}) that this has occurred.
+     */
+    public void stopWait() {
+    	propertyChangeSupport.firePropertyChange(STOP_WAIT_PROPERTY, null, null);
+    }
+	
 	/**
 	 * Switch perspectives.
 	 *
@@ -62,7 +104,6 @@ public class UI extends AbstractUIPlugin implements IStartup {
 				IWorkbench workbench = PlatformUI.getWorkbench();	   
 				IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
 				PerspectiveSwitcher switcher = new PerspectiveSwitcher(workbench, workbenchWindow);
-				
 				switcher.switchTo(perspectiveID).run();		    
 			}
 		});

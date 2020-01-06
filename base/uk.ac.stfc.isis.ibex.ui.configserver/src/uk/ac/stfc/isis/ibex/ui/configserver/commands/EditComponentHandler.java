@@ -64,9 +64,9 @@ public class EditComponentHandler extends EditConfigurationsHandler {
             helper = new ViewComponentHelper(shell);
             titleText = viewTitle;
         }
-
         ConfigSelectionDialog selectionDialog =
-                new ConfigSelectionDialog(shell, titleText, SERVER.componentsInfo().getValue(), true, true);
+                new ConfigSelectionDialog(shell, titleText, SERVER.componentsInfo().getValue(), 
+                        SERVER.compNamesWithFlags(), true, true);
         if (selectionDialog.open() == Window.OK) {
             String configName = selectionDialog.selectedConfig();
             helper.createDialog(configName, false);
