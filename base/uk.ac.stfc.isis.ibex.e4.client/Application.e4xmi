@@ -489,7 +489,7 @@
           <children xsi:type="basic:Part" xmi:id="_IKx2QKjlEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.tableofmotors3" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView" label="Additional Motors (Controllers 17 - 24)">
             <persistedState key="id" value="3"/>
           </children>
-          <children xsi:type="basic:Part" xmi:id="_cZCPQDFSEeq3-4uqm6zRVA" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.settings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.SettingsView" label="Settings">
+          <children xsi:type="basic:Part" xmi:id="_cZCPQDFSEeq3-4uqm6zRVA" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.settings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsSettingsView" label="Settings">
             <persistedState key="id" value="4"/>
           </children>
         </children>
