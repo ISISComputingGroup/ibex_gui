@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -165,9 +166,7 @@ public class ActionsTable extends ModelObject {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
 				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason() + "\n";
-				for(String line : errorString.split("\n")) {
-					errors.add(line);
-				}
+				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}
 		}
 		return errors;
