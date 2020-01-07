@@ -230,7 +230,10 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
 		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
-		String message = errors.stream().limit(maxNumOfLines).map((String error) -> String.format("- %s", error)).collect(Collectors.joining("\n"));
+		String message = errors.stream()
+				.limit(maxNumOfLines)
+				.map((String error) -> String.format("- %s", error))
+				.collect(Collectors.joining("\n"));
 		if (errors.size() > maxNumOfLines) {
 		    message = String.format("%s\n ... plus %d suppressed errors. To see an error for a specific row hover over it.", 
 		    		message, (errors.size() - maxNumOfLines));

@@ -17,7 +17,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
  */
 public class GeneratorPython implements GeneratorInterface {
 	
-	PythonInterface pythonInterface;
+	private final PythonInterface pythonInterface;
 	
 	/**
 	 * Create a python generator with the specified python interface.
@@ -73,8 +73,9 @@ public class GeneratorPython implements GeneratorInterface {
 	 * @return A suitable python representation.
 	 */
 	public List<Map<String, String>> convertActionsTableToPythonRepr(ActionsTable actionsTable) {
-		return actionsTable.getActions().stream().
-				map(action -> action.getAllActionParametersAsStrings()).collect(Collectors.toList());
+		return actionsTable.getActions().stream()
+				.map(action -> action.getAllActionParametersAsStrings())
+				.collect(Collectors.toList());
 	}
 	
 }
