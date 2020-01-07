@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import py4j.ClientServer;
 import py4j.ClientServer.ClientServerBuilder;
@@ -207,11 +208,8 @@ public class PythonInterface {
 	 * @throws InvalidParamsException Thrown if the contents (actionsTable) are invalid.
 	 */
 	public String generate(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InvalidParamsException {
-		String generatedScript = configWrapper.generate(scriptGenContent, config);
-		if (Objects.isNull(generatedScript)) {
-			throw new InvalidParamsException("Script generator content is invalid");
-		}
-		return generatedScript;
+		return Optional.ofNullable(configWrapper.generate(scriptGenContent, config))
+				.orElseThrow(() -> new InvalidParamsException("Script generator content is invalid"));
 	}
 	
 }
