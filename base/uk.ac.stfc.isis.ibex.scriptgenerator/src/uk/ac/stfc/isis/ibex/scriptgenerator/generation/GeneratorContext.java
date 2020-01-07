@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorInterface;
@@ -55,11 +56,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public String generate(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws InvalidParamsException, UnsupportedLanguageException {
-		if (generatorStrategies.containsKey(generatedLanguage)) {
-			return generatorStrategies.get(generatedLanguage).generate(actionsTable, config);
-		} else {
-			throw new UnsupportedLanguageException("Language " + generatedLanguage + " not supported");
-		}
+		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).generate(actionsTable, config))
+			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
 	
 	/**
@@ -72,11 +70,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public boolean areParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		if (generatorStrategies.containsKey(generatedLanguage)) {
-			return generatorStrategies.get(generatedLanguage).areParamsValid(actionsTable, config);
-		} else {
-			throw new UnsupportedLanguageException("Language " + generatedLanguage + " not supported");
-		}
+		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).areParamsValid(actionsTable, config))
+			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
 	
 	/**
@@ -88,11 +83,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		if (generatorStrategies.containsKey(generatedLanguage)) {
-			return generatorStrategies.get(generatedLanguage).getValidityErrors(actionsTable, config);
-		} else {
-			throw new UnsupportedLanguageException("Language " + generatedLanguage + " not supported");
-		}
+		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).getValidityErrors(actionsTable, config))
+			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
 
 }
