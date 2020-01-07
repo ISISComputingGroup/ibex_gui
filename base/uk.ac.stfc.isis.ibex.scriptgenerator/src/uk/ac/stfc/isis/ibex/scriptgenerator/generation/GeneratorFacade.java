@@ -10,6 +10,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
@@ -95,7 +96,7 @@ public class GeneratorFacade {
 	 * @param config The instrument config to validate the script against.
 	 * @return a hashmap of validity errors.
 	 */
-	public static HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
+	public static Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
 		try {
 			return getValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
 		} catch(UnsupportedLanguageException e) {
@@ -112,7 +113,7 @@ public class GeneratorFacade {
 	 * @return a string of validity errors or null if no errors.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
-	public static HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+	public static Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return generatorContext.getValidityErrors(actionsTable, config, generatedLanguage);
 	}
 }

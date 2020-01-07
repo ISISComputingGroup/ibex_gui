@@ -41,22 +41,36 @@ class Config(object):
 
         return ListConverter().convert(arguments, gateway._gateway_client)
 
-    def doAction(self, map_of_arguments: Mapping[AnyStr, AnyStr]) -> Union[None, AnyStr]:
+    def doAction(self, action) -> Union[None, AnyStr]:
         """
         Executes the action with the parameters provided
+
+        Args:
+            The 
 
         Returns:      
             None if run runs without exception, otherwise a String containing the error message.
         """
-        self.action.run(**map_of_arguments)
+        map_of_arguments = {}
+        action_parameters = action.getAllActionParameters()
+        for action_parameter, parameter_value in action_parameters.items():
+            map_of_arguments[action_parameter.getName()] = parameter_value
+        return self.action.run(**map_of_arguments)
 
-    def parametersValid(self, map_of_arguments: Mapping[AnyStr, AnyStr]) -> Union[None, AnyStr]:
+    def parametersValid(self, action) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the configuration
+
+        Args:
+            The parameters to check for validity.
 
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
+        map_of_arguments = {}
+        action_parameters = action.getAllActionParameters()
+        for action_parameter, parameter_value in action_parameters.items():
+            map_of_arguments[action_parameter.getName()] = parameter_value
         return self.action.parameters_valid(**map_of_arguments)
 
     def equals(self, other_config) -> bool:
@@ -76,7 +90,7 @@ class Generator(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
 
-    def areParamsValid(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Dict[int, AnyStr]:
+    def areParamsValid(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
         """
         Checks if a list of parameters are valid for the configuration
 
@@ -85,21 +99,21 @@ class Generator(object):
         """
         current_list_of_arguments = 0
         validityCheck: Dict[int, AnyStr] = {}
-        for list_of_arguments in list_of_map_of_arguments:
-            singleActionValidityCheck = config.parametersValid(list_of_arguments)
+        for action in list_of_actions:
+            singleActionValidityCheck = config.parametersValid(action)
             if singleActionValidityCheck != None:
                 validityCheck[current_list_of_arguments] = singleActionValidityCheck
             current_list_of_arguments += 1
         return validityCheck
 
-    def generate(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        if self.areParamsValid(list_of_map_of_arguments, config):
+        if self.areParamsValid(list_of_actions, config):
             return "Generated python script"
         else:
             return None

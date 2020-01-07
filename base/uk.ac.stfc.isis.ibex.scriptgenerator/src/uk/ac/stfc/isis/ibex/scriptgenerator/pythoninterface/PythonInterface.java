@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,6 +18,7 @@ import org.eclipse.core.runtime.Path;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 
 /**
@@ -194,7 +194,7 @@ public class PythonInterface {
 	 * @param config The config to validate against.
 	 * @return A hashmap of validity errors.
 	 */
-	public HashMap<Integer, String> areParamsValid(List<Map<String, String>> scriptGenContent, Config config) {
+	public Map<Integer, String> areParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) {
 		return configWrapper.areParamsValid(scriptGenContent, config);
 	}
 
@@ -206,7 +206,7 @@ public class PythonInterface {
 	 * @return The generated script as a string
 	 * @throws InvalidParamsException Thrown if the contents (actionsTable) are invalid.
 	 */
-	public String generate(List<Map<String, String>> scriptGenContent, Config config) throws InvalidParamsException {
+	public String generate(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InvalidParamsException {
 		String generatedScript = configWrapper.generate(scriptGenContent, config);
 		if (Objects.isNull(generatedScript)) {
 			throw new InvalidParamsException("Script generator content is invalid");

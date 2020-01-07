@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -144,7 +144,7 @@ public class ActionsTable extends ModelObject {
 	 * 
 	 * @param validityErrors The hashmap to set validity errors based on.
 	 */
-	public void setValidityErrors(HashMap<Integer, String> validityErrors) {
+	public void setValidityErrors(Map<Integer, String> validityErrors) {
 		for(int i = 0; i< actions.size(); i++) {
 			if(validityErrors.containsKey(i)) {
 				actions.get(i).setInvalid(validityErrors.get(i));

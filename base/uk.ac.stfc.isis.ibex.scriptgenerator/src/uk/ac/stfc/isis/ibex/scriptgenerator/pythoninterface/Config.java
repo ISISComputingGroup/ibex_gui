@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.util.Map;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+
 import java.util.List;
 
 /**
@@ -14,18 +15,17 @@ public interface Config {
 	
 	/**
 	 * Performs the defined action.
-	 * @param arguments The experiment parameters to run the action with.
+	 * @param arguments The action parameters.
 	 * @return The error if there has been one.
 	 */
-	public String doAction(Map<String, String> arguments);
+	public String doAction(ScriptGeneratorAction action);
 	
 	/**
 	 * Performs the check that the arguments are valid.
-	 * @param arguments The parameters to check for validity,
-	 *    where the key is the keyword argument and the value is the parameter value to check.
+	 * @param arguments The action parameters to check for validity.
 	 * @return The error if the arguments are not valid.
 	 */
-	public String parametersValid(Map<String, String> arguments);
+	public String parametersValid(ScriptGeneratorAction action);
 	
 	/**
 	 * @return The name of this configuration.

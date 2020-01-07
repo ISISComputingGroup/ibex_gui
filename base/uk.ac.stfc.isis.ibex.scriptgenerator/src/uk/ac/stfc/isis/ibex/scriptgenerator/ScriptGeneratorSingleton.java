@@ -23,6 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -217,7 +218,7 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	 * What to do on the actions in the table changing (check the validity errors).
 	 */
 	public void onTableChange() {
-		HashMap<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
+		Map<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
 				scriptGeneratorTable, configLoader.getConfig());
 		scriptGeneratorTable.setValidityErrors(validityErrors);
 	}

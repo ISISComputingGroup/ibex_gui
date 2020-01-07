@@ -82,7 +82,7 @@ public class GeneratorContext {
 	 * @return a hashmap of validity errors.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
-	public HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).getValidityErrors(actionsTable, config))
 			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
