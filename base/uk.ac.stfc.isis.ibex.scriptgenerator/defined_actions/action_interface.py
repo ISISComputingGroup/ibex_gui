@@ -46,7 +46,7 @@ def cast_parameters_to(*args_casts, **keyword_casts):
                 except ValueError:
                     casting_failures += "Cannot convert {} from string to {}\n".format(str(v), str(keyword_casts[k]))
             cast_args = []
-            for i in range(0, len(args_casts)):
+            for i in range(len(args_casts)):
                 try:
                     cast_args.append(args_casts[i](args[i]))
                 except ValueError:
@@ -56,4 +56,3 @@ def cast_parameters_to(*args_casts, **keyword_casts):
             return func(self, *cast_args, **cast_kwargs)
         return wrapper
     return decorator
-
