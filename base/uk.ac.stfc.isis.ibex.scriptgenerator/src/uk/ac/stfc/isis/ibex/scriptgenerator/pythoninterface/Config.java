@@ -16,7 +16,7 @@ public interface Config {
 	 * Performs the defined action.
 	 * @param arguments The arguments for doing the action.
 	 */
-	public void doAction(HashMap<Integer, String> arguments);
+	public String doAction(HashMap<Integer, String> arguments);
 	
 	/**
 	 * Performs the check that the arguments are valid.

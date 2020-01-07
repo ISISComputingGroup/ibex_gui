@@ -12,8 +12,7 @@ import sys
 
 class Config(object):
     """
-    Class containing the definition and validation functions of a single action
-    .
+    Class containing the definition and validation functions of a single action.
     """
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
@@ -37,14 +36,18 @@ class Config(object):
 
         Returns:
             arguments: List of the parameter names (strings)
-
         """
         arguments = signature(self.action.run).parameters
 
         return ListConverter().convert(arguments, gateway._gateway_client)
 
-    def doAction(self, list_of_arguments) -> None:
-        """Executes the action with the parameters provided"""
+    def doAction(self, list_of_arguments) -> Union[None, AnyStr]:
+        """
+        Executes the action with the parameters provided
+
+        Returns:      
+            None if run runs without exception, otherwise a String containing the error message.
+        """
         self.action.run(**list_of_arguments)
 
     def parametersValid(self, list_of_arguments) -> Union[None, AnyStr]:

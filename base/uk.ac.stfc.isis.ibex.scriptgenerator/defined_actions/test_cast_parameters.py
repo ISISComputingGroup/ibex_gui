@@ -159,5 +159,27 @@ class TestCastParameters(unittest.TestCase):
         assert_that(func(self, *values_args, **values_kwargs), contains_string(expected_return), 
             "Should return the error when casting")
 
+    def test_GIVEN_more_args_casts_than_args_WHEN_called_THEN_sensible_reason(self):
+        # Arrange
+        values_args: List[AnyStr] = ['1']
+        expected_return: str = "There are more casters for arguments than arguments"
+        @cast_parameters_to(mytype, int)
+        def func(self, val1):
+            return val1
+        # Act and Assert
+        assert_that(func(self, *values_args), contains_string(expected_return), 
+            "Should return the error when casting")
+
+    def test_GIVEN_keyword_casts_containing_keys_other_than_in_kwargs_WHEN_called_THEN_sensible_reason(self):
+        # Arrange
+        values_kwargs: Dict[AnyStr, AnyStr] = {'val1': 'defaultxx'}
+        expected_return: str = "Keyword argument casters contains keys that are not present in keyword arguments"
+        @cast_parameters_to(val1=mytype, val2=int)
+        def func(self, val1=7):
+            return val1
+        # Act and Assert
+        assert_that(func(self, **values_kwargs), contains_string(expected_return), 
+            "Should return the error when casting")
+
 if __name__ == '__main__':
     unittest.main()
