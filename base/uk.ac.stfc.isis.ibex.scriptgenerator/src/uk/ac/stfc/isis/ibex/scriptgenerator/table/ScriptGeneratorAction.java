@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -14,8 +14,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 public class ScriptGeneratorAction extends ModelObject {
 
 	private HashMap<ActionParameter, String> actionParameterValues;
-	private boolean valid = true;
-	private String invalidityReason = null;
+	private Optional<String> invalidityReason = Optional.empty();
 	private static final String VALIDITY_PROPERTY = "validity";
 
 	/**
@@ -90,8 +89,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * Set this action as valid.
 	 */
 	public void setValid() {
-		firePropertyChange(VALIDITY_PROPERTY, valid, true);
-		valid = true;
+		firePropertyChange(VALIDITY_PROPERTY, isValid(), true);
 		invalidityReason = null;
 	}
 	
@@ -101,9 +99,8 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @param reason The reason for this being invalid.
 	 */
 	public void setInvalid(String reason) {
-		firePropertyChange(VALIDITY_PROPERTY, valid, false);
-		valid = false;
-		invalidityReason = reason;
+		firePropertyChange(VALIDITY_PROPERTY, isValid(), false);
+		invalidityReason = Optional.of(reason);
 	}
 	
 	/**
@@ -112,7 +109,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * @return True if the action is valid, false if not.
 	 */
 	public boolean isValid() {
-		return valid;
+		return invalidityReason.isEmpty();
 	}
 	
 	/**
@@ -120,7 +117,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * 
 	 * @return String of reason if invalid. Null if valid.
 	 */
-	public String getInvalidityReason() {
+	public Optional<String> getInvalidityReason() {
 		return invalidityReason;
 	}
 	
