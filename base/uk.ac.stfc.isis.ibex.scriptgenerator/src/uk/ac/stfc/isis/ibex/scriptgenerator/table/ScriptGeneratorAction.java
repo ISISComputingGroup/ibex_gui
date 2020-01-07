@@ -90,7 +90,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 */
 	public void setValid() {
 		firePropertyChange(VALIDITY_PROPERTY, isValid(), true);
-		invalidityReason = null;
+		invalidityReason = Optional.empty();
 	}
 	
 	/**
@@ -113,9 +113,9 @@ public class ScriptGeneratorAction extends ModelObject {
 	}
 	
 	/**
-	 * Get the current reason for invalidity (may be null if valid).
+	 * Get the current reason for invalidity (may be empty option if valid).
 	 * 
-	 * @return String of reason if invalid. Null if valid.
+	 * @return Optional string of reason if invalid. Null if valid.
 	 */
 	public Optional<String> getInvalidityReason() {
 		return invalidityReason;

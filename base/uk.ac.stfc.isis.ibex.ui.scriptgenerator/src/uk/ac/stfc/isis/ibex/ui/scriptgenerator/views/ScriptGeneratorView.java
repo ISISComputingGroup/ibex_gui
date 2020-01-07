@@ -177,10 +177,18 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.bindValidityChecks(table);
 	}
 	
-	public void displayValidityErrors() {
-		String heading = "Validity errors:\n\n";
-		String body = heading + scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10);
-		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", body);
+	/**
+	 * Display the first few validity errors or that there are none in a popup box.
+	 */
+	private void displayValidityErrors() {
+		String body = scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10);
+		if(!body.isEmpty()) {
+			String heading = "Validity errors:\n\n";
+			String message = heading + body;
+			MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", message);
+		} else {
+			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
+		}
 	}
 	
 
