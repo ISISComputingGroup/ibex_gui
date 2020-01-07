@@ -188,7 +188,9 @@ public class ScriptGeneratorViewModel {
 		TableItem[] items = viewTable.table().getItems();
 		int validityColumnIndex = viewTable.table().getColumnCount()-1;
 		for (int i = 0; i < actions.size(); i++) {
-			if(i >= items.length) {
+			System.out.println(items.length);
+			System.out.println(i);
+			if(i < items.length) {
 				if (actions.get(i).isValid()) {
 					items[i].setBackground(clearColor);
 					items[i].setBackground(validityColumnIndex, validColor);
