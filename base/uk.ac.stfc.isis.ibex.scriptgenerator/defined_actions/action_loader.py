@@ -2,7 +2,7 @@ from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
 from action_interface import ActionDefinition
-from typing import Dict, AnyStr, Union, List
+from typing import Dict, AnyStr, Union, List, Mapping
 from inspect import signature
 import inspect
 import argparse
@@ -41,23 +41,23 @@ class Config(object):
 
         return ListConverter().convert(arguments, gateway._gateway_client)
 
-    def doAction(self, list_of_arguments) -> Union[None, AnyStr]:
+    def doAction(self, map_of_arguments: Mapping[AnyStr, AnyStr]) -> Union[None, AnyStr]:
         """
         Executes the action with the parameters provided
 
         Returns:      
             None if run runs without exception, otherwise a String containing the error message.
         """
-        self.action.run(**list_of_arguments)
+        self.action.run(**map_of_arguments)
 
-    def parametersValid(self, list_of_arguments) -> Union[None, AnyStr]:
+    def parametersValid(self, map_of_arguments: Mapping[AnyStr, AnyStr]) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the configuration
 
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(**list_of_arguments)
+        return self.action.parameters_valid(**map_of_arguments)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -76,7 +76,7 @@ class Generator(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
 
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
+    def areParamsValid(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Dict[int, AnyStr]:
         """
         Checks if a list of parameters are valid for the configuration
 
@@ -85,21 +85,21 @@ class Generator(object):
         """
         current_list_of_arguments = 0
         validityCheck: Dict[int, AnyStr] = {}
-        for list_of_arguments in list_of_list_of_arguments:
+        for list_of_arguments in list_of_map_of_arguments:
             singleActionValidityCheck = config.parametersValid(list_of_arguments)
             if singleActionValidityCheck != None:
                 validityCheck[current_list_of_arguments] = singleActionValidityCheck
             current_list_of_arguments += 1
         return validityCheck
 
-    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+    def generate(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        if self.areParamsValid(list_of_list_of_arguments, config):
+        if self.areParamsValid(list_of_map_of_arguments, config):
             return "Generated python script"
         else:
             return None
@@ -135,11 +135,11 @@ class ConfigWrapper(object):
         """
         self.generator
     
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
-        return MapConverter().convert(self.generator.areParamsValid(list_of_list_of_arguments, config), gateway._gateway_client)
+    def areParamsValid(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Dict[int, AnyStr]:
+        return MapConverter().convert(self.generator.areParamsValid(list_of_map_of_arguments, config), gateway._gateway_client)
 
-    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
-        return self.generator.generate(list_of_list_of_arguments, config)
+    def generate(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Union[None, AnyStr]:
+        return self.generator.generate(list_of_map_of_arguments, config)
 
 
 def get_actions() -> Dict[AnyStr, ActionDefinition]:
