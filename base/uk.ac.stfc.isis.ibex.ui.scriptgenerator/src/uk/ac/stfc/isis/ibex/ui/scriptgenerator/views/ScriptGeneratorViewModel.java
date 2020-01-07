@@ -27,10 +27,10 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 public class ScriptGeneratorViewModel {
 	
-	private static final Color invalidDarkColor = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-	private static final Color invalidLightColor = new Color(Display.getCurrent(), 255, 204, 203);
-	private static final Color validColor = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
-	private static final Color clearColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+	private static final Color invalidDarkColor = Display.getDefault().getSystemColor(SWT.COLOR_RED);
+	private static final Color invalidLightColor = new Color(Display.getDefault(), 255, 204, 203);
+	private static final Color validColor = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
@@ -141,7 +141,7 @@ public class ScriptGeneratorViewModel {
 	 */
 	protected void bindValidityChecks(ActionsViewTable viewTable) {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actions", e -> 
-			Display.getCurrent().asyncExec(() -> {
+			Display.getDefault().asyncExec(() -> {
                 viewTable.setRows(scriptGeneratorModel.getActions());
                 updateValidityChecks(viewTable);
 			}
@@ -294,7 +294,7 @@ public class ScriptGeneratorViewModel {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-    			e -> Display.getCurrent().asyncExec(() -> viewTable.updateTableColumns())
+    			e -> Display.getDefault().asyncExec(() -> viewTable.updateTableColumns())
     	);
     }
 	
