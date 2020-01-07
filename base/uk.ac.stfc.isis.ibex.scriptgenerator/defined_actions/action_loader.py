@@ -139,20 +139,23 @@ class ConfigWrapper(object):
 
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
-
-    def getGenerator(self) -> Generator:
-        """
-        Returns the generator to create python scripts.
-
-        Returns:
-           generator: The generator to create python scripts with.
-        """
-        self.generator
     
     def areParamsValid(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Dict[int, AnyStr]:
+        """
+        Checks if a list of parameters are valid for the configuration
+
+        Returns:
+            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+        """
         return MapConverter().convert(self.generator.areParamsValid(list_of_map_of_arguments, config), gateway._gateway_client)
 
     def generate(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Union[None, AnyStr]:
+        """
+        Generates a script from a list of parameters and configuration
+
+        Returns:
+           None if parameters are invalid, otherwise a string of a generated script.
+        """
         return self.generator.generate(list_of_map_of_arguments, config)
 
 
