@@ -178,7 +178,9 @@ public class ScriptGeneratorView {
 	}
 	
 	public void displayValidityErrors() {
-		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10));
+		String heading = "Validity errors:\n\n";
+		String body = heading + scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10);
+		MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", body);
 	}
 	
 

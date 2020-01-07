@@ -23,6 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
@@ -228,15 +229,12 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	 * @return The string of validity errors to display
 	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
-		StringBuilder errors = new StringBuilder();
-		ArrayList<String> invalidityErrorLines = scriptGeneratorTable.getInvalidityErrorLines();
-		for (int i = 0; i < invalidityErrorLines.size(); i++) {
-			if (maxNumOfLines <= i) {
-				errors.append("\nLimited to " + maxNumOfLines + " lines. To see an error for a specific row hover over it.");
-				break;
-			}
-			errors.append(invalidityErrorLines.get(i)+"\n");
+		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
+		String message = errors.stream().limit(maxNumOfLines).map((String error) -> String.format("- %s", error)).collect(Collectors.joining("\n"));
+		if (errors.size() > maxNumOfLines) {
+		    message = String.format("%s\n ... plus %d suppressed errors. To see an error for a specific row hover over it.", 
+		    		message, (errors.size() - maxNumOfLines));
 		}
-		return errors.toString();
+		return message;
 	}
 }

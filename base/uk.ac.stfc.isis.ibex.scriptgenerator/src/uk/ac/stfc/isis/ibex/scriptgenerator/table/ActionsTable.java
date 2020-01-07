@@ -164,7 +164,7 @@ public class ActionsTable extends ModelObject {
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
-				String errorString = "Row: " + (i+1) + ", Reason: " + action.getInvalidityReason() + "\n";
+				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason() + "\n";
 				for(String line : errorString.split("\n")) {
 					errors.add(line);
 				}
