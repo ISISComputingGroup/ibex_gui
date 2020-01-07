@@ -7,7 +7,6 @@ import java.net.ServerSocket;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import py4j.ClientServer;

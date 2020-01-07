@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
@@ -14,6 +15,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
@@ -29,6 +31,8 @@ public class ScriptGeneratorViewModel {
 	private static final Color invalidLightColor = new Color(Display.getCurrent(), 255, 204, 203);
 	private static final Color validColor = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
 	private static final Color clearColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	
@@ -115,7 +119,9 @@ public class ScriptGeneratorViewModel {
 	 */
 	protected LabelProvider getConfigSelectorLabelProvider() {
 		return new LabelProvider() {
-		    // Use getName method on python Config class to get labels.
+		    /**
+		     * Use getName method on python Config class to get labels.
+		     */
 			@Override
 		    public String getText(Object element) {
 		        if (element instanceof Config) {
@@ -182,12 +188,16 @@ public class ScriptGeneratorViewModel {
 		TableItem[] items = viewTable.table().getItems();
 		int validityColumnIndex = viewTable.table().getColumnCount()-1;
 		for (int i = 0; i < actions.size(); i++) {
-			if (actions.get(i).isValid()) {
-				items[i].setBackground(clearColor);
-				items[i].setBackground(validityColumnIndex, validColor);
+			if(i >= items.length) {
+				if (actions.get(i).isValid()) {
+					items[i].setBackground(clearColor);
+					items[i].setBackground(validityColumnIndex, validColor);
+				} else {
+					items[i].setBackground(invalidLightColor);
+					items[i].setBackground(validityColumnIndex, invalidDarkColor);
+				}
 			} else {
-				items[i].setBackground(invalidLightColor);
-				items[i].setBackground(validityColumnIndex, invalidDarkColor);
+				LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
 			}
 		}
 	}
@@ -263,13 +273,15 @@ public class ScriptGeneratorViewModel {
     
     /**
      * Get the tooltip text for a script generator action.
+     * We don't want to show a tooltip if the action is valid, 
+     *   SWT shows no tooltip if we return null.
      * 
      * @param action The action to get the tooltip text for.
      * @return The text for the action tooltip.
      */
     private String getScriptGenActionToolTipText(ScriptGeneratorAction action) {
     	if (action.isValid()) {
-			return null; 
+			return null; // Do not show a tooltip
 		}
 		return "The reason this row is invalid is:\n" +
 			action.getInvalidityReason() + "\n"; // Show reason on next line as a tooltip
