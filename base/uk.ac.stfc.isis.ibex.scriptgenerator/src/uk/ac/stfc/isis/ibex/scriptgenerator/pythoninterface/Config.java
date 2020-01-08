@@ -15,14 +15,14 @@ public interface Config {
 	
 	/**
 	 * Performs the defined action.
-	 * @param arguments The action parameters.
+	 * @param action The action to do.
 	 * @return The error if there has been one.
 	 */
 	public String doAction(ScriptGeneratorAction action);
 	
 	/**
 	 * Performs the check that the arguments are valid.
-	 * @param arguments The action parameters to check for validity.
+	 * @param action The action to check for validity.
 	 * @return The error if the arguments are not valid.
 	 */
 	public String parametersValid(ScriptGeneratorAction action);
