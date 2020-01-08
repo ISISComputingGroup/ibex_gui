@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
-	private ScriptGeneratorViewModel scriptGeneratorViewModel;
+	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
     
 	/**
      * Default constructor for the table. Creates all the correct columns.

@@ -6,7 +6,8 @@ import java.util.Map;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * A wrapper for the available configs/action definitions in the system.
+ * A wrapper for the available configs/action definitions in the system and utility
+ *  methods to generate scripts and check for validity.
  * 
  * @author James King
  *
