@@ -24,7 +24,7 @@ public class TableOfMotorsSettingsViewModel extends ModelObject {
 	}
 
 	public void setEnableAdvanceMotorView(Boolean enableAdvanceMotorView) {
-		firePropertyChange("enableAdvanceMotorView", enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
+		firePropertyChange("enableAdvanceMotorView", this.enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
 		// System.out.println("Value = " + enableAdvanceMotorView);
 	}
 }

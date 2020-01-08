@@ -18,7 +18,7 @@ public class TableOfMotorsSettingsView {
 	static Text enableAdvanceMotorViewLabel;
 	Button enableAdvanceMotorView ;
 	
-    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getMotorSettingsModel());
+    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getInstance().getMotorSettingsModel());
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	

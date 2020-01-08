@@ -47,8 +47,8 @@ public class Motors extends Plugin {
     	return instance; 
     }
 
-	private static MotorSettings settingsModel = new MotorSettings();
-    public static MotorSettings getMotorSettingsModel() {
+	private MotorSettings settingsModel = new MotorSettings();
+    public MotorSettings getMotorSettingsModel() {
     	return settingsModel;
     }
     

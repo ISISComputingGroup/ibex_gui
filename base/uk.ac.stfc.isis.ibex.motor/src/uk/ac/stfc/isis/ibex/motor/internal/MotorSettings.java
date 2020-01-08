@@ -6,12 +6,12 @@ public class MotorSettings extends ModelObject {
 
 	private boolean enableAdvanceMotorView;
 
-	public boolean getEnableAdvanceMotorView() {
+	public boolean isEnableAdvanceMotorView() {
 		return enableAdvanceMotorView;
 	}
 
 	public void setEnableAdvanceMotorView(boolean enableAdvanceMotorView) {
-		firePropertyChange("enableAdvanceMotorView", enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
+		firePropertyChange("enableAdvanceMotorView", this.enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
 		System.out.println("Value = " + enableAdvanceMotorView);
 	}
 	
