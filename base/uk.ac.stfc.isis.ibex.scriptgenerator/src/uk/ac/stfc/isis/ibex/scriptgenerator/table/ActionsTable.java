@@ -62,7 +62,13 @@ public class ActionsTable extends ModelObject {
 	 * @return the action.
 	 */
 	private ScriptGeneratorAction createAction(Map<ActionParameter, String> paremetersMap) {
-		ScriptGeneratorAction newAction = new ScriptGeneratorAction(paremetersMap);
+		// Ensure is not shallow copy
+		Map<ActionParameter, String> newParamsMap = new HashMap<ActionParameter, String>();
+		for (Map.Entry<ActionParameter, String> entry: paremetersMap.entrySet()) {
+			newParamsMap.put(entry.getKey(), entry.getValue());
+		}
+		// Create action and attach listeners
+		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap);
 		newAction.addPropertyChangeListener(VALUE_PROPERTY, evt -> {
 			firePropertyChange(ACTIONS_PROPERTY, null, actions);
 		});

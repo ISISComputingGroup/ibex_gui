@@ -247,6 +247,7 @@ public class ScriptGeneratorViewModel {
 	
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
+	            	System.out.println("Row: " + row + ", Value: " + value);
 	                row.setActionParameterValue(actionParameter, value);
 	            }
 	        });	
