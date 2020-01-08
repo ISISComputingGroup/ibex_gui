@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,7 +47,7 @@ public class ScriptGeneratorActionTest {
 	@Test
 	public void test_WHEN_getting_action_params_as_strings_THEN_are_expected_strings() {
 		// Act
-		HashMap<String, String> actionParamsAsStrings = action.getAllActionParametersAsStrings();
+		Map<String, String> actionParamsAsStrings = action.getAllActionParametersAsStrings();
 		
 		// Assert
 		HashMap<String, String> expectedParams = new HashMap<>();

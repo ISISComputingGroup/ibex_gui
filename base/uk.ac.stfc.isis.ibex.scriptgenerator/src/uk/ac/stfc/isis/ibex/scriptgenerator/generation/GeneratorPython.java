@@ -46,9 +46,7 @@ public class GeneratorPython implements GeneratorInterface {
 	 * @return true if the contents are valid, false if not.
 	 */
 	public boolean areParamsValid(ActionsTable actionsTable, Config config) {
-		Map<Integer, String> errorMessages = pythonInterface.areParamsValid(
-				actionsTable.getActions(), config);
-		return errorMessages.isEmpty();
+		return pythonInterface.areParamsValid(actionsTable.getActions(), config);
 	}
 
 	/**
@@ -60,7 +58,7 @@ public class GeneratorPython implements GeneratorInterface {
 	 */
 	@Override
 	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
-		return pythonInterface.areParamsValid(actionsTable.getActions(), config);
+		return pythonInterface.getValidityErrors(actionsTable.getActions(), config);
 	}
 	
 }

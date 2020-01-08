@@ -116,4 +116,5 @@ public class GeneratorFacade {
 	public static Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config,  GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return generatorContext.getValidityErrors(actionsTable, config, generatedLanguage);
 	}
+	
 }

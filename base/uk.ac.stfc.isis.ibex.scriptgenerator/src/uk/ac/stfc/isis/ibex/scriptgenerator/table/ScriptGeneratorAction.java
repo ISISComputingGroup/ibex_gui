@@ -13,17 +13,18 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  */
 public class ScriptGeneratorAction extends ModelObject {
 
-	private HashMap<ActionParameter, String> actionParameterValues;
+	private Map<ActionParameter, String> actionParameterValues;
 	private Optional<String> invalidityReason = Optional.empty();
 	private static final String VALIDITY_PROPERTY = "validity";
+	private static final String VALUE_PROPERTY = "value";
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
-	 * @param values
+	 * @param paremetersMap
 	 * 			The user-set value (string) for the specified ActionParameter.
 	 */
-	public ScriptGeneratorAction(HashMap<ActionParameter, String> values) {
-		this.actionParameterValues = values;
+	public ScriptGeneratorAction(Map<ActionParameter, String> paremetersMap) {
+		this.actionParameterValues = paremetersMap;
 	}
 	
 	/**
@@ -50,6 +51,7 @@ public class ScriptGeneratorAction extends ModelObject {
 		String oldValue = actionParameterValues.get(actionParameter); 
 		actionParameterValues.put(actionParameter, value);
 		firePropertyChange(actionParameter.getName(), oldValue, value);
+		firePropertyChange(VALUE_PROPERTY, oldValue, value);
 	}
 	
 	/**
@@ -66,19 +68,19 @@ public class ScriptGeneratorAction extends ModelObject {
 	/**
 	 * Get all parameter, value pairs.
 	 * @return
-	 * 			HashMap of parameter, value pairs.
+	 * 			Map of parameter, value pairs.
 	 */
-	public HashMap<ActionParameter, String> getAllActionParameters() {
+	public Map<ActionParameter, String> getAllActionParameters() {
 		return actionParameterValues;
 	}
 
 	/**
 	 * Get all parameter value pairs with parameters as strings.
 	 * 
-	 * @return HashMap of parameter (string), value pairs.
+	 * @return Map of parameter (string), value pairs.
 	 */
-	public HashMap<String, String> getAllActionParametersAsStrings() {
-		HashMap<String, String> actionParamStringValues = new HashMap<>();
+	public Map<String, String> getAllActionParametersAsStrings() {
+		Map<String, String> actionParamStringValues = new HashMap<>();
 		for (Map.Entry<ActionParameter, String> entry : actionParameterValues.entrySet()) {
 			actionParamStringValues.put(entry.getKey().getName(), entry.getValue());
 		}

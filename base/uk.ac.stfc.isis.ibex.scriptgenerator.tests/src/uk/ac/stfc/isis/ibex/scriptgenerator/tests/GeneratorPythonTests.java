@@ -54,7 +54,7 @@ public class GeneratorPythonTests {
 		
 		// Set up generator and finish mocking python interface
 		generator =  new GeneratorPython(mockPythonInterface);
-		when(mockPythonInterface.areParamsValid(
+		when(mockPythonInterface.getValidityErrors(
 				mockActionsTable.getActions(), mockConfig)
 				).thenReturn(paramsValidity);
 	}

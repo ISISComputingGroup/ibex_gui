@@ -39,7 +39,7 @@ public interface GeneratorInterface {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a string of validity errors or null if no errors.
+	 * @return A Mapping of validity errors
 	 */
 	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config);
 	

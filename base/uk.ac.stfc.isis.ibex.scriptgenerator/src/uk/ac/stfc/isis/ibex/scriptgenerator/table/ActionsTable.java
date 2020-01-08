@@ -17,7 +17,9 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 public class ActionsTable extends ModelObject {
 
 	private List<ActionParameter> actionParameters;
-	private ArrayList<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	private static final String ACTIONS_PROPERTY = "actions";
+	private static final String VALUE_PROPERTY = "value";
 	
 	/**
 	 * 
@@ -52,6 +54,20 @@ public class ActionsTable extends ModelObject {
 	public List<ActionParameter> getActionParameters() {
 		return actionParameters;
 	}
+	
+	/**
+	 * Create a new script generator action.
+	 * 
+	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
+	 * @return the action.
+	 */
+	private ScriptGeneratorAction createAction(Map<ActionParameter, String> paremetersMap) {
+		ScriptGeneratorAction newAction = new ScriptGeneratorAction(paremetersMap);
+		newAction.addPropertyChangeListener(VALUE_PROPERTY, evt -> {
+			firePropertyChange(ACTIONS_PROPERTY, null, actions);
+		});
+		return newAction;
+	}
 
 	/**
 	 * Adds a new action with default parameters to the list of actions.
@@ -63,9 +79,11 @@ public class ActionsTable extends ModelObject {
 			parametersMap.put(actionParameter, actionParameter.getName() + Integer.toString(actions.size()));
 		}
 		
-		var newAction = new ScriptGeneratorAction(parametersMap);
+		var newAction = createAction(parametersMap);
 		
-		firePropertyChange("actions", actions, actions.add(newAction));
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		newList.add(newAction);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
@@ -75,7 +93,9 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void deleteAction(int index) {
 		if (isValidIndex(index)) {
-			firePropertyChange("actions", actions, actions.remove(index));
+			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+			newList.remove(index);
+			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 		}
 	}
 
@@ -87,14 +107,14 @@ public class ActionsTable extends ModelObject {
 	public void duplicateAction(int index) {
 		if (isValidIndex(index)) {
 			var actionToDuplicate = actions.get(index);
-			var newAction = new ScriptGeneratorAction(actionToDuplicate);
-			var newActions = new ArrayList<ScriptGeneratorAction>();
+			var newAction = createAction(actionToDuplicate.getAllActionParameters());
+			final var newActions = new ArrayList<ScriptGeneratorAction>();
 			
 			newActions.addAll(actions);
 			
 			newActions.add(index + 1, newAction);
 			
-			firePropertyChange("actions", actions, this.actions = newActions);
+			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
 		}
 	}
 
@@ -107,7 +127,7 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
 		if (isValidIndex(oldIndex)) {
-			var newActions = new ArrayList<ScriptGeneratorAction>();
+			final var newActions = new ArrayList<ScriptGeneratorAction>();
 			
 			newActions.addAll(actions);
 			
@@ -119,7 +139,7 @@ public class ActionsTable extends ModelObject {
 			
 			Collections.swap(newActions, oldIndex, newIndex);
 		
-			firePropertyChange("actions", actions, actions = newActions);
+			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
 		}
 	}
 	
@@ -127,7 +147,7 @@ public class ActionsTable extends ModelObject {
 	 * Clears the list of actions.
 	 */
 	public void clearActions() {
-		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
 	}
 	/**
 	 * Checks if the supplied index is a valid position in the table.

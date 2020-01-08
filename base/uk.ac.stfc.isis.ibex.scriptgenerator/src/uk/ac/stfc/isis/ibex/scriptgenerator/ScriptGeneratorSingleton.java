@@ -18,8 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +36,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  * Acts as a permanent reference to the ActionsTable.
  *
  */
-public class ScriptGeneratorSingleton extends ModelObject implements PropertyChangeListener {
+public class ScriptGeneratorSingleton {
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private ConfigLoader configLoader;
 	private PythonInterface pythonInterface;
+	private final String ACTIONS_PROPERTY = "actions";
 	
 	/**
 	 * Get the config loader.
@@ -81,7 +80,12 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
-				
+		this.scriptGeneratorTable.addPropertyChangeListener("actions", evt -> {
+			scriptGeneratorTable.setValidityErrors(
+				GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
+			);
+		});
+		
 		setActionParameters(configLoader.getParameters());
 	}
 	
@@ -204,23 +208,6 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 	public Config getConfig() {
 		return configLoader.getConfig();
 	}
-
-	/**
-	 * On a property change check the validity errors.
-	 */
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		onTableChange();
-	}
-	
-	/**
-	 * What to do on the actions in the table changing (check the validity errors).
-	 */
-	public void onTableChange() {
-		Map<Integer, String> validityErrors = GeneratorFacade.getValidityErrors(
-				scriptGeneratorTable, configLoader.getConfig());
-		scriptGeneratorTable.setValidityErrors(validityErrors);
-	}
 	
 	/**
 	 * Get the first maxNumOfLines of validity errors to display to a user.
@@ -239,5 +226,14 @@ public class ScriptGeneratorSingleton extends ModelObject implements PropertyCha
 		    		message, (errors.size() - maxNumOfLines));
 		}
 		return message;
+	}
+	
+	/**
+	 * Get whether the contents of the script generator are valid or not.
+	 * 
+	 * @return true if the params are valid or false if not.
+	 */
+	public boolean areParamsValid() {
+		return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
 	}
 }

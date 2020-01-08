@@ -90,9 +90,21 @@ class Generator(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
 
-    def areParamsValid(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
+    def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
         Checks if a list of parameters are valid for the configuration
+
+        Returns:
+            True if valid, False if not
+        """
+        for action in list_of_actions:
+            if config.parametersValid(action) != None:
+                return False
+        return True
+
+    def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
+        """
+        Get a map of validity errors
 
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
@@ -140,23 +152,32 @@ class ConfigWrapper(object):
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
     
-    def areParamsValid(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Dict[int, AnyStr]:
+    def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
         Checks if a list of parameters are valid for the configuration
 
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
-        return MapConverter().convert(self.generator.areParamsValid(list_of_map_of_arguments, config), gateway._gateway_client)
+        return self.generator.areParamsValid(list_of_actions, config)
 
-    def generate(self, list_of_map_of_arguments: List[Mapping[AnyStr, AnyStr]], config: Config) -> Union[None, AnyStr]:
+    def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
+        """
+        Get the validity errors of the current actions
+
+        Returns:
+            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+        """
+        return MapConverter().convert(self.generator.getValidityErrors(list_of_actions, config), gateway._gateway_client)
+
+    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(list_of_map_of_arguments, config)
+        return self.generator.generate(list_of_actions, config)
 
 
 def get_actions() -> Dict[AnyStr, ActionDefinition]:

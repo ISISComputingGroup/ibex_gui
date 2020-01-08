@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -30,6 +31,7 @@ public class ScriptGeneratorViewModel {
 	private static final Color invalidDarkColor = Display.getDefault().getSystemColor(SWT.COLOR_RED);
 	private static final Color invalidLightColor = new Color(Display.getDefault(), 255, 204, 203);
 	private static final Color validColor = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+	private static final Color greyColor = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
@@ -139,13 +141,23 @@ public class ScriptGeneratorViewModel {
 	 * @param table The view table to update.
 	 * @param display The display to change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable) {
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors) {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actions", e -> 
 			Display.getDefault().asyncExec(() -> {
                 viewTable.setRows(scriptGeneratorModel.getActions());
                 updateValidityChecks(viewTable);
+                setButtonValidityStyle(btnGetValidityErrors);
 			}
 		));
+	}
+	
+	private void setButtonValidityStyle(Button btnGetValidityErrors) {
+		btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
+		if(scriptGeneratorModel.areParamsValid()) {
+			btnGetValidityErrors.setBackground(greyColor);
+		} else {
+			btnGetValidityErrors.setBackground(invalidLightColor);
+		}
 	}
 
 	/**
@@ -201,13 +213,6 @@ public class ScriptGeneratorViewModel {
 			}
 		}
 	}
-
-	/**
-	 * Carry out actions in model on the view table changing. 
-	 */
-	protected void onTableChange() {
-		scriptGeneratorModel.onTableChange();
-	}
 	
 	/**
      * Adds a parameter to this actions table.
@@ -243,8 +248,6 @@ public class ScriptGeneratorViewModel {
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
 	                row.setActionParameterValue(actionParameter, value);
-	                onTableChange();
-	                updateValidityChecks(viewTable);
 	            }
 	        });	
         }
@@ -284,7 +287,7 @@ public class ScriptGeneratorViewModel {
 			return null; // Do not show a tooltip
 		}
 		return "The reason this row is invalid is:\n" +
-			action.getInvalidityReason() + "\n"; // Show reason on next line as a tooltip
+			action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
     
     /**

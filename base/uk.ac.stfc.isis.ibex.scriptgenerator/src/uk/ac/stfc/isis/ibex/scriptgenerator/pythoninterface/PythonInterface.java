@@ -188,13 +188,24 @@ public class PythonInterface {
 	}
 	
 	/**
+	 * Use python to get validity errors of the current parameters
+	 * 
+	 * @param actionsTable The script generator content to validate.
+	 * @param config The config to validate against.
+	 * @return A hashmap of validity errors.
+	 */
+	public Map<Integer, String> getValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) {
+		return configWrapper.getValidityErrors(scriptGenContent, config);
+	}
+	
+	/**
 	 * Use python to check the validity of the parameters.
 	 * 
 	 * @param actionsTable The script generator content to validate.
 	 * @param config The config to validate against.
 	 * @return A hashmap of validity errors.
 	 */
-	public Map<Integer, String> areParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) {
+	public boolean areParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) {
 		return configWrapper.areParamsValid(scriptGenContent, config);
 	}
 

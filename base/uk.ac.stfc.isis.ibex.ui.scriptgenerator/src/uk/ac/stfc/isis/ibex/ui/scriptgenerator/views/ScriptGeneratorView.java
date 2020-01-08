@@ -28,7 +28,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -45,8 +44,8 @@ public class ScriptGeneratorView {
 	private DataBindingContext bindingContext;
 	private ActionsViewTable table;
 	private ComboViewer configSelector;
-	private static final Display DISPLAY = Display.getCurrent();
 	private ScriptGeneratorViewModel scriptGeneratorViewModel;
+	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	
 	private Button createMoveRowButton(Composite parent, String icon, String direction) {
         Button moveButton =  new Button(parent, SWT.NONE);
@@ -97,7 +96,6 @@ public class ScriptGeneratorView {
         btnGetValidityErrors.setText("Get Validity Errors");
         btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnGetValidityErrors.addListener(SWT.Selection, e -> displayValidityErrors());
-        btnGetValidityErrors.setBackground(new Color(DISPLAY, 255, 204, 203));
         
         Composite tableContainerComposite = new Composite(parent, SWT.NONE);
         tableContainerComposite.setLayout(new GridLayout(2, false));
@@ -142,7 +140,7 @@ public class ScriptGeneratorView {
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
         		
-        bind();
+        bind(btnGetValidityErrors);
 		
         scriptGeneratorViewModel.addEmptyAction();
 	}
@@ -169,19 +167,19 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table and config selector models to their views.
 	 */
-	private void bind() {
+	private void bind(Button btnGetValidityErrors) {
 		bindingContext = new DataBindingContext();
 		
 		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector);
 
-		scriptGeneratorViewModel.bindValidityChecks(table);
+		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors);
 	}
 	
 	/**
 	 * Display the first few validity errors or that there are none in a popup box.
 	 */
 	private void displayValidityErrors() {
-		String body = scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(10);
+		String body = scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
 		if(!body.isEmpty()) {
 			String heading = "Validity errors:\n\n";
 			String message = heading + body;
