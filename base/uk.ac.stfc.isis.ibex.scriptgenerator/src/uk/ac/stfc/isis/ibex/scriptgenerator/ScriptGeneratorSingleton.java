@@ -20,11 +20,11 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
@@ -36,12 +36,14 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  * Acts as a permanent reference to the ActionsTable.
  *
  */
-public class ScriptGeneratorSingleton {
+public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private ConfigLoader configLoader;
 	private PythonInterface pythonInterface;
 	private final String ACTIONS_PROPERTY = "actions";
+	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	private boolean languageSupported = true;
 	
 	/**
 	 * Get the config loader.
@@ -80,10 +82,15 @@ public class ScriptGeneratorSingleton {
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
-		this.scriptGeneratorTable.addPropertyChangeListener("actions", evt -> {
-			scriptGeneratorTable.setValidityErrors(
-				GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
-			);
+		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+			try {
+				scriptGeneratorTable.setValidityErrors(
+					GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
+				);
+			} catch(UnsupportedLanguageException e) {
+				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+				languageSupported = false;
+			}
 		});
 		
 		setActionParameters(configLoader.getParameters());
@@ -234,6 +241,12 @@ public class ScriptGeneratorSingleton {
 	 * @return true if the params are valid or false if not.
 	 */
 	public boolean areParamsValid() {
-		return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
+		try {
+			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
+		} catch(UnsupportedLanguageException e) {
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			languageSupported = false;
+			return false;
+		}
 	}
 }

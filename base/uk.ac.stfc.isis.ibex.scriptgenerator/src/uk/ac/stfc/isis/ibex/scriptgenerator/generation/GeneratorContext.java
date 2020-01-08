@@ -61,6 +61,20 @@ public class GeneratorContext {
 	}
 	
 	/**
+	 * Generate a script in the default language (Python) from the actionsTable passed.
+	 * 
+	 * @param actionsTable The script generator contents to generate the script from.
+	 * @param config The instrument config to generate to script from.
+	 * @param generatedLanguage The language to generate the script in.
+	 * @return The path to the generated script.
+	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
+	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 */
+	public String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException, UnsupportedLanguageException {
+		return generate(actionsTable, config, GeneratedLanguage.PYTHON);
+	}
+	
+	/**
 	 * Check if the contents of the script generator (actionsTable) are valid against a generator (generatedLanguage).
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
@@ -75,6 +89,19 @@ public class GeneratorContext {
 	}
 	
 	/**
+	 * Check if the contents of the script generator (actionsTable) are valid against the default language generator (Python).
+	 * 
+	 * @param actionsTable The contents of the script generator to validate.
+	 * @param config The instrument config to validate to script against.
+	 * @param generatedLanguage The language that the script will be generated in.
+	 * @return true if the contents are valid, false if not.
+	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 */
+	public boolean areParamsValid(ActionsTable actionsTable, Config config) throws UnsupportedLanguageException {
+		return areParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
+	}
+	
+	/**
 	 * Get the validity errors returned when checking validity.
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
@@ -85,6 +112,18 @@ public class GeneratorContext {
 	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).getValidityErrors(actionsTable, config))
 			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+	}
+
+	/**
+	 * Get the validity errors returned when checking the validity in the default language (Python).
+	 * 
+	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param config The instrument config to validate the script against.
+	 * @return a hashmap of validity errors.
+	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
+	 */
+	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) throws UnsupportedLanguageException {
+		return getValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
 	}
 
 }

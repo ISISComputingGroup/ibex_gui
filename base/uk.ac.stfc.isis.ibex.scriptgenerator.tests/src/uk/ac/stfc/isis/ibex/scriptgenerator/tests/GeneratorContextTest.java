@@ -1,7 +1,10 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.Before;
+import org.junit.Rule;
+
 import static org.junit.Assert.fail;
 
 import static org.mockito.Mockito.mock;
@@ -25,30 +28,40 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class GeneratorContextTest {
 	
+	@Rule
+	public final ExpectedException exception = ExpectedException.none();
+	
 	GeneratorContext generatorContext;
 	PythonInterface mockPythonInterface;
 	GeneratorPython mockGeneratorPython;
 	ActionsTable mockActionsTable;
 	Config mockConfig;
 	HashMap<Integer, String> expectedValidityErrors;
-	String generatedScript;
+	String generatedScript = "Generated";
 	
 	@Before
 	public void setUp() {
-		// Create mocks
-		mockPythonInterface = mock(PythonInterface.class);
-		mockGeneratorPython = mock(GeneratorPython.class);
-		mockActionsTable = mock(ActionsTable.class);
-		mockConfig = mock(Config.class);
-		when(mockGeneratorPython.areParamsValid(mockActionsTable, mockConfig)).thenReturn(true);
-		
 		// Create validity errors
 		expectedValidityErrors = new HashMap<>();
 		expectedValidityErrors.put(1, "invalid 1");
+		
+		// Create mocks
+		mockActionsTable = mock(ActionsTable.class);
+		mockConfig = mock(Config.class);
+		
+		mockPythonInterface = mock(PythonInterface.class);
+		when(mockPythonInterface.getValidityErrors(mockActionsTable.getActions(), mockConfig)).thenReturn(expectedValidityErrors);
+		when(mockPythonInterface.areParamsValid(mockActionsTable.getActions(), mockConfig)).thenReturn(true);
+		try {
+			when(mockPythonInterface.generate(mockActionsTable.getActions(), mockConfig)).thenReturn(generatedScript);
+		} catch (InvalidParamsException e) {
+			fail("We have mocked actions table so should not throw this exception");
+		}
+		
+		mockGeneratorPython = mock(GeneratorPython.class);
+		when(mockGeneratorPython.areParamsValid(mockActionsTable, mockConfig)).thenReturn(true);
 		when(mockGeneratorPython.getValidityErrors(mockActionsTable, mockConfig)).thenReturn(expectedValidityErrors);
 		
-		// Mock generation
-		generatedScript = "Generated";
 		try {
 			when(mockGeneratorPython.generate(mockActionsTable, mockConfig)).thenReturn(generatedScript);
 		} catch (InvalidParamsException e) {
@@ -57,11 +70,11 @@ public class GeneratorContextTest {
 		
 		// Set up generator context
 		generatorContext = new GeneratorContext(mockPythonInterface);
-		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 	}
 	
 	@Test
 	public void test_GIVEN_params_are_valid_WHEN_context_check_params_valid_THEN_true() {
+		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are valid and language is supported, so return true",
 					generatorContext.areParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
@@ -73,6 +86,7 @@ public class GeneratorContextTest {
 	
 	@Test
 	public void test_GIVEN_params_are_invalid_WHEN_get_validity_errors_valid_THEN_errors_as_expected() {
+		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are invalid and have outpus and language is supported, so return inserted hashmap",
 					generatorContext.getValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
@@ -84,6 +98,7 @@ public class GeneratorContextTest {
 	
 	@Test
 	public void test_GIVEN_generate_script_WHEN_get_generate_script_THEN_script_as_expected() {
+		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are invalid and have outpus and language is supported, so return inserted hashmap",
 					generatorContext.generate(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
@@ -95,5 +110,65 @@ public class GeneratorContextTest {
 		}
 	}
 	
+	@Test
+	public void test_GIVEN_using_default_generator_language_WHEN_generate_THEN_no_exception_thrown() {
+		try {
+			generatorContext.generate(mockActionsTable, mockConfig);
+		} catch(UnsupportedLanguageException e) {
+			fail("Default language should be supported");
+		} catch (InvalidParamsException e) {
+			fail("We have mocked actions table so should not throw this exception");
+		}
+	}
+	
+	@Test
+	public void test_GIVEN_using_default_generator_language_WHEN_check_params_validity_THEN_no_exception_thrown() {
+		try {
+			generatorContext.areParamsValid(mockActionsTable, mockConfig);
+		} catch(UnsupportedLanguageException e) {
+			fail("Default language should be supported");
+		}
+	}
+	
+	@Test
+	public void test_GIVEN_using_default_generator_language_WHEN_get_validity_errors_THEN_no_exception_thrown() {
+		try {
+			generatorContext.getValidityErrors(mockActionsTable, mockConfig);
+		} catch(UnsupportedLanguageException e) {
+			fail("Default language should be supported");
+		}
+	}
+	
+	@Test(expected = UnsupportedLanguageException.class)
+	public void test_GIVEN_using_unsupported_generator_language_WHEN_generate_THEN_exception_thrown() {
+		try {
+			generatorContext.generate(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			fail("Language is unsupported, should throw exception");
+		} catch (InvalidParamsException e) {
+			fail("We have mocked actions table so should not throw this exception");
+		} catch (UnsupportedLanguageException e) {
+			// success
+		}
+	}
+	
+	@Test(expected = UnsupportedLanguageException.class)
+	public void test_GIVEN_using_unsupported_generator_language_WHEN_check_params_validity_THEN_exception_thrown() {
+		try {
+			generatorContext.areParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			fail("Language is unsupported, should throw exception");
+		} catch (UnsupportedLanguageException e) {
+			// success
+		}
+	}
+	
+	@Test(expected = UnsupportedLanguageException.class)
+	public void test_GIVEN_using_unsupported_generator_language_WHEN_get_validity_errors_THEN_no_exception_thrown() {
+		try {
+			generatorContext.getValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			fail("Language is unsupported, should throw exception");
+		} catch (UnsupportedLanguageException e) {
+			// success
+		}
+	}
 
 }

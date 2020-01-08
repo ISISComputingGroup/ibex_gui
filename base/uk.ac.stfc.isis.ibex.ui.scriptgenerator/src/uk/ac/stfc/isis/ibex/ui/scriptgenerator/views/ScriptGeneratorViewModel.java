@@ -1,11 +1,13 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -34,12 +36,23 @@ public class ScriptGeneratorViewModel {
 	private static final Color greyColor = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 	
+	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	
 	public ScriptGeneratorViewModel() {
 		scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+			if(Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
+				MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+						"Language support issue",
+						"You are attempting to use an unsupported language, " + 
+						"you will not be able to check parameter validity or " + 
+						"generate a script whilst using this language");
+			}
+		});
 	}
 
 	/**
@@ -247,7 +260,6 @@ public class ScriptGeneratorViewModel {
 	
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-	            	System.out.println("Row: " + row + ", Value: " + value);
 	                row.setActionParameterValue(actionParameter, value);
 	            }
 	        });	
