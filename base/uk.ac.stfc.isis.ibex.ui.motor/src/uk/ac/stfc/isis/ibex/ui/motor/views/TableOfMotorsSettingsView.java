@@ -18,7 +18,7 @@ public class TableOfMotorsSettingsView {
 	static Text enableAdvanceMotorViewLabel;
 	Button enableAdvanceMotorView ;
 	
-    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getInstance());
+    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getMotorSettingsModel());
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
@@ -33,7 +33,7 @@ public class TableOfMotorsSettingsView {
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		
-		GridLayout gridLayout = new GridLayout(2, false);
+		GridLayout gridLayout = new GridLayout(1, false);
 		parent.setLayout(gridLayout);
 	
 		/** The advance motor view provides more status and read back information for a minimal motor view **/
@@ -53,7 +53,7 @@ public class TableOfMotorsSettingsView {
     }
 	
     /**
-     * Binds the model to the view.
+     * Binds the view model to the view.
      */
     private void bind() {
     	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(enableAdvanceMotorView),

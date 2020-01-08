@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 /**
@@ -45,7 +46,12 @@ public class Motors extends Plugin {
     public static Motors getInstance() { 
     	return instance; 
     }
-	
+
+	private static MotorSettings settingsModel = new MotorSettings();
+    public static MotorSettings getMotorSettingsModel() {
+    	return settingsModel;
+    }
+    
     private List<MotorsTable> motorsTableList = new ArrayList<MotorsTable>();
     
 	public Motors() {
