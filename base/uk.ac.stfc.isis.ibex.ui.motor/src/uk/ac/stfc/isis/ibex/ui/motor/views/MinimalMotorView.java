@@ -33,6 +33,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.motor.Motor;
+import uk.ac.stfc.isis.ibex.motor.Motors;
+
 /**
  * The viewer for an individual motor.
  */
@@ -46,7 +49,7 @@ public class MinimalMotorView extends Composite {
 	private MinimalMotionIndicator indicator;
 		
 	private Label motorName;
-
+	private Label advanceMotorView;
 	private Label value;
 	private Label setpoint;
 
@@ -71,6 +74,14 @@ public class MinimalMotorView extends Composite {
 
         this.minimalMotorViewModel = minimalMotorViewModel;
 		
+        if (Motors.getInstance().getMotorSettingsModel().isEnableAdvanceMotorView()) {
+        	advanceMotorView = new Label(this, SWT.NONE);
+        	advanceMotorView.setAlignment(SWT.CENTER);
+        	GridData advMotorLabel = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
+        	advanceMotorView.setLayoutData(advMotorLabel);
+        	advanceMotorView.setText("Advanced mode");
+        }
+        
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
 		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
@@ -92,7 +103,7 @@ public class MinimalMotorView extends Composite {
         indicator = new MinimalMotionIndicator(this, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         indicator.setMotor(this.minimalMotorViewModel.getMotor());
-		
+
 		setMouseListeners();
 		
         bind();
