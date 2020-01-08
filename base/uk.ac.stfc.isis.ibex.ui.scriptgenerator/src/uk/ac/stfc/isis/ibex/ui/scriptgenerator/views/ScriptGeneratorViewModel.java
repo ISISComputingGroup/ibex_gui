@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -167,7 +167,7 @@ public class ScriptGeneratorViewModel {
 	 * @param configSelector The config selector ui element to bind.
 	 */
 	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector) {
-		bindingContext.bindValue(ViewersObservables.observeSingleSelection(configSelector), 
+		bindingContext.bindValue(ViewerProperties.singleSelection().observe(configSelector), 
 				BeanProperties.value("config").observe(scriptGeneratorModel.getConfigLoader()));
 	}
 
