@@ -38,6 +38,18 @@ public class GeneratorContext {
 	}
 	
 	/**
+	 * Get a generator for the specified generator language. Throws exception if not supported
+	 * 
+	 * @param generatedLanguage The language to generate or check validity with.
+	 * @return The generator to carry out the generation/check validity with.
+	 * @throws UnsupportedLanguageException If the language has no supported generator throw this.
+	 */
+	private GeneratorInterface getGenerator(GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+		return Optional.ofNullable(generatorStrategies.get(generatedLanguage))
+				.orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+	}
+	
+	/**
 	 * Add each language's generator to the strategies.
 	 * @param pythonInterface 
 	 */
@@ -56,8 +68,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public String generate(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws InvalidParamsException, UnsupportedLanguageException {
-		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).generate(actionsTable, config))
-			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+		GeneratorInterface generator = getGenerator(generatedLanguage);
+		return generator.generate(actionsTable, config);
 	}
 	
 	/**
@@ -84,8 +96,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public boolean areParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).areParamsValid(actionsTable, config))
-			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+		GeneratorInterface generator = getGenerator(generatedLanguage);
+		return generator.areParamsValid(actionsTable, config);
 	}
 	
 	/**
@@ -110,8 +122,8 @@ public class GeneratorContext {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 */
 	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		return Optional.ofNullable(generatorStrategies.get(generatedLanguage).getValidityErrors(actionsTable, config))
-			    .orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+		GeneratorInterface generator = getGenerator(generatedLanguage);
+		return generator.getValidityErrors(actionsTable, config);
 	}
 
 	/**

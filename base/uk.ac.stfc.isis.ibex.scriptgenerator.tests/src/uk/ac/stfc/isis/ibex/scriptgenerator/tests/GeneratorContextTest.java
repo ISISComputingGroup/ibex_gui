@@ -139,7 +139,7 @@ public class GeneratorContextTest {
 		}
 	}
 	
-	@Test(expected = UnsupportedLanguageException.class)
+	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_generate_THEN_exception_thrown() {
 		try {
 			generatorContext.generate(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
@@ -151,7 +151,7 @@ public class GeneratorContextTest {
 		}
 	}
 	
-	@Test(expected = UnsupportedLanguageException.class)
+	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_check_params_validity_THEN_exception_thrown() {
 		try {
 			generatorContext.areParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
@@ -161,7 +161,7 @@ public class GeneratorContextTest {
 		}
 	}
 	
-	@Test(expected = UnsupportedLanguageException.class)
+	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_get_validity_errors_THEN_no_exception_thrown() {
 		try {
 			generatorContext.getValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
