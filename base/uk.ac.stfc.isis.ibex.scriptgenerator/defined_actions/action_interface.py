@@ -7,30 +7,48 @@ import functools
 
 class ActionDefinition(ABC):
     @abstractmethod
-    def run(self, *args) -> None:
+    def run(self, *kwargs) -> None:
         """
         Defines the steps of an action which can be used in the script generator.
 
         Args:
-            *args: The parameters of this action
+            *kwargs: The action parameters and their values in a keyword argument format
 
         Returns:
             None if run runs without exception, otherwise a String containing the error message
 
+        Examples:
+            Run with kwargs that are not cast:
+
+            >>> def run(self, value1: str="1", value2: str="2"):
+
+            Typical run with kwargs that are cast to float:
+
+            >>> @cast_parameters_to(temperature=float, field=float, uamps=mytype)
+            >>> def run(self, temperature: float=0.0, field: float=0.0, uamps: float=0.0):
         """
         pass
 
     @abstractmethod
-    def parameters_valid(self, *args) -> Union[None, AnyStr]:
+    def parameters_valid(self, *kwargs) -> Union[None, AnyStr]:
         """
         Contains tests to check whether a given set of inputs is valid
 
         Args:
-            *args: The parameters for this action
+            *kwargs: The action parameters and their values in a keyword argument format
 
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
 
+        Examples:
+            Parameter check with kwargs that are not cast:
+
+            >>> def run(self, value1: str="1", value2: str="2"):
+
+            Typical parameter check with kwargs that are cast to float:
+
+            >>> @cast_parameters_to(temperature=float, field=float, uamps=mytype)
+            >>> def run(self, temperature: float=0.0, field: float=0.0, uamps: float=0.0):
         """
         pass
 
