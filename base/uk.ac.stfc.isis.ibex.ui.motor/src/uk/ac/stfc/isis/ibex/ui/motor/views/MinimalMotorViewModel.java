@@ -376,4 +376,11 @@ public class MinimalMotorViewModel extends ModelObject {
     public Motor getMotor() {
         return this.motor;
     }
+    
+    /**
+     * @return whether the advanced minimal view for the table of motors is enabled
+     */
+    public boolean isEnableAdvanceMotorView() {
+    	return enableAdvanceMotorView;
+    }
 }
