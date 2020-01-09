@@ -12,7 +12,9 @@ class ActionDefinition(ABC):
         Defines the steps of an action which can be used in the script generator.
 
         Args:
-            *kwargs: The action parameters and their values in a keyword argument format
+            *kwargs: The action parameters and their values in a keyword argument format. These must be
+                have a default value provided as below in examples e.g. value1: str="1" where "1" is the
+                default value.
 
         Returns:
             None if run runs without exception, otherwise a String containing the error message
@@ -35,7 +37,9 @@ class ActionDefinition(ABC):
         Contains tests to check whether a given set of inputs is valid
 
         Args:
-            *kwargs: The action parameters and their values in a keyword argument format
+            *kwargs: The action parameters and their values in a keyword argument format. These must be
+                have a default value provided as below in examples e.g. value1: str="1" where "1" is the
+                default value.
 
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
