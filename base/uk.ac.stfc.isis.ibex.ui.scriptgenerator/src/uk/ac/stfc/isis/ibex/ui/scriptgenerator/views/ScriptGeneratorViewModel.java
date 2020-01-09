@@ -35,6 +35,10 @@ public class ScriptGeneratorViewModel {
 	private static final Color validColor = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
 	private static final Color greyColor = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	private static final Color lightValidityCheckErrorColor = new Color(Display.getDefault(), 255, 201, 102);
+	private static final Color darkValidityCheckErrorColor = new Color(Display.getDefault(), 255, 165, 0);
+	
+	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	
 	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
 	
@@ -49,8 +53,7 @@ public class ScriptGeneratorViewModel {
 				MessageDialog.openError(Display.getCurrent().getActiveShell(), 
 						"Language support issue",
 						"You are attempting to use an unsupported language, " + 
-						"you will not be able to check parameter validity or " + 
-						"generate a script whilst using this language");
+						"parameter validity checking and script generation are disabled at this time");
 			}
 		});
 	}
@@ -165,11 +168,15 @@ public class ScriptGeneratorViewModel {
 	}
 	
 	private void setButtonValidityStyle(Button btnGetValidityErrors) {
-		btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
-		if(scriptGeneratorModel.areParamsValid()) {
-			btnGetValidityErrors.setBackground(greyColor);
+		if(scriptGeneratorModel.languageSupported) {
+			btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
+			if(scriptGeneratorModel.areParamsValid()) {
+				btnGetValidityErrors.setBackground(greyColor);
+			} else {
+				btnGetValidityErrors.setBackground(invalidLightColor);
+			}
 		} else {
-			btnGetValidityErrors.setBackground(invalidLightColor);
+			btnGetValidityErrors.setBackground(lightValidityCheckErrorColor);
 		}
 	}
 
@@ -214,7 +221,10 @@ public class ScriptGeneratorViewModel {
 		int validityColumnIndex = viewTable.table().getColumnCount()-1;
 		for (int i = 0; i < actions.size(); i++) {
 			if(i < items.length) {
-				if (actions.get(i).isValid()) {
+				if (!scriptGeneratorModel.languageSupported) {
+					items[i].setBackground(lightValidityCheckErrorColor);
+					items[i].setBackground(validityColumnIndex, darkValidityCheckErrorColor);
+				} else if (actions.get(i).isValid()) {
 					items[i].setBackground(clearColor);
 					items[i].setBackground(validityColumnIndex, validColor);
 				} else {
@@ -270,6 +280,9 @@ public class ScriptGeneratorViewModel {
         		new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
         	@Override
 			protected String stringFromRow(ScriptGeneratorAction row) {
+        		if(!scriptGeneratorModel.languageSupported) {
+        			return "\u003F";
+        		}
         		if (row.isValid()) {
         			return "\u2714"; // A tick for valid
         		}
@@ -313,5 +326,21 @@ public class ScriptGeneratorViewModel {
     			e -> Display.getDefault().asyncExec(() -> viewTable.updateTableColumns())
     	);
     }
+    
+    /**
+	 * Display the first few validity errors or that there are none in a popup box.
+	 */
+	public void displayValidityErrors() {
+		if(scriptGeneratorModel.languageSupported) {
+			String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
+			if(!body.isEmpty()) {
+				String heading = "Validity errors:\n\n";
+				String message = heading + body;
+				MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", message);
+			} else {
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
+			}
+		}
+	}
 	
 }

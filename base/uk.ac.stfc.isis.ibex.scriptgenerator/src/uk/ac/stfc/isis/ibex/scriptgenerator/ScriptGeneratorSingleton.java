@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
@@ -43,7 +44,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private PythonInterface pythonInterface;
 	private final String ACTIONS_PROPERTY = "actions";
 	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
-	private boolean languageSupported = true;
+	public boolean languageSupported = true;
 	
 	/**
 	 * Get the config loader.
@@ -88,7 +89,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 					GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
 				);
 			} catch(UnsupportedLanguageException e) {
-				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
 				languageSupported = false;
 			}
 		});
@@ -223,6 +224,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The string of validity errors to display
 	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
+		if(!languageSupported) {
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
+		}
 		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
 		String message = errors.stream()
 				.limit(maxNumOfLines)
@@ -242,9 +246,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public boolean areParamsValid() {
 		try {
-			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
+			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig(), GeneratedLanguage.UNSUPPORTED_LANGUAGE);
 		} catch(UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
 			languageSupported = false;
 			return false;
 		}

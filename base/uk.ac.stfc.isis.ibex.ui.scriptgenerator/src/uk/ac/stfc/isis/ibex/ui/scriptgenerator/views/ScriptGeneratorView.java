@@ -45,7 +45,6 @@ public class ScriptGeneratorView {
 	private ActionsViewTable table;
 	private ComboViewer configSelector;
 	private ScriptGeneratorViewModel scriptGeneratorViewModel;
-	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	
 	private Button createMoveRowButton(Composite parent, String icon, String direction) {
         Button moveButton =  new Button(parent, SWT.NONE);
@@ -95,7 +94,7 @@ public class ScriptGeneratorView {
 		final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
         btnGetValidityErrors.setText("Get Validity Errors");
         btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnGetValidityErrors.addListener(SWT.Selection, e -> displayValidityErrors());
+        btnGetValidityErrors.addListener(SWT.Selection, e -> scriptGeneratorViewModel.displayValidityErrors());
         
         Composite tableContainerComposite = new Composite(parent, SWT.NONE);
         tableContainerComposite.setLayout(new GridLayout(2, false));
@@ -173,20 +172,6 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors);
-	}
-	
-	/**
-	 * Display the first few validity errors or that there are none in a popup box.
-	 */
-	private void displayValidityErrors() {
-		String body = scriptGeneratorViewModel.getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
-		if(!body.isEmpty()) {
-			String heading = "Validity errors:\n\n";
-			String message = heading + body;
-			MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", message);
-		} else {
-			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
-		}
 	}
 	
 
