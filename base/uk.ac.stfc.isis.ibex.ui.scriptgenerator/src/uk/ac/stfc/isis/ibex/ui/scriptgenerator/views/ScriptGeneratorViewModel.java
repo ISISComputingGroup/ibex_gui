@@ -50,12 +50,16 @@ public class ScriptGeneratorViewModel {
 		scriptGeneratorModel = Activator.getModel();
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
 			if(Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
-				MessageDialog.openError(Display.getCurrent().getActiveShell(), 
-						"Language support issue",
-						"You are attempting to use an unsupported language, " + 
-						"parameter validity checking and script generation are disabled at this time");
+				displayLanguageSupportError();
 			}
 		});
+	}
+	
+	private void displayLanguageSupportError() {
+		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+				"Language support issue",
+				"You are attempting to use an unsupported language, " + 
+				"parameter validity checking and script generation are disabled at this time");
 	}
 
 	/**
@@ -340,6 +344,8 @@ public class ScriptGeneratorViewModel {
 			} else {
 				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
 			}
+		} else {
+			displayLanguageSupportError();
 		}
 	}
 	

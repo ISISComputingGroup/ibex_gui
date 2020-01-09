@@ -89,7 +89,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 					GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
 				);
 			} catch(UnsupportedLanguageException e) {
-				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
+				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
 				languageSupported = false;
 			}
 		});
@@ -246,7 +246,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public boolean areParamsValid() {
 		try {
-			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig(), GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
 		} catch(UnsupportedLanguageException e) {
 			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
 			languageSupported = false;

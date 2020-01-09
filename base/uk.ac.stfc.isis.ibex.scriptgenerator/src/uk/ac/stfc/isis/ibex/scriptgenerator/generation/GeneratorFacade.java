@@ -21,9 +21,7 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class GeneratorFacade {
-	
-	private static final Logger LOG = IsisLog.getLogger(GeneratorFacade.class);
-	
+		
 	/**
 	 * Part of the strategy design pattern to generate based on which language to use.
 	 */

@@ -1,23 +1,24 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 /**
- * The language to generate a script in (currently only Python is supported).
+ * The language to generate a script in (currently only Python is supported, Unsupported language is for testing only!).
  * 
  * @author James King
  *
  */
 public enum GeneratedLanguage {
 	
-	PYTHON {
-		public String toString() {
-			return "Python";
-		}
-	},
+	PYTHON("Python"), UNSUPPORTED_LANGUAGE("Unsupported"); // Unsupported language is to be used only for testing
 	
-	UNSUPPORTED_LANGUAGE {
-		public String toString() {
-			return "Unsupported";
-		}
+	private final String name;
+	
+	private GeneratedLanguage(String name) {
+		this.name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }
