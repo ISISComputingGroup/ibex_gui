@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -32,9 +32,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-
-import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.Motors;
 
 /**
  * The viewer for an individual motor.
@@ -49,7 +46,6 @@ public class MinimalMotorView extends Composite {
 	private MinimalMotionIndicator indicator;
 		
 	private Label motorName;
-	private Label advanceMotorView;
 	private Label value;
 	private Label setpoint;
 
@@ -73,14 +69,6 @@ public class MinimalMotorView extends Composite {
         setLayout(glMotorComposite);
 
         this.minimalMotorViewModel = minimalMotorViewModel;
-		
-        if (Motors.getInstance().getMotorSettingsModel().isEnableAdvanceMotorView()) {
-        	advanceMotorView = new Label(this, SWT.NONE);
-        	advanceMotorView.setAlignment(SWT.CENTER);
-        	GridData advMotorLabel = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
-        	advanceMotorView.setLayoutData(advMotorLabel);
-        	advanceMotorView.setText("Advanced mode");
-        }
         
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
@@ -107,7 +95,6 @@ public class MinimalMotorView extends Composite {
 		setMouseListeners();
 		
         bind();
-
 	}
 
     /**
@@ -123,7 +110,6 @@ public class MinimalMotorView extends Composite {
      * Binds the model to the view.
      */
     private void bind() {
-        
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
                 BeanProperties.value("setpoint").observe(minimalMotorViewModel));
 
@@ -153,7 +139,6 @@ public class MinimalMotorView extends Composite {
 
         bindingContext.bindValue(WidgetProperties.tooltipText().observe(this),
                 BeanProperties.value("tooltip").observe(minimalMotorViewModel));
-
 	}
 	
 	private void setMouseListeners() {

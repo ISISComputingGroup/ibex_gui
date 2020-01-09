@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 /**
@@ -55,8 +54,6 @@ public class MotorsOverview extends Composite {
     private static final int HEIGHT_DIMENSION = 74;
     private static final int WIDTH_DIMENSION = 85;
 
-    private boolean advancedMotorViewEnabled = Motors.getInstance().getMotorSettingsModel().isEnableAdvanceMotorView();
-    
     /**
      * Constructor for the motors overview.
      * 

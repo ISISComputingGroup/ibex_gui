@@ -33,6 +33,8 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -43,6 +45,8 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
+import uk.ac.stfc.isis.ibex.motor.Motors;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
@@ -62,10 +66,13 @@ public class MinimalMotorViewModel extends ModelObject {
     private String tooltip;
     private Boolean enabled;
     private Boolean moving;
+    private boolean enableAdvanceMotorView;
     private MotorBackgroundPalette palette;
     private Font font;
     private Color color;
 	
+    private DataBindingContext bindingContext = new DataBindingContext();
+    
     /**
      * Constructor.
      */
@@ -78,6 +85,14 @@ public class MinimalMotorViewModel extends ModelObject {
 			}
 		});
         setPalette(displayPrefsModel.getMotorBackgroundPalette());
+
+        /**
+         *  Bind the motor settings model to this minimal motor view model to determine
+         *  if the advanced minimal view is enabled for the table of motors.
+         */
+        MotorSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
+        bindingContext.bindValue(BeanProperties.value("enableAdvanceMotorView").observe(this),
+				BeanProperties.value("enableAdvanceMotorView").observe(motorSettingsModel));
     }
     
     private Font chooseFont() {
@@ -273,7 +288,15 @@ public class MinimalMotorViewModel extends ModelObject {
         setEnabled(motor.getEnabled());
         setColor(chooseColor());
         this.font = chooseFont();
-
+        
+        
+        motor.addPropertyChangeListener("enableAdvanceMotorView", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.print("enabling advanced view: " + enableAdvanceMotorView);
+            }
+        });
+        
         motor.addPropertyChangeListener("description", new PropertyChangeListener() {
 
             @Override
@@ -316,7 +339,7 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
     }
-
+    
     /**
      * Sets the colour palette used by this motor.
      *
@@ -353,5 +376,4 @@ public class MinimalMotorViewModel extends ModelObject {
     public Motor getMotor() {
         return this.motor;
     }
-
 }

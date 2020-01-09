@@ -10,11 +10,9 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
  */
 public class TableOfMotorsSettingsViewModel extends ModelObject {
     private boolean enableAdvanceMotorView = false;
-	private MotorSettings motorSettingsModel;
 	private DataBindingContext bindingContext = new DataBindingContext();
 
 	public TableOfMotorsSettingsViewModel(MotorSettings motorSettingsModel) {
-		this.motorSettingsModel = motorSettingsModel;
 		bindingContext.bindValue(BeanProperties.value("enableAdvanceMotorView").observe(this),
 				BeanProperties.value("enableAdvanceMotorView").observe(motorSettingsModel));
 	}
@@ -25,6 +23,5 @@ public class TableOfMotorsSettingsViewModel extends ModelObject {
 
 	public void setEnableAdvanceMotorView(Boolean enableAdvanceMotorView) {
 		firePropertyChange("enableAdvanceMotorView", this.enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
-		// System.out.println("Value = " + enableAdvanceMotorView);
 	}
 }
