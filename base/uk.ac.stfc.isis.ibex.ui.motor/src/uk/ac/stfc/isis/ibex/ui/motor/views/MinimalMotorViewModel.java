@@ -392,6 +392,5 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setAdvancedMinimalMotorView(boolean newSetting) {
     	this.advancedMinimalMotorView = newSetting;
-    	System.out.print("Setting view value: " + this.motorName + " to " + this.advancedMinimalMotorView + "\n");
     }
 }
