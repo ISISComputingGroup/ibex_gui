@@ -87,12 +87,16 @@ public class MinimalMotorViewModel extends ModelObject {
         setPalette(displayPrefsModel.getMotorBackgroundPalette());
 
         /**
-         *  Bind the motor settings model to this minimal motor view model to determine
-         *  if the advanced minimal view is enabled for the table of motors.
+         *  Property change listener for the motor settings model to this minimal motor view model 
+         *  to determine if the advanced minimal view is enabled for the table of motors.
          */
         MotorSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
-        bindingContext.bindValue(BeanProperties.value("enableAdvanceMotorView").observe(this),
-				BeanProperties.value("enableAdvanceMotorView").observe(motorSettingsModel));
+        motorSettingsModel.addPropertyChangeListener("enableAdvanceMotorView", new PropertyChangeListener() {
+        	@Override
+        	public void propertyChange(PropertyChangeEvent evt) {
+        		setEnableAdvanceMotorView((boolean) evt.getNewValue());
+        	}
+        });
     }
     
     private Font chooseFont() {
@@ -382,5 +386,9 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public boolean isEnableAdvanceMotorView() {
     	return enableAdvanceMotorView;
+    }
+    
+    public void setEnableAdvanceMotorView(boolean mode) {
+    	this.enableAdvanceMotorView = mode;
     }
 }
