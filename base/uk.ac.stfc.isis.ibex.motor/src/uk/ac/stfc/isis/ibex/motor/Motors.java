@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorTableSettings;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 /**
@@ -47,8 +47,8 @@ public class Motors extends Plugin {
     	return instance; 
     }
 
-	private MotorSettings settingsModel = new MotorSettings();
-    public MotorSettings getMotorSettingsModel() {
+	private MotorTableSettings settingsModel = new MotorTableSettings();
+    public MotorTableSettings getMotorSettingsModel() {
     	return settingsModel;
     }
     

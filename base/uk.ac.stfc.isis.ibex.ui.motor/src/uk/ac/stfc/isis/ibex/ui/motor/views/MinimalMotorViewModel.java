@@ -33,8 +33,6 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -46,7 +44,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.motor.Motors;
-import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorTableSettings;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
@@ -70,9 +68,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private MotorBackgroundPalette palette;
     private Font font;
     private Color color;
-	
-    private DataBindingContext bindingContext = new DataBindingContext();
-    
+
     /**
      * Constructor.
      */
@@ -90,7 +86,7 @@ public class MinimalMotorViewModel extends ModelObject {
          *  Property change listener for the motor settings model to this minimal motor view model 
          *  to determine if the advanced minimal view is enabled for the table of motors.
          */
-        MotorSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
+        MotorTableSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
         motorSettingsModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
         	@Override
         	public void propertyChange(PropertyChangeEvent evt) {
@@ -396,5 +392,6 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setAdvancedMinimalMotorView(boolean newSetting) {
     	this.advancedMinimalMotorView = newSetting;
+    	System.out.print("Setting view value: " + this.motorName + " to " + this.advancedMinimalMotorView + "\n");
     }
 }

@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.motor.internal;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class MotorSettings extends ModelObject {
+public class MotorTableSettings extends ModelObject {
 
 	private boolean advancedMinimalMotorView;
 

@@ -38,6 +38,12 @@ import org.eclipse.swt.widgets.Label;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
+
+	private static final Integer MOTOR_COMPOSITE_VERTIAL_SPACING = 2; 
+	private static final Integer MOTOR_COMPOSITE_MARGIN_WIDTH = 2;
+	private static final Integer MOTOR_COMPOSITE_MARGIN_HEIGHT = 2;
+	private static final Integer MOTOR_NAME_MINIMUM_WIDTH = 80;
+	private static final Integer MOTOR_NAME_WIDTHHINT = 80;
 	
     private MinimalMotorViewModel minimalMotorViewModel;
 
@@ -63,9 +69,9 @@ public class MinimalMotorView extends Composite {
         super(parent, SWT.BORDER);
 
         GridLayout glMotorComposite = new GridLayout(1, false);
-		glMotorComposite.verticalSpacing = 2;
-		glMotorComposite.marginWidth = 2;
-		glMotorComposite.marginHeight = 1;
+		glMotorComposite.verticalSpacing = MOTOR_COMPOSITE_VERTIAL_SPACING;
+		glMotorComposite.marginWidth = MOTOR_COMPOSITE_MARGIN_WIDTH;
+		glMotorComposite.marginHeight = MOTOR_COMPOSITE_MARGIN_HEIGHT;
         setLayout(glMotorComposite);
 
         this.minimalMotorViewModel = minimalMotorViewModel;
@@ -73,8 +79,8 @@ public class MinimalMotorView extends Composite {
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
 		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
-		gdMotorName.minimumWidth = 80;
-		gdMotorName.widthHint = 80;
+		gdMotorName.minimumWidth = MOTOR_NAME_MINIMUM_WIDTH;
+		gdMotorName.widthHint = MOTOR_NAME_WIDTHHINT;
 		motorName.setLayoutData(gdMotorName);
 		motorName.setText("Motor name");
 				
