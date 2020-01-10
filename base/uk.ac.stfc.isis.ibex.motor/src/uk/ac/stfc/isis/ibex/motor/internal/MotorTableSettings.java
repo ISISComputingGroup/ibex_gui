@@ -2,8 +2,15 @@ package uk.ac.stfc.isis.ibex.motor.internal;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The model for the table of motor settings.
+ */
 public class MotorTableSettings extends ModelObject {
 
+	/**
+	 * The table of motors can display the standard or advanced minimal motor view depending on the
+	 * users requirements
+	 */
 	private boolean advancedMinimalMotorView;
 
 	public boolean isAdvancedMinimalMotorView() {
