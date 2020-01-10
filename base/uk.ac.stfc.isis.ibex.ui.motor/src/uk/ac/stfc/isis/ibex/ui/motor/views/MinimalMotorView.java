@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Label;
 /**
  * The viewer for an individual motor.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
 
 	private static final Integer MOTOR_COMPOSITE_VERTIAL_SPACING = 2; 
