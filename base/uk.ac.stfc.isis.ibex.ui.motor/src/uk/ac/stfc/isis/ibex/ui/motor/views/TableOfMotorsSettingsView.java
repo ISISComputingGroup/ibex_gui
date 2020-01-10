@@ -15,8 +15,8 @@ import uk.ac.stfc.isis.ibex.motor.Motors;
 
 /** Configurable settings for the table of motors. */
 public class TableOfMotorsSettingsView {
-	static Text enableAdvanceMotorViewLabel;
-	Button enableAdvanceMotorView ;
+	Text advancedMinimalMotorView;
+	Button btnAdvancedMinimalMotorView ;
 	
     private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getInstance().getMotorSettingsModel());
 
@@ -37,8 +37,8 @@ public class TableOfMotorsSettingsView {
 		parent.setLayout(gridLayout);
 	
 		/** The advance motor view provides more status and read back information for a minimal motor view **/
-		enableAdvanceMotorView = new Button(parent, SWT.CHECK);
-		enableAdvanceMotorView.setText("Enable advance table of motors");
+		btnAdvancedMinimalMotorView = new Button(parent, SWT.CHECK);
+		btnAdvancedMinimalMotorView.setText("Enable advance table of motors");
 
 		bind();
 	}
@@ -56,7 +56,7 @@ public class TableOfMotorsSettingsView {
      * Binds the view model to the view.
      */
     private void bind() {
-    	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(enableAdvanceMotorView),
-                BeanProperties.value("enableAdvanceMotorView").observe(tableOfMotorsSettingsViewModel));
+    	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnAdvancedMinimalMotorView),
+                BeanProperties.value("advancedMinimalMotorView").observe(tableOfMotorsSettingsViewModel));
     }
 }

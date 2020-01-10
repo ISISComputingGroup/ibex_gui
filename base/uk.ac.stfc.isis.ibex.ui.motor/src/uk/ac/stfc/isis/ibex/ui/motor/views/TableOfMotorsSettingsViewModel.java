@@ -9,19 +9,19 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorSettings;
  * The view model for the table of motor settings.
  */
 public class TableOfMotorsSettingsViewModel extends ModelObject {
-    private boolean enableAdvanceMotorView = false;
+    private boolean advancedMinimalMotorView = false;  // Set to false by default for standard view
 	private DataBindingContext bindingContext = new DataBindingContext();
 
 	public TableOfMotorsSettingsViewModel(MotorSettings motorSettingsModel) {
-		bindingContext.bindValue(BeanProperties.value("enableAdvanceMotorView").observe(this),
-				BeanProperties.value("enableAdvanceMotorView").observe(motorSettingsModel));
+		bindingContext.bindValue(BeanProperties.value("advancedMinimalMotorView").observe(this),
+				BeanProperties.value("advancedMinimalMotorView").observe(motorSettingsModel));
 	}
 
-	public Boolean getEnableAdvanceMotorView() {
-		return enableAdvanceMotorView;
+	public Boolean getAdvancedMinimalMotorView() {
+		return advancedMinimalMotorView;
 	}
 
-	public void setEnableAdvanceMotorView(Boolean enableAdvanceMotorView) {
-		firePropertyChange("enableAdvanceMotorView", this.enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
+	public void setAdvancedMinimalMotorView(Boolean newSetting) {
+		firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
 	}
 }

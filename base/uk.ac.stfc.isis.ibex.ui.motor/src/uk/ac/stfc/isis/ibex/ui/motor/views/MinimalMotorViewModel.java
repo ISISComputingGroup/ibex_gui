@@ -66,7 +66,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private String tooltip;
     private Boolean enabled;
     private Boolean moving;
-    private boolean enableAdvanceMotorView;
+    private boolean advancedMinimalMotorView;
     private MotorBackgroundPalette palette;
     private Font font;
     private Color color;
@@ -91,10 +91,10 @@ public class MinimalMotorViewModel extends ModelObject {
          *  to determine if the advanced minimal view is enabled for the table of motors.
          */
         MotorSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
-        motorSettingsModel.addPropertyChangeListener("enableAdvanceMotorView", new PropertyChangeListener() {
+        motorSettingsModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
         	@Override
         	public void propertyChange(PropertyChangeEvent evt) {
-        		setEnableAdvanceMotorView((boolean) evt.getNewValue());
+        		setAdvancedMinimalMotorView((boolean) evt.getNewValue());
         	}
         });
     }
@@ -297,7 +297,7 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.addPropertyChangeListener("enableAdvanceMotorView", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.print("enabling advanced view: " + enableAdvanceMotorView);
+                System.out.print("enabling advanced view: " + advancedMinimalMotorView);
             }
         });
         
@@ -384,11 +384,17 @@ public class MinimalMotorViewModel extends ModelObject {
     /**
      * @return whether the advanced minimal view for the table of motors is enabled
      */
-    public boolean isEnableAdvanceMotorView() {
-    	return enableAdvanceMotorView;
+    public boolean isAdvancedMinimalMotorView() {
+    	return advancedMinimalMotorView;
     }
     
-    public void setEnableAdvanceMotorView(boolean mode) {
-    	this.enableAdvanceMotorView = mode;
+    /**
+     * Sets if the advanced minimal motor view is enabled
+     * 
+     * @param newSetting
+     *              whether the advanced minimal view for the table of motors is enabled
+     */
+    public void setAdvancedMinimalMotorView(boolean newSetting) {
+    	this.advancedMinimalMotorView = newSetting;
     }
 }

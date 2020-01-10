@@ -4,14 +4,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class MotorSettings extends ModelObject {
 
-	private boolean enableAdvanceMotorView;
+	private boolean advancedMinimalMotorView;
 
-	public boolean isEnableAdvanceMotorView() {
-		return enableAdvanceMotorView;
+	public boolean isAdvancedMinimalMotorView() {
+		return advancedMinimalMotorView;
 	}
 
-	public void setEnableAdvanceMotorView(boolean enableAdvanceMotorView) {
-		firePropertyChange("enableAdvanceMotorView", this.enableAdvanceMotorView, this.enableAdvanceMotorView = enableAdvanceMotorView);
+	public void setAdvancedMinimalMotorView(boolean newSetting) {
+		firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
 	}
 	
 }
