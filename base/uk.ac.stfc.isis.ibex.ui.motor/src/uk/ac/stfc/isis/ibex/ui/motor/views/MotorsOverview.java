@@ -120,9 +120,7 @@ public class MotorsOverview extends Composite {
 		
 		minimalViews.add(view);
 
-		for (MouseListener listener : mouseListeners) {
-			view.addMouseListener(listener);
-		}
+		view.setMouseListeners(mouseListeners);
 	}
 	
 	private void addSpacerLabel() {

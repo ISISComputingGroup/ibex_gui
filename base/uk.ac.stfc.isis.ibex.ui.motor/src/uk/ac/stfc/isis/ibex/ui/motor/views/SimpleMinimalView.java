@@ -124,4 +124,13 @@ public class SimpleMinimalView extends Composite {
 		indicator.addMouseListener(forwardDoubleClick);
 	}
 	
+    /**
+     * Gets the MinimalMotorViewModel used by the cell.
+     * 
+     * @return the motor view model used by the cell.
+     */
+    public MinimalMotorViewModel getViewModel() {
+        return minimalMotorViewModel;
+    }
+	
 }

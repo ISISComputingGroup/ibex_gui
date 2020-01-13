@@ -21,18 +21,20 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.motor.Motors;
-import uk.ac.stfc.isis.ibex.motor.internal.MotorTableSettings;
 
 /**
  * The viewer for an individual motor.
  */
 public class MinimalMotorView extends Composite {
+	
+	SimpleMinimalView simpleView;
+	AdvancedMinimalView advancedView;
 
 	private MinimalMotorViewModel minimalMotorViewModel;
 
@@ -48,24 +50,23 @@ public class MinimalMotorView extends Composite {
      */
     public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
         super(parent, SWT.BORDER);
- 
+       
         this.minimalMotorViewModel = minimalMotorViewModel;
-        Composite this_object = this;
+
         final StackLayout layout = new StackLayout();
         setLayout(layout);
         
-        SimpleMinimalView simpleView = new SimpleMinimalView(this, SWT.BORDER, minimalMotorViewModel);
-        AdvancedMinimalView advancedView = new AdvancedMinimalView(this, SWT.BORDER, minimalMotorViewModel);
-        
+        simpleView = new SimpleMinimalView(this, SWT.BORDER, minimalMotorViewModel);
+        advancedView = new AdvancedMinimalView(this, SWT.BORDER, minimalMotorViewModel);
+
         layout.topControl = simpleView;
         this.requestLayout();
-        this.layout();
 
         minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
         	@Override
         	public void propertyChange(PropertyChangeEvent evt) {
                 layout.topControl = minimalMotorViewModel.isAdvancedMinimalMotorView() == false ? simpleView : advancedView;
-                this_object.requestLayout();
+                MinimalMotorView.this.requestLayout();
         	}
         });
 	}
@@ -78,4 +79,11 @@ public class MinimalMotorView extends Composite {
     public MinimalMotorViewModel getViewModel() {
         return minimalMotorViewModel;
     }
+    
+	public void setMouseListeners(List<MouseListener> mouseListeners) {
+		for (MouseListener listener : mouseListeners) {
+			simpleView.addMouseListener(listener);
+			//advancedView.addMouseListener(listener);
+		}
+	}
 }

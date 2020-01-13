@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.motor.Motors;
-import uk.ac.stfc.isis.ibex.motor.internal.MotorTableSettings;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTableSettings;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
@@ -86,8 +86,8 @@ public class MinimalMotorViewModel extends ModelObject {
          *  Property change listener for the motor settings model to this minimal motor view model 
          *  to determine if the advanced minimal view is enabled for the table of motors.
          */
-        MotorTableSettings motorSettingsModel = Motors.getInstance().getMotorSettingsModel();
-        motorSettingsModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
+        MotorsTableSettings motorsTableSettingsModel = Motors.getInstance().getMotorSettingsModel();
+        motorsTableSettingsModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
         	@Override
         	public void propertyChange(PropertyChangeEvent evt) {
         		setAdvancedMinimalMotorView((boolean) evt.getNewValue());
