@@ -391,6 +391,6 @@ public class MinimalMotorViewModel extends ModelObject {
      *              whether the advanced minimal view for the table of motors is enabled
      */
     public void setAdvancedMinimalMotorView(boolean newSetting) {
-    	this.advancedMinimalMotorView = newSetting;
+    	firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
     }
 }
