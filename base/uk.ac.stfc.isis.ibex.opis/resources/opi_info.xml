@@ -2216,6 +2216,24 @@
       </value>
     </entry>
     <entry>
+      <key>Muon Jaws</key>
+      <value>
+      	<type>JAWS</type>
+      	<path>MuonJaws.opi</path>
+      	<description>The OPI for the Muon Jaws</description>
+        <categories>
+            <category>Jaws and slits</category>
+        </categories>
+        <macros>
+            <macro>
+              <name>MUONJAWS</name>
+              <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
+              <default>MUONJAWS_01</default>
+            </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Zero field magnetometer</key>
       <value>
         <type>ZERO_FIELD</type>
@@ -2229,7 +2247,7 @@
             <name>ZFMAGFLD</name>
             <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
             <default>ZFMAGFLD_01</default>
-            </macro>
+           </macro>
         </macros>
       </value>
     </entry>
