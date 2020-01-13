@@ -26,8 +26,6 @@ Export-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.ui.tables
 Import-Package: org.apache.logging.log4j,
  org.eclipse.wb.swt,
- uk.ac.stfc.isis.ibex.alarm;resolution:=optional,
- uk.ac.stfc.isis.ibex.log;resolution:=optional,
  uk.ac.stfc.isis.ibex.logger
 Bundle-ClassPath: lib/opal-1.0.0.jar,
  .

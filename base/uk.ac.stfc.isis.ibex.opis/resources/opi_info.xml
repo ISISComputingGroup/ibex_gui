@@ -526,6 +526,16 @@
             <description>The second level card number (e.g. 2, optional).</description>
             <default>2</default>
           </macro>
+          <macro>
+            <name>PRESSURE_NUM1</name>
+            <description>The first pressure card number (e.g. 1, optional).</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>PRESSURE_NUM2</name>
+            <description>The second pressure card number (e.g. 2, optional).</description>
+            <default>2</default>
+          </macro>
         </macros>
         <categories>
           <category>Temperature controllers</category>
@@ -2216,11 +2226,58 @@
         </categories>
         <macros>
             <macro>
-            <name>MUONJAWS</name>
-            <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
-          	<default>MUONJAWS_01</default>
+              <name>MUONJAWS</name>
+              <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
+              <default>MUONJAWS_01</default>
             </macro>
         </macros>
+      </value>
+    </entry>
+      <key>Zero field magnetometer</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/field_strength.opi</path>
+        <description>OPI for zero field strength</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ZFMAGFLD</name>
+            <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
+            <default>ZFMAGFLD_01</default>
+           </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>ICE Oxford dilution refrigerator</key>
+      <value>
+      	<type>DILUTION_FRIDGE</type>
+      	<path>ICE_fridge/icefrdge.opi</path>
+      	<description>The OPI for the ICE Oxford dilution fridge IOC</description>
+        <categories>
+          <category>Cryogenics</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ICEFRDGE</name>
+            <description>The ICE diution fridge PV prefix (e.g. ICEFRDGE)</description>
+          	<default>ICEFRDGE_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Zero field controller</key>
+      <value>
+      	<type>ZERO_FIELD</type>
+      	<path>zero_field_controller/zero_field_controller.opi</path>
+      	<description>OPI for the Muon Zero-field controller</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros />
       </value>
     </entry>
   </opis>

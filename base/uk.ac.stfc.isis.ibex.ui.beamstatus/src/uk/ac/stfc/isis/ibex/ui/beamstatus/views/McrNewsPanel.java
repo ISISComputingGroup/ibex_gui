@@ -26,8 +26,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
@@ -53,6 +54,9 @@ public class McrNewsPanel {
             "Unable to load MCR news. \nTarget URL: " + MCR_NEWS_PAGE_URL + "\nError: ";
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
+    
+    private static final ScheduledExecutorService MCR_NEWS_UPDATE_THREAD = 
+    		Executors.newSingleThreadScheduledExecutor(runnable -> new Thread(runnable, "MCR news update worker"));
 
     private Text newsText;
 
@@ -76,7 +80,6 @@ public class McrNewsPanel {
         final String currentFontName = newsText.getFont().getFontData()[0].getName();
         newsText.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
 
-        updateNews().run();
         startTimer();
     }
 
@@ -96,23 +99,12 @@ public class McrNewsPanel {
     }
 
     private void startTimer() {
-        Timer timer = new Timer();
-        long delay = TEXT_REFRESH_PERIOD_MS;
-        timer.scheduleAtFixedRate(updateNews(), delay, TEXT_REFRESH_PERIOD_MS);
+        MCR_NEWS_UPDATE_THREAD.scheduleWithFixedDelay(this::updateNews, 0, TEXT_REFRESH_PERIOD_MS, TimeUnit.MILLISECONDS);
     }
 
-    private TimerTask updateNews() {
-        return new TimerTask() {
-            @Override
-            public void run() {
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        setText(getMCRNewsText());
-                    }
-                });
-            }
-        };
+    private void updateNews() {
+    	final String mcrNews = getMCRNewsText();
+        Display.getDefault().asyncExec(() -> setText(mcrNews));
     }
 
     /**
