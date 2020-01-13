@@ -3,11 +3,12 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorInterface;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.AbstractGenerator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
@@ -20,12 +21,18 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  * @author James King
  *
  */
-public class GeneratorContext {
+public class GeneratorContext extends ModelObject {
+	
+	
+	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
 	 * A mapping from the type of generated language to it's generator.
 	 */
-	private Map<GeneratedLanguage, GeneratorInterface> generatorStrategies = new HashMap<>();
+	private Map<GeneratedLanguage, AbstractGenerator> generatorStrategies = new HashMap<>();
+	
 	
 	/**
 	 * Add a generator to use (will replace the languages generator with a new one if it matches).
@@ -33,9 +40,25 @@ public class GeneratorContext {
 	 * @param generatedLanguage The language the new generator uses.
 	 * @param generator The generator to use.
 	 */
-	public void putGenerator(GeneratedLanguage generatedLanguage, GeneratorInterface generator) {
+	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
+		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		// If the returned string is not null update the generated script,
+		// or else fire a property change notifying that the parameters are invalid
+		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+			Optional.ofNullable(evt.getNewValue())
+			.ifPresentOrElse(
+				generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, String.class.cast(generatedScript)),
+				() -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, false)
+			);
+		});
 		generatorStrategies.put(generatedLanguage, generator);
 	}
+	
 	
 	/**
 	 * Get a generator for the specified generator language. Throws exception if not supported
@@ -44,7 +67,7 @@ public class GeneratorContext {
 	 * @return The generator to carry out the generation/check validity with.
 	 * @throws UnsupportedLanguageException If the language has no supported generator throw this.
 	 */
-	private GeneratorInterface getGenerator(GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+	private AbstractGenerator getGenerator(GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
 		return Optional.ofNullable(generatorStrategies.get(generatedLanguage))
 				.orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
@@ -54,88 +77,102 @@ public class GeneratorContext {
 	 * @param pythonInterface 
 	 */
 	public GeneratorContext(PythonInterface pythonInterface) {
-		generatorStrategies.put(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
+		putGenerator(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
 	}
 	
 	/**
-	 * Generate a script in the passed generatedLanguage from the actionsTable passed.
+	 * Refresh the generated script in the passed generatedLanguage from the actionsTable passed.
+	 * The generated script may not be refreshed if the parameters are invalid. 
+	 * The parameter validity property will change and alert listeners at this point.
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param config The instrument config to generate to script from.
 	 * @param generatedLanguage The language to generate the script in.
-	 * @return The path to the generated script.
-	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public String generate(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws InvalidParamsException, UnsupportedLanguageException {
-		GeneratorInterface generator = getGenerator(generatedLanguage);
-		return generator.generate(actionsTable, config);
+	public void refreshGeneratedScript(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		AbstractGenerator generator = getGenerator(generatedLanguage);
+		generator.refreshGeneratedScript(actionsTable.getActions(), config);
 	}
 	
 	/**
-	 * Generate a script in the default language (Python) from the actionsTable passed.
+	 * Refresh the generated script in the default language (Python).
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param config The instrument config to generate to script from.
 	 * @param generatedLanguage The language to generate the script in.
-	 * @return The path to the generated script.
-	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException, UnsupportedLanguageException {
-		return generate(actionsTable, config, GeneratedLanguage.PYTHON);
+	public void refreshGeneratedScript(ActionsTable actionsTable, Config config) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		refreshGeneratedScript(actionsTable, config, GeneratedLanguage.PYTHON);
 	}
 	
 	/**
-	 * Check if the contents of the script generator (actionsTable) are valid against a generator (generatedLanguage).
+	 * Check if the contents of the script generator (actionsTable) 
+	 *  are valid against a generator (generatedLanguage) and refresh the property.
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param config The instrument config to validate to script against.
 	 * @param generatedLanguage The language that the script will be generated in.
-	 * @return true if the contents are valid, false if not.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public boolean areParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		GeneratorInterface generator = getGenerator(generatedLanguage);
-		return generator.areParamsValid(actionsTable, config);
+	public void refreshAreParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		AbstractGenerator generator = getGenerator(generatedLanguage);
+		generator.refreshAreParamsValid(actionsTable.getActions(), config);
 	}
 	
 	/**
-	 * Check if the contents of the script generator (actionsTable) are valid against the default language generator (Python).
+	 * Check if the contents of the script generator (actionsTable) 
+	 *  are valid against the default language generator (Python) and refresh the property.
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param config The instrument config to validate to script against.
 	 * @param generatedLanguage The language that the script will be generated in.
-	 * @return true if the contents are valid, false if not.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public boolean areParamsValid(ActionsTable actionsTable, Config config) throws UnsupportedLanguageException {
-		return areParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
+	public void refreshAreParamsValid(ActionsTable actionsTable, Config config) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		refreshAreParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
 	}
 	
 	/**
-	 * Get the validity errors returned when checking validity.
+	 * Refresh the validity errors returned when checking validity.
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a hashmap of validity errors.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
-		GeneratorInterface generator = getGenerator(generatedLanguage);
-		return generator.getValidityErrors(actionsTable, config);
+	public void refreshValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		AbstractGenerator generator = getGenerator(generatedLanguage);
+		generator.refreshValidityErrors(actionsTable.getActions(), config);
 	}
 
 	/**
-	 * Get the validity errors returned when checking the validity in the default language (Python).
+	 * Refresh the validity errors returned when checking the validity in the default language (Python).
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a hashmap of validity errors.
 	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
+	 * @throws ExecutionException A failure to execute the call to generate
+	 * @throws InterruptedException The call to generate was interrupted
 	 */
-	public Map<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) throws UnsupportedLanguageException {
-		return getValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
+	public void refreshValidityErrors(ActionsTable actionsTable, Config config) 
+			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+		refreshValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
 	}
 
 }

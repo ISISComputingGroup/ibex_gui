@@ -87,9 +87,6 @@ class Config(object):
 
 class Generator(object):
 
-    class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
-
     def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
         Checks if a list of parameters are valid for the configuration
@@ -203,8 +200,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config_wrapper = ConfigWrapper(get_actions(), Generator())
-
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),
         python_server_entry_point=config_wrapper)
+    

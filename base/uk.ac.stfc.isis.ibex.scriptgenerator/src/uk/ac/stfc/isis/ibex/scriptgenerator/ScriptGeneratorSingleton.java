@@ -19,12 +19,17 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
@@ -32,6 +37,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Acts as a permanent reference to the ActionsTable.
@@ -42,9 +48,18 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	private ConfigLoader configLoader;
 	private PythonInterface pythonInterface;
-	private final String ACTIONS_PROPERTY = "actions";
-	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	private static final String ACTIONS_PROPERTY = "actions";
+	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
 	public boolean languageSupported = true;
+	private static final String THREAD_ERROR_PROPERTY = "thread error";
+	private boolean threadError = false;
+	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
+	private boolean paramValidity = false;
+	private GeneratorContext generator;
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
 	 * Get the config loader.
@@ -80,21 +95,54 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Called by the constructors to set up the class.
 	 */
 	private void setUp() {
+		generator = new GeneratorContext(pythonInterface);
+		// If the validity error message property of the generator is changed update the validity errors in the scriptGeneratorTable
+		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
+			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		// If the parameter validity property is changed update the models field that denotes whether the parameters are valid and notify any listeners
+		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
+			Optional.ofNullable(evt.getNewValue())
+				.ifPresentOrElse(paramValidity -> this.paramValidity = Boolean.class.cast(paramValidity), () -> this.paramValidity = false);
+			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
-			try {
-				scriptGeneratorTable.setValidityErrors(
-					GeneratorFacade.getValidityErrors(scriptGeneratorTable, configLoader.getConfig())
-				);
-			} catch(UnsupportedLanguageException e) {
-				firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
-				languageSupported = false;
-			}
+			// The table has changed so update the validity checks
+			refreshParameterValidityChecking();
 		});
 		
 		setActionParameters(configLoader.getParameters());
+	}
+	
+	/**
+	 * Convert the VALIDITY_ERROR_MESSAGE_PROPERTY return to the Map<Integer, String> representation.
+	 * Required because of casting generics in Java.
+	 * 
+	 * @param validityMessages The validity messages to convert.
+	 * @return The converted messages property.
+	 */
+	@SuppressWarnings("rawtypes")
+	private static Map<Integer, String> convertValidityMessagesToMap(Object validityMessages) {
+		try {
+			Map mapCastValidityMessages = Map.class.cast(validityMessages);
+			Map<Integer, String> castValidityMessages = new HashMap<>();
+			for(Object nonCastEntry : mapCastValidityMessages.entrySet()) {
+				Map.Entry castEntry = Map.Entry.class.cast(nonCastEntry);
+				castValidityMessages.put(Integer.class.cast(castEntry.getKey()),
+						String.class.cast(castEntry.getValue()));
+			}
+			return castValidityMessages;
+		} catch(ClassCastException e) {
+			LOG.error(e);
+	        return new HashMap<Integer, String>();
+	    }
 	}
 	
 	/**
@@ -245,12 +293,27 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return true if the params are valid or false if not.
 	 */
 	public boolean areParamsValid() {
+		return this.paramValidity;
+	}
+	
+	/**
+	 * Refresh the validity checking of the parameters.
+	 */
+	public void refreshParameterValidityChecking() {
 		try {
-			return GeneratorFacade.areParamsValid(scriptGeneratorTable, configLoader.getConfig());
+			Config config = getConfig();
+			generator.refreshAreParamsValid(scriptGeneratorTable, config);
+			generator.refreshValidityErrors(scriptGeneratorTable, config);
+			languageSupported = true;
+			threadError = false;
 		} catch(UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			LOG.error(e);
 			languageSupported = false;
-			return false;
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
 		}
 	}
 }

@@ -40,7 +40,9 @@ public class ScriptGeneratorViewModel {
 	
 	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	
-	private final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	private static final String THREAD_ERROR_PROPERTY = "thread error";
+	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
@@ -53,13 +55,28 @@ public class ScriptGeneratorViewModel {
 				displayLanguageSupportError();
 			}
 		});
+		scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+			displayThreadingError();
+		});
 	}
 	
+	/**
+	 * Display a message dialog box that the language that is being used is unsupported.
+	 */
 	private void displayLanguageSupportError() {
 		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
 				"Language support issue",
 				"You are attempting to use an unsupported language, " + 
 				"parameter validity checking and script generation are disabled at this time");
+	}
+	
+	/**
+	 * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
+	 */
+	private void displayThreadingError() {
+		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+				"Error",
+				"Generating or parameter validity checking error. Threading issue.");
 	}
 
 	/**
@@ -162,13 +179,27 @@ public class ScriptGeneratorViewModel {
 	 * @param display The display to change.
 	 */
 	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors) {
-		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actions", e -> 
-			Display.getDefault().asyncExec(() -> {
-                viewTable.setRows(scriptGeneratorModel.getActions());
-                updateValidityChecks(viewTable);
-                setButtonValidityStyle(btnGetValidityErrors);
-			}
-		));
+		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actions", e -> {
+			actionChangeHandler(viewTable, btnGetValidityErrors);
+		});
+		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
+			actionChangeHandler(viewTable, btnGetValidityErrors);
+		});
+	}
+	
+	/**
+	 * Handle a change in the actions or their validity.
+	 * 
+	 * @param viewTable The view table to update.
+	 * @param btnGetValidityErrors The button to manipulate.
+	 */
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors) {
+		Display.getDefault().asyncExec(() -> {
+			scriptGeneratorModel.areParamsValid();
+            viewTable.setRows(scriptGeneratorModel.getActions());
+            updateValidityChecks(viewTable);
+            setButtonValidityStyle(btnGetValidityErrors);
+		});
 	}
 	
 	private void setButtonValidityStyle(Button btnGetValidityErrors) {
@@ -347,6 +378,13 @@ public class ScriptGeneratorViewModel {
 		} else {
 			displayLanguageSupportError();
 		}
+	}
+
+	/**
+	 * Refresh the parameter validity checking.
+	 */
+	public void refreshParameterValidityChecking() {
+		scriptGeneratorModel.refreshParameterValidityChecking();
 	}
 	
 }

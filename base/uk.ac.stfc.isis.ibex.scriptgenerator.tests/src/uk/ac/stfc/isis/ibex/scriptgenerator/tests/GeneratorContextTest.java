@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -50,22 +51,30 @@ public class GeneratorContextTest {
 		mockConfig = mock(Config.class);
 		
 		mockPythonInterface = mock(PythonInterface.class);
-		when(mockPythonInterface.getValidityErrors(mockActionsTable.getActions(), mockConfig)).thenReturn(expectedValidityErrors);
-		when(mockPythonInterface.areParamsValid(mockActionsTable.getActions(), mockConfig)).thenReturn(true);
 		try {
-			when(mockPythonInterface.generate(mockActionsTable.getActions(), mockConfig)).thenReturn(generatedScript);
-		} catch (InvalidParamsException e) {
-			fail("We have mocked actions table so should not throw this exception");
+			when(mockPythonInterface.getValidityErrors(mockActionsTable.getActions(), mockConfig)).thenReturn(expectedValidityErrors);
+			when(mockPythonInterface.refreshAreParamsValid(mockActionsTable.getActions(), mockConfig)).thenReturn(true);
+			try {
+				when(mockPythonInterface.refreshGeneratedScript(mockActionsTable.getActions(), mockConfig)).thenReturn(generatedScript);
+			} catch (InvalidParamsException e) {
+				fail("We have mocked actions table so should not throw this exception");
+			}
+		} catch(ExecutionException | InterruptedException e) {
+			fail("We have mocked these calls so they should not error");
 		}
 		
 		mockGeneratorPython = mock(GeneratorPython.class);
-		when(mockGeneratorPython.areParamsValid(mockActionsTable, mockConfig)).thenReturn(true);
-		when(mockGeneratorPython.getValidityErrors(mockActionsTable, mockConfig)).thenReturn(expectedValidityErrors);
-		
 		try {
-			when(mockGeneratorPython.generate(mockActionsTable, mockConfig)).thenReturn(generatedScript);
-		} catch (InvalidParamsException e) {
-			fail("We have mocked actions table so should not throw this exception");
+			when(mockGeneratorPython.refreshAreParamsValid(mockActionsTable, mockConfig)).thenReturn(true);
+			when(mockGeneratorPython.getValidityErrors(mockActionsTable, mockConfig)).thenReturn(expectedValidityErrors);
+			
+			try {
+				when(mockGeneratorPython.refreshGeneratedScript(mockActionsTable, mockConfig)).thenReturn(generatedScript);
+			} catch (InvalidParamsException e) {
+				fail("We have mocked actions table so should not throw this exception");
+			}
+		} catch(InterruptedException | ExecutionException e) {
+			fail("We have mocked the python interface out so should not throw these");
 		}
 		
 		// Set up generator context
@@ -77,10 +86,12 @@ public class GeneratorContextTest {
 		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are valid and language is supported, so return true",
-					generatorContext.areParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
+					generatorContext.refreshAreParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
 					is(true));
 		} catch(UnsupportedLanguageException e) {
 			fail("Python is a supported language");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
@@ -93,6 +104,8 @@ public class GeneratorContextTest {
 					equalTo(expectedValidityErrors));
 		} catch(UnsupportedLanguageException e) {
 			fail("Python is a supported language");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
@@ -101,12 +114,14 @@ public class GeneratorContextTest {
 		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are invalid and have outpus and language is supported, so return inserted hashmap",
-					generatorContext.generate(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
+					generatorContext.refreshGeneratedScript(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
 					equalTo(generatedScript));
 		} catch(UnsupportedLanguageException e) {
 			fail("Python is a supported language");
 		} catch (InvalidParamsException e) {
 			fail("We have mocked actions table so should not throw this exception");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
@@ -118,15 +133,19 @@ public class GeneratorContextTest {
 			fail("Default language should be supported");
 		} catch (InvalidParamsException e) {
 			fail("We have mocked actions table so should not throw this exception");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
 	@Test
 	public void test_GIVEN_using_default_generator_language_WHEN_check_params_validity_THEN_no_exception_thrown() {
 		try {
-			generatorContext.areParamsValid(mockActionsTable, mockConfig);
+			generatorContext.refreshAreParamsValid(mockActionsTable, mockConfig);
 		} catch(UnsupportedLanguageException e) {
 			fail("Default language should be supported");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
@@ -136,28 +155,34 @@ public class GeneratorContextTest {
 			generatorContext.getValidityErrors(mockActionsTable, mockConfig);
 		} catch(UnsupportedLanguageException e) {
 			fail("Default language should be supported");
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
 	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_generate_THEN_exception_thrown() {
 		try {
-			generatorContext.generate(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			generatorContext.refreshGeneratedScript(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
 			fail("Language is unsupported, should throw exception");
 		} catch (InvalidParamsException e) {
 			fail("We have mocked actions table so should not throw this exception");
 		} catch (UnsupportedLanguageException e) {
 			// success
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
 	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_check_params_validity_THEN_exception_thrown() {
 		try {
-			generatorContext.areParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			generatorContext.refreshAreParamsValid(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
 			fail("Language is unsupported, should throw exception");
 		} catch (UnsupportedLanguageException e) {
 			// success
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 	
@@ -168,6 +193,8 @@ public class GeneratorContextTest {
 			fail("Language is unsupported, should throw exception");
 		} catch (UnsupportedLanguageException e) {
 			// success
+		} catch (InterruptedException | ExecutionException e) {
+			fail("We have mocked out py4j calls so should not throw this");
 		}
 	}
 

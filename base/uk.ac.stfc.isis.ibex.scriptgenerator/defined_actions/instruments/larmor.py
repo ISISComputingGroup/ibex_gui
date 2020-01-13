@@ -1,5 +1,4 @@
 from action_interface import ActionDefinition, cast_parameters_to
-from time import sleep
 
 def mytype(string_input: str) -> float:
     if string_input == "default":
@@ -25,7 +24,7 @@ class DoRun(ActionDefinition):
             errors += "Temperature outside range\n"
         if not -5 <= field < 5:
             errors += "Field outside range"
-        if not -20 <= uamps <= 32:
+        if not -20 <= uamps <=32:
             errors += "uamps outside of range"
         if errors != "":
             return errors

@@ -87,14 +87,25 @@ public class ScriptGeneratorView {
 		configSelector = setUpConfigSelector(globalSettingsComposite);
 		
 		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-		validityComposite.setLayout(new GridLayout(1, false));
+		validityComposite.setLayout(new GridLayout(2, false));
 		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		// Button to check validity errors
 		final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
         btnGetValidityErrors.setText("Get Validity Errors");
         btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnGetValidityErrors.addListener(SWT.Selection, e -> scriptGeneratorViewModel.displayValidityErrors());
+        btnGetValidityErrors.addListener(SWT.Selection, e -> {
+        	scriptGeneratorViewModel.refreshParameterValidityChecking();
+        	scriptGeneratorViewModel.displayValidityErrors();
+        });
+        
+        // Button to refresh validity checks
+        final Button btnRefreshValidityChecks = new Button(validityComposite, SWT.NONE);
+        btnRefreshValidityChecks.setText("Refresh Validity Checks");
+        btnRefreshValidityChecks.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btnRefreshValidityChecks.addListener(SWT.Selection, e -> {
+        	scriptGeneratorViewModel.refreshParameterValidityChecking();
+        });
         
         Composite tableContainerComposite = new Composite(parent, SWT.NONE);
         tableContainerComposite.setLayout(new GridLayout(2, false));
