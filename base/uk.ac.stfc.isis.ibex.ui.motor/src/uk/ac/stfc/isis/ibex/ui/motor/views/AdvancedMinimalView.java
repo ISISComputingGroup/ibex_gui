@@ -26,15 +26,14 @@ public class AdvancedMinimalView extends Composite {
 	private DataBindingContext bindingContext = new DataBindingContext();
 
 	private MinimalMotionIndicator indicator;
-		
-	private Label test;
+
 	private Label motorName;
 	private Label value;
 	private Label setpoint;
 
 	
 	public AdvancedMinimalView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
-		super(parent, SWT.NONE);
+		super(parent, SWT.BORDER); // Currently the only difference between simple & advance minimal motor views is this has a border
 		
 		this.minimalMotorViewModel = minimalMotorViewModel;
 		
@@ -43,12 +42,7 @@ public class AdvancedMinimalView extends Composite {
 		glMotorComposite.marginWidth = MOTOR_COMPOSITE_MARGIN_WIDTH;
 		glMotorComposite.marginHeight = MOTOR_COMPOSITE_MARGIN_HEIGHT;
         setLayout(glMotorComposite);
-
-		test = new Label(this, SWT.NONE);
-		test.setAlignment(SWT.CENTER);
-		test.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
-		test.setText("Advanced");
-        
+   
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
 		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 2, 1);

@@ -19,13 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * The viewer for an individual motor.
@@ -53,8 +52,19 @@ public class MinimalMotorView extends Composite {
         setLayout(layout);
         
         SimpleMinimalView simpleView = new SimpleMinimalView(this, SWT.BORDER, minimalMotorViewModel);
+        AdvancedMinimalView advancedView = new AdvancedMinimalView(this, SWT.BORDER, minimalMotorViewModel);
         
         layout.topControl = simpleView;
+        this.layout();
+        
+        minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
+        	@Override
+        	public void propertyChange(PropertyChangeEvent evt) {
+                layout.topControl = minimalMotorViewModel.isAdvancedMinimalMotorView() == false ? simpleView : advancedView;
+                parent.layout();
+        	}
+        });
+        
 	}
 
     /**
