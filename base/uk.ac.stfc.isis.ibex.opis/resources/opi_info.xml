@@ -2233,6 +2233,7 @@
         </macros>
       </value>
     </entry>
+    <entry>
       <key>Zero field magnetometer</key>
       <value>
         <type>ZERO_FIELD</type>
