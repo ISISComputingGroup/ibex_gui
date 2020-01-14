@@ -1143,10 +1143,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>55</width>
+        <width>60</width>
         <wrap_words>false</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7c13</wuid>
-        <x>558</x>
+        <x>555</x>
         <y>43</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1187,7 +1187,7 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7ac3</wuid>
-        <x>558</x>
+        <x>555</x>
         <y>22</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1236,10 +1236,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>55</width>
+        <width>60</width>
         <wrap_words>false</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7ab1</wuid>
-        <x>558</x>
+        <x>555</x>
         <y>126</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1280,7 +1280,7 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7aa5</wuid>
-        <x>558</x>
+        <x>555</x>
         <y>105</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1329,10 +1329,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>55</width>
+        <width>60</width>
         <wrap_words>false</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7a95</wuid>
-        <x>558</x>
+        <x>555</x>
         <y>227</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1373,8 +1373,8 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7a89</wuid>
-        <x>558</x>
-        <y>208</y>
+        <x>555</x>
+        <y>206</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1422,10 +1422,10 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>55</width>
+        <width>60</width>
         <wrap_words>false</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7a7b</wuid>
-        <x>126</x>
+        <x>123</x>
         <y>412</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1466,7 +1466,7 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>-6154bf38:16ed055d1b6:-7a71</wuid>
-        <x>126</x>
+        <x>123</x>
         <y>390</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
