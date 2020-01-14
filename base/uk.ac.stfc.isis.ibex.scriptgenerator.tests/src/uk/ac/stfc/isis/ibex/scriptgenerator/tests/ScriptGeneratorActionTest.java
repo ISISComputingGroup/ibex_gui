@@ -3,10 +3,10 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.Before;
@@ -45,15 +45,15 @@ public class ScriptGeneratorActionTest {
 	}
 	
 	@Test
-	public void test_WHEN_getting_action_params_THEN_are_expected_strings() {
+	public void test_WHEN_getting_action_params_as_strings_THEN_are_expected_strings() {
 		// Act
-		Map<ActionParameter, String> actionParamsAsStrings = action.getAllActionParameters();
+		Map<String, String> actionParamsAsStrings = action.getAllActionParametersAsStrings();
 		
 		// Assert
-		HashMap<ActionParameter, String> expectedParams = new HashMap<>();
-		expectedParams.put(new ActionParameter("actionParam1"), "actionParam1Val");
-		expectedParams.put(new ActionParameter("actionParam2"), "actionParam2Val");
-		expectedParams.put(new ActionParameter("actionParam3"), "actionParam3Val");
+		HashMap<String, String> expectedParams = new HashMap<>();
+		expectedParams.put("actionParam1", "actionParam1Val");
+		expectedParams.put("actionParam2", "actionParam2Val");
+		expectedParams.put("actionParam3", "actionParam3Val");
 		
 		assertThat("Should convert action params to their name",
 				actionParamsAsStrings, equalTo(expectedParams));
@@ -64,7 +64,7 @@ public class ScriptGeneratorActionTest {
 	public void test_WHEN_created_THEN_is_valid() {
 		// Assert
 		assertThat("Should be valid at beginning", action.isValid(), is(true));
-		assertThat("Should return null when valid", action.getInvalidityReason(), is(Optional.empty()));
+		assertThat("Should return null when valid", action.getInvalidityReason(), nullValue());
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class ScriptGeneratorActionTest {
 		
 		// Assert
 		assertThat("Should be invalid after set", action.isValid(), is(false));
-		assertThat("Should be invalid after set", action.getInvalidityReason().get(), equalTo("invalid"));
+		assertThat("Should be invalid after set", action.getInvalidityReason(), equalTo("invalid"));
 	}
 	
 	@Test
@@ -85,6 +85,6 @@ public class ScriptGeneratorActionTest {
 		
 		// Assert
 		assertThat("Should be valid at beginning", action.isValid(), is(true));
-		assertThat("Should return null when valid", action.getInvalidityReason(), is(Optional.empty()));
+		assertThat("Should return null when valid", action.getInvalidityReason(), nullValue());
 	}
 }

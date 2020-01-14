@@ -47,7 +47,7 @@ public class ScriptGeneratorSingletonTest {
 		
 		// Assert
 		assertThat("Errors should reflect those returned by actions table",
-				invalidityErrors, equalTo("- Row: 1, Reason: invalid 1\n- Row: 2, Reason: invalid 2"));
+				invalidityErrors, equalTo("Row: 1, Reason: invalid 1\nRow: 2, Reason: invalid 2\n"));
 	}
 	
 	@Test
@@ -67,8 +67,9 @@ public class ScriptGeneratorSingletonTest {
 		
 		// Assert
 		assertThat("Errors should reflect those put in actions table",
-				invalidityErrors, equalTo("- Row: 1, Reason: invalid 1\n- Row: 2, Reason: invalid 2\n\n ... plus 2 suppressed errors."
-						+ " To see an error for a specific row hover over it."));
+				invalidityErrors, equalTo("Row: 1, Reason: invalid 1\nRow: 2, Reason: invalid 2\n\nLimited to "
+						+ maxNumOfLines + 
+						" lines. To see an error for a specific row hover over it."));
 		assertThat("Should be limited to 2 lines and two other new lines for notification",
 				invalidityErrors.split("\n").length, is(maxNumOfLines+2));
 	}
@@ -87,7 +88,7 @@ public class ScriptGeneratorSingletonTest {
 		
 		// Assert
 		assertThat("Errors should reflect those put in actions table",
-				invalidityErrors, equalTo("- Row: 1, Reason: invalid 1\n- Row: 2, Reason: invalid 2"));
+				invalidityErrors, equalTo("Row: 1, Reason: invalid 1\nRow: 2, Reason: invalid 2\n"));
 		assertThat("Should not be limited",
 				invalidityErrors.split("\n").length, is(2));
 	}

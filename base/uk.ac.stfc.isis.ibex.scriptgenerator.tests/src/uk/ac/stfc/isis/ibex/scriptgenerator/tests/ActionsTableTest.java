@@ -5,12 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -127,10 +127,9 @@ public class ActionsTableTest {
 		ArrayList<String> actualValidityErrors = table.getInvalidityErrorLines();
 		
 		// Assert
-		String[] arrayExpectedValidityErrors = {"Row: 2, Reason: ", "invalid 1", "Row: 4, Reason: ", "invalid 2"};
+		String[] arrayExpectedValidityErrors = {"Row: 2, Reason: invalid 1\n", "Row: 4, Reason: invalid 2\n"};
 		List<String> expectedValidityErrors = Arrays.asList(arrayExpectedValidityErrors);
-		assertThat("We expect validity errors to match those set into actions",
-				expectedValidityErrors, equalTo(actualValidityErrors));
+		assertThat("We expect validity errors to match those set into actions", actualValidityErrors, equalTo(expectedValidityErrors));
 	}
 	
 	@Test
@@ -152,19 +151,19 @@ public class ActionsTableTest {
 		assertThat("We set 0 to invalid so should not be valid", 
 				table.getActions().get(0).isValid(), is(false));
 		assertThat("We set 0 to invalid so should give same invalidity error string",
-				table.getActions().get(0).getInvalidityReason().get(), equalTo("invalid 1"));
+				table.getActions().get(0).getInvalidityReason(), equalTo("invalid 1"));
 		assertThat("We did not set 1 to invalid so should be valid",
 				table.getActions().get(1).isValid(), is(true));
 		assertThat("As 1 is valid should return null",
-				table.getActions().get(1).getInvalidityReason(), is(Optional.empty()));
+				table.getActions().get(1).getInvalidityReason(), nullValue());
 		assertThat("We set 2 to invalid so should not be valid",
 				table.getActions().get(2).isValid(), is(false));
 		assertThat("We set 2 to invalid so should give same invalidity error string",
-				table.getActions().get(2).getInvalidityReason().get(), equalTo("invalid 3"));
+				table.getActions().get(2).getInvalidityReason(), equalTo("invalid 3"));
 		assertThat("We set 3 to invalid so should not be valid",
 				table.getActions().get(3).isValid(), is(false));
 		assertThat("We set 3 to invalid so should give same invalidity error string",
-				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 2"));
+				table.getActions().get(3).getInvalidityReason(), equalTo("invalid 2"));
 	}
 
 }
