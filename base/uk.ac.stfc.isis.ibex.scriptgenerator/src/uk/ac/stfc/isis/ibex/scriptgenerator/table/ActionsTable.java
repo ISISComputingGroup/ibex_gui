@@ -16,9 +16,24 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  */
 public class ActionsTable extends ModelObject {
 
+	/**
+	 * The action parameters (columns) of the table that all actions in the table conform to.
+	 */
 	private List<ActionParameter> actionParameters;
+	
+	/**
+	 * The actions (rows) of the table that have values for the action parameters.
+	 */
 	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	
+	/**
+	 * The property to fire a change for if the actions in the table change.
+	 */
 	private static final String ACTIONS_PROPERTY = "actions";
+	
+	/**
+	 * The property of an action to listen to for changes.
+	 */
 	private static final String VALUE_PROPERTY = "value";
 	
 	/**

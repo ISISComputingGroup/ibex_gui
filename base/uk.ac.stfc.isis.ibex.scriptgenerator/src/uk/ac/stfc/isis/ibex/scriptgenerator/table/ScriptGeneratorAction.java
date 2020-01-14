@@ -13,9 +13,24 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  */
 public class ScriptGeneratorAction extends ModelObject {
 
+	/**
+	 * Contains a mapping from the action's parameters and the action's values for those parameters.
+	 */
 	private Map<ActionParameter, String> actionParameterValues;
+	
+	/**
+	 * Contains the reason for the action being invalid. Empty optional if valid.
+	 */
 	private Optional<String> invalidityReason = Optional.empty();
+	
+	/**
+	 * The property to fire a change of if the action becomes valid or invalid.
+	 */
 	private static final String VALIDITY_PROPERTY = "validity";
+	
+	/**
+	 * The property to fire if the actions values change.
+	 */
 	private static final String VALUE_PROPERTY = "value";
 
 	/**
