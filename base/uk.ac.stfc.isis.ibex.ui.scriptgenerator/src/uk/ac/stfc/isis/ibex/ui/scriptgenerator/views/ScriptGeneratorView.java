@@ -85,7 +85,7 @@ public class ScriptGeneratorView {
 		configSelector = setUpConfigSelector(globalSettingsComposite);
 		
 		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-		validityComposite.setLayout(new GridLayout(2, false));
+		validityComposite.setLayout(new GridLayout(1, false));
 		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		// Button to check validity errors
