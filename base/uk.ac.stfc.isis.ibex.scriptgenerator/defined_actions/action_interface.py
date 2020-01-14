@@ -7,7 +7,7 @@ import functools
 
 class ActionDefinition(ABC):
     @abstractmethod
-    def run(self, *kwargs) -> None:
+    def run(self, **kwargs) -> None:
         """
         Defines the steps of an action which can be used in the script generator.
 
