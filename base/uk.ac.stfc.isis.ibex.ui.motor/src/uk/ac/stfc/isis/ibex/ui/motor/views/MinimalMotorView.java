@@ -56,7 +56,7 @@ public class MinimalMotorView extends Composite {
         final StackLayout layout = new StackLayout();
         setLayout(layout);
         
-        simpleView = new SimpleMinimalView(this, SWT.BORDER, minimalMotorViewModel);
+        simpleView = new SimpleMinimalView(this, SWT.NONE, minimalMotorViewModel);
         advancedView = new AdvancedMinimalView(this, SWT.BORDER, minimalMotorViewModel);
 
         layout.topControl = simpleView;
@@ -83,7 +83,7 @@ public class MinimalMotorView extends Composite {
 	public void setMouseListeners(List<MouseListener> mouseListeners) {
 		for (MouseListener listener : mouseListeners) {
 			simpleView.addMouseListener(listener);
-			//advancedView.addMouseListener(listener);
+			advancedView.addMouseListener(listener);
 		}
 	}
 }

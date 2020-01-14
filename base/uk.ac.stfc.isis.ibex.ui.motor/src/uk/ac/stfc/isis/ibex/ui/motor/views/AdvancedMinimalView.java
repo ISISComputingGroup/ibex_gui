@@ -13,15 +13,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
-public class AdvancedMinimalView extends Composite {
+public class AdvancedMinimalView extends MotorInfoView {
 	
 	private static final Integer MOTOR_COMPOSITE_VERTIAL_SPACING = 2; 
 	private static final Integer MOTOR_COMPOSITE_MARGIN_WIDTH = 2;
 	private static final Integer MOTOR_COMPOSITE_MARGIN_HEIGHT = 2;
 	private static final Integer MOTOR_NAME_MINIMUM_WIDTH = 80;
 	private static final Integer MOTOR_NAME_WIDTHHINT = 80;
-
-	private MinimalMotorViewModel minimalMotorViewModel;
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
 
@@ -33,9 +31,7 @@ public class AdvancedMinimalView extends Composite {
 
 	
 	public AdvancedMinimalView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
-		super(parent, SWT.BORDER); // Currently the only difference between simple & advance minimal motor views is this has a border
-		
-		this.minimalMotorViewModel = minimalMotorViewModel;
+		super(parent, style, minimalMotorViewModel); 
 		
         GridLayout glMotorComposite = new GridLayout(2, false);
 		glMotorComposite.verticalSpacing = MOTOR_COMPOSITE_VERTIAL_SPACING;
@@ -63,7 +59,7 @@ public class AdvancedMinimalView extends Composite {
 		
         indicator = new MinimalMotionIndicator(this, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
-        indicator.setMotor(this.minimalMotorViewModel.getMotor());
+        indicator.setMotor(this.getViewModel().getMotor());
 
 		setMouseListeners();
 		
@@ -76,34 +72,34 @@ public class AdvancedMinimalView extends Composite {
     private void bind() {
   	
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
-                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
+                BeanProperties.value("setpoint").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.text().observe(value),
-                BeanProperties.value("value").observe(minimalMotorViewModel));
+                BeanProperties.value("value").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.text().observe(motorName),
-                BeanProperties.value("motorName").observe(minimalMotorViewModel));
+                BeanProperties.value("motorName").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.font().observe(motorName),
-                BeanProperties.value("font").observe(minimalMotorViewModel));
+                BeanProperties.value("font").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(motorName),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
+                BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(indicator),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
+                BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(value),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
+                BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
+                BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(this),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
+                BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.tooltipText().observe(this),
-                BeanProperties.value("tooltip").observe(minimalMotorViewModel));
+                BeanProperties.value("tooltip").observe(this.getViewModel()));
 	}
 	
 	private void setMouseListeners() {
@@ -123,5 +119,4 @@ public class AdvancedMinimalView extends Composite {
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
 	}
-	
 }

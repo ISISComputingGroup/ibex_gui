@@ -58,8 +58,8 @@ public class TableOfMotorsView {
 	private MouseListener motorSelection = new MouseAdapter() {
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-			if (e.widget instanceof MinimalMotorView) {
-				MinimalMotorView minimal = (MinimalMotorView) e.widget;
+			if (e.widget instanceof MotorInfoView) {
+				MotorInfoView minimal = (MotorInfoView) e.widget;
                 openMotorView(minimal.getViewModel().getMotor());
 			}
 		}
