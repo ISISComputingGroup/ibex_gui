@@ -24,21 +24,49 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * Sets up the py4j interface.
+ * Sets up the py4j interface and acts as an interface when calling into Py4J.
  *
  */
 public class PythonInterface extends ModelObject {
 
+	/**
+	 * The client-server connection to use to communicate with Python.
+	 */
 	private ClientServer clientServer;
+	
+	/**
+	 * The python process executing calls to python,
+	 */
 	private Process pythonProcess;
+	
+	/**
+	 * The access point to python that wraps the rest of the python functionality.
+	 */
 	private ConfigWrapper configWrapper;
 
+	/**
+	 * The property change to fire when the validity messages are asynchronously
+	 *  received from Python.
+	 */
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * The property change to fire when the validity of the script generator contents is
+	 *  asynchronously received from Python.
+	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	/**
+	 * The property change to fire when the generated script is received
+	 *  asynchronously from Python.
+	 */
 	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 
+	/**
+	 * The thread to execute python calls on.
+	 */
 	private static final ExecutorService THREAD = Executors
 			.newSingleThreadExecutor(job -> new Thread(job, "Py4J scriptgenerator worker"));
 
@@ -112,7 +140,7 @@ public class PythonInterface extends ModelObject {
 	 * @param pythonPath   Path to the python interpreter to be used.
 	 * @param filePath     Path to python script to be executed.
 	 * @return The spawned python process.
-	 * @throws IOException
+	 * @throws IOException When the python process fails to start correctly.
 	 */
 	private Process startPythonProcess(ClientServer clientServer, String pythonPath, String filePath)
 			throws IOException {
@@ -170,7 +198,7 @@ public class PythonInterface extends ModelObject {
 	}
 
 	/**
-	 * Cleans up all resources.
+	 * Cleans up all resources i.e. destroy the python process.
 	 */
 	public void cleanUp() {
 		pythonProcess.destroy();
