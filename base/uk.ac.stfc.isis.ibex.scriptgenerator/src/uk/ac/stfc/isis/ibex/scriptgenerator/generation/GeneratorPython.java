@@ -19,6 +19,7 @@ public class GeneratorPython extends AbstractGenerator {
 	
 	/**
 	 * Create a python generator with the specified python interface.
+	 * Listen to changes in it's validity checking and generated script.
 	 * 
 	 * @param pythonInterface The py4j python interface to use to communicate with python.
 	 */
@@ -40,8 +41,8 @@ public class GeneratorPython extends AbstractGenerator {
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param config The instrument config to generate the script with.
-	 * @throws ExecutionException A failure to execute the py4j call
-	 * @throws InterruptedException The Py4J call was interrupted
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
@@ -53,8 +54,8 @@ public class GeneratorPython extends AbstractGenerator {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param config The instrument config to validate the script against.
-	 * @throws ExecutionException A failure to execute the py4j call
-	 * @throws InterruptedException The Py4J call was interrupted
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
 		pythonInterface.refreshAreParamsValid(scriptGenContent, config);
@@ -65,8 +66,8 @@ public class GeneratorPython extends AbstractGenerator {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @throws ExecutionException A failure to execute the py4j call
-	 * @throws InterruptedException The Py4J call was interrupted
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {

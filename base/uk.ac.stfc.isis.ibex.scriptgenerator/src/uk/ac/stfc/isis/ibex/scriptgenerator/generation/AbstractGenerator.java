@@ -21,12 +21,29 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  */
 public abstract class AbstractGenerator extends ModelObject {
 	
+	/**
+	 * The property to fire a change of when the validity error messages (Map<Integer, String>)
+	 *  have been retrieved. This will get caught by the GeneratorContext and dealt with up the chain.
+	 * Fire the change with the new value as the retrieved value.
+	 */
 	protected static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * The property to fire a change of when the validity of the script generator content is
+	 *  retrieved (bool). This will get caught by the GeneratorContext and dealt with up the chain.
+	 * Fire the change with the new value as the retrieved value.
+	 */
 	protected static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	/**
+	 * The property to fire a change of when the generated script is retrieved (String).
+	 * This will get caught by the GeneratorContext and dealt with up the chain.
+	 * Fire the change with the new value as the retrieved value.
+	 */
 	protected static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
-	 * Refresh the generated script property with a script.
+	 * Refresh the generated script property with a script (String).
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param config The instrument config to generate the script with.
@@ -36,7 +53,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
 	
 	/**
-	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid.
+	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param config The instrument config to validate the script against.
@@ -46,7 +63,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
 	
 	/**
-	 * Refresh the validity errors returned when checking validity.
+	 * Refresh the validity errors returned when checking validity (Map<Integer,String>).
 	 * 
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.

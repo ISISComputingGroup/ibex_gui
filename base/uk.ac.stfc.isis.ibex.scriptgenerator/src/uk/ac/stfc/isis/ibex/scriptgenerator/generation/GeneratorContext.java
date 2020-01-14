@@ -23,9 +23,21 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  */
 public class GeneratorContext extends ModelObject {
 	
-	
+	/**
+	 * The property to listen for changes in a Generator containing the mapping Map<Integer, String> of
+	 *  validity checks for each row of the script generator.
+	 */
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * The property to listen for changes in a Generator containing whether or not all
+	 *  script generator contents are valid or not (bool).
+	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
 	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
@@ -36,6 +48,7 @@ public class GeneratorContext extends ModelObject {
 	
 	/**
 	 * Add a generator to use (will replace the languages generator with a new one if it matches).
+	 * Listen to changes in the generators validity checking and script generation.
 	 * 
 	 * @param generatedLanguage The language the new generator uses.
 	 * @param generator The generator to use.
@@ -74,7 +87,8 @@ public class GeneratorContext extends ModelObject {
 	
 	/**
 	 * Add each language's generator to the strategies.
-	 * @param pythonInterface 
+	 * 
+	 * @param pythonInterface The python interface to set up the python generator with.
 	 */
 	public GeneratorContext(PythonInterface pythonInterface) {
 		putGenerator(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
@@ -86,11 +100,11 @@ public class GeneratorContext extends ModelObject {
 	 * The parameter validity property will change and alert listeners at this point.
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
-	 * @param config The instrument config to generate to script from.
+	 * @param config The instrument config to generate the script from.
 	 * @param generatedLanguage The language to generate the script in.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshGeneratedScript(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -102,11 +116,10 @@ public class GeneratorContext extends ModelObject {
 	 * Refresh the generated script in the default language (Python).
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
-	 * @param config The instrument config to generate to script from.
-	 * @param generatedLanguage The language to generate the script in.
+	 * @param config The instrument config to generate the script from.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshGeneratedScript(ActionsTable actionsTable, Config config) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -118,11 +131,11 @@ public class GeneratorContext extends ModelObject {
 	 *  are valid against a generator (generatedLanguage) and refresh the property.
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
-	 * @param config The instrument config to validate to script against.
+	 * @param config The instrument config to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshAreParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -135,11 +148,10 @@ public class GeneratorContext extends ModelObject {
 	 *  are valid against the default language generator (Python) and refresh the property.
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
-	 * @param config The instrument config to validate to script against.
-	 * @param generatedLanguage The language that the script will be generated in.
+	 * @param config The instrument config to validate the script against.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshAreParamsValid(ActionsTable actionsTable, Config config) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -151,9 +163,10 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
+	 * @param generatedLanguage The language that the script will be generated in.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -167,8 +180,8 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
 	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate
-	 * @throws InterruptedException The call to generate was interrupted
+	 * @throws ExecutionException A failure to execute the call to generate.
+	 * @throws InterruptedException The call to generate was interrupted.
 	 */
 	public void refreshValidityErrors(ActionsTable actionsTable, Config config) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {

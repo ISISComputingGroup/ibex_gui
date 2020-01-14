@@ -40,23 +40,82 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * Acts as a permanent reference to the ActionsTable.
- *
+ * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
+ *  and containing the actions table for the script generator.
  */
 public class ScriptGeneratorSingleton extends ModelObject {
 	
-	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
+	/**
+	 * The table containing the script generator contents (actions).
+	 */
+	private ActionsTable scriptGeneratorTable =
+			new ActionsTable(new ArrayList<ActionParameter>());
+	
+	/**
+	 * The loader to select and update the configs being used.
+	 */
 	private ConfigLoader configLoader;
+	
+	/**
+	 * The python interface to check parameter validity with,
+	 *  generate scripts with, load configs with.
+	 */
 	private PythonInterface pythonInterface;
+	
+	/**
+	 * The property to listen for changes to actions in the script generator table on.
+	 */
 	private static final String ACTIONS_PROPERTY = "actions";
+	
+	/**
+	 * The property to listen for changes in the generator on,
+	 *  as to whether the current selected language is supported.
+	 */
 	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	
+	/**
+	 * Whether the current used language is supported or not.
+	 */
 	public boolean languageSupported = true;
+	
+	/**
+	 * The property to listen for changes in the generator on,
+	 *  as to whether there has been a thread error when checking
+	 *   parameter validity or generating a script.
+	 */
 	private static final String THREAD_ERROR_PROPERTY = "thread error";
+	
+	/**
+	 * Whether there has been a thread error or not that affects
+	 *  the current state of the script generator.
+	 */
 	private boolean threadError = false;
+	
+	/**
+	 * The property to listen for changes in the generator containing the mapping Map<Integer, String> of
+	 *  validity checks for each row of the script generator.
+	 */
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * The property to listen for changes in a Generator containing whether or not all
+	 *  script generator contents are valid or not (bool).
+	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
 	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
+	
+	/**
+	 * The current state of parameter validity.
+	 */
 	private boolean paramValidity = false;
+	
+	/**
+	 * The generator to generate scripts with and check parameter validity with.
+	 */
 	private GeneratorContext generator;
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
@@ -93,18 +152,24 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Called by the constructors to set up the class.
+	 * Set up listeners for the generator.
 	 */
 	private void setUp() {
 		generator = new GeneratorContext(pythonInterface);
-		// If the validity error message property of the generator is changed update the validity errors in the scriptGeneratorTable
+		// If the validity error message property of the generator is changed update the
+		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		// If the parameter validity property is changed update the models field that denotes whether the parameters are valid and notify any listeners
+		// If the parameter validity property is changed update the models field that denotes
+		// whether the parameters are valid and notify any listeners
 		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
 			Optional.ofNullable(evt.getNewValue())
-				.ifPresentOrElse(paramValidity -> this.paramValidity = Boolean.class.cast(paramValidity), () -> this.paramValidity = false);
+				.ifPresentOrElse(
+					paramValidity -> this.paramValidity = Boolean.class.cast(paramValidity),
+					() -> this.paramValidity = false
+				);
 			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
@@ -281,7 +346,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.map((String error) -> String.format("- %s", error))
 				.collect(Collectors.joining("\n"));
 		if (errors.size() > maxNumOfLines) {
-		    message = String.format("%s\n\n ... plus %d suppressed errors. To see an error for a specific row hover over it.", 
+		    message = String.format("%s\n\n ... plus %d suppressed errors."
+		    		+ " To see an error for a specific row hover over it.", 
 		    		message, (errors.size() - maxNumOfLines));
 		}
 		return message;
@@ -297,7 +363,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Refresh the validity checking of the parameters.
+	 * Refresh the validity checking of the parameters,
+	 *  or if it fails refresh the error state of the model to be listened to by the ViewModel.
 	 */
 	public void refreshParameterValidityChecking() {
 		try {

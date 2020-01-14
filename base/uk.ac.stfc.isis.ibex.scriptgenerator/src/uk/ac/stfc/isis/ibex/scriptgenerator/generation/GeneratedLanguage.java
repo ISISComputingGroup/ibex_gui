@@ -1,7 +1,8 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 /**
- * The language to generate a script in (currently only Python is supported, Unsupported language is for testing only!).
+ * The language to generate a script in (currently only Python is supported by being added to the GeneratorContext),
+ *  Unsupported language is for testing only!).
  * 
  * @author James King
  *
