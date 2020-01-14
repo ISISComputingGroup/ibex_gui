@@ -887,20 +887,25 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Field</name>
-    <rules>
-      <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="!pvInt0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)FIELD_CONV_DEFINED</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil); 
+var pvStr0 = PVUtil.getString(pvs[0]);
+if(pvStr0 == "No")
+	widget.setPropertyValue("visible",false);
+else
+	widget.setPropertyValue("visible",true);
+]]></scriptText>
+        <pv trig="true">$(PV_ROOT)FIELD_CONV_DEFINED</pv>
+      </path>
+    </scripts>
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
@@ -1437,7 +1442,7 @@ $(pv_value)</tooltip>
       <level_lolo>10.0</level_lolo>
       <limits_from_pv>true</limits_from_pv>
       <log_scale>false</log_scale>
-      <major_tick_step_hint>50</major_tick_step_hint>
+      <major_tick_step_hint>10</major_tick_step_hint>
       <maximum>100.0</maximum>
       <minimum>0.0</minimum>
       <name>Progress Bar</name>
