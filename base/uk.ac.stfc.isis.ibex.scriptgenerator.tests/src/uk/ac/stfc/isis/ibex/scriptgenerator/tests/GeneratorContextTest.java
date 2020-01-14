@@ -20,7 +20,6 @@ import static org.hamcrest.CoreMatchers.is;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
@@ -52,13 +51,9 @@ public class GeneratorContextTest {
 		
 		mockPythonInterface = mock(PythonInterface.class);
 		try {
-			when(mockPythonInterface.getValidityErrors(mockActionsTable.getActions(), mockConfig)).thenReturn(expectedValidityErrors);
+			when(mockPythonInterface.refreshValidityErrors(mockActionsTable.getActions(), mockConfig)).thenReturn(expectedValidityErrors);
 			when(mockPythonInterface.refreshAreParamsValid(mockActionsTable.getActions(), mockConfig)).thenReturn(true);
-			try {
-				when(mockPythonInterface.refreshGeneratedScript(mockActionsTable.getActions(), mockConfig)).thenReturn(generatedScript);
-			} catch (InvalidParamsException e) {
-				fail("We have mocked actions table so should not throw this exception");
-			}
+			when(mockPythonInterface.refreshGeneratedScript(mockActionsTable.getActions(), mockConfig)).thenReturn(generatedScript);
 		} catch(ExecutionException | InterruptedException e) {
 			fail("We have mocked these calls so they should not error");
 		}
@@ -66,13 +61,8 @@ public class GeneratorContextTest {
 		mockGeneratorPython = mock(GeneratorPython.class);
 		try {
 			when(mockGeneratorPython.refreshAreParamsValid(mockActionsTable, mockConfig)).thenReturn(true);
-			when(mockGeneratorPython.getValidityErrors(mockActionsTable, mockConfig)).thenReturn(expectedValidityErrors);
-			
-			try {
-				when(mockGeneratorPython.refreshGeneratedScript(mockActionsTable, mockConfig)).thenReturn(generatedScript);
-			} catch (InvalidParamsException e) {
-				fail("We have mocked actions table so should not throw this exception");
-			}
+			when(mockGeneratorPython.refreshValidityErrors(mockActionsTable, mockConfig)).thenReturn(expectedValidityErrors);
+			when(mockGeneratorPython.refreshGeneratedScript(mockActionsTable, mockConfig)).thenReturn(generatedScript);
 		} catch(InterruptedException | ExecutionException e) {
 			fail("We have mocked the python interface out so should not throw these");
 		}
@@ -100,7 +90,7 @@ public class GeneratorContextTest {
 		generatorContext.putGenerator(GeneratedLanguage.PYTHON, mockGeneratorPython);
 		try {
 			assertThat("Params are invalid and have outpus and language is supported, so return inserted hashmap",
-					generatorContext.getValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
+					generatorContext.refreshValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.PYTHON),
 					equalTo(expectedValidityErrors));
 		} catch(UnsupportedLanguageException e) {
 			fail("Python is a supported language");
@@ -152,7 +142,7 @@ public class GeneratorContextTest {
 	@Test
 	public void test_GIVEN_using_default_generator_language_WHEN_get_validity_errors_THEN_no_exception_thrown() {
 		try {
-			generatorContext.getValidityErrors(mockActionsTable, mockConfig);
+			generatorContext.refreshValidityErrors(mockActionsTable, mockConfig);
 		} catch(UnsupportedLanguageException e) {
 			fail("Default language should be supported");
 		} catch (InterruptedException | ExecutionException e) {
@@ -189,7 +179,7 @@ public class GeneratorContextTest {
 	@Test
 	public void test_GIVEN_using_unsupported_generator_language_WHEN_get_validity_errors_THEN_no_exception_thrown() {
 		try {
-			generatorContext.getValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
+			generatorContext.refreshValidityErrors(mockActionsTable, mockConfig, GeneratedLanguage.UNSUPPORTED_LANGUAGE);
 			fail("Language is unsupported, should throw exception");
 		} catch (UnsupportedLanguageException e) {
 			// success
