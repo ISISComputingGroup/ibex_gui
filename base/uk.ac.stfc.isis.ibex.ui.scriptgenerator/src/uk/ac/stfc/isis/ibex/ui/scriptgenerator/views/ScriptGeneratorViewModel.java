@@ -108,11 +108,15 @@ public class ScriptGeneratorViewModel {
 	 */
 	public ScriptGeneratorViewModel() {
 		scriptGeneratorModel = Activator.getModel();
+		// Listen to whether the language support is changed
+		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
 			if(Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
 				displayLanguageSupportError();
 			}
 		});
+		// Listen for model threading errors and display to the user if there is one
+		// Model is responsible for logging it
 		scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
 			displayThreadingError();
 		});
