@@ -379,12 +379,5 @@ public class ScriptGeneratorViewModel {
 			displayLanguageSupportError();
 		}
 	}
-
-	/**
-	 * Refresh the parameter validity checking.
-	 */
-	public void refreshParameterValidityChecking() {
-		scriptGeneratorModel.refreshParameterValidityChecking();
-	}
 	
 }

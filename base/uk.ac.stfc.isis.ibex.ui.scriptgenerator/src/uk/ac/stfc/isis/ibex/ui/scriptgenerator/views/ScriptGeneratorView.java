@@ -23,7 +23,6 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -32,7 +31,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -95,16 +93,7 @@ public class ScriptGeneratorView {
         btnGetValidityErrors.setText("Get Validity Errors");
         btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         btnGetValidityErrors.addListener(SWT.Selection, e -> {
-        	scriptGeneratorViewModel.refreshParameterValidityChecking();
         	scriptGeneratorViewModel.displayValidityErrors();
-        });
-        
-        // Button to refresh validity checks
-        final Button btnRefreshValidityChecks = new Button(validityComposite, SWT.NONE);
-        btnRefreshValidityChecks.setText("Refresh Validity Checks");
-        btnRefreshValidityChecks.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnRefreshValidityChecks.addListener(SWT.Selection, e -> {
-        	scriptGeneratorViewModel.refreshParameterValidityChecking();
         });
         
         Composite tableContainerComposite = new Composite(parent, SWT.NONE);

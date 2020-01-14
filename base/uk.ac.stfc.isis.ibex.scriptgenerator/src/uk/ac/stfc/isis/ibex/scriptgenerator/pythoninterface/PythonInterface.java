@@ -202,10 +202,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException {
-		CompletableFuture.supplyAsync(() -> { 
-			var result = configWrapper.getValidityErrors(scriptGenContent, config);
-			return result;
-			}, THREAD)
+		CompletableFuture.supplyAsync(() -> configWrapper.getValidityErrors(scriptGenContent, config), THREAD)
 				.thenAccept(newValidityErrors -> firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
 	}
 
