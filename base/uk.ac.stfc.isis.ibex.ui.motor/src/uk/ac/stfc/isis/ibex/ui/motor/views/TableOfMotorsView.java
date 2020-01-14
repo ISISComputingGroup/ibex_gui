@@ -94,8 +94,6 @@ public class TableOfMotorsView {
 
 		scrolledComposite.setContent(motorsOverview);
 
-		//motorsOverview.addMouseListener(motorSelection);
-
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 

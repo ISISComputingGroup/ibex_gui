@@ -8,9 +8,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-public class AdvancedMinimalView extends MotorInfoView {
+/**
+ * The viewer for an individual motors advanced information.
+ */
+public class MotorInfoAdvView extends MotorInfoView {
 
-	public AdvancedMinimalView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
+	public MotorInfoAdvView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel); 
 		
         GridLayout glMotorComposite = new GridLayout(2, false);

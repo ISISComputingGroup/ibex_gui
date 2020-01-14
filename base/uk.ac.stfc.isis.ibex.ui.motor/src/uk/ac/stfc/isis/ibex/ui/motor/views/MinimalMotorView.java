@@ -44,8 +44,8 @@ import uk.ac.stfc.isis.ibex.motor.Motor;
  */
 public class MinimalMotorView extends Composite {
 	
-	SimpleMinimalView simpleView;
-	AdvancedMinimalView advancedView;
+	MotorInfoStdView standardView;
+	MotorInfoAdvView advancedView;
 
 	private MinimalMotorViewModel minimalMotorViewModel;
 
@@ -67,21 +67,21 @@ public class MinimalMotorView extends Composite {
         final StackLayout layout = new StackLayout();
         setLayout(layout);
         
-        simpleView = new SimpleMinimalView(this, SWT.NONE, minimalMotorViewModel);
-        advancedView = new AdvancedMinimalView(this, SWT.BORDER, minimalMotorViewModel);
+        standardView = new MotorInfoStdView(this, SWT.NONE, minimalMotorViewModel);
+        advancedView = new MotorInfoAdvView(this, SWT.BORDER, minimalMotorViewModel);
 
-        layout.topControl = simpleView;
+        layout.topControl = standardView;
         this.requestLayout();
 
         minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
         	@Override
         	public void propertyChange(PropertyChangeEvent evt) {
-                layout.topControl = minimalMotorViewModel.isAdvancedMinimalMotorView() == false ? simpleView : advancedView;
+                layout.topControl = minimalMotorViewModel.isAdvancedMinimalMotorView() == false ? standardView : advancedView;
                 MinimalMotorView.this.requestLayout();
         	}
         });
         
-		simpleView.addMouseListener(motorSelection);
+		standardView.addMouseListener(motorSelection);
 		advancedView.addMouseListener(motorSelection);
 	}
 

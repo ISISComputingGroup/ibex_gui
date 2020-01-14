@@ -9,6 +9,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
+/**
+ * The abstract viewer for an individual motors info such as read back values.
+ */
 public abstract class MotorInfoView extends Composite {
 	
 	protected static final Integer MOTOR_COMPOSITE_VERTIAL_SPACING = 2; 
