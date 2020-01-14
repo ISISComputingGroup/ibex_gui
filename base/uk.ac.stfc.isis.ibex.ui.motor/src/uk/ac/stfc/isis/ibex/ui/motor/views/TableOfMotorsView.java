@@ -10,23 +10,10 @@ import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-
-import com.google.common.base.Strings;
-
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -54,16 +41,7 @@ public class TableOfMotorsView {
      */
     private static final List<Integer> TAB_CONTROLLER_OFFSETS = Arrays.asList(0, 8, 16);
 
-	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
-	private MouseListener motorSelection = new MouseAdapter() {
-		@Override
-		public void mouseDoubleClick(MouseEvent e) {
-			if (e.widget instanceof MotorInfoView) {
-				MotorInfoView minimal = (MotorInfoView) e.widget;
-                openMotorView(minimal.getViewModel().getMotor());
-			}
-		}
-	};
+
 
     /** The MotorsTable used for this particular table of motors view. */
     protected MotorsTable motorsTable;
@@ -116,33 +94,12 @@ public class TableOfMotorsView {
 
 		scrolledComposite.setContent(motorsOverview);
 
-		motorsOverview.addMouseListener(motorSelection);
+		//motorsOverview.addMouseListener(motorSelection);
 
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         motorsOverview.setMotors(motorsTable, getTableControllerOffset());
-	}
-
-	/**
-	 * Opens the motor OPI for a particular motor.
-	 * @param motor The motor to show
-	 */
-	private static void openMotorView(Motor motor) {
-		try {
-    		// Display OPI motor view
-			String description = motor.getDescription();
-			String secondaryID = Strings.isNullOrEmpty(description) ? motor.name() : description;
-			secondaryID = secondaryID.replace(":", "");
-
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
-
-			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
-
-		} catch (PartInitException e) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(TableOfMotorsView.class), e.getMessage(), e);
-		}
 	}
 
 	/**

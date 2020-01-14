@@ -21,12 +21,23 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+
+import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.motor.Motor;
 
 /**
  * The viewer for an individual motor.
@@ -69,6 +80,9 @@ public class MinimalMotorView extends Composite {
                 MinimalMotorView.this.requestLayout();
         	}
         });
+        
+		simpleView.addMouseListener(motorSelection);
+		advancedView.addMouseListener(motorSelection);
 	}
 
     /**
@@ -79,11 +93,36 @@ public class MinimalMotorView extends Composite {
     public MinimalMotorViewModel getViewModel() {
         return minimalMotorViewModel;
     }
-    
-	public void setMouseListeners(List<MouseListener> mouseListeners) {
-		for (MouseListener listener : mouseListeners) {
-			simpleView.addMouseListener(listener);
-			advancedView.addMouseListener(listener);
+	
+	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
+	public MouseListener motorSelection = new MouseAdapter() {
+		@Override
+		public void mouseDoubleClick(MouseEvent e) {
+			if (e.widget instanceof MotorInfoView) {
+				MotorInfoView minimal = (MotorInfoView) e.widget;
+                openMotorView(minimal.getViewModel().getMotor());
+			}
+		}
+	};
+	
+	/**
+	 * Opens the motor OPI for a particular motor.
+	 * @param motor The motor to show
+	 */
+	private static void openMotorView(Motor motor) {
+		try {
+    		// Display OPI motor view
+			String description = motor.getDescription();
+			String secondaryID = Strings.isNullOrEmpty(description) ? motor.name() : description;
+			secondaryID = secondaryID.replace(":", "");
+
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
+
+			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
+
+		} catch (PartInitException e) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(TableOfMotorsView.class), e.getMessage(), e);
 		}
 	}
 }

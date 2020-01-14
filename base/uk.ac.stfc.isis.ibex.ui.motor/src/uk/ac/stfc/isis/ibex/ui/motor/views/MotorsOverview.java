@@ -95,22 +95,6 @@ public class MotorsOverview extends Composite {
 			addMinimalView(motor);
 		}
 	}
-
-	@Override
-	public void addMouseListener(MouseListener listener) {
-		super.addMouseListener(listener);
-		mouseListeners.add(listener);
-	}
-	
-	@Override
-	public void removeMouseListener(MouseListener listener) {
-		super.removeMouseListener(listener);
-		mouseListeners.remove(listener);
-		
-		for (MinimalMotorView view : minimalViews) {
-			view.removeMouseListener(listener);
-		}
-	}
 	
 	private void addMinimalView(Motor motor) {
         MinimalMotorViewModel model = new MinimalMotorViewModel();
@@ -120,7 +104,9 @@ public class MotorsOverview extends Composite {
 		
 		minimalViews.add(view);
 
-		view.setMouseListeners(mouseListeners);
+		for (MouseListener listener : mouseListeners) {
+			view.addMouseListener(listener);
+		}
 	}
 	
 	private void addSpacerLabel() {
