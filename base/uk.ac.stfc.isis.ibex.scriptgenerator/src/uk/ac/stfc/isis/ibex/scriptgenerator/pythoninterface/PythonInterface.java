@@ -254,8 +254,6 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The contents to generate the script with.
 	 * @param config           The config to generate the script with.
-	 * @throws InvalidParamsException Thrown if the contents (actionsTable) are
-	 *                                invalid.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 */
