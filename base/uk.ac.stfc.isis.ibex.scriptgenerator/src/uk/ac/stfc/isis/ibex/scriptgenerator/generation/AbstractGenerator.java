@@ -8,7 +8,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * An interface to be implemented by each different language for the script generator.
+ * An interface to be implemented when generating and checking the parameter validity of the script generator's contents.
+ * Those that extend this class should not manipulate the contents of the script generator, they should only access the contents.
+ * The reason that the objects aren't passed from GeneratorContext as immutable is due to possible limitations in Py4J not being
+ *   able to handle those immutable objects.
+ * Those that extend this class should implement methods that run in a separate thread to the GUI thread. Examples of this can be
+ *   seen in the way GeneratorPython calls into PythonInterface are run as CompletableFutures in a new thread. Once the future is
+ *   complete then the relevant property is updated and a property change fired which will be recognised by the GeneratorContext.
  * 
  * @author James King
  *
@@ -20,7 +26,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	protected static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
-	 * Refresh the generated script in the generator.
+	 * Refresh the generated script property with a script.
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param config The instrument config to generate the script with.
