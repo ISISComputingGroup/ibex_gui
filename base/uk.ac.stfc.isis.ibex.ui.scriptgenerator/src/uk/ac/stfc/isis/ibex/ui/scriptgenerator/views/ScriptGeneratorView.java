@@ -35,15 +35,37 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
 /**
- * Provides settings to control the script generator.
+ * Provides the UI to control the script generator.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+	
 	private DataBindingContext bindingContext;
+	
+	/**
+	 * The UI table of script generator contents.
+	 */
 	private ActionsViewTable table;
+	
+	/**
+	 * The drop down box to manipulate which config is being used and load ActionParameters accordingly.
+	 */
 	private ComboViewer configSelector;
+	
+	/**
+	 * The ViewModel the View is updated by.
+	 */
 	private ScriptGeneratorViewModel scriptGeneratorViewModel;
 	
+	/**
+	 * Create a button to manipulate the rows of the script generator table and
+	 *  move them up and down.
+	 * 
+	 * @param parent The composite the button will live in.
+	 * @param icon The icon to display on the button.
+	 * @param direction The direction of the button "up" or "down".
+	 * @return The created button.
+	 */
 	private Button createMoveRowButton(Composite parent, String icon, String direction) {
         Button moveButton =  new Button(parent, SWT.NONE);
 		GridData gdBtnMoveRow = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
@@ -69,14 +91,17 @@ public class ScriptGeneratorView {
 		parent.setLayoutData(gdQueueContainer);
 		parent.setLayout(new GridLayout(1, false));
 		
+		// A composite to contain the elements at the top of the script generator
 		Composite topBarComposite = new Composite(parent, SWT.NONE);
 		topBarComposite.setLayout(new GridLayout(2, false));
 		topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
+		// The composite to contain the config selector drop down and it's label
 		Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
 		globalSettingsComposite.setLayout(new GridLayout(2, false));
 		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		
+		// The label for the config selector drop down
 		Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
 		configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		configSelectorLabel.setText("Config:");
@@ -84,6 +109,7 @@ public class ScriptGeneratorView {
 		// Drop-down box to select between configs.
 		configSelector = setUpConfigSelector(globalSettingsComposite);
 		
+		// The composite to contain the button to check validity
 		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 		validityComposite.setLayout(new GridLayout(1, false));
 		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -96,10 +122,12 @@ public class ScriptGeneratorView {
         	scriptGeneratorViewModel.displayValidityErrors();
         });
         
+        // The composite to contain the UI table
         Composite tableContainerComposite = new Composite(parent, SWT.NONE);
         tableContainerComposite.setLayout(new GridLayout(2, false));
         tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
+        // The UI table
 		table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
@@ -138,7 +166,8 @@ public class ScriptGeneratorView {
         btnDuplicateAction.setText("Duplicate Action");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
-        		
+        
+        // Bind the context and the validity checking listeners
         bind(btnGetValidityErrors);
 		
         scriptGeneratorViewModel.addEmptyAction();
@@ -164,7 +193,7 @@ public class ScriptGeneratorView {
 	}
 	
 	/**
-	 * Binds the Script Generator Table and config selector models to their views.
+	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
 	private void bind(Button btnGetValidityErrors) {
 		bindingContext = new DataBindingContext();
