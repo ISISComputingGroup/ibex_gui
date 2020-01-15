@@ -73,27 +73,23 @@ public class MinimalMotorViewModel extends ModelObject {
      * Constructor.
      */
     public MinimalMotorViewModel() {
-    	DisplayPreferences displayPrefsModel = DisplayPreferences.getInstance();
-    	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setPalette((MotorBackgroundPalette) evt.getNewValue());
-			}
-		});
+    	this(DisplayPreferences.getInstance(), Motors.getInstance().getMotorSettingsModel());
+    }
+
+	public MinimalMotorViewModel(DisplayPreferences displayPrefsModel, MotorsTableSettings motorsTableSettingsModel) {
+		displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", 
+				evt -> setPalette((MotorBackgroundPalette) evt.getNewValue()));
+		
         setPalette(displayPrefsModel.getMotorBackgroundPalette());
 
         /**
          *  Property change listener for the motor settings model to this minimal motor view model 
          *  to determine if the advanced minimal view is enabled for the table of motors.
          */
-        MotorsTableSettings motorsTableSettingsModel = Motors.getInstance().getMotorSettingsModel();
-        motorsTableSettingsModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
-        	@Override
-        	public void propertyChange(PropertyChangeEvent evt) {
-        		setAdvancedMinimalMotorView((boolean) evt.getNewValue());
-        	}
-        });
-    }
+        
+        motorsTableSettingsModel.addPropertyChangeListener("advancedMinimalMotorView",
+        		evt -> setAdvancedMinimalMotorView((boolean) evt.getNewValue()));
+	}
     
     private Font chooseFont() {
         if (enabled == null) {

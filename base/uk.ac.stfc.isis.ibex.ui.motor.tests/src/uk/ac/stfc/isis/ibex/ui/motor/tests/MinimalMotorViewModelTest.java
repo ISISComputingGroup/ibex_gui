@@ -29,6 +29,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTableSettings;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 import uk.ac.stfc.isis.ibex.ui.motor.views.MinimalMotorViewModel;
 
@@ -39,13 +41,20 @@ public class MinimalMotorViewModelTest {
 
     @Mock
     private MotorBackgroundPalette palette;
+    @Mock
+    private MotorsTableSettings mockMotorTableSettings;
+
     private MinimalMotorViewModel viewModel;
     private TestMotor testMotor;
-
     @Before
     public void setUp() {
-        viewModel = new MinimalMotorViewModel();
 
+        mockMotorTableSettings = Mockito.mock(MotorsTableSettings.class);
+        
+        viewModel = new MinimalMotorViewModel(DisplayPreferences.getInstance(), mockMotorTableSettings);
+
+        Mockito.when(mockMotorTableSettings.isAdvancedMinimalMotorView()).thenReturn(false);
+        
         palette = Mockito.mock(MotorBackgroundPalette.class);
         Mockito.when(palette.getDisabledColor()).thenReturn(new Color(null, 0, 0, 0));
         Mockito.when(palette.getUnnamedColor()).thenReturn(new Color(null, 1, 1, 1));

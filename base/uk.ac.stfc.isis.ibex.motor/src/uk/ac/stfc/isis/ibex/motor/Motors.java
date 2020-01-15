@@ -44,7 +44,10 @@ public class Motors extends Plugin {
 	private static final int NUMBER_MOTORS = 8;
 
     public static Motors getInstance() { 
-    	return instance; 
+    	if (instance == null) {
+    		instance = new Motors();
+    	}
+    	return instance;
     }
 
 	private MotorsTableSettings settingsModel = new MotorsTableSettings();
