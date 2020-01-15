@@ -57,8 +57,6 @@ public class Activator implements BundleActivator {
 		MODEL.cleanUp();
 	}
 	
-    private static ScriptGeneratorSingleton instance;
-
 	/**
 	 * Gets the singleton instance of this class.
 	 * 

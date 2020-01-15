@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public class ActionParameter {
 
-	private String name;
+	private final String name;
 	
 	/**
 	 * This class holds the name about an action parameter.
