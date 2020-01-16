@@ -29,6 +29,7 @@ import org.osgi.framework.BundleContext;
 public class Activator implements BundleActivator {
 
 	private static BundleContext context;
+	private static ScriptGeneratorSingleton MODEL;
 	
 	/**
      * 
@@ -66,7 +67,4 @@ public class Activator implements BundleActivator {
     public static ScriptGeneratorSingleton getModel() { 
     	return MODEL; 
     }
-
-    private static ScriptGeneratorSingleton MODEL;
-
 }
