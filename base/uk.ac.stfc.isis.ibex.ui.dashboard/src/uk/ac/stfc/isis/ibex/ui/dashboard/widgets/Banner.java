@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.graphics.Font;
@@ -29,6 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 
+import uk.ac.stfc.isis.ibex.dashboard.DashboardPv;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 
 /**
@@ -111,8 +112,8 @@ public class Banner extends Composite {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(bannerText), BeanProperties.value("value").observe(model.bannerText()));
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));
-		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(model.runNumber()));
-		bindingContext.bindValue(WidgetProperties.text().observe(shutter), BeanProperties.value("value").observe(model.shutter()));
+		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(model.dashboardValue(DashboardPv.TOP_LEFT)));
+		bindingContext.bindValue(WidgetProperties.text().observe(shutter), BeanProperties.value("value").observe(model.dashboardLabel(DashboardPv.TOP_RIGHT)));
 		bindingContext.bindValue(WidgetProperties.visible().observe(simMode), BeanProperties.value("value").observe(model.daeSimMode()));
 	}
 }

@@ -62,7 +62,7 @@ public class DashboardView {
 	private final BannerModel bannerModel = new BannerModel(dashboard.observables());
 	
 	private final TitlePanelModel titleModel = 
-			new TitlePanelModel(dashboard.observables().dae.title, dashboard.observables().users);
+			new TitlePanelModel(dashboard.observables().title, dashboard.observables().users);
 	
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
