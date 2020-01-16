@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.dashboard;
 import java.util.EnumMap;
 import java.util.Map;
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
+import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -50,6 +51,7 @@ public class DashboardObservables extends Closer {
      */
     public final ForwardingObservable<String> users;
     public final ForwardingObservable<String> title;
+	public final ForwardingObservable<DaeRunState> runState;
 	
 	private final SwitchableObservable<String> getObservable(final String pv) {
 		return registerForClose(obsFactory.getSwitchableObservable(new StringChannel(), pv));
@@ -64,6 +66,7 @@ public class DashboardObservables extends Closer {
 
         final DaeObservables dae = new DaeObservables();
         title = registerForClose(dae.title);
+        runState = registerForClose(dae.runState);
         
         for (DashboardPv dashboardPv : DashboardPv.values()) {
         	valueObservables.put(dashboardPv, getObservable(dashboardPv.getValuePV()));

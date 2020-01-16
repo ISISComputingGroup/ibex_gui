@@ -3,8 +3,9 @@ package uk.ac.stfc.isis.ibex.dashboard;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 
 public enum DashboardPv {
-	TOP_LEFT("TOP:LEFT"),
-	TOP_RIGHT("TOP:RIGHT"),
+	BANNER_LEFT("BANNER:LEFT"),
+	BANNER_MIDDLE("BANNER:MIDDLE"),
+	BANNER_RIGHT("BANNER:RIGHT"),
 	ROW1_COL1("TAB:1:1"),
 	ROW1_COL2("TAB:1:2"),
 	ROW2_COL1("TAB:2:1"),

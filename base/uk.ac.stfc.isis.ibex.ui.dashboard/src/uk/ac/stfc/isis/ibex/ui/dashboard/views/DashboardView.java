@@ -34,12 +34,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.dashboard.Dashboard;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
-import uk.ac.stfc.isis.ibex.ui.dashboard.models.MonitorPanelModel;
-import uk.ac.stfc.isis.ibex.ui.dashboard.models.TimePanelModel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.Banner;
-import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.MonitorPanel;
-import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TimePanel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 
 /**
@@ -63,9 +59,6 @@ public class DashboardView {
 	
 	private final TitlePanelModel titleModel = 
 			new TitlePanelModel(dashboard.observables().title, dashboard.observables().users);
-	
-	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
-	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 
 	/**
 	 * Create the dashboard view.
@@ -100,25 +93,23 @@ public class DashboardView {
 		Label separator2 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);
         separator2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
-        GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        monitorsLayoutGridData.widthHint = FIXED_WIDTH / 2;
-        monitors.setLayoutData(monitorsLayoutGridData);
+//		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
+//        GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+//        monitorsLayoutGridData.widthHint = FIXED_WIDTH / 2;
+//        monitors.setLayoutData(monitorsLayoutGridData);
 		
 		Label separator3 = new Label(dashboardControl, SWT.SEPARATOR | SWT.VERTICAL);
 		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
-		TimePanel times = new TimePanel(dashboardControl, SWT.NONE, textFont, timesModel);
-        GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
-        times.setLayoutData(timesGridData);
+//		TimePanel times = new TimePanel(dashboardControl, SWT.NONE, textFont, timesModel);
+//        GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+//        timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
+//        times.setLayoutData(timesGridData);
 	}
 	
 	@PreDestroy
 	public void dispose() {
 		bannerModel.close();
 		titleModel.close();
-		monitorsModel.close();
-		timesModel.close();
 	}
 }

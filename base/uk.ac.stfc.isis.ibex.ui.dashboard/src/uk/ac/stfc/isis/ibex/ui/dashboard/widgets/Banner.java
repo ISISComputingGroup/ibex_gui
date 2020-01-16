@@ -40,11 +40,7 @@ public class Banner extends Composite {
 
 	private final Label bannerText;
 	private final Composite details;
-	private final Label lblRun;
-	private final Label runNumber;
-	private final Label lblShutter;
-	private final Label shutter;
-	private final Label simMode;
+	private final DataBindingContext bindingContext = new DataBindingContext();
 	
 	/**
 	 * The constructor. 
@@ -64,56 +60,54 @@ public class Banner extends Composite {
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
+		this.setBackgroundMode(SWT.INHERIT_FORCE);
 		
 		bannerText = new Label(this, SWT.WRAP | SWT.CENTER);
 		bannerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bannerText.setFont(titleFont);
-		bannerText.setText("INSTRUMENT   is   RUNNING");
+		bannerText.setText("INSTRUMENT is UNKNOWN");
 		
 		details = new Composite(this, SWT.NONE);
 		details.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 		details.setLayout(new GridLayout(5, false));
 		details.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
-		lblRun = new Label(details, SWT.NONE);
-		lblRun.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		lblRun.setFont(textFont);
-		lblRun.setText("Run:");
-		
-		runNumber = new Label(details, SWT.NONE);
-		runNumber.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		runNumber.setFont(textFont);
-		runNumber.setText("00000001");
-		
-		simMode = new Label(details, SWT.NONE);
-		simMode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		simMode.setFont(simulationModeFont);
-		simMode.setText("SIMULATION MODE");
-		
-		lblShutter = new Label(details, SWT.NONE);
-		lblShutter.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblShutter.setFont(textFont);
-		lblShutter.setText("Shutter:");
-		
-		shutter = new Label(details, SWT.NONE);
-		GridData gdShutter = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gdShutter.widthHint = 100;
-		gdShutter.minimumWidth = 100;
-		shutter.setLayoutData(gdShutter);
-		shutter.setFont(textFont);
-		shutter.setText("UNKNOWN");
+		bannerLabel(parent, textFont, DashboardPv.BANNER_LEFT, model);
+		bannerLabel(parent, textFont, DashboardPv.BANNER_MIDDLE, model);
+		bannerLabel(parent, textFont, DashboardPv.BANNER_RIGHT, model);
 		
 		if (model != null) {
 			bind(model);
 		}
 	}
 	
+	private void bannerLabel(Composite parent, Font textFont, DashboardPv pv, BannerModel model) {
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		container.setLayout(new GridLayout(2, true));
+		container.setBackgroundMode(SWT.INHERIT_FORCE);
+		
+		Label label = new Label(container, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		label.setFont(textFont);
+		label.setText("");
+		
+		Label value = new Label(container, SWT.NONE);
+		value.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		value.setFont(textFont);
+		value.setText("");
+		
+		bindingContext.bindValue(WidgetProperties.background().observe(container), 
+				BeanProperties.value("value").observe(model.background()));
+		bindingContext.bindValue(WidgetProperties.text().observe(label), 
+				BeanProperties.value("value").observe(model.dashboardLabel(pv)));
+		bindingContext.bindValue(WidgetProperties.text().observe(value), 
+				BeanProperties.value("value").observe(model.dashboardValue(pv)));
+	}
+	
     private void bind(BannerModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(bannerText), BeanProperties.value("value").observe(model.bannerText()));
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));
-		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(model.dashboardValue(DashboardPv.TOP_LEFT)));
-		bindingContext.bindValue(WidgetProperties.text().observe(shutter), BeanProperties.value("value").observe(model.dashboardLabel(DashboardPv.TOP_RIGHT)));
-		bindingContext.bindValue(WidgetProperties.visible().observe(simMode), BeanProperties.value("value").observe(model.daeSimMode()));
 	}
 }

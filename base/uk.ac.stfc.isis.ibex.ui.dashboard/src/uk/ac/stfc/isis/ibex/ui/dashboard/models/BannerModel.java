@@ -42,7 +42,6 @@ public class BannerModel extends Closer {
 	private final UpdatedValue<String> instrumentName;
 	private final InstrumentState instrumentState;
 	private final BannerText bannerText;
-	private final UpdatedValue<Boolean> simulationMode;
 	
 	private final Map<DashboardPv, TextUpdatedObservableAdapter> labelAdapters = new EnumMap<>(DashboardPv.class);
 	private final Map<DashboardPv, TextUpdatedObservableAdapter> valueAdapters = new EnumMap<>(DashboardPv.class);
@@ -53,11 +52,10 @@ public class BannerModel extends Closer {
 	 */
 	public BannerModel(DashboardObservables observables) {
 		instrumentName = Instrument.getInstance().name();
-		instrumentState = registerForClose(new InstrumentState(observables.dae.runState));
+		instrumentState = registerForClose(new InstrumentState(observables.runState));
 		bannerText = new BannerText(instrumentName, instrumentState.text());
 		
 //		runNumber = registerForClose(new TextUpdatedObservableAdapter(observables.dae.runNumber));
-		simulationMode = registerForClose(new UpdatedObservableAdapter<Boolean>(observables.dae.simulationMode));
 //		shutterState = registerForClose(new ShutterState(observables.shutter));
 		
 		for (DashboardPv pv : DashboardPv.values()) {
@@ -112,13 +110,5 @@ public class BannerModel extends Closer {
 	 */
 	public UpdatedValue<String> dashboardValue(DashboardPv pv) {
 		return valueAdapters.get(pv);
-	}
-	
-	/**
-	 * Whether the DAE is in simulation mode or not.
-	 * @return Updated value where true means the DAE is in simulation mode and false means it is not in simulation mode.
-	 */
-	public UpdatedValue<Boolean> daeSimMode() {
-		return simulationMode;
 	}
 }
