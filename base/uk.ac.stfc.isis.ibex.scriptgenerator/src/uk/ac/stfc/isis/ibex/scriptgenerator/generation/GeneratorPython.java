@@ -1,13 +1,11 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutionException;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Use to generate a python script or check parameter validity from script generator contents.
@@ -15,66 +13,65 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
  * @author James King
  *
  */
-public class GeneratorPython implements GeneratorInterface {
+public class GeneratorPython extends AbstractGenerator {
 	
-	PythonInterface pythonInterface;
+	private final PythonInterface pythonInterface;
 	
 	/**
 	 * Create a python generator with the specified python interface.
+	 * Listen to changes in it's validity checking and generated script.
 	 * 
 	 * @param pythonInterface The py4j python interface to use to communicate with python.
 	 */
 	public GeneratorPython(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
+		this.pythonInterface.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		this.pythonInterface.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
 	}
 
 	/**
-	 * Generate a script in python.
+	 * Refresh the generated python script property.
 	 * 
-	 * @param actionsTable The script generator content to produce the script from.
+	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param config The instrument config to generate the script with.
-	 * @return The path to the generated script.
-	 * @throws InvalidParamsException Thrown if the values for the parameters in the actionTable are invalid.
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
-	public String generate(ActionsTable actionsTable, Config config) throws InvalidParamsException {
-		return pythonInterface.generate(convertActionsTableToPythonRepr(actionsTable), config);
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
+		pythonInterface.refreshGeneratedScript(scriptGenContent, config);
 	}
 	
 	/**
-	 * Check if the contents of the script generator (actionsTable) are valid against Python.
+	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
 	 * 
-	 * @param actionsTable The contents of the script generator to validate.
+	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param config The instrument config to validate the script against.
-	 * @return true if the contents are valid, false if not.
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
-	public boolean areParamsValid(ActionsTable actionsTable, Config config) {
-		HashMap<Integer, String> errorMessages = pythonInterface.areParamsValid(
-				convertActionsTableToPythonRepr(actionsTable), config);
-		return errorMessages.isEmpty();
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
+		pythonInterface.refreshAreParamsValid(scriptGenContent, config);
 	}
 
 	/**
-	 * Get the validity errors returned when checking validity.
+	 * Refresh the validity errors returned when checking validity.
 	 * 
-	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param config The instrument config to validate the script against.
-	 * @return a hashmap of validity errors.
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
-	public HashMap<Integer, String> getValidityErrors(ActionsTable actionsTable, Config config) {
-		return pythonInterface.areParamsValid(convertActionsTableToPythonRepr(actionsTable), config);
-	}
-	
-	/**
-	 * Converts ActionsTable to a suitable representation for py4j to understand.
-	 * 
-	 * @param actionsTable The table to convert.
-	 * @return A suitable python representation.
-	 */
-	public List<Map<String, String>> convertActionsTableToPythonRepr(ActionsTable actionsTable) {
-		return actionsTable.getActions().stream().
-				map(action -> action.getAllActionParametersAsStrings()).collect(Collectors.toList());
+	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
+		pythonInterface.refreshValidityErrors(scriptGenContent, config);
 	}
 	
 }

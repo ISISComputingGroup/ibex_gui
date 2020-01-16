@@ -13,8 +13,7 @@ from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 
 class Config(object):
     """
-    Class containing the definition and validation functions of a single action
-    .
+    Class containing the definition and validation functions of a single action.
     """
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config']
@@ -38,24 +37,42 @@ class Config(object):
 
         Returns:
             arguments: List of the parameter names (strings)
-
         """
         arguments = signature(self.action.run).parameters
 
         return ListConverter().convert(arguments, gateway._gateway_client)
 
-    def doAction(self, list_of_arguments) -> None:
-        """Executes the action with the parameters provided"""
-        self.action.run(**list_of_arguments)
+    def doAction(self, action) -> Union[None, AnyStr]:
+        """
+        Executes the action with the parameters provided
 
-    def parametersValid(self, list_of_arguments) -> Union[None, AnyStr]:
+        Args:
+            The 
+
+        Returns:      
+            None if run runs without exception, otherwise a String containing the error message.
+        """
+        map_of_arguments = {}
+        action_parameters = action.getAllActionParameters()
+        for action_parameter, parameter_value in action_parameters.items():
+            map_of_arguments[action_parameter.getName()] = parameter_value
+        return self.action.run(**map_of_arguments)
+
+    def parametersValid(self, action) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the configuration
+
+        Args:
+            The parameters to check for validity.
 
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(**list_of_arguments)
+        map_of_arguments = {}
+        action_parameters = action.getAllActionParameters()
+        for action_parameter, parameter_value in action_parameters.items():
+            map_of_arguments[action_parameter.getName()] = parameter_value
+        return self.action.parameters_valid(**map_of_arguments)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -71,9 +88,6 @@ class Config(object):
 
 class Generator(object):
 
-    class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.generation.PythonGeneratorInterface']
-
     def __init__(self, search_folder: str = "instruments"):
         """
         Set up the template to generate with
@@ -85,35 +99,35 @@ class Generator(object):
         self.template = self.env.get_template('generator_template.py')
         self.search_folder = search_folder
 
-    def checkParamValidity(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
+    def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
         Checks if a list of parameters are valid for the configuration
+
+        Returns:
+            True if valid, False if not
+        """
+        for action in list_of_actions:
+            if config.parametersValid(action) != None:
+                return False
+        return True
+
+    def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
+        """
+        Get a map of validity errors
 
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
         current_list_of_arguments = 0
         validityCheck: Dict[int, AnyStr] = {}
-        for list_of_arguments in list_of_list_of_arguments:
-            singleActionValidityCheck = config.parametersValid(list_of_arguments)
+        for action in list_of_actions:
+            singleActionValidityCheck = config.parametersValid(action)
             if singleActionValidityCheck != None:
                 validityCheck[current_list_of_arguments] = singleActionValidityCheck
             current_list_of_arguments += 1
         return validityCheck
 
-    def areParamsValid(self, list_of_list_of_arguments, config: Config) -> bool:
-        """
-        Check if all params are valid
-
-        Returns:
-            bool: true if valid. false if not
-        """
-        for list_of_arguments in list_of_list_of_arguments:
-            if config.parametersValid(list_of_arguments) is not None:
-                return False
-        return True
-
-    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
@@ -162,22 +176,33 @@ class ConfigWrapper(object):
 
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
-
-    def getGenerator(self) -> Generator:
+    
+    def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
-        Returns the generator to create python scripts.
+        Checks if a list of parameters are valid for the configuration
 
         Returns:
-           generator: The generator to create python scripts with.
+            True if valid, False if not.
         """
-        self.generator
-    
-    def checkParamValidity(self, list_of_list_of_arguments, config: Config) -> Dict[int, AnyStr]:
-        return MapConverter().convert(self.generator.checkParamValidity(list_of_list_of_arguments, config), gateway._gateway_client)
+        return self.generator.areParamsValid(list_of_actions, config)
 
-    def generate(self, list_of_list_of_arguments, config: Config) -> Union[None, AnyStr]:
-        return self.generator.generate(list_of_list_of_arguments, config)
+    def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
+        """
+        Get the validity errors of the current actions
 
+        Returns:
+            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+        """
+        return MapConverter().convert(self.generator.getValidityErrors(list_of_actions, config), gateway._gateway_client)
+
+    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
+        """
+        Generates a script from a list of parameters and configuration
+
+        Returns:
+           None if parameters are invalid, otherwise a string of a generated script.
+        """
+        return self.generator.generate(list_of_actions, config)
 
 def get_actions(search_folder: str = "instruments") -> Dict[AnyStr, ActionDefinition]:
     """ Dynamically import all the Python modules in this module's sub directory. """
@@ -207,3 +232,4 @@ if __name__ == '__main__':
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),
         python_server_entry_point=config_wrapper)
+    

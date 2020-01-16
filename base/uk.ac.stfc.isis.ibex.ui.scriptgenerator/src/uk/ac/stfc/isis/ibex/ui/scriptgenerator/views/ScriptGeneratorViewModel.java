@@ -2,10 +2,11 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -13,6 +14,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -21,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -29,20 +30,121 @@ import uk.ac.stfc.isis.ibex.ui.widgets.MessageDialogWithCopy;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
-
+/**
+ * The ViewModel for the ScriptGeneratorView.
+ * 
+ * @author James King
+ *
+ */
 public class ScriptGeneratorViewModel {
 	
-	private Logger logger = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+	/**
+	 * A dark red for use in the validity column when a row is invalid.
+	 */
+	private static final Color invalidDarkColor = Display.getDefault().getSystemColor(SWT.COLOR_RED);
 	
-	private static final Color invalidDarkColor = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-	private static final Color invalidLightColor = new Color(Display.getCurrent(), 255, 204, 203);
-	private static final Color validColor = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
-	private static final Color clearColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+	/**
+	 * A light read for use in the other script generator table columns when a row is invalid.
+	 */
+	private static final Color invalidLightColor = new Color(Display.getDefault(), 255, 204, 203);
 	
+	/**
+	 * A green for use in the validity column when a row is valid.
+	 */
+	private static final Color validColor = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+	
+	/**
+	 * A clear colour for use in other script generator table columns when a row is valid.
+	 */
+	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	
+	/**
+	 * The colour of the "get validity errors" button when it is grayed out.
+	 */
+	private static final Color greyColor = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+	
+	/**
+	 * A light orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
+	 */
+	private static final Color lightValidityCheckErrorColor = new Color(Display.getDefault(), 255, 201, 102);
+	
+	/**
+	 * A dark orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
+	 */
+	private static final Color darkValidityCheckErrorColor = new Color(Display.getDefault(), 255, 165, 0);
+	
+	/**
+	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
+	 */
+	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
+	
+	/**
+	 * A property that denotes whether the language to generate and check validity errors in is supported,
+	 */
+	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	
+	/**
+	 * A property that denotes whether there has been a threading error in generation or validity checking.
+	 */
+	private static final String THREAD_ERROR_PROPERTY = "thread error";
+	
+	/**
+	 * A property that carries the validity error messages to listen for in order to update table rows.
+	 */
+	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * A property to listen to for when actions change in the model.
+	 */
+	private static final String ACTIONS_PROPERTY = "actions";
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+	
+	/**
+	 * The reference to the singleton model that the ViewModel is to use.
+	 */
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	
+	/**
+	 * A constructor that sets up the script generator model and 
+	 *   begins listening to property changes in the model.
+	 */
 	public ScriptGeneratorViewModel() {
+		// Set up the model
 		scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorModel.createConfigLoader();
+		scriptGeneratorModel.setUp();
+		// Listen to whether the language support is changed
+		// notify the user if the language is not supported
+		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+			if(Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
+				displayLanguageSupportError();
+			}
+		});
+		// Listen for model threading errors and display to the user if there is one
+		// Model is responsible for logging it
+		scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+			displayThreadingError();
+		});
+	}
+	
+	/**
+	 * Display a message dialog box that the language that is being used is unsupported.
+	 */
+	private void displayLanguageSupportError() {
+		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+				"Language support issue",
+				"You are attempting to use an unsupported language, " + 
+				"parameter validity checking and script generation are disabled at this time");
+	}
+	
+	/**
+	 * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
+	 */
+	private void displayThreadingError() {
+		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+				"Error",
+				"Generating or parameter validity checking error. Threading issue.");
 	}
 
 	/**
@@ -124,7 +226,9 @@ public class ScriptGeneratorViewModel {
 	 */
 	protected LabelProvider getConfigSelectorLabelProvider() {
 		return new LabelProvider() {
-		    // Use getName method on python Config class to get labels.
+		    /**
+		     * Use getName method on python Config class to get labels.
+		     */
 			@Override
 		    public String getText(Object element) {
 		        if (element instanceof Config) {
@@ -137,18 +241,49 @@ public class ScriptGeneratorViewModel {
 	}
 
 	/**
-	 * Listen to changes on the actions property of the scriptGenerator table and update the view table.
+	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
+	 *  update the view table.
 	 * 
 	 * @param table The view table to update.
 	 * @param display The display to change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable) {
-		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actions", e -> 
-			Display.getCurrent().asyncExec(() -> {
-                viewTable.setRows(scriptGeneratorModel.getActions());
-                updateValidityChecks(viewTable);
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors) {
+		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, e -> {
+			actionChangeHandler(viewTable, btnGetValidityErrors);
+		});
+		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
+			actionChangeHandler(viewTable, btnGetValidityErrors);
+		});
+	}
+	
+	/**
+	 * Handle a change in the actions or their validity.
+	 * Set the UI table's actions from the model and update validity checking.
+	 * 
+	 * @param viewTable The view table to update.
+	 * @param btnGetValidityErrors The button to manipulate.
+	 */
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors) {
+		Display.getDefault().asyncExec(() -> {
+            viewTable.setRows(scriptGeneratorModel.getActions());
+            updateValidityChecks(viewTable);
+            setButtonValidityStyle(btnGetValidityErrors);
+		});
+	}
+	
+	private void setButtonValidityStyle(Button btnGetValidityErrors) {
+		if(scriptGeneratorModel.languageSupported) {
+			// Grey the button out if parameters are valid, if not make it red
+			btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
+			if(scriptGeneratorModel.areParamsValid()) {
+				btnGetValidityErrors.setBackground(greyColor);
+			} else {
+				btnGetValidityErrors.setBackground(invalidLightColor);
 			}
-		));
+		} else {
+			// Alert the user with an orange colour that the validity checks may be incorrect
+			btnGetValidityErrors.setBackground(lightValidityCheckErrorColor);
+		}
 	}
 
 	/**
@@ -158,7 +293,7 @@ public class ScriptGeneratorViewModel {
 	 * @param configSelector The config selector ui element to bind.
 	 */
 	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector) {
-		bindingContext.bindValue(ViewersObservables.observeSingleSelection(configSelector), 
+		bindingContext.bindValue(ViewerProperties.singleSelection().observe(configSelector), 
 				BeanProperties.value("config").observe(scriptGeneratorModel.getConfigLoader()));
 	}
 
@@ -191,21 +326,21 @@ public class ScriptGeneratorViewModel {
 		TableItem[] items = viewTable.table().getItems();
 		int validityColumnIndex = viewTable.table().getColumnCount()-1;
 		for (int i = 0; i < actions.size(); i++) {
-			if (actions.get(i).isValid()) {
-				items[i].setBackground(clearColor);
-				items[i].setBackground(validityColumnIndex, validColor);
+			if(i < items.length) {
+				if (!scriptGeneratorModel.languageSupported) {
+					items[i].setBackground(lightValidityCheckErrorColor);
+					items[i].setBackground(validityColumnIndex, darkValidityCheckErrorColor);
+				} else if (actions.get(i).isValid()) {
+					items[i].setBackground(clearColor);
+					items[i].setBackground(validityColumnIndex, validColor);
+				} else {
+					items[i].setBackground(invalidLightColor);
+					items[i].setBackground(validityColumnIndex, invalidDarkColor);
+				}
 			} else {
-				items[i].setBackground(invalidLightColor);
-				items[i].setBackground(validityColumnIndex, invalidDarkColor);
+				LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
 			}
 		}
-	}
-
-	/**
-	 * Carry out actions in model on the view table changing. 
-	 */
-	protected void onTableChange() {
-		scriptGeneratorModel.onTableChange();
 	}
 	
 	/**
@@ -242,8 +377,6 @@ public class ScriptGeneratorViewModel {
 	            @Override
 	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
 	                row.setActionParameterValue(actionParameter, value);
-	                onTableChange();
-	                updateValidityChecks(viewTable);
 	            }
 	        });	
         }
@@ -253,6 +386,9 @@ public class ScriptGeneratorViewModel {
         		new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
         	@Override
 			protected String stringFromRow(ScriptGeneratorAction row) {
+        		if(!scriptGeneratorModel.languageSupported) {
+        			return "\u003F";
+        		}
         		if (row.isValid()) {
         			return "\u2714"; // A tick for valid
         		}
@@ -272,16 +408,18 @@ public class ScriptGeneratorViewModel {
     
     /**
      * Get the tooltip text for a script generator action.
+     * We don't want to show a tooltip if the action is valid, 
+     *   SWT shows no tooltip if we return null.
      * 
      * @param action The action to get the tooltip text for.
      * @return The text for the action tooltip.
      */
     private String getScriptGenActionToolTipText(ScriptGeneratorAction action) {
     	if (action.isValid()) {
-			return null; 
+			return null; // Do not show a tooltip
 		}
 		return "The reason this row is invalid is:\n" +
-			action.getInvalidityReason() + "\n"; // Show reason on next line as a tooltip
+			action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
     
     /**
@@ -291,10 +429,28 @@ public class ScriptGeneratorViewModel {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-    			e -> Display.getCurrent().asyncExec(() -> viewTable.updateTableColumns())
+    			e -> Display.getDefault().asyncExec(() -> viewTable.updateTableColumns())
     	);
     }
     
+    /**
+	 * Display the first few validity errors or that there are none in a popup box.
+	 */
+	public void displayValidityErrors() {
+		if(scriptGeneratorModel.languageSupported) {
+			String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
+			if(!body.isEmpty()) {
+				String heading = "Validity errors:\n\n";
+				String message = heading + body;
+				MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", message);
+			} else {
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
+			}
+		} else {
+			displayLanguageSupportError();
+		}
+	}
+
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      */

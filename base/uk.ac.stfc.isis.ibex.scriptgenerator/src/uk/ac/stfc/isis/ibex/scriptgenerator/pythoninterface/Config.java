@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.util.HashMap;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+
 import java.util.List;
 
 /**
@@ -14,16 +15,17 @@ public interface Config {
 	
 	/**
 	 * Performs the defined action.
-	 * @param arguments The arguments for doing the action.
+	 * @param action The action to do.
+	 * @return The error if there has been one.
 	 */
-	public void doAction(HashMap<Integer, String> arguments);
+	public String doAction(ScriptGeneratorAction action);
 	
 	/**
 	 * Performs the check that the arguments are valid.
-	 * @param arguments The current argument values.
+	 * @param action The action to check for validity.
 	 * @return The error if the arguments are not valid.
 	 */
-	public String parametersValid(HashMap<Integer, String> arguments);
+	public String parametersValid(ScriptGeneratorAction action);
 	
 	/**
 	 * @return The name of this configuration.

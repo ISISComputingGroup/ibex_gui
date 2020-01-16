@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Scriptgenerator
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.scriptgenerator;singleton:=true
@@ -10,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui,
  org.eclipse.ui.workbench,
  py4j-java;bundle-version="0.10.8",
- uk.ac.stfc.isis.ibex.logger
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.preferences
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
