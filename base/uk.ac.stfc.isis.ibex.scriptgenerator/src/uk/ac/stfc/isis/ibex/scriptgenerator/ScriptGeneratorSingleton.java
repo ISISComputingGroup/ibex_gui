@@ -121,6 +121,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
+	 * Create the config loader.
+	 */
+	public void createConfigLoader() {
+		pythonInterface = new PythonInterface();
+		configLoader = new ConfigLoader(pythonInterface);
+	}
+	
+	/**
 	 * Get the config loader.
 	 * 
 	 * @return The config loader
@@ -132,11 +140,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The constructor, will create a config loader and load an initial config.
 	 */
-	public ScriptGeneratorSingleton() {
-		pythonInterface = new PythonInterface();
-		configLoader = new ConfigLoader(pythonInterface);
-		setUp();
-	}
+	public ScriptGeneratorSingleton() {}
 	
 	/**
 	 * Pass a python interface to run with, then create a config loader and load an initial config.
@@ -154,7 +158,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Called by the constructors to set up the class.
 	 * Set up listeners for the generator.
 	 */
-	private void setUp() {
+	public void setUp() {
 		generator = new GeneratorContext(pythonInterface);
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable

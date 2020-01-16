@@ -45,6 +45,7 @@ public class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		MODEL = new ScriptGeneratorSingleton();
 	}
 
 	/*
@@ -66,6 +67,6 @@ public class Activator implements BundleActivator {
     	return MODEL; 
     }
 
-    private static ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
+    private static ScriptGeneratorSingleton MODEL;
 
 }

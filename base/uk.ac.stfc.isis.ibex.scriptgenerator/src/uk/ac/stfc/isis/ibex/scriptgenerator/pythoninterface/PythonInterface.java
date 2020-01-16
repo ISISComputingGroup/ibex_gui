@@ -188,6 +188,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws IOException If actionLoaderPythonScript not found.
 	 */
 	public void setUpPythonThread(String actionLoaderPythonScript) throws IOException {
+		LOG.info("Launching python process");
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), actionLoaderPythonScript);
 		new Thread(listenToErrors).start();
