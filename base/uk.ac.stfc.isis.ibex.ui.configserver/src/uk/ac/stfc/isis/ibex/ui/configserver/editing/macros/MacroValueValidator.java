@@ -59,7 +59,13 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
      * The message that is displayed when the regex pattern is invalid.
      */
 	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
+	/**
+	 * The message that is displayed when the value is longer than 255 character
+	 */
+	public static final String MAXIMUM_CHARACTER_LENGTH_LIMIT_MESSAGE = "Value cannot be longer than 255 characters";
 	
+	private final int MAXIMUM_CHARACTER_LIMIT = 1000;
+
 	private final Label messageDisplayer;
 	private MacroViewModel macro;
 	private boolean nameIsValid = true;
@@ -92,6 +98,9 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
             } else if (!matchesPattern(text)) {
 				setShowWarningIcon(true);
 				returnStatus = setError(PATTERN_MISMATCH_MESSAGE);
+			} else if (text.length() >= MAXIMUM_CHARACTER_LIMIT) {
+				setShowWarningIcon(true);
+				returnStatus = setError(MAXIMUM_CHARACTER_LENGTH_LIMIT_MESSAGE);
 			} else {
 				returnStatus = setNoError();
 			}
