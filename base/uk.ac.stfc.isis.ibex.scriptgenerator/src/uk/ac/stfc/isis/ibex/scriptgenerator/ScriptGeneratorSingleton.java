@@ -120,7 +120,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
-	 * The constructor, will create a config loader and load an initial config.
+	 * The constructor, will create without a config loader and without loading
+	 * an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
 	    
