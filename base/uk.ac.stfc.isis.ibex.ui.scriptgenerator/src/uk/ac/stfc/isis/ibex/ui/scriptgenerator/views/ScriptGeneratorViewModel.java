@@ -107,7 +107,10 @@ public class ScriptGeneratorViewModel {
 	 *   begins listening to property changes in the model.
 	 */
 	public ScriptGeneratorViewModel() {
+		// Set up the model
 		scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorModel.createConfigLoader();
+		scriptGeneratorModel.setUp();
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {

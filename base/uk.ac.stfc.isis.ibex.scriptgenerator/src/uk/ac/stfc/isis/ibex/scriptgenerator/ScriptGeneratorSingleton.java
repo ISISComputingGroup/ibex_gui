@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
@@ -36,8 +37,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
@@ -121,21 +120,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
-	 * Get the config loader.
-	 * 
-	 * @return The config loader
-	 */
-	public ConfigLoader getConfigLoader() {
-		return configLoader;
-	}
-	
-	/**
-	 * The constructor, will create a config loader and load an initial config.
+	 * The constructor, will create without a config loader and without loading
+	 * an initial config.
 	 */
 	public ScriptGeneratorSingleton() {
-		pythonInterface = new PythonInterface();
-		configLoader = new ConfigLoader(pythonInterface);
-		setUp();
+	    
 	}
 	
 	/**
@@ -151,10 +140,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Called by the constructors to set up the class.
+	 * Called by the constructor with three arguments during tests or in the View
+	 * Model constructor to set up the class.
 	 * Set up listeners for the generator.
 	 */
-	private void setUp() {
+	public void setUp() {
 		generator = new GeneratorContext(pythonInterface);
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
@@ -185,6 +175,23 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		
 		setActionParameters(configLoader.getParameters());
 	}
+	
+	/**
+     * Creates the config loader.
+     */
+    public void createConfigLoader() {
+        pythonInterface = new PythonInterface();
+        configLoader = new ConfigLoader(pythonInterface);
+    }
+    
+    /**
+     * Get the config loader.
+     * 
+     * @return The config loader
+     */
+    public ConfigLoader getConfigLoader() {
+        return configLoader;
+    }
 	
 	/**
 	 * Convert the VALIDITY_ERROR_MESSAGE_PROPERTY return to the Map<Integer, String> representation.
