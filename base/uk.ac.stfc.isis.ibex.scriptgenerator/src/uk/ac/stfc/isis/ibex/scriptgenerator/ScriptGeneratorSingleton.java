@@ -122,7 +122,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The constructor, will create a config loader and load an initial config.
 	 */
-	public ScriptGeneratorSingleton() {}
+	public ScriptGeneratorSingleton() {
+	    
+	}
 	
 	/**
 	 * Pass a python interface to run with, then create a config loader and load an initial config.
@@ -137,7 +139,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Called by the constructors to set up the class.
+	 * Called by the constructor with three arguments during tests or in the View
+	 * Model constructor to set up the class.
 	 * Set up listeners for the generator.
 	 */
 	public void setUp() {
@@ -173,7 +176,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-     * Create the config loader.
+     * Creates the config loader.
      */
     public void createConfigLoader() {
         pythonInterface = new PythonInterface();
