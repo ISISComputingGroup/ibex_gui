@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 
+import java.util.List;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -42,6 +44,9 @@ public class Banner extends Composite {
 	private final Composite details;
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
+	private static final List<DashboardPv> DASHBOARD_PVS = List.of(
+			DashboardPv.BANNER_LEFT, DashboardPv.BANNER_MIDDLE, DashboardPv.BANNER_RIGHT);
+	
 	/**
 	 * The constructor. 
 	 * 
@@ -58,7 +63,8 @@ public class Banner extends Composite {
 		gridLayout.marginWidth = 0;
 		gridLayout.verticalSpacing = 0;
 		gridLayout.marginHeight = 0;
-		setLayout(gridLayout);
+		this.setLayout(gridLayout);
+		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 		this.setBackgroundMode(SWT.INHERIT_FORCE);
 		
@@ -69,19 +75,19 @@ public class Banner extends Composite {
 		
 		details = new Composite(this, SWT.NONE);
 		details.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
-		details.setLayout(new GridLayout(5, false));
+		details.setLayout(new GridLayout(3, true));
 		details.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
-		bannerLabel(parent, textFont, DashboardPv.BANNER_LEFT, model);
-		bannerLabel(parent, textFont, DashboardPv.BANNER_MIDDLE, model);
-		bannerLabel(parent, textFont, DashboardPv.BANNER_RIGHT, model);
+		for (DashboardPv pv : DASHBOARD_PVS) {
+			createBannerLabel(details, textFont, pv, model);
+		}
 		
 		if (model != null) {
 			bind(model);
 		}
 	}
 	
-	private void bannerLabel(Composite parent, Font textFont, DashboardPv pv, BannerModel model) {
+	private void createBannerLabel(Composite parent, Font textFont, DashboardPv pv, BannerModel model) {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		container.setLayout(new GridLayout(2, true));

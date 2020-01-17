@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.dashboard.Dashboard;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.Banner;
+import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.DashboardTable;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 
 /**
@@ -74,37 +75,23 @@ public class DashboardView {
 		scrolledComposite.setContent(dashboardControl);
         scrolledComposite.setMinSize(new Point(FIXED_WIDTH, FIXED_HEIGHT));
 		
-        GridLayout dashboardLayout = new GridLayout(3, false);
+        GridLayout dashboardLayout = new GridLayout(1, false);
 		dashboardLayout.marginHeight = 0;
 		dashboardLayout.marginWidth = 0;
 		dashboardLayout.horizontalSpacing = 1;
 		dashboardLayout.verticalSpacing = 0;
 		dashboardControl.setLayout(dashboardLayout);
 		
-		Banner banner = new Banner(dashboardControl, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
-        banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		
-		Label separator1 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);
-        separator1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		
-		TitlePanel title = new TitlePanel(dashboardControl, SWT.NONE, titleModel, textFont);
-        title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		
-		Label separator2 = new Label(dashboardControl, SWT.SEPARATOR | SWT.HORIZONTAL);
-        separator2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		
-//		MonitorPanel monitors = new MonitorPanel(dashboardControl, SWT.NONE, monitorsModel, textFont);
-//        GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-//        monitorsLayoutGridData.widthHint = FIXED_WIDTH / 2;
-//        monitors.setLayoutData(monitorsLayoutGridData);
-		
-		Label separator3 = new Label(dashboardControl, SWT.SEPARATOR | SWT.VERTICAL);
-		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-//		TimePanel times = new TimePanel(dashboardControl, SWT.NONE, textFont, timesModel);
-//        GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-//        timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
-//        times.setLayoutData(timesGridData);
+		new Banner(dashboardControl, SWT.NONE, bannerModel, bannerTitleFont, bannerFont, simulationModeFont);
+		makeSeparator(dashboardControl);
+		new TitlePanel(dashboardControl, SWT.NONE, titleModel, textFont);
+		makeSeparator(dashboardControl);
+        new DashboardTable(dashboardControl, bannerModel, textFont);
+	}
+	
+	private void makeSeparator(Composite container) {
+		Label separator = new Label(container, SWT.SEPARATOR | SWT.HORIZONTAL);
+        separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	}
 	
 	@PreDestroy

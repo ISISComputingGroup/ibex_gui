@@ -56,6 +56,7 @@ public class TitlePanel extends Composite {
 	public TitlePanel(Composite parent, int style, TitlePanelModel model, Font font) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
+		this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		Label lblTitle = new Label(this, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

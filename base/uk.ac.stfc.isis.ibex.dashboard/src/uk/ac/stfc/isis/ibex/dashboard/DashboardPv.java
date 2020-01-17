@@ -6,12 +6,12 @@ public enum DashboardPv {
 	BANNER_LEFT("BANNER:LEFT"),
 	BANNER_MIDDLE("BANNER:MIDDLE"),
 	BANNER_RIGHT("BANNER:RIGHT"),
-	ROW1_COL1("TAB:1:1"),
-	ROW1_COL2("TAB:1:2"),
-	ROW2_COL1("TAB:2:1"),
-	ROW2_COL2("TAB:2:2"),
-	ROW3_COL1("TAB:3:1"),
-	ROW3_COL2("TAB:3:2");
+	TABLE_1_1("TAB:1:1"),
+	TABLE_1_2("TAB:1:2"),
+	TABLE_2_1("TAB:2:1"),
+	TABLE_2_2("TAB:2:2"),
+	TABLE_3_1("TAB:3:1"),
+	TABLE_3_2("TAB:3:2");
 	
 	private final String pvSuffix;
 	

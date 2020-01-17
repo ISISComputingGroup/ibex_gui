@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Color;
@@ -28,9 +27,7 @@ import org.eclipse.swt.graphics.Color;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardPv;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -54,9 +51,6 @@ public class BannerModel extends Closer {
 		instrumentName = Instrument.getInstance().name();
 		instrumentState = registerForClose(new InstrumentState(observables.runState));
 		bannerText = new BannerText(instrumentName, instrumentState.text());
-		
-//		runNumber = registerForClose(new TextUpdatedObservableAdapter(observables.dae.runNumber));
-//		shutterState = registerForClose(new ShutterState(observables.shutter));
 		
 		for (DashboardPv pv : DashboardPv.values()) {
 			labelAdapters.put(pv, registerForClose(new TextUpdatedObservableAdapter(observables.getLabelObservable(pv))));
