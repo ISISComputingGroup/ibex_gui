@@ -166,6 +166,16 @@ public class PreferenceSupplier {
      * True means show the value, False means show N/A
      */
     private static final String SHOW_VALUES_OF_INVALID_BLOCKS = "show_values_of_invalid_blocks";
+    
+    /**
+     * The default place to generate scripts to.
+     */
+    private static final String DEFAULT_SCRIPT_GENERATION_FOLDER = "C:/Scripts/";
+    
+    /**
+     * Defines where to generate scripts to.
+     */
+    private static final String SCRIPT_GENERATION_FOLDER = "script_generation_folder";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -232,5 +242,14 @@ public class PreferenceSupplier {
 	 */
 	public boolean showInvalidBlockValues() {
 		return preferenceService.getBoolean(PREFERENCE_NODE, SHOW_VALUES_OF_INVALID_BLOCKS, false, null);
+	}
+	
+	/**
+	 * Get the preference for the folder to generate scripts to.
+	 * 
+	 * @return The folder to generate scripts to.
+	 */
+	public String scriptGenerationFolder() {
+		return getString(SCRIPT_GENERATION_FOLDER, DEFAULT_SCRIPT_GENERATION_FOLDER);
 	}
 }

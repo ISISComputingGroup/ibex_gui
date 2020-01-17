@@ -36,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
@@ -51,6 +52,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  *  and containing the actions table for the script generator.
  */
 public class ScriptGeneratorSingleton extends ModelObject {
+	
+	/**
+	 * The preferences supplier to get the area to generate scripts from.
+	 */
+	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
 	
 	/**
 	 * The table containing the script generator contents (actions).
@@ -149,6 +155,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Pass a python interface to run with, then create a config loader and load an initial config.
 	 * 
 	 * @param pythonInterface The python interface to run with.
+	 * @param configLoader The object to load configs with.
+	 * @param scriptGeneratorTable The table containing actions for the model to use.
 	 */
 	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
 		this.pythonInterface = pythonInterface;
@@ -184,7 +192,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// Write the script to file, send up generated script filepath
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 			String generatedScript = String.class.cast(evt.getNewValue());
-			Optional<String> generatedScriptFilepath = generateTo(generatedScript, "C:/Scripts/");
+			String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+			Optional<String> generatedScriptFilepath = generateTo(generatedScript, scriptFilepathPrefix);
 			firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
