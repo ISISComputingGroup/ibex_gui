@@ -433,7 +433,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			UnsupportedLanguageException {
 		try {
 			if(areParamsValid()) {
-				System.out.println("Refreshing script");
 				generator.refreshGeneratedScript(scriptGeneratorTable, getConfig());
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");

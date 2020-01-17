@@ -9,7 +9,8 @@ import argparse
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
-from importlib import import_module
+import importlib.machinery
+import importlib.util
 
 
 class Config(object):
@@ -197,18 +198,31 @@ class ConfigWrapper(object):
         """
         return self.generator.generate(list_of_actions, config)
 
-def get_actions(search_folder: str = "instruments") -> Dict[AnyStr, ActionDefinition]:
+def get_actions(search_folder: str = None) -> Dict[AnyStr, ActionDefinition]:
     """ Dynamically import all the Python modules in this module's sub directory. """
-    this_file_path = os.path.split(__file__)[0]
-    for filename in os.listdir(os.path.join(this_file_path, search_folder)):
-        try:
-            module_name = filename.split(".")[0]
-            import_module("{folder}.{module}".format(folder=search_folder, module=module_name))
-        except Exception as e:
-            # Print any errors to stderr, Java will catch and throw to the user
-            print("Error loading {}: {}".format(filename, e), file=sys.stderr)
+    if search_folder is None:
+        this_file_path = os.path.split(__file__)[0]
+        search_folder = os.path.join(this_file_path, "instruments")
+    configs: Dict[AnyStr, ActionDefinition] = {}
+    for filename in os.listdir(search_folder):
+        filenameparts = filename.split(".")
+        module_name = filenameparts[0]
+        if len(filenameparts) > 1:
+            file_extension = filenameparts[-1]
+        else:
+            file_extension = ""
+        if file_extension == "py":
+            try:
+                loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                spec = importlib.util.spec_from_loader(module_name, loader)
+                sys.modules[module_name] = importlib.util.module_from_spec(spec)
+                loader.exec_module(sys.modules[module_name])
+                configs[module_name] = sys.modules[module_name].DoRun
+            except Exception as e:
+                # Print any errors to stderr, Java will catch and throw to the user
+                print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
 
-    return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in ActionDefinition.__subclasses__()}
+    return configs
 
 
 if __name__ == '__main__':
