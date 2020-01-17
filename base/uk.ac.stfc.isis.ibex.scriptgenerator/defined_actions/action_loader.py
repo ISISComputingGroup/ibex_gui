@@ -9,6 +9,7 @@ import argparse
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from importlib import import_module
 
 
 class Config(object):
@@ -202,8 +203,7 @@ def get_actions(search_folder: str = "instruments") -> Dict[AnyStr, ActionDefini
     for filename in os.listdir(os.path.join(this_file_path, search_folder)):
         try:
             module_name = filename.split(".")[0]
-            __import__("{folder}.{module}".format(folder=search_folder, module=module_name))
-            # TODO: importlib.import(...)
+            import_module(module_name, package=search_folder)
         except Exception as e:
             # Print any errors to stderr, Java will catch and throw to the user
             print("Error loading {}: {}".format(filename, e), file=sys.stderr)
