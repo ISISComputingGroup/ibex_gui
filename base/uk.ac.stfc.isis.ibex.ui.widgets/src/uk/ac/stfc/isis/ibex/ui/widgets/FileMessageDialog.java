@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -76,6 +77,8 @@ public class FileMessageDialog extends MessageDialog {
 
 	/**
 	 * Create the area of the message dialog with text in.
+	 * 
+	 * @param composite The composite parent to display the message area in.
 	 */
 	@Override
     protected Control createMessageArea(final Composite composite) {
@@ -106,6 +109,8 @@ public class FileMessageDialog extends MessageDialog {
 	
 	/**
 	 * Create an ok and open file button to place in the dialog
+	 * 
+	 * @param parent The parent to put the buttons in.
 	 */
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
@@ -130,11 +135,13 @@ public class FileMessageDialog extends MessageDialog {
 		
 	
 	/**
-	 * Handle the case where we fail to open the file.
+	 * Handle the case where we fail to open the file by showing a warning to the user.
 	 */
 	private void handleFailedToOpenFile() {
 		LOG.error("Failed to open file " + file.getAbsolutePath());
-		MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath());
+		Display.getDefault().asyncExec( () -> {
+			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath());
+		});
 	}
 		
 	
