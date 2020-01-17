@@ -176,6 +176,16 @@ public class PreferenceSupplier {
      * Defines where to generate scripts to.
      */
     private static final String SCRIPT_GENERATION_FOLDER = "script_generation_folder";
+    
+    /**
+     * The default place to store script generator configuration files.
+     */
+    private static final String DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER = "C:/ScriptGeneratorConfigs/";
+    
+    /**
+     * Defines where to generate scripts to.
+     */
+    private static final String SCRIPT_GENERATOR_CONFIG_FOLDER = "script_generator_config_folder";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -251,5 +261,15 @@ public class PreferenceSupplier {
 	 */
 	public String scriptGenerationFolder() {
 		return getString(SCRIPT_GENERATION_FOLDER, DEFAULT_SCRIPT_GENERATION_FOLDER);
+	}
+	
+	 /**
+     * Gets a list of the folders containing script generator configs.
+     * To implement many separate with commas (this is handled in the Python side).
+     * 
+     * @return a list of of folders paths that contain script generator configs.
+     */
+	public String scriptGeneratorConfigFolders() {
+		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
 	}
 }

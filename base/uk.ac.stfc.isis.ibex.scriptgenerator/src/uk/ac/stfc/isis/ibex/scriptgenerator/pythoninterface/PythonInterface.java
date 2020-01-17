@@ -146,9 +146,10 @@ public class PythonInterface extends ModelObject {
 			throws IOException {
 		Integer javaPort = clientServer.getJavaServer().getPort();
 		Integer pythonPort = clientServer.getPythonClient().getPort();
+		String configSearchFolders = new PreferenceSupplier().scriptGeneratorConfigFolders();
 		String absoluteFilePath = relativePathToFull(filePath);
 		ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(),
-				pythonPort.toString());
+				pythonPort.toString(), configSearchFolders);
 		pythonProcess = builder.start();
 		try {
 			if (!pythonProcess.isAlive() || pythonProcess.exitValue() != 0) {

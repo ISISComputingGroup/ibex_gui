@@ -198,30 +198,30 @@ class ConfigWrapper(object):
         """
         return self.generator.generate(list_of_actions, config)
 
-def get_actions(search_folder: str = None) -> Dict[AnyStr, ActionDefinition]:
-    """ Dynamically import all the Python modules in this module's sub directory. """
-    if search_folder is None:
+def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefinition]:
+    """ Dynamically import all the Python modules in the search folders"""
+    if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
-        search_folder = os.path.join(this_file_path, "instruments")
+        search_folder = [os.path.join(this_file_path, "instruments")]
     configs: Dict[AnyStr, ActionDefinition] = {}
-    for filename in os.listdir(search_folder):
-        filenameparts = filename.split(".")
-        module_name = filenameparts[0]
-        if len(filenameparts) > 1:
-            file_extension = filenameparts[-1]
-        else:
-            file_extension = ""
-        if file_extension == "py":
-            try:
-                loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                spec = importlib.util.spec_from_loader(module_name, loader)
-                sys.modules[module_name] = importlib.util.module_from_spec(spec)
-                loader.exec_module(sys.modules[module_name])
-                configs[module_name] = sys.modules[module_name].DoRun
-            except Exception as e:
-                # Print any errors to stderr, Java will catch and throw to the user
-                print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
-
+    for search_folder in search_folders:
+        for filename in os.listdir(search_folder):
+            filenameparts = filename.split(".")
+            module_name = filenameparts[0]
+            if len(filenameparts) > 1:
+                file_extension = filenameparts[-1]
+            else:
+                file_extension = ""
+            if file_extension == "py":
+                try:
+                    loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                    spec = importlib.util.spec_from_loader(module_name, loader)
+                    sys.modules[module_name] = importlib.util.module_from_spec(spec)
+                    loader.exec_module(sys.modules[module_name])
+                    configs[module_name] = sys.modules[module_name].DoRun
+                except Exception as e:
+                    # Print any errors to stderr, Java will catch and throw to the user
+                    print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
     return configs
 
 
@@ -229,10 +229,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
+    parser.add_argument('search_folders', type=str, help='the folders containing the script generator configs to search')
 
     args = parser.parse_args()
+    search_folders = args.search_folders.split(",")
 
-    config_wrapper = ConfigWrapper(get_actions(), Generator())
+    config_wrapper = ConfigWrapper(get_actions(search_folders=search_folders), Generator())
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
