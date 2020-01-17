@@ -53,6 +53,7 @@ public class GeneratorContext extends ModelObject {
 	 * @param generatedLanguage The language the new generator uses.
 	 * @param generator The generator to use.
 	 */
+	@SuppressWarnings("unchecked")
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
@@ -63,11 +64,11 @@ public class GeneratorContext extends ModelObject {
 		// If the returned string is not null update the generated script,
 		// or else fire a property change notifying that the parameters are invalid
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			Optional.ofNullable(evt.getNewValue())
-			.ifPresentOrElse(
-				generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, String.class.cast(generatedScript)),
-				() -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, false)
-			);
+			@SuppressWarnings("rawtypes")
+			Optional optionalGeneratedScript = Optional.class.cast(evt.getNewValue());
+			optionalGeneratedScript.ifPresentOrElse(
+					generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, generatedScript),
+					() -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, false));
 		});
 		generatorStrategies.put(generatedLanguage, generator);
 	}

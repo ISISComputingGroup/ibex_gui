@@ -5,5 +5,5 @@ from genie_python import genie as g
 def do_run():
     config = DoRun()
     {% for action in script_generator_actions -%}
-    config.run(**{{ action }})
+    config.run(**{{ action.getAllActionParametersAsString() }})
     {% endfor -%}

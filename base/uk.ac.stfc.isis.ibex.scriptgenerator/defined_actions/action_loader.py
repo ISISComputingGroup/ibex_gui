@@ -52,11 +52,7 @@ class Config(object):
         Returns:      
             None if run runs without exception, otherwise a String containing the error message.
         """
-        map_of_arguments = {}
-        action_parameters = action.getAllActionParameters()
-        for action_parameter, parameter_value in action_parameters.items():
-            map_of_arguments[action_parameter.getName()] = parameter_value
-        return self.action.run(**map_of_arguments)
+        return self.action.run(**action.getAllActionParametersAsString())
 
     def parametersValid(self, action) -> Union[None, AnyStr]:
         """
@@ -68,11 +64,7 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        map_of_arguments = {}
-        action_parameters = action.getAllActionParameters()
-        for action_parameter, parameter_value in action_parameters.items():
-            map_of_arguments[action_parameter.getName()] = parameter_value
-        return self.action.parameters_valid(**map_of_arguments)
+        return self.action.parameters_valid(**action.getAllActionParametersAsString())
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -134,11 +126,11 @@ class Generator(object):
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        if self.areParamsValid(list_of_list_of_arguments, config):
+        if self.areParamsValid(list_of_actions, config):
             config_file_path = "{}.py".format(config.getName())
             config_template = self.env.get_template(config_file_path)
             return self.template.render(inserted_config=config_template,
-                    script_generator_actions=list_of_list_of_arguments)
+                    script_generator_actions=list_of_actions)
         else:
             return None
     

@@ -16,7 +16,7 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_config: Config = MagicMock()
         mock_config.parametersValid.return_value = "invalid reason"
-        validityCheck: Dict[int, AnyStr] = self.generator.checkParamValidity([
+        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors([
             {"param1": "param1Val", "param2": "param2Val"}, 
             {"param1": "param1Val", "param2": "param2Val"}
         ], mock_config)
@@ -28,16 +28,17 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_config: Config = MagicMock()
         mock_config.parametersValid.return_value = None
-        validityCheck: Dict[int, AnyStr] = self.generator.checkParamValidity([
-            {"param1": "param1Val", "param2": "param2Val"}, 
-            {"param1": "param1Val", "param2": "param2Val"}
+        mock_action1 = MagicMock().getAllActionParametersAsString.return_value = {"param1": "param1Val", "param2": "param2Val"}
+        mock_action2 = MagicMock().getAllActionParametersAsString.return_value = {"param1": "param1Val", "param2": "param2Val"}
+        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors([
+            mock_action1, mock_action2
         ], mock_config)
         # Act and Assert
         assert_that(validityCheck, equal_to({}), "2 actions, both invalid with reason")
 
     # Allows us to return whether invalid or not based on passed vals
-    def params_valid_side_effect(self, params: Dict[AnyStr, AnyStr]) -> AnyStr:
-        if params == {"param1": "param1Val"}:
+    def params_valid_side_effect(self, params) -> AnyStr:
+        if params.getAllActionParametersAsString() == {"param1": "param1Val"}:
             return None
         else:
             return "invalid"
@@ -46,8 +47,12 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_config: Config = MagicMock()
         mock_config.parametersValid.side_effect = self.params_valid_side_effect
-        validityCheck: Dict[int, AnyStr] = self.generator.checkParamValidity([
-            {"param1": "param1Val"}, {"param2": "param2Val"}
+        mock_action1 = MagicMock()
+        mock_action1.getAllActionParametersAsString.return_value = {"param1": "param1Val"}
+        mock_action2 = MagicMock()
+        mock_action2.getAllActionParametersAsString.return_value = {"param2": "param2Val"}
+        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors([
+            mock_action1, mock_action2
         ], mock_config)
         # Act and Assert
         assert_that(validityCheck, equal_to({1: "invalid"}), "2 actions, one invalid with reason")
@@ -62,7 +67,11 @@ class TestGenerator(unittest.TestCase):
             r"[\s]+return reason", r"[\s]+else:",  r"[\s]+return None", r"", r"", r"def do_run\(\):",
             r"[\s]+config = DoRun\(\)", r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)",
             r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)", r""]
-        params = [{"param1": "1", "param2": "2"}, {"param1": "1", "param2": "2"}]
+        mock_action1 = MagicMock()
+        mock_action1.getAllActionParametersAsString.return_value = {"param1": "1", "param2": "2"}
+        mock_action2 = MagicMock()
+        mock_action2.getAllActionParametersAsString.return_value = {"param1": "1", "param2": "2"}
+        params = [mock_action1, mock_action2]
         config: Config = Config(name="valid_config", action=ValidDoRun())
         # Act
         generated_script: str = self.generator.generate(params, config)
@@ -79,7 +88,11 @@ class TestGenerator(unittest.TestCase):
     
     def test_GIVEN_invalid_config_params_WHEN_generate_THEN_return_none(self):
         # Arrange
-        params = [{"param1": "invalid", "param2": "2"}, {"param1": "1", "param2": "2"}]
+        mock_action1 = MagicMock()
+        mock_action1.getAllActionParametersAsString.return_value = {"param1": "invalid", "param2": "2"}
+        mock_action2 = MagicMock()
+        mock_action2.getAllActionParametersAsString.return_value = {"param1": "1", "param2": "2"}
+        params = [mock_action1, mock_action2]
         config: Config = Config(name="valid_config", action=ValidDoRun())
         # Act
         generated_script: str = self.generator.generate(params, config)

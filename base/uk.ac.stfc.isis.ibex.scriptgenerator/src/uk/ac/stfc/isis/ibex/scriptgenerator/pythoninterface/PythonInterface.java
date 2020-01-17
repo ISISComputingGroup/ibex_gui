@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -252,7 +253,7 @@ public class PythonInterface extends ModelObject {
 	/**
 	 * Generate a script in python and refresh the generated script property.
 	 * 
-	 * @param scriptGenContent The contents to generate the script with.
+	 * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
 	 * @param config           The config to generate the script with.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted
@@ -260,7 +261,7 @@ public class PythonInterface extends ModelObject {
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException {
 		CompletableFuture.supplyAsync(() -> configWrapper.generate(scriptGenContent, config), THREAD)
-				.thenAccept(generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, generatedScript));
+				.thenAccept(generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, Optional.ofNullable(generatedScript)));
 	}
 
 }

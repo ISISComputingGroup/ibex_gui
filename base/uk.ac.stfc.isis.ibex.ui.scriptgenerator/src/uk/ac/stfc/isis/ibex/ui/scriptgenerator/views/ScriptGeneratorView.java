@@ -23,17 +23,14 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -186,7 +183,7 @@ public class ScriptGeneratorView {
         
         		
         // Bind the context and the validity checking listeners
-        bind(btnGetValidityErrors);
+        bind(btnGetValidityErrors, generateScriptButton);
 		
         scriptGeneratorViewModel.addEmptyAction();
 	}
@@ -213,12 +210,12 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
-	private void bind(Button btnGetValidityErrors) {
+	private void bind(Button btnGetValidityErrors, Button btnGenerateScript) {
 		bindingContext = new DataBindingContext();
 		
 		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector);
 
-		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors);
+		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
 	}
 	
 
