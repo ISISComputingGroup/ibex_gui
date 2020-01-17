@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * A message dialog box that allows you to copy the contents of the dialog and open the file the dialog is tied to.
  * 
- * @author James King
+ * @author https://stackoverflow.com/a/30630475 modified by James King
  *
  */
 public class FileMessageDialog extends MessageDialog {
@@ -41,6 +41,32 @@ public class FileMessageDialog extends MessageDialog {
 	
 	private static final Logger LOG = IsisLog.getLogger(FileMessageDialog.class);
 
+	/**
+	 * Create the dialog box.
+	 * 
+	 * @param parentShell The shell that the dialog sits in.
+	 * @param dialogTitle The title of the dialog box.
+	 * @param dialogTitleImage The image that goes with the title.
+	 * @param dialogMessage The message that sits prepended to the filepath.
+	 * @param filepath The path to the file that we can open in this dialog.
+	 * @param dialogImageType one of the following values:
+	 *                           <ul>
+	 *                           <li><code>MessageDialog.NONE</code> for a dialog
+	 *                           with no image</li>
+	 *                           <li><code>MessageDialog.ERROR</code> for a dialog
+	 *                           with an error image</li>
+	 *                           <li><code>MessageDialog.INFORMATION</code> for a
+	 *                           dialog with an information image</li>
+	 *                           <li><code>MessageDialog.QUESTION </code> for a
+	 *                           dialog with a question image</li>
+	 *                           <li><code>MessageDialog.WARNING</code> for a dialog
+	 *                           with a warning image</li>
+	 *                           </ul>
+	 * @param dialogButtonLabels an array of labels for the buttons in the button
+	 *                           bar
+	 * @param defaultIndex       the index in the button label array of the default
+	 *                           button
+	 */
 	public FileMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage, String filepath,
 			int dialogImageType, String[] dialogButtonLabels, int defaultIndex) {
 		super(parentShell, dialogTitle, dialogTitleImage, dialogMessage+filepath, dialogImageType, dialogButtonLabels, defaultIndex);

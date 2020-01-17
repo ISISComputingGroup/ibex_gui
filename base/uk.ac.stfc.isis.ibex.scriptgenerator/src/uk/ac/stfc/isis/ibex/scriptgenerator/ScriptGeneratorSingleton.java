@@ -130,6 +130,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private GeneratorContext generator;
 	
+	/**
+	 * The date format to use when generating a script name.
+	 */
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
@@ -432,37 +437,63 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Generate a script and save it to file with the given prefix.
+	 * Save a generated script to file.
 	 * 
+	 * @param generatedScript The script that has been generated that is written to file here.
+	 * @param filepathPrefix The path prefix to where the script shall be written to.
+	 * @return An optional containing the path to the file if successful. An empty optional if unsuccessful.
 	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
 	 * @throws IOException If we fail to create and write to a file.
 	 */
 	public Optional<String> generateTo(String generatedScript, String filepathPrefix) {
-		// Create the filename and file
 		try {
-			String timestamp = getTimestamp();
-			int version = 0;
-			String filepath;
-			File file;
-			do {
-				if (version == 0) {
-					filepath = String.format("%s%s-%s.py", filepathPrefix, getConfig().getName(), timestamp);
-				} else {
-					filepath = String.format("%s%s-%s(%s).py", filepathPrefix, getConfig().getName(), timestamp, version);
-				}
-				file = new File(filepath);
-				file.getParentFile().mkdirs();
-				version += 1;
-			} while(!file.createNewFile());
-			// Write the script to the file
-			BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(file));
-			scriptWriter.write(generatedScript);
-			scriptWriter.flush();
-			scriptWriter.close();
-			return Optional.of(filepath);
+			File scriptFile = generateScriptFile(filepathPrefix);
+			return writeScriptToFile(generatedScript, scriptFile);
 		} catch(IOException e) {
 			LOG.error("Failed to write generated script to file");
 			LOG.catching(e);
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Generate a file to write the script to
+	 * 
+	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
+	 * @return The file to write the script to.
+	 * @throws IOException When we cannot create the file
+	 */
+	private File generateScriptFile(String filepathPrefix) throws IOException {
+		String timestamp = getTimestamp();
+		int version = 0;
+		String filepath;
+		File file;
+		do {
+			if (version == 0) {
+				filepath = String.format("%s%s-%s.py", filepathPrefix, getConfig().getName(), timestamp);
+			} else {
+				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, getConfig().getName(), timestamp, version);
+			}
+			file = new File(filepath);
+			file.getParentFile().mkdirs();
+			version += 1;
+		} while(!file.createNewFile());
+		return file;
+	}
+	
+	/**
+	 * Write the script to file.
+	 * 
+	 * @param generatedScript The script to write to file.
+	 * @param scriptFile The file to write the script to.
+	 * @return An optional containing the file path if successful. An empty optional if IOException.
+	 */
+	private Optional<String> writeScriptToFile(String generatedScript, File scriptFile)  {
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(generatedScript);
+			scriptWriter.flush();
+			return Optional.of(scriptFile.getAbsolutePath());
+		} catch(IOException e) {
 			return Optional.empty();
 		}
 	}
@@ -473,6 +504,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The timestamp as a string.
 	 */
 	public String getTimestamp() {
-		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		return DATE_FORMAT.format(new Date());
 	}
 }

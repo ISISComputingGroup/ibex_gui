@@ -59,14 +59,35 @@ class TestGenerator(unittest.TestCase):
     
     def test_GIVEN_valid_config_WHEN_generate_THEN_new_script_is_as_expected(self):
         # Arrange
-        expected_script_lines: List[AnyStr] = [r"from genie_python import genie as g", r"", r"from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to", r"", 
-            r"class DoRun\(ActionDefinition\):", r"", r"[\s]+@cast_parameters_to\(param1=float, param2=float\)", r"[\s]+def run\(self, param1=0\.0, param2=0\.0\):", r"[\s]+pass", r"",
-            r"[\s]+@cast_parameters_to\(param1=float, param2=float\)", r"[\s]+def parameters_valid\(self, param1=0\.0, param2=0\.0\):", r"[\s]+reason = \"\"",
-            r"if param1 != 1\.0:", r"[\s]+reason \+= \"param1 is not 1\.0[\\\\]n\"",
-            r"if param2 != 2\.0:", r"[\s]+reason \+= \"param2 is not 2\.0[\\\\]n\"", r"[\s]+if reason != \"\":",
-            r"[\s]+return reason", r"[\s]+else:",  r"[\s]+return None", r"", r"", r"def do_run\(\):",
-            r"[\s]+config = DoRun\(\)", r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)",
-            r"[\s]+config\.run\(\*\*\{\'param1\': \'1\', \'param2\': \'2\'\}\)", r""]
+        expected_script_lines: List[AnyStr] = \
+            """from genie_python import genie as g
+
+from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to
+
+class DoRun(ActionDefinition):
+
+    @cast_parameters_to(param1=float, param2=float)
+    def run(self, param1=0.0, param2=0.0):
+        pass
+
+    @cast_parameters_to(param1=float, param2=float)
+    def parameters_valid(self, param1=0.0, param2=0.0):
+        reason = ""
+        if param1 != 1.0:
+            reason += "param1 is not 1.0\\n"
+        if param2 != 2.0:
+            reason += "param2 is not 2.0\\n"
+        if reason != "":
+            return reason
+        else:
+            return None
+
+
+def do_run():
+    config = DoRun()
+    config.run(**{'param1': '1', 'param2': '2'})
+    config.run(**{'param1': '1', 'param2': '2'})
+    """.split("\n")
         mock_action1 = MagicMock()
         mock_action1.getAllActionParametersAsString.return_value = {"param1": "1", "param2": "2"}
         mock_action2 = MagicMock()
@@ -83,8 +104,8 @@ class TestGenerator(unittest.TestCase):
             "Should have the same amount of lines if they match")
 
         for i in range(len(generated_lines)):
-            assert_that(generated_lines[i], matches_regexp(expected_script_lines[i]), 
-            "Each line of the generated script should match the expected line")
+            assert_that(generated_lines[i], equal_to(expected_script_lines[i]), 
+                "Each line of the generated script should match the expected line")
     
     def test_GIVEN_invalid_config_params_WHEN_generate_THEN_return_none(self):
         # Arrange
