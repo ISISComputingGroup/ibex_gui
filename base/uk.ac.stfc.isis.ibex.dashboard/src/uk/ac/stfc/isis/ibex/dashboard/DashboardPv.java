@@ -21,10 +21,18 @@ public enum DashboardPv {
 		this.pvSuffix = pvSuffix;
 	}
 	
+	/**
+	 * Get the PV containing the value of this dashboard field.
+	 * @return the pv
+	 */
 	public String getValuePV() {
 		return InstrumentUtils.addPrefix(String.format("%s:%s:VALUE", DASHBOARD_PVS, pvSuffix));
 	}
 	
+	/**
+	 * Get the PV containing the label of this dashboard field.
+	 * @return the pv
+	 */
 	public String getLabelPV() {
 		return InstrumentUtils.addPrefix(String.format("%s:%s:LABEL", DASHBOARD_PVS, pvSuffix));
 	}

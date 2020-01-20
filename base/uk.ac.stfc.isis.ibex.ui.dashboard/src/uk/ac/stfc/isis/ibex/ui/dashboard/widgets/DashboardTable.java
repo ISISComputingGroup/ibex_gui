@@ -32,7 +32,10 @@ public class DashboardTable extends Composite {
 		super(parent, SWT.NONE);
 		this.model = model;
 		
-		this.setLayout(new GridLayout(2, true));
+		GridLayout layout = new GridLayout(2, true);
+		layout.marginHeight = 2;
+		layout.marginWidth = 2;
+		this.setLayout(layout);
 		this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		for (DashboardPv pv : PVS_IN_TABLE) {
@@ -42,16 +45,19 @@ public class DashboardTable extends Composite {
 	
 	private void singleTableItem(Composite parent, DashboardPv pv, Font textFont) {
 		Composite itemContainer = new Composite(parent, SWT.NONE);
-		itemContainer.setLayout(new GridLayout(2, true));
+		GridLayout layout = new GridLayout(2, true);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		itemContainer.setLayout(layout);
 		itemContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		Label label = new Label(itemContainer, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		label.setFont(textFont);
 		label.setText("");
 		
 		Label value = new Label(itemContainer, SWT.NONE);
-		value.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		value.setFont(textFont);
 		value.setText("");
 		
