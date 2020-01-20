@@ -2,6 +2,13 @@ package uk.ac.stfc.isis.ibex.dashboard;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 
+/**
+ * PVs which the dashboard looks at.
+ * 
+ * These are not directly pointing at the DAE because some instruments (in particular, muons) see
+ * a different set of information. Therefore these point at aliases which are loaded into INSTETC
+ * from the instrument's configuration area.
+ */
 public enum DashboardPv {
 	BANNER_LEFT("BANNER:LEFT"),
 	BANNER_MIDDLE("BANNER:MIDDLE"),

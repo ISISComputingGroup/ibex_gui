@@ -112,7 +112,6 @@ public class Banner extends Composite {
 	}
 	
     private void bind(BannerModel model) {
-		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(bannerText), BeanProperties.value("value").observe(model.bannerText()));
 		bindingContext.bindValue(WidgetProperties.background().observe(this), BeanProperties.value("value").observe(model.background()));
 	}
