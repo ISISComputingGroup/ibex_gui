@@ -27,12 +27,17 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
+
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * Provides the UI to control the script generator.
@@ -56,6 +61,14 @@ public class ScriptGeneratorView {
 	 * The ViewModel the View is updated by.
 	 */
 	private ScriptGeneratorViewModel scriptGeneratorViewModel;
+	
+	/**
+	 * The string to display if there is no configs to select.
+	 */
+	private static final String NO_CONFIGS_MESSAGE = String.format("\u26A0 Warning: Could not load any configs from %s"
+			+ System.getProperty("line.separator")
+			+ "Have they been located in the correct place or is this not your preferred location?", 
+			new PreferenceSupplier().scriptGeneratorConfigFolders());
 	
 	/**
 	 * Create a button to manipulate the rows of the script generator table and
@@ -85,107 +98,121 @@ public class ScriptGeneratorView {
 	public void createPartControl(Composite parent) {
 		
 		scriptGeneratorViewModel = new ScriptGeneratorViewModel();
-
+		
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
 		parent.setLayoutData(gdQueueContainer);
 		parent.setLayout(new GridLayout(1, false));
 		
-		// A composite to contain the elements at the top of the script generator
-		Composite topBarComposite = new Composite(parent, SWT.NONE);
-		topBarComposite.setLayout(new GridLayout(2, false));
-		topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		// The composite to contain the config selector drop down and it's label
-		Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
-		globalSettingsComposite.setLayout(new GridLayout(2, false));
-		globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		
-		// The label for the config selector drop down
-		Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
-		configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		configSelectorLabel.setText("Config:");
-
-		// Drop-down box to select between configs.
-		configSelector = setUpConfigSelector(globalSettingsComposite);
-		
-		// The composite to contain the button to check validity
-		Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-		validityComposite.setLayout(new GridLayout(1, false));
-		validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		
-		// Button to check validity errors
-		final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
-        btnGetValidityErrors.setText("Get Validity Errors");
-        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnGetValidityErrors.addListener(SWT.Selection, e -> {
-        	scriptGeneratorViewModel.displayValidityErrors();
-        });
-        
-        // The composite to contain the UI table
-        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
-        tableContainerComposite.setLayout(new GridLayout(2, false));
-        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-        // The UI table
-		table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        
-		// Composite for move action up/down buttons
-		Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
-	    moveComposite.setLayout(new GridLayout(1, false));
-	    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        
-	    // Make buttons to move an action up and down the list
-        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
-        
-        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
-        
-        // Composite for laying out new/delete/duplicate action buttons
-        Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
-        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout ssgLayout = new GridLayout(3, false);
-        ssgLayout.marginHeight = 10;
-        ssgLayout.marginWidth = 10;
-        actionsControlsGrp.setLayout(ssgLayout);
-		        
-        // Make buttons for insert new/delete/duplicate actions
-        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnInsertAction.setText("Add Action");
-        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
-        
-        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnDeleteAction.setText("Delete Action");
-        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
-
-        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnDuplicateAction.setText("Duplicate Action");
-        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
-        
-        // Composite for generate buttons
-        Composite generateButtonsGrp = new Composite(parent, SWT.NONE);
-        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(1, false);
-        gbgLayout.marginHeight = 10;
-        gbgLayout.marginWidth = 10;
-        generateButtonsGrp.setLayout(gbgLayout);
-        
-        // Button to generate a script
-        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-        generateScriptButton.setText("Generate Script");
-        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
-        
-        		
-        // Bind the context and the validity checking listeners
-        bind(btnGetValidityErrors, generateScriptButton);
-		
-        scriptGeneratorViewModel.addEmptyAction();
+		if(scriptGeneratorViewModel.configsLoaded()) {
+			
+			// A composite to contain the elements at the top of the script generator
+			Composite topBarComposite = new Composite(parent, SWT.NONE);
+			topBarComposite.setLayout(new GridLayout(2, false));
+			topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			// The composite to contain the config selector drop down and it's label
+			Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
+			globalSettingsComposite.setLayout(new GridLayout(2, false));
+			globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+			
+			// The label for the config selector drop down
+			Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
+			configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+			configSelectorLabel.setText("Config:");
+	
+			// Drop-down box to select between configs.
+			configSelector = setUpConfigSelector(globalSettingsComposite);
+			
+			// The composite to contain the button to check validity
+			Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
+			validityComposite.setLayout(new GridLayout(1, false));
+			validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+			
+			// Button to check validity errors
+			final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
+	        btnGetValidityErrors.setText("Get Validity Errors");
+	        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+	        btnGetValidityErrors.addListener(SWT.Selection, e -> {
+	        	scriptGeneratorViewModel.displayValidityErrors();
+	        });
+	        
+	        // The composite to contain the UI table
+	        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
+	        tableContainerComposite.setLayout(new GridLayout(2, false));
+	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
+	        // The UI table
+			table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
+			table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        
+			// Composite for move action up/down buttons
+			Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
+		    moveComposite.setLayout(new GridLayout(1, false));
+		    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+	        
+		    // Make buttons to move an action up and down the list
+	        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+	        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
+	        
+	        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+	        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
+	        
+	        // Composite for laying out new/delete/duplicate action buttons
+	        Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
+	        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        GridLayout ssgLayout = new GridLayout(3, false);
+	        ssgLayout.marginHeight = 10;
+	        ssgLayout.marginWidth = 10;
+	        actionsControlsGrp.setLayout(ssgLayout);
+			        
+	        // Make buttons for insert new/delete/duplicate actions
+	        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
+	        btnInsertAction.setText("Add Action");
+	        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
+	        
+	        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
+	        btnDeleteAction.setText("Delete Action");
+	        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
+	
+	        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
+	        btnDuplicateAction.setText("Duplicate Action");
+	        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
+	        
+	        // Composite for generate buttons
+	        Composite generateButtonsGrp = new Composite(parent, SWT.NONE);
+	        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        GridLayout gbgLayout = new GridLayout(1, false);
+	        gbgLayout.marginHeight = 10;
+	        gbgLayout.marginWidth = 10;
+	        generateButtonsGrp.setLayout(gbgLayout);
+	        
+	        // Button to generate a script
+	        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+	        generateScriptButton.setText("Generate Script");
+	        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
+	        
+	        		
+	        // Bind the context and the validity checking listeners
+	        bind(btnGetValidityErrors, generateScriptButton);
+			
+	        scriptGeneratorViewModel.addEmptyAction();
+		} else {
+			
+			Label warningMessage = new Label(parent, SWT.NONE);
+			warningMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+			// Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
+			FontData[] fD = warningMessage.getFont().getFontData();
+			fD[0].setHeight(16);
+			warningMessage.setFont(new Font(Display.getDefault(), fD[0]));
+			warningMessage.setText(NO_CONFIGS_MESSAGE);
+			warningMessage.pack();
+			
+		}
 	}
 	
 	/**
@@ -202,7 +229,7 @@ public class ScriptGeneratorView {
 		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
 		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigs());
-		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig()));
+		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get()));
 		
 		return configSelector;
 	}

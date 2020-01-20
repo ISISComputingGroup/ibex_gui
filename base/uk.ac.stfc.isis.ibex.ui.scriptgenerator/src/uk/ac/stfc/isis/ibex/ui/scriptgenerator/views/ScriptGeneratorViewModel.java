@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
@@ -138,6 +139,15 @@ public class ScriptGeneratorViewModel {
 		});
 	}
 	
+	/**
+	 * Check if there are any configs loaded
+	 * 
+	 * @return true if there is at least one config loaded, false if not.
+	 */
+	public boolean configsLoaded() {
+		return this.scriptGeneratorModel.getConfigLoader().configsLoaded();
+	}
+	
 	
 	/**
 	 * Display a message dialog box that the language that is being used is unsupported.
@@ -219,15 +229,6 @@ public class ScriptGeneratorViewModel {
 	 */
 	protected List<Config> getAvailableConfigs() {
 		return scriptGeneratorModel.getAvailableConfigs();
-	}
-	
-	/**
-	 * Get the currently loaded configuration.
-	 * 
-	 * @return The currently loaded configuration.
-	 */
-	protected Config getConfig() {
-		return scriptGeneratorModel.getConfig();
 	}
 	
 	/**
@@ -430,7 +431,7 @@ public class ScriptGeneratorViewModel {
         	@Override
 			protected String stringFromRow(ScriptGeneratorAction row) {
         		if(!scriptGeneratorModel.languageSupported) {
-        			return "\u003F";
+        			return "\u003F"; // A question mark to say we cannot be certain
         		}
         		if (row.isValid()) {
         			return "\u2714"; // A tick for valid
@@ -508,7 +509,20 @@ public class ScriptGeneratorViewModel {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
+		} catch(NoConfigSelectedException e) {
+			LOG.error(e);
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No config selection", 
+					"Cannot generate script. No config has been selected");
 		}
     }
+
+    /**
+     * Get the current selected config.
+     * 
+     * @return The selected config.
+     */
+	public Optional<Config> getConfig() {
+		return scriptGeneratorModel.getConfig();
+	}
 	
 }

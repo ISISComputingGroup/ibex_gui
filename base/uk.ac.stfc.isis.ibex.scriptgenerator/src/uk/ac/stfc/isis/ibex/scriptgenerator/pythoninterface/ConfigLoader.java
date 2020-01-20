@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -27,7 +28,7 @@ public class ConfigLoader extends ModelObject {
 	/**
 	 * The currently selected config.
 	 */
-	private Config selectedConfig;
+	private Optional<Config> selectedConfig = Optional.empty();
 	
 	/**
 	 * The py4j interface handling the ConfigWrapper.
@@ -40,7 +41,9 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
 	    availableConfigs = pythonInterface.getActionDefinitions();
-	    setConfig(availableConfigs.get(0));
+	    if(!availableConfigs.isEmpty()) {
+	    	setConfig(availableConfigs.get(0));
+	    }
 	}
 
 	/**
@@ -58,13 +61,13 @@ public class ConfigLoader extends ModelObject {
 		ArrayList<ActionParameter> parameters = config.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
 		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
-		firePropertyChange("config", this.selectedConfig, this.selectedConfig = config);
+		firePropertyChange("config", this.selectedConfig, this.selectedConfig = Optional.ofNullable(config));
 	}
 	
 	/**
 	 * @return the currently loaded configuration.
 	 */
-	public Config getConfig() {
+	public Optional<Config> getConfig() {
 		return selectedConfig;
 	}
 	
@@ -80,5 +83,14 @@ public class ConfigLoader extends ModelObject {
 	 */
 	public void cleanUp() {
 		pythonInterface.cleanUp();
+	}
+	
+	/**
+	 * Check if there are any configs loaded
+	 * 
+	 * @return true if there is at least one config loaded, false if not.
+	 */
+	public boolean configsLoaded() {
+		return ! getAvailableConfigs().isEmpty();
 	}
 }

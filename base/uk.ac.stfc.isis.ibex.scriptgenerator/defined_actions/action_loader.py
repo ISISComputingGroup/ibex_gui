@@ -205,23 +205,26 @@ def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefiniti
         search_folder = [os.path.join(this_file_path, "instruments")]
     configs: Dict[AnyStr, ActionDefinition] = {}
     for search_folder in search_folders:
-        for filename in os.listdir(search_folder):
-            filenameparts = filename.split(".")
-            module_name = filenameparts[0]
-            if len(filenameparts) > 1:
-                file_extension = filenameparts[-1]
-            else:
-                file_extension = ""
-            if file_extension == "py":
-                try:
-                    loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                    spec = importlib.util.spec_from_loader(module_name, loader)
-                    sys.modules[module_name] = importlib.util.module_from_spec(spec)
-                    loader.exec_module(sys.modules[module_name])
-                    configs[module_name] = sys.modules[module_name].DoRun
-                except Exception as e:
-                    # Print any errors to stderr, Java will catch and throw to the user
-                    print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+        try:
+            for filename in os.listdir(search_folder):
+                filenameparts = filename.split(".")
+                module_name = filenameparts[0]
+                if len(filenameparts) > 1:
+                    file_extension = filenameparts[-1]
+                else:
+                    file_extension = ""
+                if file_extension == "py":
+                    try:
+                        loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                        spec = importlib.util.spec_from_loader(module_name, loader)
+                        sys.modules[module_name] = importlib.util.module_from_spec(spec)
+                        loader.exec_module(sys.modules[module_name])
+                        configs[module_name] = sys.modules[module_name].DoRun
+                    except Exception as e:
+                        # Print any errors to stderr, Java will catch and throw to the user
+                        print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+        except FileNotFoundError as e:
+            print("Error loading from {}".format(search_folder), file=sys.stderr)
     return configs
 
 
