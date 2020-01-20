@@ -138,6 +138,7 @@ public class ScriptGeneratorViewModel {
 		});
 	}
 	
+	
 	/**
 	 * Display a message dialog box that the language that is being used is unsupported.
 	 */

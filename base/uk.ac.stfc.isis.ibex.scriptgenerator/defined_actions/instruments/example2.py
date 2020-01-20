@@ -1,4 +1,6 @@
 from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to
+import sys
+from genie_python import genie as g
 
 def mytype(string_input: str) -> float:
     if string_input == "default":
@@ -19,6 +21,8 @@ class DoRun(ActionDefinition):
 
     @cast_parameters_to(temperature=float, field=float, uamps=mytype)
     def parameters_valid(self, temperature: float=0.0, field: float=0.0, uamps: float=0.0):
+        with open("C:\\Instrument\\Dev\\PythonLog.txt", "a+") as f:
+            f.write("Checking validity example2")
         errors: str = ""
         if not 0.1 <= temperature <= 300:
             errors += "Temperature outside range\n"
@@ -28,5 +32,7 @@ class DoRun(ActionDefinition):
             errors += "uamps outside of range"
         if errors != "":
             return errors
+        with open("C:\\Instrument\\Dev\\PythonLog.txt", "a+") as f:
+            f.write(errors)
         return None    
 
