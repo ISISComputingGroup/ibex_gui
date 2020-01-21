@@ -75,15 +75,17 @@ public class ConfigLoader extends ModelObject {
 		ArrayList<ActionParameter> parameters = config.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
 		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
-		firePropertyChange("config", this.selectedConfig, this.selectedConfig = Optional.ofNullable(config));
+		this.selectedConfig = Optional.ofNullable(config);
+		firePropertyChange("config", null, null);
 	}
 	
 	/**
-	 * @return the currently loaded configuration.
+	 * @return An optional of the currently loaded configuration.
 	 */
-	public Optional<Config> getConfig() {
-		return selectedConfig;
+	public Config getConfig() {
+		return selectedConfig.get();
 	}
+	
 	
 	/**
 	 * @return the parameters for the current configuration.

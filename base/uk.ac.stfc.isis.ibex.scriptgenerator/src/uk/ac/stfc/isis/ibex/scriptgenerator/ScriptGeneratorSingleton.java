@@ -377,12 +377,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Get the currently loaded configuration.
+	 * Get an optional of the currently loaded configuration.
 	 * 
-	 * @return The currently loaded configuration.
+	 * @return An optional of the currently loaded configuration.
 	 */
 	public Optional<Config> getConfig() {
-		return configLoader.getConfig();
+		return Optional.ofNullable(configLoader.getConfig());
 	}
 	
 	/**
