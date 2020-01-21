@@ -94,12 +94,12 @@ public class Banner extends Composite {
 		container.setBackgroundMode(SWT.INHERIT_FORCE);
 		
 		Label label = new Label(container, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		label.setFont(textFont);
 		label.setText("");
 		
 		Label value = new Label(container, SWT.NONE);
-		value.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setFont(textFont);
 		value.setText("");
 		
