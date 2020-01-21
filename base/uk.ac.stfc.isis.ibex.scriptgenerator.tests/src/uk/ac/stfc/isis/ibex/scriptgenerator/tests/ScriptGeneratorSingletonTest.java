@@ -72,7 +72,7 @@ public class ScriptGeneratorSingletonTest {
 				}
 			}
 			if(!test_scripts_folder.delete()) {
-				fail("Failed to deleter folder " + test_scripts_folder.getPath());
+				fail("Failed to delete folder " + test_scripts_folder.getPath());
 			}
 		}
 	}
