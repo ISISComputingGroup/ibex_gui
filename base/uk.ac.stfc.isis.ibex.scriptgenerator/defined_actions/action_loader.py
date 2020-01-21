@@ -157,9 +157,19 @@ class ConfigWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
 
-    def __init__(self, available_actions: Dict, generator: Generator):
+    def __init__(self, available_actions: Dict[AnyStr, ActionDefinition], generator: Generator, config_load_errors: Dict[AnyStr, AnyStr] = {}):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
         self.generator = generator
+        self.config_load_errors = config_load_errors
+
+    def getConfigLoadErrors(self) -> Dict[AnyStr, AnyStr]:
+        """
+        Returns a dictionary mapping of a config that has failed to load mapped to it's error when loading
+
+        Returns:
+           config_load_errors: The Dictionary mapping configs to load errors.
+        """
+        return MapConverter().convert(self.config_load_errors, gateway._gateway_client)
 
     def getActionDefinitions(self) -> list:
         """
@@ -204,6 +214,7 @@ def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefiniti
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
     configs: Dict[AnyStr, ActionDefinition] = {}
+    config_load_errors: Dict[AnyStr, AnyStr] = {}
     for search_folder in search_folders:
         try:
             for filename in os.listdir(search_folder):
@@ -221,11 +232,13 @@ def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefiniti
                         loader.exec_module(sys.modules[module_name])
                         configs[module_name] = sys.modules[module_name].DoRun
                     except Exception as e:
+                        config_load_errors[module_name] = str(e)
                         # Print any errors to stderr, Java will catch and throw to the user
                         print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
         except FileNotFoundError as e:
+            config_load_errors[search_folder] = str(e)
             print("Error loading from {}".format(search_folder), file=sys.stderr)
-    return configs
+    return configs, config_load_errors
 
 
 if __name__ == '__main__':
@@ -237,7 +250,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
 
-    config_wrapper = ConfigWrapper(get_actions(search_folders=search_folders), Generator())
+    configs: Dict[AnyStr, ActionDefinition] = {}
+    config_load_errors: Dict[AnyStr, AnyStr] = {}
+    configs, config_load_errors = get_actions(search_folders=search_folders)
+
+    config_wrapper = ConfigWrapper(configs, Generator(), config_load_errors=config_load_errors)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),

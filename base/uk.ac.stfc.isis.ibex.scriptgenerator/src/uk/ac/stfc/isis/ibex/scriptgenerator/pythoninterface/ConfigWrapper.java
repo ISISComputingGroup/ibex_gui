@@ -15,6 +15,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public interface ConfigWrapper {
 	
 	/**
+	 * Get all action definitions that have failed to load into the script generator and the reason they have failed to load.
+	 * 
+	 * @return A mapping of unloaded configs to the reason they could not be loaded.
+	 */
+	public Map<String, String> getConfigLoadErrors();
+	
+	/**
 	 * Get all action definitions available for use in the script generator.
 	 * 
 	 * @return A list of action definitions for use.

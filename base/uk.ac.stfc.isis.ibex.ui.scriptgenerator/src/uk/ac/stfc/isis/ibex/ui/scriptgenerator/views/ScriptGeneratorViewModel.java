@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -229,6 +230,13 @@ public class ScriptGeneratorViewModel {
 	 */
 	protected List<Config> getAvailableConfigs() {
 		return scriptGeneratorModel.getAvailableConfigs();
+	}
+	
+	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	protected Map<String, String> getConfigLoadErrors() {
+		return scriptGeneratorModel.getConfigLoadErrors();
 	}
 	
 	/**

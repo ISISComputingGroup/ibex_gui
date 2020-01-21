@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -172,6 +173,13 @@ public class PythonInterface extends ModelObject {
 			socket.setReuseAddress(true);
 			return socket.getLocalPort();
 		}
+	}
+	
+	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	public Map<String, String> getConfigLoadErrors() {
+		return configWrapper.getConfigLoadErrors();
 	}
 
 	/**

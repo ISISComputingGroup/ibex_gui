@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -35,15 +37,22 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * Provides the UI to control the script generator.
+ * 
+ * Uses code from http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+	
+	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
 	private DataBindingContext bindingContext;
 	
@@ -68,7 +77,7 @@ public class ScriptGeneratorView {
 	private static final String NO_CONFIGS_MESSAGE = String.format("\u26A0 Warning: Could not load any configs from %s"
 			+ System.getProperty("line.separator")
 			+ "Have they been located in the correct place or is this not your preferred location?", 
-			new PreferenceSupplier().scriptGeneratorConfigFolders());
+			preferences.scriptGeneratorConfigFolders());
 	
 	/**
 	 * Create a button to manipulate the rows of the script generator table and
@@ -136,6 +145,12 @@ public class ScriptGeneratorView {
 	        btnGetValidityErrors.addListener(SWT.Selection, e -> {
 	        	scriptGeneratorViewModel.displayValidityErrors();
 	        });
+	        
+	        Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
+	        
+	        if(!configLoadErrors.isEmpty()) {
+		        setUpConfigLoadErrorTable(parent, configLoadErrors); 			    
+	        }
 	        
 	        // The composite to contain the UI table
 	        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
@@ -212,6 +227,45 @@ public class ScriptGeneratorView {
 			warningMessage.setText(NO_CONFIGS_MESSAGE);
 			warningMessage.pack();
 			
+			Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
+	        
+	        if(!configLoadErrors.isEmpty()) {
+		        setUpConfigLoadErrorTable(parent, configLoadErrors); 			    
+	        }
+			
+		}
+	}
+	
+	/**
+	 * Set up a composite and table to display config load errors.
+	 */
+	private void setUpConfigLoadErrorTable(Composite parent, Map<String, String> configLoadErrors) {
+		if(!preferences.hideScriptGenConfigErrorTable()) {
+			// A composite to contain the config load errors
+			Composite configErrorComposite = new Composite(parent, SWT.NONE);
+			configErrorComposite.setLayout(new GridLayout(1, false));
+			configErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			// A table to display the config load errors
+			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
+			Table table = new Table(configErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		    table.setHeaderVisible(true);
+		    String[] titles = { "Config", "Error" };
+		    
+		    for (int i = 0; i < titles.length; i++) {
+		    	TableColumn column = new TableColumn(table, SWT.NULL);
+		    	column.setText(titles[i]);
+		    }
+		    
+		    for(Map.Entry<String, String> loadError : configLoadErrors.entrySet()) {
+		    	TableItem item = new TableItem(table, SWT.NULL);
+		    	item.setText(0, loadError.getKey());
+		    	item.setText(1, loadError.getValue());
+		    }
+		    
+		    for (int i = 0; i < titles.length; i++) {
+		    	table.getColumn(i).pack();
+		    }
 		}
 	}
 	

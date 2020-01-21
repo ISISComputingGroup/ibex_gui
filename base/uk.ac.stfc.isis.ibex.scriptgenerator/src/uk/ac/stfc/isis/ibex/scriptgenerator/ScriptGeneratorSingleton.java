@@ -370,6 +370,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	public Map<String, String> getConfigLoadErrors() {
+		return configLoader.getConfigLoadErrors();
+	}
+	
+	/**
 	 * Get the currently loaded configuration.
 	 * 
 	 * @return The currently loaded configuration.

@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,11 @@ public class ConfigLoader extends ModelObject {
 	 * List of configs imported by the python interface.
 	 */
 	private List<Config> availableConfigs;
+	
+	/**
+	 * Map of configs which could not be loaded and the reason.
+	 */
+	private Map<String, String> configLoadErrors;
 	
 	/**
 	 * The action parameters of the currently loaded config.
@@ -41,6 +47,7 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
 	    availableConfigs = pythonInterface.getActionDefinitions();
+	    configLoadErrors = pythonInterface.getConfigLoadErrors();
 	    if(!availableConfigs.isEmpty()) {
 	    	setConfig(availableConfigs.get(0));
 	    }
@@ -51,6 +58,13 @@ public class ConfigLoader extends ModelObject {
 	 */
 	public List<Config> getAvailableConfigs() {
 		return availableConfigs;
+	}
+	
+	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	public Map<String, String> getConfigLoadErrors() {
+		return configLoadErrors;
 	}
 
 	/**
