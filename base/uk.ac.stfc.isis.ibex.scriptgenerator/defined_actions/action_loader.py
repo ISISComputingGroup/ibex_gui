@@ -134,7 +134,7 @@ class Generator(object):
             try:
                 rendered_template = self.template.render(inserted_config=config_template,
                     script_generator_actions=list_of_actions)
-            except Exception as e:
+            except Exception:
                 rendered_template = None
             return rendered_template
         else:
