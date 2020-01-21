@@ -2,7 +2,7 @@ from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
 from genie_python.genie_script_generator import ActionDefinition
-from typing import Dict, AnyStr, Union, List
+from typing import Dict, AnyStr, Union, List, Tuple
 from inspect import signature
 import inspect
 import argparse
@@ -82,16 +82,15 @@ class Config(object):
 
 class Generator(object):
 
-    def __init__(self, search_folder: str = "instruments"):
+    def __init__(self, search_folders: List[str] = ["instruments"]):
         """
         Set up the template to generate with
         """
         cwd = os.path.dirname(os.path.abspath(__file__))
-        self.loader = FileSystemLoader(['{}/defined_actions/templates'.format(cwd), '{}defined_actions/{}'.format(cwd, search_folder),
-            '{}/templates'.format(cwd), "{}/{}".format(cwd, search_folder)])
+        search_folders.append('{}/templates'.format(cwd)) # Add a search to find the template for jinja2
+        self.loader = FileSystemLoader(search_folders)
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
-        self.search_folder = search_folder
 
     def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
@@ -218,7 +217,7 @@ class ConfigWrapper(object):
         """
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
-def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefinition]:
+def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDefinition], Dict[AnyStr, AnyStr]]:
     """ Dynamically import all the Python modules in the search folders"""
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
@@ -264,7 +263,7 @@ if __name__ == '__main__':
     config_load_errors: Dict[AnyStr, AnyStr] = {}
     configs, config_load_errors = get_actions(search_folders=search_folders)
 
-    config_wrapper = ConfigWrapper(configs, Generator(), config_load_errors=config_load_errors)
+    config_wrapper = ConfigWrapper(configs, Generator(search_folders=search_folders), config_load_errors=config_load_errors)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
