@@ -3,8 +3,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 import java.util.List;
 import java.util.Map;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-
 /**
  * A wrapper for the available configs/action definitions in the system and utility
  *  methods to generate scripts and check for validity.
@@ -35,7 +33,7 @@ public interface ConfigWrapper {
 	 * @param config The action definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	public String generate(List<ScriptGeneratorAction> scriptGenContent, Config config);
+	public String generate(List<Map<String, String>> scriptGenContent, Config config);
 	
 	/**
 	 * Get a mapping of validity errors of the scriptGenContent against the config.
@@ -45,7 +43,7 @@ public interface ConfigWrapper {
 	 * @return A map where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	public Map<Integer, String> getValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config);
+	public Map<Integer, String> getValidityErrors(List<Map<String, String>> scriptGenContent, Config config);
 	
 	/**
 	 * Check if a list of actions are valid under the passed action definition.
@@ -54,6 +52,6 @@ public interface ConfigWrapper {
 	 * @param config The action definition to check with.
 	 * @return True if valid, False if not.
 	 */
-	public boolean areParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config);
+	public boolean areParamsValid(List<Map<String, String>> scriptGenContent, Config config);
 	
 }

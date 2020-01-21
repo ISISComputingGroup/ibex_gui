@@ -114,6 +114,11 @@ public class ScriptGeneratorViewModel {
 	 */
 	private static final String ACTIONS_PROPERTY = "actions";
 	
+	/**
+	 * A property to fire a change of when there is an error generating a script.
+	 */
+	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	/**
@@ -142,6 +147,10 @@ public class ScriptGeneratorViewModel {
 		scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
 			displayThreadingError();
 		});
+		scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+			LOG.info("Generation error");
+			displayGenerationError();
+		});
 	}
 	
 	/**
@@ -166,6 +175,17 @@ public class ScriptGeneratorViewModel {
 	
 	/**
 	 * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
+	 */
+	private void displayGenerationError() {
+		DISPLAY.asyncExec(() -> {
+			MessageDialog.openError(DISPLAY.getActiveShell(), 
+					"Error",
+					"Error when generating a script, are your parameters valid?");
+		});
+	}
+	
+	/**
+	 * Display a message dialog box that there was an issue when generating a script
 	 */
 	private void displayThreadingError() {
 		MessageDialog.openError(DISPLAY.getActiveShell(), 
@@ -512,7 +532,6 @@ public class ScriptGeneratorViewModel {
      */
     public void generate() {
     	try {
-    		LOG.info("Refreshing script");
     		scriptGeneratorModel.refreshGeneratedScript();
 		} catch (InvalidParamsException e) {
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 

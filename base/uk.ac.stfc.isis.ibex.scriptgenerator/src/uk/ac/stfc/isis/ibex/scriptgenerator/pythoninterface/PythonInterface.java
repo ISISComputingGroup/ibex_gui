@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import py4j.ClientServer;
 import py4j.ClientServer.ClientServerBuilder;
@@ -211,7 +212,7 @@ public class PythonInterface extends ModelObject {
 	 * Cleans up all resources i.e. destroy the python process.
 	 */
 	public void cleanUp() {
-		pythonProcess.destroy();
+		pythonProcess.destroyForcibly();
 	}
 
 	/**
@@ -228,6 +229,11 @@ public class PythonInterface extends ModelObject {
 
 		return Path.forWindows(fullPath).toOSString();
 	}
+	
+	private List<Map<String, String>> convertScriptGenContentToPython(List<ScriptGeneratorAction> scriptGenContent) {
+		return scriptGenContent.stream()
+				.map(action -> action.getAllActionParametersAsString()).collect(Collectors.toList());
+	}
 
 	/**
 	 * Use python to get validity errors of the current parameters and refresh the
@@ -240,7 +246,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException {
-		CompletableFuture.supplyAsync(() -> configWrapper.getValidityErrors(scriptGenContent, config), THREAD)
+		CompletableFuture.supplyAsync(() -> configWrapper.getValidityErrors(convertScriptGenContentToPython(scriptGenContent), config), THREAD)
 				.thenAccept(newValidityErrors -> firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
 	}
 
@@ -255,7 +261,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException {
-		CompletableFuture.supplyAsync(() -> configWrapper.areParamsValid(scriptGenContent, config), THREAD)
+		CompletableFuture.supplyAsync(() -> configWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), config), THREAD)
 				.thenAccept(paramValidity -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, paramValidity));
 	}
 
@@ -269,8 +275,10 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException {
-		CompletableFuture.supplyAsync(() -> configWrapper.generate(scriptGenContent, config), THREAD)
-				.thenAccept(generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, Optional.ofNullable(generatedScript)));
+		CompletableFuture.supplyAsync(() -> configWrapper.generate(convertScriptGenContentToPython(scriptGenContent), config), THREAD)
+				.thenAccept(generatedScript -> {
+					firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, Optional.ofNullable(generatedScript));
+				});
 	}
 
 }

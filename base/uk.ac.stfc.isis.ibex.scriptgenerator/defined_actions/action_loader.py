@@ -54,7 +54,7 @@ class Config(object):
         Returns:      
             None if run runs without exception, otherwise a String containing the error message.
         """
-        return self.action.run(**action.getAllActionParametersAsString())
+        return self.action.run(**action)
 
     def parametersValid(self, action) -> Union[None, AnyStr]:
         """
@@ -66,7 +66,7 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(**action.getAllActionParametersAsString())
+        return self.action.parameters_valid(**action)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -112,13 +112,13 @@ class Generator(object):
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
-        current_list_of_arguments = 0
+        current_action_index = 0
         validityCheck: Dict[int, AnyStr] = {}
         for action in list_of_actions:
             singleActionValidityCheck = config.parametersValid(action)
             if singleActionValidityCheck != None:
-                validityCheck[current_list_of_arguments] = singleActionValidityCheck
-            current_list_of_arguments += 1
+                validityCheck[current_action_index] = singleActionValidityCheck
+            current_action_index += 1
         return validityCheck
 
     def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
@@ -126,13 +126,17 @@ class Generator(object):
         Generates a script from a list of parameters and configuration
 
         Returns:
-           None if parameters are invalid, otherwise a string of a generated script.
+           None if there is an error or parameters are invalid, otherwise a string of a generated script.
         """
         if self.areParamsValid(list_of_actions, config):
             config_file_path = "{}.py".format(config.getName())
             config_template = self.env.get_template(config_file_path)
-            return self.template.render(inserted_config=config_template,
+            try:
+                rendered_template = self.template.render(inserted_config=config_template,
                     script_generator_actions=list_of_actions)
+            except Exception as e:
+                rendered_template = None
+            return rendered_template
         else:
             return None
     
@@ -180,6 +184,10 @@ class ConfigWrapper(object):
 
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
+
+    def convert_list_of_actions_to_python(self, list_of_actions) -> List[Dict[AnyStr, AnyStr]]:
+        python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
+        return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
     
     def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
@@ -188,7 +196,7 @@ class ConfigWrapper(object):
         Returns:
             True if valid, False if not.
         """
-        return self.generator.areParamsValid(list_of_actions, config)
+        return self.generator.areParamsValid(self.convert_list_of_actions_to_python(list_of_actions), config)
 
     def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
         """
@@ -197,7 +205,9 @@ class ConfigWrapper(object):
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
-        return MapConverter().convert(self.generator.getValidityErrors(list_of_actions, config), gateway._gateway_client)
+        return MapConverter().convert(self.generator.getValidityErrors(
+                self.convert_list_of_actions_to_python(list_of_actions), config),
+            gateway._gateway_client)
 
     def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
         """
@@ -206,7 +216,9 @@ class ConfigWrapper(object):
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(list_of_actions, config)
+        with open("C:\\Instrument\\Dev\\PythonLog.txt", "a+") as f:
+            f.write("ConfigWrapper generating"+"\n")
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
 def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefinition]:
     """ Dynamically import all the Python modules in the search folders"""

@@ -61,14 +61,8 @@ public class GeneratorContext extends ModelObject {
 		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
 			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		// If the returned string is not null update the generated script,
-		// or else fire a property change notifying that the parameters are invalid
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			@SuppressWarnings("rawtypes")
-			Optional optionalGeneratedScript = Optional.class.cast(evt.getNewValue());
-			optionalGeneratedScript.ifPresentOrElse(
-					generatedScript -> firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, generatedScript),
-					() -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, false));
+			firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
 		});
 		generatorStrategies.put(generatedLanguage, generator);
 	}

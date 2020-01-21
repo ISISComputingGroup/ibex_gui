@@ -136,6 +136,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The generator to generate scripts with and check parameter validity with.
 	 */
 	private GeneratorContext generator;
+
+	/**
+	 * A property to fire a change of when there is an error generating a script.
+	 */
+	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	/**
 	 * The date format to use when generating a script name.
@@ -193,14 +198,20 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// Detect when the generated script is refreshed
 		// Write the script to file, send up generated script filepath
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			String generatedScript = String.class.cast(evt.getNewValue());
-			String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
-			try {
-				Optional<String> generatedScriptFilepath = generateTo(generatedScript, scriptFilepathPrefix);
-				firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-			} catch(NoConfigSelectedException e) {
-				LOG.error(e);
-			}
+			@SuppressWarnings("unchecked")
+			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
+			generatedScript.ifPresentOrElse(script -> {
+				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+				try {
+					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+				} catch(NoConfigSelectedException e) {
+					LOG.error(e);
+				}
+			}, () -> {
+				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+			});
+			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
