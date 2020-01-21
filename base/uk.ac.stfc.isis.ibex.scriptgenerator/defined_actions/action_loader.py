@@ -216,8 +216,6 @@ class ConfigWrapper(object):
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        with open("C:\\Instrument\\Dev\\PythonLog.txt", "a+") as f:
-            f.write("ConfigWrapper generating"+"\n")
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
 def get_actions(search_folders: List[str] = None) -> Dict[AnyStr, ActionDefinition]:
