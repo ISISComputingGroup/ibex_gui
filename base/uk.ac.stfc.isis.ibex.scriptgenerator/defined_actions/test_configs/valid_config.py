@@ -1,3 +1,5 @@
+from genie_python import genie as g
+
 from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to
 
 class DoRun(ActionDefinition):
