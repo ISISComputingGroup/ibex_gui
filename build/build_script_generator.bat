@@ -29,7 +29,6 @@ robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /MT /XF "install
 REM Copy python into the client
 python get_python_write_dir.py %sensible_build_dir% > Output
 set /p PythonWriteDir=<Output
-pause
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
