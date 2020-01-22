@@ -21,10 +21,12 @@ set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
-REM Copy built client into a sensible directory to run it
+REM Copy built client into a sensible clean directory to run it
 set built_client="%~dp0..\base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\scriptgenerator.product\win32\win32\x86_64"
 set sensible_build_dir="%~dp0..\built_script_gen"
-robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
+RMDIR /S /Q %sensible_build_dir%
+pause
+robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC
 
 REM Copy python into the client
 python get_python_write_dir.py %sensible_build_dir% > Output
