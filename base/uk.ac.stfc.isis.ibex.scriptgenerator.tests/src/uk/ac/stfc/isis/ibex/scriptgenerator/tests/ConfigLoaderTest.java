@@ -58,7 +58,7 @@ public class ConfigLoaderTest {
 		// Arrange (in setUp)
 		
 		// Assert
-		assertEquals(configLoader.getOptionalConfig(), mockedConfig1);
+		assertEquals(configLoader.getConfig(), mockedConfig1);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class ConfigLoaderTest {
 		configLoader.setConfig(mockedConfig2);
 		
 		// Assert
-		assertEquals(mockedConfig2, configLoader.getOptionalConfig());
+		assertEquals(mockedConfig2, configLoader.getConfig());
 		
 		// Compare the parameters in the mocked Config to the ActionParameter in the configLoader.
 		assertEquals(mockedConfig2.getParameters().get(0), configLoader.getParameters().get(0).getName());
