@@ -17,7 +17,7 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	exit /b 1
 )
 
-robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /XF "install.log" /NFL /NDL /NP
+robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /XF "install.log" /NFL /NDL /NP /NS /NC
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
