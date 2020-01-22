@@ -166,6 +166,36 @@ public class PreferenceSupplier {
      * True means show the value, False means show N/A
      */
     private static final String SHOW_VALUES_OF_INVALID_BLOCKS = "show_values_of_invalid_blocks";
+    
+    /**
+     * The default place to generate scripts to.
+     */
+    private static final String DEFAULT_SCRIPT_GENERATION_FOLDER = "C:/Scripts/";
+    
+    /**
+     * Defines where to generate scripts to.
+     */
+    private static final String SCRIPT_GENERATION_FOLDER = "script_generation_folder";
+    
+    /**
+     * The default place to store script generator configuration files.
+     */
+    private static final String DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER = "C:/ScriptGeneratorConfigs/";
+    
+    /**
+     * Defines where to generate scripts to.
+     */
+    private static final String SCRIPT_GENERATOR_CONFIG_FOLDER = "script_generator_config_folder";
+    
+    /**
+     * The default of whether to hide the config error table or not.
+     */
+    private static final boolean DEFAULT_HIDE_CONFIG_ERRORS = false;
+    
+    /**
+     * Defines whether to hide config error table.
+     */
+    private static final String HIDE_CONFIG_ERRORS = "hide_config_error_table";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -174,6 +204,15 @@ public class PreferenceSupplier {
      */
 	private String getString(String name, String def) {
 		return preferenceService.getString(PREFERENCE_NODE, name, def, null);
+	}
+	
+	/**
+     * Gets a boolean from the IBEX preference store.
+     * 
+     * @return the preferences boolean, or the default if it was not present.
+     */
+	private boolean getBoolean(String name, boolean def) {
+		return preferenceService.getBoolean(PREFERENCE_NODE, name, def, null);
 	}
 		
     /**
@@ -232,5 +271,33 @@ public class PreferenceSupplier {
 	 */
 	public boolean showInvalidBlockValues() {
 		return preferenceService.getBoolean(PREFERENCE_NODE, SHOW_VALUES_OF_INVALID_BLOCKS, false, null);
+	}
+	
+	/**
+	 * Get the preference for the folder to generate scripts to.
+	 * 
+	 * @return The folder to generate scripts to.
+	 */
+	public String scriptGenerationFolder() {
+		return getString(SCRIPT_GENERATION_FOLDER, DEFAULT_SCRIPT_GENERATION_FOLDER);
+	}
+	
+	 /**
+     * Gets a list of the folders containing script generator configs.
+     * To implement many separate with commas (this is handled in the Python side).
+     * 
+     * @return a list of of folders paths that contain script generator configs.
+     */
+	public String scriptGeneratorConfigFolders() {
+		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
+	}
+	
+	/**
+	 * Get whether to hide the script gen config error table.
+	 * 
+	 * @return true if we should hide the table, false if not.
+	 */
+	public boolean hideScriptGenConfigErrorTable() {
+		return getBoolean(HIDE_CONFIG_ERRORS, DEFAULT_HIDE_CONFIG_ERRORS);
 	}
 }

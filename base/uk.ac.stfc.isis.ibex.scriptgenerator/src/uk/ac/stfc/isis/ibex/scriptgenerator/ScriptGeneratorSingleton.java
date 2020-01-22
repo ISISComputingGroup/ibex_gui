@@ -18,7 +18,13 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,19 +36,28 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
  *  and containing the actions table for the script generator.
  */
 public class ScriptGeneratorSingleton extends ModelObject {
+	
+	
+	/**
+	 * The preferences supplier to get the area to generate scripts from.
+	 */
+	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
 	
 	/**
 	 * The table containing the script generator contents (actions).
@@ -108,6 +123,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
+	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
+	
+	/**
 	 * The current state of parameter validity.
 	 */
 	private boolean paramValidity = false;
@@ -116,8 +136,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The generator to generate scripts with and check parameter validity with.
 	 */
 	private GeneratorContext generator;
+
+	/**
+	 * A property to fire a change of when there is an error generating a script.
+	 */
+	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
+	
+	/**
+	 * The date format to use when generating a script name.
+	 */
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
+	
 	
 	/**
 	 * The constructor, will create without a config loader and without loading
@@ -131,6 +162,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Pass a python interface to run with, then create a config loader and load an initial config.
 	 * 
 	 * @param pythonInterface The python interface to run with.
+	 * @param configLoader The object to load configs with.
+	 * @param scriptGeneratorTable The table containing actions for the model to use.
 	 */
 	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
 		this.pythonInterface = pythonInterface;
@@ -162,15 +195,34 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				);
 			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+		// Detect when the generated script is refreshed
+		// Write the script to file, send up generated script filepath
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
+			@SuppressWarnings("unchecked")
+			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
+			generatedScript.ifPresentOrElse(script -> {
+				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+				try {
+					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+				} catch(NoConfigSelectedException e) {
+					LOG.error(e);
+				}
+			}, () -> {
+				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+			});
+			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
 			// The table has changed so update the validity checks
-			refreshParameterValidityChecking();
+			try {
+				refreshParameterValidityChecking();
+			} catch(NoConfigSelectedException e) {
+				LOG.error(e);
+			}
 		});
 		
 		setActionParameters(configLoader.getParameters());
@@ -329,12 +381,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Get the currently loaded configuration.
-	 * 
-	 * @return The currently loaded configuration.
+	 * Gets all actions that could not be loaded and the reason.
 	 */
-	public Config getConfig() {
-		return configLoader.getConfig();
+	public Map<String, String> getConfigLoadErrors() {
+		return configLoader.getConfigLoadErrors();
+	}
+	
+	/**
+	 * Get an optional of the currently loaded configuration.
+	 * 
+	 * @return An optional of the currently loaded configuration.
+	 */
+	public Optional<Config> getConfig() {
+		return Optional.ofNullable(configLoader.getConfig());
 	}
 	
 	/**
@@ -372,10 +431,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Refresh the validity checking of the parameters,
 	 *  or if it fails refresh the error state of the model to be listened to by the ViewModel.
+	 *  
+	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
 	 */
-	public void refreshParameterValidityChecking() {
+	public void refreshParameterValidityChecking() throws NoConfigSelectedException {
+		Config config = getConfig()
+			.orElseThrow(() -> new NoConfigSelectedException("Tried to refresh parameter validity with no config selected"));
 		try {
-			Config config = getConfig();
 			generator.refreshAreParamsValid(scriptGeneratorTable, config);
 			generator.refreshValidityErrors(scriptGeneratorTable, config);
 			languageSupported = true;
@@ -389,5 +451,106 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			LOG.error(e);
 			threadError = true;
 		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 * @throws UnsupportedLanguageException If the language we are trying to generate a script in is unsupported.
+	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
+	 */
+	public void refreshGeneratedScript() throws InvalidParamsException,
+			UnsupportedLanguageException, NoConfigSelectedException {
+		Config config = getConfig()
+				.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"));
+		try {
+			if(areParamsValid()) {
+				generator.refreshGeneratedScript(scriptGeneratorTable, config);
+			} else {
+				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+			}
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
+		}
+	}
+	
+	/**
+	 * Save a generated script to file.
+	 * 
+	 * @param generatedScript The script that has been generated that is written to file here.
+	 * @param filepathPrefix The path prefix to where the script shall be written to.
+	 * @return An optional containing the path to the file if successful. An empty optional if unsuccessful.
+	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 */
+	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoConfigSelectedException {
+		try {
+			File scriptFile = generateScriptFile(filepathPrefix);
+			return writeScriptToFile(generatedScript, scriptFile);
+		} catch(IOException e) {
+			LOG.error("Failed to write generated script to file");
+			LOG.catching(e);
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Generate a file to write the script to
+	 * 
+	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
+	 * @return The file to write the script to.
+	 * @throws IOException When we cannot create the file
+	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 */
+	private File generateScriptFile(String filepathPrefix) throws IOException, NoConfigSelectedException {
+		String configName = getConfig()
+			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
+			.getName();
+		String timestamp = getTimestamp();
+		int version = 0;
+		String filepath;
+		File file;
+		do {
+			if (version == 0) {
+				filepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
+			} else {
+				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, configName, timestamp, version);
+			}
+			file = new File(filepath);
+			file.getParentFile().mkdirs();
+			version += 1;
+		} while(!file.createNewFile());
+		return file;
+	}
+	
+	/**
+	 * Write the script to file.
+	 * 
+	 * @param generatedScript The script to write to file.
+	 * @param scriptFile The file to write the script to.
+	 * @return An optional containing the file path if successful. An empty optional if IOException.
+	 */
+	private Optional<String> writeScriptToFile(String generatedScript, File scriptFile)  {
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(generatedScript);
+			scriptWriter.flush();
+			return Optional.of(scriptFile.getAbsolutePath());
+		} catch(IOException e) {
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Get the current timestamp to put in a filename. (Allows testing).
+	 * 
+	 * @return The timestamp as a string.
+	 */
+	public String getTimestamp() {
+		return DATE_FORMAT.format(new Date());
 	}
 }

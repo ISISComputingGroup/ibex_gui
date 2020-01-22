@@ -2,6 +2,8 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -20,6 +22,11 @@ public class ConfigLoader extends ModelObject {
 	private List<Config> availableConfigs;
 	
 	/**
+	 * Map of configs which could not be loaded and the reason.
+	 */
+	private Map<String, String> configLoadErrors;
+	
+	/**
 	 * The action parameters of the currently loaded config.
 	 */
 	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
@@ -27,7 +34,7 @@ public class ConfigLoader extends ModelObject {
 	/**
 	 * The currently selected config.
 	 */
-	private Config selectedConfig;
+	private Optional<Config> selectedConfig = Optional.empty();
 	
 	/**
 	 * The py4j interface handling the ConfigWrapper.
@@ -40,7 +47,10 @@ public class ConfigLoader extends ModelObject {
 	public ConfigLoader(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
 	    availableConfigs = pythonInterface.getActionDefinitions();
-	    setConfig(availableConfigs.get(0));
+	    configLoadErrors = pythonInterface.getConfigLoadErrors();
+	    if(!availableConfigs.isEmpty()) {
+	    	setConfig(availableConfigs.get(0));
+	    }
 	}
 
 	/**
@@ -48,6 +58,13 @@ public class ConfigLoader extends ModelObject {
 	 */
 	public List<Config> getAvailableConfigs() {
 		return availableConfigs;
+	}
+	
+	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	public Map<String, String> getConfigLoadErrors() {
+		return configLoadErrors;
 	}
 
 	/**
@@ -58,15 +75,17 @@ public class ConfigLoader extends ModelObject {
 		ArrayList<ActionParameter> parameters = config.getParameters().stream()
 				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
 		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
-		firePropertyChange("config", this.selectedConfig, this.selectedConfig = config);
+		this.selectedConfig = Optional.ofNullable(config);
+		firePropertyChange("config", null, null);
 	}
 	
 	/**
-	 * @return the currently loaded configuration.
+	 * @return An optional of the currently loaded configuration.
 	 */
 	public Config getConfig() {
-		return selectedConfig;
+		return selectedConfig.get();
 	}
+	
 	
 	/**
 	 * @return the parameters for the current configuration.
@@ -80,5 +99,14 @@ public class ConfigLoader extends ModelObject {
 	 */
 	public void cleanUp() {
 		pythonInterface.cleanUp();
+	}
+	
+	/**
+	 * Check if there are any configs loaded
+	 * 
+	 * @return true if there is at least one config loaded, false if not.
+	 */
+	public boolean configsLoaded() {
+		return ! getAvailableConfigs().isEmpty();
 	}
 }

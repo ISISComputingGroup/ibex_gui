@@ -1,13 +1,16 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
-from action_interface import ActionDefinition
-from typing import Dict, AnyStr, Union, List, Mapping
+from genie_python.genie_script_generator import ActionDefinition
+from typing import Dict, AnyStr, Union, List, Tuple
 from inspect import signature
 import inspect
 import argparse
 import os
 import sys
+from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+import importlib.machinery
+import importlib.util
 
 
 class Config(object):
@@ -51,11 +54,7 @@ class Config(object):
         Returns:      
             None if run runs without exception, otherwise a String containing the error message.
         """
-        map_of_arguments = {}
-        action_parameters = action.getAllActionParameters()
-        for action_parameter, parameter_value in action_parameters.items():
-            map_of_arguments[action_parameter.getName()] = parameter_value
-        return self.action.run(**map_of_arguments)
+        return self.action.run(**action)
 
     def parametersValid(self, action) -> Union[None, AnyStr]:
         """
@@ -67,11 +66,7 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        map_of_arguments = {}
-        action_parameters = action.getAllActionParameters()
-        for action_parameter, parameter_value in action_parameters.items():
-            map_of_arguments[action_parameter.getName()] = parameter_value
-        return self.action.parameters_valid(**map_of_arguments)
+        return self.action.parameters_valid(**action)
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
@@ -86,6 +81,16 @@ class Config(object):
         return hash(self.name)
 
 class Generator(object):
+
+    def __init__(self, search_folders: List[str] = ["instruments"]):
+        """
+        Set up the template to generate with
+        """
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        search_folders.append('{}/templates'.format(cwd)) # Add a search to find the template for jinja2
+        self.loader = FileSystemLoader(search_folders)
+        self.env = Environment(loader=self.loader, keep_trailing_newline=True)
+        self.template = self.env.get_template('generator_template.py')
 
     def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
@@ -106,13 +111,13 @@ class Generator(object):
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
-        current_list_of_arguments = 0
+        current_action_index = 0
         validityCheck: Dict[int, AnyStr] = {}
         for action in list_of_actions:
             singleActionValidityCheck = config.parametersValid(action)
             if singleActionValidityCheck != None:
-                validityCheck[current_list_of_arguments] = singleActionValidityCheck
-            current_list_of_arguments += 1
+                validityCheck[current_action_index] = singleActionValidityCheck
+            current_action_index += 1
         return validityCheck
 
     def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
@@ -120,12 +125,32 @@ class Generator(object):
         Generates a script from a list of parameters and configuration
 
         Returns:
-           None if parameters are invalid, otherwise a string of a generated script.
+           None if there is an error or parameters are invalid, otherwise a string of a generated script.
         """
         if self.areParamsValid(list_of_actions, config):
-            return "Generated python script"
+            config_file_path = "{}.py".format(config.getName())
+            config_template = self.env.get_template(config_file_path)
+            try:
+                rendered_template = self.template.render(inserted_config=config_template,
+                    script_generator_actions=list_of_actions)
+            except Exception:
+                rendered_template = None
+            return rendered_template
         else:
             return None
+    
+    def get_config_filepath(self, config: Config) -> str:
+        """
+        Find the absolute file path to the config
+
+        Parameters:
+            config: Config
+                The config to get the filepath for
+        Returns:
+            str: The absolute filepath to the config
+        """
+        return os.path.basename(config.action.get_file())
+
 
 
 class ConfigWrapper(object):
@@ -135,9 +160,19 @@ class ConfigWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigWrapper']
 
-    def __init__(self, available_actions: Dict, generator: Generator):
+    def __init__(self, available_actions: Dict[AnyStr, ActionDefinition], generator: Generator, config_load_errors: Dict[AnyStr, AnyStr] = {}):
         self.actions = [Config(instrument, action()) for instrument, action in available_actions.items()]
         self.generator = generator
+        self.config_load_errors = config_load_errors
+
+    def getConfigLoadErrors(self) -> Dict[AnyStr, AnyStr]:
+        """
+        Returns a dictionary mapping of a config that has failed to load mapped to it's error when loading
+
+        Returns:
+           config_load_errors: The Dictionary mapping configs to load errors.
+        """
+        return MapConverter().convert(self.config_load_errors, gateway._gateway_client)
 
     def getActionDefinitions(self) -> list:
         """
@@ -148,15 +183,19 @@ class ConfigWrapper(object):
 
         """
         return ListConverter().convert(self.actions, gateway._gateway_client)
+
+    def convert_list_of_actions_to_python(self, list_of_actions) -> List[Dict[AnyStr, AnyStr]]:
+        python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
+        return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
     
     def areParamsValid(self, list_of_actions, config: Config) -> bool:
         """
         Checks if a list of parameters are valid for the configuration
 
         Returns:
-            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+            True if valid, False if not.
         """
-        return self.generator.areParamsValid(list_of_actions, config)
+        return self.generator.areParamsValid(self.convert_list_of_actions_to_python(list_of_actions), config)
 
     def getValidityErrors(self, list_of_actions, config: Config) -> Dict[int, AnyStr]:
         """
@@ -165,7 +204,9 @@ class ConfigWrapper(object):
         Returns:
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
-        return MapConverter().convert(self.generator.getValidityErrors(list_of_actions, config), gateway._gateway_client)
+        return MapConverter().convert(self.generator.getValidityErrors(
+                self.convert_list_of_actions_to_python(list_of_actions), config),
+            gateway._gateway_client)
 
     def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
         """
@@ -174,32 +215,64 @@ class ConfigWrapper(object):
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(list_of_actions, config)
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
-
-def get_actions() -> Dict[AnyStr, ActionDefinition]:
-    """ Dynamically import all the Python modules in this module's sub directory. """
-    search_folder = "instruments"
-    this_file_path = os.path.split(__file__)[0]
-    for filename in os.listdir(os.path.join(this_file_path, search_folder)):
+def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDefinition], Dict[AnyStr, AnyStr]]:
+    """ Dynamically import all the Python modules in the search folders"""
+    if search_folders is None:
+        this_file_path = os.path.split(__file__)[0]
+        search_folder = [os.path.join(this_file_path, "instruments")]
+    configs: Dict[AnyStr, ActionDefinition] = {}
+    config_load_errors: Dict[AnyStr, AnyStr] = {}
+    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+        f.write("Starting search folders"+"\n")
+    for search_folder in search_folders:
+        with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+            f.write(search_folder+"\n")
         try:
-            module_name = filename.split(".")[0]
-            __import__("{folder}.{module}".format(folder=search_folder, module=module_name))
-        except Exception as e:
-            # Print any errors to stderr, Java will catch and throw to the user
-            print("Error loading {}: {}".format(filename, e), file=sys.stderr)
-
-    return {os.path.basename(inspect.getfile(cls)).split(".")[0]: cls for cls in ActionDefinition.__subclasses__()}
+            for filename in os.listdir(search_folder):
+                with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+                    f.write(filename+"\n")
+                filenameparts = filename.split(".")
+                module_name = filenameparts[0]
+                if len(filenameparts) > 1:
+                    file_extension = filenameparts[-1]
+                else:
+                    file_extension = ""
+                if file_extension == "py":
+                    try:
+                        loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                        spec = importlib.util.spec_from_loader(module_name, loader)
+                        sys.modules[module_name] = importlib.util.module_from_spec(spec)
+                        loader.exec_module(sys.modules[module_name])
+                        configs[module_name] = sys.modules[module_name].DoRun
+                    except Exception as e:
+                        config_load_errors[module_name] = str(e)
+                        # Print any errors to stderr, Java will catch and throw to the user
+                        print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+        except FileNotFoundError as e:
+            config_load_errors[search_folder] = str(e)
+            print("Error loading from {}".format(search_folder), file=sys.stderr)
+    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+        f.write(str(configs)+"\n"+str(config_load_errors)+"\n")
+    return configs, config_load_errors
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
+    parser.add_argument('search_folders', type=str, help='the folders containing the script generator configs to search')
 
     args = parser.parse_args()
+    search_folders = args.search_folders.split(",")
 
-    config_wrapper = ConfigWrapper(get_actions(), Generator())
+    configs: Dict[AnyStr, ActionDefinition] = {}
+    config_load_errors: Dict[AnyStr, AnyStr] = {}
+    configs, config_load_errors = get_actions(search_folders=search_folders)
+
+    config_wrapper = ConfigWrapper(configs, Generator(search_folders=search_folders), config_load_errors=config_load_errors)
+
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),

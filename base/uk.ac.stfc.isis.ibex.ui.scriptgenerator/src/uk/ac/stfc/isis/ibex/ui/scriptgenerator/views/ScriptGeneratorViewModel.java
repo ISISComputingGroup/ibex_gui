@@ -1,31 +1,42 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
@@ -35,40 +46,43 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
  */
 public class ScriptGeneratorViewModel {
 	
+	private static final Display DISPLAY = Display.getDefault();
+	
+
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
-	private static final Color invalidDarkColor = Display.getDefault().getSystemColor(SWT.COLOR_RED);
+	private static final Color invalidDarkColor = DISPLAY.getSystemColor(SWT.COLOR_RED);
 	
 	/**
 	 * A light read for use in the other script generator table columns when a row is invalid.
 	 */
-	private static final Color invalidLightColor = new Color(Display.getDefault(), 255, 204, 203);
+	private static final Color invalidLightColor = new Color(DISPLAY, 255, 204, 203);
 	
 	/**
 	 * A green for use in the validity column when a row is valid.
 	 */
-	private static final Color validColor = Display.getDefault().getSystemColor(SWT.COLOR_GREEN);
+	private static final Color validColor = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
 	
 	/**
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
-	private static final Color clearColor = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	/**
 	 * The colour of the "get validity errors" button when it is grayed out.
 	 */
-	private static final Color greyColor = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+	private static final Color greyColor = DISPLAY.getSystemColor(SWT.COLOR_GRAY);
 	
 	/**
 	 * A light orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
 	 */
-	private static final Color lightValidityCheckErrorColor = new Color(Display.getDefault(), 255, 201, 102);
+	private static final Color lightValidityCheckErrorColor = new Color(DISPLAY, 255, 201, 102);
 	
 	/**
 	 * A dark orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
 	 */
-	private static final Color darkValidityCheckErrorColor = new Color(Display.getDefault(), 255, 165, 0);
+	private static final Color darkValidityCheckErrorColor = new Color(DISPLAY, 255, 165, 0);
 	
 	/**
 	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
@@ -91,9 +105,19 @@ public class ScriptGeneratorViewModel {
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
 	
 	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
+	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
+	
+	/**
 	 * A property to listen to for when actions change in the model.
 	 */
 	private static final String ACTIONS_PROPERTY = "actions";
+	
+	/**
+	 * A property to fire a change of when there is an error generating a script.
+	 */
+	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
@@ -123,13 +147,27 @@ public class ScriptGeneratorViewModel {
 		scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
 			displayThreadingError();
 		});
+		scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+			LOG.info("Generation error");
+			displayGenerationError();
+		});
 	}
+	
+	/**
+	 * Check if there are any configs loaded
+	 * 
+	 * @return true if there is at least one config loaded, false if not.
+	 */
+	public boolean configsLoaded() {
+		return this.scriptGeneratorModel.getConfigLoader().configsLoaded();
+	}
+	
 	
 	/**
 	 * Display a message dialog box that the language that is being used is unsupported.
 	 */
 	private void displayLanguageSupportError() {
-		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+		MessageDialog.openError(DISPLAY.getActiveShell(), 
 				"Language support issue",
 				"You are attempting to use an unsupported language, " + 
 				"parameter validity checking and script generation are disabled at this time");
@@ -138,8 +176,19 @@ public class ScriptGeneratorViewModel {
 	/**
 	 * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
 	 */
+	private void displayGenerationError() {
+		DISPLAY.asyncExec(() -> {
+			MessageDialog.openError(DISPLAY.getActiveShell(), 
+					"Error",
+					"Error when generating a script, are your parameters valid?");
+		});
+	}
+	
+	/**
+	 * Display a message dialog box that there was an issue when generating a script
+	 */
 	private void displayThreadingError() {
-		MessageDialog.openError(Display.getCurrent().getActiveShell(), 
+		MessageDialog.openError(DISPLAY.getActiveShell(), 
 				"Error",
 				"Generating or parameter validity checking error. Threading issue.");
 	}
@@ -208,12 +257,10 @@ public class ScriptGeneratorViewModel {
 	}
 	
 	/**
-	 * Get the currently loaded configuration.
-	 * 
-	 * @return The currently loaded configuration.
+	 * Gets all actions that could not be loaded and the reason.
 	 */
-	protected Config getConfig() {
-		return scriptGeneratorModel.getConfig();
+	protected Map<String, String> getConfigLoadErrors() {
+		return scriptGeneratorModel.getConfigLoadErrors();
 	}
 	
 	/**
@@ -242,15 +289,36 @@ public class ScriptGeneratorViewModel {
 	 *  update the view table.
 	 * 
 	 * @param table The view table to update.
-	 * @param display The display to change.
+	 * @param btnGetValidityErrors The validity check button to style change.
+	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors) {
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, e -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors);
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
 		});
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors);
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
 		});
+		// Listen for generated script refreshes
+		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, evt -> {
+			@SuppressWarnings("unchecked")
+			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
+			DISPLAY.asyncExec(() -> {
+				optionalScriptFilePath.ifPresentOrElse(
+						scriptFilePath -> {
+							openFileDialog(scriptFilePath);
+						},
+						() -> {
+							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+						}
+				);
+			});
+		});
+	}
+	
+	private void openFileDialog(String filePath) {
+		FileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
+				"Script Generated", "Script generated at: ", filePath);
 	}
 	
 	/**
@@ -260,12 +328,23 @@ public class ScriptGeneratorViewModel {
 	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The button to manipulate.
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors) {
-		Display.getDefault().asyncExec(() -> {
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+		DISPLAY.asyncExec(() -> {
             viewTable.setRows(scriptGeneratorModel.getActions());
             updateValidityChecks(viewTable);
             setButtonValidityStyle(btnGetValidityErrors);
+            setButtonGenerateStyle(btnGenerateScript);
 		});
+	}
+	
+	private void setButtonGenerateStyle(Button btnGenerateScript) {
+		if(scriptGeneratorModel.languageSupported) {
+			// Grey the button out if parameters are valid
+			btnGenerateScript.setEnabled(scriptGeneratorModel.areParamsValid());
+		} else {
+			// Grey the button out when language is not supported
+			btnGenerateScript.setEnabled(false);
+		}
 	}
 	
 	private void setButtonValidityStyle(Button btnGetValidityErrors) {
@@ -384,7 +463,7 @@ public class ScriptGeneratorViewModel {
         	@Override
 			protected String stringFromRow(ScriptGeneratorAction row) {
         		if(!scriptGeneratorModel.languageSupported) {
-        			return "\u003F";
+        			return "\u003F"; // A question mark to say we cannot be certain
         		}
         		if (row.isValid()) {
         			return "\u2714"; // A tick for valid
@@ -426,7 +505,7 @@ public class ScriptGeneratorViewModel {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-    			e -> Display.getDefault().asyncExec(() -> viewTable.updateTableColumns())
+    			e -> DISPLAY.asyncExec(() -> viewTable.updateTableColumns())
     	);
     }
     
@@ -439,13 +518,42 @@ public class ScriptGeneratorViewModel {
 			if(!body.isEmpty()) {
 				String heading = "Validity errors:\n\n";
 				String message = heading + body;
-				MessageDialog.openWarning(Display.getCurrent().getActiveShell(), "Validity Errors", message);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
 			} else {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Validity Errors", "No validity errors");
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
 			}
 		} else {
 			displayLanguageSupportError();
 		}
+	}
+
+    /**
+     * Generate a script and display the file it was generated to. If fail display warnings.
+     */
+    public void generate() {
+    	try {
+    		scriptGeneratorModel.refreshGeneratedScript();
+		} catch (InvalidParamsException e) {
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
+					"Cannot generate script. Parameters are invalid.");
+		} catch (UnsupportedLanguageException e) {
+			LOG.error(e);
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
+					"Cannot generate script. Language to generate in is unsupported.");
+		} catch(NoConfigSelectedException e) {
+			LOG.error(e);
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No config selection", 
+					"Cannot generate script. No config has been selected");
+		}
+    }
+
+    /**
+     * Get the current selected config.
+     * 
+     * @return The selected config.
+     */
+	public Optional<Config> getConfig() {
+		return scriptGeneratorModel.getConfig();
 	}
 	
 }

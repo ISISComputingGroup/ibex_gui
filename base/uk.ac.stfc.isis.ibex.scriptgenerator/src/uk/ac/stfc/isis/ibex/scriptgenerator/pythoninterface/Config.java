@@ -1,8 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-
 import java.util.List;
+import java.util.Map;
 
 /**
  * A configuration describing how the script generator should be configured.
@@ -18,14 +17,14 @@ public interface Config {
 	 * @param action The action to do.
 	 * @return The error if there has been one.
 	 */
-	public String doAction(ScriptGeneratorAction action);
+	public String doAction(Map<String, String> action);
 	
 	/**
 	 * Performs the check that the arguments are valid.
 	 * @param action The action to check for validity.
 	 * @return The error if the arguments are not valid.
 	 */
-	public String parametersValid(ScriptGeneratorAction action);
+	public String parametersValid(Map<String, String> action);
 	
 	/**
 	 * @return The name of this configuration.

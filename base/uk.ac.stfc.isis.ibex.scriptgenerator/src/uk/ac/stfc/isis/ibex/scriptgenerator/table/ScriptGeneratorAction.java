@@ -90,6 +90,19 @@ public class ScriptGeneratorAction extends ModelObject {
 	}
 	
 	/**
+	 * Get all parameter, value pairs. With the parameter as a string
+	 * @return
+	 * 			Map of parameter, value pairs.
+	 */
+	public Map<String, String> getAllActionParametersAsString() {
+		Map<String, String> actionParametersAsString = new HashMap<>();
+		for(Map.Entry<ActionParameter, String> actionParam : actionParameterValues.entrySet()) {
+			actionParametersAsString.put(actionParam.getKey().getName(), actionParam.getValue());
+		}
+		return actionParametersAsString;
+	}
+	
+	/**
 	 * Set this action as valid.
 	 */
 	public void setValid() {
