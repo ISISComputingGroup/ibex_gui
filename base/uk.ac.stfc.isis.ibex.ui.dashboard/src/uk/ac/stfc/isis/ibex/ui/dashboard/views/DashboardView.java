@@ -51,7 +51,7 @@ public class DashboardView {
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
-	private final Font textFont = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+	private final Font textFont = SWTResourceManager.getFont("Arial", 11, SWT.NORMAL);
 	private final Font simulationModeFont = SWTResourceManager.getFont("Arial", 20, SWT.BOLD);
 	
 	private final Dashboard dashboard = Dashboard.getInstance();
