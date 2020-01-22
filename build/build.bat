@@ -23,7 +23,7 @@ call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isi
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it
-set built_client="%~dp0..\base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64"
+set built_client="%~dp0..\%2"
 set sensible_build_dir="%~dp0..\built_client"
 robocopy %built_client% %sensible_build_dir% /e /purge /r:2 /mt /XF "install.log" /NFL /NDL /NP
 

@@ -224,9 +224,15 @@ def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDe
         search_folder = [os.path.join(this_file_path, "instruments")]
     configs: Dict[AnyStr, ActionDefinition] = {}
     config_load_errors: Dict[AnyStr, AnyStr] = {}
+    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+        f.write("Starting search folders"+"\n")
     for search_folder in search_folders:
+        with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+            f.write(search_folder+"\n")
         try:
             for filename in os.listdir(search_folder):
+                with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+                    f.write(filename+"\n")
                 filenameparts = filename.split(".")
                 module_name = filenameparts[0]
                 if len(filenameparts) > 1:
@@ -247,6 +253,8 @@ def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDe
         except FileNotFoundError as e:
             config_load_errors[search_folder] = str(e)
             print("Error loading from {}".format(search_folder), file=sys.stderr)
+    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
+        f.write(str(configs)+"\n"+str(config_load_errors)+"\n")
     return configs, config_load_errors
 
 
