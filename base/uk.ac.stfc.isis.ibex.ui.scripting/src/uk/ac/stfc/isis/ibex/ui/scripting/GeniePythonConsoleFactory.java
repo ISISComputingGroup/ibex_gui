@@ -101,7 +101,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 				"org.python.pydev.debug");
 
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
-				Commands.GENIE_INITIALISATION);
+				Commands.GENIE_INITIALISATION_CMDS);
 	}
 
 	/**
