@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.awt.Desktop;
 import java.io.IOException;
 
@@ -122,25 +123,49 @@ public class FileMessageDialog extends MessageDialog {
 		openFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
 			try {
 				if(file.exists() && Desktop.isDesktopSupported()) {
-					Desktop.getDesktop().open(file);
+					Runtime rs = Runtime.getRuntime();
+					String notepadExe = findNotepadExe();
+					rs.exec(String.format("%s %s", notepadExe, file));
 				} else {
-					handleFailedToOpenFile();
+					String notepadLaunchWarning = "Could not launch notepad++";
+					LOG.info(notepadLaunchWarning);
+					handleFailedToOpenFile(notepadLaunchWarning);
 				}
 			} catch(IOException e) {
 				LOG.catching(e);
-				handleFailedToOpenFile();
+				handleFailedToOpenFile(e.getMessage());
 			}
 		}));
+	}
+	
+	private String findNotepadExe() throws IOException {
+		String[] possibleLocations = {"C:\\Program Files\\Notepad++", "C:\\Program Files (x86)\\Notepad++"};
+		for(String location : possibleLocations) {
+			File directory = new File(location);
+			if(directory.exists()) {
+				File[] possibleFiles = directory.listFiles(new FilenameFilter() {
+					
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.equals("notepad++.exe");
+					}
+				});
+				if(possibleFiles.length > 0) {
+					return possibleFiles[0].getAbsolutePath();
+				}
+			}
+		}
+		throw new IOException("Failed to find notepad to launch");
 	}
 		
 	
 	/**
 	 * Handle the case where we fail to open the file by showing a warning to the user.
 	 */
-	private void handleFailedToOpenFile() {
+	private void handleFailedToOpenFile(String message) {
 		LOG.error("Failed to open file " + file.getAbsolutePath());
 		Display.getDefault().asyncExec( () -> {
-			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath());
+			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath() + "\n" + message);
 		});
 	}
 		
