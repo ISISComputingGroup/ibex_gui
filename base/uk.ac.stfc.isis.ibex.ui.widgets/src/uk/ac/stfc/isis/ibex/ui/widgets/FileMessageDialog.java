@@ -127,11 +127,13 @@ public class FileMessageDialog extends MessageDialog {
 					String notepadExe = findNotepadExe();
 					rs.exec(String.format("%s %s", notepadExe, file));
 				} else {
-					handleFailedToOpenFile();
+					String notepadLaunchWarning = "Could not launch notepad++";
+					LOG.info(notepadLaunchWarning);
+					handleFailedToOpenFile(notepadLaunchWarning);
 				}
 			} catch(IOException e) {
 				LOG.catching(e);
-				handleFailedToOpenFile();
+				handleFailedToOpenFile(e.getMessage());
 			}
 		}));
 	}
@@ -153,17 +155,17 @@ public class FileMessageDialog extends MessageDialog {
 				}
 			}
 		}
-		throw new IOException("Failed to find notepad to launch with");
+		throw new IOException("Failed to find notepad to launch");
 	}
 		
 	
 	/**
 	 * Handle the case where we fail to open the file by showing a warning to the user.
 	 */
-	private void handleFailedToOpenFile() {
+	private void handleFailedToOpenFile(String message) {
 		LOG.error("Failed to open file " + file.getAbsolutePath());
 		Display.getDefault().asyncExec( () -> {
-			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath());
+			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath() + "\n" + message);
 		});
 	}
 		
