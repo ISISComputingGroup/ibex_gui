@@ -27,28 +27,50 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public final class Commands {
 
-	private static final String SET_INSTRUMENT = "set_instrument('%s')\n";
+	/**
+	 * Python command to set the current instrument name
+	 */
+	private static final String SET_INSTRUMENT_CMD = "set_instrument('%s')\n";
 
+	/**
+	 * Python command to scale down matplotlib plot dimensions (hardcoded for now)
+	 */
+	public static final String COMPACT_PLOT_CMD = "matplotlib.rcParams['figure.figsize'] = [5.7, 2.3] \n";
+	
 	/**
 	 * The command to initialise genie.
 	 */
-	public static final String GENIE_INITIALISATION = 
+	public static final String GENIE_INITIALISATION_CMDS = 
 			"import matplotlib \n"
 			+ "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
 			+ "from genie_python.genie_startup import * \n" 
 			+ "load_script(None, globals()) \n";
-
+	
+	
     private Commands() {
     }
-	
+
     /**
      * Creates the command to switch genie to the current instrument.
      * @return the command to switch genie to the current instrument.
      */
-	public static String setInstrument() {
+	private static String setInstrumentCommand() {
 		InstrumentInfo info = Instrument.getInstance().currentInstrument();
 		String instrumentName = info.hostName().equals("localhost") ? info.pvPrefix() : info.hostName();
 		
-		return String.format(SET_INSTRUMENT, instrumentName);
+		return String.format(SET_INSTRUMENT_CMD, instrumentName);
+	}
+	
+    /**
+     * Creates additional commands to run when creating the genie_python console
+     * @return additional python commands
+     */
+	public static String getAdditionalCommands(boolean compactPlot) {
+		String additionalCommands = "";
+		
+		additionalCommands += setInstrumentCommand();
+		additionalCommands += compactPlot ? COMPACT_PLOT_CMD : "";
+
+		return additionalCommands;
 	}
 }

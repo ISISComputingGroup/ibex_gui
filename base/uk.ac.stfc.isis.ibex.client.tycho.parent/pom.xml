@@ -234,6 +234,7 @@
 		<module>../uk.ac.stfc.isis.ibex.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.reflectometry</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
@@ -263,7 +264,6 @@
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
 		
-		<module>../uk.ac.stfc.isis.ibex.ui.reflectometry</module>
 	</modules>
 </project>
 
