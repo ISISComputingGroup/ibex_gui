@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tableofmotors
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.tableofmotors
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.tableofmotors.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.targets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.tableofmotors
+Bundle-ActivationPolicy: lazy
