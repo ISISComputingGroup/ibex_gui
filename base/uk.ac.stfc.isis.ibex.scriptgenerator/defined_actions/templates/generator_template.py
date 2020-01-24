@@ -1,6 +1,6 @@
 {% include inserted_config %}
 
-def do_run():
+def runscript():
     config = DoRun()
     {% for action in script_generator_actions -%}
     config.run(**{{ action }})
