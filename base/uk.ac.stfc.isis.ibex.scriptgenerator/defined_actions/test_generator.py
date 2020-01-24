@@ -78,7 +78,7 @@ class DoRun(ActionDefinition):
             return None
 
 
-def do_run():
+def runscript():
     config = DoRun()
     config.run(**{'param1': '1', 'param2': '2'})
     config.run(**{'param1': '1', 'param2': '2'})
