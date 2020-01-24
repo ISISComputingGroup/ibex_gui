@@ -24,6 +24,9 @@ package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.PlatformUI;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -33,25 +36,40 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
  * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
 public class MatplotlibOpiTargetView extends OpiTargetView {
+	
+	/**
+	 * The ID of the reflectometry perspective
+	 */
+	private static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
+	
     /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
-    
     /**
      * Name of the OPI.
      */
     private static final String NAME = "Matplotlib";
 
     /**
-     * File name of the web links OPI.
+     * File name of the matplotlib OPI.
      */
     private static final String OPI = "matplotlib.opi";
+    
+    /**
+     * File name of the compact matplotlib OPI.
+     */
+    private static final String OPI_COMPACT = "matplotlib_compact.opi";
     
     /**
      * The OPI target for the matplotlib opi.
      */
     private static final OpiTarget TARGET = new OpiTarget(NAME, OPI);
+    
+    /**
+     * The OPI target for the compact matplotlib opi.
+     */
+    private static final OpiTarget TARGET_COMPACT = new OpiTarget(NAME, OPI_COMPACT);
     
     /**
      * Logger for errors.
@@ -71,18 +89,19 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * @throws OPIViewCreationException when opi can not be created
      */
     public static synchronized void displayOpi(final String url) {
+    	IPerspectiveDescriptor currentPerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
+		final OpiTarget target = currentPerspective.getId().equals(REFL_PERSPECTIVE_ID) ? TARGET_COMPACT : TARGET;
     	
-    	if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
-    		TARGET.properties().remove(URL_MACRO_NAME);
+    	if (target.properties().containsKey(URL_MACRO_NAME)) {
+    		target.properties().remove(URL_MACRO_NAME);
     	}
-    	
-    	TARGET.addProperty(URL_MACRO_NAME, url);
+    	target.addProperty(URL_MACRO_NAME, url);
     	
         Display.getDefault().syncExec(new Runnable() {
 			@Override
             public void run() {
 		        try {
-					displayOpi(TARGET, ID);
+	        		displayOpi(target, ID);
 				} catch (OPIViewCreationException e) {
 					LOG.error(e.getMessage(), e);
 				}
