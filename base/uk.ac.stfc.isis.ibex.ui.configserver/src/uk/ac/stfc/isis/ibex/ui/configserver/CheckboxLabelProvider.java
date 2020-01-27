@@ -49,21 +49,21 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		super.update(cell);
 
 		cell.setText("");
-		final T ioc = (T) cell.getElement();		
+		final T model = (T) cell.getElement();		
 		final Button checkBox = getControl(cell, SWT.CHECK);
 		
-		checkBox.setSelection(checked(ioc));	
-		checkBox.setText(stringFromRow(ioc));
+		checkBox.setSelection(checked(model));	
+		checkBox.setText(stringFromRow(model));
 
 		checkBox.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				setChecked(ioc, checkBox.getSelection());
-				checkBox.setText(stringFromRow(ioc));
+				setChecked(model, checkBox.getSelection());
+				checkBox.setText(stringFromRow(model));
 			}
 		});
 		
-		checkBox.setEnabled(isEditable(ioc));
+		checkBox.setEnabled(isEditable(model));
 	}
 	
 	@Override
