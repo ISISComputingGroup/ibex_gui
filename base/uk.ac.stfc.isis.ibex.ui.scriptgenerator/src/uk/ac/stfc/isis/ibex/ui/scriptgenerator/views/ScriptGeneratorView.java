@@ -147,17 +147,19 @@ public class ScriptGeneratorView {
  			// Separate help and selector
  			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
 	        
- 			// Display help for the config
+ 			// Label for config help
 	        Label helpLabel = new Label(configComposite, SWT.NONE);
 			helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			helpLabel.setText("Config Help: ");
 			
+			// Display help for the config
 			Text helpText = new Text(configComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 			var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
 			helpTextDataLayout.widthHint = 400;
 			helpTextDataLayout.heightHint = 100;
 			helpText.setLayoutData(helpTextDataLayout);
 			helpText.setBackground(clearColor);
+			// Display the correct starting text
 			scriptGeneratorViewModel.getConfig().ifPresentOrElse(
 						config -> {
 							Optional.ofNullable(config.getHelp()).ifPresentOrElse(
