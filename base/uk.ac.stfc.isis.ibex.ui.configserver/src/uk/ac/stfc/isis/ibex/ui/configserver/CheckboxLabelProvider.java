@@ -50,7 +50,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 
 		cell.setText("");
 		final T ioc = (T) cell.getElement();		
-		final Button checkBox = (Button) getControl(cell, SWT.CHECK);
+		final Button checkBox = getControl(cell, SWT.CHECK);
 		
 		checkBox.setSelection(checked(ioc));	
 		checkBox.setText(stringFromRow(ioc));
