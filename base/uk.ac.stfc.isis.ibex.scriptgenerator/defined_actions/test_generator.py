@@ -77,6 +77,8 @@ class DoRun(ActionDefinition):
         else:
             return None
 
+    def get_help(self):
+        return "Help"
 
 def runscript():
     config = DoRun()
