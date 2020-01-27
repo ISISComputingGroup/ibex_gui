@@ -368,6 +368,7 @@ public class ScriptGeneratorViewModel {
 	 * 
 	 * @param bindingContext The context.
 	 * @param configSelector The config selector ui element to bind.
+	 * @param helpText The UI element to display help string text in.
 	 */
 	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector, Text helpText) {
 		// Switch the composite value when config switched
@@ -391,9 +392,7 @@ public class ScriptGeneratorViewModel {
 	 * Display help string to the user if present, else clear the help string UI display.
 	 * 
 	 * @param config The config to get the help string from
-	 * @param configHelpComposite The composite containing the UI to display the help string.
 	 * @param helpText The text UI element to display the help string in.
-	 * @param mainParent The parent of all the UI elements to redraw together when a change is made.
 	 */
 	private void displayHelpString(Config config, Text helpText) {
 		Optional.ofNullable(config.getHelp()).ifPresentOrElse(
