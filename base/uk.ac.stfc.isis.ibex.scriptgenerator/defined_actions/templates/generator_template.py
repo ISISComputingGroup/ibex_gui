@@ -1,3 +1,5 @@
+# pylint: skip-file
+
 {% include inserted_config %}
 
 def do_run():

@@ -55,7 +55,9 @@ class TestGenerator(unittest.TestCase):
     def test_GIVEN_valid_config_WHEN_generate_THEN_new_script_is_as_expected(self):
         # Arrange
         expected_script_lines: List[AnyStr] = \
-            """from genie_python import genie as g
+            """# pylint: skip-file
+
+from genie_python import genie as g
 
 from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to
 
@@ -76,6 +78,9 @@ class DoRun(ActionDefinition):
             return reason
         else:
             return None
+
+    def get_help(self):
+        return "Help"
 
 
 def do_run():
