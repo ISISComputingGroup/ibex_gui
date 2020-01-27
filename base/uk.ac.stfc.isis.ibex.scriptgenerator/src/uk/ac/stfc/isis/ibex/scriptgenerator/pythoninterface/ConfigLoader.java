@@ -87,14 +87,6 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	/**
-	 * @return An optional of the currently loaded configuration.
-	 */
-	public Optional<Config> getOptionalConfig() {
-		return selectedConfig;
-	}
-	
-	
-	/**
 	 * @return the parameters for the current configuration.
 	 */
 	public ArrayList<ActionParameter> getParameters() {
