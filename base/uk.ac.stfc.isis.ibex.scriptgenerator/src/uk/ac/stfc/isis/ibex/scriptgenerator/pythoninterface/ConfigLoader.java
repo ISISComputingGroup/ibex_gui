@@ -80,10 +80,17 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	/**
-	 * @return An optional of the currently loaded configuration.
+	 * @return The currently loaded config.
 	 */
 	public Config getConfig() {
 		return selectedConfig.get();
+	}
+	
+	/**
+	 * @return An optional of the currently loaded configuration.
+	 */
+	public Optional<Config> getOptionalConfig() {
+		return selectedConfig;
 	}
 	
 	
