@@ -161,7 +161,7 @@ $(pv_value)</tooltip>
         <path/>
         <scriptText>import webbrowser
 
-webbrowser.open("https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Matplotlib")
+webbrowser.open("http://shadow.nd.rl.ac.uk/ibex_user_manual/Matplotlib")
 </scriptText>
         <embedded>true</embedded>
         <description/>
