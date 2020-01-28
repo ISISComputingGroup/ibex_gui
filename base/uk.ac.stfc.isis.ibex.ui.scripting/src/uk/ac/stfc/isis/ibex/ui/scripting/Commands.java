@@ -54,7 +54,7 @@ public final class Commands {
      * Creates the command to switch genie to the current instrument.
      * @return the command to switch genie to the current instrument.
      */
-	private static String setInstrumentCommand() {
+	public static String getSetInstrumentCommand() {
 		InstrumentInfo info = Instrument.getInstance().currentInstrument();
 		String instrumentName = info.hostName().equals("localhost") ? info.pvPrefix() : info.hostName();
 		
@@ -62,15 +62,13 @@ public final class Commands {
 	}
 	
     /**
-     * Creates additional commands to run when creating the genie_python console
-     * @return additional python commands
+     * Creates a set of initialisation commands to run when creating the genie_python console
+     * @return initial python commands
      */
-	public static String getAdditionalCommands(boolean compactPlot) {
-		String additionalCommands = "";
-		
-		additionalCommands += setInstrumentCommand();
-		additionalCommands += compactPlot ? COMPACT_PLOT_CMD : "";
+	public static String getInitialisationCommands(boolean compactPlot) {
+		String initCommands = GENIE_INITIALISATION_CMDS;
+		initCommands += compactPlot ? COMPACT_PLOT_CMD : "";
 
-		return additionalCommands;
+		return initCommands;
 	}
 }

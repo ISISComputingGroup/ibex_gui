@@ -192,7 +192,7 @@ public class Consoles extends AbstractUIPlugin {
 					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
 					new ConsoleView();
-					GENIE_CONSOLE_FACTORY.createConsole(Commands.getAdditionalCommands(compactPlot));
+					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
 				}
 			}
 		});

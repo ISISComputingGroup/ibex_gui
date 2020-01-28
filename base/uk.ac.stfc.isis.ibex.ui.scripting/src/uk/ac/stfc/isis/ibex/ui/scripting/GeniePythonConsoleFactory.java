@@ -80,12 +80,24 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	};
 
 	/**
+	 * Creates the scripting console after configuring the set of default
+	 * interpreter commands.
+	 * 
+	 * @param additionalInitialCommands Additional commands to run on startup
+	 * @param compactPlot               Flag indicating whether matplotlib plots
+	 *                                  should be shrunk to a compact size.
+	 */
+	public void configureAndCreateConsole(String additionalInitialCommands, boolean compactPlot) {
+		setInitialInterpreterCommands(compactPlot);
+		createConsole(additionalInitialCommands);
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void createConsole(String additionalInitialComands) {
 		try {
-			setInitialInterpreterCommands();
 			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
 		} catch (Exception e) {
 			LOG.error(e);
@@ -96,12 +108,12 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
 	}
 
-	private void setInitialInterpreterCommands() {
+	private void setInitialInterpreterCommands(boolean compactPlot) {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				"org.python.pydev.debug");
 
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
-				Commands.GENIE_INITIALISATION_CMDS);
+				Commands.getInitialisationCommands(compactPlot));
 	}
 
 	/**
