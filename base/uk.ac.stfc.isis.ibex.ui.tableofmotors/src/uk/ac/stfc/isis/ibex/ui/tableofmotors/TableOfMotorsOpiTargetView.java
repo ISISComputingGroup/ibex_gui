@@ -52,13 +52,6 @@ public class TableOfMotorsOpiTargetView extends OpiTargetView {
 	}
 	
 	/**
-	 * Override toolbars to not exist (they appear in the dashboard which looks weird).
-	 */
-	@Override
-	public void createToolbarButtons() {
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -74,7 +67,7 @@ public class TableOfMotorsOpiTargetView extends OpiTargetView {
 	@Override
 	public MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
-		macros.put("INST", Instrument.getInstance().currentInstrument().name());
+		macros.put("P", Instrument.getInstance().getPvPrefix());
 		return macros;
 	}
 
