@@ -143,6 +143,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	/**
+	 * A property to notify listeners when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
+	
+	/**
 	 * The date format to use when generating a script name.
 	 */
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -229,10 +234,26 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Reload the table actions by firing a property change.
+	 */
+	public void reloadActions() {
+		this.scriptGeneratorTable.reloadActions();
+	}
+	
+	/**
      * Creates the config loader.
      */
     public void createConfigLoader() {
         pythonInterface = new PythonInterface();
+        pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+        	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+        try {
+			pythonInterface.setUpPythonThread();
+		} catch (IOException e) {
+			LOG.error("Failed to set up py4j interface");
+			LOG.error(e);
+		}
         configLoader = new ConfigLoader(pythonInterface);
     }
     
@@ -552,5 +573,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public String getTimestamp() {
 		return DATE_FORMAT.format(new Date());
+	}
+
+	/**
+	 * Reload the configs.
+	 */
+	public void reloadConfigs() {
+		configLoader.reloadConfigs();
 	}
 }

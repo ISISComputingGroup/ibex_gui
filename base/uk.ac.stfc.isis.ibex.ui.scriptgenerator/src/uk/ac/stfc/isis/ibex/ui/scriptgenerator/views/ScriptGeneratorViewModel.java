@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
@@ -40,7 +41,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * @author James King
  *
  */
-public class ScriptGeneratorViewModel {
+public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Display DISPLAY = Display.getDefault();
 	
@@ -120,6 +121,11 @@ public class ScriptGeneratorViewModel {
 	 */
 	private static final String CONFIG_SWITCH_PROPERTY = "config";
 	
+	/**
+	 * A property to notify listeners when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	/**
@@ -134,6 +140,15 @@ public class ScriptGeneratorViewModel {
 	public ScriptGeneratorViewModel() {
 		// Set up the model
 		scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+			firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+	}
+	
+	/**
+	 * Set up the model. Allows us to attach listeners for the view first.
+	 */
+	public void setUpModel() {
 		scriptGeneratorModel.createConfigLoader();
 		scriptGeneratorModel.setUp();
 		// Listen to whether the language support is changed
@@ -159,8 +174,8 @@ public class ScriptGeneratorViewModel {
 	 * 
 	 * @return true if there is at least one config loaded, false if not.
 	 */
-	public boolean configsLoaded() {
-		return this.scriptGeneratorModel.getConfigLoader().configsLoaded();
+	public boolean configsAvailable() {
+		return this.scriptGeneratorModel.getConfigLoader().configsAvailable();
 	}
 	
 	
@@ -331,10 +346,16 @@ public class ScriptGeneratorViewModel {
 	 */
 	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
 		DISPLAY.asyncExec(() -> {
-            viewTable.setRows(scriptGeneratorModel.getActions());
-            updateValidityChecks(viewTable);
-            setButtonValidityStyle(btnGetValidityErrors);
-            setButtonGenerateStyle(btnGenerateScript);
+			if(!viewTable.isDisposed()) {
+	            viewTable.setRows(scriptGeneratorModel.getActions());
+	            updateValidityChecks(viewTable);
+			}
+			if(!btnGetValidityErrors.isDisposed()) {
+				setButtonValidityStyle(btnGetValidityErrors);
+			}
+			if(!btnGenerateScript.isDisposed()) {
+				setButtonGenerateStyle(btnGenerateScript);
+			}
 		});
 	}
 	
@@ -377,14 +398,16 @@ public class ScriptGeneratorViewModel {
 		// Display new help when config switch or make invisible if not help available
 		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, 
 			e -> {
-				Optional<Config> optionalConfig = getConfig();
-				optionalConfig.ifPresentOrElse(
-						realConfig -> {
-							displayHelpString(realConfig, helpText);
-						},
-						() -> {
-							helpText.setText("");
-						});
+				if(!helpText.isDisposed()) {
+					Optional<Config> optionalConfig = getConfig();
+					optionalConfig.ifPresentOrElse(
+							realConfig -> {
+								displayHelpString(realConfig, helpText);
+							},
+							() -> {
+								helpText.setText("");
+							});
+				}
 			});
 	}
 	
@@ -536,7 +559,11 @@ public class ScriptGeneratorViewModel {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-    			e -> DISPLAY.asyncExec(() -> viewTable.updateTableColumns())
+    			e -> DISPLAY.asyncExec(() -> {
+    				if(!viewTable.isDisposed()) {
+    					viewTable.updateTableColumns();
+    				}
+    			})
     	);
     }
     
@@ -585,6 +612,20 @@ public class ScriptGeneratorViewModel {
      */
 	public Optional<Config> getConfig() {
 		return scriptGeneratorModel.getConfig();
+	}
+
+	/**
+	 * Reload the available configs.
+	 */
+	public void reloadConfigs() {
+		scriptGeneratorModel.reloadConfigs();
+	}
+
+	/**
+	 * Reload the actions table actions.
+	 */
+	public void reloadActions() {
+		scriptGeneratorModel.reloadActions();
 	}
 	
 }

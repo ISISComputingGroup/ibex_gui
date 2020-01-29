@@ -11,6 +11,7 @@ import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 import importlib.machinery
 import importlib.util
+import time
 
 
 class Config(object):
@@ -89,6 +90,10 @@ class Config(object):
     def hashCode(self) -> int:
         """ Calculates the hash of the config"""
         return hash(self.name)
+
+    def toString(self) -> str:
+        """Return the name of the config"""
+        return self.getName()
 
 class Generator(object):
 
@@ -277,11 +282,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
 
+    time.sleep(2)
+
     configs: Dict[AnyStr, ActionDefinition] = {}
     config_load_errors: Dict[AnyStr, AnyStr] = {}
     configs, config_load_errors = get_actions(search_folders=search_folders)
 
     config_wrapper = ConfigWrapper(configs, Generator(search_folders=search_folders), config_load_errors=config_load_errors)
+
+    print("Python Ready", file=sys.stderr)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),

@@ -13,6 +13,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 
 public class ConfigLoaderTest {
 
@@ -36,7 +37,11 @@ public class ConfigLoaderTest {
 		
 		mockPythonInterface = mock(PythonInterface.class);
 		
-		when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
+		try {
+			when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
+		} catch(PythonNotReadyException e) {
+			fail("We are mocking this out so should not throw exception");
+		}
 		
 		configLoader = new ConfigLoader(mockPythonInterface);
 	}
