@@ -210,10 +210,6 @@ public class ScriptGeneratorView {
 	 			// Drop-down box to select between configs.
 	 			ComboViewer configSelector = setUpConfigSelector(configComposite);
 	 			
-//	 			// Button to reload configs
-//	 			Button reloadConfigsButton = new Button(configComposite, SWT.NONE);
-//	 			reloadConfigsButton.setText(string);
-	 			
 	 			// Separate help and selector
 	 			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
 		        
