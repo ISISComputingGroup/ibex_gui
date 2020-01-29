@@ -281,9 +281,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-
-    time.sleep(2)
-
+    
     configs: Dict[AnyStr, ActionDefinition] = {}
     config_load_errors: Dict[AnyStr, AnyStr] = {}
     configs, config_load_errors = get_actions(search_folders=search_folders)
