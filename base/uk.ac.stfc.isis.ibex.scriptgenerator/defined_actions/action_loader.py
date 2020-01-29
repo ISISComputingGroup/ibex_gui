@@ -11,7 +11,6 @@ import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 import importlib.machinery
 import importlib.util
-import time
 
 
 class Config(object):
@@ -281,7 +280,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-    
+
     configs: Dict[AnyStr, ActionDefinition] = {}
     config_load_errors: Dict[AnyStr, AnyStr] = {}
     configs, config_load_errors = get_actions(search_folders=search_folders)
