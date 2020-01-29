@@ -80,7 +80,7 @@ class DoRun(ActionDefinition):
     def get_help(self):
         return "Help"
 
-def runscript():
+def run_script():
     config = DoRun()
     config.run(**{'param1': '1', 'param2': '2'})
     config.run(**{'param1': '1', 'param2': '2'})
