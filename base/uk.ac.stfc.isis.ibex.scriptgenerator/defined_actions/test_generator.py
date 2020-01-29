@@ -77,8 +77,10 @@ class DoRun(ActionDefinition):
         else:
             return None
 
+    def get_help(self):
+        return "Help"
 
-def do_run():
+def run_script():
     config = DoRun()
     config.run(**{'param1': '1', 'param2': '2'})
     config.run(**{'param1': '1', 'param2': '2'})
