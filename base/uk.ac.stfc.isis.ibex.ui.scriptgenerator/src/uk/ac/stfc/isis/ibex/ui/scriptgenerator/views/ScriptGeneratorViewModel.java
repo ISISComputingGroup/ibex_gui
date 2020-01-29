@@ -1,17 +1,25 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -262,14 +270,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void cleanUp() {
 		scriptGeneratorModel.cleanUp();
 	}
-
+	
 	/**
 	 * Get a list of available configs.
 	 * 
 	 * @return A list of available configs.
 	 */
-	protected List<Config> getAvailableConfigs() {
-		return scriptGeneratorModel.getAvailableConfigs();
+	protected List<String> getAvailableConfigsNames() {
+		return scriptGeneratorModel.getAvailableConfigs()
+				.stream()
+				.map(config -> config.getName())
+				.collect(Collectors.toList());
 	}
 	
 	/**
@@ -299,24 +310,40 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		    }
 		};
 	}
+	
+	private PropertyChangeListener actionChangeListener = new PropertyChangeListener() {
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			LOG.info("VALIDITY");
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
+		}
+	};
 
 	/**
-	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
-	 *  update the view table.
-	 * 
-	 * @param table The view table to update.
-	 * @param btnGetValidityErrors The validity check button to style change.
-	 * @param btnGenerateScript The generate script button to style change.
+	 * The current viewTable in the actions.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
-		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, e -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		});
-		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		});
-		// Listen for generated script refreshes
-		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, evt -> {
+	private ActionsViewTable viewTable;
+
+
+	/**
+	 * The current get validity errors button in the view.
+	 */
+	private Button btnGetValidityErrors;
+
+	/**
+	 * The current generate script button in the view.
+	 */
+	private Button btnGenerateScript;
+	
+	/**
+	 * Listen for generated scripts and display the correct dialog (error or success and open file).
+	 */
+	private PropertyChangeListener generatedScriptListener = new PropertyChangeListener() {
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			LOG.info("Refreshed generated script");
 			@SuppressWarnings("unchecked")
 			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
 			DISPLAY.asyncExec(() -> {
@@ -329,7 +356,29 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						}
 				);
 			});
-		});
+		}
+	};
+
+	/**
+	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
+	 *  update the view table.
+	 * 
+	 * @param table The view table to update.
+	 * @param btnGetValidityErrors The validity check button to style change.
+	 * @param btnGenerateScript The generate script button to style change.
+	 */
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+		this.viewTable = viewTable;
+		this.btnGetValidityErrors = btnGetValidityErrors;
+		this.btnGenerateScript = btnGenerateScript;
+		// Remove listeners so as not to bind them twice
+		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+		// Listen for generated script refreshes
+		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
 	}
 	
 	private void openFileDialog(String filePath) {
@@ -383,6 +432,41 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			btnGetValidityErrors.setBackground(lightValidityCheckErrorColor);
 		}
 	}
+	
+	private PropertyChangeListener configSwitchHelpListener = new PropertyChangeListener() {
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			// Display the new config help string
+			if(!helpText.isDisposed()) {
+				Optional<Config> optionalConfig = getConfig();
+				optionalConfig.ifPresentOrElse(
+						realConfig -> {
+							displayHelpString(realConfig, helpText);
+						},
+						() -> {
+							helpText.setText("");
+						});
+			}
+		}
+	};
+
+	/**
+	 * The view's current helpText element.
+	 */
+	private Text helpText;
+	
+	private ISelectionChangedListener configSwitchListener = new ISelectionChangedListener() {
+		
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			String selectedConfigName;
+			if(!event.getSelection().isEmpty()) {
+				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
+				scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+			}
+		}
+	};
 
 	/**
 	 * Bind the config loader to the context.
@@ -391,24 +475,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param configSelector The config selector ui element to bind.
 	 * @param helpText The UI element to display help string text in.
 	 */
-	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector, Text helpText) {
+	protected void bindConfigLoader(ComboViewer configSelector, Text helpText) {
 		// Switch the composite value when config switched
-		bindingContext.bindValue(ViewerProperties.singleSelection().observe(configSelector), 
-				BeanProperties.value(CONFIG_SWITCH_PROPERTY).observe(scriptGeneratorModel.getConfigLoader()));
+		configSelector.removeSelectionChangedListener(configSwitchListener);
+		configSelector.addSelectionChangedListener(configSwitchListener);
 		// Display new help when config switch or make invisible if not help available
-		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, 
-			e -> {
-				if(!helpText.isDisposed()) {
-					Optional<Config> optionalConfig = getConfig();
-					optionalConfig.ifPresentOrElse(
-							realConfig -> {
-								displayHelpString(realConfig, helpText);
-							},
-							() -> {
-								helpText.setText("");
-							});
-				}
-			});
+		this.helpText = helpText;
+		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, configSwitchHelpListener);
 	}
 	
 	/**

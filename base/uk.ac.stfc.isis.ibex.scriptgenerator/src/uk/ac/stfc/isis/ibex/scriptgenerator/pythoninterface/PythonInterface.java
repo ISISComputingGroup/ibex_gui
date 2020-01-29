@@ -145,7 +145,7 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param ready Whether python is ready or not.
 	 */
-	private void handlePythonReadinessChange(boolean ready) {
+	protected void handlePythonReadinessChange(boolean ready) {
 		boolean wasPythonReady = pythonReady;
 		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
 		if (ready == false && wasPythonReady != ready) {

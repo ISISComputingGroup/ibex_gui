@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageExcept
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -187,6 +188,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			LOG.info("VALIDITY ERROR MESSAGES");
 			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
@@ -206,16 +208,18 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			@SuppressWarnings("unchecked")
 			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
 			generatedScript.ifPresentOrElse(script -> {
-				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
-				try {
-					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
-					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-				} catch(NoConfigSelectedException e) {
-					LOG.error(e);
-				}
-			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
-			});
+					String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+					try {
+						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+						LOG.info("generated script refreshed 1");
+					} catch(NoConfigSelectedException e) {
+						LOG.error(e);
+					}
+				}, () -> {
+					LOG.info("generated script refreshed 2");
+					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+				});
 			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
 
+import py4j.Py4JException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -106,18 +107,24 @@ public class ConfigLoader extends ModelObject {
 	 * 
 	 * @param configName The name of the config to select.
 	 */
-	private void setConfig(String configName) {
-		for(Config config : getAvailableConfigs()) {
-			if(config.getName().equals(configName)) {
-				setConfig(config);
-				return;
+	public void setConfig(String configName) {
+		lastSelectedConfigName = Optional.of(configName);
+		try {
+			for(Config config : getAvailableConfigs()) {
+				if(config.getName().equals(configName)) {
+					setConfig(config);
+					return;
+				}
 			}
-		}
-		if(!availableConfigs.isEmpty()) {
-			LOG.error("No config matching name: " + configName + ". Setting default config.");
-			setConfig(getAvailableConfigs().get(0));
-		} else {
-			LOG.error("No default config available");
+			if(!availableConfigs.isEmpty()) {
+				LOG.error("No config matching name: " + configName + ". Setting default config.");
+				setConfig(getAvailableConfigs().get(0));
+			} else {
+				LOG.error("No default config available");
+			}
+		} catch(Py4JException e) {
+			LOG.error(e);
+			pythonInterface.handlePythonReadinessChange(false);
 		}
 	}
 
@@ -126,14 +133,19 @@ public class ConfigLoader extends ModelObject {
 	 * @param config The currently loaded configuration.
 	 */
 	public void setConfig(Config config) {
-		ArrayList<ActionParameter> parameters = config.getParameters().stream()
-				.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
-		firePropertyChange("parameters", this.parameters, this.parameters=parameters);
-		selectedConfig = Optional.ofNullable(config);
-		selectedConfig.ifPresentOrElse(presentSelectedConfig -> {
-			lastSelectedConfigName = Optional.of(presentSelectedConfig.getName());
-		}, () -> lastSelectedConfigName = Optional.empty());
-		firePropertyChange("config", null, null);
+		try {
+			ArrayList<ActionParameter> parameters = config.getParameters().stream()
+					.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
+			firePropertyChange("parameters", this.parameters, this.parameters=parameters);
+			selectedConfig = Optional.ofNullable(config);
+			selectedConfig.ifPresentOrElse(presentSelectedConfig -> {
+				lastSelectedConfigName = Optional.of(presentSelectedConfig.getName());
+			}, () -> lastSelectedConfigName = Optional.empty());
+			firePropertyChange("config", null, null);
+		} catch(Py4JException e) {
+			LOG.error(e);
+			pythonInterface.handlePythonReadinessChange(false);
+		}
 	}
 	
 	/**

@@ -25,7 +25,6 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -58,7 +57,6 @@ public class ScriptGeneratorView {
 	
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
-	private DataBindingContext bindingContext;
 	
 	private static final Display DISPLAY = Display.getDefault();
 
@@ -66,11 +64,6 @@ public class ScriptGeneratorView {
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
 	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-	
-	/**
-	 * The drop down box to manipulate which config is being used and load ActionParameters accordingly.
-	 */
-	private ComboViewer configSelector;
 	
 	/**
 	 * The ViewModel the View is updated by.
@@ -215,7 +208,11 @@ public class ScriptGeneratorView {
 	 			configSelectorLabel.setText("Config:");
 	 	
 	 			// Drop-down box to select between configs.
-	 			configSelector = setUpConfigSelector(configComposite);
+	 			ComboViewer configSelector = setUpConfigSelector(configComposite);
+	 			
+//	 			// Button to reload configs
+//	 			Button reloadConfigsButton = new Button(configComposite, SWT.NONE);
+//	 			reloadConfigsButton.setText(string);
 	 			
 	 			// Separate help and selector
 	 			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
@@ -328,7 +325,7 @@ public class ScriptGeneratorView {
 		        
 		        		
 		        // Bind the context and the validity checking listeners
-		        bind(table, btnGetValidityErrors, generateScriptButton, helpText);
+		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText);
 				
 			} else {
 				
@@ -394,13 +391,13 @@ public class ScriptGeneratorView {
 	 * 			Combo box with available configurations
 	 */
 	private ComboViewer setUpConfigSelector(Composite globalSettingsComposite) {
-		configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+		ComboViewer configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
 
 		configSelector.setContentProvider(ArrayContentProvider.getInstance());
 		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
 		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigs());
-		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get()));
+		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigsNames());
+		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get().getName()));
 		
 		return configSelector;
 	}
@@ -408,10 +405,8 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
-	private void bind(ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {
-		bindingContext = new DataBindingContext();
-		
-		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector, helpText);
+	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {		
+		scriptGeneratorViewModel.bindConfigLoader(configSelector, helpText);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
 	}
