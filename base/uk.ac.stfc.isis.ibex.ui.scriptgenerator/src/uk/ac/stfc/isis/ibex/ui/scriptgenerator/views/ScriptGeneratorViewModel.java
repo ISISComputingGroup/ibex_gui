@@ -8,12 +8,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -315,7 +309,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			LOG.info("VALIDITY");
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
 		}
 	};
@@ -343,7 +336,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			LOG.info("Refreshed generated script");
 			@SuppressWarnings("unchecked")
 			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
 			DISPLAY.asyncExec(() -> {

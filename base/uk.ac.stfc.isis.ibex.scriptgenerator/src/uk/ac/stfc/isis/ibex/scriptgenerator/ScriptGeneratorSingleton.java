@@ -188,7 +188,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			LOG.info("VALIDITY ERROR MESSAGES");
 			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
@@ -212,12 +211,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 					try {
 						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
 						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-						LOG.info("generated script refreshed 1");
 					} catch(NoConfigSelectedException e) {
 						LOG.error(e);
 					}
 				}, () -> {
-					LOG.info("generated script refreshed 2");
 					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
 				});
 			
