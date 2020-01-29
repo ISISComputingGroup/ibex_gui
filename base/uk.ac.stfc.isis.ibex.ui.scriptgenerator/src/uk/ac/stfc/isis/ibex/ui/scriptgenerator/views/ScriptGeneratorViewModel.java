@@ -463,7 +463,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			String selectedConfigName;
 			if(!event.getSelection().isEmpty()) {
 				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
-				scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+				scriptGeneratorModel.getConfigLoader().getLastSelectedConfigName()
+					.ifPresentOrElse(lastSelectedConfigName -> {
+						if(!selectedConfigName.equals(lastSelectedConfigName)) {
+							scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+						}
+					}, () -> scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName));
 			}
 		}
 	};

@@ -156,6 +156,13 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	/**
+	 * @return The name of the last selected config.
+	 */
+	public Optional<String> getLastSelectedConfigName() {
+		return lastSelectedConfigName;
+	}
+	
+	/**
 	 * @return the parameters for the current configuration.
 	 */
 	public ArrayList<ActionParameter> getParameters() {
