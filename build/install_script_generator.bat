@@ -17,4 +17,5 @@ if %errorlevel% neq 0 (
     @echo ERROR copying SCRIPT GENERATOR
 )
 
+:FINISH
 pause
