@@ -2,15 +2,18 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.awt.Desktop;
 import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -29,19 +32,29 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * @author https://stackoverflow.com/a/30630475 modified by James King
  *
  */
-public class FileMessageDialog extends MessageDialog {
+public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	
 	/**
-	 * The file to open with the openFileButton.
+	 * The filepath prefix to add to the front of the filename.
 	 */
-	private File file;
+	private String filepathPrefix;
+	
+	/**
+	 * The file to save the python generated script to.
+	 */
+	private String filename;
 	
 	/**
 	 * The parent of the message dialog.
 	 */
 	private Shell parentShell;
+
+	/**
+	 * The generated script to write to file.
+	 */
+	private String generatedScript;
 	
-	private static final Logger LOG = IsisLog.getLogger(FileMessageDialog.class);
+	private static final Logger LOG = IsisLog.getLogger(SaveScriptGeneratorFileMessageDialog.class);
 
 	/**
 	 * Create the dialog box.
@@ -50,7 +63,7 @@ public class FileMessageDialog extends MessageDialog {
 	 * @param dialogTitle The title of the dialog box.
 	 * @param dialogTitleImage The image that goes with the title.
 	 * @param dialogMessage The message that sits prepended to the filepath.
-	 * @param filepath The path to the file that we can open in this dialog.
+	 * @param filepathPrefix The path to the file that we can open in this dialog.
 	 * @param dialogImageType one of the following values:
 	 *                           <ul>
 	 *                           <li><code>MessageDialog.NONE</code> for a dialog
@@ -68,12 +81,15 @@ public class FileMessageDialog extends MessageDialog {
 	 *                           bar
 	 * @param defaultIndex       the index in the button label array of the default
 	 *                           button
+	 * @param defaultFilename	 The default file name to save the script files with.
 	 */
-	public FileMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage, String filepath,
-			int dialogImageType, String[] dialogButtonLabels, int defaultIndex) {
-		super(parentShell, dialogTitle, dialogTitleImage, dialogMessage+filepath, dialogImageType, dialogButtonLabels, defaultIndex);
-		file = new File(filepath);
+	public SaveScriptGeneratorFileMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage, String filepathPrefix,
+			int dialogImageType, String[] dialogButtonLabels, int defaultIndex, String defaultFilename, String generatedScript) {
+		super(parentShell, dialogTitle, dialogTitleImage, dialogMessage, dialogImageType, dialogButtonLabels, defaultIndex);
+		this.filepathPrefix = filepathPrefix;
+		filename = filepathPrefix+defaultFilename;
 		this.parentShell = parentShell;
+		this.generatedScript = generatedScript;
 	}
 
 	/**
@@ -91,53 +107,96 @@ public class FileMessageDialog extends MessageDialog {
 
 			imageLabel.setLayoutData(new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
 		}
+			
+		// Create filename edit area
+		
+		Label filenameLabel = new Label(composite, SWT.NONE);
+		
+		filenameLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		filenameLabel.setText("File name: ");
+			
+		Text msg = new Text(composite, SWT.NONE);
 
-		// Use Text control for message to allow copy
+		msg.setText(filename);
+		
+		msg.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				filename = filepathPrefix + e.data;
+				System.out.println(filename);
+			}
+		});
 
-		if (message != null) {
-			Text msg = new Text(composite, SWT.READ_ONLY | SWT.MULTI);
+		GridData data = new GridData(SWT.FILL, SWT.TOP, true, false);
+		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
 
-			msg.setText(message);
-
-			GridData data = new GridData(SWT.FILL, SWT.TOP, true, false);
-			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
-
-			msg.setLayoutData(data);
-		}
+		msg.setLayoutData(data);
 
 		return composite;
 	}
 	
 	/**
-	 * Create an ok and open file button to place in the dialog
+	 * Create an save and, save and open file button to place in the dialog
 	 * 
 	 * @param parent The parent to put the buttons in.
 	 */
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
-		// create OK button as default does
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		// create Button to open file
-		Button openFileButton = createButton(parent, IDialogConstants.OK_ID, "Open File", false);
-		// Open the file if possible, if not notify the user
-		openFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			try {
-				if(file.exists() && Desktop.isDesktopSupported()) {
-					Runtime rs = Runtime.getRuntime();
-					String notepadExe = findNotepadExe();
-					rs.exec(String.format("%s %s", notepadExe, file));
-				} else {
-					String notepadLaunchWarning = "Could not launch notepad++";
-					LOG.info(notepadLaunchWarning);
-					handleFailedToOpenFile(notepadLaunchWarning);
-				}
-			} catch(IOException e) {
-				LOG.catching(e);
-				handleFailedToOpenFile(e.getMessage());
-			}
+		// create save button
+		Button saveFileButton = createButton(parent, IDialogConstants.OK_ID, "Save File", true);
+		saveFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
+			generate();
+			this.close();
+		}));
+		// create save and open file button
+		Button saveOpenFileButton = createButton(parent, IDialogConstants.OK_ID, "Save and Open File", true);
+		saveOpenFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
+			generate();
+			openFile();
+			this.close();
 		}));
 	}
 	
+	/**
+	 * Save a generated script to file.
+	 */
+	public void generate() {
+		File scriptFile = new File(filename);
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(generatedScript);
+			scriptWriter.flush();
+		} catch(IOException e) {
+			LOG.error("Failed to write generated file");
+			LOG.error(e);
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "Failed to write generated script to file");
+		}
+	}
+	
+	private void openFile() {
+		File file = new File(filename);
+		try {
+			if(file.exists()) {
+				Runtime rs = Runtime.getRuntime();
+				String notepadExe = findNotepadExe();
+				rs.exec(String.format("%s %s", notepadExe, file));
+			} else {
+				String notepadLaunchWarning = "Could not launch notepad++";
+				LOG.info(notepadLaunchWarning);
+				handleFailedToOpenFile(notepadLaunchWarning, file);
+			}
+		} catch(IOException e) {
+			LOG.catching(e);
+			handleFailedToOpenFile(e.getMessage(), file);
+		}
+	}
+	
+	/**
+	 * Find the notepad executable so we can launch it to open the file.
+	 * 
+	 * @return The location of notepad.exe
+	 * @throws IOException If we fail to find notepad throw this
+	 */
 	private String findNotepadExe() throws IOException {
 		String[] possibleLocations = {"C:\\Program Files\\Notepad++", "C:\\Program Files (x86)\\Notepad++"};
 		for(String location : possibleLocations) {
@@ -161,8 +220,11 @@ public class FileMessageDialog extends MessageDialog {
 	
 	/**
 	 * Handle the case where we fail to open the file by showing a warning to the user.
+	 * 
+	 * @param message The warning message to display to the user.
+	 * @param file The file that failed to open.
 	 */
-	private void handleFailedToOpenFile(String message) {
+	private void handleFailedToOpenFile(String message, File file) {
 		LOG.error("Failed to open file " + file.getAbsolutePath());
 		Display.getDefault().asyncExec( () -> {
 			MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + file.getAbsolutePath() + "\n" + message);
@@ -178,9 +240,9 @@ public class FileMessageDialog extends MessageDialog {
 	 * @param message The message to display in front of the filepath for the box.
 	 * @param filepath The filepath of the file this box refers to.
 	 */
-	public static void openInformation(Shell parent, String title,  String message, String filepath) {
-		FileMessageDialog dialog = new FileMessageDialog(parent, title, null,  message, filepath, 
-				INFORMATION, new String[] {IDialogConstants.OK_LABEL}, 0);
+	public static void openInformation(Shell parent, String title,  String message, String filepath, String defaultFilename, String generatedScript) {
+		SaveScriptGeneratorFileMessageDialog dialog = new SaveScriptGeneratorFileMessageDialog(parent, title, null,  message, filepath, 
+				INFORMATION, new String[] {IDialogConstants.OK_LABEL}, 0, defaultFilename, generatedScript);
 
 		dialog.open();
 	}
