@@ -8,7 +8,6 @@ paths = [
 
 dir_list = []
 for path in paths:
-    print(path)
     for d in glob.glob(path):
         if os.path.isdir(d):
             file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(d))
@@ -16,5 +15,5 @@ for path in paths:
                 dir_list.append(d)
 
 for d in dir_list:
-    print("Delete {}".format(d))
+    print("Deleting {}".format(d))
     shutil.rmtree(d)
