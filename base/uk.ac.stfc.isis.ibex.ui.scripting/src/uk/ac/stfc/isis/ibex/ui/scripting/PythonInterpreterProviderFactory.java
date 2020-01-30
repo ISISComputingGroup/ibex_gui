@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import org.python.pydev.ui.pythonpathconf.AbstractInterpreterProviderFactory;
 import org.python.pydev.ui.pythonpathconf.AlreadyInstalledInterpreterProvider;
-import org.python.pydev.ui.pythonpathconf.IInterpreterProvider;
+import org.python.pydev.ast.interpreter_managers.IInterpreterProvider;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
