@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  com.google.gson,
  org.eclipse.swt,
  javax.annotation;bundle-version="1.2.0",
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.epics.switching
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard.views

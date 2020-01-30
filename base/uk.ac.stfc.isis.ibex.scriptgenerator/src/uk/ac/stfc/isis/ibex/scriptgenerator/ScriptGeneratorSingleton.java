@@ -18,37 +18,264 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
- * Acts as a permanent reference to the ActionsTable.
- *
+ * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
+ *  and containing the actions table for the script generator.
  */
 public class ScriptGeneratorSingleton extends ModelObject {
-	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
 	
+	
+	/**
+	 * The preferences supplier to get the area to generate scripts from.
+	 */
+	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
+	
+	/**
+	 * The table containing the script generator contents (actions).
+	 */
+	private ActionsTable scriptGeneratorTable =
+			new ActionsTable(new ArrayList<ActionParameter>());
+	
+	/**
+	 * The loader to select and update the configs being used.
+	 */
 	private ConfigLoader configLoader;
 	
 	/**
-	 * Create a config loader and load an initial config.
-	 * You cannot do this in the instantiation of the class because the class is 
-	 * created when the plugin is and surefire tests will fail.
-	 * 
-	 * @return The config loader
+	 * The python interface to check parameter validity with,
+	 *  generate scripts with, load configs with.
 	 */
-	public ConfigLoader createConfigLoader() {
-		configLoader = new ConfigLoader(new PythonInterface());
+	private PythonInterface pythonInterface;
+	
+	/**
+	 * The property to listen for changes to actions in the script generator table on.
+	 */
+	private static final String ACTIONS_PROPERTY = "actions";
+	
+	/**
+	 * The property to listen for changes in the generator on,
+	 *  as to whether the current selected language is supported.
+	 */
+	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
+	
+	/**
+	 * Whether the current used language is supported or not.
+	 */
+	public boolean languageSupported = true;
+	
+	/**
+	 * The property to listen for changes in the generator on,
+	 *  as to whether there has been a thread error when checking
+	 *   parameter validity or generating a script.
+	 */
+	private static final String THREAD_ERROR_PROPERTY = "thread error";
+	
+	/**
+	 * Whether there has been a thread error or not that affects
+	 *  the current state of the script generator.
+	 */
+	private boolean threadError = false;
+	
+	/**
+	 * The property to listen for changes in the generator containing the mapping Map<Integer, String> of
+	 *  validity checks for each row of the script generator.
+	 */
+	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
+	
+	/**
+	 * The property to listen for changes in a Generator containing whether or not all
+	 *  script generator contents are valid or not (bool).
+	 */
+	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
+	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
+	
+	/**
+	 * The property to listen for changes in a Generator containing the generated script (String).
+	 */
+	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
+	
+	/**
+	 * The current state of parameter validity.
+	 */
+	private boolean paramValidity = false;
+	
+	/**
+	 * The generator to generate scripts with and check parameter validity with.
+	 */
+	private GeneratorContext generator;
+
+	/**
+	 * A property to fire a change of when there is an error generating a script.
+	 */
+	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
+	
+	/**
+	 * The date format to use when generating a script name.
+	 */
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
+	
+	
+	/**
+	 * The constructor, will create without a config loader and without loading
+	 * an initial config.
+	 */
+	public ScriptGeneratorSingleton() {
+	    
+	}
+	
+	/**
+	 * Pass a python interface to run with, then create a config loader and load an initial config.
+	 * 
+	 * @param pythonInterface The python interface to run with.
+	 * @param configLoader The object to load configs with.
+	 * @param scriptGeneratorTable The table containing actions for the model to use.
+	 */
+	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
+		this.pythonInterface = pythonInterface;
+		this.configLoader = configLoader;
+		this.scriptGeneratorTable = scriptGeneratorTable;
+		setUp();
+	}
+	
+	/**
+	 * Called by the constructor with three arguments during tests or in the View
+	 * Model constructor to set up the class.
+	 * Set up listeners for the generator.
+	 */
+	public void setUp() {
+		generator = new GeneratorContext(pythonInterface);
+		// If the validity error message property of the generator is changed update the
+		// validity errors in the scriptGeneratorTable
+		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
+			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		// If the parameter validity property is changed update the models field that denotes
+		// whether the parameters are valid and notify any listeners
+		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
+			Optional.ofNullable(evt.getNewValue())
+				.ifPresentOrElse(
+					paramValidity -> this.paramValidity = Boolean.class.cast(paramValidity),
+					() -> this.paramValidity = false
+				);
+			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		// Detect when the generated script is refreshed
+		// Write the script to file, send up generated script filepath
+		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+			@SuppressWarnings("unchecked")
+			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
+			generatedScript.ifPresentOrElse(script -> {
+				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+				try {
+					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+				} catch(NoConfigSelectedException e) {
+					LOG.error(e);
+				}
+			}, () -> {
+				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+			});
+			
+		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
 		});
-				
+		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+			// The table has changed so update the validity checks
+			try {
+				refreshParameterValidityChecking();
+			} catch(NoConfigSelectedException e) {
+				LOG.error(e);
+			}
+		});
+		
 		setActionParameters(configLoader.getParameters());
-		return configLoader;
+	}
+	
+	/**
+     * Creates the config loader.
+     */
+    public void createConfigLoader() {
+        pythonInterface = new PythonInterface();
+        configLoader = new ConfigLoader(pythonInterface);
+    }
+    
+    /**
+     * Get the config loader.
+     * 
+     * @return The config loader
+     */
+    public ConfigLoader getConfigLoader() {
+        return configLoader;
+    }
+	
+	/**
+	 * Convert the VALIDITY_ERROR_MESSAGE_PROPERTY return to the Map<Integer, String> representation.
+	 * Required because of casting generics in Java.
+	 * 
+	 * @param validityMessages The validity messages to convert.
+	 * @return The converted messages property.
+	 */
+	@SuppressWarnings("rawtypes")
+	private static Map<Integer, String> convertValidityMessagesToMap(Object validityMessages) {
+		try {
+			Map mapCastValidityMessages = Map.class.cast(validityMessages);
+			Map<Integer, String> castValidityMessages = new HashMap<>();
+			for(Object nonCastEntry : mapCastValidityMessages.entrySet()) {
+				Map.Entry castEntry = Map.Entry.class.cast(nonCastEntry);
+				castValidityMessages.put(Integer.class.cast(castEntry.getKey()),
+						String.class.cast(castEntry.getValue()));
+			}
+			return castValidityMessages;
+		} catch(ClassCastException e) {
+			LOG.error(e);
+	        return new HashMap<Integer, String>();
+	    }
+	}
+	
+	/**
+	 * Get the python interface.
+	 * 
+	 * @return The class responsible for interfacing with python.
+	 */
+	public PythonInterface getPythonInterface() {
+		return pythonInterface;
 	}
 
 	/**
@@ -119,11 +346,211 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void moveActionDown(int index) {
 		scriptGeneratorTable.moveAction(index, index + 1);
 	}
+	
+	/**
+	 * Get the list of actions in the ActionsTable.
+	 * 
+	 * @return List of actions in the ActionsTable.
+	 */
+	public List<ScriptGeneratorAction> getActions() {
+		return scriptGeneratorTable.getActions();
+	}
+	
+	/**
+	 * @return The action parameters used in this table.
+	 * 
+	 */
+	public List<ActionParameter> getActionParameters() {
+		return scriptGeneratorTable.getActionParameters();
+	}
 
 	/**
 	 * Clean up resources when the plugin is destroyed.
 	 */
 	public void cleanUp() {
 		configLoader.cleanUp();
+	}
+	
+	/**
+	 * Get a list of available configs.
+	 * 
+	 * @return A list of available configs.
+	 */
+	public List<Config> getAvailableConfigs() {
+		return configLoader.getAvailableConfigs();
+	}
+	
+	/**
+	 * Gets all actions that could not be loaded and the reason.
+	 */
+	public Map<String, String> getConfigLoadErrors() {
+		return configLoader.getConfigLoadErrors();
+	}
+	
+	/**
+	 * Get an optional of the currently loaded configuration.
+	 * 
+	 * @return An optional of the currently loaded configuration.
+	 */
+	public Optional<Config> getConfig() {
+		return Optional.ofNullable(configLoader.getConfig());
+	}
+	
+	/**
+	 * Get the first maxNumOfLines of validity errors to display to a user.
+	 * 
+	 * @param maxNumOfLines The number of lines to limit the validity errors to.
+	 * @return The string of validity errors to display
+	 */
+	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
+		if(!languageSupported) {
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
+		}
+		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
+		String message = errors.stream()
+				.limit(maxNumOfLines)
+				.map((String error) -> String.format("- %s", error))
+				.collect(Collectors.joining("\n"));
+		if (errors.size() > maxNumOfLines) {
+		    message = String.format("%s\n\n ... plus %d suppressed errors."
+		    		+ " To see an error for a specific row hover over it.", 
+		    		message, (errors.size() - maxNumOfLines));
+		}
+		return message;
+	}
+	
+	/**
+	 * Get whether the contents of the script generator are valid or not.
+	 * 
+	 * @return true if the params are valid or false if not.
+	 */
+	public boolean areParamsValid() {
+		return this.paramValidity;
+	}
+	
+	/**
+	 * Refresh the validity checking of the parameters,
+	 *  or if it fails refresh the error state of the model to be listened to by the ViewModel.
+	 *  
+	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
+	 */
+	public void refreshParameterValidityChecking() throws NoConfigSelectedException {
+		Config config = getConfig()
+			.orElseThrow(() -> new NoConfigSelectedException("Tried to refresh parameter validity with no config selected"));
+		try {
+			generator.refreshAreParamsValid(scriptGeneratorTable, config);
+			generator.refreshValidityErrors(scriptGeneratorTable, config);
+			languageSupported = true;
+			threadError = false;
+		} catch(UnsupportedLanguageException e) {
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			LOG.error(e);
+			languageSupported = false;
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
+		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 * @throws UnsupportedLanguageException If the language we are trying to generate a script in is unsupported.
+	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
+	 */
+	public void refreshGeneratedScript() throws InvalidParamsException,
+			UnsupportedLanguageException, NoConfigSelectedException {
+		Config config = getConfig()
+				.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"));
+		try {
+			if(areParamsValid()) {
+				generator.refreshGeneratedScript(scriptGeneratorTable, config);
+			} else {
+				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+			}
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
+		}
+	}
+	
+	/**
+	 * Save a generated script to file.
+	 * 
+	 * @param generatedScript The script that has been generated that is written to file here.
+	 * @param filepathPrefix The path prefix to where the script shall be written to.
+	 * @return An optional containing the path to the file if successful. An empty optional if unsuccessful.
+	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 */
+	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoConfigSelectedException {
+		try {
+			File scriptFile = generateScriptFile(filepathPrefix);
+			return writeScriptToFile(generatedScript, scriptFile);
+		} catch(IOException e) {
+			LOG.error("Failed to write generated script to file");
+			LOG.catching(e);
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Generate a file to write the script to
+	 * 
+	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
+	 * @return The file to write the script to.
+	 * @throws IOException When we cannot create the file
+	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 */
+	private File generateScriptFile(String filepathPrefix) throws IOException, NoConfigSelectedException {
+		String configName = getConfig()
+			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
+			.getName();
+		String timestamp = getTimestamp();
+		int version = 0;
+		String filepath;
+		File file;
+		do {
+			if (version == 0) {
+				filepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
+			} else {
+				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, configName, timestamp, version);
+			}
+			file = new File(filepath);
+			file.getParentFile().mkdirs();
+			version += 1;
+		} while(!file.createNewFile());
+		return file;
+	}
+	
+	/**
+	 * Write the script to file.
+	 * 
+	 * @param generatedScript The script to write to file.
+	 * @param scriptFile The file to write the script to.
+	 * @return An optional containing the file path if successful. An empty optional if IOException.
+	 */
+	private Optional<String> writeScriptToFile(String generatedScript, File scriptFile)  {
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(generatedScript);
+			scriptWriter.flush();
+			return Optional.of(scriptFile.getAbsolutePath());
+		} catch(IOException e) {
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Get the current timestamp to put in a filename. (Allows testing).
+	 * 
+	 * @return The timestamp as a string.
+	 */
+	public String getTimestamp() {
+		return DATE_FORMAT.format(new Date());
 	}
 }

@@ -29,6 +29,7 @@ import org.osgi.framework.BundleContext;
 public class Activator implements BundleActivator {
 
 	private static BundleContext context;
+	private static ScriptGeneratorSingleton MODEL;
 	
 	/**
      * 
@@ -45,6 +46,7 @@ public class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		MODEL = new ScriptGeneratorSingleton();
 	}
 
 	/*
@@ -57,8 +59,6 @@ public class Activator implements BundleActivator {
 		MODEL.cleanUp();
 	}
 	
-    private static ScriptGeneratorSingleton instance;
-
 	/**
 	 * Gets the singleton instance of this class.
 	 * 
@@ -67,7 +67,4 @@ public class Activator implements BundleActivator {
     public static ScriptGeneratorSingleton getModel() { 
     	return MODEL; 
     }
-
-    private static ScriptGeneratorSingleton MODEL = new ScriptGeneratorSingleton();
-
 }

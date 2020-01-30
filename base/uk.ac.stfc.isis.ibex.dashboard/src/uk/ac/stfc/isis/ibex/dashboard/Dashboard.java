@@ -28,7 +28,6 @@ import org.osgi.framework.BundleContext;
 public class Dashboard implements BundleActivator {
 
     private static Dashboard instance;
-	private static BundleContext context;
 
     /**
      * @return The singleton instance of the dashboard.
@@ -55,15 +54,6 @@ public class Dashboard implements BundleActivator {
 	public DashboardObservables observables() {
 		return observables;
 	}
-	
-    /**
-     * Get the context for the bundle.
-     * 
-     * @return The context for the bundle.
-     */
-	static BundleContext getContext() {
-		return context;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -71,7 +61,6 @@ public class Dashboard implements BundleActivator {
 	 */
 	@Override
     public void start(BundleContext bundleContext) throws Exception {
-		Dashboard.context = bundleContext;
 	}
 
 	/*
@@ -80,7 +69,6 @@ public class Dashboard implements BundleActivator {
 	 */
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
-		Dashboard.context = null;
 		observables.close();
 	}
 

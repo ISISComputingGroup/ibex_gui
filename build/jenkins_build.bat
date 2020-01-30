@@ -12,7 +12,13 @@ set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call build.bat
+if "%IS_E4_DEPLOY%" == "YES" (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+) else (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+)
+
+call build.bat "LOG" %BUILT_CLIENT_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
@@ -35,11 +41,7 @@ net use p: \\isis\inst$
 
 python.exe purge_archive_client.py
 
-if "%IS_E4_DEPLOY%" == "YES" (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
-) else (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
-)
+set TARGET_DIR=built_client
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
