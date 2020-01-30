@@ -11,18 +11,14 @@ import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
-
+import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -118,6 +114,11 @@ public class ScriptGeneratorViewModel {
 	 * A property to fire a change of when there is an error generating a script.
 	 */
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
+	
+	/**
+	 * A property that is changed when configs are switched.
+	 */
+	private static final String CONFIG_SWITCH_PROPERTY = "config";
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
@@ -367,10 +368,40 @@ public class ScriptGeneratorViewModel {
 	 * 
 	 * @param bindingContext The context.
 	 * @param configSelector The config selector ui element to bind.
+	 * @param helpText The UI element to display help string text in.
 	 */
-	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector) {
+	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector, Text helpText) {
+		// Switch the composite value when config switched
 		bindingContext.bindValue(ViewerProperties.singleSelection().observe(configSelector), 
-				BeanProperties.value("config").observe(scriptGeneratorModel.getConfigLoader()));
+				BeanProperties.value(CONFIG_SWITCH_PROPERTY).observe(scriptGeneratorModel.getConfigLoader()));
+		// Display new help when config switch or make invisible if not help available
+		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, 
+			e -> {
+				Optional<Config> optionalConfig = getConfig();
+				optionalConfig.ifPresentOrElse(
+						realConfig -> {
+							displayHelpString(realConfig, helpText);
+						},
+						() -> {
+							helpText.setText("");
+						});
+			});
+	}
+	
+	/**
+	 * Display help string to the user if present, else clear the help string UI display.
+	 * 
+	 * @param config The config to get the help string from
+	 * @param helpText The text UI element to display the help string in.
+	 */
+	private void displayHelpString(Config config, Text helpText) {
+		Optional.ofNullable(config.getHelp()).ifPresentOrElse(
+				helpString -> {
+					helpText.setText(helpString);
+				},
+				() -> {
+					helpText.setText("");
+				});
 	}
 
 	/**
