@@ -173,7 +173,9 @@ public enum ComponentType {
 	/** Coherent OBIS Laser Remote. */
 	OBIS_LASER_REMOTE,
 	/** Zero field */
-	ZERO_FIELD;
+	ZERO_FIELD,
+	/** LSI correlator */
+	LSI_CORR;
 	
 	
 	private Target target;
