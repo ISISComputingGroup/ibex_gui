@@ -31,4 +31,9 @@ public interface Config {
 	 */
 	public String getName();
 	
+	/**
+	 * @return A string to be displayed in the script generator UI to help a user when using a config.
+	 */
+	public String getHelp();
+	
 }

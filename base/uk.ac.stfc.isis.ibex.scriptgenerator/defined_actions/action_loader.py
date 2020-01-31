@@ -44,6 +44,13 @@ class Config(object):
 
         return ListConverter().convert(arguments, gateway._gateway_client)
 
+    def getHelp(self) -> str:
+        """
+        Returns:
+            A string to be displayed in the script generator UI to help a user when using a config.
+        """
+        return self.action.get_help()
+
     def doAction(self, action) -> Union[None, AnyStr]:
         """
         Executes the action with the parameters provided
@@ -66,7 +73,10 @@ class Config(object):
         Returns:
             None if all parameters are valid, otherwise a String containing an error message.
         """
-        return self.action.parameters_valid(**action)
+        try:
+            return self.action.parameters_valid(**action)
+        except Exception as e:
+            return str(e) # If there is an error validating return to the user
 
     def equals(self, other_config) -> bool:
         """ Implement equals needed for py4j
