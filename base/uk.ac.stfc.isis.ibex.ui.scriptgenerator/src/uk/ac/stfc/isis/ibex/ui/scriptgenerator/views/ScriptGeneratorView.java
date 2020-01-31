@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -29,6 +30,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -40,6 +42,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -55,6 +58,13 @@ public class ScriptGeneratorView {
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
 	private DataBindingContext bindingContext;
+	
+	private static final Display DISPLAY = Display.getDefault();
+
+	/**
+	 * A clear colour for use in other script generator table columns when a row is valid.
+	 */
+	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	/**
 	 * The UI table of script generator contents.
@@ -117,21 +127,47 @@ public class ScriptGeneratorView {
 			
 			// A composite to contain the elements at the top of the script generator
 			Composite topBarComposite = new Composite(parent, SWT.NONE);
-			topBarComposite.setLayout(new GridLayout(2, false));
+			topBarComposite.setLayout(new GridLayout(6, false));
 			topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			
-			// The composite to contain the config selector drop down and it's label
-			Composite globalSettingsComposite = new Composite(topBarComposite, SWT.NONE);
-			globalSettingsComposite.setLayout(new GridLayout(2, false));
-			globalSettingsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+			// Composite to contain help strings from configs
+	        Composite configComposite = new Composite(topBarComposite, SWT.NONE);
+	        configComposite.setLayout(new GridLayout(5, false));
+	        configComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+	        
+	        // The label for the config selector drop down
+ 			Label configSelectorLabel = new Label(configComposite, SWT.NONE);
+ 			configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+ 			configSelectorLabel.setText("Config:");
+ 	
+ 			// Drop-down box to select between configs.
+ 			configSelector = setUpConfigSelector(configComposite);
+ 			
+ 			// Separate help and selector
+ 			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
+	        
+ 			// Label for config help
+	        Label helpLabel = new Label(configComposite, SWT.NONE);
+			helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			helpLabel.setText("Config Help: ");
 			
-			// The label for the config selector drop down
-			Label configSelectorLabel = new Label(globalSettingsComposite, SWT.NONE);
-			configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-			configSelectorLabel.setText("Config:");
-	
-			// Drop-down box to select between configs.
-			configSelector = setUpConfigSelector(globalSettingsComposite);
+			// Display help for the config
+			Text helpText = new Text(configComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+			var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
+			helpTextDataLayout.widthHint = 400;
+			helpTextDataLayout.heightHint = 100;
+			helpText.setLayoutData(helpTextDataLayout);
+			helpText.setBackground(clearColor);
+			// Display the correct starting text
+			scriptGeneratorViewModel.getConfig().ifPresentOrElse(
+						config -> {
+							Optional.ofNullable(config.getHelp()).ifPresentOrElse(
+								helpString -> helpText.setText(helpString),
+								() -> helpText.setText("")
+							);
+						},
+						() -> helpText.setText("")
+					);
 			
 			// The composite to contain the button to check validity
 			Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
@@ -145,6 +181,7 @@ public class ScriptGeneratorView {
 	        btnGetValidityErrors.addListener(SWT.Selection, e -> {
 	        	scriptGeneratorViewModel.displayValidityErrors();
 	        });
+	        
 	        
 	        Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
 	        
@@ -213,7 +250,7 @@ public class ScriptGeneratorView {
 	        
 	        		
 	        // Bind the context and the validity checking listeners
-	        bind(btnGetValidityErrors, generateScriptButton);
+	        bind(btnGetValidityErrors, generateScriptButton, helpText);
 			
 	        scriptGeneratorViewModel.addEmptyAction();
 		} else {
@@ -281,7 +318,7 @@ public class ScriptGeneratorView {
 
 		configSelector.setContentProvider(ArrayContentProvider.getInstance());
 		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
-		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigs());
 		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get()));
 		
@@ -291,10 +328,10 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
-	private void bind(Button btnGetValidityErrors, Button btnGenerateScript) {
+	private void bind(Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {
 		bindingContext = new DataBindingContext();
 		
-		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector);
+		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector, helpText);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
 	}
