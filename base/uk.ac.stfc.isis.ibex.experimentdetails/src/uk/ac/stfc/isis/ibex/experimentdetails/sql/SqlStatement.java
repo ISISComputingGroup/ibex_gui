@@ -146,7 +146,11 @@ public class SqlStatement {
     	//add aliases
     	ArrayList<String> aliasedSelects = new ArrayList<>();
     	for (ExpDataField field : this.selectFields) {
-    		aliasedSelects.add(field.toString() + " AS \"" + field.toString() + "\"");
+    		if (field.isMaxInSelect()) {
+    			aliasedSelects.add("MAX(" + field.toString() + ") AS \"" + field.toString() + "\"");
+    		}else {
+    			aliasedSelects.add(field.toString() + " AS \"" + field.toString() + "\"");
+    		}
     	}
 		return joinString(aliasedSelects, ", ");
     }

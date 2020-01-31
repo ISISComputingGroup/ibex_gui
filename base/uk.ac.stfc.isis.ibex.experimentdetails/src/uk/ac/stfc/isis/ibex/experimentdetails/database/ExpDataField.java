@@ -26,19 +26,26 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
 public class ExpDataField {
 	private ExpDataTablesEnum table;
 	private ExpDataFieldsEnum field;
+	private boolean isMaxInSelect;
 	
 	/**
 	 * Constructor to create an ExpDataField Object based on a table and field.
 	 * @param table The table that the field can be found in.
 	 * @param field The specific field.
+	 * @param isMaxInSelectd if in select this should be max() for a group by statement
 	 */
-	public ExpDataField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
+	public ExpDataField(ExpDataTablesEnum table, ExpDataFieldsEnum field, boolean isMaxInSelectd) {
 		this.table = table;
 		this.field = field;
+		this.isMaxInSelect = isMaxInSelectd;
 	}
 	
 	@Override
 	public String toString() {
 		return table + "." + field;
+	}
+	
+	public boolean isMaxInSelect() {
+		return this.isMaxInSelect;
 	}
 }

@@ -41,11 +41,11 @@ import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereLikeClause;
  * experiment database.
  */
 public class ExperimentIDQuery {
-	private static ExpDataField experimentteamsExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-	private static ExpDataField userName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME);
-	private static ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME);
-	private static ExpDataField userOrganisation = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.ORGANISATION);
-	private static ExpDataField experimentStartDate = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);	
+	private static ExpDataField experimentteamsExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID, false);
+	private static ExpDataField userName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME, false);
+	private static ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME, true);
+	private static ExpDataField userOrganisation = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.ORGANISATION, true);
+	private static ExpDataField experimentStartDate = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE, false);	
 	
     private static final ExpDataField[] SQL_SELECT_FIELDS = {
     	experimentteamsExpID, userName, experimentStartDate,
@@ -77,19 +77,19 @@ public class ExperimentIDQuery {
 		List<ExpDataTablesEnum> fromTables = new ArrayList<>();
 		List<ExpDataField> groupBy = new ArrayList<>();
 		
-		ExpDataField userUserID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
+		ExpDataField userUserID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID, false);
 		
-		ExpDataField experimentteamsUserID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.USER_ID);
-		ExpDataField experimentteamsRoleID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.ROLE_ID);
+		ExpDataField experimentteamsUserID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.USER_ID, false);
+		ExpDataField experimentteamsRoleID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.ROLE_ID, false);
 		
-		ExpDataField roleRoleID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.ROLE_ID);
+		ExpDataField roleRoleID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.ROLE_ID, false);
 		
-		ExpDataField experimentExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
+		ExpDataField experimentExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID, false);
 		
         ExpDataField experimentStartDate =
-                ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);
+                ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE, false);
         ExpDataField experimentteamsStartDate =
-                ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.STARTDATE);
+                ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.STARTDATE, false);
 
 		//Connect tables
 		whereClauses.add(new SqlWhereEqualClause(roleRoleID, experimentteamsRoleID));
@@ -117,7 +117,6 @@ public class ExperimentIDQuery {
 		sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
 		sqlStatement.setFromTables(fromTables);
 		sqlStatement.setWhereClause(whereClauses);
-		sqlStatement.setGroupBy(groupBy);
 		sqlStatement.setOrderBy(experimentteamsExpID);
 		
 		return sqlStatement;

@@ -52,12 +52,12 @@ public final class ExpDataFieldsCreator {
      *            the field to get
      * @return the experimental database field
      */
-    public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
+    public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field, boolean isMaxInSelectd) {
     	if (!getFieldList(table).contains(field)) {
     		throw new IllegalArgumentException("Unknown experiment details field: " + field);
     	}
     	
-		return new ExpDataField(table, field);
+		return new ExpDataField(table, field, isMaxInSelectd);
 		
     }
 
