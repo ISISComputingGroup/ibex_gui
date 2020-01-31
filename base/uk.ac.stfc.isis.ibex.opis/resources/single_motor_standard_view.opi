@@ -46,7 +46,7 @@
           <include_parent_macros>true</include_parent_macros>
           <MM>MOT:MTR$(MTR)</MM>
         </macros>
-        <mode>0</mode>
+        <mode>1</mode>
         <description></description>
       </action>
     </actions>
@@ -58,7 +58,7 @@
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <fc>false</fc>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
@@ -127,7 +127,7 @@
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <font>
         <fontdata fontName="Arial" height="9" style="0" pixels="true" />
       </font>
@@ -179,7 +179,7 @@ $(pv_value)</tooltip>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <font>
         <fontdata fontName="Arial" height="9" style="0" pixels="true" />
       </font>
@@ -228,7 +228,7 @@ $(pv_value)</tooltip>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <font>
         <fontdata fontName="Arial" height="9" style="0" pixels="true" />
       </font>
@@ -268,7 +268,7 @@ $(pv_value)</tooltip>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <font>
         <fontdata fontName="Arial" height="9" style="0" pixels="true" />
       </font>
@@ -311,7 +311,7 @@ $(pv_value)</tooltip>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <font>
         <fontdata fontName="Arial" height="9" style="1" pixels="true" />
       </font>
@@ -348,327 +348,275 @@ $(pv_value)</tooltip>
       <x>1</x>
       <y>4</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <crop_bottom>0</crop_bottom>
-      <crop_left>0</crop_left>
-      <crop_right>0</crop_right>
-      <crop_top>0</crop_top>
-      <degree>0</degree>
-      <enabled>true</enabled>
-      <flip_horizontal>false</flip_horizontal>
-      <flip_vertical>false</flip_vertical>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>12</height>
-      <image_file>icons/not_homed.svg</image_file>
-      <name>Image</name>
+      <height>512</height>
+      <name>Image Boolean Indicator_5</name>
       <no_animation>false</no_animation>
-      <permutation_matrix>
-        <row>
-          <col>1.0</col>
-          <col>0.0</col>
-        </row>
-        <row>
-          <col>0.0</col>
-          <col>1.0</col>
-        </row>
-      </permutation_matrix>
-      <rules>
-        <rule name="IF motor homed THEN change motor homed icon" prop_id="image_file" out_exp="false">
-          <exp bool_exp="pv0==1">
-            <value>icons/homed.svg</value>
-          </exp>
-          <pv trig="true">$(AT_HOME)</pv>
-        </rule>
-      </rules>
+      <off_image>icons/not_homed.svg</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/homed.svg</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(AT_HOME)</pv_name>
+      <pv_value />
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>Axis is homed.</tooltip>
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
-      <widget_type>Image</widget_type>
-      <width>12</width>
-      <wuid>6480f560:16fd821999b:-58bc</wuid>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>512</width>
+      <wuid>32dfefdc:16ffc0cfadb:-661b</wuid>
       <x>28</x>
-      <y>50</y>
+      <y>54</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <crop_bottom>0</crop_bottom>
-      <crop_left>0</crop_left>
-      <crop_right>0</crop_right>
-      <crop_top>0</crop_top>
-      <degree>0</degree>
-      <enabled>true</enabled>
-      <flip_horizontal>false</flip_horizontal>
-      <flip_vertical>false</flip_vertical>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>12</height>
-      <image_file>icons/not_moving_right.svg</image_file>
-      <name>Image_1</name>
+      <height>512</height>
+      <name>Image Boolean Indicator_6</name>
       <no_animation>false</no_animation>
-      <permutation_matrix>
-        <row>
-          <col>1.0</col>
-          <col>0.0</col>
-        </row>
-        <row>
-          <col>0.0</col>
-          <col>1.0</col>
-        </row>
-      </permutation_matrix>
-      <rules>
-        <rule name="IF motion WHEN positive THEN change icon" prop_id="image_file" out_exp="false">
-          <exp bool_exp="pv0==1&amp;pv1==1">
-            <value>icons/moving_right.svg</value>
-          </exp>
-          <pv trig="true">$(MOVING)</pv>
-          <pv trig="true">$(DIRECTION)</pv>
-        </rule>
-      </rules>
+      <off_image>icons/not_at_high_limit.svg</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/at_high_limit.svg</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(HIGH_LIMIT)</pv_name>
+      <pv_value />
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>Axis is moving in the positive direction.</tooltip>
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
-      <widget_type>Image</widget_type>
-      <width>12</width>
-      <wuid>6480f560:16fd821999b:-58bb</wuid>
-      <x>42</x>
-      <y>50</y>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>512</width>
+      <wuid>32dfefdc:16ffc0cfadb:-661a</wuid>
+      <x>54</x>
+      <y>54</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <crop_bottom>0</crop_bottom>
-      <crop_left>0</crop_left>
-      <crop_right>0</crop_right>
-      <crop_top>0</crop_top>
-      <degree>0</degree>
-      <enabled>true</enabled>
-      <flip_horizontal>false</flip_horizontal>
-      <flip_vertical>false</flip_vertical>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>12</height>
-      <image_file>icons/not_at_high_limit.svg</image_file>
-      <name>Image_2</name>
+      <height>512</height>
+      <name>Image Boolean Indicator_7</name>
       <no_animation>false</no_animation>
-      <permutation_matrix>
-        <row>
-          <col>1.0</col>
-          <col>0.0</col>
-        </row>
-        <row>
-          <col>0.0</col>
-          <col>1.0</col>
-        </row>
-      </permutation_matrix>
-      <rules>
-        <rule name="IF at high limit switch THEN change icon" prop_id="image_file" out_exp="false">
-          <exp bool_exp="pv0==1">
-            <value>icons/at_high_limit.svg</value>
-          </exp>
-          <pv trig="true">$(HIGH_LIMIT)</pv>
-        </rule>
-      </rules>
+      <off_image>icons/not_at_low_limit.svg</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/at_low_limit.svg</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(LOW_LIMIT)</pv_name>
+      <pv_value />
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>Axis is on the high limit switch.</tooltip>
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
-      <widget_type>Image</widget_type>
-      <width>12</width>
-      <wuid>6480f560:16fd821999b:-58ba</wuid>
-      <x>55</x>
-      <y>50</y>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>512</width>
+      <wuid>32dfefdc:16ffc0cfadb:-6616</wuid>
+      <x>2</x>
+      <y>54</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <crop_bottom>0</crop_bottom>
-      <crop_left>0</crop_left>
-      <crop_right>0</crop_right>
-      <crop_top>0</crop_top>
-      <degree>0</degree>
-      <enabled>true</enabled>
-      <flip_horizontal>false</flip_horizontal>
-      <flip_vertical>false</flip_vertical>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>12</height>
-      <image_file>icons/not_moving_left.svg</image_file>
-      <name>Image_4</name>
+      <height>512</height>
+      <name>Image Boolean Indicator_8</name>
       <no_animation>false</no_animation>
-      <permutation_matrix>
-        <row>
-          <col>1.0</col>
-          <col>0.0</col>
-        </row>
-        <row>
-          <col>0.0</col>
-          <col>1.0</col>
-        </row>
-      </permutation_matrix>
-      <rules>
-        <rule name="IF moving WHEN negative movement THEN change icon" prop_id="image_file" out_exp="false">
-          <exp bool_exp="pv0==1&amp;&amp;pv1==0">
-            <value>icons/moving_left.svg</value>
-          </exp>
-          <pv trig="true">$(MOVING)</pv>
-          <pv trig="true">$(DIRECTION)</pv>
-        </rule>
-      </rules>
+      <off_image>icons/not_moving_left.svg</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/moving_left.svg</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(DIRECTION)</pv_name>
+      <pv_value />
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>Axis is moving in the negative direction.</tooltip>
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
-      <widget_type>Image</widget_type>
-      <width>12</width>
-      <wuid>6480f560:16fd821999b:-58b9</wuid>
-      <x>14</x>
-      <y>50</y>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>512</width>
+      <wuid>32dfefdc:16ffc0cfadb:-6615</wuid>
+      <x>15</x>
+      <y>54</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
       <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <crop_bottom>0</crop_bottom>
-      <crop_left>0</crop_left>
-      <crop_right>0</crop_right>
-      <crop_top>0</crop_top>
-      <degree>0</degree>
-      <enabled>true</enabled>
-      <flip_horizontal>false</flip_horizontal>
-      <flip_vertical>false</flip_vertical>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>12</height>
-      <image_file>icons/not_at_low_limit.svg</image_file>
-      <name>Image_5</name>
+      <height>512</height>
+      <name>Image Boolean Indicator_9</name>
       <no_animation>false</no_animation>
-      <permutation_matrix>
-        <row>
-          <col>1.0</col>
-          <col>0.0</col>
-        </row>
-        <row>
-          <col>0.0</col>
-          <col>1.0</col>
-        </row>
-      </permutation_matrix>
-      <rules>
-        <rule name="IF at low limit switch THEN change icon" prop_id="image_file" out_exp="false">
-          <exp bool_exp="pv0==1">
-            <value>icons/at_low_limit.svg</value>
-          </exp>
-          <pv trig="true">$(LOW_LIMIT)</pv>
-        </rule>
-      </rules>
+      <off_image>icons/not_moving_right.svg</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/moving_right.svg</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(DIRECTION)</pv_name>
+      <pv_value />
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>Axis is at the low limit switch.</tooltip>
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
-      <widget_type>Image</widget_type>
-      <width>12</width>
-      <wuid>6480f560:16fd821999b:-58b8</wuid>
-      <x>1</x>
-      <y>50</y>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>512</width>
+      <wuid>32dfefdc:16ffc0cfadb:-6614</wuid>
+      <x>41</x>
+      <y>54</y>
     </widget>
   </widget>
 </display>
