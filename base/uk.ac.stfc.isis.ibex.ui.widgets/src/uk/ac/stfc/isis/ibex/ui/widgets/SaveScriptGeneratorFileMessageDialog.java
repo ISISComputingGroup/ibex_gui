@@ -189,7 +189,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	private boolean generateWithOverwriteAndNameCheck(String toWrite, String fileExtension) {
 		// Don't generate if filename contains extension or file path.
 		if(!isFilenameValid()) {
-			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Cannot save", "Cannot save: filename contains a ., ;, / or \\");
+			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Cannot save", "Cannot save: filename contains a . ; / or \\");
 			return false;
 		}
 		File scriptFile = new File(filepathPrefix + filename + fileExtension);
