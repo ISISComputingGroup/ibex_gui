@@ -228,27 +228,32 @@ class ConfigWrapper(object):
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
 def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDefinition], Dict[AnyStr, AnyStr]]:
-    """ Dynamically import all the Python modules in the search folders"""
-    if search_folders is None:
-        this_file_path = os.path.split(__file__)[0]
-        search_folder = [os.path.join(this_file_path, "instruments")]
+    """
+    Dynamically import all the Python modules in the search folders
+    
+    Parameters:
+        search_folders: List[str]
+            The folders to search for actions in
+
+    Returns:
+        A tuple. 
+        The first element being a dictionary with keys as the module name and actions as the values.
+        The second element is also a dictionary with keys as the module name, 
+         but with values as the reason they could not be imported.
+    """
     configs: Dict[AnyStr, ActionDefinition] = {}
     config_load_errors: Dict[AnyStr, AnyStr] = {}
-    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
-        f.write("Starting search folders"+"\n")
     for search_folder in search_folders:
-        with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
-            f.write(search_folder+"\n")
         try:
             for filename in os.listdir(search_folder):
-                with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
-                    f.write(filename+"\n")
+                # Check if we have found a python file or not
                 filenameparts = filename.split(".")
                 module_name = filenameparts[0]
                 if len(filenameparts) > 1:
                     file_extension = filenameparts[-1]
                 else:
                     file_extension = ""
+                # Found a config (python file) import the DoRun class
                 if file_extension == "py":
                     try:
                         loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
@@ -257,14 +262,14 @@ def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDe
                         loader.exec_module(sys.modules[module_name])
                         configs[module_name] = sys.modules[module_name].DoRun
                     except Exception as e:
+                        # On failure to load ensure we return the reason
                         config_load_errors[module_name] = str(e)
                         # Print any errors to stderr, Java will catch and throw to the user
                         print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
         except FileNotFoundError as e:
+            # On failure to load ensure we return the reason
             config_load_errors[search_folder] = str(e)
             print("Error loading from {}".format(search_folder), file=sys.stderr)
-    with open("C:/Instrument/Dev/PythonLog.txt", "a+") as f:
-        f.write(str(configs)+"\n"+str(config_load_errors)+"\n")
     return configs, config_load_errors
 
 
