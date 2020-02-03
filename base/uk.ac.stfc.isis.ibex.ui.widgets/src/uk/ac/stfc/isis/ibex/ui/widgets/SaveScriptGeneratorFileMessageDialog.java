@@ -16,6 +16,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -54,6 +55,11 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 */
 	private String generatedScript;
 	
+	/**
+	 * The file extenstion for Python files.
+	 */
+	private String PYTHON_EXT = ".py";
+	
 	private static final Logger LOG = IsisLog.getLogger(SaveScriptGeneratorFileMessageDialog.class);
 
 	/**
@@ -87,7 +93,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 			int dialogImageType, String[] dialogButtonLabels, int defaultIndex, String defaultFilename, String generatedScript) {
 		super(parentShell, dialogTitle, dialogTitleImage, dialogMessage, dialogImageType, dialogButtonLabels, defaultIndex);
 		this.filepathPrefix = filepathPrefix;
-		filename = filepathPrefix+defaultFilename;
+		this.filename = defaultFilename;
 		this.parentShell = parentShell;
 		this.generatedScript = generatedScript;
 	}
@@ -99,23 +105,27 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 */
 	@Override
     protected Control createMessageArea(final Composite composite) {
+		composite.setLayout(new GridLayout(3, false));
+		
 		Image image = getImage();
 		if (image != null) {
 			imageLabel = new Label(composite, SWT.NULL);
 			image.setBackground(imageLabel.getBackground());
 			imageLabel.setImage(image);
 
-			imageLabel.setLayoutData(new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
+			imageLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		}
-			
+		
 		// Create filename edit area
 		
 		Label filenameLabel = new Label(composite, SWT.NONE);
 		
-		filenameLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		filenameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		filenameLabel.setText("File name: ");
 			
-		Text msg = new Text(composite, SWT.NONE);
+		Text msg = new Text(composite, SWT.BORDER);
+		
+		msg.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
 		msg.setText(filename);
 		
@@ -123,8 +133,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 			
 			@Override
 			public void modifyText(ModifyEvent e) {
-				filename = filepathPrefix + e.data;
-				System.out.println(filename);
+				filename = msg.getText();
 			}
 		});
 
@@ -137,51 +146,114 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	}
 	
 	/**
-	 * Create an save and, save and open file button to place in the dialog
+	 * Create a save and, save and open file button to place in the dialog
 	 * 
 	 * @param parent The parent to put the buttons in.
 	 */
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
+		parent.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		// create save button
-		Button saveFileButton = createButton(parent, IDialogConstants.OK_ID, "Save File", true);
+		Button saveFileButton = createButton(parent, IDialogConstants.OK_ID, "Save File", false);
+		saveFileButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		saveFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			generate();
-			this.close();
+			boolean fileWritten = generateWithOverwriteAndNameCheck(generatedScript, PYTHON_EXT);
+			if(fileWritten) {
+				this.close();
+			} else {
+				this.open();
+			}
 		}));
 		// create save and open file button
 		Button saveOpenFileButton = createButton(parent, IDialogConstants.OK_ID, "Save and Open File", true);
+		saveOpenFileButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 		saveOpenFileButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			generate();
-			openFile();
-			this.close();
+			boolean fileWritten = generateWithOverwriteAndNameCheck(generatedScript, PYTHON_EXT);
+			if(fileWritten) {
+				openFile(PYTHON_EXT);
+				this.close();
+			} else {
+				this.open();
+			}
 		}));
 	}
 	
 	/**
-	 * Save a generated script to file.
+	 * Save a string to a file with the name as specified in the dialog box (a generated script generally).
+	 * With a check to see if we are overwriting a file.
+	 * 
+	 * @param toWrite The string to write to file
+	 * @param fileExtension The file extension to save 
+	 * @return true if file written, false if not.
 	 */
-	public void generate() {
-		File scriptFile = new File(filename);
-		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
-			scriptWriter.write(generatedScript);
-			scriptWriter.flush();
+	private boolean generateWithOverwriteAndNameCheck(String toWrite, String fileExtension) {
+		// Don't generate if filename contains extension or file path.
+		if(!isFilenameValid()) {
+			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Cannot save", "Cannot save: filename contains a ., ;, / or \\");
+			return false;
+		}
+		File scriptFile = new File(filepathPrefix + filename + fileExtension);
+		try {
+			if(scriptFile.createNewFile()) {
+				// There was no file preventing creation so we are not overwriting
+				writeToFile(toWrite, scriptFile);
+				return true;
+			} else {
+				// There was a file preventing creation, check to see if we wish to overwrite
+				boolean overwriteChosen = MessageDialog.openQuestion(Display.getDefault().getActiveShell(),
+						"File already exists",
+						"File already exists, would you like to overwite?");
+				if(overwriteChosen) {
+					writeToFile(toWrite, scriptFile);
+					return true;
+				} else {
+					return false;
+				}
+			}
 		} catch(IOException e) {
 			LOG.error("Failed to write generated file");
 			LOG.error(e);
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "Failed to write generated script to file");
+			return false;
 		}
 	}
 	
-	private void openFile() {
-		File file = new File(filename);
+	/**
+	 * Checks if the filename contains a ., :, / or \
+	 * 
+	 * @return true if filename does not contain these, or false if it does.
+	 */
+	private boolean isFilenameValid() {
+		return !(filename.contains(".") || filename.contains(":") || filename.contains("/") || filename.contains("\\"));
+	}
+	
+	/**
+	 * Save a string to a file with the name as specified in the dialog box (a generated script generally).
+	 * 
+	 * @param toWrite The string to write to file
+	 * @param scriptFile The file to write to
+	 */
+	private void writeToFile(String toWrite, File scriptFile) throws IOException {
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(toWrite);
+			scriptWriter.flush();
+		}
+	}
+	
+	/**
+	 * Open the file specified in this dialog by the filepathPrefix, filename and passed fileExtension in notepad++.
+	 * 
+	 * @param fileExtension The file extension of the file to open.
+	 */
+	private void openFile(String fileExtension) {
+		File file = new File(filepathPrefix + filename + fileExtension);
 		try {
 			if(file.exists()) {
 				Runtime rs = Runtime.getRuntime();
 				String notepadExe = findNotepadExe();
 				rs.exec(String.format("%s %s", notepadExe, file));
 			} else {
-				String notepadLaunchWarning = "Could not launch notepad++";
+				String notepadLaunchWarning = "Could not launch notepad++, file does not exist";
 				LOG.info(notepadLaunchWarning);
 				handleFailedToOpenFile(notepadLaunchWarning, file);
 			}
@@ -239,6 +311,8 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * @param title The title for the dialog box.
 	 * @param message The message to display in front of the filepath for the box.
 	 * @param filepath The filepath of the file this box refers to.
+	 * @param defaultFilename The default filename to save the script with
+	 * @param generatedScript 
 	 */
 	public static void openInformation(Shell parent, String title,  String message, String filepath, String defaultFilename, String generatedScript) {
 		SaveScriptGeneratorFileMessageDialog dialog = new SaveScriptGeneratorFileMessageDialog(parent, title, null,  message, filepath, 

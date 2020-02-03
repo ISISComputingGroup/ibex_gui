@@ -155,12 +155,14 @@ public class ScriptGeneratorViewModel {
 		});
 		// Listen for generated script refreshes
 		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
-			@SuppressWarnings("unchecked")
 			String scriptFilename = (String) evt.getNewValue();
 			DISPLAY.asyncExec(() -> {
 				scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
 						generatedScript -> {
-							openFileDialog(scriptGeneratorModel.getScriptFilepathPrefix(), scriptFilename, generatedScript);
+							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
+									"Script Generated", "",
+									scriptGeneratorModel.getScriptFilepathPrefix(),
+									scriptFilename, generatedScript);
 						},
 						() -> {
 							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -316,11 +318,6 @@ public class ScriptGeneratorViewModel {
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
 		});
-	}
-	
-	private void openFileDialog(String filePath, String defaultFilename, String generatedScript) {
-		SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-				"Script Generated", "Script generated at: ", filePath, defaultFilename, generatedScript);
 	}
 	
 	/**

@@ -143,7 +143,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The date format to use when generating a script name.
 	 */
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd-MM-yyyy)-(HH-mm-ss)");
 	
 	/**
 	 * The string containing the last generated script.
@@ -205,7 +205,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			lastGeneratedScript = (Optional<String>) evt.getNewValue();
 			lastGeneratedScript.ifPresentOrElse(script -> {
 				try {
-					String generatedScriptFilename = generateScriptFilePath(getScriptFilepathPrefix());
+					String generatedScriptFilename = generateScriptFileName(getScriptFilepathPrefix());
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
 				} catch(NoConfigSelectedException e) {
 					LOG.error(e);
@@ -495,28 +495,28 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Generate a filepath to write the script to
+	 * Generate a filename to write the script to
 	 * 
 	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
-	 * @return The filepath to write the script to.
+	 * @return The filename to prepend a path to write the script to.
 	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	private String generateScriptFilePath(String filepathPrefix) throws NoConfigSelectedException {
+	private String generateScriptFileName(String filepathPrefix) throws NoConfigSelectedException {
 		String configName = getConfig()
 			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
 		String timestamp = getTimestamp();
 		int version = 0;
-		String filepath;
+		String filename;
 		do {
 			if (version == 0) {
-				filepath = String.format("%s%s-%s", filepathPrefix, configName, timestamp);
+				filename = String.format("%s-%s", configName, timestamp);
 			} else {
-				filepath = String.format("%s%s-%s(%s)", filepathPrefix, configName, timestamp, version);
+				filename = String.format("%s-%s(%s)", configName, timestamp, version);
 			}
 			version += 1;
-		} while(new File(filepath).exists());
-		return filepath;
+		} while(new File(String.format("%s%s", filepathPrefix, filename)).exists());
+		return filename;
 	}
 	
 	/**
