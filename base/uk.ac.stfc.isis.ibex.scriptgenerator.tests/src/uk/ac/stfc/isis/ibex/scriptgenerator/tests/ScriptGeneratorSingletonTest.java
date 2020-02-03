@@ -1,9 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -62,7 +59,7 @@ public class ScriptGeneratorSingletonTest {
 		when(mockModel.getConfig()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
 		try {
-			when(mockModel.generateTo(scriptLines, filepathPrefix)).thenCallRealMethod();
+			when(mockModel.generateScriptFileName(filepathPrefix)).thenCallRealMethod();
 		} catch (NoConfigSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
@@ -144,10 +141,10 @@ public class ScriptGeneratorSingletonTest {
 	@Test
 	public void test_GIVEN_new_file_WHEN_generate_THEN_filename_without_version() {
 		// Arrange in setUp
-		String expectedFilepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
+		String expectedFilepath = String.format("%s-%s", configName, timestamp);
 		try {
 			// Act
-			String filepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
+			String filepath = mockModel.generateScriptFileName(filepathPrefix);
 			// Assert
 			assertThat("Should generate filepath with the config name and a timestamp",
 					filepath, equalTo(expectedFilepath));
@@ -156,53 +153,4 @@ public class ScriptGeneratorSingletonTest {
 		}
 	}
 	
-	@Test
-	public void test_GIVEN_new_file_WHEN_generate_THEN_file_contents_as_expected() {
-		// Arrange in setUp
-		// Act
-		try {
-			String filepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
-			String[] splitScriptLines = scriptLines.split("\n");
-			// Assert
-			try(BufferedReader reader = new BufferedReader(new FileReader(filepath))){
-				int linenum = 0;
-				String line;
-				while((line = reader.readLine()) != null) {
-					if(linenum > splitScriptLines.length) {
-						fail("Should be the same number of script lines as written lines");
-					}
-					assertThat("Lines should match the generated script",
-							line, equalTo(splitScriptLines[linenum]));
-					linenum += 1;
-				}
-			} catch(IOException e) {
-				fail("Should not fail to read from file");
-			}
-		} catch(NoConfigSelectedException e) {
-			fail("We have mocked out getConfig() so should always return a config");
-		}
-	}
-	
-	@Test
-	public void test_GIVEN_new_and_old_file_WHEN_generate_THEN_filename_with_version() {
-		// Arrange
-		String expectedOldFilepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
-		String expectedNewFilepath = String.format("%s%s-%s(1).py", filepathPrefix, configName, timestamp);
-		String expectedNewNewFilepath = String.format("%s%s-%s(2).py", filepathPrefix, configName, timestamp);
-		try {
-			// Act
-			String oldFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
-			String newFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
-			String newNewFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
-			// Assert
-			assertThat("Should generate filepath with the config name and a timestamp",
-					oldFilepath, equalTo(expectedOldFilepath));
-			assertThat("Should generate filepath with the config name, a timestamp and 0 a version",
-					newFilepath, equalTo(expectedNewFilepath));
-			assertThat("Should generate filepath with the config name, a timestamp and 1 as a version",
-					newNewFilepath, equalTo(expectedNewNewFilepath));
-		} catch(NoConfigSelectedException e) {
-			fail("We have mocked out getConfig() so should always return a config");
-		}
-	}
 }

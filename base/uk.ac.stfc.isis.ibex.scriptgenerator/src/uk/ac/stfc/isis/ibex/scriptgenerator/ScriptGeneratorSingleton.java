@@ -501,7 +501,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The filename to prepend a path to write the script to.
 	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	private String generateScriptFileName(String filepathPrefix) throws NoConfigSelectedException {
+	public String generateScriptFileName(String filepathPrefix) throws NoConfigSelectedException {
 		String configName = getConfig()
 			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
