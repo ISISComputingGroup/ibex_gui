@@ -19,3 +19,7 @@ class DoRun(ActionDefinition):
             return reason
         else:
             return None
+
+    def get_help(self):
+        return "Help"
+

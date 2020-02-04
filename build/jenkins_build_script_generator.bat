@@ -8,7 +8,7 @@ set PYTHON=C:\Instrument\Apps\Python
 set PYTHON_HOME=C:\Instrument\Apps\Python
 
 REM We bundle our own JRE with the script generator, this is where it is
-set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_script_generator_jre
+set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
 set PATH=%M2%;%PYTHON%;%PATH%
 
