@@ -24,7 +24,10 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TypedListener;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
@@ -55,6 +58,16 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		checkBox.setSelection(checked(model));	
 		checkBox.setText(stringFromRow(model));
 
+		for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+		    if (listener instanceof TypedListener) {
+		        TypedListener typedListener = (TypedListener) listener;
+		        
+		        if(typedListener.getEventListener() instanceof SelectionAdapter) {
+		            checkBox.removeSelectionListener((SelectionListener)typedListener.getEventListener());  
+	            }
+		    }
+		}
+		
 		checkBox.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
