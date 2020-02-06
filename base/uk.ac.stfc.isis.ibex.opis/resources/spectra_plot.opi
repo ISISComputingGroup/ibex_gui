@@ -284,15 +284,7 @@ $(trace_0_y_pv_value)</tooltip>
     <y>-6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
-    <actions hook="false" hook_all="false">
-      <action type="EXECUTE_PYTHONSCRIPT">
-        <path>spectra_plots_mode.py</path>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-]]></scriptText>
-        <embedded>false</embedded>
-        <description></description>
-      </action>
-    </actions>
+    <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
@@ -313,10 +305,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>32</height>
-    <items>
-      <s>counts/us</s>
-      <s>counts</s>
-    </items>
+    <items />
     <items_from_pv>false</items_from_pv>
     <name>Combo</name>
     <pv_name>$(MODE_PV$(NUMBER))</pv_name>
@@ -330,6 +319,7 @@ $(trace_0_y_pv_value)</tooltip>
     <scripts>
       <path pathString="spectra_plots_mode.py" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>
+        <pv trig="false">$(MODE_PV$(NUMBER))</pv>
       </path>
     </scripts>
     <tooltip>$(pv_name)

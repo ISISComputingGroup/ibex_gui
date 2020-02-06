@@ -1,5 +1,6 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
+
 pvInt0 = PVUtil.getLong(pvs[0])
 pvInt1 = PVUtil.getLong(pvs[1])
 
@@ -31,7 +32,8 @@ def main():
     else:
         mode = "Y"
         if yAxisUnitsPv.isConnected():
-            y_axis_title = PVUtil.getString(yAxisUnitsPv)
+            # Remove cnt from start of string and add counts to make it more readable 
+            y_axis_title = "counts/" + PVUtil.getString(yAxisUnitsPv).split("/")[1]
         else:
             y_axis_title = "counts/us"
 
