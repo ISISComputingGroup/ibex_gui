@@ -321,21 +321,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		};
 	}
 	
-	private PropertyChangeListener actionChangeListener = new PropertyChangeListener() {
-		
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
+	/**
+	 * Listen for changes in actions and activate the handler.
+	 */
+	private PropertyChangeListener actionChangeListener = evt -> {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		}
-	};
+		};
 	
 	/**
 	 * Listen for generated scripts and display the correct dialog (error or success and open file).
 	 */
-	private PropertyChangeListener generatedScriptListener = new PropertyChangeListener() {
-		
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
+	private PropertyChangeListener generatedScriptListener = evt -> {
 			@SuppressWarnings("unchecked")
 			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
 			DISPLAY.asyncExec(() -> {
@@ -348,8 +344,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						}
 				);
 			});
-		}
-	};
+		};
 
 	/**
 	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
