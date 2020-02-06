@@ -20,11 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -43,8 +46,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -54,6 +62,7 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+    private static final Logger LOGGER = IsisLog.getLogger(ScriptGeneratorView.class);
 	
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
@@ -88,6 +97,20 @@ public class ScriptGeneratorView {
 			+ System.getProperty("line.separator")
 			+ "Have they been located in the correct place or is this not your preferred location?", 
 			preferences.scriptGeneratorConfigFolders());
+	
+	/**
+	 * The URL of the Script Generator page on the user manual
+	 */
+	private static final URL SCRIPT_GENERATOR_DOCS_URL;
+	static {
+		URL temp = null;
+		try {
+			temp = new URL("http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator");
+		} catch (MalformedURLException ex) {
+			LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to parse user manual URL", ex);;
+		}
+		SCRIPT_GENERATOR_DOCS_URL = temp;
+	}
 	
 	/**
 	 * Create a button to manipulate the rows of the script generator table and
@@ -169,6 +192,24 @@ public class ScriptGeneratorView {
 						() -> helpText.setText("")
 					);
 			
+	        // Composite for the Open Manual button
+	        Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
+	        manualButtonComposite.setLayout(new GridLayout(1, false));
+	        manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+
+	        // Button to open the user manual in a button
+	        final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
+	        manualButton.setText("Open manual");
+	        manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        manualButton.addListener(SWT.Selection, e -> {
+	            try {
+	                IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+	                browser.openURL(SCRIPT_GENERATOR_DOCS_URL);
+	            } catch (PartInitException ex) {
+	                LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
+	            }
+	        });
+
 			// The composite to contain the button to check validity
 			Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 			validityComposite.setLayout(new GridLayout(1, false));
