@@ -136,6 +136,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	
 	/**
+	 * The current viewTable in the actions.
+	 */
+	private ActionsViewTable viewTable;
+
+
+	/**
+	 * The current get validity errors button in the view.
+	 */
+	private Button btnGetValidityErrors;
+
+	/**
+	 * The current generate script button in the view.
+	 */
+	private Button btnGenerateScript;
+	
+	/**
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
 	 */
@@ -312,22 +328,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
 		}
 	};
-
-	/**
-	 * The current viewTable in the actions.
-	 */
-	private ActionsViewTable viewTable;
-
-
-	/**
-	 * The current get validity errors button in the view.
-	 */
-	private Button btnGetValidityErrors;
-
-	/**
-	 * The current generate script button in the view.
-	 */
-	private Button btnGenerateScript;
 	
 	/**
 	 * Listen for generated scripts and display the correct dialog (error or success and open file).

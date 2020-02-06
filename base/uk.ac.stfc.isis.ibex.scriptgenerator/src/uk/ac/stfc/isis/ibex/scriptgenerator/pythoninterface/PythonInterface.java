@@ -148,21 +148,21 @@ public class PythonInterface extends ModelObject {
 		boolean wasPythonReady = pythonReady;
 		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
 		if (ready == false && wasPythonReady != ready) {
-			CompletableFuture.runAsync(() -> {
+			THREAD.submit(() -> {
+				try {
+					cleanUp();
+					setUpPythonThread();
+				} catch(IOException e) {
+					LOG.error("Failed to load Python");
+					LOG.error(e);
 					try {
-						cleanUp();
-						setUpPythonThread();
-					} catch(IOException e) {
-						LOG.error("Failed to load Python");
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
 						LOG.error(e);
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e1) {
-							LOG.error(e);
-						}
-						handlePythonReadinessChange(ready);
 					}
-				}, THREAD);
+					handlePythonReadinessChange(ready);
+				}
+			});
 		}
 	}
 
