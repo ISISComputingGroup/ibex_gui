@@ -199,7 +199,7 @@ public class ScriptGeneratorView {
 
             // Button to open the user manual in a button
             final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
-            manualButton.setText("Open manual");
+            manualButton.setText("Open Manual");
             manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
             manualButton.addListener(SWT.Selection, e -> {
                 try {
