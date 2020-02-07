@@ -284,7 +284,6 @@ if __name__ == '__main__':
     parser.add_argument('python_port', type=int, help='the python port to connect on')
     parser.add_argument('search_folders', type=str, help='the folders containing the script generator configs to search')
 
-
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
 
@@ -293,7 +292,6 @@ if __name__ == '__main__':
     configs, config_load_errors = get_actions(search_folders=search_folders)
 
     config_wrapper = ConfigWrapper(configs, Generator(search_folders=search_folders), config_load_errors=config_load_errors)
-
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
