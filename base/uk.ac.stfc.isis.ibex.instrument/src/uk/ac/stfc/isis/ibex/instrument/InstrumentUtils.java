@@ -55,12 +55,12 @@ public final class InstrumentUtils {
 
     public static <S, T> ForwardingObservable<T> convert(ClosableObservable<S> observable,
             Converter<S, T> converter) {
-        return new ForwardingObservable<>("InstUtils", new ConvertingObservable<>(observable, converter));
+        return new ForwardingObservable<>(new ConvertingObservable<>(observable, converter));
 	}
 
     /**
      * Provides a writable that converts data and sends to another writable.
-     * 
+     * 	
      * @param <S>
      *            The type of data to convert to
      * @param <T>

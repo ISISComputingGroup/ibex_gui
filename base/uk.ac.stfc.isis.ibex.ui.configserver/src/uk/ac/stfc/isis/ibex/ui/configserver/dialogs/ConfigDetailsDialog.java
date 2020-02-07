@@ -89,12 +89,6 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 	}
 	
 	@Override
-	public boolean close() {
-		editor.close();
-		return super.close();
-	}
-
-	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(title);

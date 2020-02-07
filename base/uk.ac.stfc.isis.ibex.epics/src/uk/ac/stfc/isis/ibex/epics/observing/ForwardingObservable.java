@@ -57,4 +57,9 @@ public class ForwardingObservable<T> extends TransformingObservable<T, T> {
     protected T transform(T value) {
 	return value;
     }
+    
+    @Override
+    public String toString() {
+        return this.name + " " + super.toString();
+    }
 }

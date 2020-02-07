@@ -29,6 +29,8 @@ import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -48,13 +50,12 @@ import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
-import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * The panel that holds general misc information about the configuration.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SummaryPanel extends Composite implements Closable {
+public class SummaryPanel extends Composite {
     private Text txtName;
     private Text txtDescription;
     private Label lblDateCreated;
@@ -69,7 +70,7 @@ public class SummaryPanel extends Composite implements Closable {
     private Label protectLabel;
     private Label warning;
     private Observer<Collection<SynopticInfo>> synopticInfoObserver;
-    private Subscription synoptic_subscription;
+    private Subscription synopticSubscription;
 
     /**
      * Constructor for the general information about the configuration.
@@ -140,11 +141,6 @@ public class SummaryPanel extends Composite implements Closable {
 	warning.setText("");
 	warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 
-    }
-
-    @Override
-    public void close() {
-	synoptic_subscription.cancelSubscription();
     }
 
     /**
@@ -273,6 +269,15 @@ public class SummaryPanel extends Composite implements Closable {
 		// keep list as is
 	    }
 	};
-	synoptic_subscription = Synoptic.getInstance().availableSynopticsInfo().subscribe(synopticInfoObserver);
+	synopticSubscription = Synoptic.getInstance().availableSynopticsInfo().subscribe(synopticInfoObserver);
+	
+	this.addDisposeListener(new DisposeListener() {
+	    
+	    @Override
+	    public void widgetDisposed(DisposeEvent e) {
+		
+		synopticSubscription.cancelSubscription();
+	    }
+	});
     }
 }

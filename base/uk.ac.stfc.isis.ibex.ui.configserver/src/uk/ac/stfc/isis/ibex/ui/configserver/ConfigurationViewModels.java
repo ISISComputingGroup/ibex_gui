@@ -29,8 +29,8 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.ObservableEditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
@@ -52,7 +52,7 @@ public class ConfigurationViewModels {
     /** view model for the group. */
     private GroupEditorViewModel groupEditorViewModel;
 
-    private Optional<ClosableObservable<EditableConfiguration>> configModel = Optional.empty();
+    private Optional<ObservableEditableConfiguration> configModel = Optional.empty();
 
     private static final Logger LOG = IsisLog.getLogger(ConfigurationViewModels.class);
 
@@ -72,7 +72,6 @@ public class ConfigurationViewModels {
      */
     public void bind(Editing editingModel) {
 	this.editingModel = editingModel;
-	LOG.info("Calling bind in ConfigurationViewModels");
 	setAsObservableConfigModel(editingModel.currentConfig());
     }
 
@@ -150,7 +149,7 @@ public class ConfigurationViewModels {
      * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
      *                          before the value was accessible.
      */
-    private EditableConfiguration currentValueFromObservable(ClosableObservable<EditableConfiguration> observable)
+    private EditableConfiguration currentValueFromObservable(ObservableEditableConfiguration observable)
 	    throws TimeoutException {
 	// Required because the groups model uses the "global" state of this class - so
 	// need to ensure we keep updating the state even
@@ -177,12 +176,12 @@ public class ConfigurationViewModels {
      * @param model - the new model to use.
      * @return an updated observable observing the new model
      */
-    private void setAsObservableConfigModel(ClosableObservable<EditableConfiguration> model) {
-	// Close old observable adapter and modelif it was set.
-	configModel.ifPresent(ClosableObservable<EditableConfiguration>::close);
+    private void setAsObservableConfigModel(ObservableEditableConfiguration model) {
+	// Close old observable adapter and model if they were set.
+	configModel.ifPresent(ObservableEditableConfiguration::cancelSubscriptionAndCloseEditableConfig);
 	Optional.ofNullable(observableConfigModel).ifPresent(UpdatedObservableAdapter::close);
 
-	configModel = Optional.of(model);
+	configModel = Optional.ofNullable(model);
 	observableConfigModel = new UpdatedObservableAdapter<>(model);
 	groupEditorViewModel.updateModel(observableConfigModel);
     }

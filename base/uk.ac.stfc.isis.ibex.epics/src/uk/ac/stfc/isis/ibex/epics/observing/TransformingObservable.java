@@ -30,64 +30,64 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public abstract class TransformingObservable<T1, T2> extends ClosableObservable<T2> {
 
-	/**
-	 * The observable that provides the raw value to be converted.
-	 */
+    /**
+     * The observable that provides the raw value to be converted.
+     */
     protected ClosableObservable<T1> source;
 
     /**
      * Keeps track of the connection between the source observer and the source so it
      * can be cancelled later on if desired.
      */
-	private Subscription sourceSubscription;
+    private Subscription sourceSubscription;
 
-	/**
-	 * Observes the source and triggers the properties of this object to be updated when
-	 * they change.
-	 */
-	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
-		@Override
-		public void onValue(T1 value) {
-			setValue(transform(value));
-		}
+    /**
+     * Observes the source and triggers the properties of this object to be updated when
+     * they change.
+     */
+    private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
+	@Override
+	public void onValue(T1 value) {
+	    setValue(transform(value));
+	}
 
-		@Override
-		public void onError(Exception e) {
-			setError(e);
-		}
+	@Override
+	public void onError(Exception e) {
+	    setError(e);
+	}
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			setConnectionStatus(isConnected);
-		}
+	@Override
+	public void onConnectionStatus(boolean isConnected) {
+	    setConnectionStatus(isConnected);
+	}
 
-	};
+    };
 
-	/**
-	 * Set the data source for this observable to get its data from.
-	 *
-	 * @param source The source that supplies the raw data that this object transforms
-	 */
+    /**
+     * Set the data source for this observable to get its data from.
+     *
+     * @param source The source that supplies the raw data that this object transforms
+     */
     protected synchronized void setSource(ClosableObservable<T1> source) {
-		cancelSubscription();
+	cancelSubscription();
 
-		closeSource();
-		this.source = source;
+	closeSource();
+	this.source = source;
 
-        sourceObserver.onConnectionStatus(false);
-        sourceObserver.onConnectionStatus(source.isConnected());
+	sourceObserver.onConnectionStatus(false);
+	sourceObserver.onConnectionStatus(source.isConnected());
 
-        T1 value = source.getValue();
-        if (value != null) {
-        	sourceObserver.onValue(value);
-        }
+	T1 value = source.getValue();
+	if (value != null) {
+	    sourceObserver.onValue(value);
+	}
 
-        Exception error = source.currentError();
-        if (error != null) {
-        	sourceObserver.onError(error);
-        }
+	Exception error = source.currentError();
+	if (error != null) {
+	    sourceObserver.onError(error);
+	}
 
-		sourceSubscription = source.subscribe(sourceObserver);
+	sourceSubscription = source.subscribe(sourceObserver);
     }
 
     /**
@@ -97,44 +97,44 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
      * @param value The new value of the source
      * @return The transformed value supplied by this object
      */
-	protected abstract T2 transform(T1 value);
+    protected abstract T2 transform(T1 value);
 
-	@Override
-	public void close() {
-		cancelSubscription();
-		closeSource();
-        super.close();
-	}
+    @Override
+    public void close() {
+	cancelSubscription();
+	closeSource();
+	super.close();
+    }
 
-	/**
-	 * Break the connection between this objects source observer and the source
-	 * it is currently pointing at.
-	 */
-	protected void cancelSubscription() {
-		if (sourceSubscription != null) {
-			sourceSubscription.cancelSubscription();
-		}
+    /**
+     * Break the connection between this objects source observer and the source
+     * it is currently pointing at.
+     */
+    protected void cancelSubscription() {
+	if (sourceSubscription != null) {
+	    sourceSubscription.cancelSubscription();
 	}
+    }
 
-	/**
-	 * Close the attached data source. Useful for triggering a whole stack of observables to close
-	 * from the top down.
-	 */
-	private void closeSource() {
-		if (source != null) {
-	        sourceObserver.onConnectionStatus(false);
-			source.close();
-			source=null;
-		}
+    /**
+     * Close the attached data source. Useful for triggering a whole stack of observables to close
+     * from the top down.
+     */
+    private void closeSource() {
+	if (source != null) {
+	    sourceObserver.onConnectionStatus(false);
+	    source.close();
+	    source = null;
 	}
+    }
 
-	/**
-	 * Return a human readable value to assist with identifying issues in the observable stack.
-	 *
-	 * @return The string representation of the object.
-	 */
-	@Override
-	public String toString() {
-		return this.getClass().getName() + " observing source: " + source;
-	}
+    /**
+     * Return a human readable value to assist with identifying issues in the observable stack.
+     *
+     * @return The string representation of the object.
+     */
+    @Override
+    public String toString() {
+	return this.getClass().getName() + " observing source: " + source;
+    }
 }

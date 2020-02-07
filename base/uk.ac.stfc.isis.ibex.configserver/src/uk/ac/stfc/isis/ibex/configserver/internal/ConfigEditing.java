@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.ObservableEditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
@@ -57,7 +56,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ClosableObservable<EditableConfiguration> currentConfig() {
+	public ObservableEditableConfiguration currentConfig() {
 		return edit(configServer.currentConfig());
 	}
 
@@ -65,7 +64,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ClosableObservable<EditableConfiguration> blankConfig() {
+	public ObservableEditableConfiguration blankConfig() {
 		return edit(configServer.blankConfig());
 	}
 
@@ -73,7 +72,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ClosableObservable<EditableConfiguration> config(String configName) {
+	public ObservableEditableConfiguration config(String configName) {
 		return edit(configServer.config(configName));
 	}
 
@@ -81,15 +80,11 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ClosableObservable<EditableConfiguration> component(String componentName) {
+	public ObservableEditableConfiguration component(String componentName) {
 		return edit(configServer.component(componentName));
 	}
 
-	private ClosableObservable<EditableConfiguration> edit(ClosableObservable<Configuration> config) {
-		ObservableEditableConfiguration editableConfig = new ObservableEditableConfiguration(
-				config, 
-				configServer);
-		
-		return editableConfig;
+	private ObservableEditableConfiguration edit(ClosableObservable<Configuration> config) { 		
+		return registerForClose(new ObservableEditableConfiguration(config,configServer));
 	}
 }

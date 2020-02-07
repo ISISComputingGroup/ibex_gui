@@ -19,8 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.configserver.editing.ObservableEditableConfiguration;
 
 /**
  * Public interface for editing the config server.
@@ -34,7 +33,7 @@ public interface Editing {
      * @return
      *          The current configuration as an editable configuration.
      */
-    ClosableObservable<EditableConfiguration> currentConfig();
+    ObservableEditableConfiguration currentConfig();
 
     /**
      * Returns a blank configuration as an editable configuration.
@@ -42,7 +41,7 @@ public interface Editing {
      * @return
      *          A blank configuration as an editable configuration.
      */
-    ClosableObservable<EditableConfiguration> blankConfig();
+    ObservableEditableConfiguration blankConfig();
 
     /**
      * Returns a given configuration as an editable configuration.
@@ -53,7 +52,7 @@ public interface Editing {
      * @return
      *                  A given configuration as an editable configuration.
      */
-    ClosableObservable<EditableConfiguration> config(String configName);
+    ObservableEditableConfiguration config(String configName);
 
 
     /**
@@ -65,5 +64,5 @@ public interface Editing {
      * @return
      *                  A given component as an editable configuration.
      */
-    ClosableObservable<EditableConfiguration> component(String componentName);
+    ObservableEditableConfiguration component(String componentName);
 }
