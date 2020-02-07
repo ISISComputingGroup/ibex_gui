@@ -29,9 +29,15 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 public class ForwardingObservable<T> extends TransformingObservable<T, T> {
 	
 	public final String name;
-	
+
+    /**
+     * Sets up an unnamed forwarding observable with a closable source.
+     * 
+     * @param source
+     *            the source observable
+     */
 	public ForwardingObservable(ClosableObservable<T> source) {
-		this("not the one we care about", source);
+		this("", source);
 	}
 		
     /**
@@ -39,6 +45,8 @@ public class ForwardingObservable<T> extends TransformingObservable<T, T> {
      * 
      * @param source
      *            the source observable
+     * @param name
+     * 				an optional name for this forwarding observable to help with identification
      */
     public ForwardingObservable(String name, ClosableObservable<T> source) {
     	setSource(source);

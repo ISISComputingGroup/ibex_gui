@@ -19,9 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -36,6 +34,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  */
 public class Closer implements Closable {
 
+	// resources to close, these are weak references so that the garbage collector can collect them even if they are in a closer
 	private final Set<Closable> resources = Collections.newSetFromMap(new WeakHashMap<Closable, Boolean>());
 	private static final Logger LOG = IsisLog.getLogger(Closer.class);
 

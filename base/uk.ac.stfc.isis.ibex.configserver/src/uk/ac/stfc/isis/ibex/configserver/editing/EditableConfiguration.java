@@ -824,22 +824,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     private void addObserver() {
     	
-//        this.manager_mode_observable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
-//
-//            @Override
-//            protected void setManagerMode(Boolean value) {
-//                inManagerMode = value;
-//                // EditableConfiguration.this.setEnableOrDisableSaveButton();
-//                // EditableConfiguration.this.setEnableSaveAsButton();
-//
-//            }
-//
-//            @Override
-//            protected void setUnknown() {
-//                inManagerMode = null;
-//            }
-//
-//        });
+        this.manager_mode_observable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
+
+            @Override
+            protected void setManagerMode(Boolean value) {
+                inManagerMode = value;
+                EditableConfiguration.this.setEnableOrDisableSaveButton();
+                EditableConfiguration.this.setEnableSaveAsButton();
+            }
+
+            @Override
+            protected void setUnknown() {
+                inManagerMode = null;
+            }
+
+        });
     }
     
     /**

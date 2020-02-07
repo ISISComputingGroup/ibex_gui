@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.ObservableEditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
 /**
@@ -91,6 +90,6 @@ public class ConfigEditing extends Closer implements Editing {
 				config, 
 				configServer);
 		
-		return editableConfig; //new ForwardingObservable<>("config editor", editableConfig);
+		return editableConfig;
 	}
 }

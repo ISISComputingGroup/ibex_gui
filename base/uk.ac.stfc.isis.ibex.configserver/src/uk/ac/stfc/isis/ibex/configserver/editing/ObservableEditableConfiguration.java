@@ -21,16 +21,14 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
 import java.util.Collections;
+
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
@@ -40,7 +38,6 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public class ObservableEditableConfiguration 
         extends TransformingObservable<Configuration, EditableConfiguration> {
 	
-	//public static ArrayList<ObservableEditableConfiguration> LIST = new ArrayList<>();
 
 	private static final Logger LOG = IsisLog.getLogger(ObservableEditableConfiguration.class);
 	private final ConfigServer configServer;
@@ -65,9 +62,9 @@ public class ObservableEditableConfiguration
 	 */
 	@Override
 	protected EditableConfiguration transform(Configuration value) {
-		//LIST.add(this);
 				
 	    try {
+	    	// close the previous editable config
 	    	EditableConfiguration val = this.getValue();
 	    	if (val != null) {
 	    		val.close();
@@ -88,26 +85,18 @@ public class ObservableEditableConfiguration
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}
     
+    /**
+     * Close the observable editable configuration.
+     * This is special because we do not want to close the source because the source is config. 
+     */
     @Override
     public void close() {
+    	//super.close(); This is not done because we don't want to close the source just want to unsubscribe. 
+    	// However we can't do that because this is a closable.
     	EditableConfiguration val = this.getValue();
     	if (val != null) {
     		val.close();
     	};
-    	//super.close();
     	cancelSubscription();
-    }
-    
-//    @Override
-//    public void unsubscribe(Observer<EditableConfiguration> observer) {
-//    	source.un
-//    }
-    
-    @Override
-    public Subscription subscribe(Observer<EditableConfiguration> observer) {
-    	// TODO Auto-generated method stub
-    	//if (this.observers.size() > 1)
-    		
-    	return super.subscribe(observer);
     }
 }
