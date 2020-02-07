@@ -249,12 +249,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
         pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
         	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-        try {
-			pythonInterface.setUpPythonThread();
-		} catch (IOException e) {
-			LOG.error("Failed to set up py4j interface");
-			LOG.error(e);
-		}
+		pythonInterface.workerSetUpPythonThread();
     }
     
     /**

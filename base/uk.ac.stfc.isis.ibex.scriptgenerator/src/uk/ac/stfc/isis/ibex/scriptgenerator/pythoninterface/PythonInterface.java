@@ -134,6 +134,27 @@ public class PythonInterface extends ModelObject {
 	};
 	
 	/**
+	 * When python has become not ready handle this by trying to restart it.
+	 * MUST always be called in Py4J worker thread.
+	 * MUST never wait for a thread to complete or return in here otherwise deadlock will occur.
+	 */
+	private void handlePythonReadinessChangeNotReadyHelper() {
+		try {
+			cleanUp();
+			setUpPythonThread();
+		} catch(IOException e) {
+			LOG.error("Failed to load Python");
+			LOG.error(e);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				LOG.error(e);
+			}
+			handlePythonReadinessChange(false);
+		}
+	}
+	
+	/**
 	 * The readiness of python has changed. 
 	 * Fire the property change and if python is no longer ready attempt to start python again.
 	 * 
@@ -143,21 +164,7 @@ public class PythonInterface extends ModelObject {
 		boolean wasPythonReady = pythonReady;
 		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
 		if (ready == false && wasPythonReady != ready) {
-			THREAD.submit(() -> {
-				try {
-					cleanUp();
-					setUpPythonThread();
-				} catch(IOException e) {
-					LOG.error("Failed to load Python");
-					LOG.error(e);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						LOG.error(e);
-					}
-					handlePythonReadinessChange(ready);
-				}
-			});
+			THREAD.submit(() -> handlePythonReadinessChangeNotReadyHelper());
 		}
 	}
 
@@ -257,16 +264,28 @@ public class PythonInterface extends ModelObject {
 			throw new PythonNotReadyException("When getting configs");
 		}
 	}
+	
+	/**
+	 * Create the py4j client/server and starts the python thread in the Py4J worker thread. 
+	 */
+	public void workerSetUpPythonThread() {
+		THREAD.submit(() -> {
+			try {
+				setUpPythonThread();
+			} catch(IOException e) {
+				LOG.error(e);
+			}
+		});
+	}
 
 	/**
 	 * 
-	 * Creates the py4j client/server and starts the python thread.
+	 * Creates the py4j client/server and starts the python thread. 
+	 * ALWAYS called inside the Py4J worker thread.
 	 * 
-	 * @param actionLoaderPythonScript Path to the script containing the Config and
-	 *                                 ConfigWrapper classes.
 	 * @throws IOException If actionLoaderPythonScript not found.
 	 */
-	public void setUpPythonThread() throws IOException {
+	private void setUpPythonThread() throws IOException {
 		firePropertyChange(PYTHON_READINESS_PROPERTY, null, pythonReady);
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), actionLoaderScript);
