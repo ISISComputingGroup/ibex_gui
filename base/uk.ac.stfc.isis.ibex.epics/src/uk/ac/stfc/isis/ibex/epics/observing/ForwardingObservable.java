@@ -60,6 +60,10 @@ public class ForwardingObservable<T> extends TransformingObservable<T, T> {
     
     @Override
     public String toString() {
-        return this.name + " " + super.toString();
+	String asString = super.toString();	
+	if (this.name != "") {
+	    asString = this.name + " which is " + asString;
+	}
+        return asString;
     }
 }
