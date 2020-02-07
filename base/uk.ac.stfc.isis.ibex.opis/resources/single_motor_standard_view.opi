@@ -81,22 +81,6 @@
         </exp>
         <pv trig="true">$(PV_ROOT)$(MTR).DMOV</pv>
       </rule>
-      <rule name="IF at limit switch THEN change border colour" prop_id="border_color" out_exp="false">
-        <exp bool_exp="pv0==1||pv1==1">
-          <value>
-            <color name="ISIS_Shutter_Moving" red="255" green="150" blue="0" />
-          </value>
-        </exp>
-        <pv trig="true">$(HIGH_LIMIT)</pv>
-        <pv trig="true">$(LOW_LIMIT)</pv>
-      </rule>
-      <rule name="IF at limit switch THEN change border thickness" prop_id="border_width" out_exp="false">
-        <exp bool_exp="pv0==1||pv1==1">
-          <value>2</value>
-        </exp>
-        <pv trig="true">$(LOW_LIMIT)</pv>
-        <pv trig="true">$(HIGH_LIMIT)</pv>
-      </rule>
     </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -374,66 +358,12 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>512</height>
-      <name>Image Boolean Indicator_5</name>
-      <no_animation>false</no_animation>
-      <off_image>icons/not_homed.svg</off_image>
-      <off_label>OFF</off_label>
-      <on_image>icons/homed.svg</on_image>
-      <on_label>ON</on_label>
-      <pv_name>$(AT_HOME)</pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_boolean_label>false</show_boolean_label>
-      <stretch_to_fit>false</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparency>true</transparency>
-      <visible>true</visible>
-      <widget_type>Image Boolean Indicator</widget_type>
-      <width>512</width>
-      <wuid>32dfefdc:16ffc0cfadb:-661b</wuid>
-      <x>28</x>
-      <y>54</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>false</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <bit>-1</bit>
-      <boolean_label_position>0</boolean_label_position>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <data_type>0</data_type>
-      <enabled>false</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>512</height>
+      <height>16</height>
       <name>Image Boolean Indicator_6</name>
       <no_animation>false</no_animation>
-      <off_image>icons/not_at_high_limit.svg</off_image>
+      <off_image>icons/high_limit_off.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>icons/at_high_limit.svg</on_image>
+      <on_image>icons/high_limit_on.png</on_image>
       <on_label>ON</on_label>
       <pv_name>$(HIGH_LIMIT)</pv_name>
       <pv_value />
@@ -446,15 +376,14 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Axis high limit triggered.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image Boolean Indicator</widget_type>
-      <width>512</width>
+      <width>16</width>
       <wuid>32dfefdc:16ffc0cfadb:-661a</wuid>
-      <x>54</x>
-      <y>54</y>
+      <x>52</x>
+      <y>49</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -482,12 +411,12 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>512</height>
+      <height>16</height>
       <name>Image Boolean Indicator_7</name>
       <no_animation>false</no_animation>
-      <off_image>icons/not_at_low_limit.svg</off_image>
+      <off_image>icons/low_limit_off.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>icons/at_low_limit.svg</on_image>
+      <on_image>icons/low_limit_on.png</on_image>
       <on_label>ON</on_label>
       <pv_name>$(LOW_LIMIT)</pv_name>
       <pv_value />
@@ -500,15 +429,14 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Axis low limit triggered.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image Boolean Indicator</widget_type>
-      <width>512</width>
+      <width>16</width>
       <wuid>32dfefdc:16ffc0cfadb:-6616</wuid>
-      <x>2</x>
-      <y>54</y>
+      <x>0</x>
+      <y>49</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -536,14 +464,14 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>512</height>
-      <name>Image Boolean Indicator_8</name>
+      <height>16</height>
+      <name>Image Boolean Indicator_7</name>
       <no_animation>false</no_animation>
-      <off_image>icons/not_moving_left.svg</off_image>
+      <off_image>icons/at_home.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>icons/moving_left.svg</on_image>
+      <on_image>icons/at_home_homed.png</on_image>
       <on_label>ON</on_label>
-      <pv_name>$(DIRECTION)</pv_name>
+      <pv_name>$(AT_HOME)</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -554,15 +482,14 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Axis is at home.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image Boolean Indicator</widget_type>
-      <width>512</width>
-      <wuid>32dfefdc:16ffc0cfadb:-6615</wuid>
-      <x>15</x>
-      <y>54</y>
+      <width>16</width>
+      <wuid>-20bcb158:16ffc42142b:-7a2f</wuid>
+      <x>26</x>
+      <y>49</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -590,14 +517,14 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
-      <height>512</height>
-      <name>Image Boolean Indicator_9</name>
+      <height>16</height>
+      <name>Image Boolean Indicator_7</name>
       <no_animation>false</no_animation>
-      <off_image>icons/not_moving_right.svg</off_image>
+      <off_image>icons/negative_move_no_move_small.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>icons/moving_right.svg</on_image>
+      <on_image>icons/negative_move_moving_small.png</on_image>
       <on_label>ON</on_label>
-      <pv_name>$(DIRECTION)</pv_name>
+      <pv_name>$(AT_HOME)</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -608,15 +535,67 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Movement in the negative direction.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image Boolean Indicator</widget_type>
-      <width>512</width>
-      <wuid>32dfefdc:16ffc0cfadb:-6614</wuid>
-      <x>41</x>
-      <y>54</y>
+      <width>8</width>
+      <wuid>-20bcb158:16ffc42142b:-7a17</wuid>
+      <x>17</x>
+      <y>49</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <align_to_nearest_second>false</align_to_nearest_second>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <data_type>0</data_type>
+      <enabled>false</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>16</height>
+      <name>Image Boolean Indicator_7</name>
+      <no_animation>false</no_animation>
+      <off_image>icons/positive_move_no_move_small.png</off_image>
+      <off_label>OFF</off_label>
+      <on_image>icons/positive_move_moving_small.png</on_image>
+      <on_label>ON</on_label>
+      <pv_name>$(AT_HOME)</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>false</stretch_to_fit>
+      <tooltip>Movement in the positive direction.</tooltip>
+      <transparency>true</transparency>
+      <visible>true</visible>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>8</width>
+      <wuid>-20bcb158:16ffc42142b:-7a0d</wuid>
+      <x>43</x>
+      <y>49</y>
     </widget>
   </widget>
 </display>
