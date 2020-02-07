@@ -73,5 +73,6 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
                 }
             }
         }
+        editDialog.close();
 	}
 }

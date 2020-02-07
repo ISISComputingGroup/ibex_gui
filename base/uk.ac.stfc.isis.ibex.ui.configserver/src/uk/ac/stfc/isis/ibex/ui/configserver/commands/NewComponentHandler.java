@@ -67,5 +67,6 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
                 SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
             }
         }
+        editDialog.close();
 	}
 }

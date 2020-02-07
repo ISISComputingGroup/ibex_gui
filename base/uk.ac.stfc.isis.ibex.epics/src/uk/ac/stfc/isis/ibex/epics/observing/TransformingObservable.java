@@ -110,7 +110,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	 * Break the connection between this objects source observer and the source
 	 * it is currently pointing at.
 	 */
-	private void cancelSubscription() {
+	protected void cancelSubscription() {
 		if (sourceSubscription != null) {
 			sourceSubscription.cancelSubscription();
 		}
@@ -124,6 +124,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 		if (source != null) {
 	        sourceObserver.onConnectionStatus(false);
 			source.close();
+			source=null;
 		}
 	}
 
@@ -134,6 +135,6 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	 */
 	@Override
 	public String toString() {
-		return this.getClass().getName() + " observing source: " + source.toString();
+		return this.getClass().getName() + " observing source: " + source;
 	}
 }

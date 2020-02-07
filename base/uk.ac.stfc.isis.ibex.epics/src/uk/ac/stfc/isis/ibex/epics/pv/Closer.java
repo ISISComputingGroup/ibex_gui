@@ -20,8 +20,11 @@
 package uk.ac.stfc.isis.ibex.epics.pv;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +36,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  */
 public class Closer implements Closable {
 
-	private final List<Closable> resources = new ArrayList<>();
+	private final Set<Closable> resources = Collections.newSetFromMap(new WeakHashMap<Closable, Boolean>());
 	private static final Logger LOG = IsisLog.getLogger(Closer.class);
 
 	/**

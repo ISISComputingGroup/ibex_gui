@@ -48,9 +48,14 @@ public final class InstrumentUtils {
      *            the converter
      * @return the new observable
      */
+    public static <S, T> ForwardingObservable<T> convert(String name, ClosableObservable<S> observable,
+            Converter<S, T> converter) {
+        return new ForwardingObservable<>(name, new ConvertingObservable<>(observable, converter));
+	}
+
     public static <S, T> ForwardingObservable<T> convert(ClosableObservable<S> observable,
             Converter<S, T> converter) {
-        return new ForwardingObservable<>(new ConvertingObservable<>(observable, converter));
+        return new ForwardingObservable<>("InstUtils", new ConvertingObservable<>(observable, converter));
 	}
 
     /**

@@ -21,14 +21,16 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
 import java.util.Collections;
-
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
@@ -37,6 +39,8 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  */
 public class ObservableEditableConfiguration 
         extends TransformingObservable<Configuration, EditableConfiguration> {
+	
+	//public static ArrayList<ObservableEditableConfiguration> LIST = new ArrayList<>();
 
 	private static final Logger LOG = IsisLog.getLogger(ObservableEditableConfiguration.class);
 	private final ConfigServer configServer;
@@ -61,7 +65,13 @@ public class ObservableEditableConfiguration
 	 */
 	@Override
 	protected EditableConfiguration transform(Configuration value) {
+		//LIST.add(this);
+				
 	    try {
+	    	EditableConfiguration val = this.getValue();
+	    	if (val != null) {
+	    		val.close();
+	    	};
     		return new EditableConfiguration(
     				value, 
                     valueOrEmptyCollection(configServer.iocs()),
@@ -77,4 +87,27 @@ public class ObservableEditableConfiguration
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}
+    
+    @Override
+    public void close() {
+    	EditableConfiguration val = this.getValue();
+    	if (val != null) {
+    		val.close();
+    	};
+    	//super.close();
+    	cancelSubscription();
+    }
+    
+//    @Override
+//    public void unsubscribe(Observer<EditableConfiguration> observer) {
+//    	source.un
+//    }
+    
+    @Override
+    public Subscription subscribe(Observer<EditableConfiguration> observer) {
+    	// TODO Auto-generated method stub
+    	//if (this.observers.size() > 1)
+    		
+    	return super.subscribe(observer);
+    }
 }

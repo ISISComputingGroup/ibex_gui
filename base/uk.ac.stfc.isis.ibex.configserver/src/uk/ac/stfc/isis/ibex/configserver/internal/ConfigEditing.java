@@ -58,7 +58,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForwardingObservable<EditableConfiguration> currentConfig() {
+	public ClosableObservable<EditableConfiguration> currentConfig() {
 		return edit(configServer.currentConfig());
 	}
 
@@ -66,7 +66,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForwardingObservable<EditableConfiguration> blankConfig() {
+	public ClosableObservable<EditableConfiguration> blankConfig() {
 		return edit(configServer.blankConfig());
 	}
 
@@ -74,7 +74,7 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForwardingObservable<EditableConfiguration> config(String configName) {
+	public ClosableObservable<EditableConfiguration> config(String configName) {
 		return edit(configServer.config(configName));
 	}
 
@@ -82,11 +82,15 @@ public class ConfigEditing extends Closer implements Editing {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForwardingObservable<EditableConfiguration> component(String componentName) {
+	public ClosableObservable<EditableConfiguration> component(String componentName) {
 		return edit(configServer.component(componentName));
 	}
 
-	private ForwardingObservable<EditableConfiguration> edit(ClosableObservable<Configuration> config) {
-		return registerForClose(new ForwardingObservable<>(new ObservableEditableConfiguration(config, configServer)));
+	private ClosableObservable<EditableConfiguration> edit(ClosableObservable<Configuration> config) {
+		ObservableEditableConfiguration editableConfig = new ObservableEditableConfiguration(
+				config, 
+				configServer);
+		
+		return editableConfig; //new ForwardingObservable<>("config editor", editableConfig);
 	}
 }

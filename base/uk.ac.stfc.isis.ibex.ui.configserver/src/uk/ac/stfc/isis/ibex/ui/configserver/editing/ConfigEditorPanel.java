@@ -39,11 +39,12 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocOverviewPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * The panel that contains all the information for editing a configuration.
  */
-public class ConfigEditorPanel extends Composite {
+public class ConfigEditorPanel extends Composite implements Closable {
 	private final IocOverviewPanel iocs;
 	private final BlocksEditorPanel blocks;
 	private final GroupsEditorPanel groups;
@@ -158,4 +159,10 @@ public class ConfigEditorPanel extends Composite {
     public void selectBlocksTab() {
         editorTabs.setSelection(blocksTab);
     }
+
+	@Override
+	public void close() {
+		summary.close();
+		
+	}
 }

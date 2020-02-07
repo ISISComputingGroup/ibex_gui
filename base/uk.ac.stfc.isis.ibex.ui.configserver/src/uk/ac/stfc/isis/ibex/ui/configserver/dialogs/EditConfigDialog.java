@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
  * as buttons).
@@ -85,7 +85,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         }
         return control;
     }
-
+    
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         if (!isBlank && !this.config.getName().isEmpty()) {

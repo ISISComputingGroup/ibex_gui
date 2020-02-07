@@ -128,7 +128,7 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     		logErrorsAndContinue(() -> this.value.ifPresent(observer::onValue));
     	}
     }
-
+    
     /**
      * Sets the current error experienced by this observable. Error is blanked
      * if a new value is set

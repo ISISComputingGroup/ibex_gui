@@ -41,18 +41,20 @@ import org.eclipse.swt.widgets.Button;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * The panel that holds general misc information about the configuration.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SummaryPanel extends Composite {
+public class SummaryPanel extends Composite implements Closable {
     private Text txtName;
     private Text txtDescription;
     private Label lblDateCreated;
@@ -66,6 +68,8 @@ public class SummaryPanel extends Composite {
     private Button protectedCheckBox;
     private Label protectLabel;
     private Label warning;
+	private Observer<Collection<SynopticInfo>> synopticInfoObserver;
+	private Subscription synoptic_subscription;
 
     /**
      * Constructor for the general information about the configuration.
@@ -137,6 +141,11 @@ public class SummaryPanel extends Composite {
         warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 
     }
+    
+    @Override
+    public void close() {
+    	synoptic_subscription.cancelSubscription();
+    }
 
     /**
      * Sets the configuration that the panel information relates to.
@@ -201,7 +210,7 @@ public class SummaryPanel extends Composite {
      * #2527.
      */
     private void bindSynopticList() {
-        Synoptic.getInstance().availableSynopticsInfo().subscribe(new Observer<Collection<SynopticInfo>>() {
+        synopticInfoObserver = new Observer<Collection<SynopticInfo>>() {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
@@ -264,6 +273,7 @@ public class SummaryPanel extends Composite {
             public void onConnectionStatus(boolean isConnected) {
                 // keep list as is
             }
-        });
+        };
+		synoptic_subscription = Synoptic.getInstance().availableSynopticsInfo().subscribe(synopticInfoObserver);
     }
 }

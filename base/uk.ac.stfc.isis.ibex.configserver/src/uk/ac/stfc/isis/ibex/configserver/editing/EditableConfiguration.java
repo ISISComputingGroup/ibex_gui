@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
@@ -55,7 +56,7 @@ import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
  * available blocks (blocks not from the current instrument).
  * 
  */
-public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
+public class EditableConfiguration extends ModelObject implements GroupNamesProvider, Closable {
 
     /** The property change identifier associated with editing groups. */
     public static final String EDITABLE_GROUPS = "editableGroups";
@@ -155,6 +156,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             firePropertyChange("blocks", blocksBeforeRename, transformBlocks());
         }
     };
+
+	private Optional<ManagerModeObserver> manager_mode_observable = Optional.empty();
 
 
     /**
@@ -820,22 +823,23 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * Add observer to the observable.
      */
     private void addObserver() {
-        new ManagerModeObserver(managerModePv.observable) {
-
-            @Override
-            protected void setManagerMode(Boolean value) {
-                inManagerMode = value;
-                EditableConfiguration.this.setEnableOrDisableSaveButton();
-                EditableConfiguration.this.setEnableSaveAsButton();
-
-            }
-
-            @Override
-            protected void setUnknown() {
-                inManagerMode = null;
-            }
-
-        };
+    	
+//        this.manager_mode_observable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
+//
+//            @Override
+//            protected void setManagerMode(Boolean value) {
+//                inManagerMode = value;
+//                // EditableConfiguration.this.setEnableOrDisableSaveButton();
+//                // EditableConfiguration.this.setEnableSaveAsButton();
+//
+//            }
+//
+//            @Override
+//            protected void setUnknown() {
+//                inManagerMode = null;
+//            }
+//
+//        });
     }
     
     /**
@@ -845,4 +849,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public String getErrorMessage() {
         return currentErrorMessage;
     }
+
+	@Override
+	public void close() {
+		this.manager_mode_observable.ifPresent(ManagerModeObserver::close);
+		this.manager_mode_observable = Optional.empty();
+	}
 }

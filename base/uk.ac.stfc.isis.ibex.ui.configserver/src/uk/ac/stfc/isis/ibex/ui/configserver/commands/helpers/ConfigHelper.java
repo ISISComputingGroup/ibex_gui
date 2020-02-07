@@ -48,7 +48,9 @@ public abstract class ConfigHelper {
      *             Thrown if the config cannot be obtained in a reasonable time.
      */
     public void createDialog(String configName, boolean editBlockFirst) throws TimeoutException {
-        openDialog(configurationViewModels.getConfig(configName), false, editBlockFirst);
+        EditableConfiguration config = configurationViewModels.getConfig(configName);
+		openDialog(config, false, editBlockFirst);
+		config.close();
     }
 
     /**
@@ -59,7 +61,9 @@ public abstract class ConfigHelper {
      */
     public void createDialogCurrent(boolean editBlockFirst) {
         try {
-            openDialog(configurationViewModels.getCurrentConfig(), true, editBlockFirst);
+            EditableConfiguration currentConfig = configurationViewModels.getCurrentConfig();
+			openDialog(currentConfig, true, editBlockFirst);
+			currentConfig.close();
         } catch (TimeoutException err) {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }

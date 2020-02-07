@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -41,132 +42,153 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
  */
 public class ConfigurationViewModels {
 
-    private static final int MAX_SECONDS_TO_WAIT_FOR_VALUE = 10;
+	private static final int MAX_SECONDS_TO_WAIT_FOR_VALUE = 10;
 
-    /** model that is being edited. */
-    private Editing editingModel;
+	/** model that is being edited. */
+	private Editing editingModel;
 
-    /** common observables from the model for configuration. */
-    private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
+	/** common observables from the model for configuration. */
+	private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
 
-    /** view model for the group. */
-    private GroupEditorViewModel groupEditorViewModel;
+	/** view model for the group. */
+	private GroupEditorViewModel groupEditorViewModel;
 
-    private static final Logger LOG = IsisLog.getLogger(ConfigurationViewModels.class);
+	private Optional<ClosableObservable<EditableConfiguration>> configModel = Optional.empty();
 
-    /**
-     * Constructor.
-     */
-    public ConfigurationViewModels() {
-        groupEditorViewModel = new GroupEditorViewModel();
-        LOG.info("Created configurationviewmodels");
-    }
+	private static final Logger LOG = IsisLog.getLogger(ConfigurationViewModels.class);
 
-    /**
-     * Bind the editing model to this model.
-     * Note: this must be done before changing the item being edited.
-     *
-     * @param editingModel the editing model
-     */
-    public void bind(Editing editingModel) {
-        this.editingModel = editingModel;
-        observableConfigModel = new UpdatedObservableAdapter<EditableConfiguration>(editingModel.currentConfig());
-    }
+	/**
+	 * Constructor.
+	 */
+	public ConfigurationViewModels() {
+		groupEditorViewModel = new GroupEditorViewModel();
+		LOG.info("Created configurationviewmodels");
+	}
 
-    /**
-     * Get the model for group being edited.
-     *
-     * @return the group editor view model
-     */
-    public GroupEditorViewModel groupEditorViewModel() {
-        return groupEditorViewModel;
-    }
+	/**
+	 * Bind the editing model to this model. Note: this must be done before changing
+	 * the item being edited.
+	 *
+	 * @param editingModel the editing model
+	 */
+	public void bind(Editing editingModel) {
+		this.editingModel = editingModel;
+		LOG.info("Calling bind in ConfigurationViewModels");
+		// observableConfigModel = new
+		// UpdatedObservableAdapter<EditableConfiguration>(editingModel.currentConfig());
+		setAsObservableConfigModel(editingModel.currentConfig());
+	}
 
-    /**
-     * Get the configuration model.
-     *
-     * @return configuration model
-     */
-    public UpdatedObservableAdapter<EditableConfiguration> getConfigModel() {
-        return observableConfigModel;
-    }
+	/**
+	 * Get the model for group being edited.
+	 *
+	 * @return the group editor view model
+	 */
+	public GroupEditorViewModel groupEditorViewModel() {
+		return groupEditorViewModel;
+	}
 
-    /**
-     * Set the model to point at the current configuration.
-     *
-     * @return configuration model
-     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the current config was accessible.
-     */
-    public EditableConfiguration getCurrentConfig() throws TimeoutException {
-    	return currentValueFromObservable(editingModel.currentConfig());
-    }
+	/**
+	 * Get the configuration model.
+	 *
+	 * @return configuration model
+	 */
+	public UpdatedObservableAdapter<EditableConfiguration> getConfigModel() {
+		return observableConfigModel;
+	}
 
-    /**
-     * Set the model to point at the named configuration.
-     *
-     * @param configName name of the configuration
-     * @return configuration model
-     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the config was accessible.
-     */
-    public EditableConfiguration getConfig(String configName) throws TimeoutException {
-        return currentValueFromObservable(editingModel.config(configName));
-    }
+	/**
+	 * Set the model to point at the current configuration.
+	 *
+	 * @return configuration model
+	 * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
+	 *                          before the current config was accessible.
+	 */
+	public EditableConfiguration getCurrentConfig() throws TimeoutException {
+		return currentValueFromObservable(editingModel.currentConfig());
+	}
 
-    /**
-     * Set the model to point at the named component.
-     *
-     * @param componentName name of the component
-     * @return configuration model
-     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the component was accessible.
-     */
-    public EditableConfiguration getComponent(String componentName) throws TimeoutException {
-        return currentValueFromObservable(editingModel.component(componentName));
-    }
+	/**
+	 * Set the model to point at the named configuration.
+	 *
+	 * @param configName name of the configuration
+	 * @return configuration model
+	 * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
+	 *                          before the config was accessible.
+	 */
+	public EditableConfiguration getConfig(String configName) throws TimeoutException {
+		return currentValueFromObservable(editingModel.config(configName));
+	}
 
-    /**
-     * Set the model to point at a blank configuration.
-     * @return configuration model
-     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the blank config was accessible.
-     */
-    public EditableConfiguration getBlankConfig() throws TimeoutException {
-    	return currentValueFromObservable(editingModel.blankConfig());
-    }
+	/**
+	 * Set the model to point at the named component.
+	 *
+	 * @param componentName name of the component
+	 * @return configuration model
+	 * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
+	 *                          before the component was accessible.
+	 */
+	public EditableConfiguration getComponent(String componentName) throws TimeoutException {
+		return currentValueFromObservable(editingModel.component(componentName));
+	}
 
-    /**
-     * This method takes an observable, waits for it to have a correct value, and then returns that value
-     * @param <T> - the type of value
-     * @param observable - the observable to monitor
-     * @return - the current value
-     * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed before the value was accessible.
-     */
-    private EditableConfiguration currentValueFromObservable(ForwardingObservable<EditableConfiguration> observable) throws TimeoutException {
-    	// Required because the groups model uses the "global" state of this class - so need to ensure we keep updating the state even
-    	// if things don't directly need it to be updated.
-    	setAsObservableConfigModel(observable);
+	/**
+	 * Set the model to point at a blank configuration.
+	 * 
+	 * @return configuration model
+	 * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
+	 *                          before the blank config was accessible.
+	 */
+	public EditableConfiguration getBlankConfig() throws TimeoutException {
+		return currentValueFromObservable(editingModel.blankConfig());
+	}
 
-    	UpdatedObservableAdapter<EditableConfiguration> updateAdapter = new UpdatedObservableAdapter<>(observable);
+	/**
+	 * This method takes an observable, waits for it to have a correct value, and
+	 * then returns that value
+	 * 
+	 * @param <T>        - the type of value
+	 * @param observable - the observable to monitor
+	 * @return - the current value
+	 * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
+	 *                          before the value was accessible.
+	 */
+	private EditableConfiguration currentValueFromObservable(ClosableObservable<EditableConfiguration> observable)
+			throws TimeoutException {
+		// Required because the groups model uses the "global" state of this class - so
+		// need to ensure we keep updating the state even
+		// if things don't directly need it to be updated.
+		setAsObservableConfigModel(observable);
 
-        if (Awaited.returnedValue(updateAdapter, MAX_SECONDS_TO_WAIT_FOR_VALUE)) {
-        	EditableConfiguration value = updateAdapter.getValue();
-            updateAdapter.close();
-            return value;
-        } else {
-        	updateAdapter.close();
-        	throw new TimeoutException("Could not get value from " + observable + " after waiting " + MAX_SECONDS_TO_WAIT_FOR_VALUE + " seconds.");
-        }
-    }
+		UpdatedObservableAdapter<EditableConfiguration> updateAdapter = new UpdatedObservableAdapter<>(observable);
 
-    /**
-     * Changes this class to point at a different type of configuration object to edit.
-     * @param model - the new model to use.
-     * @return an updated observable observing the new model
-     */
-    private void setAsObservableConfigModel(ForwardingObservable<EditableConfiguration> model) {
-    	// Close old observable adapter if it was set.
-    	Optional.ofNullable(observableConfigModel).ifPresent(UpdatedObservableAdapter::close);
+		if (Awaited.returnedValue(updateAdapter, MAX_SECONDS_TO_WAIT_FOR_VALUE)) {
+			EditableConfiguration value = updateAdapter.getValue();
+			updateAdapter.close();
+			return value;
+		} else {
+			updateAdapter.close();
+			throw new TimeoutException("Could not get value from " + observable + " after waiting "
+					+ MAX_SECONDS_TO_WAIT_FOR_VALUE + " seconds.");
+		}
+	}
 
-    	observableConfigModel = new UpdatedObservableAdapter<>(model);
-    	groupEditorViewModel.updateModel(observableConfigModel);
-    }
+	/**
+	 * Changes this class to point at a different type of configuration object to
+	 * edit.
+	 * 
+	 * @param model - the new model to use.
+	 * @return an updated observable observing the new model
+	 */
+	private void setAsObservableConfigModel(ClosableObservable<EditableConfiguration> model) {
+		// Close old observable adapter if it was set.
+
+		configModel.ifPresent(ClosableObservable<EditableConfiguration>::close);
+		Optional.ofNullable(observableConfigModel).ifPresent(UpdatedObservableAdapter::close);
+
+		configModel = Optional.of(model);
+		observableConfigModel = new UpdatedObservableAdapter<>(model);
+		groupEditorViewModel.updateModel(observableConfigModel);
+	}
 
 }
