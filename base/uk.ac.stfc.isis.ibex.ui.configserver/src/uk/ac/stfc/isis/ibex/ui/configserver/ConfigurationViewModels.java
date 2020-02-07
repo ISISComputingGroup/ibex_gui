@@ -65,8 +65,8 @@ public class ConfigurationViewModels {
     }
 
     /**
-     * Bind the editing model to this model. Note: this must be done before changing
-     * the item being edited.
+     * Bind the editing model to this model. 
+     * Note: this must be done before changing the item being edited.
      *
      * @param editingModel the editing model
      */
