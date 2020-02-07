@@ -245,6 +245,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
      */
     public void createConfigLoader() {
         pythonInterface = new PythonInterface();
+        configLoader = new ConfigLoader(pythonInterface);
         pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
         	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
@@ -254,7 +255,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			LOG.error("Failed to set up py4j interface");
 			LOG.error(e);
 		}
-        configLoader = new ConfigLoader(pythonInterface);
     }
     
     /**

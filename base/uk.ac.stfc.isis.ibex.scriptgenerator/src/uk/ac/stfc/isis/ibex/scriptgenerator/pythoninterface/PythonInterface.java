@@ -125,12 +125,7 @@ public class PythonInterface extends ModelObject {
 				if (!pythonProcess.isAlive()) {
 					break;
 				}
-				if (line.equals("Python Ready")) {
-					handlePythonReadinessChange(true);
-					LOG.info("Python Ready");
-				} else {
-					LOG.error("> " + line);
-				}
+				LOG.error("> " + line);
 			}
 		} catch (IOException e) {
 			LOG.warn("Could not forward process errors");
@@ -279,6 +274,16 @@ public class PythonInterface extends ModelObject {
 		
 		this.configWrapper = (ConfigWrapper) clientServer
 				.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });
+		
+		while(true) {
+			try {
+				this.configWrapper.isPythonReady();
+				handlePythonReadinessChange(true);
+				break;
+			} catch(Py4JException e) {
+				// Waiting until Python is ready (no Py4JException)
+			}
+		}
 	}
 
 	/**

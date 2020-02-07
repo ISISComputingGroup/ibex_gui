@@ -231,6 +231,12 @@ class ConfigWrapper(object):
         """
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
 
+    def isPythonReady(self) -> bool:
+        """
+        Tells Java the Python is ready.
+        """
+        return True
+
 def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDefinition], Dict[AnyStr, AnyStr]]:
     """ Dynamically import all the Python modules in the search folders"""
     if search_folders is None:
@@ -278,6 +284,7 @@ if __name__ == '__main__':
     parser.add_argument('python_port', type=int, help='the python port to connect on')
     parser.add_argument('search_folders', type=str, help='the folders containing the script generator configs to search')
 
+
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
 
@@ -287,7 +294,6 @@ if __name__ == '__main__':
 
     config_wrapper = ConfigWrapper(configs, Generator(search_folders=search_folders), config_load_errors=config_load_errors)
 
-    print("Python Ready", file=sys.stderr)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
