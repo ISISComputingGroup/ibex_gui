@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets;
 
 
+import java.util.Collection;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -43,6 +45,12 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 
 		initialise();
 	}
+	
+	@Override
+    public void setRows(Collection<EditablePVSet> rows) {
+        super.setRows(rows);
+        super.refresh();
+    }
 
 	@Override
 	protected void addColumns() {

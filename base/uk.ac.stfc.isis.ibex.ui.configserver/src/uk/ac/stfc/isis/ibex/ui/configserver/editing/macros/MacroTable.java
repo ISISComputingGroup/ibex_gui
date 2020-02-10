@@ -71,6 +71,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	@Override
 	public void setRows(Collection<MacroViewModel> rows) {
 		super.setRows(rows);
+		super.refresh();
 	}
 
 	@Override
