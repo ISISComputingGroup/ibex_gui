@@ -84,8 +84,9 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		    super.update(cell);
 		    
 		    final EditableBlock model = (EditableBlock) cell.getElement();
-		    Optional<Boolean> optionalBoolean = Optional.ofNullable(modelCheckboxListenerMap.get(model))
-		            .map(atomicFlag -> atomicFlag.getAndSet(false));
+		    Optional<Boolean> optionalBoolean = Optional.ofNullable(
+		            modelCheckboxListenerMap.get(model)).map(
+		            atomicFlag -> atomicFlag.getAndSet(false));
 		    
 		    optionalBoolean.ifPresent(updateFlag -> {
 		        if(updateFlag) {
@@ -93,11 +94,12 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		            
 	                for(Listener listener: checkBox.getListeners(SWT.Selection)) {
 	                    if (listener instanceof TypedListener) {
-	                      TypedListener typedListener = (TypedListener) listener;
-	                      
-	                      if(typedListener.getEventListener() instanceof SelectionAdapter) {
-	                          checkBox.removeSelectionListener((SelectionListener)typedListener.getEventListener());  
-	                      }
+	                        TypedListener typedListener = (TypedListener) listener;
+	                        
+	                        if(typedListener.getEventListener() instanceof SelectionAdapter) {
+	                            checkBox.removeSelectionListener((SelectionListener)
+	                            typedListener.getEventListener());
+	                        }
 	                    }
 	                }
 	              
@@ -108,7 +110,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	                        checkBox.setText(stringFromRow(model));
 	                    }
 	                });
-		        }
+	            }
 		    });
 		}
 	};

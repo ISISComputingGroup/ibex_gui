@@ -52,24 +52,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		
 		checkBox.setSelection(checked(model));	
 		checkBox.setText(stringFromRow(model));
-
-//		for(Listener listener: checkBox.getListeners(SWT.Selection)) {
-//		    if (listener instanceof TypedListener) {
-//		        TypedListener typedListener = (TypedListener) listener;
-//		        
-//		        if(typedListener.getEventListener() instanceof SelectionAdapter) {
-//		            checkBox.removeSelectionListener((SelectionListener)typedListener.getEventListener());  
-//	            }
-//		    }
-//		}
-//		
-//		checkBox.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				setChecked(model, checkBox.getSelection());
-//				checkBox.setText(stringFromRow(model));
-//			}
-//		});
 		
 		checkBox.setEnabled(isEditable(model));
 	}
