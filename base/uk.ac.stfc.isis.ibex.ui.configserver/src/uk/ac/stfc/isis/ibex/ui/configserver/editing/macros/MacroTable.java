@@ -144,8 +144,8 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
             }
         };
 	    
-	    setChangeListener(() -> defaultUseLabelProvider.updateCheckboxListenerMap());
-        setSortListener(() -> defaultUseLabelProvider.resetModelCheckBoxListenerMap());
+	    setChangeListener(() -> defaultUseLabelProvider.updateCheckboxListenerUpdateFlagsMap());
+        setSortListener(() -> defaultUseLabelProvider.resetCheckBoxListenerUpdateFlags());
         
 	    createColumn("Use Default?", 3, false, defaultUseLabelProvider);
 	}

@@ -106,7 +106,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		return checked(model) ? "Yes" : "No";
 	}
 	
-	public void updateCheckboxListenerMap() { 
+	public void updateCheckboxListenerUpdateFlagsMap() { 
         for(TableItem item: databoundTable.table().getItems()) {
             T model = (T) item.getData();
             
@@ -118,7 +118,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
         }
     }
 	
-	public void resetModelCheckBoxListenerMap() {
+	public void resetCheckBoxListenerUpdateFlags() {
         for(AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {
             flag.set(true);
         }

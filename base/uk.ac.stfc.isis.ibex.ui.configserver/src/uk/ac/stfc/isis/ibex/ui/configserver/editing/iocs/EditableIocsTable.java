@@ -211,12 +211,12 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     }
     
     private void updateCheckboxLabelProviders() {
-        autoStartLabelProvider.updateCheckboxListenerMap();
-        autoRestartLabelProvider.updateCheckboxListenerMap();
+        autoStartLabelProvider.updateCheckboxListenerUpdateFlagsMap();
+        autoRestartLabelProvider.updateCheckboxListenerUpdateFlagsMap();
     }
     
     private void resetCheckboxLabelProviders() {
-        autoStartLabelProvider.resetModelCheckBoxListenerMap();
-        autoRestartLabelProvider.resetModelCheckBoxListenerMap();
+        autoStartLabelProvider.resetCheckBoxListenerUpdateFlags();
+        autoRestartLabelProvider.resetCheckBoxListenerUpdateFlags();
     }
 }
