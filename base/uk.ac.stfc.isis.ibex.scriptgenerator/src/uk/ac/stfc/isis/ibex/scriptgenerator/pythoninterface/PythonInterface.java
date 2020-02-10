@@ -138,7 +138,7 @@ public class PythonInterface extends ModelObject {
 	 * MUST always be called in Py4J worker thread.
 	 * MUST never wait for a thread to complete or return in here otherwise deadlock will occur.
 	 */
-	private void handlePythonReadinessChangeNotReadyHelper() {
+	private void restartPython() {
 		try {
 			cleanUp();
 			setUpPythonThread();
@@ -164,7 +164,7 @@ public class PythonInterface extends ModelObject {
 		boolean wasPythonReady = pythonReady;
 		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
 		if (ready == false && wasPythonReady != ready) {
-			THREAD.submit(() -> handlePythonReadinessChangeNotReadyHelper());
+			THREAD.submit(() -> restartPython());
 		}
 	}
 
