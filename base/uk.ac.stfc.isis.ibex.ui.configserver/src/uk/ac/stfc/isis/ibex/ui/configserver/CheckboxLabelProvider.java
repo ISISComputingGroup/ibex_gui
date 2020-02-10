@@ -69,34 +69,9 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		
 		checkBox.setSelection(checked(model));	
 		checkBox.setText(stringFromRow(model));
-		
-        Optional<Boolean> optionalBoolean = Optional.ofNullable(
-                checkboxListenerUpdateFlags.get(model)).map(
-                atomicFlag -> atomicFlag.getAndSet(false));
         
-        optionalBoolean.ifPresent(updateFlag -> {
-            if(updateFlag) {
-                
-                for(Listener listener: checkBox.getListeners(SWT.Selection)) {
-                    if (listener instanceof TypedListener) {
-                        TypedListener typedListener = (TypedListener) listener;
-                        
-                        if(typedListener.getEventListener() instanceof SelectionAdapter) {
-                            checkBox.removeSelectionListener((SelectionListener)
-                            typedListener.getEventListener());
-                        }
-                    }
-                }
-              
-                checkBox.addSelectionListener(new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(SelectionEvent e) {
-                        setChecked(model, checkBox.getSelection());
-                        checkBox.setText(stringFromRow(model));
-                    }
-                });
-            }
-        });
+        getOptionalUpdateFlag(model).ifPresent(updateFlag -> resetCheckBoxListeners(
+                updateFlag, checkBox, model));
 		
 		checkBox.setEnabled(isEditable(model));
 	}
@@ -123,6 +98,35 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             flag.set(true);
         }
     }
+	
+	private Optional<Boolean> getOptionalUpdateFlag(T model) {
+	    Optional<AtomicBoolean> optionalAtomicFlag = Optional.ofNullable(checkboxListenerUpdateFlags.get(model));
+	    Optional<Boolean> optionalFlag = optionalAtomicFlag.map(atomicFlag -> atomicFlag.getAndSet(false));
+	    return optionalFlag;
+	}
+	
+	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
+	    if(doUpdate) {
+            for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+                if (listener instanceof TypedListener) {
+                    TypedListener typedListener = (TypedListener) listener;
+                    
+                    if(typedListener.getEventListener() instanceof SelectionAdapter) {
+                        checkBox.removeSelectionListener((SelectionListener)
+                            typedListener.getEventListener());
+                    }
+                }
+            }
+          
+            checkBox.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    setChecked(model, checkBox.getSelection());
+                    checkBox.setText(stringFromRow(model));
+                }
+            });
+        }
+	}
 	
 	/**
 	 * @param model the model
