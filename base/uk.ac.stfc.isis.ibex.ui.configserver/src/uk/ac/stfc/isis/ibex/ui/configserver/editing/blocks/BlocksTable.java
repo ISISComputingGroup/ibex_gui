@@ -150,13 +150,15 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		super.setRows(rows);
 	}
 	
-	protected void updateCheckboxListenerMap() {
-	    modelCheckboxListenerMap.clear();
-	    
+	protected void updateCheckboxListenerMap() { 
 	    for(TableItem item: table().getItems()) {
 	        EditableBlock block = (EditableBlock)item.getData();
 	        
-	        modelCheckboxListenerMap.put(block, new AtomicBoolean(true));
+	        if(!modelCheckboxListenerMap.containsKey(block)) {
+	            modelCheckboxListenerMap.put(block, new AtomicBoolean(true));
+	        } else {
+	            modelCheckboxListenerMap.get(block).set(true);
+	        }  
 	    }
 	}
 	
