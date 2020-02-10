@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -587,4 +588,7 @@ public class ScriptGeneratorViewModel {
 		return scriptGeneratorModel.getConfig();
 	}
 	
+	public Optional<URL> getUserManualUrl() {
+	    return scriptGeneratorModel.getUserManualUrl();
+	}
 }

@@ -188,6 +188,16 @@ public class PreferenceSupplier {
     private static final String SCRIPT_GENERATOR_CONFIG_FOLDER = "script_generator_config_folder";
     
     /**
+     * The default URL for the Script Generator manual page
+     */
+    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
+    
+    /**
+     * Defines the URL of the Script Generator page on the user manual
+     */
+    private static final String SCRIPT_GENERATOR_MANUAL_URL = "script_generator_manual_url";
+    
+    /**
      * The default of whether to hide the config error table or not.
      */
     private static final boolean DEFAULT_HIDE_CONFIG_ERRORS = false;
@@ -291,6 +301,15 @@ public class PreferenceSupplier {
 	public String scriptGeneratorConfigFolders() {
 		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
 	}
+	
+    /**
+     * Get a list of URLs pointing to the Script Generator page on the user manual
+     * 
+     * @return a comma-separated list of URLs
+     */
+    public String scriptGeneratorManualURL() {
+        return getString(SCRIPT_GENERATOR_MANUAL_URL, DEFAULT_SCRIPT_GENERATOR_MANUAL_URL);
+    }
 	
 	/**
 	 * Get whether to hide the script gen config error table.

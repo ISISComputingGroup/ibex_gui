@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -97,20 +98,6 @@ public class ScriptGeneratorView {
             + System.getProperty("line.separator")
             + "Have they been located in the correct place or is this not your preferred location?", 
             preferences.scriptGeneratorConfigFolders());
-
-    /**
-     * The URL of the Script Generator page on the user manual
-     */
-    private static final URL SCRIPT_GENERATOR_DOCS_URL;
-    static {
-        URL temp = null;
-        try {
-            temp = new URL("http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator");
-        } catch (MalformedURLException ex) {
-            LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to parse user manual URL", ex);;
-        }
-        SCRIPT_GENERATOR_DOCS_URL = temp;
-    }
 
     /**
      * Create a button to manipulate the rows of the script generator table and
@@ -201,14 +188,20 @@ public class ScriptGeneratorView {
             final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
             manualButton.setText("Open Manual");
             manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-            manualButton.addListener(SWT.Selection, e -> {
-                try {
-                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-                    browser.openURL(SCRIPT_GENERATOR_DOCS_URL);
-                } catch (PartInitException ex) {
-                    LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
-                }
-            });
+            
+            try {
+                URL userManualUrl = scriptGeneratorViewModel.getUserManualUrl().get();
+                manualButton.addListener(SWT.Selection, e -> {
+                    try {
+                        IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+                        browser.openURL(userManualUrl);
+                    } catch (PartInitException ex) {
+                        LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
+                    }
+                });
+            } catch (NoSuchElementException ex) {
+                manualButton.setEnabled(false);
+            }
 
             // The composite to contain the button to check validity
             Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
