@@ -70,22 +70,27 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	}
 	
 	private void enable() {
-		createColumn("Enabled?", 2, new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled")) {	
-			@Override
-			protected boolean checked(EditablePVSet pvset) {
-				return pvset.getEnabled();
-			}
-			
-			@Override
-			protected void setChecked(EditablePVSet pvset, boolean checked) {
-				pvset.setEnabled(checked);
-			}
-			
-			@Override
-			protected boolean isEditable(EditablePVSet pvset) {
-				return isEditable;
-			}
-		});	
+	    CheckboxLabelProvider<EditablePVSet> enableStatusLabelProvider = new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled"), this) {  
+            @Override
+            protected boolean checked(EditablePVSet pvset) {
+                return pvset.getEnabled();
+            }
+            
+            @Override
+            protected void setChecked(EditablePVSet pvset, boolean checked) {
+                pvset.setEnabled(checked);
+            }
+            
+            @Override
+            protected boolean isEditable(EditablePVSet pvset) {
+                return isEditable;
+            }
+        };
+        
+        setChangeListener(() -> enableStatusLabelProvider.updateCheckboxListenerMap());
+        setSortListener(() -> enableStatusLabelProvider.resetModelCheckBoxListenerMap());
+        
+		createColumn("Enabled?", 2, enableStatusLabelProvider);
 	}
 	
 	/**

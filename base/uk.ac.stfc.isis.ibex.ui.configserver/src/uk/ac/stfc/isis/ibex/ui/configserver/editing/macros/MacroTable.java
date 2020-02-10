@@ -62,6 +62,8 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
      */
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.BORDER);
+		
+		
 
 		initialise();
 	}
@@ -126,23 +128,28 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	}
 	
 	private void useDefault() {
-	    createColumn("Use Default?", 3, false, new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault")) {
+	    CheckboxLabelProvider<MacroViewModel> defaultUseLabelProvider = new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault"), this) {
 
-	        @Override
-	        protected boolean checked(MacroViewModel macro) {
-	            return macro.getUseDefault();
-	        }
-	        
-	        @Override
-	        protected void setChecked(MacroViewModel macro, boolean checked) {
-	            macro.setUseDefault(checked);
-	        }
-	        
+            @Override
+            protected boolean checked(MacroViewModel macro) {
+                return macro.getUseDefault();
+            }
+            
+            @Override
+            protected void setChecked(MacroViewModel macro, boolean checked) {
+                macro.setUseDefault(checked);
+            }
+            
             @Override
             protected boolean isEditable(MacroViewModel model) {
                 return canEdit;
             }
-	    });
+        };
+	    
+	    setChangeListener(() -> defaultUseLabelProvider.updateCheckboxListenerMap());
+        setSortListener(() -> defaultUseLabelProvider.resetModelCheckBoxListenerMap());
+        
+	    createColumn("Use Default?", 3, false, defaultUseLabelProvider);
 	}
 	
 	private void defaultValue() {

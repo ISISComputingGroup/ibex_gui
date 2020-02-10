@@ -55,7 +55,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     /**
      * Checkbox Label provider for the auto-start column.
      */
-    private CheckboxLabelProvider<EditableIoc> autoStartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("autostart")) {
+    private CheckboxLabelProvider<EditableIoc> autoStartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("autostart"), this) {
 
     @Override
     protected boolean checked(EditableIoc ioc) {
@@ -74,7 +74,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     /**
      * Checkbox Label provider for the auto-restart column.
      */
-    private CheckboxLabelProvider<EditableIoc> autoRestartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("restart")) {
+    private CheckboxLabelProvider<EditableIoc> autoRestartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("restart"), this) {
         @Override
         protected boolean checked(EditableIoc ioc) {
             return ioc.getRestart();
@@ -108,6 +108,9 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
+		
+		setChangeListener(() -> updateCheckboxLabelProvider());
+        setSortListener(() -> resetCheckboxLabelProviders());
 				
         initialise();
 	}
@@ -205,5 +208,15 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     private void clear() {
         autoStart.setLabelProvider(autoStartLabelProvider);
         autoRestart.setLabelProvider(autoRestartLabelProvider);
+    }
+    
+    private void updateCheckboxLabelProvider() {
+        autoStartLabelProvider.updateCheckboxListenerMap();
+        autoRestartLabelProvider.updateCheckboxListenerMap();
+    }
+    
+    private void resetCheckboxLabelProviders() {
+        autoStartLabelProvider.resetModelCheckBoxListenerMap();
+        autoRestartLabelProvider.resetModelCheckBoxListenerMap();
     }
 }

@@ -19,11 +19,23 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TypedListener;
 
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 /**
@@ -32,13 +44,18 @@ import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
  * @param <T> The model to get the/set the information for the checkbox
  */
 public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T> {
+    
+    private Map<T, AtomicBoolean> modelCheckboxListenerMap = new WeakHashMap<>();
+    
+    private DataboundTable<T> databoundTable;
 	
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
 	 * @param stateProperties The properties that this label provider should be observing
 	 */
-	public CheckboxLabelProvider(IObservableMap stateProperties) {
+	public CheckboxLabelProvider(IObservableMap stateProperties, DataboundTable<T> table) {
 		super(stateProperties);
+		this.databoundTable = table;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,6 +70,34 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		checkBox.setSelection(checked(model));	
 		checkBox.setText(stringFromRow(model));
 		
+        Optional<Boolean> optionalBoolean = Optional.ofNullable(
+                modelCheckboxListenerMap.get(model)).map(
+                atomicFlag -> atomicFlag.getAndSet(false));
+        
+        optionalBoolean.ifPresent(updateFlag -> {
+            if(updateFlag) {
+                
+                for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+                    if (listener instanceof TypedListener) {
+                        TypedListener typedListener = (TypedListener) listener;
+                        
+                        if(typedListener.getEventListener() instanceof SelectionAdapter) {
+                            checkBox.removeSelectionListener((SelectionListener)
+                            typedListener.getEventListener());
+                        }
+                    }
+                }
+              
+                checkBox.addSelectionListener(new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        setChecked(model, checkBox.getSelection());
+                        checkBox.setText(stringFromRow(model));
+                    }
+                });
+            }
+        });
+		
 		checkBox.setEnabled(isEditable(model));
 	}
 	
@@ -60,6 +105,24 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	protected String stringFromRow(T model) {
 		return checked(model) ? "Yes" : "No";
 	}
+	
+	public void updateCheckboxListenerMap() { 
+        for(TableItem item: databoundTable.table().getItems()) {
+            T model = (T) item.getData();
+            
+            if(!modelCheckboxListenerMap.containsKey(model)) {
+                modelCheckboxListenerMap.put(model, new AtomicBoolean(true));
+            } else {
+                modelCheckboxListenerMap.get(model).set(true);
+            }  
+        }
+    }
+	
+	public void resetModelCheckBoxListenerMap() {
+        for(AtomicBoolean flag: modelCheckboxListenerMap.values()) {
+            flag.set(true);
+        }
+    }
 	
 	/**
 	 * @param model the model
