@@ -21,10 +21,22 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TypedListener;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
@@ -48,6 +60,8 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
 	
+	private Map<EditableBlock, AtomicBoolean> modelCheckboxListenerMap = new WeakHashMap<>();
+	
 	private CheckboxLabelProvider<EditableBlock> visibilityLabelProvider = 
 			new CheckboxLabelProvider<EditableBlock>(observeProperty("isVisible")) {
 		@Override
@@ -64,6 +78,39 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		protected boolean isEditable(EditableBlock block) {
 			return block.isEditable();
 		}
+		
+		@Override
+        public void update(ViewerCell cell) {
+		    super.update(cell);
+		    
+		    final EditableBlock model = (EditableBlock) cell.getElement();
+		    Optional<Boolean> optionalBoolean = Optional.ofNullable(modelCheckboxListenerMap.get(model))
+		            .map(atomicFlag -> atomicFlag.getAndSet(false));
+		    
+		    optionalBoolean.ifPresent(updateFlag -> {
+		        if(updateFlag) {
+		            final Button checkBox = getControl(cell, SWT.CHECK);
+		            
+	                for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+	                    if (listener instanceof TypedListener) {
+	                      TypedListener typedListener = (TypedListener) listener;
+	                      
+	                      if(typedListener.getEventListener() instanceof SelectionAdapter) {
+	                          checkBox.removeSelectionListener((SelectionListener)typedListener.getEventListener());  
+	                      }
+	                    }
+	                }
+	              
+	                checkBox.addSelectionListener(new SelectionAdapter() {
+	                    @Override
+	                    public void widgetSelected(SelectionEvent e) {
+	                        setChecked(model, checkBox.getSelection());
+	                        checkBox.setText(stringFromRow(model));
+	                    }
+	                });
+		        }
+		    });
+		}
 	};
 	
 	/**
@@ -76,6 +123,8 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
 		super(parent, style, tableStyle | SWT.BORDER);
 		
+		setChangeListener(() -> updateCheckboxListenerMap());
+		setSortListener(() -> resetModelCheckBoxListenerMap());
 		this.isBlockVisibilityShown = isBlockVisibilityShown;
 
 		initialise();
@@ -97,6 +146,22 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	public void setRows(Collection<EditableBlock> rows) {
 		clear();
 		super.setRows(rows);
+	}
+	
+	protected void updateCheckboxListenerMap() {
+	    modelCheckboxListenerMap.clear();
+	    
+	    for(TableItem item: table().getItems()) {
+	        EditableBlock block = (EditableBlock)item.getData();
+	        
+	        modelCheckboxListenerMap.put(block, new AtomicBoolean(true));
+	    }
+	}
+	
+	protected void resetModelCheckBoxListenerMap() {
+	    for(AtomicBoolean flag: modelCheckboxListenerMap.values()) {
+	        flag.set(true);
+	    }
 	}
 	
 	private void clear() {
