@@ -404,8 +404,11 @@ public abstract class DataboundTable<TRow> extends Composite {
                 int dir = comparator.getDirection();
                 viewer.getTable().setSortDirection(dir);
                 viewer.getTable().setSortColumn(column);
-                sortListener.run();
                 
+                if(sortListener != null) {
+                    sortListener.run();
+                }
+        
                 viewer.refresh();
             }
         };
