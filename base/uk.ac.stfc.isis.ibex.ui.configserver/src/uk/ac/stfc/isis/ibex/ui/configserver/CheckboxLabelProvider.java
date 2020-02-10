@@ -45,7 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
  */
 public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T> {
     
-    private Map<T, AtomicBoolean> modelCheckboxListenerMap = new WeakHashMap<>();
+    private Map<T, AtomicBoolean> checkboxListenerUpdateFlags = new WeakHashMap<>();
     
     private DataboundTable<T> databoundTable;
 	
@@ -71,7 +71,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		checkBox.setText(stringFromRow(model));
 		
         Optional<Boolean> optionalBoolean = Optional.ofNullable(
-                modelCheckboxListenerMap.get(model)).map(
+                checkboxListenerUpdateFlags.get(model)).map(
                 atomicFlag -> atomicFlag.getAndSet(false));
         
         optionalBoolean.ifPresent(updateFlag -> {
@@ -110,16 +110,16 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
         for(TableItem item: databoundTable.table().getItems()) {
             T model = (T) item.getData();
             
-            if(!modelCheckboxListenerMap.containsKey(model)) {
-                modelCheckboxListenerMap.put(model, new AtomicBoolean(true));
+            if(!checkboxListenerUpdateFlags.containsKey(model)) {
+                checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
             } else {
-                modelCheckboxListenerMap.get(model).set(true);
+                checkboxListenerUpdateFlags.get(model).set(true);
             }  
         }
     }
 	
 	public void resetModelCheckBoxListenerMap() {
-        for(AtomicBoolean flag: modelCheckboxListenerMap.values()) {
+        for(AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {
             flag.set(true);
         }
     }
