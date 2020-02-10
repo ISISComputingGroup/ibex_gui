@@ -62,9 +62,6 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
      */
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.BORDER);
-		
-		
-
 		initialise();
 	}
 	
