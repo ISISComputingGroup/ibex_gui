@@ -105,18 +105,22 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	    return optionalFlag;
 	}
 	
-	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
-	    if(doUpdate) {
-            for(Listener listener: checkBox.getListeners(SWT.Selection)) {
-                if (listener instanceof TypedListener) {
-                    TypedListener typedListener = (TypedListener) listener;
-                    
-                    if(typedListener.getEventListener() instanceof SelectionAdapter) {
-                        checkBox.removeSelectionListener((SelectionListener)
-                            typedListener.getEventListener());
-                    }
+	private void clearCheckBoxSelectListener(Button checkBox) {
+	    for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+            if (listener instanceof TypedListener) {
+                TypedListener typedListener = (TypedListener) listener;
+                
+                if(typedListener.getEventListener() instanceof SelectionAdapter) {
+                    checkBox.removeSelectionListener((SelectionListener)
+                        typedListener.getEventListener());
                 }
             }
+        }
+	}
+	
+	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
+	    if(doUpdate) {
+            clearCheckBoxSelectListener(checkBox);
           
             checkBox.addSelectionListener(new SelectionAdapter() {
                 @Override
