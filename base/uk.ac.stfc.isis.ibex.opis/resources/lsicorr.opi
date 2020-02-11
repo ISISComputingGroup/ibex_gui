@@ -365,7 +365,7 @@
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update</name>
           <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)REPETITIONS</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -672,7 +672,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <name>Text Input</name>
           <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)REPETITIONS:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -863,7 +863,7 @@ $(pv_value)</tooltip>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update</name>
           <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)MEASUREMENTDURATION</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -920,7 +920,7 @@ $(pv_value)</tooltip>
           <multiline_input>false</multiline_input>
           <name>Text Input</name>
           <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)MEASUREMENTDURATION:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -932,7 +932,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -1125,21 +1125,20 @@ $(pv_value)</tooltip>
           <x>18</x>
           <y>42</y>
         </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
           <alarm_pulsing>false</alarm_pulsing>
           <auto_size>false</auto_size>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
-          <border_style>3</border_style>
+          <border_style>0</border_style>
           <border_width>1</border_width>
-          <confirm_message></confirm_message>
           <enabled>true</enabled>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
@@ -1151,13 +1150,9 @@ $(pv_value)</tooltip>
           <format_type>4</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
-          <limits_from_pv>false</limits_from_pv>
-          <maximum>1.7976931348623157E308</maximum>
-          <minimum>-1.7976931348623157E308</minimum>
-          <multiline_input>false</multiline_input>
-          <name>Text Input_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <name>Text Update_4</name>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)FILEPATH</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1168,17 +1163,17 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <selector_type>0</selector_type>
-          <show_units>false</show_units>
-          <style>0</style>
-          <text></text>
+          <show_units>true</show_units>
+          <text>######</text>
           <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-          <transparent>false</transparent>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
-          <widget_type>Text Input</widget_type>
-          <width>270</width>
-          <wuid>47114686:16fe750af01:-681b</wuid>
+          <widget_type>Text Update</widget_type>
+          <width>271</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7f85</wuid>
           <x>126</x>
           <y>42</y>
         </widget>
@@ -1286,12 +1281,12 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>6</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SCATTERING_ANGLE</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1347,8 +1342,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SCATTERING_ANGLE:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1360,7 +1355,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -1440,8 +1435,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SAMPLE_TEMP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1497,8 +1492,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SAMPLE_TEMP:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1510,7 +1505,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -1590,8 +1585,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_2</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SOLVENT_VISCOSITY</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1647,8 +1642,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_2</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SOLVENT_VISCOSITY:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1660,7 +1655,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -1740,8 +1735,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_3</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SOLVENT_REFRACTIVE_INDEX</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1797,8 +1792,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_3</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)SOLVENT_REFRACTIVE_INDEX:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1810,7 +1805,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -1890,8 +1885,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_4</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)LASER_WAVELENGTH</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1947,8 +1942,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_4</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(PV_ROOT)LASER_WAVELENGTH:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1960,7 +1955,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <selector_type>0</selector_type>
-          <show_units>false</show_units>
+          <show_units>true</show_units>
           <style>0</style>
           <text></text>
           <tooltip>$(pv_name)
@@ -2120,7 +2115,7 @@ $(pv_value)</tooltip>
           <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo</name>
-          <pv_name>$(PV_ROOT)CORRELATIONTYPE</pv_name>
+          <pv_name>$(PV_ROOT)CORRELATIONTYPE:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2133,9 +2128,9 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
-          <width>90</width>
+          <width>102</width>
           <wuid>47114686:16fe750af01:-6e35</wuid>
-          <x>180</x>
+          <x>288</x>
           <y>34</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2203,7 +2198,7 @@ $(pv_value)</tooltip>
           <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_1</name>
-          <pv_name>$(PV_ROOT)SAMPLINGTIMEMULTIT</pv_name>
+          <pv_name>$(PV_ROOT)SAMPLINGTIMEMULTIT:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2216,9 +2211,9 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
-          <width>90</width>
+          <width>102</width>
           <wuid>47114686:16fe750af01:-6e0d</wuid>
-          <x>180</x>
+          <x>288</x>
           <y>64</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2286,7 +2281,7 @@ $(pv_value)</tooltip>
           <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_2</name>
-          <pv_name>$(PV_ROOT)SWAPCHANNELS</pv_name>
+          <pv_name>$(PV_ROOT)SWAPCHANNELS:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2299,9 +2294,9 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
-          <width>90</width>
+          <width>102</width>
           <wuid>47114686:16fe750af01:-6d12</wuid>
-          <x>180</x>
+          <x>288</x>
           <y>94</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2369,7 +2364,7 @@ $(pv_value)</tooltip>
           <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_3</name>
-          <pv_name>$(PV_ROOT)NORMALIZATION</pv_name>
+          <pv_name>$(PV_ROOT)NORMALIZATION:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2382,9 +2377,9 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
-          <width>90</width>
+          <width>102</width>
           <wuid>47114686:16fe750af01:-6cf8</wuid>
-          <x>180</x>
+          <x>288</x>
           <y>124</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2452,7 +2447,7 @@ $(pv_value)</tooltip>
           <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_4</name>
-          <pv_name>$(PV_ROOT)CORRELATIONTYPE</pv_name>
+          <pv_name>$(PV_ROOT)TRANSFERRATE:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2465,10 +2460,270 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
-          <width>90</width>
+          <width>102</width>
           <wuid>47114686:16fe750af01:-6c8a</wuid>
-          <x>180</x>
+          <x>288</x>
           <y>2</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)TRANSFERRATE</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>103</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7fbd</wuid>
+          <x>174</x>
+          <y>4</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)CORRELATIONTYPE</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>103</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7fb5</wuid>
+          <x>174</x>
+          <y>36</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)SAMPLINGTIMEMULTIT</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>103</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7fb0</wuid>
+          <x>174</x>
+          <y>66</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)SWAPCHANNELS</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>103</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7fab</wuid>
+          <x>174</x>
+          <y>96</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)NORMALIZATION</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>103</width>
+          <wrap_words>false</wrap_words>
+          <wuid>6c35ceef:1701f7c20c0:-7fa6</wuid>
+          <x>174</x>
+          <y>126</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
