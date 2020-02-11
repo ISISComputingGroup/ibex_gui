@@ -19,9 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -82,13 +84,21 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void updateCheckboxListenerUpdateFlagsMap() {
-        for(T model: (List<T>) databoundTable.viewer().getInput()) {
+	public void updateCheckboxListenerUpdateFlags() {
+	    Set<T> tableModelSet = new HashSet<>((List<T>) databoundTable.viewer().getInput());
+	    
+        for(T model: tableModelSet) {
             if(!checkboxListenerUpdateFlags.containsKey(model)) {
                 checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
             } else {
                 checkboxListenerUpdateFlags.get(model).set(true);
             }  
+        }
+        
+        for(T model: checkboxListenerUpdateFlags.keySet()) {
+            if(!tableModelSet.contains(model)) {
+                checkboxListenerUpdateFlags.remove(model);
+            }
         }
     }
 	
@@ -104,19 +114,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	    return optionalFlag;
 	}
 	
-	private void clearCheckBoxSelectListener(Button checkBox) {
-	    for(Listener listener: checkBox.getListeners(SWT.Selection)) {
-            if (listener instanceof TypedListener) {
-                TypedListener typedListener = (TypedListener) listener;
-                
-                if(typedListener.getEventListener() instanceof SelectionAdapter) {
-                    checkBox.removeSelectionListener((SelectionListener)
-                        typedListener.getEventListener());
-                }
-            }
-        }
-	}
-	
 	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
 	    if(doUpdate) {
             clearCheckBoxSelectListener(checkBox);
@@ -130,6 +127,19 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             });
         }
 	}
+	
+	private void clearCheckBoxSelectListener(Button checkBox) {
+        for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+            if (listener instanceof TypedListener) {
+                TypedListener typedListener = (TypedListener) listener;
+                
+                if(typedListener.getEventListener() instanceof SelectionAdapter) {
+                    checkBox.removeSelectionListener((SelectionListener)
+                        typedListener.getEventListener());
+                }
+            }
+        }
+    }
 	
 	/**
 	 * @param model the model
