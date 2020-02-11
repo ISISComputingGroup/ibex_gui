@@ -145,6 +145,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	/**
+	 * A property to notify listeners when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
+	
+	/**
 	 * The date format to use when generating a script name.
 	 */
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -203,16 +208,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			@SuppressWarnings("unchecked")
 			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
 			generatedScript.ifPresentOrElse(script -> {
-				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
-				try {
-					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
-					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-				} catch(NoConfigSelectedException e) {
-					LOG.error(e);
-				}
-			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
-			});
+					String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+					try {
+						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+					} catch(NoConfigSelectedException e) {
+						LOG.error(e);
+					}
+				}, () -> {
+					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+				});
 			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
@@ -256,11 +261,22 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Reload the table actions by firing a property change.
+	 */
+	public void reloadActions() {
+		this.scriptGeneratorTable.reloadActions();
+	}
+	
+	/**
      * Creates the config loader.
      */
     public void createConfigLoader() {
         pythonInterface = new PythonInterface();
         configLoader = new ConfigLoader(pythonInterface);
+        pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+        	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		pythonInterface.workerSetUpPythonThread();
     }
     
     /**
@@ -579,5 +595,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public String getTimestamp() {
 		return DATE_FORMAT.format(new Date());
+	}
+
+	/**
+	 * Reload the configs.
+	 */
+	public void reloadConfigs() {
+		configLoader.reloadConfigs();
 	}
 }

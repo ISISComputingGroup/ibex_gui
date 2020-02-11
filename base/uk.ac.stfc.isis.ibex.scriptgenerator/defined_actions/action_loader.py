@@ -90,6 +90,10 @@ class Config(object):
         """ Calculates the hash of the config"""
         return hash(self.name)
 
+    def toString(self) -> str:
+        """Return the name of the config"""
+        return self.getName()
+
 class Generator(object):
 
     def __init__(self, search_folders: List[str] = ["instruments"]):
@@ -226,6 +230,12 @@ class ConfigWrapper(object):
            None if parameters are invalid, otherwise a string of a generated script.
         """
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
+
+    def isPythonReady(self) -> bool:
+        """
+        Tells Java the Python is ready.
+        """
+        return True
 
 def get_actions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ActionDefinition], Dict[AnyStr, AnyStr]]:
     """ Dynamically import all the Python modules in the search folders"""

@@ -54,4 +54,9 @@ public interface ConfigWrapper {
 	 */
 	public boolean areParamsValid(List<Map<String, String>> scriptGenContent, Config config);
 	
+	/**
+	 * Check if Python is ready.
+	 */
+	public boolean isPythonReady();
+	
 }
