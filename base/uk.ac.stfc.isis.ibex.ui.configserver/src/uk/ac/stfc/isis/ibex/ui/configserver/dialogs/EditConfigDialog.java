@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
  * as buttons).
@@ -85,7 +84,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         }
         return control;
     }
-
+    
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         if (!isBlank && !this.config.getName().isEmpty()) {

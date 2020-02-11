@@ -48,7 +48,9 @@ public abstract class ConfigHelper {
      *             Thrown if the config cannot be obtained in a reasonable time.
      */
     public void createDialog(String configName, boolean editBlockFirst) throws TimeoutException {
-        openDialog(configurationViewModels.getConfig(configName), false, editBlockFirst);
+	EditableConfiguration config = configurationViewModels.getConfig(configName);
+	openDialog(config, false, editBlockFirst);
+	config.close();
     }
 
     /**
@@ -58,18 +60,20 @@ public abstract class ConfigHelper {
      *            Whether the first operation we want to do is edit a block
      */
     public void createDialogCurrent(boolean editBlockFirst) {
-        try {
-            openDialog(configurationViewModels.getCurrentConfig(), true, editBlockFirst);
-        } catch (TimeoutException err) {
-            MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
-        }
+	try {
+	    EditableConfiguration currentConfig = configurationViewModels.getCurrentConfig();
+	    openDialog(currentConfig, true, editBlockFirst);
+	    currentConfig.close();
+	} catch (TimeoutException err) {
+	    MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
+	}
     }
 
     /**
      * Create a dialog box for editing the current config.
      */
     public void createDialogCurrent() {
-        createDialogCurrent(false);
+	createDialogCurrent(false);
     }
 
     /**
@@ -83,7 +87,7 @@ public abstract class ConfigHelper {
      *            Should the dialog open the blocks tab first
      */
     protected abstract void openDialog(EditableConfiguration config, boolean isCurrent,
-            boolean editBlockFirst);
+	    boolean editBlockFirst);
 
     /**
      * Get the display name for this configuration
@@ -96,6 +100,6 @@ public abstract class ConfigHelper {
      * @return the display name for this configuration
      */
     public String getConfigDisplayName(EditableConfiguration config, boolean isCurrent) {
-    	return (isCurrent) ? "current" : config.getName();
+	return (isCurrent) ? "current" : config.getName();
     }
 }
