@@ -20,12 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.PostConstruct;
 
@@ -48,13 +44,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -64,8 +56,6 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
-    private static final Logger LOGGER = IsisLog.getLogger(ScriptGeneratorView.class);
-
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
     private DataBindingContext bindingContext;
@@ -190,15 +180,6 @@ public class ScriptGeneratorView {
             manualButton.setEnabled(false);
             manualButton.setText("Open Manual");
             manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-            
-            CompletableFuture.supplyAsync(() -> scriptGeneratorViewModel.getUserManualUrl())
-                .thenAccept(url -> {
-                    DISPLAY.asyncExec(() -> {
-                        if (!manualButton.isDisposed()) {
-                            setupLinkButton(manualButton, url);
-                        }
-                    });
-                });
 
             // The composite to contain the button to check validity
             Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
@@ -281,7 +262,7 @@ public class ScriptGeneratorView {
 
 
             // Bind the context and the validity checking listeners
-            bind(btnGetValidityErrors, generateScriptButton, helpText);
+            bind(btnGetValidityErrors, generateScriptButton, helpText, manualButton);
 
             scriptGeneratorViewModel.addEmptyAction();
         } else {
@@ -304,20 +285,6 @@ public class ScriptGeneratorView {
         }
     }
     
-    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
-        target.ifPresent(url -> {
-            linkButton.setEnabled(true);
-            linkButton.addListener(SWT.Selection, e -> {
-                try {
-                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-                    browser.openURL(url);
-                } catch (PartInitException ex) {
-                    LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
-                }
-            });
-        });
-    }
-
     /**
      * Set up a composite and table to display config load errors.
      */
@@ -373,12 +340,14 @@ public class ScriptGeneratorView {
     /**
      * Binds the Script Generator Table, config selector and validity check models to their views.
      */
-    private void bind(Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {
+    private void bind(Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
         bindingContext = new DataBindingContext();
 
         scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector, helpText);
 
         scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
+        
+        scriptGeneratorViewModel.bindManualButton(manualButton);
     }
 
 
