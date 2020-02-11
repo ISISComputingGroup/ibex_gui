@@ -40,8 +40,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
  */
 public abstract class ControlCellLabelProvider<T extends Control, TRow> extends SortableObservableMapCellLabelProvider<TRow> {
 	
-	private final Map<ViewerCell, T> cellControls = new HashMap<>();
-	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
+	private final Map<TRow, T> cellControls = new HashMap<>();
+	private final Map<TRow, TableEditor> cellEditors = new HashMap<>();
 	
 	/**
 	 * Constructor for the control cell label provider.
@@ -59,7 +59,10 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 * @return The control that the cell contains
 	 */
 	protected T getControl(ViewerCell cell, int style) {
-		return cellControls.containsKey(cell) ? cellControls.get(cell) : create(cell, style);
+	    @SuppressWarnings("unchecked")
+	    TRow modelRow = (TRow) cell.getElement();
+	    
+		return cellControls.containsKey(modelRow) ? cellControls.get(modelRow) : create(cell, style);
 	}
 	
 	/**
@@ -80,11 +83,12 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	
     protected abstract T createControl(ViewerCell cell, int style);
 	
+    @SuppressWarnings("unchecked")
 	private T create(final ViewerCell cell, int style) {
 		T control = createControl(cell, style);
 		
 		setEditor(cell, control);
-		cellControls.put(cell, control);
+		cellControls.put((TRow) cell.getElement(), control);
 		
 		return control;
 	}
@@ -93,6 +97,7 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 		return (Composite) cell.getControl();
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected void setEditor(ViewerCell cell, Control control) {
 		TableItem item = (TableItem) cell.getItem();
 		TableEditor editor = new TableEditor(item.getParent());
@@ -103,7 +108,6 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	    editor.setEditor(control, item, cell.getColumnIndex());
 	    editor.layout();
 	    
-	    cellEditors.put(cell, editor);
-		
+	    cellEditors.put((TRow) cell.getElement(), editor);
 	}
 }
