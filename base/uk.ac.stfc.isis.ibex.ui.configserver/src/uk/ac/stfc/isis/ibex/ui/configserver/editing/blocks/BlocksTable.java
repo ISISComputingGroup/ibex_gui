@@ -78,8 +78,8 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		
 		setChangeListener(() -> visibilityLabelProvider.updateCheckboxListenerUpdateFlags());
 		setSortListener(() -> visibilityLabelProvider.resetCheckBoxListenerUpdateFlags());
+		
 		this.isBlockVisibilityShown = isBlockVisibilityShown;
-
 		initialise();
 		
 		search = new BlockNameSearch();

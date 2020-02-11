@@ -203,18 +203,22 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     /**
-     * Clears old checkboxes from the table.
+     * Clears old check boxes from the table.
      */
     private void clear() {
         autoStart.setLabelProvider(autoStartLabelProvider);
         autoRestart.setLabelProvider(autoRestartLabelProvider);
     }
     
+    /**Updates the check box listener update flags of the autoStart and 
+     * autoRestart label providers.*/
     private void updateCheckboxLabelProviders() {
         autoStartLabelProvider.updateCheckboxListenerUpdateFlags();
         autoRestartLabelProvider.updateCheckboxListenerUpdateFlags();
     }
     
+    /**Resets the check box listener update flags of the autoStart and 
+     * autoRestart label providers.*/
     private void resetCheckboxLabelProvidersUpdateFlags() {
         autoStartLabelProvider.resetCheckBoxListenerUpdateFlags();
         autoRestartLabelProvider.resetCheckBoxListenerUpdateFlags();

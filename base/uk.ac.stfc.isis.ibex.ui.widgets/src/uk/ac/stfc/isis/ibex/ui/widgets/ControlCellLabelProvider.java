@@ -60,9 +60,10 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 */
 	protected T getControl(ViewerCell cell, int style) {
 	    @SuppressWarnings("unchecked")
-	    TRow modelRow = (TRow) cell.getElement();
+	    TRow model = (TRow) cell.getElement();
 	    
-		return cellControls.containsKey(modelRow) ? cellControls.get(modelRow) : create(cell, style);
+		return cellControls.containsKey(model) ? cellControls.get(model)
+		        : create(cell, style);
 	}
 	
 	/**
