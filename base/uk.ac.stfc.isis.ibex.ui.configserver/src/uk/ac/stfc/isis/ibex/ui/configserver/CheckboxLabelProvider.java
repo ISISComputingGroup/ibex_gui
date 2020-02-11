@@ -55,6 +55,22 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     
     /**The data bound table that owns this label provider.*/
     private final DataboundTable<T> databoundTable;
+    
+    protected class CheckboxSelectionAdapter extends SelectionAdapter {    
+        final Button checkbox;
+        final T model;
+        
+        public CheckboxSelectionAdapter(Button checkbox, T model) {
+            this.checkbox = checkbox;
+            this.model = model;
+        }
+        
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            setChecked(model, checkbox.getSelection());
+            checkbox.setText(stringFromRow(model));
+        }
+    }
 	
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
@@ -152,13 +168,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	    if(doUpdate) {
             clearCheckBoxSelectListener(checkBox);
           
-            checkBox.addSelectionListener(new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    setChecked(model, checkBox.getSelection());
-                    checkBox.setText(stringFromRow(model));
-                }
-            });
+            checkBox.addSelectionListener(new CheckboxSelectionAdapter(checkBox, model));
         }
 	}
 	
@@ -173,7 +183,9 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             if (listener instanceof TypedListener) {
                 TypedListener typedListener = (TypedListener) listener;
                 
-                if(typedListener.getEventListener() instanceof SelectionAdapter) {
+                if(typedListener.getEventListener() instanceof 
+                        CheckboxLabelProvider.CheckboxSelectionAdapter) {
+                    
                     checkBox.removeSelectionListener((SelectionListener)
                         typedListener.getEventListener());
                 }
