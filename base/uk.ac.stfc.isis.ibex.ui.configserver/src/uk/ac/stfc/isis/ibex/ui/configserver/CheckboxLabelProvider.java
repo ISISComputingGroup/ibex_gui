@@ -54,7 +54,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     private Map<T, AtomicBoolean> checkboxListenerUpdateFlags = new WeakHashMap<>();
     
     /**The data bound table that owns this label provider.*/
-    private DataboundTable<T> databoundTable;
+    private final DataboundTable<T> databoundTable;
 	
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
@@ -148,7 +148,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param checkBox The check box where we want to reset the listeners.
 	 * @param model The model that will be bound to the check box by the new listeners.
 	 */
-	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
+	public void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
 	    if(doUpdate) {
             clearCheckBoxSelectListener(checkBox);
           
@@ -168,7 +168,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param checkBox the check box whose SelectionAdapter listeners we 
 	 * will remove.
 	 */
-	private void clearCheckBoxSelectListener(Button checkBox) {
+	public static void clearCheckBoxSelectListener(Button checkBox) {
         for(Listener listener: checkBox.getListeners(SWT.Selection)) {
             if (listener instanceof TypedListener) {
                 TypedListener typedListener = (TypedListener) listener;
