@@ -19,9 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -99,7 +101,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 */
 	@SuppressWarnings("unchecked")
 	public void updateCheckboxListenerUpdateFlags() {
-	    List<T> tableModels = (List<T>) databoundTable.viewer().getInput();
+	    Set<T> tableModels = new HashSet<>((List<T>) databoundTable.viewer().getInput());
 	    
         for(T model: tableModels) {
             if(!checkboxListenerUpdateFlags.containsKey(model)) {
