@@ -41,19 +41,25 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 /**
- * A LabelProvider that adds a checkbox to a cell in a table. 
+ * A LabelProvider that adds a check box to a cell in a table. 
  *
- * @param <T> The model to get the/set the information for the checkbox
+ * @param <T> The model to get the/set the information for the check box.
  */
 public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T> {
     
+    /**A map between a model and a flag that says whether the selection listeners 
+     * on the check box on the row of the given model need to be updated. The 
+     * value of the flag is false, unless an item has just been added or removed
+     * from the table.*/
     private Map<T, AtomicBoolean> checkboxListenerUpdateFlags = new WeakHashMap<>();
     
+    /**The data bound table that owns this label provider.*/
     private DataboundTable<T> databoundTable;
 	
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
-	 * @param stateProperties The properties that this label provider should be observing
+	 * @param stateProperties The properties that this label provider should be observing.
+	 * @param table The data bound table that owns this label provider.
 	 */
 	public CheckboxLabelProvider(IObservableMap stateProperties, DataboundTable<T> table) {
 		super(stateProperties);
@@ -71,7 +77,12 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		
 		checkBox.setSelection(checked(model));	
 		checkBox.setText(stringFromRow(model));
-        
+		
+        /*if needed, clears all selection listeners on the check box and re-adds
+         * new update listeners. Since check boxes remain in the same row after
+         * the table is sorted, while the models do not, we need to remove old 
+         * listeners that refer to models that are no longer in the row of that
+         * check box.*/
         getOptionalUpdateFlag(model).ifPresent(updateFlag -> resetCheckBoxListeners(
                 updateFlag, checkBox, model));
 		
@@ -83,6 +94,11 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		return checked(model) ? "Yes" : "No";
 	}
 	
+	/**
+	 * Ensures newly added models have an associated update flag, that flags 
+	 * associated with models no longer in the table are removed, and all update
+	 * flags are set to true.
+	 */
 	@SuppressWarnings("unchecked")
 	public void updateCheckboxListenerUpdateFlags() {
 	    Set<T> tableModelSet = new HashSet<>((List<T>) databoundTable.viewer().getInput());
@@ -102,18 +118,36 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
         }
     }
 	
+	/**
+	 * Sets the update flag of each model of the table to true.
+	 */
 	public void resetCheckBoxListenerUpdateFlags() {
         for(AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {
             flag.set(true);
         }
     }
 	
+	/**
+	 * Gets the check box listener update flag mapped to the given model, wrapped
+	 * in an Optional.
+	 * @param model the model on the same table row as the check box.
+	 * @return a boolean wrapped in an Optional, or an empty Optional if there is 
+	 * no mapping for the given model.
+	 */
 	private Optional<Boolean> getOptionalUpdateFlag(T model) {
 	    Optional<AtomicBoolean> optionalAtomicFlag = Optional.ofNullable(checkboxListenerUpdateFlags.get(model));
 	    Optional<Boolean> optionalFlag = optionalAtomicFlag.map(atomicFlag -> atomicFlag.getAndSet(false));
 	    return optionalFlag;
 	}
 	
+	/**
+	 * If the given flag is true, it removes all SelectionAdapter listeners of the given 
+	 * check box, then adds one selection listener that will bind the given model 
+	 * to the given check box.
+	 * @param doUpdate a boolean telling whether to do the update or not.
+	 * @param checkBox The check box where we want to reset the listeners.
+	 * @param model The model that will be bound to the check box by the new listeners.
+	 */
 	protected void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
 	    if(doUpdate) {
             clearCheckBoxSelectListener(checkBox);
@@ -128,6 +162,12 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
         }
 	}
 	
+	/**
+	 * Removes all SelectionAdapter listeners from this check box's 
+	 * listener list.
+	 * @param checkBox the check box whose SelectionAdapter listeners we 
+	 * will remove.
+	 */
 	private void clearCheckBoxSelectListener(Button checkBox) {
         for(Listener listener: checkBox.getListeners(SWT.Selection)) {
             if (listener instanceof TypedListener) {
@@ -141,23 +181,23 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
         }
     }
 	
-	/**
-	 * @param model the model
-	 * @return whether the checkbox should be checked or not
+	/**Says whether the check box should be checked or not.
+	 * @param model the model.
+	 * @return true if the check box should be checked, false if not.
 	 */
 	protected abstract boolean checked(T model);
 	
 	/**
-	 * Called when the user checks a checkbox.
+	 * Called when the user checks a check box.
 	 * 
-	 * @param model the model
-	 * @param checked whether the checkbox is checked ot unchecked
+	 * @param model the model.
+	 * @param checked whether the check box is checked or unchecked.
 	 */
 	protected abstract void setChecked(T model, boolean checked);
 	
-	/**
-	 * @param model the model
-	 * @return whether the item is editable or not
+	/** Says if the item is editable.
+	 * @param model the model.
+	 * @return true if the item is editable, false if not.
 	 */
 	protected abstract boolean isEditable(T model);
 }
