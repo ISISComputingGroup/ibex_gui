@@ -151,8 +151,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
-	private final Optional<URL> userManualUrl = loadUserManualUrl();
-	
 	
 	/**
 	 * The constructor, will create without a config loader and without loading
@@ -232,7 +230,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(configLoader.getParameters());
 	}
 	
-	private Optional<URL> loadUserManualUrl() {
+	public Optional<URL> getUserManualUrl() {
 	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
 	    
 	    // Loop through all URLs in the preference property
@@ -256,10 +254,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	    LOG.warn("No valid URLs for the user manual were found");
 	    return Optional.empty();
 	}
-	
-    public Optional<URL> getUserManualUrl() {
-        return userManualUrl;
-    }
 	
 	/**
      * Creates the config loader.

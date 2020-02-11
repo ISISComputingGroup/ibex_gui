@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.PostConstruct;
 
@@ -186,22 +187,14 @@ public class ScriptGeneratorView {
 
             // Button to open the user manual in a button
             final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
+            manualButton.setEnabled(false);
             manualButton.setText("Open Manual");
             manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
             
-            try {
-                URL userManualUrl = scriptGeneratorViewModel.getUserManualUrl().get();
-                manualButton.addListener(SWT.Selection, e -> {
-                    try {
-                        IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-                        browser.openURL(userManualUrl);
-                    } catch (PartInitException ex) {
-                        LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
-                    }
+            CompletableFuture.supplyAsync(() -> scriptGeneratorViewModel.getUserManualUrl())
+                .thenAccept(url -> {
+                    DISPLAY.asyncExec(() -> setupLinkButton(manualButton, url));
                 });
-            } catch (NoSuchElementException ex) {
-                manualButton.setEnabled(false);
-            }
 
             // The composite to contain the button to check validity
             Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
@@ -305,6 +298,20 @@ public class ScriptGeneratorView {
             }
 
         }
+    }
+    
+    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
+        target.ifPresent(url -> {
+            linkButton.setEnabled(true);
+            linkButton.addListener(SWT.Selection, e -> {
+                try {
+                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+                    browser.openURL(url);
+                } catch (PartInitException ex) {
+                    LoggerUtils.logErrorWithStackTrace(LOGGER, "Failed to open user manual in browser", ex);
+                }
+            });
+        });
     }
 
     /**
