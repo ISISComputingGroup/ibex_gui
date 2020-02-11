@@ -28,6 +28,7 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -230,6 +231,7 @@ public class SummaryPanel extends Composite {
                 if (!cmboSynoptic.getControl().isDisposed()) {
                     cmboSynoptic.setInput(names);
                     if (selected != null) {
+                        cmboSynoptic.setSelection(new StructuredSelection(selected));
                         config.setSynoptic(selected);
                     }
                 }
