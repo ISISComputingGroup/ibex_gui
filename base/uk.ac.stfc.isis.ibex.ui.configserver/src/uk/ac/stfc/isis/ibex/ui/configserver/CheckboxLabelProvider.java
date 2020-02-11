@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.WeakHashMap;
@@ -32,7 +33,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TypedListener;
 
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -81,10 +81,9 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		return checked(model) ? "Yes" : "No";
 	}
 	
-	public void updateCheckboxListenerUpdateFlagsMap() { 
-        for(TableItem item: databoundTable.table().getItems()) {
-            T model = (T) item.getData();
-            
+	@SuppressWarnings("unchecked")
+	public void updateCheckboxListenerUpdateFlagsMap() {
+        for(T model: (List<T>) databoundTable.viewer().getInput()) {
             if(!checkboxListenerUpdateFlags.containsKey(model)) {
                 checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
             } else {
