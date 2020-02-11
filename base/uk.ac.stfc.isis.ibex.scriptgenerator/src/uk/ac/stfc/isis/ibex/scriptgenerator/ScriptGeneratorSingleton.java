@@ -22,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -231,6 +233,31 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		});
 		
 		setActionParameters(configLoader.getParameters());
+	}
+	
+	public Optional<URL> getUserManualUrl() {
+	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
+	    
+	    // Loop through all URLs in the preference property
+	    // and return the first one reachable from the user's network
+	    for (String url : preferenceProperty.split(",")) {
+	        try {
+	            URL possibleUrl = new URL(url);
+	            
+	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
+	            connection.setRequestMethod("GET");
+	            connection.connect();
+	            int responseCode = connection.getResponseCode();
+	            if (responseCode >= 200 && responseCode < 300) {
+	                return Optional.of(possibleUrl);
+	            }
+	        } catch (IOException ex) {
+	            LOG.debug("Invalid URL for user manual was found: " + url);
+	        }
+	    };
+	    
+	    LOG.warn("No valid URLs for the user manual were found");
+	    return Optional.empty();
 	}
 	
 	/**

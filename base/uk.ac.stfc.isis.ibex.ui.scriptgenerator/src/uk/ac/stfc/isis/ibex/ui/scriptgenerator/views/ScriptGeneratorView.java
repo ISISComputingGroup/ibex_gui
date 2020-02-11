@@ -236,6 +236,17 @@ public class ScriptGeneratorView {
 							() -> helpText.setText("")
 						);
 				
+	            // Composite for the Open Manual button
+	            Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
+	            manualButtonComposite.setLayout(new GridLayout(1, false));
+	            manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+
+	            // Button to open the user manual in a button
+	            final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
+	            manualButton.setEnabled(false);
+	            manualButton.setText("Open Manual");
+	            manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				
 				// The composite to contain the button to check validity
 				Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 				validityComposite.setLayout(new GridLayout(1, false));
@@ -321,7 +332,7 @@ public class ScriptGeneratorView {
 		        
 		        		
 		        // Bind the context and the validity checking listeners
-		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText);
+		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText, manualButton);
 				
 			} else {
 				
@@ -401,10 +412,12 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
-	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {		
+	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
 		scriptGeneratorViewModel.bindConfigLoader(configSelector, helpText);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
+		
+		scriptGeneratorViewModel.bindManualButton(manualButton);
 	}
 	
 

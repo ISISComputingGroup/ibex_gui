@@ -1,11 +1,13 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.net.URL;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -21,6 +23,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -35,6 +40,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -491,6 +498,36 @@ public class ScriptGeneratorViewModel extends ModelObject {
 					helpText.setText("");
 				});
 	}
+    
+    /**
+     * Asynchronously get the URL of the user manual and bind it to the Open Manual button
+     * 
+     * @param manualButton The button that should open the manual
+     */
+    public void bindManualButton(Button manualButton) {
+        CompletableFuture.supplyAsync(() -> getUserManualUrl())
+            .thenAccept(url -> {
+                DISPLAY.asyncExec(() -> {
+                    if (!manualButton.isDisposed()) {
+                        setupLinkButton(manualButton, url);
+                    }
+                });
+            });
+    }
+    
+    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
+        target.ifPresent(url -> {
+            linkButton.setEnabled(true);
+            linkButton.addListener(SWT.Selection, e -> {
+                try {
+                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+                    browser.openURL(url);
+                } catch (PartInitException ex) {
+                    LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+                }
+            });
+        });
+    }
 
 	/**
 	 * Get the first i lines of invalidity errors for the current configuration and parameters.
@@ -693,4 +730,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.reloadActions();
 	}
 	
+	public Optional<URL> getUserManualUrl() {
+	    return scriptGeneratorModel.getUserManualUrl();
+	}
 }
