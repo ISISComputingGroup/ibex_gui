@@ -193,7 +193,11 @@ public class ScriptGeneratorView {
             
             CompletableFuture.supplyAsync(() -> scriptGeneratorViewModel.getUserManualUrl())
                 .thenAccept(url -> {
-                    DISPLAY.asyncExec(() -> setupLinkButton(manualButton, url));
+                    DISPLAY.asyncExec(() -> {
+                        if (!manualButton.isDisposed()) {
+                            setupLinkButton(manualButton, url);
+                        }
+                    });
                 });
 
             // The composite to contain the button to check validity
