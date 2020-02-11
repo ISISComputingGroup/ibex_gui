@@ -56,11 +56,20 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     /**The data bound table that owns this label provider.*/
     private final DataboundTable<T> databoundTable;
     
+    /**
+     * A selection listener that binds models to check boxes.
+     */
     protected class CheckboxSelectionAdapter extends SelectionAdapter {    
         final Button checkbox;
         final T model;
         
+        /**
+         * Makes a new check box selection adapter.
+         * @param checkbox the check box a model will be bound to.
+         * @param model the model in a table item the check box will be bound to.
+         */
         public CheckboxSelectionAdapter(Button checkbox, T model) {
+            super();
             this.checkbox = checkbox;
             this.model = model;
         }
