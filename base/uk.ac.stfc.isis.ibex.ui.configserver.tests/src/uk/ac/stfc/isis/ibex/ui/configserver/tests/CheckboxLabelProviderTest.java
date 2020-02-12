@@ -152,4 +152,22 @@ public class CheckboxLabelProviderTest {
         assertEquals(false, unmodifiableMapView.containsKey("block"));
         assertEquals(false, unmodifiableMapView.containsKey("ioc"));
     }
+    
+    @SuppressWarnings("unchecked")
+    @Test
+    public void GIVEN_update_flags_map_WHEN_table_unchanged_THEN_map_unchanged() {
+        tableModelList.add("block");
+        tableModelList.add("ioc");
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+        }
+        
+        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        assertEquals(true, unmodifiableMapView.containsKey("block"));
+        assertEquals(true, unmodifiableMapView.containsKey("ioc"));
+    }
 }
