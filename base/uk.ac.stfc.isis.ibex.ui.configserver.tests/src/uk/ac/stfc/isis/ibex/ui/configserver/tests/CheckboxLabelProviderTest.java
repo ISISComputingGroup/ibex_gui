@@ -22,14 +22,19 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
+
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.viewers.TableViewer;
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
@@ -42,7 +47,7 @@ public class CheckboxLabelProviderTest {
     
     private CheckboxLabelProvider<String> labelProvider;
     
-    private LinkedList<String> modelList;
+    private LinkedList<String> modelList = new LinkedList<>();
     
     @Mock
     private DataboundTable<String> table;
@@ -52,14 +57,14 @@ public class CheckboxLabelProviderTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        IObservableMap mockProperties = Mockito.mock(ObservableMap.class);
+        IObservableMap mockProperties = mock(ObservableMap.class);
         
         modelList.add("block");
         modelList.add("ioc");
         modelList.add("macro");
         
-        Mockito.when(table.viewer()).thenReturn(Mockito.mock(TableViewer.class));
-        Mockito.when(table.viewer().getInput()).thenReturn(modelList);
+        when(table.viewer()).thenReturn(mock(TableViewer.class));
+        when(table.viewer().getInput()).thenReturn(modelList);
         
         labelProvider = new CheckboxLabelProvider<String>(mockProperties, table) {
             @Override
@@ -77,5 +82,17 @@ public class CheckboxLabelProviderTest {
                 return true;
             }
         };
+    }
+    
+    @Test
+    public void GIVEN_empty_update_flags_map_WHEN_updating_map_THEN_all_new_models_added() {
+        labelProvider.updateCheckboxListenerUpdateFlags();
+        
+        Map<String, AtomicBoolean> unmodifiableMap = labelProvider.getUnmodifiableUpdateFlagsMap();
+        
+        for(String s: modelList) {
+            assertEquals(true, unmodifiableMap.containsKey(s));
+            assertEquals(true, unmodifiableMap.get(s).get());
+        }
     }
 }
