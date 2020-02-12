@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -201,6 +202,15 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             }
         }
     }
+	
+	/**
+	 * Gets an unmodifiable version of the map between models and their update 
+	 * flag. Was added to make unit testing easier.
+	 * @return an unmodifiable map with models as keys and update flags as values.
+	 */
+	public Map<T, AtomicBoolean> getUnmodifiableUpdateFlagsMap() {
+	    return Collections.unmodifiableMap(checkboxListenerUpdateFlags);
+	}
 	
 	/**Says whether the check box should be checked or not.
 	 * @param model the model.
