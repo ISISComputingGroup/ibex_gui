@@ -53,12 +53,8 @@ public class CheckboxLabelProviderTest {
     
     private Map<String, AtomicBoolean> unmodifiableMapView;
     
-    //rivate Set<String> modelTestSet = new HashSet<>();
-    
     @Mock
     private DataboundTable<String> table;
-    
-    //private HashMap<K, V>
     
     public CheckboxLabelProviderTest() {
         MockitoAnnotations.initMocks(this);
@@ -169,5 +165,28 @@ public class CheckboxLabelProviderTest {
         
         assertEquals(true, unmodifiableMapView.containsKey("block"));
         assertEquals(true, unmodifiableMapView.containsKey("ioc"));
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Test
+    public void GIVEN_update_flags_map_WHEN_reset_update_flags_THEN_all_flags_true() {
+        tableModelList.add("block");
+        tableModelList.add("ioc");
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+        }
+        
+        for(String model: unmodifiableMapView.keySet()) {
+            unmodifiableMapView.get(model).set(false);
+        }
+        
+        labelProvider.resetCheckBoxListenerUpdateFlags();
+        
+        for(String model: unmodifiableMapView.keySet()) {
+            assertEquals(true, unmodifiableMapView.get(model).get());
+        }
     }
 }
