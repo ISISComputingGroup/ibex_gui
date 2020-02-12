@@ -49,7 +49,9 @@ public class CheckboxLabelProviderTest {
     
     private CheckboxLabelProvider<String> labelProvider;
     
-    private LinkedList<String> tableModelList = new LinkedList<>();
+    private final LinkedList<String> tableModelList = new LinkedList<>();
+    
+    private Map<String, AtomicBoolean> unmodifiableMapView;
     
     //rivate Set<String> modelTestSet = new HashSet<>();
     
@@ -58,8 +60,7 @@ public class CheckboxLabelProviderTest {
     
     //private HashMap<K, V>
     
-    @Before
-    public void setUp() {
+    public CheckboxLabelProviderTest() {
         MockitoAnnotations.initMocks(this);
         IObservableMap mockProperties = mock(ObservableMap.class);
         
@@ -82,28 +83,54 @@ public class CheckboxLabelProviderTest {
                 return true;
             }
         };
+        
+        unmodifiableMapView = labelProvider.getUnmodifiableUpdateFlagsMap();
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Before
+    public void resetUpdateFlagMap() {
+        tableModelList.clear();
+        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
     }
     
     @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
-        Map<String, AtomicBoolean> unmodifiableMap = labelProvider.getUnmodifiableUpdateFlagsMap();
+        tableModelList.add("model");
+        tableModelList.add("ioc");
         
         for(String s: tableModelList) {
-            assertEquals(false, unmodifiableMap.containsKey(s));
+            assertEquals(false, unmodifiableMapView.containsKey(s));
         }
-        
-        tableModelList.add("block");
-        tableModelList.add("ioc");
-        tableModelList.add("macro");
         
         labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
         
         for(String s: tableModelList) {
-            assertEquals(true, unmodifiableMap.containsKey(s));
-            assertEquals(true, unmodifiableMap.get(s).get());
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+            assertEquals(true, unmodifiableMapView.get(s).get());
         }
     }
     
-    //public void GIVEN_incomplete
+    @SuppressWarnings("unchecked")
+    @Test
+    public void GIVEN_complete_update_flags_map_WHEN_adding_models_THEN_map_unchanged() {
+        tableModelList.add("block");
+        tableModelList.add("ioc");
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+        }
+        
+        int mapSize = unmodifiableMapView.size();
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+        }
+        assertEquals(mapSize, unmodifiableMapView.size());
+    }
 }
