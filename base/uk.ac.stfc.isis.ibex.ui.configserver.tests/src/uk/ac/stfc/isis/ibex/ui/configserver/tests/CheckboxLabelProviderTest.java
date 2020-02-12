@@ -91,7 +91,7 @@ public class CheckboxLabelProviderTest {
     @Before
     public void resetUpdateFlagMap() {
         tableModelList.clear();
-        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
     }
     
     @SuppressWarnings("unchecked")
@@ -132,5 +132,24 @@ public class CheckboxLabelProviderTest {
             assertEquals(true, unmodifiableMapView.containsKey(s));
         }
         assertEquals(mapSize, unmodifiableMapView.size());
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Test
+    public void GIVEN_update_flags_map_WHEN_table_now_empty_THEN_remove_old_map_entries() {
+        tableModelList.add("block");
+        tableModelList.add("ioc");
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
+            assertEquals(true, unmodifiableMapView.containsKey(s));
+        }
+        
+        tableModelList.clear();
+        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        assertEquals(false, unmodifiableMapView.containsKey("block"));
+        assertEquals(false, unmodifiableMapView.containsKey("ioc"));
     }
 }

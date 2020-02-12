@@ -141,11 +141,8 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
      * label provider.
      */
     public void removeModelsNoLongerInTable(Set<T> tableModels) {
-        for(T model: checkboxListenerUpdateFlags.keySet()) {
-            if(!tableModels.contains(model)) {
-                checkboxListenerUpdateFlags.remove(model);
-            }
-        }
+        checkboxListenerUpdateFlags.entrySet().removeIf(entry -> !tableModels.contains(
+                entry.getKey()));
     }
     
 	/**
