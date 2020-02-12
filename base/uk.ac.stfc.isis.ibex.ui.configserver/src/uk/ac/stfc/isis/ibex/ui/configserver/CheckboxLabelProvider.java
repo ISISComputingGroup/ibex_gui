@@ -130,7 +130,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	    Set<T> tableModels = new HashSet<>((List<T>) databoundTable.viewer().getInput());
         
         removeModelsNoLongerInTable(tableModels);
-        setCheckBoxesListenerUpdate();
+        resetCheckBoxListenerUpdateFlags();
         addNewModelsToUpdateFlagsMap(tableModels);
     }
 	
@@ -145,18 +145,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             if(!tableModels.contains(model)) {
                 checkboxListenerUpdateFlags.remove(model);
             }
-        }
-    }
-    
-	/**
-     * Sets the update flags for the check boxes corresponding to the given 
-     * models to true.
-     * @param tableModels the set of models currently in the table of this
-     * label provider.
-     */
-    public void setCheckBoxesListenerUpdate() {
-        for(T model: checkboxListenerUpdateFlags.keySet()) {
-            checkboxListenerUpdateFlags.get(model).set(true);
         }
     }
     
