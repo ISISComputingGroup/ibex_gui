@@ -25,7 +25,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -47,7 +49,9 @@ public class CheckboxLabelProviderTest {
     
     private CheckboxLabelProvider<String> labelProvider;
     
-    private LinkedList<String> modelList = new LinkedList<>();
+    private LinkedList<String> tableModelList = new LinkedList<>();
+    
+    //rivate Set<String> modelTestSet = new HashSet<>();
     
     @Mock
     private DataboundTable<String> table;
@@ -59,12 +63,8 @@ public class CheckboxLabelProviderTest {
         MockitoAnnotations.initMocks(this);
         IObservableMap mockProperties = mock(ObservableMap.class);
         
-        modelList.add("block");
-        modelList.add("ioc");
-        modelList.add("macro");
-        
         when(table.viewer()).thenReturn(mock(TableViewer.class));
-        when(table.viewer().getInput()).thenReturn(modelList);
+        when(table.viewer().getInput()).thenReturn(tableModelList);
         
         labelProvider = new CheckboxLabelProvider<String>(mockProperties, table) {
             @Override
@@ -84,15 +84,26 @@ public class CheckboxLabelProviderTest {
         };
     }
     
+    @SuppressWarnings("unchecked")
     @Test
-    public void GIVEN_empty_update_flags_map_WHEN_updating_map_THEN_all_new_models_added() {
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
+    public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
         Map<String, AtomicBoolean> unmodifiableMap = labelProvider.getUnmodifiableUpdateFlagsMap();
         
-        for(String s: modelList) {
+        for(String s: tableModelList) {
+            assertEquals(false, unmodifiableMap.containsKey(s));
+        }
+        
+        tableModelList.add("block");
+        tableModelList.add("ioc");
+        tableModelList.add("macro");
+        
+        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        
+        for(String s: tableModelList) {
             assertEquals(true, unmodifiableMap.containsKey(s));
             assertEquals(true, unmodifiableMap.get(s).get());
         }
     }
+    
+    //public void GIVEN_incomplete
 }
