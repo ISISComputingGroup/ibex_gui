@@ -128,21 +128,51 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	@SuppressWarnings("unchecked")
 	public void updateCheckboxListenerUpdateFlags() {
 	    Set<T> tableModels = new HashSet<>((List<T>) databoundTable.viewer().getInput());
-	    
-        for(T model: tableModels) {
-            if(!checkboxListenerUpdateFlags.containsKey(model)) {
-                checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
-            } else {
-                checkboxListenerUpdateFlags.get(model).set(true);
-            }  
-        }
         
+        removeModelsNoLongerInTable(tableModels);
+        setCheckBoxesListenerUpdate();
+        addNewModelsToUpdateFlagsMap(tableModels);
+    }
+	
+	/**
+     * Removes mappings for models that are no longer in the table of this 
+     * label provider from the update flags map.
+     * @param tableModels the set of models currently in the table of this
+     * label provider.
+     */
+    public void removeModelsNoLongerInTable(Set<T> tableModels) {
         for(T model: checkboxListenerUpdateFlags.keySet()) {
             if(!tableModels.contains(model)) {
                 checkboxListenerUpdateFlags.remove(model);
             }
         }
     }
+    
+	/**
+     * Sets the update flags for the check boxes corresponding to the given 
+     * models to true.
+     * @param tableModels the set of models currently in the table of this
+     * label provider.
+     */
+    public void setCheckBoxesListenerUpdate() {
+        for(T model: checkboxListenerUpdateFlags.keySet()) {
+            checkboxListenerUpdateFlags.get(model).set(true);
+        }
+    }
+    
+	/**
+	 * Adds mappings for models newly added to the table of this label provider 
+	 * to the update flags map.
+     * @param tableModels the set of models currently in the table of this
+     * label provider.
+	 */
+	public void addNewModelsToUpdateFlagsMap(Set<T> tableModels) {
+	    for(T model: tableModels) {
+            if(!checkboxListenerUpdateFlags.containsKey(model)) {
+                checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
+            }
+        }
+	}
 	
 	/**
 	 * Sets the update flag of each model of the table to true.
