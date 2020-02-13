@@ -360,7 +360,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
 	 *  update the view table.
 	 * 
-	 * @param table The view table to update.
+	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
