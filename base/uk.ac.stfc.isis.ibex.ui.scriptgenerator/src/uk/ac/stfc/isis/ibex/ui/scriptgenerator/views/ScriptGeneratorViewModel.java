@@ -195,7 +195,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Check if there are any configs loaded
+	 * Check if there are any configs loaded.
 	 * 
 	 * @return true if there is at least one config loaded, false if not.
 	 */
@@ -502,7 +502,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
     
     /**
-     * Asynchronously get the URL of the user manual and bind it to the Open Manual button
+     * Asynchronously get the URL of the user manual and bind it to the Open Manual button.
      * 
      * @param manualButton The button that should open the manual
      */
