@@ -24,12 +24,14 @@ import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -42,6 +44,7 @@ import org.eclipse.swt.widgets.Button;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
@@ -67,6 +70,8 @@ public class SummaryPanel extends Composite {
     private Button protectedCheckBox;
     private Label protectLabel;
     private Label warning;
+    private Observer<Collection<SynopticInfo>> synopticInfoObserver;
+    private Subscription synopticSubscription;
 
     /**
      * Constructor for the general information about the configuration.
@@ -153,13 +158,12 @@ public class SummaryPanel extends Composite {
     private void setBindings() {
         DataBindingContext bindingContext = new DataBindingContext();
 
-        UpdateValueStrategy descValidator = new UpdateValueStrategy();
+	UpdateValueStrategy<String, String> descValidator = new UpdateValueStrategy<>();
         // Set validator if not saving a new config
         if (!config.getIsNew()) {
         	 BlockServerNameValidator configDescriptionRules = Configurations.getInstance()
                      .variables().configDescriptionRules.getValue();
-            descValidator
-                    .setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescriptionRules));
+	    descValidator.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescriptionRules));
         }
         
         bindSynopticList();
@@ -170,23 +174,23 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("name").observe(config));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
                 BeanProperties.value("description").observe(config), descValidator, null);
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()),
+	bindingContext.bindValue(WidgetProperties.comboSelection().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
-                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
+		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
-                BeanProperties.value("isNew").observe(config), null, UIUtils.NOT_CONVERTER);
+		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField),
                 BeanProperties.value("dateCreated").observe(config));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField),
                 BeanProperties.value("dateModified").observe(config));
-        bindingContext.bindValue(WidgetProperties.selection().observe(protectedCheckBox),
+	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(protectedCheckBox),
                 BeanProperties.value("isProtected").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
-                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
+		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
-                BeanProperties.value("isComponent").observe(config), null, UIUtils.NOT_CONVERTER);
+		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(warning),
                 BeanProperties.value("errorMessage").observe(config));
 
@@ -202,7 +206,7 @@ public class SummaryPanel extends Composite {
      * #2527.
      */
     private void bindSynopticList() {
-        Synoptic.getInstance().availableSynopticsInfo().subscribe(new Observer<Collection<SynopticInfo>>() {
+	synopticInfoObserver = new Observer<Collection<SynopticInfo>>() {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
@@ -266,6 +270,16 @@ public class SummaryPanel extends Composite {
             public void onConnectionStatus(boolean isConnected) {
                 // keep list as is
             }
+	};
+	synopticSubscription = Synoptic.getInstance().availableSynopticsInfo().subscribe(synopticInfoObserver);
+	
+	this.addDisposeListener(new DisposeListener() {
+	    
+	    @Override
+	    public void widgetDisposed(DisposeEvent e) {
+		
+		synopticSubscription.cancelSubscription();
+	    }
         });
     }
 }

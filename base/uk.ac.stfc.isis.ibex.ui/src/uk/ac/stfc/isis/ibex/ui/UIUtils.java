@@ -46,6 +46,16 @@ public final class UIUtils {
             return !(Boolean) value;
         }
     };
+    
+    /**
+     * A typed update strategy for inverting an observed boolean value.
+     */
+    public static final UpdateValueStrategy<Boolean, Boolean> TYPED_NOT_CONVERTER = new UpdateValueStrategy<Boolean, Boolean>() {
+        @Override
+        public Boolean convert(Boolean value) {
+            return !(Boolean) value;
+        }
+    };
 
     private UIUtils() {
 
