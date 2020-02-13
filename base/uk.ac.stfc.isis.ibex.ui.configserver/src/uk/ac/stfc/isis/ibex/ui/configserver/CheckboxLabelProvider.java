@@ -140,7 +140,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
      * @param tableModels the set of models currently in the table of this
      * label provider.
      */
-    public void removeModelsNoLongerInTable(Set<T> tableModels) {
+    private void removeModelsNoLongerInTable(Set<T> tableModels) {
         checkboxListenerUpdateFlags.entrySet().removeIf(entry -> !tableModels.contains(
                 entry.getKey()));
     }
@@ -151,7 +151,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
      * @param tableModels the set of models currently in the table of this
      * label provider.
 	 */
-	public void addNewModelsToUpdateFlagsMap(Set<T> tableModels) {
+	private void addNewModelsToUpdateFlagsMap(Set<T> tableModels) {
 	    for(T model: tableModels) {
             if(!checkboxListenerUpdateFlags.containsKey(model)) {
                 checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));

@@ -26,9 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -61,7 +59,7 @@ public class CheckboxLabelProviderTest {
     
     private Map<String, AtomicBoolean> unmodifiableMapView;
     
-    private String[] testModels = {"block", "ioc"};
+    private final String[] testModels = {"block", "ioc"};
     
     @Mock
     private DataboundTable<String> table;
@@ -99,7 +97,6 @@ public class CheckboxLabelProviderTest {
         labelProvider.updateCheckboxListenerUpdateFlags();
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
         tableModelList.add(testModels[0]);
@@ -109,7 +106,7 @@ public class CheckboxLabelProviderTest {
             assertEquals(false, unmodifiableMapView.containsKey(s));
         }
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String s: tableModelList) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
@@ -117,13 +114,12 @@ public class CheckboxLabelProviderTest {
         }
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_complete_update_flags_map_WHEN_adding_same_models_THEN_map_unchanged() {
         tableModelList.add(testModels[0]);
         tableModelList.add(testModels[1]);
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String s: tableModelList) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
@@ -131,7 +127,7 @@ public class CheckboxLabelProviderTest {
         
         int mapSize = unmodifiableMapView.size();
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String s: tableModelList) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
@@ -139,50 +135,47 @@ public class CheckboxLabelProviderTest {
         assertEquals(mapSize, unmodifiableMapView.size());
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_update_flags_map_WHEN_table_now_empty_THEN_remove_old_map_entries() {
         tableModelList.add(testModels[0]);
         tableModelList.add(testModels[1]);
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String s: tableModelList) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
         }
         
         tableModelList.clear();
-        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         assertEquals(false, unmodifiableMapView.containsKey(testModels[0]));
         assertEquals(false, unmodifiableMapView.containsKey(testModels[1]));
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_update_flags_map_WHEN_table_unchanged_THEN_map_unchanged() {
         tableModelList.add(testModels[0]);
         tableModelList.add(testModels[1]);
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String s: tableModelList) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
         }
         
-        labelProvider.removeModelsNoLongerInTable(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         assertEquals(true, unmodifiableMapView.containsKey(testModels[0]));
         assertEquals(true, unmodifiableMapView.containsKey(testModels[1]));
     }
     
-    @SuppressWarnings("unchecked")
     @Test
     public void GIVEN_update_flags_map_WHEN_reset_update_flags_THEN_all_flags_true() {
         tableModelList.add(testModels[0]);
         tableModelList.add(testModels[1]);
         
-        labelProvider.addNewModelsToUpdateFlagsMap(new HashSet<>((List<String>) table.viewer().getInput()));
+        labelProvider.updateCheckboxListenerUpdateFlags();
         
         for(String model: unmodifiableMapView.keySet()) {
             unmodifiableMapView.get(model).set(false);
