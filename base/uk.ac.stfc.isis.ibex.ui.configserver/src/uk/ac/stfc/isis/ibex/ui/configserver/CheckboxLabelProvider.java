@@ -60,7 +60,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     /**
      * A selection listener that binds models to check boxes.
      */
-    protected class CheckboxSelectionAdapter extends SelectionAdapter {    
+    public class CheckboxSelectionAdapter extends SelectionAdapter {    
         final Button checkbox;
         final T model;
         
@@ -191,7 +191,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 */
 	public void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
 	    if(doUpdate) {
-            clearCheckBoxSelectListener(checkBox);
+            clearCheckBoxSelectListeners(checkBox);
           
             checkBox.addSelectionListener(new CheckboxSelectionAdapter(checkBox, model));
         }
@@ -203,7 +203,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param checkBox the check box whose SelectionAdapter listeners we 
 	 * will remove.
 	 */
-	public static void clearCheckBoxSelectListener(Button checkBox) {
+	public static void clearCheckBoxSelectListeners(Button checkBox) {
         for(Listener listener: checkBox.getListeners(SWT.Selection)) {
             if (listener instanceof TypedListener) {
                 TypedListener typedListener = (TypedListener) listener;
