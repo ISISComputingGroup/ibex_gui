@@ -88,6 +88,11 @@ public class PythonInterface extends ModelObject {
 	private String actionLoaderScript = DEFAULT_ACTION_LOADER_SCRIPT;
 
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
+	
+	/**
+	 * The time to wait before retrying restarting python.
+	 */
+	private static final int TIME_TO_WAIT_BEFORE_RETRY = 1000;
 
 	/**
 	 * The thread to execute python calls on.
@@ -146,7 +151,7 @@ public class PythonInterface extends ModelObject {
 			LOG.error("Failed to load Python");
 			LOG.error(e);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(TIME_TO_WAIT_BEFORE_RETRY);
 			} catch (InterruptedException e1) {
 				LOG.error(e);
 			}
