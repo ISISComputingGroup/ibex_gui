@@ -115,27 +115,6 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_complete_update_flags_map_WHEN_adding_same_models_THEN_map_unchanged() {
-        tableModelList.add(testModels[0]);
-        tableModelList.add(testModels[1]);
-        
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String s: tableModelList) {
-            assertEquals(true, unmodifiableMapView.containsKey(s));
-        }
-        
-        int mapSize = unmodifiableMapView.size();
-        
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String s: tableModelList) {
-            assertEquals(true, unmodifiableMapView.containsKey(s));
-        }
-        assertEquals(mapSize, unmodifiableMapView.size());
-    }
-    
-    @Test
     public void GIVEN_update_flags_map_WHEN_table_now_empty_THEN_remove_old_map_entries() {
         tableModelList.add(testModels[0]);
         tableModelList.add(testModels[1]);
