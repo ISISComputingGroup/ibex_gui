@@ -13,6 +13,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 
 public class ConfigLoaderTest {
 
@@ -27,8 +28,8 @@ public class ConfigLoaderTest {
 	@Before
 	public void setUp() {
 		
-		mockedConfig1 = createMockConfig("Config1");
-		mockedConfig2 = createMockConfig("Config2");
+		mockedConfig1 = createMockConfig("Config1", "Param1");
+		mockedConfig2 = createMockConfig("Config2", "Param2");
 		
 		availableConfigs = new ArrayList<Config>();
 		availableConfigs.add(mockedConfig1);
@@ -36,18 +37,22 @@ public class ConfigLoaderTest {
 		
 		mockPythonInterface = mock(PythonInterface.class);
 		
-		when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
+		try {
+			when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
+		} catch(PythonNotReadyException e) {
+			fail("We are mocking this out so should not throw exception");
+		}
 		
 		configLoader = new ConfigLoader(mockPythonInterface);
 	}
 
-	private Config createMockConfig(String action_parameter_name) {
+	private Config createMockConfig(String configName, String action_parameter_name) {
 		Config mockedConfig = mock(Config.class);
 		
-		ArrayList<String> configParams = new ArrayList<String>();
+		when(mockedConfig.getName()).thenReturn(configName);
 		
+		ArrayList<String> configParams = new ArrayList<String>();
 		configParams.add(action_parameter_name);
-				
 		when(mockedConfig.getParameters()).thenReturn(configParams);
 		
 		return mockedConfig;
@@ -79,6 +84,8 @@ public class ConfigLoaderTest {
 	public void test_GIVEN_config_loader_WHEN_config_set_THEN_ActionParameters_generated_from_action_definition() {
 		// Arrange
 		Config mockedConfigManyParameters = mock(Config.class);
+		
+		when(mockedConfigManyParameters.getName()).thenReturn("ConfigManyParams");
 		
 		ArrayList<String> configParams = new ArrayList<String>();
 		

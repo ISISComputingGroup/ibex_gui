@@ -22,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -143,6 +145,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	/**
+	 * A property to notify listeners when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
+	
+	/**
 	 * The date format to use when generating a script name.
 	 */
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -201,16 +208,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			@SuppressWarnings("unchecked")
 			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
 			generatedScript.ifPresentOrElse(script -> {
-				String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
-				try {
-					Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
-					firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-				} catch(NoConfigSelectedException e) {
-					LOG.error(e);
-				}
-			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
-			});
+					String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+					try {
+						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+					} catch(NoConfigSelectedException e) {
+						LOG.error(e);
+					}
+				}, () -> {
+					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+				});
 			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
@@ -228,12 +235,48 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(configLoader.getParameters());
 	}
 	
+	public Optional<URL> getUserManualUrl() {
+	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
+	    
+	    // Loop through all URLs in the preference property
+	    // and return the first one reachable from the user's network
+	    for (String url : preferenceProperty.split(",")) {
+	        try {
+	            URL possibleUrl = new URL(url);
+	            
+	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
+	            connection.setRequestMethod("GET");
+	            connection.connect();
+	            int responseCode = connection.getResponseCode();
+	            if (responseCode >= 200 && responseCode < 300) {
+	                return Optional.of(possibleUrl);
+	            }
+	        } catch (IOException ex) {
+	            LOG.debug("Invalid URL for user manual was found: " + url);
+	        }
+	    };
+	    
+	    LOG.warn("No valid URLs for the user manual were found");
+	    return Optional.empty();
+	}
+	
+	/**
+	 * Reload the table actions by firing a property change.
+	 */
+	public void reloadActions() {
+		this.scriptGeneratorTable.reloadActions();
+	}
+	
 	/**
      * Creates the config loader.
      */
     public void createConfigLoader() {
         pythonInterface = new PythonInterface();
         configLoader = new ConfigLoader(pythonInterface);
+        pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+        	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+		pythonInterface.workerSetUpPythonThread();
     }
     
     /**
@@ -552,5 +595,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public String getTimestamp() {
 		return DATE_FORMAT.format(new Date());
+	}
+
+	/**
+	 * Reload the configs.
+	 */
+	public void reloadConfigs() {
+		configLoader.reloadConfigs();
 	}
 }

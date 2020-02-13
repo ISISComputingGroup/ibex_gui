@@ -1,17 +1,21 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.net.URL;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -19,6 +23,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -34,13 +41,16 @@ import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * The ViewModel for the ScriptGeneratorView.
  * 
  * @author James King
  *
  */
-public class ScriptGeneratorViewModel {
+public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Display DISPLAY = Display.getDefault();
 	
@@ -120,6 +130,11 @@ public class ScriptGeneratorViewModel {
 	 */
 	private static final String CONFIG_SWITCH_PROPERTY = "config";
 	
+	/**
+	 * A property to notify listeners when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	/**
@@ -128,12 +143,37 @@ public class ScriptGeneratorViewModel {
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	
 	/**
+	 * The current viewTable in the actions.
+	 */
+	private ActionsViewTable viewTable;
+
+
+	/**
+	 * The current get validity errors button in the view.
+	 */
+	private Button btnGetValidityErrors;
+
+	/**
+	 * The current generate script button in the view.
+	 */
+	private Button btnGenerateScript;
+	
+	/**
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
 	 */
 	public ScriptGeneratorViewModel() {
 		// Set up the model
 		scriptGeneratorModel = Activator.getModel();
+		scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+			firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		});
+	}
+	
+	/**
+	 * Set up the model. Allows us to attach listeners for the view first.
+	 */
+	public void setUpModel() {
 		scriptGeneratorModel.createConfigLoader();
 		scriptGeneratorModel.setUp();
 		// Listen to whether the language support is changed
@@ -159,8 +199,8 @@ public class ScriptGeneratorViewModel {
 	 * 
 	 * @return true if there is at least one config loaded, false if not.
 	 */
-	public boolean configsLoaded() {
-		return this.scriptGeneratorModel.getConfigLoader().configsLoaded();
+	public boolean configsAvailable() {
+		return this.scriptGeneratorModel.getConfigLoader().configsAvailable();
 	}
 	
 	
@@ -247,14 +287,17 @@ public class ScriptGeneratorViewModel {
 	protected void cleanUp() {
 		scriptGeneratorModel.cleanUp();
 	}
-
+	
 	/**
 	 * Get a list of available configs.
 	 * 
 	 * @return A list of available configs.
 	 */
-	protected List<Config> getAvailableConfigs() {
-		return scriptGeneratorModel.getAvailableConfigs();
+	protected List<String> getAvailableConfigsNames() {
+		return scriptGeneratorModel.getAvailableConfigs()
+				.stream()
+				.map(config -> config.getName())
+				.collect(Collectors.toList());
 	}
 	
 	/**
@@ -284,24 +327,18 @@ public class ScriptGeneratorViewModel {
 		    }
 		};
 	}
-
+	
 	/**
-	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
-	 *  update the view table.
-	 * 
-	 * @param table The view table to update.
-	 * @param btnGetValidityErrors The validity check button to style change.
-	 * @param btnGenerateScript The generate script button to style change.
+	 * Listen for changes in actions and activate the handler.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
-		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, e -> {
+	private PropertyChangeListener actionChangeListener = evt -> {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		});
-		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		});
-		// Listen for generated script refreshes
-		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, evt -> {
+		};
+	
+	/**
+	 * Listen for generated scripts and display the correct dialog (error or success and open file).
+	 */
+	private PropertyChangeListener generatedScriptListener = evt -> {
 			@SuppressWarnings("unchecked")
 			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
 			DISPLAY.asyncExec(() -> {
@@ -314,7 +351,28 @@ public class ScriptGeneratorViewModel {
 						}
 				);
 			});
-		});
+		};
+
+	/**
+	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
+	 *  update the view table.
+	 * 
+	 * @param table The view table to update.
+	 * @param btnGetValidityErrors The validity check button to style change.
+	 * @param btnGenerateScript The generate script button to style change.
+	 */
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+		this.viewTable = viewTable;
+		this.btnGetValidityErrors = btnGetValidityErrors;
+		this.btnGenerateScript = btnGenerateScript;
+		// Remove listeners so as not to bind them twice
+		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+		// Listen for generated script refreshes
+		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
 	}
 	
 	private void openFileDialog(String filePath) {
@@ -331,10 +389,16 @@ public class ScriptGeneratorViewModel {
 	 */
 	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
 		DISPLAY.asyncExec(() -> {
-            viewTable.setRows(scriptGeneratorModel.getActions());
-            updateValidityChecks(viewTable);
-            setButtonValidityStyle(btnGetValidityErrors);
-            setButtonGenerateStyle(btnGenerateScript);
+			if(!viewTable.isDisposed()) {
+	            viewTable.setRows(scriptGeneratorModel.getActions());
+	            updateValidityChecks(viewTable);
+			}
+			if(!btnGetValidityErrors.isDisposed()) {
+				setButtonValidityStyle(btnGetValidityErrors);
+			}
+			if(!btnGenerateScript.isDisposed()) {
+				setButtonGenerateStyle(btnGenerateScript);
+			}
 		});
 	}
 	
@@ -362,21 +426,13 @@ public class ScriptGeneratorViewModel {
 			btnGetValidityErrors.setBackground(lightValidityCheckErrorColor);
 		}
 	}
-
-	/**
-	 * Bind the config loader to the context.
-	 * 
-	 * @param bindingContext The context.
-	 * @param configSelector The config selector ui element to bind.
-	 * @param helpText The UI element to display help string text in.
-	 */
-	protected void bindConfigLoader(DataBindingContext bindingContext, ComboViewer configSelector, Text helpText) {
-		// Switch the composite value when config switched
-		bindingContext.bindValue(ViewerProperties.singleSelection().observe(configSelector), 
-				BeanProperties.value(CONFIG_SWITCH_PROPERTY).observe(scriptGeneratorModel.getConfigLoader()));
-		// Display new help when config switch or make invisible if not help available
-		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, 
-			e -> {
+	
+	private PropertyChangeListener configSwitchHelpListener = new PropertyChangeListener() {
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			// Display the new config help string
+			if(!helpText.isDisposed()) {
 				Optional<Config> optionalConfig = getConfig();
 				optionalConfig.ifPresentOrElse(
 						realConfig -> {
@@ -385,7 +441,46 @@ public class ScriptGeneratorViewModel {
 						() -> {
 							helpText.setText("");
 						});
-			});
+			}
+		}
+	};
+
+	/**
+	 * The view's current helpText element.
+	 */
+	private Text helpText;
+	
+	private ISelectionChangedListener configSwitchListener = new ISelectionChangedListener() {
+		
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			String selectedConfigName;
+			if(!event.getSelection().isEmpty()) {
+				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
+				scriptGeneratorModel.getConfigLoader().getLastSelectedConfigName()
+					.ifPresentOrElse(lastSelectedConfigName -> {
+						if(!selectedConfigName.equals(lastSelectedConfigName)) {
+							scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+						}
+					}, () -> scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName));
+			}
+		}
+	};
+
+	/**
+	 * Bind the config loader to the context.
+	 * 
+	 * @param bindingContext The context.
+	 * @param configSelector The config selector ui element to bind.
+	 * @param helpText The UI element to display help string text in.
+	 */
+	protected void bindConfigLoader(ComboViewer configSelector, Text helpText) {
+		// Switch the composite value when config switched
+		configSelector.removeSelectionChangedListener(configSwitchListener);
+		configSelector.addSelectionChangedListener(configSwitchListener);
+		// Display new help when config switch or make invisible if not help available
+		this.helpText = helpText;
+		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, configSwitchHelpListener);
 	}
 	
 	/**
@@ -403,6 +498,36 @@ public class ScriptGeneratorViewModel {
 					helpText.setText("");
 				});
 	}
+    
+    /**
+     * Asynchronously get the URL of the user manual and bind it to the Open Manual button
+     * 
+     * @param manualButton The button that should open the manual
+     */
+    public void bindManualButton(Button manualButton) {
+        CompletableFuture.supplyAsync(() -> getUserManualUrl())
+            .thenAccept(url -> {
+                DISPLAY.asyncExec(() -> {
+                    if (!manualButton.isDisposed()) {
+                        setupLinkButton(manualButton, url);
+                    }
+                });
+            });
+    }
+    
+    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
+        target.ifPresent(url -> {
+            linkButton.setEnabled(true);
+            linkButton.addListener(SWT.Selection, e -> {
+                try {
+                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+                    browser.openURL(url);
+                } catch (PartInitException ex) {
+                    LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+                }
+            });
+        });
+    }
 
 	/**
 	 * Get the first i lines of invalidity errors for the current configuration and parameters.
@@ -536,7 +661,11 @@ public class ScriptGeneratorViewModel {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-    			e -> DISPLAY.asyncExec(() -> viewTable.updateTableColumns())
+    			e -> DISPLAY.asyncExec(() -> {
+    				if(!viewTable.isDisposed()) {
+    					viewTable.updateTableColumns();
+    				}
+    			})
     	);
     }
     
@@ -586,5 +715,22 @@ public class ScriptGeneratorViewModel {
 	public Optional<Config> getConfig() {
 		return scriptGeneratorModel.getConfig();
 	}
+
+	/**
+	 * Reload the available configs.
+	 */
+	public void reloadConfigs() {
+		scriptGeneratorModel.reloadConfigs();
+	}
+
+	/**
+	 * Reload the actions table actions.
+	 */
+	public void reloadActions() {
+		scriptGeneratorModel.reloadActions();
+	}
 	
+	public Optional<URL> getUserManualUrl() {
+	    return scriptGeneratorModel.getUserManualUrl();
+	}
 }

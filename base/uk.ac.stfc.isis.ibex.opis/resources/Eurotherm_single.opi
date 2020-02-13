@@ -33,193 +33,6 @@
   <wuid>-336ad6f:141c65e96ed:-7fff</wuid>
   <x>18</x>
   <y>30</y>
-  <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <axis_0_auto_scale>true</axis_0_auto_scale>
-    <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-    <axis_0_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_0_axis_color>
-    <axis_0_axis_title>Time</axis_0_axis_title>
-    <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
-    <axis_0_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_0_grid_color>
-    <axis_0_log_scale>false</axis_0_log_scale>
-    <axis_0_maximum>120.0</axis_0_maximum>
-    <axis_0_minimum>0.0</axis_0_minimum>
-    <axis_0_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
-    </axis_0_scale_font>
-    <axis_0_scale_format></axis_0_scale_format>
-    <axis_0_show_grid>true</axis_0_show_grid>
-    <axis_0_time_format>5</axis_0_time_format>
-    <axis_0_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_0_title_font>
-    <axis_0_visible>true</axis_0_visible>
-    <axis_1_auto_scale>true</axis_1_auto_scale>
-    <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
-    <axis_1_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_1_axis_color>
-    <axis_1_axis_title>Temperature</axis_1_axis_title>
-    <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
-    <axis_1_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_1_grid_color>
-    <axis_1_log_scale>false</axis_1_log_scale>
-    <axis_1_maximum>50.0</axis_1_maximum>
-    <axis_1_minimum>0.0</axis_1_minimum>
-    <axis_1_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
-    </axis_1_scale_font>
-    <axis_1_scale_format></axis_1_scale_format>
-    <axis_1_show_grid>true</axis_1_show_grid>
-    <axis_1_time_format>0</axis_1_time_format>
-    <axis_1_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_1_title_font>
-    <axis_1_visible>true</axis_1_visible>
-    <axis_2_auto_scale>true</axis_2_auto_scale>
-    <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
-    <axis_2_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_2_axis_color>
-    <axis_2_axis_title>Output</axis_2_axis_title>
-    <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
-    <axis_2_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_2_grid_color>
-    <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
-    <axis_2_log_scale>false</axis_2_log_scale>
-    <axis_2_maximum>100.0</axis_2_maximum>
-    <axis_2_minimum>0.0</axis_2_minimum>
-    <axis_2_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
-    </axis_2_scale_font>
-    <axis_2_scale_format></axis_2_scale_format>
-    <axis_2_show_grid>true</axis_2_show_grid>
-    <axis_2_time_format>0</axis_2_time_format>
-    <axis_2_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_2_title_font>
-    <axis_2_visible>true</axis_2_visible>
-    <axis_2_y_axis>true</axis_2_y_axis>
-    <axis_count>3</axis_count>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <height>397</height>
-    <name></name>
-    <plot_area_background_color>
-      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-    </plot_area_background_color>
-    <pv_name>$(PV_ROOT_EURO):TEMP</pv_name>
-    <pv_value />
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_legend>true</show_legend>
-    <show_plot_area_border>false</show_plot_area_border>
-    <show_toolbar>false</show_toolbar>
-    <title></title>
-    <title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
-    </title_font>
-    <tooltip>$(trace_0_y_pv)
-$(trace_0_y_pv_value)</tooltip>
-    <trace_0_anti_alias>true</trace_0_anti_alias>
-    <trace_0_buffer_size>1000</trace_0_buffer_size>
-    <trace_0_concatenate_data>true</trace_0_concatenate_data>
-    <trace_0_line_width>1</trace_0_line_width>
-    <trace_0_name>TEMPERATURE</trace_0_name>
-    <trace_0_plot_mode>0</trace_0_plot_mode>
-    <trace_0_point_size>4</trace_0_point_size>
-    <trace_0_point_style>0</trace_0_point_style>
-    <trace_0_trace_color>
-      <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
-    </trace_0_trace_color>
-    <trace_0_trace_type>0</trace_0_trace_type>
-    <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_0_update_mode>4</trace_0_update_mode>
-    <trace_0_visible>true</trace_0_visible>
-    <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_0_x_pv></trace_0_x_pv>
-    <trace_0_x_pv_value />
-    <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_0_y_pv>$(PV_ROOT_EURO):TEMP</trace_0_y_pv>
-    <trace_0_y_pv_value />
-    <trace_1_anti_alias>true</trace_1_anti_alias>
-    <trace_1_buffer_size>1000</trace_1_buffer_size>
-    <trace_1_concatenate_data>true</trace_1_concatenate_data>
-    <trace_1_line_width>1</trace_1_line_width>
-    <trace_1_name>TEMPERATURE SETPOINT</trace_1_name>
-    <trace_1_plot_mode>0</trace_1_plot_mode>
-    <trace_1_point_size>4</trace_1_point_size>
-    <trace_1_point_style>0</trace_1_point_style>
-    <trace_1_trace_color>
-      <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
-    </trace_1_trace_color>
-    <trace_1_trace_type>0</trace_1_trace_type>
-    <trace_1_update_delay>100</trace_1_update_delay>
-    <trace_1_update_mode>4</trace_1_update_mode>
-    <trace_1_visible>true</trace_1_visible>
-    <trace_1_x_axis_index>0</trace_1_x_axis_index>
-    <trace_1_x_pv></trace_1_x_pv>
-    <trace_1_x_pv_value />
-    <trace_1_y_axis_index>1</trace_1_y_axis_index>
-    <trace_1_y_pv>$(PV_ROOT_EURO):TEMP:SP:RBV</trace_1_y_pv>
-    <trace_1_y_pv_value />
-    <trace_2_anti_alias>true</trace_2_anti_alias>
-    <trace_2_buffer_size>1000</trace_2_buffer_size>
-    <trace_2_concatenate_data>true</trace_2_concatenate_data>
-    <trace_2_line_width>1</trace_2_line_width>
-    <trace_2_name>HEATER OUTPUT</trace_2_name>
-    <trace_2_plot_mode>0</trace_2_plot_mode>
-    <trace_2_point_size>4</trace_2_point_size>
-    <trace_2_point_style>0</trace_2_point_style>
-    <trace_2_trace_color>
-      <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0" />
-    </trace_2_trace_color>
-    <trace_2_trace_type>0</trace_2_trace_type>
-    <trace_2_update_delay>100</trace_2_update_delay>
-    <trace_2_update_mode>4</trace_2_update_mode>
-    <trace_2_visible>true</trace_2_visible>
-    <trace_2_x_axis_index>0</trace_2_x_axis_index>
-    <trace_2_x_pv></trace_2_x_pv>
-    <trace_2_x_pv_value />
-    <trace_2_y_axis_index>2</trace_2_y_axis_index>
-    <trace_2_y_pv>$(PV_ROOT_EURO):OUTPUT</trace_2_y_pv>
-    <trace_2_y_pv_value />
-    <trace_count>3</trace_count>
-    <transparent>false</transparent>
-    <trigger_pv>$(P)CS:IOC:$(EURO):DEVIOS:HEARTBEAT</trigger_pv>
-    <trigger_pv_value />
-    <visible>true</visible>
-    <widget_type>XY Graph</widget_type>
-    <width>493</width>
-    <wuid>-335c4d15:141df6bc595:-7aad</wuid>
-    <x>6</x>
-    <y>6</y>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
@@ -881,47 +694,6 @@ $(pv_value)</tooltip>
       <x>90</x>
       <y>0</y>
     </widget>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <auto_size>false</auto_size>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
-    </font>
-    <foreground_color>
-      <color name="ISIS_Blue" red="0" green="0" blue="255" />
-    </foreground_color>
-    <height>181</height>
-    <horizontal_alignment>2</horizontal_alignment>
-    <name>Temerature_label</name>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_scrollbar>false</show_scrollbar>
-    <text>If making changes to this OPI, please ensure that "Dummy" button appears last in XML file </text>
-    <tooltip></tooltip>
-    <transparent>false</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>false</visible>
-    <widget_type>Label</widget_type>
-    <width>163</width>
-    <wrap_words>true</wrap_words>
-    <wuid>-648922a4:1624e4fa0bd:-7d08</wuid>
-    <x>282</x>
-    <y>55</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -3256,6 +3028,193 @@ $(pv_value)</tooltip>
       <x>0</x>
       <y>0</y>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <axis_0_auto_scale>true</axis_0_auto_scale>
+    <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+    <axis_0_axis_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </axis_0_axis_color>
+    <axis_0_axis_title>Time</axis_0_axis_title>
+    <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+    <axis_0_grid_color>
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+    </axis_0_grid_color>
+    <axis_0_log_scale>false</axis_0_log_scale>
+    <axis_0_maximum>120.0</axis_0_maximum>
+    <axis_0_minimum>0.0</axis_0_minimum>
+    <axis_0_scale_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
+    </axis_0_scale_font>
+    <axis_0_scale_format></axis_0_scale_format>
+    <axis_0_show_grid>true</axis_0_show_grid>
+    <axis_0_time_format>5</axis_0_time_format>
+    <axis_0_title_font>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
+    </axis_0_title_font>
+    <axis_0_visible>true</axis_0_visible>
+    <axis_1_auto_scale>true</axis_1_auto_scale>
+    <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+    <axis_1_axis_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </axis_1_axis_color>
+    <axis_1_axis_title>Temperature</axis_1_axis_title>
+    <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+    <axis_1_grid_color>
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+    </axis_1_grid_color>
+    <axis_1_log_scale>false</axis_1_log_scale>
+    <axis_1_maximum>50.0</axis_1_maximum>
+    <axis_1_minimum>0.0</axis_1_minimum>
+    <axis_1_scale_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
+    </axis_1_scale_font>
+    <axis_1_scale_format></axis_1_scale_format>
+    <axis_1_show_grid>true</axis_1_show_grid>
+    <axis_1_time_format>0</axis_1_time_format>
+    <axis_1_title_font>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
+    </axis_1_title_font>
+    <axis_1_visible>true</axis_1_visible>
+    <axis_2_auto_scale>true</axis_2_auto_scale>
+    <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
+    <axis_2_axis_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </axis_2_axis_color>
+    <axis_2_axis_title>Output</axis_2_axis_title>
+    <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
+    <axis_2_grid_color>
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+    </axis_2_grid_color>
+    <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+    <axis_2_log_scale>false</axis_2_log_scale>
+    <axis_2_maximum>100.0</axis_2_maximum>
+    <axis_2_minimum>0.0</axis_2_minimum>
+    <axis_2_scale_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
+    </axis_2_scale_font>
+    <axis_2_scale_format></axis_2_scale_format>
+    <axis_2_show_grid>true</axis_2_show_grid>
+    <axis_2_time_format>0</axis_2_time_format>
+    <axis_2_title_font>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
+    </axis_2_title_font>
+    <axis_2_visible>true</axis_2_visible>
+    <axis_2_y_axis>true</axis_2_y_axis>
+    <axis_count>3</axis_count>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>397</height>
+    <name></name>
+    <plot_area_background_color>
+      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+    </plot_area_background_color>
+    <pv_name>$(PV_ROOT_EURO):TEMP</pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_legend>true</show_legend>
+    <show_plot_area_border>false</show_plot_area_border>
+    <show_toolbar>false</show_toolbar>
+    <title></title>
+    <title_font>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
+    </title_font>
+    <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+    <trace_0_anti_alias>true</trace_0_anti_alias>
+    <trace_0_buffer_size>1000</trace_0_buffer_size>
+    <trace_0_concatenate_data>true</trace_0_concatenate_data>
+    <trace_0_line_width>1</trace_0_line_width>
+    <trace_0_name>TEMPERATURE</trace_0_name>
+    <trace_0_plot_mode>0</trace_0_plot_mode>
+    <trace_0_point_size>4</trace_0_point_size>
+    <trace_0_point_style>0</trace_0_point_style>
+    <trace_0_trace_color>
+      <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
+    </trace_0_trace_color>
+    <trace_0_trace_type>0</trace_0_trace_type>
+    <trace_0_update_delay>100</trace_0_update_delay>
+    <trace_0_update_mode>4</trace_0_update_mode>
+    <trace_0_visible>true</trace_0_visible>
+    <trace_0_x_axis_index>0</trace_0_x_axis_index>
+    <trace_0_x_pv></trace_0_x_pv>
+    <trace_0_x_pv_value />
+    <trace_0_y_axis_index>1</trace_0_y_axis_index>
+    <trace_0_y_pv>$(PV_ROOT_EURO):TEMP</trace_0_y_pv>
+    <trace_0_y_pv_value />
+    <trace_1_anti_alias>true</trace_1_anti_alias>
+    <trace_1_buffer_size>1000</trace_1_buffer_size>
+    <trace_1_concatenate_data>true</trace_1_concatenate_data>
+    <trace_1_line_width>1</trace_1_line_width>
+    <trace_1_name>TEMPERATURE SETPOINT</trace_1_name>
+    <trace_1_plot_mode>0</trace_1_plot_mode>
+    <trace_1_point_size>4</trace_1_point_size>
+    <trace_1_point_style>0</trace_1_point_style>
+    <trace_1_trace_color>
+      <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
+    </trace_1_trace_color>
+    <trace_1_trace_type>0</trace_1_trace_type>
+    <trace_1_update_delay>100</trace_1_update_delay>
+    <trace_1_update_mode>4</trace_1_update_mode>
+    <trace_1_visible>true</trace_1_visible>
+    <trace_1_x_axis_index>0</trace_1_x_axis_index>
+    <trace_1_x_pv></trace_1_x_pv>
+    <trace_1_x_pv_value />
+    <trace_1_y_axis_index>1</trace_1_y_axis_index>
+    <trace_1_y_pv>$(PV_ROOT_EURO):TEMP:SP:RBV</trace_1_y_pv>
+    <trace_1_y_pv_value />
+    <trace_2_anti_alias>true</trace_2_anti_alias>
+    <trace_2_buffer_size>1000</trace_2_buffer_size>
+    <trace_2_concatenate_data>true</trace_2_concatenate_data>
+    <trace_2_line_width>1</trace_2_line_width>
+    <trace_2_name>HEATER OUTPUT</trace_2_name>
+    <trace_2_plot_mode>0</trace_2_plot_mode>
+    <trace_2_point_size>4</trace_2_point_size>
+    <trace_2_point_style>0</trace_2_point_style>
+    <trace_2_trace_color>
+      <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0" />
+    </trace_2_trace_color>
+    <trace_2_trace_type>0</trace_2_trace_type>
+    <trace_2_update_delay>100</trace_2_update_delay>
+    <trace_2_update_mode>4</trace_2_update_mode>
+    <trace_2_visible>true</trace_2_visible>
+    <trace_2_x_axis_index>0</trace_2_x_axis_index>
+    <trace_2_x_pv></trace_2_x_pv>
+    <trace_2_x_pv_value />
+    <trace_2_y_axis_index>2</trace_2_y_axis_index>
+    <trace_2_y_pv>$(PV_ROOT_EURO):OUTPUT</trace_2_y_pv>
+    <trace_2_y_pv_value />
+    <trace_count>3</trace_count>
+    <transparent>false</transparent>
+    <trigger_pv>$(P)CS:IOC:$(EURO):DEVIOS:HEARTBEAT</trigger_pv>
+    <trigger_pv_value />
+    <visible>true</visible>
+    <widget_type>XY Graph</widget_type>
+    <width>493</width>
+    <wuid>-335c4d15:141df6bc595:-7aad</wuid>
+    <x>6</x>
+    <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false" />

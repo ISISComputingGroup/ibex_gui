@@ -3,8 +3,12 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -16,6 +20,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class GeneratorPython extends AbstractGenerator {
 	
 	private final PythonInterface pythonInterface;
+	
+	private static final Logger LOG = IsisLog.getLogger(GeneratorPython.class);
 	
 	/**
 	 * Create a python generator with the specified python interface.
@@ -46,7 +52,12 @@ public class GeneratorPython extends AbstractGenerator {
 	 */
 	@Override
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshGeneratedScript(scriptGenContent, config);
+		try {
+			pythonInterface.refreshGeneratedScript(scriptGenContent, config);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 	
 	/**
@@ -58,7 +69,12 @@ public class GeneratorPython extends AbstractGenerator {
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshAreParamsValid(scriptGenContent, config);
+		try {	
+			pythonInterface.refreshAreParamsValid(scriptGenContent, config);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 
 	/**
@@ -71,7 +87,12 @@ public class GeneratorPython extends AbstractGenerator {
 	 */
 	@Override
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshValidityErrors(scriptGenContent, config);
+		try {
+			pythonInterface.refreshValidityErrors(scriptGenContent, config);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 	
 }
