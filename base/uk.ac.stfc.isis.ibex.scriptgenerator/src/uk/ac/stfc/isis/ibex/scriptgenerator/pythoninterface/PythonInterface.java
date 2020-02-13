@@ -231,6 +231,9 @@ public class PythonInterface extends ModelObject {
 	
 	/**
 	 * Gets all actions that could not be loaded and the reason.
+	 * 
+	 * @return Any errors when loading configs, the key is the config name,
+	 *  the value is the reason it could not load.
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 	public Map<String, String> getConfigLoadErrors() throws PythonNotReadyException {
@@ -249,6 +252,8 @@ public class PythonInterface extends ModelObject {
 
 	/**
 	 * Gets all available actions from the python script.
+	 * 
+	 * @return A list of available configs/action definitions.
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 	public List<Config> getActionDefinitions() throws PythonNotReadyException {
