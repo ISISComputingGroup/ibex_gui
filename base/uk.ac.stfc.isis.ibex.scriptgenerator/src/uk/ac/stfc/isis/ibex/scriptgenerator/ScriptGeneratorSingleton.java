@@ -163,7 +163,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * A response code for a get call that is bad.
 	 */
-	private static final int BAD_RESPONSE_CODE = 200;
+	private static final int BAD_RESPONSE_CODE = 300;
 	
 	
 	/**
