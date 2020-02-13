@@ -235,6 +235,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(configLoader.getParameters());
 	}
 	
+	/**
+	 * Load the URL for the user manual from preferences and attempt to connect to them.
+	 * If we can connect with them then select this as the url for the manual or an
+	 *  empty optional if we can't connect to any.
+	 * 
+	 * @return An empty optional if there is no preference that we can connect to,
+	 *  or an optional containing the url.
+	 */
 	public Optional<URL> getUserManualUrl() {
 	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
 	    
@@ -425,6 +433,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Gets all actions that could not be loaded and the reason.
+	 * 
+	 * @return A map of errors when loading configs, the config name
+	 *  is the key and the value is the reason.
 	 */
 	public Map<String, String> getConfigLoadErrors() {
 		return configLoader.getConfigLoadErrors();
