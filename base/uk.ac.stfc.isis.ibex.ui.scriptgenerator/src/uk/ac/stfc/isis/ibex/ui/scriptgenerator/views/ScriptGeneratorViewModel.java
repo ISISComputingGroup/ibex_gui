@@ -210,8 +210,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private void displayLanguageSupportError() {
 		MessageDialog.openError(DISPLAY.getActiveShell(), 
 				"Language support issue",
-				"You are attempting to use an unsupported language, " + 
-				"parameter validity checking and script generation are disabled at this time");
+				"You are attempting to use an unsupported language, "
+				+ "parameter validity checking and script generation are disabled at this time");
 	}
 	
 	/**
@@ -650,8 +650,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	if (action.isValid()) {
 			return null; // Do not show a tooltip
 		}
-		return "The reason this row is invalid is:\n" +
-			action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
+		return "The reason this row is invalid is:\n"
+			+ action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
     
     /**
