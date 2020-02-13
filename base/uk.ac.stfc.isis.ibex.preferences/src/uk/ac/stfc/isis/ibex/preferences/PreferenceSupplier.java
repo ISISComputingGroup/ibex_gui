@@ -275,9 +275,10 @@ public class PreferenceSupplier {
 	}
 	
 	/**
-	 * Whether the values of invalid blocks should be shown
+	 * Whether the values of invalid blocks should be shown.
+	 * 
 	 * @return true if invalid blocks should be shown with their current value and the relevant alarm border, 
-	 * false if invalid blocks should be shown with placeholder text and an alarm border
+	 *  false if invalid blocks should be shown with placeholder text and an alarm border
 	 */
 	public boolean showInvalidBlockValues() {
 		return preferenceService.getBoolean(PREFERENCE_NODE, SHOW_VALUES_OF_INVALID_BLOCKS, false, null);
@@ -303,7 +304,7 @@ public class PreferenceSupplier {
 	}
 	
     /**
-     * Get a list of URLs pointing to the Script Generator page on the user manual
+     * Get a list of URLs pointing to the Script Generator page on the user manual.
      * 
      * @return a comma-separated list of URLs
      */
