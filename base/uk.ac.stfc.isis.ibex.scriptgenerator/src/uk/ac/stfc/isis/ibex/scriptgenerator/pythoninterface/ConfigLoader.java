@@ -191,6 +191,6 @@ public class ConfigLoader extends ModelObject {
 	 * @return true if there is at least one config loaded, false if not.
 	 */
 	public boolean configsAvailable() {
-		return ! getAvailableConfigs().isEmpty();
+		return !getAvailableConfigs().isEmpty();
 	}
 }
