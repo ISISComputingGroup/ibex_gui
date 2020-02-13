@@ -34,6 +34,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.TypedListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -186,5 +190,21 @@ public class CheckboxLabelProviderTest {
         for(String model: unmodifiableMapView.keySet()) {
             assertEquals(true, unmodifiableMapView.get(model).get());
         }
+    }
+    
+    @Test
+    public void GIVEN_checkbox_WHEN_clear_checkbox_selection_listeners_THEN_listeners_removed() {
+        Button mockCheckBox = mock(Button.class);
+        
+        TypedListener[] checkBoxListeners = new TypedListener[2];
+        checkBoxListeners[0] = new TypedListener(labelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[0]));
+        checkBoxListeners[1] = new TypedListener(labelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[1]));
+        
+        when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(checkBoxListeners);
+        
+        CheckboxLabelProvider.clearCheckBoxSelectListeners(mockCheckBox);
+        
+        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[0].getEventListener());
+        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[1].getEventListener());
     }
 }
