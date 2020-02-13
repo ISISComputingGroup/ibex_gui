@@ -60,6 +60,8 @@ public class ConfigLoader extends ModelObject {
 	
 	/**
 	 * Constructor for the config loader, initialises the connection with python and reads the configurations.
+	 * 
+	 * @param pythonInterface The python interface to send python commands and queries through.
 	 */
 	public ConfigLoader(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
@@ -97,6 +99,9 @@ public class ConfigLoader extends ModelObject {
 	
 	/**
 	 * Gets all actions that could not be loaded and the reason.
+	 * 
+	 * @return Any errors when loading configs,
+	 *  where the key is the config name and the value is the reason it could not be loaded.
 	 */
 	public Map<String, String> getConfigLoadErrors() {
 		return configLoadErrors;
