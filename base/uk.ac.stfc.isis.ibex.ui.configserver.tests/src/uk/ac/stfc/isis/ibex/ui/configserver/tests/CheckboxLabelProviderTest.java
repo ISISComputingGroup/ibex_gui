@@ -38,13 +38,16 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider.CheckboxSelectionAdapter;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
@@ -222,5 +225,27 @@ public class CheckboxLabelProviderTest {
         CheckboxLabelProvider.clearCheckBoxSelectListeners(mockCheckBox);
         
         verify(mockCheckBox, never()).removeSelectionListener(any());
+    }
+    
+    @Test
+    public void GIVEN_checkbox_and_model_WHEN_should_not_update_THEN_label_provider_listeners_not_changed() {
+        Button mockCheckBox = mock(Button.class);
+        
+        labelProvider.resetCheckBoxListeners(false, mockCheckBox, testModels[0]);
+        
+        verify(mockCheckBox, never()).addSelectionListener(any());
+    }
+    
+    @Test
+    public void GIVEN_checkbox_and_model_WHEN_should_update_THEN_label_provider_listeners_added() {
+        Button mockCheckBox = mock(Button.class);
+        when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
+        
+        labelProvider.resetCheckBoxListeners(true, mockCheckBox, testModels[0]);
+        
+        ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
+        verify(mockCheckBox, times(1)).addSelectionListener(captor.capture());
+        
+        assertEquals(captor.getValue().getClass(), CheckboxSelectionAdapter.class);
     }
 }
