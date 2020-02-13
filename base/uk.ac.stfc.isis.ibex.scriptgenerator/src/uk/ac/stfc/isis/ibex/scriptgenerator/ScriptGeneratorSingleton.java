@@ -47,7 +47,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
