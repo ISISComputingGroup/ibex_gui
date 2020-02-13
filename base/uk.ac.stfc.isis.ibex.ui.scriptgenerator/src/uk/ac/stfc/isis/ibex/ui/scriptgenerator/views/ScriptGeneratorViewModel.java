@@ -473,7 +473,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Bind the config loader to the context.
 	 * 
-	 * @param bindingContext The context.
 	 * @param configSelector The config selector ui element to bind.
 	 * @param helpText The UI element to display help string text in.
 	 */
