@@ -74,7 +74,7 @@ public class ConfigLoader extends ModelObject {
 			availableConfigs = pythonInterface.getActionDefinitions();
 			configLoadErrors = pythonInterface.getConfigLoadErrors();
 			configsLoaded = true;
-			if(!availableConfigs.isEmpty()) {
+			if (!availableConfigs.isEmpty()) {
 				lastSelectedConfigName.ifPresentOrElse(configName -> {
 					setConfig(configName);
 				}, () -> setConfig(availableConfigs.get(0)));
@@ -110,19 +110,19 @@ public class ConfigLoader extends ModelObject {
 	public void setConfig(String configName) {
 		lastSelectedConfigName = Optional.of(configName);
 		try {
-			for(Config config : getAvailableConfigs()) {
-				if(config.getName().equals(configName)) {
+			for (Config config : getAvailableConfigs()) {
+				if (config.getName().equals(configName)) {
 					setConfig(config);
 					return;
 				}
 			}
-			if(!availableConfigs.isEmpty()) {
+			if (!availableConfigs.isEmpty()) {
 				LOG.error("No config matching name: " + configName + ". Setting default config.");
 				setConfig(getAvailableConfigs().get(0));
 			} else {
 				LOG.error("No default config available");
 			}
-		} catch(Py4JException e) {
+		} catch (Py4JException e) {
 			LOG.error(e);
 			pythonInterface.handlePythonReadinessChange(false);
 		}
@@ -136,13 +136,13 @@ public class ConfigLoader extends ModelObject {
 		try {
 			ArrayList<ActionParameter> parameters = config.getParameters().stream()
 					.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
-			firePropertyChange("parameters", this.parameters, this.parameters=parameters);
+			firePropertyChange("parameters", this.parameters, this.parameters = parameters);
 			selectedConfig = Optional.ofNullable(config);
 			selectedConfig.ifPresentOrElse(presentSelectedConfig -> {
 				lastSelectedConfigName = Optional.of(presentSelectedConfig.getName());
 			}, () -> lastSelectedConfigName = Optional.empty());
 			firePropertyChange("config", null, null);
-		} catch(Py4JException e) {
+		} catch (Py4JException e) {
 			LOG.error(e);
 			pythonInterface.handlePythonReadinessChange(false);
 		}
