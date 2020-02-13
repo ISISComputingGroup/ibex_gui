@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
@@ -193,7 +194,7 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_checkbox_WHEN_clear_checkbox_selection_listeners_THEN_listeners_removed() {
+    public void GIVEN_checkbox_with_selection_adapters_WHEN_clear_checkbox_selection_listeners_THEN_selection_adapters_removed() {
         Button mockCheckBox = mock(Button.class);
         
         TypedListener[] checkBoxListeners = new TypedListener[2];
@@ -206,5 +207,20 @@ public class CheckboxLabelProviderTest {
         
         verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[0].getEventListener());
         verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[1].getEventListener());
+    }
+    
+    @Test
+    public void GIVEN_checkbox_with_non_selection_listeners_WHEN_clear_checkbox_selection_listeners_THEN_no_listener_removed() {
+        Button mockCheckBox = mock(Button.class);
+        
+        TypedListener[] checkBoxListeners = new TypedListener[2];
+        checkBoxListeners[0] = new TypedListener(mock(SelectionListener.class));
+        checkBoxListeners[1] = new TypedListener(mock(SelectionListener.class));
+        
+        when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(checkBoxListeners);
+        
+        CheckboxLabelProvider.clearCheckBoxSelectListeners(mockCheckBox);
+        
+        verify(mockCheckBox, never()).removeSelectionListener(any());
     }
 }
