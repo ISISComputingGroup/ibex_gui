@@ -58,37 +58,37 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
-	private static final Color invalidDarkColor = DISPLAY.getSystemColor(SWT.COLOR_RED);
+	private static final Color INVALID_DARK_COLOR = DISPLAY.getSystemColor(SWT.COLOR_RED);
 	
 	/**
 	 * A light read for use in the other script generator table columns when a row is invalid.
 	 */
-	private static final Color invalidLightColor = new Color(DISPLAY, 255, 204, 203);
+	private static final Color INVALID_LIGHT_COLOR = new Color(DISPLAY, 255, 204, 203);
 	
 	/**
 	 * A green for use in the validity column when a row is valid.
 	 */
-	private static final Color validColor = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
+	private static final Color VALID_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
 	
 	/**
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
-	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
+	private static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	/**
 	 * The colour of the "get validity errors" button when it is grayed out.
 	 */
-	private static final Color greyColor = DISPLAY.getSystemColor(SWT.COLOR_GRAY);
+	private static final Color GREY_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GRAY);
 	
 	/**
 	 * A light orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
 	 */
-	private static final Color lightValidityCheckErrorColor = new Color(DISPLAY, 255, 201, 102);
+	private static final Color LIGHT_VALIDITY_CHECK_ERROR_COLOR = new Color(DISPLAY, 255, 201, 102);
 	
 	/**
 	 * A dark orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
 	 */
-	private static final Color darkValidityCheckErrorColor = new Color(DISPLAY, 255, 165, 0);
+	private static final Color DARK_VALIDITY_CHECK_ERROR_COLOR = new Color(DISPLAY, 255, 165, 0);
 	
 	/**
 	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
@@ -417,13 +417,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			// Grey the button out if parameters are valid, if not make it red
 			btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
 			if (scriptGeneratorModel.areParamsValid()) {
-				btnGetValidityErrors.setBackground(greyColor);
+				btnGetValidityErrors.setBackground(GREY_COLOR);
 			} else {
-				btnGetValidityErrors.setBackground(invalidLightColor);
+				btnGetValidityErrors.setBackground(INVALID_LIGHT_COLOR);
 			}
 		} else {
 			// Alert the user with an orange colour that the validity checks may be incorrect
-			btnGetValidityErrors.setBackground(lightValidityCheckErrorColor);
+			btnGetValidityErrors.setBackground(LIGHT_VALIDITY_CHECK_ERROR_COLOR);
 		}
 	}
 	
@@ -560,14 +560,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		for (int i = 0; i < actions.size(); i++) {
 			if (i < items.length) {
 				if (!scriptGeneratorModel.languageSupported) {
-					items[i].setBackground(lightValidityCheckErrorColor);
-					items[i].setBackground(validityColumnIndex, darkValidityCheckErrorColor);
+					items[i].setBackground(LIGHT_VALIDITY_CHECK_ERROR_COLOR);
+					items[i].setBackground(validityColumnIndex, DARK_VALIDITY_CHECK_ERROR_COLOR);
 				} else if (actions.get(i).isValid()) {
-					items[i].setBackground(clearColor);
-					items[i].setBackground(validityColumnIndex, validColor);
+					items[i].setBackground(CLEAR_COLOR);
+					items[i].setBackground(validityColumnIndex, VALID_COLOR);
 				} else {
-					items[i].setBackground(invalidLightColor);
-					items[i].setBackground(validityColumnIndex, invalidDarkColor);
+					items[i].setBackground(INVALID_LIGHT_COLOR);
+					items[i].setBackground(validityColumnIndex, INVALID_DARK_COLOR);
 				}
 			} else {
 				LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
