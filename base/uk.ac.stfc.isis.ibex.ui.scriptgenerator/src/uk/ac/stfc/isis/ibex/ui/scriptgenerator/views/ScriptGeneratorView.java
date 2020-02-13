@@ -63,7 +63,7 @@ public class ScriptGeneratorView {
 	/**
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
-	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
+	private static final Color CLEAR_COLOUR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	/**
 	 * The ViewModel the View is updated by.
@@ -224,7 +224,7 @@ public class ScriptGeneratorView {
 				helpTextDataLayout.widthHint = 400;
 				helpTextDataLayout.heightHint = 100;
 				helpText.setLayoutData(helpTextDataLayout);
-				helpText.setBackground(clearColor);
+				helpText.setBackground(CLEAR_COLOUR);
 				// Display the correct starting text
 				scriptGeneratorViewModel.getConfig().ifPresentOrElse(
 							config -> {
