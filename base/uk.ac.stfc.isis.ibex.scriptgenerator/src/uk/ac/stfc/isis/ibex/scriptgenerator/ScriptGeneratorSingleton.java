@@ -47,7 +47,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 
 /**
  * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
@@ -156,6 +155,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
+	/**
+	 * A response code for a get call that is good.
+	 */
+	private static final int GOOD_RESPONSE_CODE = 200;
+	
+	/**
+	 * A response code for a get call that is bad.
+	 */
+	private static final int BAD_RESPONSE_CODE = 300;
+	
 	
 	/**
 	 * The constructor, will create without a config loader and without loading
@@ -212,11 +221,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 					try {
 						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
 						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-					} catch(NoConfigSelectedException e) {
+					} catch (NoConfigSelectedException e) {
 						LOG.error(e);
 					}
 				}, () -> {
-					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
 				});
 			
 		});
@@ -227,7 +236,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			// The table has changed so update the validity checks
 			try {
 				refreshParameterValidityChecking();
-			} catch(NoConfigSelectedException e) {
+			} catch (NoConfigSelectedException e) {
 				LOG.error(e);
 			}
 		});
@@ -235,6 +244,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(configLoader.getParameters());
 	}
 	
+	/**
+	 * SHOULD ONLY BE CALLED IN ANOTHER THREAD.
+	 * Load the URL for the user manual from preferences and attempt to connect to them.
+	 * If we can connect with them then select this as the url for the manual or an
+	 *  empty optional if we can't connect to any.
+	 * 
+	 * @return An empty optional if there is no preference that we can connect to,
+	 *  or an optional containing the url.
+	 */
 	public Optional<URL> getUserManualUrl() {
 	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
 	    
@@ -248,7 +266,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	            connection.setRequestMethod("GET");
 	            connection.connect();
 	            int responseCode = connection.getResponseCode();
-	            if (responseCode >= 200 && responseCode < 300) {
+	            if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
 	                return Optional.of(possibleUrl);
 	            }
 	        } catch (IOException ex) {
@@ -300,13 +318,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		try {
 			Map mapCastValidityMessages = Map.class.cast(validityMessages);
 			Map<Integer, String> castValidityMessages = new HashMap<>();
-			for(Object nonCastEntry : mapCastValidityMessages.entrySet()) {
+			for (Object nonCastEntry : mapCastValidityMessages.entrySet()) {
 				Map.Entry castEntry = Map.Entry.class.cast(nonCastEntry);
 				castValidityMessages.put(Integer.class.cast(castEntry.getKey()),
 						String.class.cast(castEntry.getValue()));
 			}
 			return castValidityMessages;
-		} catch(ClassCastException e) {
+		} catch (ClassCastException e) {
 			LOG.error(e);
 	        return new HashMap<Integer, String>();
 	    }
@@ -425,6 +443,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Gets all actions that could not be loaded and the reason.
+	 * 
+	 * @return A map of errors when loading configs, the config name
+	 *  is the key and the value is the reason.
 	 */
 	public Map<String, String> getConfigLoadErrors() {
 		return configLoader.getConfigLoadErrors();
@@ -446,7 +467,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The string of validity errors to display
 	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
-		if(!languageSupported) {
+		if (!languageSupported) {
 			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
 		}
 		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
@@ -485,7 +506,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			generator.refreshValidityErrors(scriptGeneratorTable, config);
 			languageSupported = true;
 			threadError = false;
-		} catch(UnsupportedLanguageException e) {
+		} catch (UnsupportedLanguageException e) {
 			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
 			LOG.error(e);
 			languageSupported = false;
@@ -509,7 +530,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		Config config = getConfig()
 				.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"));
 		try {
-			if(areParamsValid()) {
+			if (areParamsValid()) {
 				generator.refreshGeneratedScript(scriptGeneratorTable, config);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
@@ -535,7 +556,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		try {
 			File scriptFile = generateScriptFile(filepathPrefix);
 			return writeScriptToFile(generatedScript, scriptFile);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			LOG.error("Failed to write generated script to file");
 			LOG.catching(e);
 			return Optional.empty();
@@ -567,7 +588,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			file = new File(filepath);
 			file.getParentFile().mkdirs();
 			version += 1;
-		} while(!file.createNewFile());
+		} while (!file.createNewFile());
 		return file;
 	}
 	
@@ -583,7 +604,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			scriptWriter.write(generatedScript);
 			scriptWriter.flush();
 			return Optional.of(scriptFile.getAbsolutePath());
-		} catch(IOException e) {
+		} catch (IOException e) {
 			return Optional.empty();
 		}
 	}
