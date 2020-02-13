@@ -179,7 +179,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
-			if(Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
+			if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
 				displayLanguageSupportError();
 			}
 		});
@@ -389,21 +389,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
 		DISPLAY.asyncExec(() -> {
-			if(!viewTable.isDisposed()) {
+			if (!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
 	            updateValidityChecks(viewTable);
 			}
-			if(!btnGetValidityErrors.isDisposed()) {
+			if (!btnGetValidityErrors.isDisposed()) {
 				setButtonValidityStyle(btnGetValidityErrors);
 			}
-			if(!btnGenerateScript.isDisposed()) {
+			if (!btnGenerateScript.isDisposed()) {
 				setButtonGenerateStyle(btnGenerateScript);
 			}
 		});
 	}
 	
 	private void setButtonGenerateStyle(Button btnGenerateScript) {
-		if(scriptGeneratorModel.languageSupported) {
+		if (scriptGeneratorModel.languageSupported) {
 			// Grey the button out if parameters are valid
 			btnGenerateScript.setEnabled(scriptGeneratorModel.areParamsValid());
 		} else {
@@ -413,10 +413,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	private void setButtonValidityStyle(Button btnGetValidityErrors) {
-		if(scriptGeneratorModel.languageSupported) {
+		if (scriptGeneratorModel.languageSupported) {
 			// Grey the button out if parameters are valid, if not make it red
 			btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
-			if(scriptGeneratorModel.areParamsValid()) {
+			if (scriptGeneratorModel.areParamsValid()) {
 				btnGetValidityErrors.setBackground(greyColor);
 			} else {
 				btnGetValidityErrors.setBackground(invalidLightColor);
@@ -432,7 +432,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			// Display the new config help string
-			if(!helpText.isDisposed()) {
+			if (!helpText.isDisposed()) {
 				Optional<Config> optionalConfig = getConfig();
 				optionalConfig.ifPresentOrElse(
 						realConfig -> {
@@ -455,11 +455,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			String selectedConfigName;
-			if(!event.getSelection().isEmpty()) {
+			if (!event.getSelection().isEmpty()) {
 				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
 				scriptGeneratorModel.getConfigLoader().getLastSelectedConfigName()
 					.ifPresentOrElse(lastSelectedConfigName -> {
-						if(!selectedConfigName.equals(lastSelectedConfigName)) {
+						if (!selectedConfigName.equals(lastSelectedConfigName)) {
 							scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
 						}
 					}, () -> scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName));
@@ -556,9 +556,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void updateValidityChecks(ActionsViewTable viewTable) {
 		List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
 		TableItem[] items = viewTable.table().getItems();
-		int validityColumnIndex = viewTable.table().getColumnCount()-1;
+		int validityColumnIndex = viewTable.table().getColumnCount() - 1;
 		for (int i = 0; i < actions.size(); i++) {
-			if(i < items.length) {
+			if (i < items.length) {
 				if (!scriptGeneratorModel.languageSupported) {
 					items[i].setBackground(lightValidityCheckErrorColor);
 					items[i].setBackground(validityColumnIndex, darkValidityCheckErrorColor);
@@ -618,7 +618,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         		new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
         	@Override
 			protected String stringFromRow(ScriptGeneratorAction row) {
-        		if(!scriptGeneratorModel.languageSupported) {
+        		if (!scriptGeneratorModel.languageSupported) {
         			return "\u003F"; // A question mark to say we cannot be certain
         		}
         		if (row.isValid()) {
@@ -662,7 +662,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
     			e -> DISPLAY.asyncExec(() -> {
-    				if(!viewTable.isDisposed()) {
+    				if (!viewTable.isDisposed()) {
     					viewTable.updateTableColumns();
     				}
     			})
@@ -673,9 +673,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Display the first few validity errors or that there are none in a popup box.
 	 */
 	public void displayValidityErrors() {
-		if(scriptGeneratorModel.languageSupported) {
+		if (scriptGeneratorModel.languageSupported) {
 			String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
-			if(!body.isEmpty()) {
+			if (!body.isEmpty()) {
 				String heading = "Validity errors:\n\n";
 				String message = heading + body;
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
@@ -700,7 +700,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
-		} catch(NoConfigSelectedException e) {
+		} catch (NoConfigSelectedException e) {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No config selection", 
 					"Cannot generate script. No config has been selected");
