@@ -142,7 +142,7 @@ public class PythonInterface extends ModelObject {
 		try {
 			cleanUp();
 			setUpPythonThread();
-		} catch(IOException e) {
+		} catch (IOException e) {
 			LOG.error("Failed to load Python");
 			LOG.error(e);
 			try {
@@ -234,7 +234,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 	public Map<String, String> getConfigLoadErrors() throws PythonNotReadyException {
-		if(pythonReady) {
+		if (pythonReady) {
 			try {
 				return configWrapper.getConfigLoadErrors();
 			} catch (Py4JException e) {
@@ -252,7 +252,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 	public List<Config> getActionDefinitions() throws PythonNotReadyException {
-		if(pythonReady) {
+		if (pythonReady) {
 			try {
 				return configWrapper.getActionDefinitions();
 			} catch (Py4JException e) {
@@ -272,7 +272,7 @@ public class PythonInterface extends ModelObject {
 		THREAD.submit(() -> {
 			try {
 				setUpPythonThread();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				LOG.error(e);
 			}
 		});
@@ -292,14 +292,14 @@ public class PythonInterface extends ModelObject {
 		new Thread(listenToErrors).start();
 		
 		this.configWrapper = (ConfigWrapper) clientServer
-				.getPythonServerEntryPoint(new Class[] { ConfigWrapper.class });
+				.getPythonServerEntryPoint(new Class[] {ConfigWrapper.class});
 		
-		while(true) {
+		while (true) {
 			try {
 				this.configWrapper.isPythonReady();
 				handlePythonReadinessChange(true);
 				break;
-			} catch(Py4JException e) {
+			} catch (Py4JException e) {
 				// Waiting until Python is ready (no Py4JException)
 			}
 		}
@@ -345,7 +345,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if(pythonReady) {
+		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
 					return configWrapper.getValidityErrors(convertScriptGenContentToPython(scriptGenContent), config);
@@ -360,7 +360,7 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting validity errors");
 		}
-		if(!pythonReady) {
+		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting validity errors");
 		}
 	}
@@ -377,7 +377,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if(pythonReady) {
+		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
 					return configWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), config);
@@ -392,7 +392,7 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting parameter validity");
 		}
-		if(!pythonReady) {
+		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting parameter validity");
 		}
 	}
@@ -408,7 +408,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if(pythonReady) {
+		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
 					return configWrapper.generate(convertScriptGenContentToPython(scriptGenContent), config);
@@ -425,7 +425,7 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting generated script");
 		}
-		if(!pythonReady) {
+		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting generated script");
 		}
 	}
