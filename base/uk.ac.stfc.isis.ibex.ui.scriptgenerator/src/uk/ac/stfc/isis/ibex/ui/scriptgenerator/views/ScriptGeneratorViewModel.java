@@ -93,7 +93,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
 	 */
-	private int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
+	private static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	
 	/**
 	 * A property that denotes whether the language to generate and check validity errors in is supported,
