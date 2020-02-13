@@ -236,6 +236,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * SHOULD ONLY BE CALLED IN ANOTHER THREAD.
 	 * Load the URL for the user manual from preferences and attempt to connect to them.
 	 * If we can connect with them then select this as the url for the manual or an
 	 *  empty optional if we can't connect to any.
