@@ -90,7 +90,7 @@ public class PythonInterface extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 	
 	/**
-	 * The time to wait before retrying restarting python.
+	 * The time to wait before retrying restarting python in ms.
 	 */
 	private static final int TIME_TO_WAIT_BEFORE_RETRY = 1000;
 
