@@ -141,7 +141,7 @@ public class ScriptGeneratorView {
 		
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
-			if(ready) {
+			if (ready) {
 				scriptGeneratorViewModel.reloadConfigs();
 				displayLoaded();
 			} else {
@@ -156,7 +156,7 @@ public class ScriptGeneratorView {
 	 * Destroy all child elements of the mainParent.
 	 */
 	private void destroyUIContents() {
-		for(Control child : mainParent.getChildren()) {
+		for (Control child : mainParent.getChildren()) {
 			child.dispose();
 		}
 	}
@@ -190,7 +190,7 @@ public class ScriptGeneratorView {
 		DISPLAY.asyncExec(() -> {
 			configsLoadedOnce = true;
 			destroyUIContents();
-			if(scriptGeneratorViewModel.configsAvailable()) {
+			if (scriptGeneratorViewModel.configsAvailable()) {
 				
 				// A composite to contain the elements at the top of the script generator
 				Composite topBarComposite = new Composite(mainParent, SWT.NONE);
@@ -263,7 +263,7 @@ public class ScriptGeneratorView {
 		        
 		        Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
 		        
-		        if(!configLoadErrors.isEmpty()) {
+		        if (!configLoadErrors.isEmpty()) {
 			        setUpConfigLoadErrorTable(mainParent, configLoadErrors); 			    
 		        }
 		        
@@ -347,7 +347,7 @@ public class ScriptGeneratorView {
 				
 				Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
 		        
-		        if(!configLoadErrors.isEmpty()) {
+		        if (!configLoadErrors.isEmpty()) {
 			        setUpConfigLoadErrorTable(mainParent, configLoadErrors); 			    
 		        }
 				
@@ -361,7 +361,7 @@ public class ScriptGeneratorView {
 	 * Set up a composite and table to display config load errors.
 	 */
 	private void setUpConfigLoadErrorTable(Composite parent, Map<String, String> configLoadErrors) {
-		if(!preferences.hideScriptGenConfigErrorTable()) {
+		if (!preferences.hideScriptGenConfigErrorTable()) {
 			// A composite to contain the config load errors
 			Composite configErrorComposite = new Composite(parent, SWT.NONE);
 			configErrorComposite.setLayout(new GridLayout(1, false));
@@ -378,7 +378,7 @@ public class ScriptGeneratorView {
 		    	column.setText(titles[i]);
 		    }
 		    
-		    for(Map.Entry<String, String> loadError : configLoadErrors.entrySet()) {
+		    for (Map.Entry<String, String> loadError : configLoadErrors.entrySet()) {
 		    	TableItem item = new TableItem(table, SWT.NULL);
 		    	item.setText(0, loadError.getKey());
 		    	item.setText(1, loadError.getValue());
