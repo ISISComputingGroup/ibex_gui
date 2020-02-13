@@ -371,7 +371,7 @@ public class ScriptGeneratorView {
 			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
 			Table table = new Table(configErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		    table.setHeaderVisible(true);
-		    String[] titles = { "Config", "Error" };
+		    String[] titles = {"Config", "Error"};
 		    
 		    for (int i = 0; i < titles.length; i++) {
 		    	TableColumn column = new TableColumn(table, SWT.NULL);
