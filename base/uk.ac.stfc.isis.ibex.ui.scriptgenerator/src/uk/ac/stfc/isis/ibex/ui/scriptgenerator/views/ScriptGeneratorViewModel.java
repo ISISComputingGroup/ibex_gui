@@ -738,6 +738,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.reloadActions();
 	}
 	
+	/**
+	 * Get the user manual URL for the script generator from the model.
+	 * 
+	 * @return An optional with a value containing the URL if there is a user manual to load.
+	 */
 	public Optional<URL> getUserManualUrl() {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
