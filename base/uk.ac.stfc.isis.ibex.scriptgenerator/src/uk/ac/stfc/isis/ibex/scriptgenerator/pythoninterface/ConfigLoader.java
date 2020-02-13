@@ -69,7 +69,7 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	/**
-	 * Reload the configs 
+	 * Reload the configs.
 	 */
 	public void reloadConfigs() {
 		 try {
@@ -191,7 +191,7 @@ public class ConfigLoader extends ModelObject {
 	}
 	
 	/**
-	 * Check if there are any configs loaded
+	 * Check if there are any configs loaded.
 	 * 
 	 * @return true if there is at least one config loaded, false if not.
 	 */
