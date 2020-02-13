@@ -302,6 +302,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	
 	/**
 	 * Gets all actions that could not be loaded and the reason.
+	 * 
+	 * @return A map of config load errors with keys as the name of the config
+	 *  and the value as the reason it could not be loaded
 	 */
 	protected Map<String, String> getConfigLoadErrors() {
 		return scriptGeneratorModel.getConfigLoadErrors();
