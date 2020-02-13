@@ -56,6 +56,8 @@ public interface ConfigWrapper {
 	
 	/**
 	 * Check if Python is ready.
+	 * 
+	 * @return True if python is ready, False if not.
 	 */
 	boolean isPythonReady();
 	
