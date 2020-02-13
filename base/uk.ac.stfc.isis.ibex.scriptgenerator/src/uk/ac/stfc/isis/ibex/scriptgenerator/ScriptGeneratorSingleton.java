@@ -155,6 +155,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
+	/**
+	 * A response code for a get call that is good.
+	 */
+	private static final int GOOD_RESPONSE_CODE = 200;
+	
+	/**
+	 * A response code for a get call that is bad.
+	 */
+	private static final int BAD_RESPONSE_CODE = 200;
+	
 	
 	/**
 	 * The constructor, will create without a config loader and without loading
@@ -256,7 +266,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	            connection.setRequestMethod("GET");
 	            connection.connect();
 	            int responseCode = connection.getResponseCode();
-	            if (responseCode >= 200 && responseCode < 300) {
+	            if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
 	                return Optional.of(possibleUrl);
 	            }
 	        } catch (IOException ex) {
