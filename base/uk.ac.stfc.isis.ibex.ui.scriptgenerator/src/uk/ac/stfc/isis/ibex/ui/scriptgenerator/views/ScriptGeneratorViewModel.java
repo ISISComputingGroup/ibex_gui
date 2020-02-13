@@ -517,6 +517,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
             });
     }
     
+    /**
+     * Sets up the button that links to the manual of the script generator.
+     * 
+     * @param linkButton The button to set up.
+     * @param target The url to point the button towards (an empty optional, if nowhere to point the button to).
+     */
     protected void setupLinkButton(Button linkButton, Optional<URL> target) {
         target.ifPresent(url -> {
             linkButton.setEnabled(true);
@@ -580,7 +586,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
      * Adds a parameter to this actions table.
      * 
-     * @param viewTabl The table view to add columns to.
+     * @param viewTable The table view to add columns to.
      */
     protected void addColumns(ActionsViewTable viewTable) {    	
     	// Add action parameter columns
