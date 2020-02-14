@@ -149,15 +149,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The date format to use when generating a script name.
 	 */
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
-	
-	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("(dd-MM-yyyy)-(HH-mm-ss)");
 	
 	/**
 	 * The string containing the last generated script.
 	 */
 	private Optional<String> lastGeneratedScript;
-
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
+	
 	/**
 	 * A response code for a get call that is good.
 	 */
@@ -218,6 +218,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// Detect when the generated script is refreshed
 		// Write the script to file, send up generated script filepath
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+<<<<<<< HEAD
 			lastGeneratedScript = (Optional<String>) evt.getNewValue();
 			lastGeneratedScript.ifPresentOrElse(script -> {
 				try {
@@ -229,6 +230,21 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			}, () -> {
 				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
 			});
+=======
+			@SuppressWarnings("unchecked")
+			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
+			generatedScript.ifPresentOrElse(script -> {
+					String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
+					try {
+						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
+					} catch (NoConfigSelectedException e) {
+						LOG.error(e);
+					}
+				}, () -> {
+					firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
+				});
+>>>>>>> origin/master
 			
 		});
 		configLoader.addPropertyChangeListener("parameters", evt -> {
@@ -559,7 +575,32 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Generate a filename to write the script to
+=======
+	 * Save a generated script to file.
+	 * 
+	 * @param generatedScript The script that has been generated that is written to file here.
+	 * @param filepathPrefix The path prefix to where the script shall be written to.
+	 * @return An optional containing the path to the file if successful. An empty optional if unsuccessful.
+	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
+	 * @throws IOException If we fail to create and write to a file.
+	 */
+	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoConfigSelectedException {
+		try {
+			File scriptFile = generateScriptFile(filepathPrefix);
+			return writeScriptToFile(generatedScript, scriptFile);
+		} catch (IOException e) {
+			LOG.error("Failed to write generated script to file");
+			LOG.catching(e);
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * Generate a file to write the script to
+>>>>>>> origin/master
 	 * 
 	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
 	 * @return The filename to prepend a path to write the script to.
@@ -579,8 +620,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				filename = String.format("%s-%s(%s)", configName, timestamp, version);
 			}
 			version += 1;
+<<<<<<< HEAD
 		} while(new File(String.format("%s%s", filepathPrefix, filename)).exists());
 		return filename;
+=======
+		} while (!file.createNewFile());
+		return file;
+	}
+	
+	/**
+	 * Write the script to file.
+	 * 
+	 * @param generatedScript The script to write to file.
+	 * @param scriptFile The file to write the script to.
+	 * @return An optional containing the file path if successful. An empty optional if IOException.
+	 */
+	private Optional<String> writeScriptToFile(String generatedScript, File scriptFile)  {
+		try (BufferedWriter scriptWriter = new BufferedWriter(new FileWriter(scriptFile))) {
+			scriptWriter.write(generatedScript);
+			scriptWriter.flush();
+			return Optional.of(scriptFile.getAbsolutePath());
+		} catch (IOException e) {
+			return Optional.empty();
+		}
+>>>>>>> origin/master
 	}
 	
 	/**

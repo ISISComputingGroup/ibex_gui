@@ -162,6 +162,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
 	 */
+	@SuppressWarnings("unchecked")
 	public ScriptGeneratorViewModel() {
 		// Set up the model
 		scriptGeneratorModel = Activator.getModel();
@@ -304,7 +305,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void cleanUp() {
 		scriptGeneratorModel.cleanUp();
 	}
-
+	
 	/**
 	 * Get a list of available configs.
 	 * 
@@ -347,12 +348,36 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		    }
 		};
 	}
-
+	
 	/**
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
+<<<<<<< HEAD
+		});
+		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, e -> {
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
+		});
+=======
+		};
+	
+	/**
+	 * Listen for generated scripts and display the correct dialog (error or success and open file).
+	 */
+	private PropertyChangeListener generatedScriptListener = evt -> {
+			@SuppressWarnings("unchecked")
+			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
+			DISPLAY.asyncExec(() -> {
+				optionalScriptFilePath.ifPresentOrElse(
+						scriptFilePath -> {
+							openFileDialog(scriptFilePath);
+						},
+						() -> {
+							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+						}
+				);
+			});
 		};
 
 	/**
@@ -372,6 +397,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+		// Listen for generated script refreshes
+		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
+	}
+	
+	private void openFileDialog(String filePath) {
+		FileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
+				"Script Generated", "Script generated at: ", filePath);
+>>>>>>> origin/master
 	}
 	
 	/**

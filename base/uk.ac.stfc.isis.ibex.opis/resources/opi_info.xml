@@ -797,6 +797,24 @@
       </value>
     </entry>
     <entry>
+      <key>Lakeshore 372</key>
+      <value>
+        <type>LAKESHORE</type>
+        <path>lakeshore372.opi</path>
+        <description>The OPI for the Lakeshore 372 temperature controller.</description>
+        <macros>
+          <macro>
+            <name>LAKESHORE372</name>
+            <description>The Lakeshore 372 PV prefix (e.g. LKSH372_01).</description>
+            <default>LKSH372_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Slit 1</key>
       <value>
         <type>JAWS</type>

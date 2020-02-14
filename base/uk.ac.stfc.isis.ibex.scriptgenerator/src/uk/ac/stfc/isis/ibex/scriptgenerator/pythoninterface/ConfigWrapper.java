@@ -17,14 +17,14 @@ public interface ConfigWrapper {
 	 * 
 	 * @return A mapping of unloaded configs to the reason they could not be loaded.
 	 */
-	public Map<String, String> getConfigLoadErrors();
+	Map<String, String> getConfigLoadErrors();
 	
 	/**
 	 * Get all action definitions available for use in the script generator.
 	 * 
 	 * @return A list of action definitions for use.
 	 */
-	public List<Config> getActionDefinitions();
+	List<Config> getActionDefinitions();
 
 	/**
 	 * Generate a script from a list of script generator actions for the given action definition.
@@ -33,7 +33,7 @@ public interface ConfigWrapper {
 	 * @param config The action definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	public String generate(List<Map<String, String>> scriptGenContent, Config config);
+	String generate(List<Map<String, String>> scriptGenContent, Config config);
 	
 	/**
 	 * Get a mapping of validity errors of the scriptGenContent against the config.
@@ -43,7 +43,7 @@ public interface ConfigWrapper {
 	 * @return A map where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	public Map<Integer, String> getValidityErrors(List<Map<String, String>> scriptGenContent, Config config);
+	Map<Integer, String> getValidityErrors(List<Map<String, String>> scriptGenContent, Config config);
 	
 	/**
 	 * Check if a list of actions are valid under the passed action definition.
@@ -52,6 +52,13 @@ public interface ConfigWrapper {
 	 * @param config The action definition to check with.
 	 * @return True if valid, False if not.
 	 */
-	public boolean areParamsValid(List<Map<String, String>> scriptGenContent, Config config);
+	boolean areParamsValid(List<Map<String, String>> scriptGenContent, Config config);
+	
+	/**
+	 * Check if Python is ready.
+	 * 
+	 * @return True if python is ready, False if not.
+	 */
+	boolean isPythonReady();
 	
 }

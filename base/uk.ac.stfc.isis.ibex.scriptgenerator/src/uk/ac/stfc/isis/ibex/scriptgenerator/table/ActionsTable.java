@@ -213,4 +213,11 @@ public class ActionsTable extends ModelObject {
 		}
 		return errors;
 	}
+
+	/**
+	 * Reload the actions by firing a property change.
+	 */
+	public void reloadActions() {
+		firePropertyChange(ACTIONS_PROPERTY, null, actions);
+	}
 }

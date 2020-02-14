@@ -8,7 +8,9 @@ if not exist "%BASEDIR%COPY_COMPLETE.txt" (
     @echo ERROR Client copy in %BASEDIR% is not complete
 	goto FINISH
 )
+
 REM Copy the Client files across
+@echo %TIME% main ibex client install started
 set APPSDIR=C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client_E4
 mkdir %CLIENTDIR%
@@ -19,6 +21,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Copy EPICS_UTILS across
+@echo %TIME% epics utils install started
 set UTILSDIR=%APPSDIR%\EPICS_UTILS
 mkdir %UTILSDIR%
 xcopy /q /s /e /h \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS %UTILSDIR%
@@ -26,7 +29,6 @@ if %errorlevel% neq 0 (
     @echo ERROR copying EPICS UTILS
 	goto FINISH
 )
-
 
 REM genie_python already has its own script
 REM the hierarchy is slightly different for release and development builds
@@ -42,6 +44,8 @@ if %errorlevel% neq 0 (
     @echo ERROR copying GENIE PYTHON
     goto FINISH
 )
+
+@echo %TIME% client install finished
 
 :FINISH
 pause
