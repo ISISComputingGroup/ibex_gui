@@ -122,15 +122,15 @@
         <unit id="org.eclipse.rcp.feature.group" version="4.12.0.v20190605-1801"/>
         <unit id="org.eclipse.rcp.source.feature.group" version="4.12.0.v20190605-1801"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://www.pydev.org/update_sites/5.9.2"/>
-        <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
-        <unit id="org.python.pydev.feature.source.feature.group" version="5.9.2.201708151115"/>
-    </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://eclipse.py4j.org/"/>
 		<unit id="org.py4j.feature.feature.group" version="0.10.9.bnd-SP8nOw"/>
 	</location>
+    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+        <repository location="http://www.pydev.org/update_sites/7.5.0"/>
+        <unit id="org.python.pydev.feature.feature.group" version="7.5.0.202001101138"/>
+        <unit id="org.python.pydev.feature.source.feature.group" version="7.5.0.202001101138"/>
+    </location>
 </locations>
 <environment>
 <os>win32</os>

@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
 import org.python.pydev.debug.newconsole.PydevConsoleConstants;
@@ -112,7 +113,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 *             can throw several different exceptions
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
-		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
+		IInterpreterManager manager = InterpreterManagersAPI.getPythonInterpreterManager(true);
 		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
 				monitor, false);
 
