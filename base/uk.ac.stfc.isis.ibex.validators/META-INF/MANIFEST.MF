@@ -7,13 +7,13 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.validators.ValidatorsActivator
 Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.8.2",
- jaxb-core;bundle-version="2.2.11",
- javax.xml.bind;bundle-version="2.2.12",
  javax.annotation;bundle-version="1.2.0",
  org.eclipse.persistence.moxy;bundle-version="2.7.3",
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- org.eclipse.core.databinding;bundle-version="1.7.0"
+ org.eclipse.core.databinding;bundle-version="1.7.0",
+ jakarta.xml.bind-api;bundle-version="2.3.2",
+ com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.validators;uses:="org.osgi.framework"

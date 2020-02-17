@@ -1062,13 +1062,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.xml.bind"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.xml.rpc"
          download-size="0"
          install-size="0"
@@ -1403,6 +1396,20 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.widgets.epics"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sun.xml.bind.jaxb-osgi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.xml.bind-api"
          download-size="0"
          install-size="0"
          version="0.0.0"

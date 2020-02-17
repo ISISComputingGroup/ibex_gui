@@ -86,7 +86,6 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://download.eclipse.org/rt/eclipselink/updates/"/>
-        <unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.3.v20180807-4be1041"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/jacorb/target/repository/"/>
@@ -133,6 +132,10 @@
 		<repository location="http://www.pydev.org/update_sites/7.5.0"/>
 		<unit id="org.python.pydev.feature.feature.group" version="7.5.0.202001101138"/>
 		<unit id="org.python.pydev.feature.source.feature.group" version="7.5.0.202001101138"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://download.eclipse.org/rt/eclipselink/updates/"/>
+		<unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.6.v20200131-b7c997804f"/>
 	</location>
 </locations>
 <environment>
