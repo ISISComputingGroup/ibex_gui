@@ -168,6 +168,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private static final int BAD_RESPONSE_CODE = 300;
 	
+	/**
+	 * The file handler to write and open scripts with.
+	 */
+	private ScriptGeneratorFileHandler fileHandler = new ScriptGeneratorFileHandler();
+	
 	
 	/**
 	 * The constructor, will create without a config loader and without loading
@@ -597,5 +602,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public void reloadConfigs() {
 		configLoader.reloadConfigs();
+	}
+	
+	/**
+	 * Get the file writer to use to write scripts to file.
+	 */
+	public ScriptGeneratorFileHandler getFileHandler() {
+		return fileHandler;
 	}
 }

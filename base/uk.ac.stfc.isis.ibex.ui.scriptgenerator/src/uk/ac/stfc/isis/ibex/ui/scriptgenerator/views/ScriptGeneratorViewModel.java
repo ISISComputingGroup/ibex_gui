@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageExcept
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.widgets.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -201,7 +200,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
 									"Script Generated", "",
 									scriptGeneratorModel.getScriptFilepathPrefix(),
-									scriptFilename, generatedScript);
+									scriptFilename, generatedScript, scriptGeneratorModel);
 						},
 						() -> {
 							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
