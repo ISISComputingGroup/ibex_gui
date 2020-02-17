@@ -96,11 +96,6 @@
         <repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
         <unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://www.pydev.org/update_sites/5.9.2"/>
-        <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
-        <unit id="org.python.pydev.feature.source.feature.group" version="5.9.2.201708151115"/>
-    </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://eclipse.py4j.org/"/>
 		<unit id="org.py4j.feature.feature.group" version="0.10.9.bnd-SP8nOw"/>
@@ -134,6 +129,11 @@
          <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
          <repository location="http://download.eclipse.org/releases/2018-09"/>
      </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://www.pydev.org/update_sites/7.5.0"/>
+		<unit id="org.python.pydev.feature.feature.group" version="7.5.0.202001101138"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="7.5.0.202001101138"/>
+	</location>
 </locations>
 <environment>
 <os>win32</os>
