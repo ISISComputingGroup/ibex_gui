@@ -33,17 +33,7 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="true">
-      <action type="OPEN_DISPLAY">
-        <path>Motor/mymotor.opi</path>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <MM>MOT:MTR$(MTR)</MM>
-        </macros>
-        <mode>1</mode>
-        <description></description>
-      </action>
-    </actions>
+    <actions hook="false" hook_all="true" />
     <background_color>
       <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
     </background_color>
@@ -65,7 +55,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>$(NAME)</name>
+    <name></name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
