@@ -1,4 +1,4 @@
-robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
+robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre_new" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
