@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * A class for handling the writing to and opening of script generator files.
+ */
 public class ScriptGeneratorFileHandler {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorFileHandler.class);
