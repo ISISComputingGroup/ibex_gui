@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.CheckForOverwriteException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.FileGeneratorException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.OpenFileException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 
 
@@ -163,6 +164,12 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 		}));
 	}		
 	
+	/**
+	 * Handle the saving (and possibly opening) of a file.
+	 * 
+	 * @param openFile true if we wish to open the file in notepad,
+	 *  false if we do not wish to open the file at all.
+	 */
 	private void fileSaveHandler(boolean openFile) {
 		// Detect whether the file has been written or not
 		boolean fileWritten = false;
@@ -194,10 +201,17 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "Failed to write generated script to file");
 		}
 		
-		// Only close the dialog if we have succesfully written to file
+		// Only close the dialog if we have successfully written to file
 		if(fileWritten) {
 			if(openFile) {
-				model.getFileHandler().openFile(filepathPrefix, filename, PYTHON_EXT);
+				try {
+					model.getFileHandler().openFile(filepathPrefix, filename, PYTHON_EXT);
+				} catch(OpenFileException | IOException e) {
+					Display.getDefault().asyncExec( () -> {
+						MessageDialog.openWarning(Display.getDefault().getActiveShell(),
+								"Error", "Failed to open file: " + e.getMessage());
+					});
+				}
 			}
 			this.close();
 		} else {

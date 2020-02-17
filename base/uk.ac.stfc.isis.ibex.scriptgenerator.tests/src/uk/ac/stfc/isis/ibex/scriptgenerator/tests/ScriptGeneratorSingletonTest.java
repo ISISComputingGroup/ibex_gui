@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -52,7 +53,11 @@ public class ScriptGeneratorSingletonTest {
 		timestamp = "timestamp";
 		mockConfig = mock(Config.class);
 		configName = "config";
-		filepathPrefix = (System.getProperty("user.dir") + "\\test_scripts\\");
+		
+		filepathPrefix = (System.getProperty("user.dir") + "\\test_script_gen_handler_scripts\\");
+		if(!(new File(filepathPrefix).mkdir())) {
+			fail("We need to create this directory to write files to it");
+		}
 		
 		// Mock out some methods to test real calls to others
 		when(mockModel.getTimestamp()).thenReturn(timestamp);
@@ -139,17 +144,30 @@ public class ScriptGeneratorSingletonTest {
 	}
 	
 	@Test
-	public void test_GIVEN_new_file_WHEN_generate_THEN_filename_without_version() {
-		// Arrange in setUp
-		String expectedFilepath = String.format("%s-%s", configName, timestamp);
+	public void test_GIVEN_new_and_old_file_WHEN_generate_THEN_filename_with_versioning() {
+		// Arrange
+		String expectedOldFilepath = String.format("%s-%s", configName, timestamp);
+		String expectedNewFilepath = String.format("%s-%s(1)", configName, timestamp);
+		String expectedNewNewFilepath = String.format("%s-%s(2)", configName, timestamp);
 		try {
 			// Act
-			String filepath = mockModel.generateScriptFileName(filepathPrefix);
+			String oldFilepath = mockModel.generateScriptFileName(filepathPrefix);
+			new File(filepathPrefix+oldFilepath).createNewFile();
+			String newFilepath = mockModel.generateScriptFileName(filepathPrefix);
+			new File(filepathPrefix+newFilepath).createNewFile();
+			String newNewFilepath = mockModel.generateScriptFileName(filepathPrefix);
 			// Assert
 			assertThat("Should generate filepath with the config name and a timestamp",
-					filepath, equalTo(expectedFilepath));
+					oldFilepath, equalTo(expectedOldFilepath));
+			assertThat("Should generate filepath with the config name, a timestamp and 0 a version",
+					newFilepath, equalTo(expectedNewFilepath));
+			assertThat("Should generate filepath with the config name, a timestamp and 1 as a version",
+					newNewFilepath, equalTo(expectedNewNewFilepath));
 		} catch(NoConfigSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+			fail("We have failed when creating the file");
 		}
 	}
 	
