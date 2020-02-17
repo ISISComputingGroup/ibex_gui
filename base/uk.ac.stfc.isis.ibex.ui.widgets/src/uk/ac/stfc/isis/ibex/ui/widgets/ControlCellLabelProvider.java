@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.widgets.Composite;
@@ -40,8 +41,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
  */
 public abstract class ControlCellLabelProvider<T extends Control, TRow> extends SortableObservableMapCellLabelProvider<TRow> {
 	
-	private final Map<TRow, T> cellControls = new HashMap<>();
-	private final Map<TRow, TableEditor> cellEditors = new HashMap<>();
+	private final Map<ViewerRow, T> cellControls = new HashMap<>();
+	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
 	/**
 	 * Constructor for the control cell label provider.
@@ -59,11 +60,8 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 * @return The control that the cell contains
 	 */
 	protected T getControl(ViewerCell cell, int style) {
-	    @SuppressWarnings("unchecked")
-	    TRow model = (TRow) cell.getElement();
-	    
-		return cellControls.containsKey(model) ? cellControls.get(model)
-		        : create(cell, style);
+	    return cellControls.containsKey(cell.getViewerRow()) ? cellControls.get(
+	            cell.getViewerRow()) : create(cell, style);
 	}
 	
 	/**
@@ -84,12 +82,11 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	
     protected abstract T createControl(ViewerCell cell, int style);
 	
-    @SuppressWarnings("unchecked")
 	private T create(final ViewerCell cell, int style) {
 		T control = createControl(cell, style);
 		
 		setEditor(cell, control);
-		cellControls.put((TRow) cell.getElement(), control);
+		cellControls.put(cell.getViewerRow(), control);
 		
 		return control;
 	}
@@ -98,7 +95,6 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 		return (Composite) cell.getControl();
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void setEditor(ViewerCell cell, Control control) {
 		TableItem item = (TableItem) cell.getItem();
 		TableEditor editor = new TableEditor(item.getParent());
@@ -109,6 +105,6 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	    editor.setEditor(control, item, cell.getColumnIndex());
 	    editor.layout();
 	    
-	    cellEditors.put((TRow) cell.getElement(), editor);
+	    cellEditors.put(cell, editor);
 	}
 }
