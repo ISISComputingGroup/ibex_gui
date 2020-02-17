@@ -6,10 +6,10 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
- lib/joda-time-2.10.3.jar,
- lib/commons-codec-1.11-javadoc.jar,
- lib/commons-codec-1.11-sources.jar,
- lib/commons-codec-1.11.jar,
+ lib/joda-time-2.10.5.jar,
+ lib/commons-codec-1.14-javadoc.jar,
+ lib/commons-codec-1.14-sources.jar,
+ lib/commons-codec-1.14.jar,
  .,
  resources/
 Require-Bundle: org.eclipse.persistence.moxy;bundle-version="2.7.3";visibility:=reexport,
