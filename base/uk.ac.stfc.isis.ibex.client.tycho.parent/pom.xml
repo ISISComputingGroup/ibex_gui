@@ -229,6 +229,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
+		<module>../uk.ac.stfc.isis.ibex.jaxb</module>
 		
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>

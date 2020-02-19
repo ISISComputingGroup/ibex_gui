@@ -32,6 +32,7 @@ import org.eclipse.persistence.exceptions.XMLMarshalException;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Utils
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.jaxb;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.stfc.isis.ibex.jaxb
+Bundle-ClassPath: .
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.jaxb
+Require-Bundle: javax.xml.stream;bundle-version="1.0.1",
+ uk.ac.stfc.isis.ibex.logger,
+ com.google.gson;bundle-version="2.8.2",
+ org.eclipse.persistence.moxy,
+ org.eclipse.ui;bundle-version="3.115.0",
+ com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2";visibility:=reexport,
+ jakarta.xml.bind-api;bundle-version="2.3.2";visibility:=reexport
