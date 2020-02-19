@@ -23,10 +23,11 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.MarshalException;
 import org.eclipse.persistence.exceptions.XMLMarshalException;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,11 +55,11 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
 	
     @Test
     public void WHEN_passed_a_schema_that_does_not_match_xml_THEN_exception_thrown()
-            throws IOException, SAXException {
+            throws JAXBException, SAXException {
         try {
             XMLUtil.toXml(instrument, SynopticDescription.class, badSchema);
-        } catch (IOException e) {
-            assertThat(e.getCause().getCause(), instanceOf(XMLMarshalException.class));
+        } catch (MarshalException e) {
+            assertThat(e.getCause(), instanceOf(XMLMarshalException.class));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -66,7 +67,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
 
     @Test
     public void GIVEN_a_synoptic_created_from_xml_WHEN_converted_back_to_xml_THEN_xml_unchanged()
-            throws IOException {
+            throws JAXBException, SAXException {
 
         String input = fileContent();
         input = input.replace("\n", "").replace("\t", "");

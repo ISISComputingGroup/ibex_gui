@@ -19,10 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +41,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * EPICS/schema/configurations/screens.xsd.
  */
 @XmlRootElement(name = "devices", namespace = "")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 
     private static final Logger LOG = IsisLog.getLogger(DeviceScreensDescription.class);
@@ -111,7 +114,7 @@ public class DeviceScreensDescription {
     public String toString() {
         try {
             return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
-        } catch (IOException e) {
+        } catch (JAXBException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return e.toString();
         }

@@ -2,13 +2,14 @@ package uk.ac.stfc.isis.ibex.opis.tests.desc;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class DescriptionsProviderTest {
 	DescriptionsProvider descProvider;
 	
 	@Before
-	public void setUp() throws IOException, SAXException {
+	public void setUp() throws JAXBException, SAXException {
 		List<MacroInfo> macros = new ArrayList<MacroInfo>();
 		
         OpiDescription opi1 = new OpiDescription(opiType1, opiPath1, opiDescription1, macros, opiCategories1);

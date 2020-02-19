@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -48,7 +49,7 @@ public class XmlDuplicateCheck {
 	}
 	
 	@Test
-	public void test_that_opi_info_file_does_not_contain_any_duplicate_keys() throws IOException {
+	public void test_that_opi_info_file_does_not_contain_any_duplicate_keys() throws IOException, JAXBException {
 		Path path = new Path("../uk.ac.stfc.isis.ibex.opis/resources/opi_info.xml");
 	    KeyList keyList = XMLUtil.fromXml(new FileReader(path.toOSString()), KeyList.class);
 	    

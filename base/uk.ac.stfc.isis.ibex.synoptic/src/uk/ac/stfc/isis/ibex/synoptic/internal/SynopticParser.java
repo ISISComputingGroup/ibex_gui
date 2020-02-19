@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal;
 
-import java.io.IOException;
+import javax.xml.bind.JAXBException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
@@ -36,7 +36,7 @@ public class SynopticParser extends Converter<String, SynopticDescription> {
 			throws ConversionException {
 		try {
             return XMLUtil.fromXml(value, SynopticDescription.class);
-        } catch (IOException e) {
+        } catch (JAXBException e) {
             throw new ConversionException("Error creating synoptic from xml", e);
 		}		
 	}

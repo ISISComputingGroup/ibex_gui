@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
-import java.io.IOException;
+import javax.xml.bind.JAXBException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
@@ -35,7 +35,7 @@ public class DeviceScreensDescriptionXmlParser extends Converter<String, DeviceS
     public DeviceScreensDescription convert(String value) throws ConversionException {
         try {
             return XMLUtil.fromXml(value, DeviceScreensDescription.class);
-        } catch (IOException e) {
+        } catch (JAXBException e) {
             throw new ConversionException("Error parsing device screens", e);
         }
     }

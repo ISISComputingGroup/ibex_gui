@@ -31,6 +31,8 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Path;
 
+import javax.xml.bind.JAXBException;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -104,7 +106,7 @@ public class DescriptionsProvider extends Provider {
         Path path = pathToFileResource("/resources/" + FILENAME);
 		try {
             return XMLUtil.fromXml(new FileReader(path.toOSString()), Descriptions.class);
-        } catch (IOException e) {
+        } catch (JAXBException | IOException e) {
 			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 			return new Descriptions();
 		}

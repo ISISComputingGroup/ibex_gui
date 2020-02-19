@@ -19,12 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -33,13 +37,13 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.persistence.jaxb.JAXBContext;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
@@ -65,14 +69,10 @@ public final class XMLUtil {
      *             XML Exception thrown if the conversion failed
      */
     @SuppressWarnings("unchecked")
-    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws IOException {
-    	try {
-	        javax.xml.bind.JAXBContext context = getJaxbContext(clazz);
-	    	Unmarshaller unmarshaller = context.createUnmarshaller();
-		    return (T) unmarshaller.unmarshal(xml);
-    	} catch (JAXBException e) {
-	        throw new IOException(String.format("Converted JAXBException to IOException in fromXml. Original message: %s", e.getMessage()), e);
-	    }
+    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
+        JAXBContext context = getJaxbContext(clazz);
+    	Unmarshaller unmarshaller = context.createUnmarshaller();
+	    return (T) unmarshaller.unmarshal(xml);
     }
     
     /**
@@ -84,7 +84,59 @@ public final class XMLUtil {
      * pass the classloader check.
      */
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-    	return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), Thread.currentThread().getContextClassLoader());
+    	
+    	// Nuclear approach - depending on where this gets called from
+    	// we need different classloaders to be used. Try them all until
+    	// one doesn't error. This is hacky but it's the best way I've found
+    	// to get around JAXB's limitations so far.
+    	List<ClassLoader> classloaders = List.of(
+    			clazz.getClassLoader(),
+    			XMLUtil.class.getClassLoader(),
+    			JAXBContextFactory.class.getClassLoader(),
+    			Thread.currentThread().getContextClassLoader(),
+    			ClassLoader.getPlatformClassLoader(),
+    			ClassLoader.getSystemClassLoader()
+    	);
+    	
+    	Map<String, Throwable> errors = new HashMap<>();
+    	
+    	for (ClassLoader classloader : classloaders) {
+    		LOG.info(String.format("Classloader %s loads JAXBContext from %s", classloader, classloader.getResource("javax/xml/bind/JAXBContext.class")));
+    		try {
+        		return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), classloader);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used classloader %s", classloader), e);
+        	}
+    		
+    		try {
+        		return JAXBContextFactory.createContext(new Class[] {clazz}, null);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used raw class moxy %s", clazz), e);
+        	}
+    		
+    		try {
+        		return JAXBContext.newInstance(clazz);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used raw class %s", clazz), e);
+        	}
+    		
+    		try {
+        		return JAXBContext.newInstance(clazz.getPackageName(), classloader);
+        	} catch (Exception | NoClassDefFoundError e) {
+        		errors.put(String.format("used package name %s with classloader %s", clazz.getPackageName(), classloader), e);
+        	}
+    	}
+    	
+    	for (var entry : errors.entrySet()) {
+    		LoggerUtils.logErrorWithStackTrace(LOG, 
+    				String.format("%s, got exception: %s", entry.getKey(), entry.getValue().getMessage()), entry.getValue());
+    		
+    		if (entry.getValue().getCause() != null) {
+    			LoggerUtils.logErrorWithStackTrace(LOG, "Caused by: " + entry.getValue().getCause().getMessage(), entry.getValue().getCause());
+    		}
+    	}
+    	
+    	throw new JAXBException("Failed to get a JAXBContext using any classloader");
     }
 
     /**
@@ -100,7 +152,7 @@ public final class XMLUtil {
      * @throws JAXBException
      *             XML Exception thrown if the conversion failed
      */
-    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws IOException {
+    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
         return fromXml(new StringReader(xml), clazz);
 	}
 
@@ -120,7 +172,7 @@ public final class XMLUtil {
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
-            throws IOException {
+            throws JAXBException {
         
         return XMLUtil.toXml(toConvert, clazz, null);
     }
@@ -144,7 +196,7 @@ public final class XMLUtil {
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
-            throws IOException {
+            throws JAXBException {
         Schema schema = null; // Null means no validation
         
         if (!Strings.isNullOrEmpty(rawSchema)) {
@@ -152,20 +204,16 @@ public final class XMLUtil {
             try {
             	schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
             } catch (SAXException e) {
-                throw new IOException(e.getMessage(), e);
+                throw new JAXBException(e.getMessage(), e);
             }
         }
         
-        try {
-	        javax.xml.bind.JAXBContext context = getJaxbContext(clazz);
-	        Marshaller marshaller = context.createMarshaller();
-	        StringWriter writer = new StringWriter();
-	        marshaller.setSchema(schema);
-	        marshaller.marshal(toConvert, writer);
-			
-			return writer.toString();
-        } catch (JAXBException e) {
-        	throw new IOException(String.format("Converted JAXBException to IOException in toXml. Original message: %s", e.getMessage()), e);
-        }
+        JAXBContext context = getJaxbContext(clazz);
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter writer = new StringWriter();
+        marshaller.setSchema(schema);
+        marshaller.marshal(toConvert, writer);
+		
+		return writer.toString();		
 	}
 }
