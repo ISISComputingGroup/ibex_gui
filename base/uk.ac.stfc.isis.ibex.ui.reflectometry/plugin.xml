@@ -10,6 +10,13 @@
             name="Reflectometry OPI View"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView"
+            name="Matplotlib"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

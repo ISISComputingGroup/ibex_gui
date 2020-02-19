@@ -35,7 +35,7 @@ public final class Commands {
 	/**
 	 * Python command to scale down matplotlib plot dimensions (hardcoded for now)
 	 */
-	public static final String COMPACT_PLOT_CMD = "matplotlib.rcParams['figure.figsize'] = [5.7, 2.3] \n";
+	public static final String COMPACT_PLOT_CMD = "matplotlib.rcParams['figure.figsize'] = [5.8, 2.2] \n";
 	
 	/**
 	 * The command to initialise genie.
