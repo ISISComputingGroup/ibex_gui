@@ -2,13 +2,12 @@ package uk.ac.stfc.isis.ibex.opis.tests.desc;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +39,7 @@ public class XmlTest {
 	private String fullDescriptionsXml;
 
 	@Before
-	public void setUp() throws JAXBException, SAXException {
+	public void setUp() throws IOException, SAXException {
 		// Generate example XML
 		List<MacroInfo> macros = new ArrayList<MacroInfo>();
 		macros.add(new MacroInfo(macroName1, macroDescription1));
@@ -61,7 +60,7 @@ public class XmlTest {
 	}
 
 	@Test
-	public void generate_full_description_from_xml() throws JAXBException, SAXException {
+	public void generate_full_description_from_xml() throws IOException, SAXException {
         Descriptions desc = XMLUtil.fromXml(fullDescriptionsXml, Descriptions.class);
 
 		Map<String, OpiDescription> opis = desc.getOpis();
@@ -86,7 +85,7 @@ public class XmlTest {
 	}
 
 	@Test
-	public void generate_empty_description_from_xml() throws JAXBException, SAXException {
+	public void generate_empty_description_from_xml() throws IOException, SAXException {
         Descriptions desc = XMLUtil.fromXml(emptyDescriptionsXml, Descriptions.class);
 		
 		Map<String, OpiDescription> opis = desc.getOpis();

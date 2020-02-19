@@ -34,8 +34,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -147,7 +145,7 @@ public class XmlUtilTest {
     @Test
     public void
             GIVEN_device_description_parsed_from_xml_WHEN_it_is_written_to_xml_THEN_output_xml_is_equal_to_input_xml()
-                    throws JAXBException, SAXException {
+                    throws IOException, SAXException {
         try {
             // Act
             String outputXml = convertToXML.convert(multipleDeviceScreensDescription);
