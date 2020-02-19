@@ -231,9 +231,14 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
 		<module>../uk.ac.stfc.isis.ibex.jaxb</module>
 		
-		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
+		<!-- 
+			Tests disabled as they use JAXB which doesn't work correctly under surefire. 
+			See https://github.com/ISISComputingGroup/IBEX/issues/4759
+			
+			<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
+			<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
+			<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module> 
+		-->
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
