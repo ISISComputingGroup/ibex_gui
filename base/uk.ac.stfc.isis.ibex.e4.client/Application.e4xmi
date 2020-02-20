@@ -83,7 +83,7 @@
       <children xsi:type="basic:Part" xmi:id="_SDyz8BH8Eeq6Ie-xR-8O0g" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="scripting console"/>
     </sharedElements>
     <sharedElements xsi:type="basic:PartStack" xmi:id="_-0AlUFPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36" containerData="50">
-      <children xsi:type="basic:Part" xmi:id="_-0AlUVPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
+      <children xsi:type="basic:Part" xmi:id="_-0AlUVPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot"/>
     </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
