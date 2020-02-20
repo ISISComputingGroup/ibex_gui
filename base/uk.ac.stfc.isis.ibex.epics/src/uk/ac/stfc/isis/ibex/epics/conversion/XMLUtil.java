@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -29,20 +30,16 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.jaxb.JAXB;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
-	
-    private static final Logger LOG = IsisLog.getLogger(XMLUtil.class);
 
 	private XMLUtil() {
     }
@@ -61,8 +58,12 @@ public final class XMLUtil {
      *             XML Exception thrown if the conversion failed
      */
     @SuppressWarnings("unchecked")
-    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
-	    return (T) JAXB.getUnmarshaller(clazz).unmarshal(xml);
+    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws IOException {
+    	try {
+    		return (T) JAXB.getUnmarshaller(clazz).unmarshal(xml);
+    	} catch (JAXBException e) {
+    		throw new IOException(e.getMessage(), e);
+    	}
     }
 
     /**
@@ -78,7 +79,7 @@ public final class XMLUtil {
      * @throws JAXBException
      *             XML Exception thrown if the conversion failed
      */
-    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
+    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws IOException {
         return fromXml(new StringReader(xml), clazz);
 	}
 
@@ -92,13 +93,13 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the XML that the object has been converted into
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception for if the conversion to xml failed
      * @throws SAXException
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
-            throws JAXBException {
+            throws IOException {
         
         return XMLUtil.toXml(toConvert, clazz, null);
     }
@@ -122,7 +123,7 @@ public final class XMLUtil {
      *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
-            throws JAXBException {
+            throws IOException {
         Schema schema = null; // Null means no validation
         
         if (!Strings.isNullOrEmpty(rawSchema)) {
@@ -130,14 +131,18 @@ public final class XMLUtil {
             try {
             	schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
             } catch (SAXException e) {
-                throw new JAXBException(e.getMessage(), e);
+                throw new IOException(e.getMessage(), e);
             }
         }
         
         Marshaller marshaller = JAXB.getMarshaller(clazz);
         StringWriter writer = new StringWriter();
         marshaller.setSchema(schema);
-        marshaller.marshal(toConvert, writer);
+        try {
+        	marshaller.marshal(toConvert, writer);
+        } catch (JAXBException e) {
+        	throw new IOException(e.getMessage(), e);
+        }
 		
 		return writer.toString();		
 	}

@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.jaxb;
 
+import java.io.IOException;
 import java.util.Collections;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -23,7 +24,7 @@ public class JAXB {
     	    return JAXBContextFactory.createContext(new Class [] { clazz }, Collections.emptyMap(), JAXBContextFactory.class.getClassLoader());
     	} catch (Exception | LinkageError e) {
     		// For unit tests
-    		return JAXBContextFactory.createContext(new Class [] { clazz }, Collections.emptyMap(), Thread.currentThread().getContextClassLoader());
+    		return JAXBContext.newInstance(clazz.getPackageName(), clazz.getClassLoader());
     	}
     }
     
@@ -32,10 +33,14 @@ public class JAXB {
      * @param <T> - the type to get an unmarshaller for
      * @param clazz - the class to get an unmarshaller for
      * @return the unmarshaller
-     * @throws JAXBException if an error occured
+     * @throws IOException if an error occured
      */
-    public static <T> Unmarshaller getUnmarshaller(Class<T> clazz) throws JAXBException {
-    	return getJaxbContext(clazz).createUnmarshaller();
+    public static <T> Unmarshaller getUnmarshaller(Class<T> clazz) throws IOException {
+    	try {
+    		return getJaxbContext(clazz).createUnmarshaller();
+    	} catch (JAXBException e) {
+    		throw new IOException(e.getMessage(), e);
+    	}
     }
     
     /**
@@ -43,9 +48,13 @@ public class JAXB {
      * @param <T> - the type to get a marshaller for
      * @param clazz - the class to get a marshaller for
      * @return the marshaller
-     * @throws JAXBException if an error occured
+     * @throws IOException if an error occured
      */
-    public static <T> Marshaller getMarshaller(Class<T> clazz) throws JAXBException {
-    	return getJaxbContext(clazz).createMarshaller();
+    public static <T> Marshaller getMarshaller(Class<T> clazz) throws IOException {
+    	try {
+    		return getJaxbContext(clazz).createMarshaller();
+    	} catch (JAXBException e) {
+    		throw new IOException(e.getMessage(), e);
+    	}
     }
 }

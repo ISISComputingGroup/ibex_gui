@@ -9,10 +9,6 @@
 			<accessrule kind="nonaccessible" pattern="java/xml"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins">
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="java.xml"/>
-		</accessrules>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

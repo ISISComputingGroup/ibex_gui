@@ -10,8 +10,10 @@ Bundle-ClassPath: .
 Require-Bundle: jakarta.xml.bind-api;bundle-version="2.3.2";visibility:=reexport,
  com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2",
  uk.ac.stfc.isis.ibex.logger,
- org.eclipse.ui;bundle-version="3.115.0"
+ org.eclipse.ui;bundle-version="3.115.0",
+ org.eclipse.persistence.asm;bundle-version="7.2.0",
+ javax.xml.bind;bundle-version="2.2.0",
+ javax.persistence;bundle-version="2.1.0",
+ org.eclipse.persistence.moxy;bundle-version="2.7.6"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.jaxb
-Import-Package: javax.xml.stream,
- org.eclipse.persistence.internal.libraries.asm;version="7.2.0",
- org.eclipse.persistence.jaxb;version="2.7.6"
+Import-Package: javax.xml.stream
