@@ -42,14 +42,14 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * The Model of the script generator responsible for generating scripts, checking parameter validity, loading configs
+ * The Model of the script generator responsible for generating scripts, checking parameter validity, loading script definitions
  *  and containing the actions table for the script generator.
  */
 public class ScriptGeneratorSingleton extends ModelObject {
@@ -67,13 +67,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			new ActionsTable(new ArrayList<ActionParameter>());
 	
 	/**
-	 * The loader to select and update the configs being used.
+	 * The loader to select and update the script definition being used.
 	 */
-	private ConfigLoader configLoader;
+	private ScriptDefinitionLoader scriptDefinitionLoader;
 	
 	/**
 	 * The python interface to check parameter validity with,
-	 *  generate scripts with, load configs with.
+	 *  generate scripts with, load script definitions with.
 	 */
 	private PythonInterface pythonInterface;
 	
@@ -167,23 +167,25 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	
 	/**
-	 * The constructor, will create without a config loader and without loading
-	 * an initial config.
+	 * The constructor, will create without a script definition loader and without loading
+	 * an initial script definition.
 	 */
 	public ScriptGeneratorSingleton() {
 	    
 	}
 	
 	/**
-	 * Pass a python interface to run with, then create a config loader and load an initial config.
+	 * Pass a python interface to run with, then create a script definition loader
+	 *  and load an initial script definition.
 	 * 
 	 * @param pythonInterface The python interface to run with.
-	 * @param configLoader The object to load configs with.
+	 * @param scriptDefinitionLoader The object to load script definitions with.
 	 * @param scriptGeneratorTable The table containing actions for the model to use.
 	 */
-	public ScriptGeneratorSingleton(PythonInterface pythonInterface, ConfigLoader configLoader, ActionsTable scriptGeneratorTable) {
+	public ScriptGeneratorSingleton(PythonInterface pythonInterface,
+			ScriptDefinitionLoader scriptDefinitionLoader, ActionsTable scriptGeneratorTable) {
 		this.pythonInterface = pythonInterface;
-		this.configLoader = configLoader;
+		this.scriptDefinitionLoader = scriptDefinitionLoader;
 		this.scriptGeneratorTable = scriptGeneratorTable;
 		setUp();
 	}
@@ -221,7 +223,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 					try {
 						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
 						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
-					} catch (NoConfigSelectedException e) {
+					} catch (NoScriptDefinitionSelectedException e) {
 						LOG.error(e);
 					}
 				}, () -> {
@@ -229,19 +231,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				});
 			
 		});
-		configLoader.addPropertyChangeListener("parameters", evt -> {
-			setActionParameters(configLoader.getParameters());
+		scriptDefinitionLoader.addPropertyChangeListener("parameters", evt -> {
+			setActionParameters(scriptDefinitionLoader.getParameters());
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
 			// The table has changed so update the validity checks
 			try {
 				refreshParameterValidityChecking();
-			} catch (NoConfigSelectedException e) {
+			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 			}
 		});
 		
-		setActionParameters(configLoader.getParameters());
+		setActionParameters(scriptDefinitionLoader.getParameters());
 	}
 	
 	/**
@@ -286,11 +288,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-     * Creates the config loader.
+     * Creates the script definition loader.
      */
-    public void createConfigLoader() {
+    public void createScriptDefinitionLoader() {
         pythonInterface = new PythonInterface();
-        configLoader = new ConfigLoader(pythonInterface);
+        scriptDefinitionLoader = new ScriptDefinitionLoader(pythonInterface);
         pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
         	firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
@@ -298,12 +300,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
     }
     
     /**
-     * Get the config loader.
+     * Get the script definition loader.
      * 
-     * @return The config loader
+     * @return The script definition loader
      */
-    public ConfigLoader getConfigLoader() {
-        return configLoader;
+    public ScriptDefinitionLoader getScriptDefinitionLoader() {
+        return scriptDefinitionLoader;
     }
 	
 	/**
@@ -429,35 +431,35 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Clean up resources when the plugin is destroyed.
 	 */
 	public void cleanUp() {
-		configLoader.cleanUp();
+		scriptDefinitionLoader.cleanUp();
 	}
 	
 	/**
-	 * Get a list of available configs.
+	 * Get a list of available script definitions.
 	 * 
-	 * @return A list of available configs.
+	 * @return A list of available script definitions.
 	 */
-	public List<Config> getAvailableConfigs() {
-		return configLoader.getAvailableConfigs();
+	public List<ScriptDefinitionWrapper> getAvailableScriptDefinitions() {
+		return scriptDefinitionLoader.getAvailableScriptDefinitions();
 	}
 	
 	/**
-	 * Gets all actions that could not be loaded and the reason.
+	 * Gets all script definitions that could not be loaded and the reason.
 	 * 
-	 * @return A map of errors when loading configs, the config name
+	 * @return A map of errors when loading script definitions, the script definition name
 	 *  is the key and the value is the reason.
 	 */
-	public Map<String, String> getConfigLoadErrors() {
-		return configLoader.getConfigLoadErrors();
+	public Map<String, String> getScriptDefinitionLoadErrors() {
+		return scriptDefinitionLoader.getScriptDefinitionLoadErrors();
 	}
 	
 	/**
-	 * Get an optional of the currently loaded configuration.
+	 * Get an optional of the currently loaded script definition.
 	 * 
-	 * @return An optional of the currently loaded configuration.
+	 * @return An optional of the currently loaded script definition.
 	 */
-	public Optional<Config> getConfig() {
-		return Optional.ofNullable(configLoader.getConfig());
+	public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
+		return Optional.ofNullable(scriptDefinitionLoader.getScriptDefinition());
 	}
 	
 	/**
@@ -496,14 +498,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Refresh the validity checking of the parameters,
 	 *  or if it fails refresh the error state of the model to be listened to by the ViewModel.
 	 *  
-	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition selected to refresh checking against.
 	 */
-	public void refreshParameterValidityChecking() throws NoConfigSelectedException {
-		Config config = getConfig()
-			.orElseThrow(() -> new NoConfigSelectedException("Tried to refresh parameter validity with no config selected"));
+	public void refreshParameterValidityChecking() throws NoScriptDefinitionSelectedException {
+		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+			.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to refresh parameter validity with no script definition selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable, config);
-			generator.refreshValidityErrors(scriptGeneratorTable, config);
+			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition);
+			generator.refreshValidityErrors(scriptGeneratorTable, scriptDefinition);
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
@@ -523,15 +525,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
 	 * @throws IOException If we fail to create and write to a file.
 	 * @throws UnsupportedLanguageException If the language we are trying to generate a script in is unsupported.
-	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition selected to refresh checking against.
 	 */
 	public void refreshGeneratedScript() throws InvalidParamsException,
-			UnsupportedLanguageException, NoConfigSelectedException {
-		Config config = getConfig()
-				.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"));
+			UnsupportedLanguageException, NoScriptDefinitionSelectedException {
+		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+				.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				generator.refreshGeneratedScript(scriptGeneratorTable, config);
+				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
@@ -548,11 +550,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param generatedScript The script that has been generated that is written to file here.
 	 * @param filepathPrefix The path prefix to where the script shall be written to.
 	 * @return An optional containing the path to the file if successful. An empty optional if unsuccessful.
-	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws NoScriptDefinitionSelectedException Thrown when we have no script definition selected to generate the script file with.
 	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
 	 * @throws IOException If we fail to create and write to a file.
 	 */
-	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoConfigSelectedException {
+	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoScriptDefinitionSelectedException {
 		try {
 			File scriptFile = generateScriptFile(filepathPrefix);
 			return writeScriptToFile(generatedScript, scriptFile);
@@ -569,11 +571,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
 	 * @return The file to write the script to.
 	 * @throws IOException When we cannot create the file
-	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws NoScriptDefinitionSelectedException Thrown when we have no script definition selected to generate the script file with.
 	 */
-	private File generateScriptFile(String filepathPrefix) throws IOException, NoConfigSelectedException {
-		String configName = getConfig()
-			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
+	private File generateScriptFile(String filepathPrefix) throws IOException, NoScriptDefinitionSelectedException {
+		String scriptDefinitionName = getScriptDefinition()
+			.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to generate a script with no script definition selected to generate it with"))
 			.getName();
 		String timestamp = getTimestamp();
 		int version = 0;
@@ -581,9 +583,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		File file;
 		do {
 			if (version == 0) {
-				filepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
+				filepath = String.format("%s%s-%s.py", filepathPrefix, scriptDefinitionName, timestamp);
 			} else {
-				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, configName, timestamp, version);
+				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, scriptDefinitionName, timestamp, version);
 			}
 			file = new File(filepath);
 			file.getParentFile().mkdirs();
@@ -619,9 +621,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 * Reload the configs.
+	 * Reload the script definitions.
 	 */
-	public void reloadConfigs() {
-		configLoader.reloadConfigs();
+	public void reloadScriptDefinitions() {
+		scriptDefinitionLoader.reloadScriptDefinitions();
 	}
 }

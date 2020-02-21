@@ -13,7 +13,7 @@ from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
 from xmlrunner import XMLTestRunner
 
-from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
+from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 from check_opi_format_tests import TestCheckOpiFormatMethods
 
 # Directory to iterate through
@@ -90,6 +90,13 @@ class CheckStrictOpiFormat(unittest.TestCase):
         errors = check_plot_area_backgrounds(self.xml_root)
         if len(errors):
             message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
+    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
+        errors = get_trigger_pv(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
                                 .format(*error) for error in errors])
             self.fail(message)
 
