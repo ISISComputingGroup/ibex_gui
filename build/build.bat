@@ -45,5 +45,7 @@ if %errcode% GEQ 4 (
 	set ERRORLEVEL=0
 )
 
+%PythonWriteDir%\python.exe run_script_generator_python_support_tests.py
+
 @echo Client built in %sensible_build_dir%
 pause
