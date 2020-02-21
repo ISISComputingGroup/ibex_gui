@@ -70,8 +70,8 @@
     <width>391</width>
     <wrap_words>true</wrap_words>
     <wuid>4fdc1aa2:158de06471b:-7a02</wuid>
-    <x>6</x>
-    <y>-12</y>
+    <x>0</x>
+    <y>0</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -132,8 +132,8 @@
     <widget_type>Tabbed Container</widget_type>
     <width>684</width>
     <wuid>1a251549:1653d5a1794:-76d0</wuid>
-    <x>6</x>
-    <y>30</y>
+    <x>0</x>
+    <y>40</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
