@@ -33,22 +33,22 @@ pipeline {
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
+                env.IS_E4 = "YES"
             }
             else if (env.GIT_BRANCH == "origin/master_E3_maint") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
-                env.IS_E4_DEPLOY = "NO"
+                env.IS_E4 = "NO"
             }
             else if (env.GIT_BRANCH == "origin/master") {
                 env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
+                env.IS_DEPLOY = "YES"
+                env.IS_E4 = "YES"
             }
             else {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "NO"
+                env.IS_E4 = "YES"
             }
         }
         
