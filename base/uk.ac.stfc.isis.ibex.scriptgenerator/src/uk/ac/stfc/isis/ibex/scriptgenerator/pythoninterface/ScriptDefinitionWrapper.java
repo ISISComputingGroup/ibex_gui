@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A configuration describing how the script generator should be configured.
+ * A definition describing how the script generator should be configured.
  */
-public interface Config {
+public interface ScriptDefinitionWrapper {
 	
 	/**
 	 * @return The names of the parameters that each action requires.

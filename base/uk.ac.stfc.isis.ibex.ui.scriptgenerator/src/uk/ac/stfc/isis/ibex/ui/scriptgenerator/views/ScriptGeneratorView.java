@@ -81,7 +81,7 @@ public class ScriptGeneratorView {
 	private static final String NO_CONFIGS_MESSAGE = String.format("\u26A0 Warning: Could not load any configs from %s"
 			+ System.getProperty("line.separator")
 			+ "Have they been located in the correct place or is this not your preferred location?", 
-			preferences.scriptGeneratorConfigFolders());
+			preferences.scriptGeneratorScriptDefinitionFolders());
 	
 	/**
 	 * The string to display if python is loading.

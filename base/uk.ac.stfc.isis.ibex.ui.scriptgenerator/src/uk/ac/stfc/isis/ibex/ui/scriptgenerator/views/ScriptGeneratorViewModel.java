@@ -30,11 +30,11 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
@@ -174,7 +174,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Set up the model. Allows us to attach listeners for the view first.
 	 */
 	public void setUpModel() {
-		scriptGeneratorModel.createConfigLoader();
+		scriptGeneratorModel.createScriptDefinitionLoader();
 		scriptGeneratorModel.setUp();
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
@@ -200,7 +200,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @return true if there is at least one config loaded, false if not.
 	 */
 	public boolean configsAvailable() {
-		return this.scriptGeneratorModel.getConfigLoader().configsAvailable();
+		return this.scriptGeneratorModel.getScriptDefinitionLoader().scriptDefinitionAvailable();
 	}
 	
 	
@@ -294,7 +294,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @return A list of available configs.
 	 */
 	protected List<String> getAvailableConfigsNames() {
-		return scriptGeneratorModel.getAvailableConfigs()
+		return scriptGeneratorModel.getAvailableScriptDefinitions()
 				.stream()
 				.map(config -> config.getName())
 				.collect(Collectors.toList());
@@ -307,7 +307,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 *  and the value as the reason it could not be loaded
 	 */
 	protected Map<String, String> getConfigLoadErrors() {
-		return scriptGeneratorModel.getConfigLoadErrors();
+		return scriptGeneratorModel.getScriptDefinitionLoadErrors();
 	}
 	
 	/**
@@ -322,8 +322,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		     */
 			@Override
 		    public String getText(Object element) {
-		        if (element instanceof Config) {
-		        	Config actionWrapper = (Config) element;
+		        if (element instanceof ScriptDefinitionWrapper) {
+		        	ScriptDefinitionWrapper actionWrapper = (ScriptDefinitionWrapper) element;
 		            return actionWrapper.getName();
 		        }
 		        return super.getText(element);
@@ -436,7 +436,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		public void propertyChange(PropertyChangeEvent evt) {
 			// Display the new config help string
 			if (!helpText.isDisposed()) {
-				Optional<Config> optionalConfig = getConfig();
+				Optional<ScriptDefinitionWrapper> optionalConfig = getConfig();
 				optionalConfig.ifPresentOrElse(
 						realConfig -> {
 							displayHelpString(realConfig, helpText);
@@ -460,12 +460,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			String selectedConfigName;
 			if (!event.getSelection().isEmpty()) {
 				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
-				scriptGeneratorModel.getConfigLoader().getLastSelectedConfigName()
+				scriptGeneratorModel.getScriptDefinitionLoader().getLastSelectedConfigName()
 					.ifPresentOrElse(lastSelectedConfigName -> {
 						if (!selectedConfigName.equals(lastSelectedConfigName)) {
-							scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+							scriptGeneratorModel.getScriptDefinitionLoader().setConfig(selectedConfigName);
 						}
-					}, () -> scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName));
+					}, () -> scriptGeneratorModel.getScriptDefinitionLoader().setConfig(selectedConfigName));
 			}
 		}
 	};
@@ -482,7 +482,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		configSelector.addSelectionChangedListener(configSwitchListener);
 		// Display new help when config switch or make invisible if not help available
 		this.helpText = helpText;
-		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, configSwitchHelpListener);
+		scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, configSwitchHelpListener);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param config The config to get the help string from
 	 * @param helpText The text UI element to display the help string in.
 	 */
-	private void displayHelpString(Config config, Text helpText) {
+	private void displayHelpString(ScriptDefinitionWrapper config, Text helpText) {
 		Optional.ofNullable(config.getHelp()).ifPresentOrElse(
 				helpString -> {
 					helpText.setText(helpString);
@@ -708,7 +708,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
-		} catch (NoConfigSelectedException e) {
+		} catch (NoScriptDefinitionSelectedException e) {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No config selection", 
 					"Cannot generate script. No config has been selected");
@@ -720,15 +720,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @return The selected config.
      */
-	public Optional<Config> getConfig() {
-		return scriptGeneratorModel.getConfig();
+	public Optional<ScriptDefinitionWrapper> getConfig() {
+		return scriptGeneratorModel.getScriptDefinition();
 	}
 
 	/**
 	 * Reload the available configs.
 	 */
 	public void reloadConfigs() {
-		scriptGeneratorModel.reloadConfigs();
+		scriptGeneratorModel.reloadScriptDefinitions();
 	}
 
 	/**

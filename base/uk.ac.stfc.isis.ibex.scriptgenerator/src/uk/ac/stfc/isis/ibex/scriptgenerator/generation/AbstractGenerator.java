@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -46,11 +46,11 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * Refresh the generated script property with a script (String).
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
-	 * @param config The instrument config to generate the script with.
+	 * @param scriptDefinition The instrument config to generate the script with.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
+	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
@@ -60,7 +60,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
+	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper config) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the validity errors returned when checking validity (Map<Integer,String>).
@@ -70,6 +70,6 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
+	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper config) throws InterruptedException, ExecutionException;
 	
 }

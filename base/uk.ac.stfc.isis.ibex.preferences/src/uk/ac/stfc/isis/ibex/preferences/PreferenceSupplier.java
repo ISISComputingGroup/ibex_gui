@@ -299,7 +299,7 @@ public class PreferenceSupplier {
      * 
      * @return a list of of folders paths that contain script generator configs.
      */
-	public String scriptGeneratorConfigFolders() {
+	public String scriptGeneratorScriptDefinitionFolders() {
 		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
 	}
 	
