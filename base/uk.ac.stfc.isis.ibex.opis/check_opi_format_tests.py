@@ -481,6 +481,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = etree.fromstring("""
                 <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
                     <trigger_pv></trigger_pv>
+                    <axis_0_time_format>1</axis_0_time_format>
                 </widget>
               """)
 
@@ -495,8 +496,36 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         root = etree.fromstring("""
                 <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
                     <trigger_pv>TRIGGER_PV</trigger_pv>
+                    <axis_0_time_format>1</axis_0_time_format>
                 </widget>
               """)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
+
+    def test_that_if_a_graph_has_no_time_format_then_no_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                </widget>
+              """)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
+
+    def test_that_if_a_graph_has_0_time_format_then_no_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                   <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                        <axis_0_time_format>0</axis_0_time_format>
+                   </widget>
+                 """)
 
         # Act
         errors = get_traces_with_different_buffer_sizes(root)
