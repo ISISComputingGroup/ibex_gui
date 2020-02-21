@@ -65,9 +65,9 @@ pipeline {
 	
 	stage("OPI Checker") {
       steps {
-	    """
-		set %PYTHON3%=C:\Instrument\Apps\Python3\python.exe
-		%PYTHON3% .\base\uk.ac.stfc.isis.ibex.opis\check_opi_format_tests.py 
+	    bat """
+		set %PYTHON3%=C:\\Instrument\\Apps\\Python3\\python.exe
+		%PYTHON3% .\\base\uk.ac.stfc.isis.ibex.opis\\check_opi_format_tests.py 
         """
       }
     }
