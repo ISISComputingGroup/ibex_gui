@@ -484,5 +484,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         assert_that(errors, has_length(0))
 
+
 if __name__ == '__main__':
     unittest.main()

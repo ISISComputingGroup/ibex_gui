@@ -11,6 +11,7 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
+from check_OPI_format_utils.position import get_widgets_outside_of_boundary
 from xmlrunner import XMLTestRunner
 
 from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
@@ -51,6 +52,12 @@ class CheckOpiFormat(unittest.TestCase):
         super(CheckOpiFormat, self).__init__(methodName=methodName)
         self.xml_root = xml_root
 
+    def _assert_widgets_inside_x_y_boundary(self):
+        errors = get_widgets_outside_of_boundary(self.xml_root)
+        if len(errors):
+            self.fail("\n".join(["On line {}, widget '{}', outside of boundary with position {}."
+                                .format(*error) for error in errors]))
+
     def _assert_colour_correct(self, location, widget, colours):
         errors = check_colour(self.xml_root, widget, location, colours)
 
@@ -63,6 +70,9 @@ class CheckOpiFormat(unittest.TestCase):
         if len(errors):
             self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
                                 .format(*error) for error in errors]))
+
+    def test_GIVEN_an_opi_file_with_widgets_WHEN_checking_if_widget_within_boundaries_THEN_widget_is_within_boundaries(self):
+        self._assert_widgets_inside_x_y_boundary()
 
     def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
         self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
