@@ -93,6 +93,7 @@ class CheckStrictOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
+
 class CheckOpiFormat(CheckStrictOpiFormat):
     def _assert_trace_buffers_are_the_same(self):
         errors = get_traces_with_different_buffer_sizes(self.xml_root)
@@ -143,6 +144,13 @@ class CheckOpiFormat(CheckStrictOpiFormat):
 
     def test_GIVEN_a_TextInput_THEN_it_is_within_a_grouping_container(self):
         self._assert_widget_not_outside_container("TextInput")
+
+    def test_GIVEN_a_label_THEN_it_has_correct_font(self):
+        errors = get_incorrect_fonts(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Label on line {} with text '{}' has incorrect font"
+                                .format(*error) for error in errors])
+            self.fail(message)
 
 
 if __name__ == "__main__":
