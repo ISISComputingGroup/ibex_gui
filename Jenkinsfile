@@ -18,54 +18,63 @@ pipeline {
         checkout scm
       }
     }
-    
-    stage("Build") {
-      steps {
-        script {
-            // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
-            if (env.BRANCH_NAME == null) {
-                env.BRANCH_NAME = ""
-			      }
-            env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
-            env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
-            echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
-            if (env.BRANCH_NAME.startsWith("Release")) {
-                env.IS_RELEASE = "YES"
-                env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
-            }
-            else if (env.GIT_BRANCH == "origin/master_E3_maint") {
-                env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "YES"
-                env.IS_E4_DEPLOY = "NO"
-            }
-            else if (env.GIT_BRANCH == "origin/master") {
-                env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
-            }
-            else {
-                env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "NO"
-            }
-        }
+	
+    # stage("Build") {
+      # steps {
+        # script {
+            # // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
+            # if (env.BRANCH_NAME == null) {
+                # env.BRANCH_NAME = ""
+			      # }
+            # env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
+            # env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
+            # echo "git commit: ${env.GIT_COMMIT}"
+            # echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
+            # if (env.BRANCH_NAME.startsWith("Release")) {
+                # env.IS_RELEASE = "YES"
+                # env.IS_DEPLOY = "NO"
+                # env.IS_E4_DEPLOY = "YES"
+            # }
+            # else if (env.GIT_BRANCH == "origin/master_E3_maint") {
+                # env.IS_RELEASE = "NO"
+                # env.IS_DEPLOY = "YES"
+                # env.IS_E4_DEPLOY = "NO"
+            # }
+            # else if (env.GIT_BRANCH == "origin/master") {
+                # env.IS_RELEASE = "NO"
+                # env.IS_DEPLOY = "NO"
+                # env.IS_E4_DEPLOY = "YES"
+            # }
+            # else {
+                # env.IS_RELEASE = "NO"
+                # env.IS_DEPLOY = "NO"
+                # env.IS_E4_DEPLOY = "NO"
+            # }
+        # }
         
-        bat """
-            cd build
-            set GIT_COMMIT=${env.GIT_COMMIT}
-            set GIT_BRANCH=${env.BRANCH_NAME}
-            set RELEASE=${env.IS_RELEASE}
-            set DEPLOY=${env.IS_DEPLOY}
-            jenkins_build.bat
-            """
+        # bat """
+            # cd build
+            # set GIT_COMMIT=${env.GIT_COMMIT}
+            # set GIT_BRANCH=${env.BRANCH_NAME}
+            # set RELEASE=${env.IS_RELEASE}
+            # set DEPLOY=${env.IS_DEPLOY}
+            # jenkins_build.bat
+            # """
+      # }
+    # }
+	
+	stage("OPI Checker") {
+      steps {
+	    """
+		set %PYTHON3%=C:\Instrument\Apps\Python3\python.exe
+		%PYTHON3% .\base\uk.ac.stfc.isis.ibex.opis\check_opi_format_tests.py 
+        """
       }
     }
-    
-    stage("Unit Tests") {
+	
+    stage("Collate Unit Tests") {
       steps {
-        junit '**/surefire-reports/TEST-*.xml'
+        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
       }
     }
     
