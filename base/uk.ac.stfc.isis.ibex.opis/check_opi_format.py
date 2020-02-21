@@ -93,6 +93,13 @@ class CheckStrictOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
+    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
+        errors = get_trigger_pv(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
 
 class CheckOpiFormat(CheckStrictOpiFormat):
     def _assert_trace_buffers_are_the_same(self):
@@ -149,13 +156,6 @@ class CheckOpiFormat(CheckStrictOpiFormat):
         errors = get_incorrect_fonts(self.xml_root)
         if len(errors):
             message = "\n".join(["Label on line {} with text '{}' has incorrect font"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
-    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
-        errors = get_trigger_pv(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
                                 .format(*error) for error in errors])
             self.fail(message)
 
