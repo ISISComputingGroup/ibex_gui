@@ -4,8 +4,8 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Instrument\Apps\Python
-set PYTHON_HOME=C:\Instrument\Apps\Python
+set PYTHON=C:\Instrument\Apps\Python3
+set PYTHON_HOME=C:\Instrument\Apps\Python3
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
