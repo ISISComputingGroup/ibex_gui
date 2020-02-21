@@ -26,7 +26,7 @@ if "%~2" == "" (
 )
 set sensible_build_dir="%~dp0..\built_client"
 RMDIR /S /Q %sensible_build_dir%
-robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC
+robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC
 
 REM Copy python into the client
 python get_python_write_dir.py %sensible_build_dir% > Output

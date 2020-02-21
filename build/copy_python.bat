@@ -2,8 +2,8 @@ REM Get the latest genie python build with LATEST_PYTHON and LATEST_PYTHON_DIR a
 
 pushd \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP
 
-set KITS_ICP_PATH=%cd%
-set PYCOPYPATH=%1
+set "KITS_ICP_PATH=%cd%"
+set "PYCOPYPATH=%1"
 
 REM Get latest build
 if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
@@ -17,14 +17,13 @@ if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	exit /b 1
 )
 
-robocopy %LATEST_PYTHON_DIR% %PYCOPYPATH% /e /purge /r:2 /XF "install.log" /NFL /NDL /NP /NS /NC
-
+robocopy "%LATEST_PYTHON_DIR%" "%PYCOPYPATH%" /e /purge /r:2 /XF "install.log" /MT /NFL /NDL /NP /NS /NC
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
 	@echo robocopy error
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
 	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log
-    if not "%1" == "NOLOG" start %INSTALLDIR%install.log
+	popd
 	exit /b %errcode%
 ) else (
 	set ERRORLEVEL=0
