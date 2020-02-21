@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A configuration describing how the script generator should be configured.
+ * A definition describing how the script generator should be configured.
  */
-public interface Config {
+public interface ScriptDefinitionWrapper {
 	
 	/**
 	 * @return The names of the parameters that each action requires.
@@ -28,12 +28,12 @@ public interface Config {
 	String parametersValid(Map<String, String> action);
 	
 	/**
-	 * @return The name of this configuration.
+	 * @return The name of this script definition.
 	 */
 	String getName();
 	
 	/**
-	 * @return A string to be displayed in the script generator UI to help a user when using a config.
+	 * @return A string to be displayed in the script generator UI to help a user when using a script definition.
 	 */
 	String getHelp();
 	
