@@ -169,7 +169,8 @@ if __name__ == "__main__":
                         help='A directory to check files in')
     parser.add_argument('-logs_directory', type=str, default=DEFAULT_LOGS_DIR,
                         help='A directory to save the logs into')
-    parser.add_argument('-strict', help="Run only the strict tests")
+    parser.add_argument('-strict', action="store_true", default=False,
+                        help="Run only the strict tests")
 
     args = parser.parse_args()
 
