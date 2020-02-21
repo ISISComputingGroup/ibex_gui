@@ -74,7 +74,7 @@ pipeline {
 	
     stage("Collate Unit Tests") {
       steps {
-        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+        junit '**/test-reports/TEST-*.xml'
       }
     }
     
