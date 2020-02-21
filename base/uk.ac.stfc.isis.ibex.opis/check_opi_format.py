@@ -43,6 +43,49 @@ def file_iterator(directory, file_name=None):
         yield os.path.join(directory, file_name)
 
 
+class CheckStrictOpiFormat(unittest.TestCase):
+    """
+    These are the tests run in CI.
+    """
+
+    IGNORED_OPIS = ["dma4500m", "/stage\\", "sdtest", "qepro", "/pinhole_selector\\", "/gateway\\", "/autosave\\",
+                    "/asyn\\", "template", "scimag3D"]
+
+    # Need the 'None' default because unittest's test loader uses a
+    # no-argument constructor when getting the test names.
+    def __init__(self, methodName, xml_root=None):
+        # Boilerplate so that unittest knows how to run these tests.
+        super(CheckStrictOpiFormat, self).__init__(methodName=methodName)
+        self.xml_root = xml_root
+
+    def _assert_colour_correct(self, location, widget, colours):
+        errors = check_colour(self.xml_root, widget, location, colours)
+
+        if len(errors):
+            self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+
+    def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
+
+    def test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "Label", ["ISIS_Label_Background", "ISIS_Title_Background_NEW"])
+
+    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
+        self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
+
+    def test_GIVEN_an_opi_file_with_xygraph_WHEN_checking_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "xyGraph", ["ISIS_OPI_Background"])
+
+    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground(self):
+        self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
+
+    def test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour(self):
+        self._assert_colour_correct("on_color", "LED", ["ISIS_Green_LED_On", "ISIS_Red_LED_On"])
+
+    def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
+        self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
+
 class CheckOpiFormat(unittest.TestCase):
     # Need the 'None' default because unittest's test loader uses a
     # no-argument constructor when getting the test names.
@@ -63,27 +106,6 @@ class CheckOpiFormat(unittest.TestCase):
         if len(errors):
             self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
                                 .format(*error) for error in errors]))
-
-    def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
-        self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
-
-    def test_GIVEN_an_opi_file_with_labels_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
-        self._assert_colour_correct("background_color", "Label", ["ISIS_Label_Background", "ISIS_Title_Background_NEW"])
-
-    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
-        self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
-
-    def test_GIVEN_an_opi_file_with_xygraph_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
-        self._assert_colour_correct("background_color", "xyGraph", ["ISIS_Textbox_Background"])
-
-    def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground(self):
-        self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
-
-    def test_GIVEN_an_opi_file_with_led_WHEN_checking_on_colour_THEN_it_is_the_isis_led_on_colour(self):
-        self._assert_colour_correct("on_color", "LED", ["ISIS_Green_LED_On", "ISIS_Red_LED_On"])
-
-    def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
-        self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
 
     def test_GIVEN_an_opi_file_with_graph_widgets_WHEN_checking_buffer_sizes_THEN_all_buffer_sizes_are_the_same(self):
         self._assert_trace_buffers_are_the_same()
@@ -190,7 +212,8 @@ if __name__ == "__main__":
             return_values.append(False)
             continue
 
-        suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
+        if not any(opi in filename for opi in CheckStrictOpiFormat.IGNORED_OPIS):
+            suite.addTests([CheckStrictOpiFormat(test, root) for test in loader.getTestCaseNames(CheckStrictOpiFormat)])
         runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
         return_values.append(runner.run(suite).wasSuccessful())
 
