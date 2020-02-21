@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -38,10 +39,14 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.status.InstrumentStatusVariables;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.InstrumentStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
+import uk.ac.stfc.isis.ibex.ui.banner.widgets.StatusIndicator;
 
 /**
  * View of the spangle banner containing various instrument status messages.
@@ -76,12 +81,19 @@ public class BannerView {
         glParent.marginWidth = 0;
         glParent.marginHeight = 0;
         parent.setLayout(glParent);
-
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        gd.heightHint = 35;
+        
+        Composite serverStatusPanel = new Composite(parent, SWT.NONE);
+        serverStatusPanel.setLayout(new GridLayout());
+        GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        serverStatusPanel.setLayoutData(gdServerStatus);
+        
+        InstrumentStatusViewModel model = new InstrumentStatusViewModel(new InstrumentStatusVariables());
+        
+        GridData gdBannerItems = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gdBannerItems.heightHint = 35;
         bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
         bannerItemPanel.setLayout(glBannerItemPanel = new GridLayout(1, false));
-        bannerItemPanel.setLayoutData(gd);
+        bannerItemPanel.setLayoutData(gdBannerItems);
         glBannerItemPanel.marginHeight = 0;
         glBannerItemPanel.horizontalSpacing = 15;
 
