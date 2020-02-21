@@ -39,11 +39,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
-	 */
 	@Override
     public void initializeDefaultPreferences() {
 		IPreferenceStore store = IsisLog.getDefault().getPreferenceStore();

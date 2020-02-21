@@ -20,7 +20,11 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.Collection;
+import java.util.Map;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -34,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
  * as buttons).
@@ -42,10 +45,10 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 public class EditConfigDialog extends ConfigDetailsDialog {
 
     private Button saveAsBtn;
+    private Button saveButton;
     private boolean editBlockFirst;
     private boolean switchConfigOnSaveAs;
     private boolean calledSwitchConfigOnSaveAs = false;
-
     private ConfigServer server = Configurations.getInstance().server();
 
     /**
@@ -81,23 +84,29 @@ public class EditConfigDialog extends ConfigDetailsDialog {
         }
         return control;
     }
-
+    
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         if (!isBlank && !this.config.getName().isEmpty()) {
-            createButton(parent, IDialogConstants.OK_ID, "Save", true);
+            saveButton = createButton(parent, IDialogConstants.OK_ID, "Save", true);
         }
 
         saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
         saveAsBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+            	Map<String, Boolean> configNamesFlags = server.configNamesWithFlags();
+            	Map<String, Boolean> componentsNamesFlags = server.compNamesWithFlags();
+            	
                 Collection<String> configNames = server.configNames();
                 Collection<String> componentNames = server.componentNames();
+                
                 boolean hasComponents = !config.getEditableComponents().getSelected().isEmpty();
                 String currentConfigName = server.currentConfig().getValue().name();
+                
                 SaveConfigDialog dlg = new SaveConfigDialog(null, config.getName(), config.getDescription(),
-                        configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
+                        configNames, componentNames, !config.getIsComponent(), hasComponents, currentConfigName,
+                        configNamesFlags, componentsNamesFlags);
                 if (dlg.open() == Window.OK) {
                     switchConfigOnSaveAs = dlg.shouldSwitchConfig();
                     calledSwitchConfigOnSaveAs = true;
@@ -117,6 +126,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 
         // Show any error message and set buttons after creating those buttons
         super.showErrorMessage();
+        bind();
     }
 
     @Override
@@ -156,4 +166,21 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     public boolean calledSwitchConfigOnSaveAs() {
         return calledSwitchConfigOnSaveAs;
     }
+    
+    /**
+     * Binding for save and save as button.
+     */
+    public void bind() {
+    	DataBindingContext bindingContext = new DataBindingContext();
+    	if (saveButton != null) {
+    		bindingContext.bindValue(WidgetProperties.enabled().observe(saveButton),
+    				BeanProperties.value("enableOrDisableSaveButton").observe(config));
+    	}
+        
+        bindingContext.bindValue(WidgetProperties.enabled().observe(saveAsBtn),
+                BeanProperties.value("enableSaveAsButton").observe(config));
+        
+
+    }
+    
 }

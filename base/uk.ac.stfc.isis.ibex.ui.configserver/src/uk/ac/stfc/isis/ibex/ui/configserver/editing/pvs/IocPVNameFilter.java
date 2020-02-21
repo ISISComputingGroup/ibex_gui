@@ -27,6 +27,11 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 public class IocPVNameFilter extends ViewerFilter {
 	private String searchString = ".*";
 	
+	/**
+	 * Sets the text to search for.
+	 * 
+	 * @param s the text to search for.
+	 */
 	public void setSearchText(String s) {
 	    // ensure that the value can be used for matching 
 	    this.searchString = ".*" + s + ".*";

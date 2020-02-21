@@ -1,23 +1,27 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -39,9 +43,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
  * The right-click menu for blocks in the dashboard.
  */
 public class BlocksMenu extends MenuManager {
-	
+
 	private final DisplayBlock block;
-	
+
     private static final String BLOCK_MENU_GROUP = "Block";
 
     private static final String EDIT_BLOCK_PREFIX = "Edit host ";
@@ -50,12 +54,12 @@ public class BlocksMenu extends MenuManager {
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private final IAction editBlockAction;
-	
+
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for modifying the command if the underlying configuration PV cannot be written to.
 	 */
-	protected final SameTypeWriter<Configuration> readOnlyListener = new SameTypeWriter<Configuration>() {	
+	protected final SameTypeWriter<Configuration> readOnlyListener = new SameTypeWriter<Configuration>() {
 		@Override
 		public void onCanWriteChanged(final boolean canWrite) {
 			Display.getDefault().asyncExec(new Runnable() {
@@ -70,29 +74,38 @@ public class BlocksMenu extends MenuManager {
 					}
 				}
 			});
-		}	
+		}
 	};
-	
+
 	private IAction createAddToPlotAction(String plotName) {
-		return new Action("Add to " + plotName + " plot") {
+		return new Action("Add to new axis") {
 			@Override
 			public void run() {
 				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName);
+				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.empty());
 			}
 		};
 	}
-	
+
+	private IAction createAddToAxisAction(String plotName, String axisName) {
+	    return new Action("Add to " + axisName + " axis") {
+            @Override
+            public void run() {
+                BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+                Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.of(axisName));
+            }
+        };
+	}
+
     /**
      * The constructor, creates the menu for when the specific block is right-clicked on.
-     * 
+     *
      * @param displayBlock the selected block
      */
     public BlocksMenu(DisplayBlock displayBlock) {
 		this.block = displayBlock;
-		
 		Configurations.getInstance().server().setCurrentConfig().subscribe(readOnlyListener);
-		
+
         add(new GroupMarker(BLOCK_MENU_GROUP));
 
         final MenuManager logSubMenu = new MenuManager("Display block history...");
@@ -101,7 +114,7 @@ public class BlocksMenu extends MenuManager {
         });
         // Allows the menu to be dynamic
         logSubMenu.setRemoveAllWhenShown(true);
-        
+
         final IAction newPlotAction = new Action("New Plot") {
 			@Override
 			public void run() {
@@ -109,15 +122,24 @@ public class BlocksMenu extends MenuManager {
 				Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
-		
+
         logSubMenu.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				logSubMenu.add(newPlotAction);
-				Presenter.pvHistoryPresenter().getDataBrowserTitles().forEach(p -> logSubMenu.add(createAddToPlotAction(p)));
+
+				HashMap<String, ArrayList<String>> dataBrowserData = Presenter.pvHistoryPresenter().getPlotsAndAxes();
+				for (String plotName : dataBrowserData.keySet()) {
+				    MenuManager plotSubMenu = new MenuManager("Add to " + plotName + " plot...");
+
+				    plotSubMenu.add(createAddToPlotAction(plotName));
+				    dataBrowserData.get(plotName).stream().forEach(a -> plotSubMenu.add(createAddToAxisAction(plotName, a)));
+
+				    logSubMenu.add(plotSubMenu);
+				}
 			}
         });
-		
+
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
 
         String editBlockLabel = EDIT_BLOCK_PREFIX;
@@ -129,7 +151,7 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
-                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct                
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
             }
         };
 	}

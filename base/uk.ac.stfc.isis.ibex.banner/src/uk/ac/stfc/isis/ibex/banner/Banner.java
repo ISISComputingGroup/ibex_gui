@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -19,11 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
-import java.util.Collection;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
@@ -45,7 +45,7 @@ public class Banner implements BundleActivator {
         instance = this;
         observables = new Observables();
 
-        observables.bannerDescription.addObserver(descriptionAdapter);
+        observables.bannerDescription.subscribe(descriptionAdapter);
     }
 
     /**
@@ -83,12 +83,15 @@ public class Banner implements BundleActivator {
         Banner.context = null;
     }
 
-    private final BaseObserver<Collection<BannerItem>> descriptionAdapter = new BaseObserver<Collection<BannerItem>>() {
+    private final BaseObserver<CustomBannerData> descriptionAdapter = new BaseObserver<CustomBannerData>() {
 
         @Override
-        public void onValue(Collection<BannerItem> value) {
-            for (BannerItem item : value) {
+        public void onValue(CustomBannerData value) {
+            for (BannerItem item : value.items) {
                 item.createPVObservable();
+            }
+            for (BannerButton button : value.buttons) {
+                button.createPVWritable();
             }
         }
     };

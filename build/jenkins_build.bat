@@ -4,21 +4,25 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Python27
-set PYTHON_HOME=C:\Python27
-set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
-set GENIEPYTHONDIR=c:\Installers\genie_python
+set PYTHON=C:\Instrument\Apps\Python
+set PYTHON_HOME=C:\Instrument\Apps\Python
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
-REM Find latest Java 7 version
-for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
-
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call build.bat
+if "%IS_E4_DEPLOY%" == "YES" (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+) else (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+)
+
+call build.bat "LOG" %BUILT_CLIENT_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
+
+REM set EXIT=YES will change error code to 1 if not set previously so store the current
+set build_error_level=%errorlevel%
 
 @echo on
 
@@ -27,7 +31,7 @@ set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
 if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit
+if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
 REM Delete older versions?
@@ -37,11 +41,7 @@ net use p: \\isis\inst$
 
 python.exe purge_archive_client.py
 
-if "%IS_E4_DEPLOY%" == "YES" (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
-) else (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
-)
+set TARGET_DIR=built_client
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
@@ -121,6 +121,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-REM build MSI kit
-REM call build_msi.bat %INSTALLDIR%

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -29,7 +29,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockDuplicateChecker;
+import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
@@ -58,16 +60,22 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
 	@Override
 	public void safeExecute(Shell shell) {
         updateObservers();
+        
         ConfigSelectionDialog dialog =
-                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), false, false);
+                new ConfigSelectionDialog(shell, "Load Configuration", SERVER.configsInfo().getValue(), 
+                        SERVER.configNamesWithFlags(), false, false);
 		if (dialog.open() == Window.OK) {
             String config = dialog.selectedConfig();
-            Map<String, Set<String>> conflicts = getConflicts(config);
-            if (conflicts.isEmpty()) {
+            
+            Map<String, Set<String>> blockConflicts = getItemConflicts(new BlockDuplicateChecker(), configs.get(config));
+            Map<String, Set<String>> iocConflicts = getItemConflicts(new IocDuplicateChecker(), configs.get(config));
+            
+            if (blockConflicts.isEmpty() && iocConflicts.isEmpty()) {
                 configService.uncheckedWrite(config);
                 Configurations.getInstance().addNameToRecentlyLoadedConfigList(config);
             } else {
-                new MessageDialog(shell, "Conflicts in selected configuration", null, buildWarning(conflicts),
+                new MessageDialog(shell, "Conflicts in selected configuration", null,
+                        DisplayConfiguration.buildWarning(blockConflicts, iocConflicts, "load", "configuration"),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 execute(shell);
             }
@@ -78,7 +86,7 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         for (String name : SERVER.configNames()) {
             if (!configs.containsKey(name)) {
                 ForwardingObservable<Configuration> configObs = SERVER.config(name);
-                configObs.addObserver(new BaseObserver<Configuration>() {
+                configObs.subscribe(new BaseObserver<Configuration>() {
                     @Override
                     public void onValue(Configuration value) {
                         configs.put(value.getName(), value);
@@ -86,32 +94,5 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
                 });
             }
         }
-    }
-
-    private Map<String, Set<String>> getConflicts(String name) {
-        Configuration config = configs.get(name);
-        DuplicateChecker duplicateChecker = new DuplicateChecker();
-        duplicateChecker.setBase(config);
-        return duplicateChecker.checkOnLoad();
-    }
-
-    private String buildWarning(Map<String, Set<String>> conflicts) {
-        boolean multi = (conflicts.size() > 1);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Cannot load the selected configuration as it and its components contains duplicate blocks. "
-                + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
-
-        for (String block : conflicts.keySet()) {
-            sb.append("Block \"" + block + "\" contained in:\n");
-            Set<String> sources = conflicts.get(block);
-            for (String source : sources) {
-                sb.append("\u2022 " + source + "\n");
-            }
-            sb.append("\n");
-        }
-        sb.append(
-                "Please rename or remove the duplicate block" + (multi ? "s" : "")
-                        + " before loading this configuration.");
-        return sb.toString();
     }
 }

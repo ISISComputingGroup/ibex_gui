@@ -87,12 +87,10 @@ public class DeviceScreensDescriptionViewModelTest {
         OpiDescription opiDesc1 = mock(OpiDescription.class);
         when(opiDesc1.getMacros()).thenReturn(macros);
         when(opiDesc1.getDescription()).thenReturn(opiDescription1);
-        when(opiDesc1.getKeys()).thenReturn(propertyNames);
 
         OpiDescription opiDesc2 = mock(OpiDescription.class);
         when(opiDesc2.getMacros()).thenReturn(macros);
         when(opiDesc2.getDescription()).thenReturn(opiDescription2);
-        when(opiDesc2.getKeys()).thenReturn(propertyNames);
         
         DescriptionsProvider provider = mock(DescriptionsProvider.class);
         when(provider.guessOpiName(opiName1)).thenReturn(opiName1);

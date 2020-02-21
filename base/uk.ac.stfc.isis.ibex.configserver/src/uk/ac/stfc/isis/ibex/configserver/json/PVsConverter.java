@@ -19,31 +19,28 @@
 
 package uk.ac.stfc.isis.ibex.configserver.json;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 /**
- * Converts a JSON representation of a PV into a java object representation.
- *
+ * Converts a JSON representation of a PV into a java object representation.s
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PVsConverter extends Converter<String[][], Collection<PV>> {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Collection<PV> convert(String[][] value) throws ConversionException {
-		return Lists.newArrayList(Iterables.transform(Arrays.asList(value), new Function<String[], PV>() {
-			@Override
-			public PV apply(String[] info) {
-				return new PV(info[0], info[1], info[2], info[3]);
-			}
-		}));
+		return Arrays.stream(value)
+				.map(info -> new PV(info[0], info[1], info[2], info[3]))
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 }

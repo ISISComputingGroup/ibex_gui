@@ -20,9 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -31,7 +36,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
@@ -40,6 +44,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
+import uk.ac.stfc.isis.ibex.ui.widgets.DateTimeWithCalendar;
 
 /**
  * The Class Search Control to allow searching within the log.
@@ -59,16 +64,17 @@ public class SearchControl extends Canvas {
 			FIELD_NAMES[f] = FIELDS[f].getDisplayName();
 		}
 	}
-
+	private final LogDisplayModel viewModel;
+	private final DataBindingContext bindingContext = new DataBindingContext();
 	private Text txtValue;
 	private Combo cmboFields;
 
 	private Button chkFrom;
-	private DateTime dtFromDate;
-	private DateTime dtFromTime;
+	private DateTimeWithCalendar dtFromDate;
+	private DateTimeWithCalendar dtFromTime;
 	private Button chkTo;
-	private DateTime dtToDate;
-	private DateTime dtToTime;
+	private DateTimeWithCalendar dtToDate;
+	private DateTimeWithCalendar dtToTime;
 	
     private Combo cmboSeverity;
 
@@ -84,16 +90,18 @@ public class SearchControl extends Canvas {
 
     private ProgressBar progressBar;
 	
+	private Label error;
 	/**
 	 * Instantiates a new search control.
 	 *
 	 * @param parent the parent in which this control resides
 	 * @param searcher a model to allow searching of log messages
 	 */
-	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
-		super(parent, SWT.NONE);		
+	public SearchControl(LogDisplay parent, final LogDisplayModel model) {
+		super(parent, SWT.NONE);
+		this.viewModel = model;
 		this.parent = parent;
-		this.searcher = searcher;
+		this.searcher = model;
 
         GridLayout gl = new GridLayout(1, false);
         setLayout(gl);
@@ -168,18 +176,21 @@ public class SearchControl extends Canvas {
 		chkFrom = new Button(timePicker, SWT.CHECK);
 		chkFrom.setText("From");
 
-		dtFromDate = new DateTime(timePicker, SWT.BORDER | SWT.DROP_DOWN);
-		dtFromTime = new DateTime(timePicker, SWT.BORDER | SWT.DROP_DOWN
+		dtFromDate = new DateTimeWithCalendar(timePicker, SWT.BORDER | SWT.DROP_DOWN);
+		dtFromTime = new DateTimeWithCalendar(timePicker, SWT.BORDER | SWT.DROP_DOWN
 				| SWT.TIME);
 		dtFromDate.setEnabled(false);
 		dtFromTime.setEnabled(false);
-
+		
         chkFrom.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dtFromDate.setEnabled(chkFrom.getSelection());
 				dtFromTime.setEnabled(chkFrom.getSelection());
-			}
+				
+				viewModel.setInitialFromDateTime(dtFromDate.getDateTime(), dtFromTime.getDateTime());
+				viewModel.setInitialToDateTime(dtToDate.getDateTime(), dtToTime.getDateTime());
+ 			}
 		});
 
 		Label lblNewLabel = new Label(timePicker, SWT.NONE);
@@ -189,8 +200,8 @@ public class SearchControl extends Canvas {
 		chkTo = new Button(timePicker, SWT.CHECK);
 		chkTo.setText("To");
 
-		dtToDate = new DateTime(timePicker, SWT.BORDER | SWT.DROP_DOWN);
-		dtToTime = new DateTime(timePicker, SWT.BORDER | SWT.DROP_DOWN
+		dtToDate = new DateTimeWithCalendar(timePicker, SWT.BORDER | SWT.DROP_DOWN);
+		dtToTime = new DateTimeWithCalendar(timePicker, SWT.BORDER | SWT.DROP_DOWN
 				| SWT.TIME);
 		dtToDate.setEnabled(false);
 		dtToTime.setEnabled(false);
@@ -200,8 +211,21 @@ public class SearchControl extends Canvas {
 			public void widgetSelected(SelectionEvent e) {
 				dtToDate.setEnabled(chkTo.getSelection());
 				dtToTime.setEnabled(chkTo.getSelection());
+				
+				viewModel.setInitialFromDateTime(dtFromDate.getDateTime(), dtFromTime.getDateTime());
+				viewModel.setInitialToDateTime(dtToDate.getDateTime(), dtToTime.getDateTime());
 			}
 		});
+        
+        addSearchListeners(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
+                    search();
+                }
+            }
+        });
 		
         new Label(grpFilter, SWT.NONE);
 		
@@ -220,13 +244,62 @@ public class SearchControl extends Canvas {
 		});
         setInfoFilter(cmboSeverity.getText());
 
+        error = new Label(grpFilter, SWT.NONE);
+        error.setText("Date/Time in wrong order");
+        error.setVisible(false);
+        error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+        
+
         // Progress bar
         progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
         lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         setProgressIndicatorsVisible(false);
-		
+        
+        
+        startListeners();
+        		
 	}
+	
+	/**
+	 * Start widget listeners so we can update the ViewModel.
+	 */
+	
+	public void startListeners() {   
+        
+		dtFromDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setFromDate(dtFromDate.getDateTime());
+            }
+        });
 
+        dtFromTime.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setFromTime(dtFromTime.getDateTime());
+            }
+        });
+
+        dtToDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setToDate(dtToDate.getDateTime());
+            }
+        });
+
+        dtToTime.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setToTime(dtToTime.getDateTime());
+            }
+
+        });
+        
+		bindingContext.bindValue(WidgetProperties.visible().observe(error),
+                BeanProperties.value("errorVisibility").observe(viewModel));
+                
+	}
+	
 	/**
 	 * Sets the searcher model.
 	 *
@@ -249,15 +322,9 @@ public class SearchControl extends Canvas {
                 final String value = txtValue.getText();
 
                 final Calendar from = chkFrom.getSelection()
-                        ? new GregorianCalendar(dtFromDate.getYear(),
-							dtFromDate.getMonth(), dtFromDate.getDay(),
-							dtFromTime.getHours(), dtFromTime.getMinutes(),
-							dtFromTime.getSeconds()) : null;
+                        ? dtFromDate.getDateTime(): null;
                 final Calendar to = chkTo.getSelection()
-                        ? new GregorianCalendar(dtToDate.getYear(),
-							dtToDate.getMonth(), dtToDate.getDay(),
-							dtToTime.getHours(), dtToTime.getMinutes(),
-                        dtToTime.getSeconds()) : null;
+                        ? dtToDate.getDateTime(): null;
 
                 runSearchJob(field, value, from, to);
 
@@ -312,4 +379,18 @@ public class SearchControl extends Canvas {
             parent.addMessageFilter(infoFilter);
         }
 	}
+    
+    /**
+     * Adds a KeyListener to the elements where search parameters are input.
+     * 
+     * @param listener
+     *            the KeyListener to add
+     */
+    private void addSearchListeners(KeyListener listener) {
+        txtValue.addKeyListener(listener);
+        dtFromDate.addKeyListener(listener);
+        dtFromTime.addKeyListener(listener);
+        dtToDate.addKeyListener(listener);
+        dtToTime.addKeyListener(listener);
+    }
 }

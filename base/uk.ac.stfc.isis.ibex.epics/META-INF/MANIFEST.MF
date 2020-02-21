@@ -4,17 +4,25 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Epics
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .,
- lib/joda-time-2.10-javadoc.jar,
- lib/joda-time-2.10-sources.jar,
- lib/joda-time-2.10.jar,
+ lib/joda-time-2.10.3.jar,
  lib/commons-codec-1.11-javadoc.jar,
  lib/commons-codec-1.11-sources.jar,
  lib/commons-codec-1.11.jar,
  .,
  resources/
-Require-Bundle: uk.ac.stfc.isis.ibex.logger,
+Require-Bundle: org.eclipse.persistence.moxy;bundle-version="2.7.3";visibility:=reexport,
+ javax.xml.bind;bundle-version="2.2.12";visibility:=reexport,
+ jaxb-core;bundle-version="2.2.11";visibility:=reexport,
+ org.eclipse.persistence.antlr;bundle-version="3.5.2";visibility:=reexport,
+ org.eclipse.persistence.asm;bundle-version="6.2.0";visibility:=reexport,
+ org.eclipse.persistence.core;bundle-version="2.7.3";visibility:=reexport,
+ javax.activation;bundle-version="1.1.0";visibility:=reexport,
+ javax.annotation;bundle-version="1.2.0";visibility:=reexport,
+ jaxb-xjc;bundle-version="2.2.11";visibility:=reexport,
+ javax.persistence;bundle-version="2.2.1";visibility:=reexport,
+ uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  com.google.gson;visibility:=reexport,
@@ -30,5 +38,6 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion.json,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.pv,
+ uk.ac.stfc.isis.ibex.epics.pvmanager,
  uk.ac.stfc.isis.ibex.epics.writing
-Import-Package: uk.ac.stfc.isis.ibex.epics.observing
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.epics

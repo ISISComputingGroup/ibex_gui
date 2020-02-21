@@ -36,6 +36,9 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
+/**
+ * A panel containing all of the run information.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunInformationPanel {
 
@@ -536,7 +539,7 @@ public class RunInformationPanel {
 		glGrpMemoryUsage.horizontalSpacing = 20;
 		grpMemoryUsage.setLayout(glGrpMemoryUsage);
 		grpMemoryUsage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		grpMemoryUsage.setText("Memory Usage");
+		grpMemoryUsage.setText("Event Mode Data Statistics");
 		
 		Label lblBufUsed = new Label(grpMemoryUsage, SWT.RIGHT);
 		GridData gdLblBufUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
@@ -578,6 +581,11 @@ public class RunInformationPanel {
         setModel(viewModel);
 	}
 	
+	/**
+	 * Sets the model and binds all of the values.
+	 *
+	 * @param viewModel the view model
+	 */
 	public void setModel(DaeViewModel viewModel) {
 		bind(viewModel.runInformation());
 	}

@@ -31,35 +31,104 @@ import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlVariables;
 public class RunControlServer extends Closer {
 	private RunControlVariables variables;
 	
+	/**
+	 * Constructor.
+	 *
+	 * @param variables the run-control variables
+	 */
 	public RunControlServer(RunControlVariables variables) {
 		this.variables = variables;
 	}
 	
+	/**
+     * Gets an observable looking at the run-control low limit PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<Double> blockRunControlLowLimit(String blockName) {
 		return variables.blockRunControlLowLimit(blockName);
 	}
 	
+	/**
+     * Gets an observable looking at the run-control high limit PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<Double> blockRunControlHighLimit(String blockName) {
 		return variables.blockRunControlHighLimit(blockName);
 	}
 	
+	/**
+     * Gets an observable looking at the run-control suspend if invalid PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
+	public ForwardingObservable<Boolean> blockRunControlSuspendIfInvalid(String blockName) {
+		return variables.blockRunControlSuspendIfInvalid(blockName);
+	}
+	
+	/**
+     * Gets an observable looking at the run-control in range PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<String> blockRunControlInRange(String blockName) {
 		return variables.blockRunControlInRange(blockName);
 	}
 	
+	/**
+     * Gets an observable looking at the run-control enabled PV.
+     *
+     * @param blockName the name of the block
+     * @return the forwarding observable
+     */
 	public ForwardingObservable<String> blockRunControlEnabled(String blockName) {
 		return variables.blockRunControlEnabled(blockName);
 	}
 
+	/**
+     * Gets a writable for the run-control low limit setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
 	public Writer<Double> blockRunControlLowLimitSetter(String blockName) {
 		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlLowLimitSetter(blockName)));
 	}
 	
+	/**
+     * Gets a writable for the run-control high limit setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
 	public Writer<Double> blockRunControlHighLimitSetter(String blockName) {
         return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlHighLimitSetter(blockName)));
 	}
 	
+	/**
+     * Gets a writable for the run-control enabled setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
 	public Writer<String> blockRunControlEnabledSetter(String blockName) {
 		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlEnabledSetter(blockName)));
+	}
+	
+
+	
+	/**
+     * Gets a writable for the run-control enabled setter PV.
+     *
+     * @param blockName the name of the block
+     * @return the writable
+     */
+	public Writer<String> blockRunControlSuspendIfInvalidSetter(String blockName) {
+		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlSuspendIfInvalidSetter(blockName)));
 	}
 }

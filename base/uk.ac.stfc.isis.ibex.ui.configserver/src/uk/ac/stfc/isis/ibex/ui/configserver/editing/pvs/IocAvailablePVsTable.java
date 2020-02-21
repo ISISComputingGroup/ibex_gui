@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
- * Table showing the IOCs that could be added to a configuration.
+ * Table showing the available PVs that could be set on an IOCs.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
@@ -79,6 +79,11 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 		});	
 	}
 	
+	/**
+	 * Sets the search filter and refreshes the table.
+	 * 
+	 * @param search the text to search for.
+	 */
 	public void setFilter(String search) {
 		filter.setSearchText(search);
 		this.viewer().refresh();

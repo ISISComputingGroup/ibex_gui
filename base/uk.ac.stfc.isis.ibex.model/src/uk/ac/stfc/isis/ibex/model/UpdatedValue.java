@@ -28,16 +28,21 @@ import java.beans.PropertyChangeListener;
 public class UpdatedValue<T> extends ModelObject {
 
 	private T value;
+	
 	private boolean isSet;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see uk.ac.stfc.isis.ibex.model.ReadableValue#getValue()
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
 	 */
 	public final synchronized T getValue() {
 		return value;
 	}
 	
+	/**
+	 * @return true if the value is set, false otherwise.
+	 */
 	public synchronized boolean isSet() {
 		return isSet;
 	}
@@ -50,8 +55,13 @@ public class UpdatedValue<T> extends ModelObject {
 		}
 	}
 	
+	/**
+	 * Sets the value.
+	 *
+	 * @param value the new value
+	 */
 	protected synchronized void setValue(T value) {
-		isSet = true;
+		isSet = (value != null);
 		firePropertyChange("value", this.value, this.value = value);
 	}
 }

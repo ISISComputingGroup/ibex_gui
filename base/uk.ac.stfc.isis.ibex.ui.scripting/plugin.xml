@@ -13,12 +13,6 @@
             class="uk.ac.stfc.isis.ibex.ui.scripting.PythonInterpreterProviderFactory">
       </interpreter_provider_participant>
    </extension>
-   <extension
-         point="org.python.pydev.pydev_interpreter_info_builder">
-      <interpreter_info_builder_participant
-            class="uk.ac.stfc.isis.ibex.ui.scripting.InterpreterInfoBuilderParticipant">
-      </interpreter_info_builder_participant>
-   </extension>
    <extension point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
             class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleSettings">
@@ -41,6 +35,10 @@
 	      </with>
 	   </activeWhen>
 	</handler>
+    <handler
+          class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthMonitor"
+          commandId="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
+    </handler>
 	</extension>
 	
 	   <extension
@@ -49,5 +47,18 @@
             id="uk.ac.stfc.isis.ibex.ui.scripting.KillScript"
             name="Kill the script">
       </command>
-      </extension>
+      <command
+            id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole"
+            name="Clear Console">
+      </command>
+    </extension>
+      
+    <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
+      <dynamic
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthMonitor"
+            id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
+      </dynamic> 
+      </menuContribution>
+    </extension>
 </plugin>

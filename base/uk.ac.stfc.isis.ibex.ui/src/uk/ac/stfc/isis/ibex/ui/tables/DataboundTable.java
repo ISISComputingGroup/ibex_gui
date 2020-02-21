@@ -45,6 +45,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -371,7 +372,15 @@ public abstract class DataboundTable<TRow> extends Composite {
 		return viewCol;
 	}
 	
-	private SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
+	/**
+	 * Gets a selection adapter for when a column is selected.
+	 * Tables can override to provide their own.
+	 * 
+	 * @param column the column to create the adapter for
+	 * @param index the index of the column
+	 * @return the selection adapter
+	 */
+	protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
         SelectionAdapter selectionAdapter = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -441,5 +450,32 @@ public abstract class DataboundTable<TRow> extends Composite {
 	protected ColumnComparator<TRow> comparator() {
 		return comparator;
 	}
+	
+	/**
+	 * Disposes and re-adds the columns so that they update from the model again. 
+	 */
+	public void updateTableColumns() {
+        for (TableColumn col : table().getColumns()) {
+            col.dispose();
+        }
+
+        addColumns();
+
+        forceResizeTable();
+	}
+	
+    /**
+     * Forces the table to display the columns correctly.
+     * 
+     * This is a dirty hack but is the only way I found to ensure the columns
+     * displayed properly.
+     */
+    private void forceResizeTable() {
+        setRedraw(false);
+        Point prevSize = table.getSize();
+        setSize(prevSize.x, prevSize.y - 1);
+        setSize(prevSize);
+        setRedraw(true);
+    }
 }
 

@@ -32,8 +32,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -98,7 +96,6 @@ public class PVSelectorPanel extends Composite {
 		pvSource.setContentProvider(new ArrayContentProvider());
 		pvSource.setInput(SourceFilters.values());	
 
-		
 		Label lblInterestLevel = new Label(grpPV, SWT.NONE);
 		lblInterestLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblInterestLevel.setText("Interest Level:");
@@ -118,13 +115,6 @@ public class PVSelectorPanel extends Composite {
 		GridData gdPvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gdPvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gdPvAddress);
-		
-		pvAddress.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent arg0) {
-				blockPVTable.setSearch(pvAddress.getText());
-			}
-		});
 		
 		final Button btnClear = new Button(grpPV, SWT.NONE);
 		btnClear.setText("Clear");
@@ -156,6 +146,8 @@ public class PVSelectorPanel extends Composite {
 				}
 			}
 		});
+		
+		pvAddress.addModifyListener(e -> blockPVTable.setSearch(pvAddress.getText()));
 	}
 	
     /**

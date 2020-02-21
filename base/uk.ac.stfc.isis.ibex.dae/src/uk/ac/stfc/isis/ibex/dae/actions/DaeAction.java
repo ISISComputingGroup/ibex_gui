@@ -117,9 +117,9 @@ public abstract class DaeAction extends Action implements Closable {
 			ForwardingObservable<DaeRunState> runState) {
 		
 		targetSubscribtion = target.subscribe(actionWriter);
-		writerSubscription = actionWriter.writeTo(target);
-		transitionSubscription = inStateTransition.addObserver(transitionObserver);
-		runStateSubscription = runState.addObserver(runStateObserver);
+		writerSubscription = actionWriter.subscribe(target);
+		transitionSubscription = inStateTransition.subscribe(transitionObserver);
+		runStateSubscription = runState.subscribe(runStateObserver);
 	}
 
 	@Override
@@ -129,10 +129,10 @@ public abstract class DaeAction extends Action implements Closable {
 
 	@Override
 	public synchronized void close() {
-		runStateSubscription.removeObserver();
-		transitionSubscription.removeObserver();
-		targetSubscribtion.removeObserver();
-		writerSubscription.removeObserver();
+		runStateSubscription.cancelSubscription();
+		transitionSubscription.cancelSubscription();
+		targetSubscribtion.cancelSubscription();
+		writerSubscription.cancelSubscription();
 	}
 	
     /**

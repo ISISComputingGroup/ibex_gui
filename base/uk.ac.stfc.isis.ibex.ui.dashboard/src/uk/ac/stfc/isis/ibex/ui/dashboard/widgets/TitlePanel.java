@@ -21,9 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -56,6 +56,7 @@ public class TitlePanel extends Composite {
 	public TitlePanel(Composite parent, int style, TitlePanelModel model, Font font) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
+		this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		Label lblTitle = new Label(this, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -84,23 +85,32 @@ public class TitlePanel extends Composite {
 	}
 
 	private void bind(TitlePanelModel model) {
-        UpdateValueStrategy literalAmpersands =
-                new UpdateValueStrategy().setConverter(new Converter(String.class, String.class) {
+        UpdateValueStrategy<String, String> literalAmpersands =
+                new UpdateValueStrategy<String,String>().setConverter(new Converter<String,String>(String.class, String.class) {
             @Override
-            public Object convert(Object fromObject) {
-                String in = (String) fromObject;
-                return in.replaceAll("&", "&&");
+            public String convert(String fromObject) {
+                return fromObject.replaceAll("&", "&&");
             }
         });
 
 		DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text().observe(title),
-                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
-        bindingContext.bindValue(WidgetProperties.tooltipText().observe(title),
-                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
+        bindingContext.bindValue(
+        		WidgetProperties.text().observe(title), 
+        		BeanProperties.<Object, String>value("value").observe(model.title()), 
+        		null, literalAmpersands);
+        bindingContext.bindValue(
+        		WidgetProperties.tooltipText().observe(title), 
+        		BeanProperties.<Object, String>value("value").observe(model.title()), 
+        		null, literalAmpersands);
 		
         UsersConverter deJsoner = new UsersConverter();
-		bindingContext.bindValue(WidgetProperties.text().observe(users), BeanProperties.value("value").observe(model.users()), null, new UpdateValueStrategy().setConverter(deJsoner));	
-		bindingContext.bindValue(WidgetProperties.tooltipText().observe(users), BeanProperties.value("value").observe(model.users()), null, new UpdateValueStrategy().setConverter(deJsoner));
+		bindingContext.bindValue(
+				WidgetProperties.text().observe(users), 
+				BeanProperties.<Object, String>value("value").observe(model.users()), 
+				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
+		bindingContext.bindValue(
+				WidgetProperties.tooltipText().observe(users), 
+				BeanProperties.<Object, String>value("value").observe(model.users()), 
+				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
 	}
 }

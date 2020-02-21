@@ -30,7 +30,7 @@ import com.google.gson.GsonBuilder;
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
-import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
+import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -50,12 +50,18 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  */
 public class JsonConverters implements Converters {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Configuration> toConfig() {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Converter<String, Collection<Configuration>> toConfigList() {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
@@ -63,26 +69,41 @@ public class JsonConverters implements Converters {
                 .apply(Convert.<Configuration>toCollection()).apply(forEach(INIT_CONFIG));
     }
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, ServerStatus> toServerStatus() {
 		return new JsonDeserialisingConverter<>(ServerStatus.class);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, BlockRules> toBlockRules() {
 		return new JsonDeserialisingConverter<>(BlockRules.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public Converter<String, BlockServerNameValidator> toBlockServerTextValidor() {
         return new JsonDeserialisingConverter<>(BlockServerNameValidator.class);
     }
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<ConfigInfo>> toConfigsInfo() {
 		return new JsonDeserialisingConverter<>(ConfigInfo[].class).apply(Convert.<ConfigInfo>toCollection());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<ComponentInfo>> toComponents() {
 		return new JsonDeserialisingConverter<>(ComponentInfo[].class)
@@ -90,36 +111,57 @@ public class JsonConverters implements Converters {
 				.apply(forEach(INIT_COMP));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<EditableIoc>> toIocs() {
 		return new IocsParametersConverter().apply(new EditableIocsConverter());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<PV>> toPVs() {
 		return new JsonDeserialisingConverter<>(String[][].class).apply(new PVsConverter());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<Configuration, String> configToString() {
 		return new JsonSerialisingConverter<Configuration>(Configuration.class);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<Collection<String>, String> namesToString() {
 		return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<String>> toNames() {
 		return new JsonDeserialisingConverter<>(String[].class).apply(Convert.<String>toCollection());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, String> nameToString() {
 		return new JsonSerialisingConverter<String>(String.class);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Converter<String, Collection<IocState>> toIocStates() {
 		return new IocsParametersConverter().apply(new IocStateConverter());
@@ -142,23 +184,16 @@ public class JsonConverters implements Converters {
 			}
 		};
 	}
-	
-	private static final Function<Configuration, Configuration> INIT_CONFIG = new Function<Configuration, Configuration>() {
-		@Override
-		public Configuration apply(Configuration uninitialised) {
-			return new Configuration(uninitialised);
-		}
-	};
+		
+	private static final Function<Configuration, Configuration> INIT_CONFIG = uninitialized -> new Configuration(uninitialized);
 
-	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = new Function<ComponentInfo, ComponentInfo>() {
-		@Override
-		public ComponentInfo apply(ComponentInfo uninitialised) {
-			return new ComponentInfo(uninitialised);
-		}
-	};
+	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Converter<String, Collection<BannerItem>> toBannerDescription() {
-		return new JsonDeserialisingConverter<>(BannerItem[].class).apply(Convert.<BannerItem>toCollection());
-	}
+	public Converter<String, CustomBannerData> toBannerDescription() {
+        return new JsonDeserialisingConverter<>(CustomBannerData.class);
+    }
 }

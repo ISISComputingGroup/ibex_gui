@@ -28,11 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -43,8 +40,12 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObservable;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
 
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to
@@ -55,7 +56,7 @@ import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
  * available blocks (blocks not from the current instrument).
  * 
  */
-public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
+public class EditableConfiguration extends ModelObject implements GroupNamesProvider, Closable {
 
     /** The property change identifier associated with editing groups. */
     public static final String EDITABLE_GROUPS = "editableGroups";
@@ -96,37 +97,68 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private final EditableComponents editableComponents;
     /** Dates when the configuration has been changed. */
     private List<String> history = new ArrayList<>();
+    /** if the config is protected or not */
+    private boolean isProtected;
 
     /** Available PVs. */
     private final List<PV> pvs;
-    
+
     /** If this is a component. */
     private boolean isComponent;
 
     /** Holds general information for IOCs */
     private Map<String, EditableIoc> iocMap = new HashMap<>();
 
+    /** Manager mode model **/
+    private ManagerModeModel managerMode;
+    /** To enable or disable save button **/
+    private boolean isSaveButtonEnabled;
+    /** Flag for enabling/disabling save as button */
+    private boolean enableSaveAsButton;
+
+    /** Currently in manager mode or not **/
+    private Boolean inManagerMode;
+    /** Manager mode Observable **/
+    private ManagerModeObservable managerModePv;
+    /** Initial Flag of a config/component **/
+    final private boolean originalProtectedFlag;
+    /** Warning to be shown when saving protected config in non manager mode **/
+    private final String savingProtectedConfigWarning = "Info : To modify/save a protected "
+	    + "configuration you have to be in Manager Mode";
+    /** Warning to be shown when saving protected component in non manager mode **/
+    private final String savingProtectedCompWarning = "Info : To modify/save a protected "
+	    + "component you have to be in Manager Mode";
+    /** To show when no error **/
+    private final String noError = " ";
+    /** Current error message to be displayed **/
+    private String currentErrorMessage = noError;
+
+
+
     /**
      * Listener for block renaming events.
      */
     private final PropertyChangeListener blockRenameListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            String oldName = (String) evt.getOldValue();
-            String newName = (String) evt.getNewValue();
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+	    String oldName = (String) evt.getOldValue();
+	    String newName = (String) evt.getNewValue();
 
-            // Recreate the collection before the rename occurred.
-            Collection<Block> blocksBeforeRename = transformBlocks();
-            Block renamed = getBlockByName(blocksBeforeRename, newName);
-            blocksBeforeRename.remove(renamed);
+	    // Recreate the collection before the rename occurred.
+	    Collection<Block> blocksBeforeRename = transformBlocks();
+	    Block renamed = getBlockByName(blocksBeforeRename, newName).orElseThrow(NoSuchElementException::new);
+	    blocksBeforeRename.remove(renamed);
 
-            Block oldBlock = new Block(renamed);
-            oldBlock.setName(oldName);
-            blocksBeforeRename.add(oldBlock);
+	    Block oldBlock = new Block(renamed);
+	    oldBlock.setName(oldName);
+	    blocksBeforeRename.add(oldBlock);
 
-            firePropertyChange("blocks", blocksBeforeRename, transformBlocks());
-        }
+	    firePropertyChange("blocks", blocksBeforeRename, transformBlocks());
+	}
     };
+
+    private Optional<ManagerModeObserver> manager_mode_observable = Optional.empty();
+
 
     /**
      * @param config
@@ -140,145 +172,152 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The PVs available to the configuration
      */
     public EditableConfiguration(
-			Configuration config,
-			Collection<EditableIoc> iocs,
-            Collection<Configuration> components,
-            Collection<PV> pvs) {
-		this.name = config.name();
-		this.description = config.description();
-		this.synoptic = config.synoptic();
-		
-		this.allIocs = new ArrayList<>();
-		
-		for (EditableIoc ioc : iocs) {
-			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
-			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
-			this.allIocs.add(newIoc);
-		}
+	    Configuration config,
+	    Collection<EditableIoc> iocs,
+	    Collection<Configuration> components, 
+	    Collection<PV> pvs) {
+	this.name = config.name();
+	this.description = config.description();
+	this.synoptic = config.synoptic();
+	this.isProtected = config.isProtected();
+	originalProtectedFlag = this.isProtected;
+	this.allIocs = new ArrayList<>();
+	this.managerMode = ManagerModeModel.getInstance();
+	this.isSaveButtonEnabled = true;
+	this.enableSaveAsButton = true;
+	managerModePv = managerMode.getManagerModeObservable();
 
-        this.history = new ArrayList<>();
+	for (EditableIoc ioc : iocs) {
+	    EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
+	    newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
+	    this.allIocs.add(newIoc);
+	}
 
-        for (String date : config.getHistory()) {
-            this.history.add(date);
-        }
+	this.history = new ArrayList<>();
 
-        this.pvs = new ArrayList<>(pvs);
+	for (String date : config.getHistory()) {
+	    this.history.add(date);
+	}
 
-        for (Block block : config.getBlocks()) {
-            EditableBlock eb = new EditableBlock(block);
-            allBlocks.add(eb);
-            if (!block.inComponent()) {
-                makeBlockAvailable(eb);
-            }
-            addRenameListener(eb);
-        }
+	this.pvs = new ArrayList<>(pvs);
 
-        for (Group group : config.getGroups()) {
-            editableGroups.add(new EditableGroup(this, group));
-        }
+	for (Block block : config.getBlocks()) {
+	    EditableBlock eb = new EditableBlock(block);
+	    allBlocks.add(eb);
+	    if (!block.inComponent()) {
+		makeBlockAvailable(eb);
+	    }
+	    addRenameListener(eb);
+	}
 
-        editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
+	for (Group group : config.getGroups()) {
+	    editableGroups.add(new EditableGroup(this, group));
+	}
 
-        for (EditableIoc ioc : allIocs) {
-            iocMap.put(ioc.getName(), ioc);
-        }
-        initMacros(iocMap);
+	editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 
-        for (Ioc ioc : config.getIocs()) {
-            addIoc(convertIoc(ioc));
-        }
+	for (EditableIoc ioc : allIocs) {
+	    iocMap.put(ioc.getName(), ioc);
+	}
+	initMacros(iocMap);
 
-        Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
-        editableComponents = new EditableComponents(selectedComponents, components);
-        editableComponents.addPropertyChangeListener(new PropertyChangeListener() {
+	for (Ioc ioc : config.getIocs()) {
+	    addIoc(convertIoc(ioc));
+	}
 
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updateComponents();
-            }
-        });
+	Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
+	editableComponents = new EditableComponents(selectedComponents, components);
+	editableComponents.addPropertyChangeListener(evt -> updateComponents());
 
-        updateComponents();
+	updateComponents();
+	setEnableSaveAsButton();
+	addObserver();
     }
 
     private EditableIoc convertIoc(Ioc ioc) {
-        final EditableIoc generalIOC = iocMap.get(ioc.getName());
+	final EditableIoc generalIOC = iocMap.get(ioc.getName());
 
-        EditableIoc editableIoc;
+	EditableIoc editableIoc;
 
-        if (generalIOC == null) {
-            editableIoc = new EditableIoc(ioc, UNKNOWN_IOC_TEXT);
-        } else {
-            editableIoc = new EditableIoc(ioc, generalIOC.getDescription());
-            editableIoc.setAvailableMacros(generalIOC.getAvailableMacros());
-        }
+	if (generalIOC == null) {
+	    editableIoc = new EditableIoc(ioc, UNKNOWN_IOC_TEXT);
+	} else {
+	    editableIoc = new EditableIoc(ioc, generalIOC.getDescription());
+	    editableIoc.setAvailableMacros(generalIOC.getAvailableMacros());
+	}
 
-        return editableIoc;
+	return editableIoc;
     }
 
     private void updateComponents() {
-        Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>();
-        iocsBeforeUpdate.addAll(componentIocs);
-        componentIocs.clear();
-        for (Configuration comp : editableComponents.getSelected()) {
-            for (Ioc ioc : comp.getIocs()) {
-                EditableIoc compIoc = convertIoc(ioc);
-                compIoc.setComponent(comp.getName());
-                componentIocs.add(compIoc);
-            }
-        }
-        firePropertyChange("iocs", componentIocs, iocsBeforeUpdate);
+	Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>();
+	iocsBeforeUpdate.addAll(componentIocs);
+	componentIocs.clear();
+	for (Configuration comp : editableComponents.getSelected()) {
+	    for (Ioc ioc : comp.getIocs()) {
+		EditableIoc compIoc = convertIoc(ioc);
+		compIoc.setComponent(comp.getName());
+		componentIocs.add(compIoc);
+	    }
+	}
+	firePropertyChange("iocs", componentIocs, iocsBeforeUpdate);
     }
 
     /**
      * @return The configuration name
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
      * @return The configuration description
      */
     public String getDescription() {
-        return description;
+	return description;
     }
 
     /**
      * @return The name of the default synoptic
      */
     public String getSynoptic() {
-        return synoptic;
+	return synoptic;
     }
 
     /**
      * @return The date the configuration was created
      */
     public String getDateCreated() {
-        if (history.size() != 0) {
-            return history.get(0);
-        } else {
-            return "";
-        }
+	if (history.size() != 0) {
+	    return history.get(0);
+	} else {
+	    return "";
+	}
     }
 
     /**
      * @return The date the configuration was last modified
      */
     public String getDateModified() {
-        if (history.size() != 0) {
-            return history.get(history.size() - 1);
-        } else {
-            return "";
-        }
+	if (history.size() != 0) {
+	    return history.get(history.size() - 1);
+	} else {
+	    return "";
+	}
     }
 
+    /**
+     * @return if the config is protected or not by manager mode
+     */
+    public boolean getIsProtected() {
+	return isProtected;
+    }
     /**
      * @param name
      *            The new configuration name
      */
     public void setName(String name) {
-        firePropertyChange("name", this.name, this.name = name);
+	firePropertyChange("name", this.name, this.name = name);
     }
 
     /**
@@ -286,7 +325,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The new configuration description
      */
     public void setDescription(String description) {
-        firePropertyChange("description", this.description, this.description = description);
+	firePropertyChange("description", this.description, this.description = description);
     }
 
     /**
@@ -294,7 +333,18 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The name of the new default synoptic for the configuration
      */
     public void setSynoptic(String synoptic) {
-        firePropertyChange("synoptic", this.synoptic, this.synoptic = synoptic);
+	firePropertyChange("synoptic", this.synoptic, this.synoptic = synoptic);
+    }
+
+    /**
+     * 
+     * @param isProtected
+     * 				Whether the configuration is protected to only be editable in manager mode or not
+     */
+    public void setIsProtected(boolean isProtected) {
+	firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
+	setEnableOrDisableSaveButton();
+	setEnableSaveAsButton();
     }
 
     /**
@@ -302,7 +352,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The date the configuration was created
      */
     public void setDateCreated(String dateCreated) {
-        firePropertyChange("dateCreated", this.dateCreated, this.dateCreated = dateCreated);
+	firePropertyChange("dateCreated", this.dateCreated, this.dateCreated = dateCreated);
     }
 
     /**
@@ -310,7 +360,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The date the configuration was last modified
      */
     public void setDateModified(String dateModified) {
-        firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
+	firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
     }
 
     /**
@@ -319,70 +369,51 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return True if configuration is new.
      */
     public boolean getIsNew() {
-        boolean isNew = (history.size() == 0);
-        return isNew;
+	return (history.size() == 0);
     }
 
     /**
      * @return The blocks associated with the configuration
      */
     Collection<Block> transformBlocks() {
-        return Lists.newArrayList(Iterables.transform(allBlocks, new Function<EditableBlock, Block>() {
-            @Override
-            public Block apply(EditableBlock block) {
-                return block;
-            }
-        }));
+	return new ArrayList<Block>(allBlocks);
     }
 
     /**
      * @return The groups associated with the configuration
      */
     private Collection<Group> transformGroups() {
-        return Lists.newArrayList(Iterables.transform(getEditableGroups(), new Function<EditableGroup, Group>() {
-            @Override
-            public Group apply(EditableGroup group) {
-                return group;
-            }
-
-        }));
+	return new ArrayList<Group>(getEditableGroups());
     }
 
     /**
      * @return The IOCs associated with the configuration
      */
     private Collection<Ioc> transformIocs() {
-        return Lists.newArrayList(Iterables.transform(configIocs, new Function<EditableIoc, Ioc>() {
-            @Override
-            public Ioc apply(EditableIoc ioc) {
-                return ioc;
-            }
-        }));
+	return new ArrayList<Ioc>(configIocs);
     }
 
     /**
      * @return The components associated with the configuration
      */
-	private Collection<ComponentInfo> transformComponents() {
-        Collection<ComponentInfo> result = new ArrayList<ComponentInfo>();
-        for (Configuration compDetails : editableComponents.getSelected()) {
-            result.add(new ComponentInfo(compDetails));
-        }
-        return result;
-	}
-	
+    private Collection<ComponentInfo> transformComponents() {
+	return editableComponents.getSelected().stream()
+		.map(ComponentInfo::new)
+		.collect(Collectors.toCollection(ArrayList::new));
+    }
+
     /**
      * @return The dates when the configuration has been modified
      */
     private Collection<String> getHistory() {
-        return history;
+	return history;
     }
 
     /**
      * @return The PVs associated with the configuration
      */
     public Collection<PV> pvs() {
-        return new ArrayList<>(pvs);
+	return new ArrayList<>(pvs);
     }
 
     /**
@@ -392,9 +423,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The IOC to be added.
      */
     public void addIoc(EditableIoc ioc) {
-        Collection<Ioc> iocsBeforeAdd = transformIocs();
-        configIocs.add(ioc);
-        firePropertyChange("iocs", iocsBeforeAdd, transformIocs());
+	Collection<Ioc> iocsBeforeAdd = transformIocs();
+	configIocs.add(ioc);
+	firePropertyChange("iocs", iocsBeforeAdd, transformIocs());
     }
 
     /**
@@ -404,79 +435,79 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the list of IOCs to remove
      */
     public void removeIocs(List<EditableIoc> iocs) {
-        Collection<EditableIoc> iocsBefore = getAddedIocs();
-        for (EditableIoc ioc : iocs) {
-            configIocs.remove(ioc);
-        }
-        firePropertyChange("iocs", iocsBefore, getAddedIocs());
+	Collection<EditableIoc> iocsBefore = getAddedIocs();
+	for (EditableIoc ioc : iocs) {
+	    configIocs.remove(ioc);
+	}
+	firePropertyChange("iocs", iocsBefore, getAddedIocs());
     }
 
     /**
      * @return The available IOCs not associated with the configuration.
      */
     public Collection<EditableIoc> getAvailableIocs() {
-        List<EditableIoc> result = new ArrayList<EditableIoc>();
-    
-        List<String> addedIocNames = new ArrayList<String>();
-        for (EditableIoc ioc : getAddedIocs()) {
-            addedIocNames.add(ioc.getName());
-        }
-    
-        for (EditableIoc ioc : allIocs) {
-            if (!addedIocNames.contains(ioc.getName())) {
-                result.add(ioc);
-            }
-        }
-        Collections.sort(result);
-        return result;
+	List<EditableIoc> result = new ArrayList<EditableIoc>();
+
+	List<String> addedIocNames = new ArrayList<String>();
+	for (EditableIoc ioc : getAddedIocs()) {
+	    addedIocNames.add(ioc.getName());
+	}
+
+	for (EditableIoc ioc : allIocs) {
+	    if (!addedIocNames.contains(ioc.getName())) {
+		result.add(ioc);
+	    }
+	}
+	Collections.sort(result);
+	return result;
     }
 
     /**
      * @return The IOCs added to the configuration
      */
     public Collection<EditableIoc> getAddedIocs() {
-        Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
-        addedIocs.addAll(configIocs);
-        addedIocs.addAll(componentIocs);
-        return addedIocs;
+	Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
+	addedIocs.addAll(configIocs);
+	addedIocs.addAll(componentIocs);
+	return addedIocs;
     }
 
     // Add available macros to IOCs that are part of the configuration.
     private void initMacros(Map<String, EditableIoc> available) {
-        for (EditableIoc selectedIoc : configIocs) {
-            Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
-            selectedIoc.setAvailableMacros(availableMacros);
-        }
-    
-        Collections.sort(configIocs);
+	for (EditableIoc selectedIoc : configIocs) {
+	    Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
+	    selectedIoc.setAvailableMacros(availableMacros);
+	}
+
+	Collections.sort(configIocs);
     }
 
     /**
      * @return All of the blocks associated with the configuration, including those from components.
      */
     public Collection<EditableBlock> getAllBlocks() {
-        return new ArrayList<>(allBlocks);
+	return new ArrayList<>(allBlocks);
     }
 
     /**
      * @return All of the blocks in the configuration that are not in a group
      */
     public Collection<EditableBlock> getOtherBlocks() {
-        return new ArrayList<>(otherBlocks);
+	return new ArrayList<>(otherBlocks);
     }
 
     /**
      * @return The editable groups associated with the configuration
      */
     public Collection<EditableGroup> getEditableGroups() {
-        return new ArrayList<>(editableGroups);
+	return new ArrayList<>(editableGroups);
     }
 
     /**
      * @return The editable components associated with the configuration
      */
     public EditableComponents getEditableComponents() {
-        return editableComponents;
+	return editableComponents;
     }
 
     /**
@@ -490,15 +521,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *             already in the configuration
      */
     public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
-        if (blockNameIsUnique(block.getName())) {
-            Collection<Block> blocksBeforeAdd = transformBlocks();
-            allBlocks.add(0, block);
-            makeBlockAvailable(block);
-            addRenameListener(block);
-            firePropertyChange("blocks", blocksBeforeAdd, transformBlocks());
-        } else {
-            throw new DuplicateBlockNameException();
-        }
+	if (blockNameIsUnique(block.getName())) {
+	    Collection<Block> blocksBeforeAdd = transformBlocks();
+	    allBlocks.add(0, block);
+	    makeBlockAvailable(block);
+	    addRenameListener(block);
+	    firePropertyChange("blocks", blocksBeforeAdd, transformBlocks());
+	} else {
+	    throw new DuplicateBlockNameException();
+	}
     }
 
     /**
@@ -510,12 +541,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return whether the name is unique as boolean
      */
     private boolean blockNameIsUnique(String name) {
-        for (EditableBlock existingBlock : allBlocks) {
-            if (existingBlock.getName().equals(name)) {
-                return false;
-            }
-        }
-        return true;
+	return !allBlocks.stream().map(Block::getName).anyMatch(name::equals);
     }
 
     /**
@@ -525,7 +551,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to make unavailable
      */
     public void makeBlockUnavailable(EditableBlock block) {
-        otherBlocks.remove(block);
+	otherBlocks.remove(block);
     }
 
     /**
@@ -535,9 +561,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to make available
      */
     public void makeBlockAvailable(EditableBlock block) {
-        if (!otherBlocks.contains(block)) {
-            otherBlocks.add(0, block);
-        }
+	if (!otherBlocks.contains(block)) {
+	    otherBlocks.add(0, block);
+	}
     }
 
     /**
@@ -547,12 +573,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the list of blocks to remove
      */
     public void removeBlocks(List<EditableBlock> blocks) {
-        Collection<Block> blocksBefore = transformBlocks();
-        for (EditableBlock block : blocks) {
-            allBlocks.remove(block);
-            makeBlockUnavailable(block);
-        }
-        firePropertyChange("blocks", blocksBefore, transformBlocks());
+	Collection<Block> blocksBefore = transformBlocks();
+	for (EditableBlock block : blocks) {
+	    allBlocks.remove(block);
+	    makeBlockUnavailable(block);
+	}
+	firePropertyChange("blocks", blocksBefore, transformBlocks());
     }
 
     /**
@@ -562,17 +588,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return The new group
      */
     public EditableGroup addNewGroup() {
-        Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = transformGroups();
+	Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
+	Collection<Group> groupsBefore = transformGroups();
 
-        String name = groupName.getUnique(getGroupNames());
-        EditableGroup newGroup = new EditableGroup(this, new Group(name));
-        editableGroups.add(newGroup);
+	String name = groupName.getUnique(getGroupNames());
+	EditableGroup newGroup = new EditableGroup(this, new Group(name));
+	editableGroups.add(newGroup);
 
-        firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
-        firePropertyChange("groups", groupsBefore, transformGroups());
+	firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
+	firePropertyChange("groups", groupsBefore, transformGroups());
 
-        return newGroup;
+	return newGroup;
     }
 
     /**
@@ -582,16 +608,16 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The group to remove
      */
     public void removeGroup(EditableGroup group) {
-        Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = transformGroups();
+	Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
+	Collection<Group> groupsBefore = transformGroups();
 
-        // Remove selected blocks
-        group.toggleSelection(group.getSelectedBlocks());
+	// Remove selected blocks
+	group.toggleSelection(group.getSelectedBlocks());
 
-        editableGroups.remove(group);
+	editableGroups.remove(group);
 
-        firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
-		firePropertyChange("groups", groupsBefore, transformGroups());
+	firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
+	firePropertyChange("groups", groupsBefore, transformGroups());
     }
 
     /**
@@ -600,9 +626,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return the underlying configuration
      */
     public Configuration asConfiguration() {
-        Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-                transformGroups(), transformComponents(), getHistory());
-        return new ComponentFilteredConfiguration(config);
+	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
+		transformGroups(), transformComponents(), getHistory(), getIsProtected());
+	return new ComponentFilteredConfiguration(config);
     }
 
     /**
@@ -612,9 +638,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return the configuration as a component
      */
     public Configuration asComponent() {
-        Configuration config = asConfiguration();
-        return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-                config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory());
+	Configuration config = asConfiguration();
+	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
+		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected());
     }
 
     /**
@@ -627,18 +653,18 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The second group
      */
     public void swapGroups(EditableGroup group1, EditableGroup group2) {
-        Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = transformGroups();
+	Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
+	Collection<Group> groupsBefore = transformGroups();
 
-        // Need to find indexes because the NONE group may throw result in
-        // non-sequential numbers
-        int index1 = editableGroups.indexOf(group1);
-        int index2 = editableGroups.indexOf(group2);
+	// Need to find indexes because the NONE group may throw result in
+	// non-sequential numbers
+	int index1 = editableGroups.indexOf(group1);
+	int index2 = editableGroups.indexOf(group2);
 
-        Collections.swap(editableGroups, index1, index2);
+	Collections.swap(editableGroups, index1, index2);
 
-        firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
-        firePropertyChange("groups", groupsBefore, transformGroups());
+	firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
+	firePropertyChange("groups", groupsBefore, transformGroups());
     }
 
     /**
@@ -650,13 +676,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the name of the block in question
      * @return the Block object
      */
-    private static Block getBlockByName(Iterable<Block> blocks, final String name) {
-        return Iterables.find(blocks, new Predicate<Block>() {
-            @Override
-            public boolean apply(Block block) {
-                return block.getName().equals(name);
-            }
-        });
+    private static Optional<Block> getBlockByName(Collection<Block> blocks, final String name) {
+	return blocks.stream()
+		.filter(block -> block.getName().equals(name))
+		.findFirst();
     }
 
     /**
@@ -667,11 +690,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return the Block object
      */
     public Block getBlockByName(final String name) {
-        try {
-            return getBlockByName(transformBlocks(), name);
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+	return getBlockByName(transformBlocks(), name).orElse(null);
     }
 
     /**
@@ -681,7 +700,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The block to add to the listener
      */
     private void addRenameListener(EditableBlock block) {
-        block.addPropertyChangeListener("name", blockRenameListener);
+	block.addPropertyChangeListener("name", blockRenameListener);
     }
 
     /**
@@ -691,14 +710,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     @Override
     public List<String> getGroupNames() {
-        List<String> names = new ArrayList<>();
-        for (Group group : transformGroups()) {
-            names.add(group.getName());
-        }
-
-        return names;
+	return transformGroups().stream()
+		.map(Group::getName)
+		.collect(Collectors.toCollection(ArrayList::new));
     }
-    
+
     /**
      * Sets whether this configuration is a component or not.
      * 
@@ -706,27 +722,136 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            true if this is a component
      */
     public void setIsComponent(boolean isComponent) {
-        firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
+	firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
     }
-    
+
     /**
      * Get whether this configuration is a component or not.
      * 
      * @return true if this is a component
      */
     public boolean getIsComponent() {
-        return isComponent;
+	return isComponent;
     }
     private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected,
-            Collection<Configuration> available) {
-        Collection<Configuration> result = new ArrayList<Configuration>();
-        for (ComponentInfo compInfo : selected) {
-            for (Configuration details : available) {
-                if (compInfo.getName().equals(details.name())) {
-                    result.add(details);
-                }
-            }
-        }
-        return result;
+	    Collection<Configuration> available) {
+	Collection<Configuration> result = new ArrayList<Configuration>();
+	for (ComponentInfo compInfo : selected) {
+	    for (Configuration details : available) {
+		if (compInfo.getName().equals(details.name())) {
+		    result.add(details);
+		}
+	    }
+	}
+	return result;
+    }
+
+    /**
+     * Logic for whether to enable or disable save button .
+     */
+    public void setEnableOrDisableSaveButton() {
+	String errorMessage = noError;
+	if (inManagerMode == null) {
+	    // Do nothing
+	} else if ((this.originalProtectedFlag == true) && isProtected == false && inManagerMode) {
+
+	    String compOrConfName = isComponent ? "component" : "configuration";
+	    errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
+		    + "will be downgraded to an unprotected " + compOrConfName;
+	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+
+	} else if ((this.originalProtectedFlag == true) && isProtected == false && !inManagerMode) {
+	    errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
+	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
+
+	} else if ((!inManagerMode && !isProtected) || (inManagerMode)) {
+	    errorMessage = this.noError;
+	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
+
+	} else {
+	    errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
+	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
+	}
+	setErrorMessage(errorMessage);
+    }
+    /**
+     * Sets error message.
+     * @param message to be displayed
+     *          
+     */
+    private void setErrorMessage(String message) {
+	firePropertyChange("errorMessage", this.currentErrorMessage, this.currentErrorMessage = message);
+
+    }
+
+    /**
+     * Decides if save as Button needs to be enabled or disabled.
+     */
+    public void setEnableSaveAsButton() {
+	if (inManagerMode == null) {
+
+	} else if ((this.originalProtectedFlag == true) && isProtected == false) {
+	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+
+	} else if (isProtected && (!inManagerMode)) {
+	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = false);
+
+	} else if (inManagerMode || (!isProtected && !inManagerMode)) {
+	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+
+	}
+    }
+
+    /**
+     * Whether to enable or disable save button.
+     * 
+     * @return boolean value to disable or enable save button
+     */
+    public boolean getEnableOrDisableSaveButton() {
+	return isSaveButtonEnabled;
+    }
+
+    /**
+     * Enabled or Disable Save Button.
+     * @return boolean value to enable or disable save as button
+     */
+    public boolean getEnableSaveAsButton() {
+	return enableSaveAsButton;
+    }
+
+    /**
+     * Add observer to the observable.
+     */
+    private void addObserver() {
+
+	this.manager_mode_observable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
+
+	    @Override
+	    protected void setManagerMode(Boolean value) {
+		inManagerMode = value;
+		EditableConfiguration.this.setEnableOrDisableSaveButton();
+		EditableConfiguration.this.setEnableSaveAsButton();
+	    }
+
+	    @Override
+	    protected void setUnknown() {
+		inManagerMode = null;
+	    }
+
+	});
+    }
+
+    /**
+     * Gets current error message.
+     * @return current error message
+     */
+    public String getErrorMessage() {
+	return currentErrorMessage;
+    }
+
+    @Override
+    public void close() {
+	this.manager_mode_observable.ifPresent(ManagerModeObserver::close);
+	this.manager_mode_observable = Optional.empty();
     }
 }

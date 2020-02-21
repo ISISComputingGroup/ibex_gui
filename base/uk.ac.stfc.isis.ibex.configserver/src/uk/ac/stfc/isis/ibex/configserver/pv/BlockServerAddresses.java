@@ -39,8 +39,6 @@ public class BlockServerAddresses {
 	private static final String SET_CURRENT_CONFIG = "SET_CURR_CONFIG_DETAILS";
     /** PV ending for loading a named configuration. */
 	private static final String LOAD_CONFIG = "LOAD_CONFIG";
-    /** PV ending for saving an existing configuration. */
-	private static final String SAVE_CONFIG = "SAVE_CONFIG";
     /** PV ending for saving a new configuration. */
 	private static final String SAVE_NEW_CONFIG = "SAVE_NEW_CONFIG";
     /** PV ending for retrieving a list of configuration names. */
@@ -200,13 +198,6 @@ public class BlockServerAddresses {
      */
 	public String loadConfig() {
 		return blockServerAddress.endWith(LOAD_CONFIG);
-	}
-	
-    /**
-     * @return The PV address to save the current configuration
-     */
-	public String saveConfig() {
-		return blockServerAddress.endWith(SAVE_CONFIG);
 	}
 	
     /**

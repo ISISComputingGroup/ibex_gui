@@ -74,7 +74,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
      */
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
-		SERVER.currentConfig().addObserver(currentConfigObserver);
+		SERVER.currentConfig().subscribe(currentConfigObserver);
 	}
 
 	/**

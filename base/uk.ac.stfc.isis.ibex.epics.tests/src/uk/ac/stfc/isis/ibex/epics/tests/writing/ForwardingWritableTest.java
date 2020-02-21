@@ -88,13 +88,13 @@ public class ForwardingWritableTest {
 
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
-        verify(mockSubscription, never()).removeObserver();
+        verify(mockSubscription, never()).cancelSubscription();
 
         // Act
         forwardingWritable.close();
 
         // Assert
-        verify(mockSubscription, times(1)).removeObserver();
+        verify(mockSubscription, times(1)).cancelSubscription();
     }
 
     @Test
@@ -194,13 +194,13 @@ public class ForwardingWritableTest {
 
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
-        verify(mockSubscription, never()).removeObserver();
+        verify(mockSubscription, never()).cancelSubscription();
 
         // Act
         forwardingWritable.setWritable(mockNewDestination);
 
         // Assert
-        verify(mockSubscription, times(1)).removeObserver();
+        verify(mockSubscription, times(1)).cancelSubscription();
     }
 
     @Test

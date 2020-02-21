@@ -3,51 +3,57 @@ import json
 import zlib
 
 
-def reload_widgets(count):
+def _set_opi(widget, param_type):
     """
-    Reload all the position widgets. We have 'count' of them.
-    Args:
-        Count: widget to reload
-    """
-    for index in range(1, count + 1):
-        reload_widget(display.getWidget("pos_" + str(index)))
-
-
-def reload_widget(widget):
-    """
-    We have to reload the widget to update the macros. Done by unsetting and resetting the
-    target OPI.
+    Set the opi
     Args:
         widget: wdidget to reload
     """
     widget.setPropertyValue("opi_file", "null.opi")
-    widget.setPropertyValue("opi_file", "component_pos.opi")
+    if param_type == "correction":
+        widget.setPropertyValue("opi_file", "correction.opi")
+    elif param_type == "align":
+        widget.setPropertyValue("opi_file", "param_align.opi")        
+    elif param_type == "in_out":
+        widget.setPropertyValue("opi_file", "param_inout.opi")
+    else:
+        widget.setPropertyValue("opi_file", "param_move.opi")
 
 
-def _add_macros(widget_index, name, value):
+def _add_macros(widget, name, value):
     """
-    Add the macro with name to a motor widget with value. 
-    Widgets are identified as "Motor_n" for n in [1,8] in the parent OPI
+    Add the macro with name to a widget with value. 
     Args:
-        widget_index: index of the widget
+        widget: widget to add macro to
         name: macro name
         value: macro value
     """
-    motor_widget = display.getWidget("pos_" + str(widget_index))
-    motor_macros = motor_widget.getPropertyValue("macros")
-    motor_macros.put(name, value)
-    motor_widget.setPropertyValue("macros", motor_macros)
-    motor_widget.setPropertyValue("visible", True)
+    macros = widget.getPropertyValue("macros")
+    macros.put(name, value)
+    widget.setPropertyValue("macros", macros)
 
-value = PVUtil.getStringArray(pvs[0])
-value = "".join(chr(int(i)) for i in value[:-1])
-value = zlib.decompress(value.decode("hex"))
-params = json.loads(value)
+def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
+    value = PVUtil.getStringArray(pv)
+    value = "".join(chr(int(i)) for i in value[:-1])
+    value = zlib.decompress(value.decode("hex"))
+    params = json.loads(value)
 
-pos = 1
-for pv, name in params.items():
-    _add_macros(pos, "PARAM_PV", pv)
-    _add_macros(pos, "PARAM_NAME", name)
-    pos += 1
 
-reload_widgets(pos)
+    for widget_index in range(1, max+1):
+        widget = display.getWidget(widget_name_prefix + str(widget_index))
+        if widget_index <= len(params):
+            _add_macros(widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
+            _add_macros(widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
+            if has_type:
+                _set_opi(widget, params[widget_index - 1]["type"])
+            else:
+                _set_opi(widget, "correction")
+            widget.setPropertyValue("visible", True)
+        else:
+            widget.setPropertyValue("visible", False)
+
+sort_out_list(pvs[2], "align_", "PARAM", True, 32)
+sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
+sort_out_list(pvs[0], "pos_", "PARAM", True, 22)
+
+

@@ -1,12 +1,14 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import org.eclipse.e4.core.services.events.IEventBroker;
 
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.UIEvents;
@@ -14,19 +16,26 @@ import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.CollapseSidebarButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
-import org.osgi.service.event.Event;
-import org.osgi.service.event.EventHandler;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ScriptServerButtonViewModel;
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
  * The view containing the perspective buttons.
@@ -34,7 +43,20 @@ import org.osgi.service.event.EventHandler;
 public class PerspectiveSwitcherView {
 
 	private PerspectivesProvider perspectivesProvider;
-
+	private Collection<ButtonViewModel> buttonModels = new ArrayList<>();
+	private CollapseSidebarButton collapseSidebarButton;
+	private Label separator;
+	private GridData separatorGD;
+	
+	/**
+     * Width of the button when maximised.
+     */
+    public static final int MAXIMISED_BUTTON_WIDTH = 188;
+    /**
+     * Width of the button when minimised.
+     */
+    public static final int MINIMISED_BUTTON_WIDTH = 30;
+    
 	@Inject
 	private EModelService modelService;
 
@@ -54,7 +76,13 @@ public class PerspectiveSwitcherView {
 	 *            The parent container
 	 */
 	@PostConstruct
+	@SuppressWarnings("magicnumber")
 	public void draw(Composite parent) {
+	    GridLayout glParent = new GridLayout(2, false);
+	    glParent.marginHeight = 0;
+	    glParent.marginWidth = 0;
+	    glParent.horizontalSpacing = 0;
+	    parent.setLayout(glParent);
 		Composite composite = new Composite(parent, SWT.None);
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -64,6 +92,23 @@ public class PerspectiveSwitcherView {
 		addResetCurrentPerspectiveShortcut(composite);
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
+		addCollapseButton(parent);
+		
+		maximise();
+	}
+	
+	private void addCollapseButton(Composite parent) {
+	    collapseSidebarButton = new CollapseSidebarButton(parent);
+	    collapseSidebarButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (collapseSidebarButton.isCollapsed()) {
+                    maximise();
+                } else {
+                    minimise();
+                }
+            }
+        });
 	}
 
 	private void addPerspectiveShortcuts(Composite parent) {
@@ -75,9 +120,12 @@ public class PerspectiveSwitcherView {
 			final PerspectiveButtonViewModel model;
 			if (perspective.getLabel().equals("Alarms")) {
 				model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
+			} else if (perspective.getLabel().equals("Script Server")) {
+				model = new ScriptServerButtonViewModel(Nicos.getDefault().getModel(), perspective.getLabel());
 			} else {
 				model = new PerspectiveButtonViewModel(perspective.getLabel());
 			}
+			buttonModels.add(model);
 			new PerspectiveButton(parent, perspective, perspectivesProvider, model);
 			broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {
 				@Override
@@ -96,11 +144,33 @@ public class PerspectiveSwitcherView {
 	}
 
 	private void addSeparator(Composite parent) {
-		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
-		separator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		separatorGD = new GridData(SWT.FILL, SWT.FILL, true, false);
+		separator.setLayoutData(separatorGD);
 	}
 
 	private void addResetCurrentPerspectiveShortcut(Composite parent) {
-		new ResetLayoutButton(parent, perspectivesProvider);
+	    ResetLayoutButtonViewModel model = new ResetLayoutButtonViewModel();
+	    buttonModels.add(model);
+	    
+	    ResetLayoutButton button = new ResetLayoutButton(parent, perspectivesProvider, model);
+	    button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+                maximise();
+            }
+	    });
 	}
+	
+	private void minimise() {
+	    separatorGD.widthHint = MINIMISED_BUTTON_WIDTH;
+	    buttonModels.forEach(m -> m.minimise(MINIMISED_BUTTON_WIDTH));
+	    collapseSidebarButton.collapse();
+	}
+	
+	private void maximise() {
+        separatorGD.widthHint = MAXIMISED_BUTTON_WIDTH;
+        buttonModels.forEach(m -> m.maximise(MAXIMISED_BUTTON_WIDTH));
+        collapseSidebarButton.expand();
+    }
 }

@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -55,11 +55,13 @@ public class RunControlEditorPanel extends Composite {
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
 	private final Button chkEnabled;
+	private final Button chkInvalid;
 	private final Button btnSend;
     private final Button btnRestoreSingle;
     private final Button btnRestoreAll;
     private final Label spacerLabel;
     private final Label spacerLabel2;
+    private final Label spacerLabel3;
     private Group grpGlobalSettings;
     private boolean canSend;
 
@@ -101,14 +103,14 @@ public class RunControlEditorPanel extends Composite {
 
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
         grpSelectedSetting.setText("Block Settings");
-        grpSelectedSetting.setLayout(new GridLayout(7, false));
+        grpSelectedSetting.setLayout(new GridLayout(9, false));
 		
 		Label lblName = new Label(grpSelectedSetting, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
 		name = new Label(grpSelectedSetting, SWT.NONE);
-        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1);
+        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 8, 1);
 		gdLblName.widthHint = 150;
 		name.setLayoutData(gdLblName);
 		
@@ -140,6 +142,13 @@ public class RunControlEditorPanel extends Composite {
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
+		
+        spacerLabel3 = new Label(grpSelectedSetting, SWT.NONE);
+        spacerLabel3.setText(" ");
+
+		chkInvalid = new Button(grpSelectedSetting, SWT.CHECK);
+		chkInvalid.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		chkInvalid.setText("Suspend data collection if invalid");
 		
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreSingle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
@@ -185,7 +194,7 @@ public class RunControlEditorPanel extends Composite {
         parent.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				saveAsSubscription.removeObserver();
+				saveAsSubscription.cancelSubscription();
 			}
 		});
 	}
@@ -199,14 +208,17 @@ public class RunControlEditorPanel extends Composite {
                 BeanProperties.value(RunControlViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHighLimit),
                 BeanProperties.value(RunControlViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(chkEnabled),
                 BeanProperties.value(RunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(chkInvalid),
+                BeanProperties.value(RunControlViewModel.SUSPEND_ON_INVALID_BINDING_NAME).observe(viewModel));
     }
 	
     private void setAllEnabled(boolean enabled) {
         txtLowLimit.setEnabled(enabled);
         txtHighLimit.setEnabled(enabled);
         chkEnabled.setEnabled(enabled);
+        chkInvalid.setEnabled(enabled);
         btnRestoreSingle.setEnabled(enabled);
         viewModel.setSendEnabled(enabled);
     }

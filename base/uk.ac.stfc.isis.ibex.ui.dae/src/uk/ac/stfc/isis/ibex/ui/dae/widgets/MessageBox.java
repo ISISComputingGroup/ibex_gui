@@ -35,6 +35,12 @@ public class MessageBox extends Composite {
 	private Text text;
 	private Label title;
 	
+	/**
+	 * The constructor for the message box.
+	 * 
+	 * @param parent the parent composite.
+	 * @param style the SWT style.
+	 */
 	public MessageBox(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -47,6 +53,11 @@ public class MessageBox extends Composite {
 		
 	}
 	
+	/**
+	 * Sets the title of the message box.
+	 * 
+	 * @param title the title
+	 */
 	public void setTitle(String title) {
 		this.title.setText(title);
 	}

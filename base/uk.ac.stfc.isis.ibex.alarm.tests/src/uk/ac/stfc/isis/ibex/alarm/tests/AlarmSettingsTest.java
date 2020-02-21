@@ -80,7 +80,7 @@ public class AlarmSettingsTest {
      *         instrument.
      */
     private static String buildRdbUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/ALARM";
+        return "jdbc:mysql://" + hostName + "/ALARM?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
     }
 
     /**

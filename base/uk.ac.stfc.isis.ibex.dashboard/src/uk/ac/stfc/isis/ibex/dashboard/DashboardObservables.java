@@ -19,41 +19,76 @@
 
 package uk.ac.stfc.isis.ibex.dashboard;
 
+import java.util.EnumMap;
+import java.util.Map;
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
+import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.DateTimeChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
  * Holds the Observables for the non-DAE part of the dashboard and holds a
  * reference to the class containing the DAE Observables.
  */
 public class DashboardObservables extends Closer {
-
-    private static final String SHUTTER_STATUS = "SHTR:STAT";    
-    private static final String TIME = "CS:IOC:INSTETC_01:DEVIOS:TOD";
+	
     private static final String USERS = "ED:SURNAME";
+    
+    
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
-    public final ForwardingObservable<ShutterStatus> shutter;
-    public final ForwardingObservable<String> instrumentTime;
+    private final Map<DashboardPv, SwitchableObservable<String>> valueObservables = new EnumMap<>(DashboardPv.class);
+    private final Map<DashboardPv, SwitchableObservable<String>> labelObservables = new EnumMap<>(DashboardPv.class);
+    
+    /**
+     * An observable for the list of users to be displayed on the dashboard.
+     */
     public final ForwardingObservable<String> users;
-		
-	public final DaeObservables dae;
-
-    public DashboardObservables() {
-        shutter = obsFactory.getSwitchableObservable(new EnumChannel<>(ShutterStatus.class),
-                InstrumentUtils.addPrefix(SHUTTER_STATUS));
-        instrumentTime = obsFactory.getSwitchableObservable(new DateTimeChannel(),
-                InstrumentUtils.addPrefix(TIME));
-        users = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                InstrumentUtils.addPrefix(USERS));
-
-        dae = new DaeObservables();
+    public final ForwardingObservable<String> title;
+	public final ForwardingObservable<DaeRunState> runState;
+	
+	private final SwitchableObservable<String> getObservable(final String pv) {
+		return registerForClose(obsFactory.getSwitchableObservable(new StringChannel(), pv));
 	}
+
+	/**
+	 * Constructor which initialises the observables.
+	 */
+    public DashboardObservables() {
+        users = registerForClose(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.addPrefix(USERS)));
+
+        final DaeObservables dae = new DaeObservables();
+        title = registerForClose(dae.title);
+        runState = registerForClose(dae.runState);
+        
+        for (DashboardPv dashboardPv : DashboardPv.values()) {
+        	valueObservables.put(dashboardPv, getObservable(dashboardPv.getValuePV()));
+        	labelObservables.put(dashboardPv, getObservable(dashboardPv.getLabelPV()));
+        }
+	}
+    
+    /**
+     * Return an observable observing the label of the provided DashboardPv
+     * @param pv the dashboard pv to observe
+     * @return the observable
+     */
+    public SwitchableObservable<String> getLabelObservable(DashboardPv pv) {
+    	return labelObservables.get(pv);
+    }
+    
+    /**
+     * Return an observable observing the value of the provided DashboardPv
+     * @param pv the dashboard pv to observe
+     * @return the observable
+     */
+    public SwitchableObservable<String> getValueObservable(DashboardPv pv) {
+    	return valueObservables.get(pv);
+    }
 }

@@ -5,7 +5,7 @@ package uk.ac.stfc.isis.ibex.ui;
  */
 public class StringUtils {
 	
-	private static final String ELIPSES = "...";
+	private static final String ELIPSES = "…";
 	
 	/**
 	 * If a string is too long, truncate it and add an ellipsis to the end.

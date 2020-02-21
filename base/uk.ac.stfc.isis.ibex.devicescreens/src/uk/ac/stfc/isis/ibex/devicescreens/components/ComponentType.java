@@ -34,6 +34,8 @@ public enum ComponentType {
 	UNKNOWN,
     /** Jaws component type. */
 	JAWS,
+	/** CP2800 Helum compressor component type. */
+	CP2800,
     /** Chopper component type. */
 	CHOPPER,
     /** Fermi Chopper component type. */
@@ -148,15 +150,32 @@ public enum ComponentType {
     POWER_SUPPLY,
     /** Oscilloscope. */
     OSCILLOSCOPE,
-    /** Moxa ioLogik e1210 Remote I/O. */
-    MOXA_1210,
+    /** Moxa ioLogik e12XX Remote I/O. */
+    MOXA_12XX,
     /** Furnace temperature controller. */
     FURNACE,
+	/** Generic Multimeter. */
+    MULTIMETER,
+	/** Generic Keithley Multimeter. **/
+    KEITHLEY,
     /** Ocean Optics DH2000 shutter control. */
     DH2000,
     /** Generic Pump. */
-    PUMP;
-
+    PUMP,
+	/** Water bath position valve. */
+	WATER_BATH_VALVE,
+	/** Reflectometry Front Panel. */
+	REFLECTOMETRY,
+	/** Generic sensor. **/
+	SENSOR,
+	/** Thin film fabrication device. **/
+	FILM_FABRICATION,
+	/** Coherent OBIS Laser Remote. */
+	OBIS_LASER_REMOTE,
+	/** Zero field */
+	ZERO_FIELD;
+	
+	
 	private Target target;
 
     /**

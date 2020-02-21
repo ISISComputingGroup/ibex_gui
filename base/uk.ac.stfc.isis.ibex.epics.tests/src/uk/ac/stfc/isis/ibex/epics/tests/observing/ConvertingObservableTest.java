@@ -70,7 +70,7 @@ public class ConvertingObservableTest {
 		when(mockConverter.convert(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
         convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
-		convertObservable.addObserver(mockObserver);
+		convertObservable.subscribe(mockObserver);
 		
 		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
 		when(mockConverterWithException.convert(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
@@ -88,7 +88,7 @@ public class ConvertingObservableTest {
 	@Test
 	public void when_converter_thows_error_onError_method_on_observer_is_called_with_error() {
 		//Act
-		convertObservable.addObserver(mockObserver);
+		convertObservable.subscribe(mockObserver);
 		testObservable.setValue(INT_THROWS_EXCEPTION_VALUE);
 		
 		//Assert - The initialisable observer has its onError message called once, for the ConversionException

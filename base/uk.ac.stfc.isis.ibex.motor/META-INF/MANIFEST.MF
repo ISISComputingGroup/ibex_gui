@@ -8,10 +8,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences,
- uk.ac.stfc.isis.ibex.instrument
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.epics.switching;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.motor,
  uk.ac.stfc.isis.ibex.motor.internal,
  uk.ac.stfc.isis.ibex.motor.observable
-Import-Package: uk.ac.stfc.isis.ibex.epics.switching
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.motor

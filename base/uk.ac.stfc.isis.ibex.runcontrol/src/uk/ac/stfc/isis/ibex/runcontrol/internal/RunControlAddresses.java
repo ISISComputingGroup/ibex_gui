@@ -27,27 +27,65 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 public class RunControlAddresses {
 	private static final String LOW_LIMIT = "RC:LOW";
 	private static final String HIGH_LIMIT = "RC:HIGH";
+	private static final String SUSPEND_ON_INVALID = "RC:SUSPEND_ON_INVALID";
 	private static final String ENABLE = "RC:ENABLE";
 	private static final String INRANGE = "RC:INRANGE";
 
 	private final PVAddress blockRoot;
 
+	/**
+	 * Constructor.
+	 */
 	public RunControlAddresses() {
 		blockRoot = PVAddress.startWith("CS").append("SB");
 	}
 
+	/**
+	 * Gets the low limit PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the low limit PV
+	 */
 	public String getLowLimitPv(String blockName) {
 		return blockRoot.append(blockName).endWith(LOW_LIMIT);
 	}
 
+	/**
+	 * Gets the high limit PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the high limit PV
+	 */
 	public String getHighLimitPv(String blockName) {
 		return blockRoot.append(blockName).endWith(HIGH_LIMIT);
 	}
+	
+	/**
+	 * Gets the suspend on invalid PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the high limit PV
+	 */
+	public String getSuspendOnInvalidPv(String blockName) {
+		return blockRoot.append(blockName).endWith(SUSPEND_ON_INVALID);
+	}
 
+	/**
+	 * Gets the enable PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the enable PV
+	 */
 	public String getEnablePv(String blockName) {
 		return blockRoot.append(blockName).endWith(ENABLE);
 	}
 
+	/**
+	 * Gets the in range PV.
+	 *
+	 * @param blockName the name of the block
+	 * @return the in range PV
+	 */
 	public String getInRangePv(String blockName) {
 		return blockRoot.append(blockName).endWith(INRANGE);
 	}

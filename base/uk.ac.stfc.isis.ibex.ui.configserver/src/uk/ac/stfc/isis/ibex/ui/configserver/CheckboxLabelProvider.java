@@ -71,9 +71,23 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		return checked(model) ? "Yes" : "No";
 	}
 	
+	/**
+	 * @param model the model
+	 * @return whether the checkbox should be checked or not
+	 */
 	protected abstract boolean checked(T model);
 	
+	/**
+	 * Called when the user checks a checkbox.
+	 * 
+	 * @param model the model
+	 * @param checked whether the checkbox is checked ot unchecked
+	 */
 	protected abstract void setChecked(T model, boolean checked);
 	
+	/**
+	 * @param model the model
+	 * @return whether the item is editable or not
+	 */
 	protected abstract boolean isEditable(T model);
 }

@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 public class Awaited<T> extends UpdatedValue<T> {
 	
 	private final UpdatedValue<T> value;
-	private final CountDownLatch latch = new CountDownLatch(1);
+	private final CountDownLatch latch;
 
 	private final PropertyChangeListener set = new PropertyChangeListener() {	
 		@Override
@@ -48,9 +48,12 @@ public class Awaited<T> extends UpdatedValue<T> {
      * 
      * @param value
      *            The value to wait upon.
+     * @param latch
+     *            The count down latch to wait with.
      */
-	public Awaited(final UpdatedValue<T> value) {
+	public Awaited(final UpdatedValue<T> value, CountDownLatch latch) {
 		this.value = value;
+		this.latch = latch;
 		if (value.isSet()) {
 			setValue(value.getValue());
 		} else {
@@ -70,7 +73,7 @@ public class Awaited<T> extends UpdatedValue<T> {
      * @return the awaited value
      */
 	public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait) {
-		return new Awaited<>(value).until(secondsToWait);
+		return new Awaited<>(value, new CountDownLatch(1)).until(secondsToWait);
 	}
 	
     /**
@@ -81,6 +84,9 @@ public class Awaited<T> extends UpdatedValue<T> {
      * @return true if the value was set
      */
 	public boolean until(int secondsToWait) {
+	    if (isSet()) {
+	        return true;
+	    }
 		startCountdown(secondsToWait);
 		return isSet();
 	}

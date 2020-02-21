@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
  * Used for data-binding.
  * 
  */
-public class RunControlForegroundColourConverter extends Converter {
+public class RunControlForegroundColourConverter extends Converter<RuncontrolState, Color> {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color BLACK = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 
@@ -43,14 +43,15 @@ public class RunControlForegroundColourConverter extends Converter {
     }
 
     @Override
-    public Object convert(Object fromObject) {
-        RuncontrolState state = (RuncontrolState) fromObject;
-
-        if (state == RuncontrolState.ENABLED_IN_RANGE) {
-            return BLACK;
+    public Color convert(RuncontrolState state) {
+        switch (state) {
+	        case ENABLED_IN_RANGE:
+	        	return BLACK;
+	        case DISCONNECTED:
+	        	return BLACK;
+	        default:
+	        	return WHITE;
         }
-
-        return WHITE;
     }
 
 }

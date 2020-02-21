@@ -59,12 +59,12 @@ public class InitialiseOnSubscribeObservableTest {
 
 		// The real observables to test
         initObservableCachingSource = new ForwardingObservable<>(mockObservable);
-		initObservableCachingSource.addObserver(mockObserver);
-		initObservableCachingSource.addObserver(mockObserverTwo);
+		initObservableCachingSource.subscribe(mockObserver);
+		initObservableCachingSource.subscribe(mockObserverTwo);
 		
 		initObservableTestableSource = new ForwardingObservable<>(testableObservable);
-		addObserverReturnedObject = initObservableTestableSource.addObserver(mockObserver);
-		initObservableTestableSource.addObserver(mockObserverTwo);
+		addObserverReturnedObject = initObservableTestableSource.subscribe(mockObserver);
+		initObservableTestableSource.subscribe(mockObserverTwo);
 	}
 	
 	@Test
@@ -151,7 +151,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void calling_removeObserver_on_unsubscriber_stops_observer_being_update_on_value_changes() {
 		// Act
-		((Unsubscriber<String>) addObserverReturnedObject).removeObserver();
+		((Unsubscriber<String>) addObserverReturnedObject).cancelSubscription();
 		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - The first observer does not have its onValue method called, the second does not
@@ -162,7 +162,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void adding_observer_more_than_once_calls_upadate_method_twice() {
 		// Act
-		initObservableCachingSource.addObserver(mockObserver);
+		initObservableCachingSource.subscribe(mockObserver);
 		
 		// Assert - Should have update method called
 		verify(mockObserver, atLeastOnce()).update(TestHelpers.STRING_VALUE, null, false);
@@ -171,7 +171,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void adding_observer_more_than_once_only_calls_onValue_method_once() {		
 		// Act
-		initObservableCachingSource.addObserver(mockObserver);
+		initObservableCachingSource.subscribe(mockObserver);
 		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - Should only have the onValue method called once

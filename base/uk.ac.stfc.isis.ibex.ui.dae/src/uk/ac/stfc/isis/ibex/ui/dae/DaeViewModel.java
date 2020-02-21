@@ -19,11 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae;
 
-import java.util.List;
+import org.eclipse.core.databinding.DataBindingContext;
 
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.dae.IDae;
-import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -52,13 +51,11 @@ public class DaeViewModel extends Closer {
         /** Tab which we are not interested is active. */
         OTHER;
     }
-
-	private IDae model;
 	
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
 	private RunInformationViewModel runInformation = registerForClose(new RunInformationViewModel(Dae.getInstance().observables()));
-	private DetectorDiagnosticsViewModel detectorDiagnosticsViewModel = DetectorDiagnosticsViewModel.getInstance();
+	private DetectorDiagnosticsViewModel detectorDiagnosticsViewModel = new DetectorDiagnosticsViewModel(new DataBindingContext());
 	
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
@@ -72,8 +69,6 @@ public class DaeViewModel extends Closer {
      *            A IDae model object that holds information about the DAE.
      */
 	public void bind(IDae model) {
-		this.model = model;
-		
 		runSummary.bind(model);
 		experimentSetup.setModel(model.experimentSetup());
 		
@@ -81,7 +76,7 @@ public class DaeViewModel extends Closer {
 		
 		isRunning = new UpdatedObservableAdapter<>(model.isRunning());
 		
-		model.simulationMode().addObserver(new BaseObserver<Boolean>() {
+		model.simulationMode().subscribe(new BaseObserver<Boolean>() {
 			@Override
 			public void onValue(Boolean value) {
 				if (value) {
@@ -126,16 +121,6 @@ public class DaeViewModel extends Closer {
      */
 	public ExperimentSetupViewModel experimentSetup() {
 		return experimentSetup;
-	}
-	
-    /**
-     * Get a list of updating spectrums from the model.
-     * 
-     * @return A list, each item is an updating spectrum to be displayed.
-     *         Currently 4 spectra are contained within the list.
-     */
-	public List<? extends UpdatableSpectrum> spectra() {
-		return model.spectra().spectra();
 	}
 	
     /**

@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Display;
 public class SampleParametersPanel {
 
     private ParametersTable sampleParameters;
-    private final ViewModel viewModel;
+    private final ExperimentDetailsViewModel viewModel;
 
     /**
      * Create the panel.
@@ -45,7 +45,7 @@ public class SampleParametersPanel {
     @Inject
     public SampleParametersPanel(Composite parent) {
 
-        viewModel = ViewModel.getInstance();
+        viewModel = ExperimentDetailsViewModel.getInstance();
         
         sampleParameters = new ParametersTable(parent, SWT.BEGINNING);
         sampleParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());

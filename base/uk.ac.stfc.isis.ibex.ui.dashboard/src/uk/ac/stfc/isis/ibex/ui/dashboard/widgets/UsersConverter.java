@@ -32,7 +32,7 @@ import com.google.gson.reflect.TypeToken;
  * Takes the JSON list string and converts it into a nicely formatted list of
  * names.
  */
-public class UsersConverter extends Converter {
+public class UsersConverter extends Converter<String, String> {
 
     /**
      * The default constructor for the object, sets the convert to and convert
@@ -43,7 +43,7 @@ public class UsersConverter extends Converter {
     }
 
 	@Override
-	public Object convert(Object arg0) {
+	public String convert(String arg0) {
 		String raw = "";
 		
 		List<String> names = new ArrayList<String>();
@@ -51,7 +51,7 @@ public class UsersConverter extends Converter {
 		try {
             // CHECKSTYLE:OFF The declaration format for GSON's TypeToken upsets
             // CheckStyle.
-			names = new Gson().fromJson(arg0.toString(), new TypeToken<List<String>>() { }.getType());
+			names = new Gson().fromJson(arg0, new TypeToken<List<String>>() { }.getType());
             // CHECKSTYLE:ON
 		} catch (Exception err) {
 			//It was not valid json, so just set users to nothing

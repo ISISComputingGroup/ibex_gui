@@ -50,7 +50,7 @@ public class FilterFromPVList extends PVFilter {
 	 * @param pvList The list of PVs to allow through the filter.
 	 */
 	public FilterFromPVList(ForwardingObservable<Collection<PV>> pvList) {
-		pvList.addObserver(observer);
+		pvList.subscribe(observer);
 	}
 
 	private void updatePVList(Collection<PV> pvs) {

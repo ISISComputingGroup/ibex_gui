@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.dae;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
-import uk.ac.stfc.isis.ibex.dae.spectra.Spectra;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -35,7 +34,6 @@ public class DaeModel extends Closer implements IDae {
 	private final DaeActions actions;
 	private final DaeObservables observables;
 	private final DaeWritables writables;
-	private final Spectra spectra;
 	
 	private final ForwardingObservable<Boolean> isRunning;
 	
@@ -53,7 +51,6 @@ public class DaeModel extends Closer implements IDae {
 		
 		experimentSetup = registerForClose(new ExperimentSetup(observables, writables));
 		actions = registerForClose(new DaeActions(writables, observables));
-		spectra = new Spectra(observables);
 
 		isRunning = registerForClose(new ForwardingObservable<>(new DaeIsRunning(observables.runState)));
 	}
@@ -106,9 +103,17 @@ public class DaeModel extends Closer implements IDae {
 		return observables.title;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ForwardingObservable<String> titleSP() {
+        return observables.titleSP;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ForwardingObservable<Boolean> displayTitle() {
         return observables.displayTitle;
@@ -152,14 +157,6 @@ public class DaeModel extends Closer implements IDae {
 	@Override
 	public DaeActions actions() {
 		return actions;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-    public Spectra spectra() {
-		return spectra;
 	}
 	
 	/**

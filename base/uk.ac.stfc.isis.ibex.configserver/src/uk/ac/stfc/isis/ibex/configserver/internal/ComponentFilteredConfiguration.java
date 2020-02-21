@@ -22,11 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -47,7 +43,7 @@ public class ComponentFilteredConfiguration extends Configuration {
 	public ComponentFilteredConfiguration(Configuration other) {
         super(other.name(), other.description(), other.synoptic(), filterIocs(other.getIocs()),
                 filterBlocks(other.getBlocks()), filterGroups(other.getGroups()), other.getComponents(),
-                other.getHistory());
+                other.getHistory(), other.isProtected());
 	}
 	
     /**
@@ -59,12 +55,9 @@ public class ComponentFilteredConfiguration extends Configuration {
      * @return The filtered collection of IOCs
      */
     public static Collection<Ioc> filterIocs(Collection<Ioc> iocs) {
-        return Lists.newArrayList(Iterables.filter(iocs, new Predicate<Ioc>() {
-			@Override
-			public boolean apply(Ioc ioc) {
-				return !ioc.inComponent();
-			}
-		}));
+        return iocs.stream()
+        		.filter(ioc -> !ioc.inComponent())
+        		.collect(Collectors.toCollection(ArrayList::new));
 	}
 
     /**
@@ -76,12 +69,9 @@ public class ComponentFilteredConfiguration extends Configuration {
      * @return The filtered collection of blocks
      */
     public static Collection<Block> filterBlocks(Collection<Block> blocks) {
-        return Lists.newArrayList(Iterables.filter(blocks, new Predicate<Block>() {
-			@Override
-			public boolean apply(Block block) {
-				return !block.inComponent();
-			}
-		}));
+        return blocks.stream()
+        		.filter(block -> !block.inComponent())
+        		.collect(Collectors.toCollection(ArrayList::new));
 	}
 
     /**
@@ -95,12 +85,8 @@ public class ComponentFilteredConfiguration extends Configuration {
      * @return The filtered collection of groups
      */
     public static List<Group> filterGroups(Collection<Group> groups) {
-        return Lists.newArrayList(Iterables.transform(groups, new Function<Group, Group>() {
-            @Override
-            public Group apply(Group group) {
-                return group.getComponent() == null ? group
-                        : new Group(group.getName(), new ArrayList<String>(), group.getComponent());
-            }
-        }));
+        return groups.stream()
+        		.map(group -> group.getComponent() == null ? group : new Group(group.getName(), new ArrayList<String>(), group.getComponent()))
+        		.collect(Collectors.toCollection(ArrayList::new));
 	}
 }
