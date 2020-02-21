@@ -317,7 +317,7 @@ public class PreferenceSupplier {
 	 * 
 	 * @return true if we should hide the table, false if not.
 	 */
-	public boolean hideScriptGenConfigErrorTable() {
+	public boolean hideScriptGenScriptDefinitionErrorTable() {
 		return getBoolean(HIDE_CONFIG_ERRORS, DEFAULT_HIDE_CONFIG_ERRORS);
 	}
 }

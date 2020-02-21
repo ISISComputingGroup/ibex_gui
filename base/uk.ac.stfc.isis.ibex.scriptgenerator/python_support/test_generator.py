@@ -1,6 +1,6 @@
 import unittest
 from mock import MagicMock
-from action_loader import Generator, ScriptDefinitionWrapper
+from script_definition_loader import Generator, ScriptDefinitionWrapper
 from typing import Dict, AnyStr, List
 from hamcrest.core import assert_that, equal_to
 from hamcrest.library.text import matches_regexp

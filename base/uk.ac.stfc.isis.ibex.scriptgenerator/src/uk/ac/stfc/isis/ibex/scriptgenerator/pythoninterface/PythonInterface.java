@@ -78,14 +78,14 @@ public class PythonInterface extends ModelObject {
 	private boolean pythonReady = false;
 	
 	/**
-	 * The default action loader script.
+	 * The default script definition loader script.
 	 */
-	private static final String DEFAULT_ACTION_LOADER_SCRIPT = "/defined_actions/action_loader.py";
+	private static final String DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT = "/python_support/script_definition_loader.py";
 	
 	/**
-	 * The action loader script to use.
+	 * The script definition loader script to use.
 	 */
-	private String actionLoaderScript = DEFAULT_ACTION_LOADER_SCRIPT;
+	private String scriptDefinitionLoaderScript = DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT;
 
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 	
@@ -101,20 +101,20 @@ public class PythonInterface extends ModelObject {
 			.newSingleThreadExecutor(job -> new Thread(job, "Py4J scriptgenerator worker"));
 
 	/**
-	 * Constructor uses default action loader python script location.
+	 * Constructor uses default script definition loader python script location.
 	 */
 	public PythonInterface() {
-		this(DEFAULT_ACTION_LOADER_SCRIPT);
+		this(DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT);
 	}
 
 	/**
 	 * Constructor starts the python given python script.
 	 * 
-	 * @param actionLoaderPythonScript Path to the action loader python script to
+	 * @param scriptDefinitionLoaderPythonScript Path to the script definition loader python script to
 	 *                                 start.
 	 */
-	public PythonInterface(String actionLoaderPythonScript) {
-		actionLoaderScript = actionLoaderPythonScript;
+	public PythonInterface(String scriptDefinitionLoaderPythonScript) {
+		scriptDefinitionLoaderScript = scriptDefinitionLoaderPythonScript;
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class PythonInterface extends ModelObject {
 	}
 	
 	/**
-	 * Gets all actions that could not be loaded and the reason.
+	 * Gets all script definitions that could not be loaded and the reason.
 	 * 
 	 * @return Any errors when loading script definitions, the key is the script definition name,
 	 *  the value is the reason it could not load.
@@ -255,15 +255,15 @@ public class PythonInterface extends ModelObject {
 	}
 
 	/**
-	 * Gets all available actions from the python script.
+	 * Gets all available script definitions from the python script.
 	 * 
 	 * @return A list of available script definitions.
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public List<ScriptDefinitionWrapper> getActionDefinitions() throws PythonNotReadyException {
+	public List<ScriptDefinitionWrapper> getScriptDefinitions() throws PythonNotReadyException {
 		if (pythonReady) {
 			try {
-				return scriptDefinitionWrapper.getActionDefinitions();
+				return scriptDefinitionWrapper.getScriptDefinitions();
 			} catch (Py4JException e) {
 				LOG.error(e);
 				handlePythonReadinessChange(false);
@@ -292,12 +292,12 @@ public class PythonInterface extends ModelObject {
 	 * Creates the py4j client/server and starts the python thread. 
 	 * ALWAYS called inside the Py4J worker thread.
 	 * 
-	 * @throws IOException If actionLoaderPythonScript not found.
+	 * @throws IOException If scriptDefinitionLoaderPythonScript not found.
 	 */
 	private void setUpPythonThread() throws IOException {
 		firePropertyChange(PYTHON_READINESS_PROPERTY, null, pythonReady);
 		clientServer = createClientServer();
-		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), actionLoaderScript);
+		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), scriptDefinitionLoaderScript);
 		new Thread(listenToErrors).start();
 		
 		this.scriptDefinitionWrapper = (ScriptDefinitionsWrapper) clientServer

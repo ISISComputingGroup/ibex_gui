@@ -444,7 +444,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Gets all actions that could not be loaded and the reason.
+	 * Gets all script definitions that could not be loaded and the reason.
 	 * 
 	 * @return A map of errors when loading script definitions, the script definition name
 	 *  is the key and the value is the reason.

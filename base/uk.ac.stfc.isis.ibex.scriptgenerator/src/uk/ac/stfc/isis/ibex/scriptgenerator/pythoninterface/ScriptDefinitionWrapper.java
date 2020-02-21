@@ -28,12 +28,12 @@ public interface ScriptDefinitionWrapper {
 	String parametersValid(Map<String, String> action);
 	
 	/**
-	 * @return The name of this configuration.
+	 * @return The name of this script definition.
 	 */
 	String getName();
 	
 	/**
-	 * @return A string to be displayed in the script generator UI to help a user when using a config.
+	 * @return A string to be displayed in the script generator UI to help a user when using a script definition.
 	 */
 	String getHelp();
 	

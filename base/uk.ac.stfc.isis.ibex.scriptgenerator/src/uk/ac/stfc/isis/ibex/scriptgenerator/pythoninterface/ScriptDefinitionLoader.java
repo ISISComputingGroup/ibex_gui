@@ -47,7 +47,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	private Optional<String> lastSelectedScriptName = Optional.empty();
 	
 	/**
-	 * The py4j interface handling the ConfigWrapper.
+	 * The py4j interface handling the ScriptDefinitionsWrapper.
 	 */
 	private PythonInterface pythonInterface;	
 	
@@ -73,13 +73,13 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 */
 	public void reloadScriptDefinitions() {
 		 try {
-			availableScriptDefinitions = pythonInterface.getActionDefinitions();
+			availableScriptDefinitions = pythonInterface.getScriptDefinitions();
 			scriptDefinitionLoadErrors = pythonInterface.getScriptDefinitionLoadErrors();
 			scriptDefinitionsLoaded = true;
 			if (!availableScriptDefinitions.isEmpty()) {
 				lastSelectedScriptName.ifPresentOrElse(scriptDefinitionName -> {
-					setConfig(scriptDefinitionName);
-				}, () -> setConfig(availableScriptDefinitions.get(0)));
+					setScriptDefinition(scriptDefinitionName);
+				}, () -> setScriptDefinition(availableScriptDefinitions.get(0)));
 		    }
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening for python readiness changes, handled there
@@ -98,7 +98,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	}
 	
 	/**
-	 * Gets all actions that could not be loaded and the reason.
+	 * Gets all script definitions that could not be loaded and the reason.
 	 * 
 	 * @return Any errors when loading script definitions,
 	 *  where the key is the script definition name and the value is the reason it could not be loaded.
@@ -112,18 +112,18 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 * 
 	 * @param scriptDefinitionName The name of the script definition to select.
 	 */
-	public void setConfig(String scriptDefinitionName) {
+	public void setScriptDefinition(String scriptDefinitionName) {
 		lastSelectedScriptName = Optional.of(scriptDefinitionName);
 		try {
 			for (ScriptDefinitionWrapper scriptDefinition : getAvailableScriptDefinitions()) {
 				if (scriptDefinition.getName().equals(scriptDefinitionName)) {
-					setConfig(scriptDefinition);
+					setScriptDefinition(scriptDefinition);
 					return;
 				}
 			}
 			if (!availableScriptDefinitions.isEmpty()) {
 				LOG.error("No script definition matching name: " + scriptDefinitionName + ". Setting default script definition.");
-				setConfig(getAvailableScriptDefinitions().get(0));
+				setScriptDefinition(getAvailableScriptDefinitions().get(0));
 			} else {
 				LOG.error("No default script definition available");
 			}
@@ -137,7 +137,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 * Set which script definitions is currently loaded.
 	 * @param scriptDefinition The currently loaded script definitions.
 	 */
-	public void setConfig(ScriptDefinitionWrapper scriptDefinition) {
+	public void setScriptDefinition(ScriptDefinitionWrapper scriptDefinition) {
 		try {
 			ArrayList<ActionParameter> parameters = scriptDefinition.getParameters().stream()
 					.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
@@ -163,7 +163,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	/**
 	 * @return The name of the last selected script definition.
 	 */
-	public Optional<String> getLastSelectedConfigName() {
+	public Optional<String> getLastSelectedScriptDefinitionName() {
 		return lastSelectedScriptName;
 	}
 	

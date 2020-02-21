@@ -38,7 +38,7 @@ public class ConfigLoaderTest {
 		mockPythonInterface = mock(PythonInterface.class);
 		
 		try {
-			when(mockPythonInterface.getActionDefinitions()).thenReturn(availableConfigs);
+			when(mockPythonInterface.getScriptDefinitions()).thenReturn(availableConfigs);
 		} catch(PythonNotReadyException e) {
 			fail("We are mocking this out so should not throw exception");
 		}
@@ -71,7 +71,7 @@ public class ConfigLoaderTest {
 		// Arrange (in setUp)
 		
 		// Act
-		configLoader.setConfig(mockedConfig2);
+		configLoader.setScriptDefinition(mockedConfig2);
 		
 		// Assert
 		assertEquals(mockedConfig2, configLoader.getScriptDefinition());
@@ -106,7 +106,7 @@ public class ConfigLoaderTest {
 		actionParamList.add(new ActionParameter(param3));
 		
 		// Act
-		configLoader.setConfig(mockedConfigManyParameters);
+		configLoader.setScriptDefinition(mockedConfigManyParameters);
 		
 		// Assert
 		assertEquals(actionParamList, configLoader.getParameters());
