@@ -47,9 +47,10 @@ class CheckStrictOpiFormat(unittest.TestCase):
     """
     These are the tests run in CI.
     """
-
     IGNORED_OPIS = ["dma4500m", "/stage\\", "sdtest", "qepro", "/pinhole_selector\\", "/gateway\\", "/autosave\\",
-                    "/asyn\\", "template", "scimag3D"]
+                    "/asyn\\", "template", "scimag3D", "analyser", "attenuator", "polariser", "rotating_bench",
+                    "/SKFG5Chopper\\"]
+
 
     # Need the 'None' default because unittest's test loader uses a
     # no-argument constructor when getting the test names.
@@ -85,21 +86,14 @@ class CheckStrictOpiFormat(unittest.TestCase):
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
 
-
-class CheckOpiFormat(unittest.TestCase):
-    # Need the 'None' default because unittest's test loader uses a
-    # no-argument constructor when getting the test names.
-    def __init__(self, methodName, xml_root=None):
-        # Boilerplate so that unittest knows how to run these tests.
-        super(CheckOpiFormat, self).__init__(methodName=methodName)
-        self.xml_root = xml_root
-
-    def _assert_colour_correct(self, location, widget, colours):
-        errors = check_colour(self.xml_root, widget, location, colours)
-
+    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
+        errors = check_plot_area_backgrounds(self.xml_root)
         if len(errors):
-            self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
+                                .format(*error) for error in errors])
+            self.fail(message)
 
+class CheckOpiFormat(CheckStrictOpiFormat):
     def _assert_trace_buffers_are_the_same(self):
         errors = get_traces_with_different_buffer_sizes(self.xml_root)
 
@@ -150,20 +144,6 @@ class CheckOpiFormat(unittest.TestCase):
     def test_GIVEN_a_TextInput_THEN_it_is_within_a_grouping_container(self):
         self._assert_widget_not_outside_container("TextInput")
 
-    def test_GIVEN_a_label_THEN_it_has_correct_font(self):
-        errors = get_incorrect_fonts(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Label on line {} with text '{}' has incorrect font"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
-    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
-        errors = check_plot_area_backgrounds(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='check_opi_format')
@@ -174,6 +154,7 @@ if __name__ == "__main__":
                         help='A directory to check files in')
     parser.add_argument('-logs_directory', type=str, default=DEFAULT_LOGS_DIR,
                         help='A directory to save the logs into')
+    parser.add_argument('-strict', help="Run only the strict tests")
 
     args = parser.parse_args()
 
@@ -212,8 +193,11 @@ if __name__ == "__main__":
             return_values.append(False)
             continue
 
-        if not any(opi in filename for opi in CheckStrictOpiFormat.IGNORED_OPIS):
-            suite.addTests([CheckStrictOpiFormat(test, root) for test in loader.getTestCaseNames(CheckStrictOpiFormat)])
+        if args.strict:
+            if not any(opi in filename for opi in CheckStrictOpiFormat.IGNORED_OPIS):
+                suite.addTests([CheckStrictOpiFormat(test, root) for test in loader.getTestCaseNames(CheckStrictOpiFormat)])
+        else:
+            suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
         runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
         return_values.append(runner.run(suite).wasSuccessful())
 
