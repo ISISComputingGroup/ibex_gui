@@ -4,13 +4,13 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Instrument\Apps\Python3
+set PYTHON3=C:\Instrument\Apps\Python3\python.exe
 set PYTHON_HOME=C:\Instrument\Apps\Python3
 
 REM We bundle our own JRE with the script generator, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
-set PATH=%M2%;%PYTHON%;%PATH%
+set PATH=%M2%;%PATH%
 
 call build_script_generator.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
@@ -32,7 +32,7 @@ REM the password for isis\IBEXbuilder is contained in the BUILDERPW system envir
 net use p: /d /yes
 net use p: \\isis\inst$
 
-python.exe purge_archive_client.py
+%PYTHON3% purge_archive_client.py
 
 set TARGET_DIR=built_script_gen
 
