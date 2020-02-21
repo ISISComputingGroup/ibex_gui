@@ -526,6 +526,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void setupLinkButton(Button linkButton, Optional<URL> target) {
         target.ifPresent(url -> {
             linkButton.setEnabled(true);
+            linkButton.setToolTipText(url.toString());
             linkButton.addListener(SWT.Selection, e -> {
                 try {
                     IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
