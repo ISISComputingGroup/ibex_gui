@@ -4,15 +4,15 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Instrument\Apps\Python
-set PYTHON_HOME=C:\Instrument\Apps\Python
+set PYTHON=C:\Instrument\Apps\Python3
+set PYTHON_HOME=C:\Instrument\Apps\Python3
 
 REM We bundle our own JRE with the client, this is where it is
 set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-if "%IS_E4_DEPLOY%" == "YES" (
+if "%IS_E4%" == "YES" (
     set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
 ) else (
     set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
@@ -30,7 +30,6 @@ REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
-if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
 if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
@@ -54,7 +53,7 @@ if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
-    if "%IS_E4_DEPLOY%" == "YES" (
+    if "%IS_E4%" == "YES" (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
     ) else (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
