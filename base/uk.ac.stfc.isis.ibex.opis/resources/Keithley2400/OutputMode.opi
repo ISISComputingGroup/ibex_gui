@@ -199,7 +199,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_y_pv_value />
     <trace_count>2</trace_count>
     <transparent>false</transparent>
-    <trigger_pv></trigger_pv>
+    <trigger_pv>$(P)CS:IOC:$(KHLY2400):DEVIOS:HEARTBEAT</trigger_pv>
     <trigger_pv_value />
     <visible>true</visible>
     <widget_type>XY Graph</widget_type>
