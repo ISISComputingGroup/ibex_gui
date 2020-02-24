@@ -146,7 +146,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 			selectedScriptDefinition.ifPresentOrElse(presentSelectedScriptDefinition -> {
 				lastSelectedScriptName = Optional.of(presentSelectedScriptDefinition.getName());
 			}, () -> lastSelectedScriptName = Optional.empty());
-			firePropertyChange("scriptDefinition", null, null);
+			firePropertyChange("script definition", null, null);
 		} catch (Py4JException e) {
 			LOG.error(e);
 			pythonInterface.handlePythonReadinessChange(false);
