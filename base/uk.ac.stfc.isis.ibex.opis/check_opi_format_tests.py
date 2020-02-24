@@ -1,6 +1,8 @@
 import unittest
 from hamcrest import *
 from lxml import etree
+import xmlrunner
+import sys
 
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour, \
     check_plot_area_backgrounds
@@ -8,7 +10,7 @@ from check_OPI_format_utils.text import check_label_punctuation, check_container
     check_label_case_inside_containers, check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
-from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
+from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 
 WIDGET_XML = '<widget typeId="org.csstudio.opibuilder.widgets.{type}" version="1.0">{widget_internals}</widget>'
 
@@ -474,6 +476,63 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         assert_that(errors, has_length(0))
 
+    def test_that_if_a_graph_has_an_empty_trigger_pv_then_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                    <trigger_pv></trigger_pv>
+                    <axis_0_time_format>1</axis_0_time_format>
+                </widget>
+              """)
+
+        # Act
+        errors = get_trigger_pv(root)
+
+        # Assert
+        assert_that(errors, has_length(1))
+
+    def test_that_if_a_graph_has_a_trigger_pv_then_no_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                    <trigger_pv>TRIGGER_PV</trigger_pv>
+                    <axis_0_time_format>1</axis_0_time_format>
+                </widget>
+              """)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
+
+    def test_that_if_a_graph_has_no_time_format_then_no_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                </widget>
+              """)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
+
+    def test_that_if_a_graph_has_0_time_format_then_no_error(self):
+        # Arrange
+        root = etree.fromstring("""
+                   <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0">
+                        <axis_0_time_format>0</axis_0_time_format>
+                   </widget>
+                 """)
+
+        # Act
+        errors = get_traces_with_different_buffer_sizes(root)
+
+        # Assert
+        assert_that(errors, has_length(0))
+
     def test_GIVEN_a_colourless_grouping_container_inside_a_tabbed_container_THEN_no_error(self):
         # This is a CSS bug where colours are not propagated through tabbed containers correctly
         widget, colour_type = "groupingContainer", "background_color"
@@ -484,5 +543,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         assert_that(errors, has_length(0))
 
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports', stream=sys.stdout))

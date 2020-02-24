@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -50,7 +51,7 @@ public class AssociatedPvFilter extends PVFilter {
 				@Override
 				public void propertyChange(PropertyChangeEvent arg0) {
 					updateIocList(availableIocs);
-					firePropertyChange("refresh", false, true);
+					Display.getDefault().asyncExec(() -> firePropertyChange("refresh", false, true));
 				}
 			});
 		}
