@@ -80,7 +80,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
@@ -91,7 +91,7 @@ if %errorlevel% geq 4 (
 )
 
 REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\Client\jre /MIR /R:1 /NFL /NDL /NP
+robocopy %JRELOCATION% %INSTALLDIR%\Client\jre /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1
