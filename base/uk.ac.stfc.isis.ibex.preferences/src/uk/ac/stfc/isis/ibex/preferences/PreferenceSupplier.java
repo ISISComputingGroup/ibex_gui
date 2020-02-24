@@ -240,7 +240,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_2_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH);
 	}
 	
     /**
