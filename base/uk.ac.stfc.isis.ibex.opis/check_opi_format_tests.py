@@ -35,7 +35,9 @@ def get_xml_for_widget_with_colour(widget, colour_type, colour_name=None):
 
 def get_xml_for_widget_with_position(widget, x_position, y_position):
     return WIDGET_XML.format(type=widget, widget_internals="<x>{}</x>"
-                                                           "<y>{}</y>").format(x_position, y_position)
+                                                           "<y>{}</y>"
+                                                           "<widget_type>{}</widget_type>")\
+                                                           .format(x_position, y_position, widget)
 
 
 def make_widget_with_x_y_position(widget, x_position, y_position):
