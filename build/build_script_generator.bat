@@ -9,8 +9,12 @@ if %errcode% GEQ 4 (
 )
 
 SET "JAVA_HOME=%~dp0\jdk"
+
+if "%PYTHON3%" == "" (
+	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
+)
  
-python .\check_build.py ..\base\
+%PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" (
@@ -28,7 +32,7 @@ RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC
 
 REM Copy python into the client
-python get_python_write_dir.py %sensible_build_dir% > Output
+%PYTHON3% get_python_write_dir.py %sensible_build_dir% > Output
 set /p PythonWriteDir=<Output
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
