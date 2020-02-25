@@ -18,6 +18,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
+set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
