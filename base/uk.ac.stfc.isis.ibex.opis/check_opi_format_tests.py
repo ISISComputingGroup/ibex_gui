@@ -6,7 +6,6 @@ import sys
 
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour, \
     check_plot_area_backgrounds
-from check_OPI_format_utils.position import get_widgets_outside_of_boundary
 from check_OPI_format_utils.text import check_label_punctuation, check_container_names,\
     check_label_case_inside_containers, check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
@@ -31,17 +30,6 @@ def get_xml_for_widget_with_colour(widget, colour_type, colour_name=None):
     return WIDGET_XML.format(type=widget, widget_internals='<{colour_type}>' \
           '{colour_str}' \
           '</{colour_type}>').format(colour_type=colour_type, colour_str=colour_str)
-
-
-def get_xml_for_widget_with_position(widget, x_position, y_position):
-    return WIDGET_XML.format(type=widget, widget_internals="<x>{}</x>"
-                                                           "<y>{}</y>"
-                                                           "<widget_type>{}</widget_type>")\
-                                                           .format(x_position, y_position, widget)
-
-
-def make_widget_with_x_y_position(widget, x_position, y_position):
-    return etree.fromstring(get_xml_for_widget_with_position(widget, x_position, y_position))
 
 
 def make_widget_with_colour(widget, colour_type, colour_name=None):
@@ -72,28 +60,6 @@ def make_label_with_font(font_name, font_text):
 
 
 class TestCheckOpiFormatMethods(unittest.TestCase):
-
-    def test_that_if_a_widget_with_valid_position_is_parsed_it_causes_no_errors(self):
-        # Arrange
-        widget, x, y = "LED", "10", "10"
-        root = make_widget_with_x_y_position(widget, x, y)
-
-        # Act
-        errors = get_widgets_outside_of_boundary(root)
-
-        # Assert
-        self.assertEqual(len(errors), 0)
-
-    def test_that_if_a_widget_with_invalid_position_is_parsed_it_causes_errors(self):
-        # Arrange
-        widget, x, y = "LED", "-100", "10"
-        root = make_widget_with_x_y_position(widget, x, y)
-
-        # Act
-        errors = get_widgets_outside_of_boundary(root)
-
-        # Assert
-        self.assertNotEqual(len(errors), 0)
 
     def test_that_if_a_valid_led_tag_is_parsed_it_causes_no_errors(self):
         # Arrange
