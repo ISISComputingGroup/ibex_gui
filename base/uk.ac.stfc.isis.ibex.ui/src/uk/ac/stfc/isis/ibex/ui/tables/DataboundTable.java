@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
@@ -70,7 +70,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	private TableViewer viewer;
 	private TableColumnLayout tableColumnLayout = new TableColumnLayout();
 	private Composite tableComposite;
-	private ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+	private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
 	
     /**
      * Instantiates a new databound table.
@@ -434,7 +434,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param propertyName the property name
      * @return the observable map
      */
-	public IObservableMap observeProperty(String propertyName) {
+	public IObservableMap<TRow, ?> observeProperty(String propertyName) {
 		return BeanProperties.value(propertyName).observeDetail(contentProvider.getKnownElements());
 	}	
 
