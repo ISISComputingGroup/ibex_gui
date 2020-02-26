@@ -1,8 +1,8 @@
 from genie_python import genie as g
 
-from genie_python.genie_script_generator import ActionDefinition, cast_parameters_to
+from genie_python.genie_script_generator import ScriptDefinition, cast_parameters_to
 
-class DoRun(ActionDefinition):
+class DoRun(ScriptDefinition):
 
     @cast_parameters_to(param1=float, param2=float)
     def run(self, param1=0.0, param2=0.0):
@@ -19,3 +19,7 @@ class DoRun(ActionDefinition):
             return reason
         else:
             return None
+
+    def get_help(self):
+        return "Help"
+
