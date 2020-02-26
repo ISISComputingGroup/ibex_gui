@@ -60,12 +60,6 @@ class CheckStrictOpiFormat(unittest.TestCase):
         super(CheckStrictOpiFormat, self).__init__(methodName=methodName)
         self.xml_root = xml_root
 
-    def _assert_widgets_inside_x_y_boundary(self):
-        errors = get_widgets_outside_of_boundary(self.xml_root)
-        if len(errors):
-            self.fail("\n".join(["On line {}, widget '{}', outside of boundary with position {}."
-                                .format(*error) for error in errors]))
-
     def _assert_colour_correct(self, location, widget, colours):
         errors = check_colour(self.xml_root, widget, location, colours)
 
@@ -78,9 +72,6 @@ class CheckStrictOpiFormat(unittest.TestCase):
         if len(errors):
             self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
                                 .format(*error) for error in errors]))
-
-    def test_GIVEN_an_opi_file_with_widgets_WHEN_checking_if_widget_within_boundaries_THEN_widget_is_within_boundaries(self):
-        self._assert_widgets_inside_x_y_boundary()
 
     def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
         self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
@@ -119,12 +110,15 @@ class CheckStrictOpiFormat(unittest.TestCase):
 
 
 class CheckOpiFormat(CheckStrictOpiFormat):
-    def _assert_trace_buffers_are_the_same(self):
-        errors = get_traces_with_different_buffer_sizes(self.xml_root)
 
+    def _assert_widgets_inside_x_y_boundary(self):
+        errors = get_widgets_outside_of_boundary(self.xml_root)
         if len(errors):
-            self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
+            self.fail("\n".join(["On line {}, widget '{}', outside of boundary with position {}."
                                 .format(*error) for error in errors]))
+
+    def test_GIVEN_an_opi_file_with_widgets_WHEN_checking_if_widget_within_boundaries_THEN_widget_is_within_boundaries(self):
+        self._assert_widgets_inside_x_y_boundary()
 
     def test_GIVEN_an_opi_file_with_graph_widgets_WHEN_checking_buffer_sizes_THEN_all_buffer_sizes_are_the_same(self):
         self._assert_trace_buffers_are_the_same()
