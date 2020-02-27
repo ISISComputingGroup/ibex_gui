@@ -41,7 +41,7 @@ public class TableOfMotorsOpiTargetView extends OpiTargetView {
     /**
      * File name of the web links OPI.
      */
-    private static final String TABLE_OF_MOTORS_OPI_PATH = "table_of_motors.opi";
+    private static final String TABLE_OF_MOTORS_OPI_PATH = "motors_perspective/motors_perspective.opi";
 
     /**
      * {@inheritDoc}
