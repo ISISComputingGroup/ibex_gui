@@ -106,6 +106,20 @@ public class ActionsTable extends ModelObject {
 		newList.add(newAction);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
+	
+	/**
+	 * Add multiple actions
+	 * @param list contains mapped action parameters to its values
+	 */
+	public void addMultipleActions(List<Map<ActionParameter, String>> list) {
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		for (Map<ActionParameter, String> map : list) {
+			var newAction = createAction(map);
+			newList.add(newAction);
+		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions=newList);
+
+	}
 
 	/**
 	 * Removes an action from the list in specified location.
@@ -117,6 +131,10 @@ public class ActionsTable extends ModelObject {
 			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 			newList.remove(index);
 			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+			// if actions are empty then set the value of currentLoadedDataFile to null
+			if (newList.isEmpty()) {
+				firePropertyChange("empty actions", null, null);
+			}
 		}
 	}
 

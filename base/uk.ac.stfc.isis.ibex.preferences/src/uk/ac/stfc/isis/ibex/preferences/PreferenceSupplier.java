@@ -183,6 +183,16 @@ public class PreferenceSupplier {
     private static final String DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER = "C:/ScriptGeneratorConfigs/";
     
     /**
+     * Default place to save data file
+     */
+    private static final String DEFAULT_DATA_FILE_GENERATE_FOLDER = "C:/DataFile/";
+    
+    /**
+     * Define where to generate data files to
+     */
+    private static final String DATA_FILE_GENERATE_FOLDER = "data_file_generate_folder";
+    
+    /**
      * Defines where to generate scripts to.
      */
     private static final String SCRIPT_GENERATOR_CONFIG_FOLDER = "script_generator_config_folder";
@@ -290,6 +300,14 @@ public class PreferenceSupplier {
      */
 	public String scriptGeneratorConfigFolders() {
 		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
+	}
+	
+	/**
+	 * Gets the preference for the folder to save data from script generator parameters to
+	 * @return The folder to save script generator parameter data
+	 */
+	public String dataFileFolder() {
+		return getString(DATA_FILE_GENERATE_FOLDER, DEFAULT_DATA_FILE_GENERATE_FOLDER);
 	}
 	
 	/**

@@ -20,8 +20,11 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,12 +37,21 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedProgrammingLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorJson;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.AlgorithmType;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedDataExchangeFormat;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.ParametersConverter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedTypeException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
@@ -58,6 +70,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The preferences supplier to get the area to generate scripts from.
 	 */
 	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
+	
+	private ParametersConverter currentlyLoadedDataFile = null;
 	
 	/**
 	 * The table containing the script generator contents (actions).
@@ -128,6 +142,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
 	
 	/**
+	 * The property to listen for changes in Generator containing the generated parameter values data 
+	 */
+	private static final String GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY = "generated data exchange filepath";
+	
+	/**
 	 * The current state of parameter validity.
 	 */
 	private boolean paramValidity = false;
@@ -183,7 +202,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Set up listeners for the generator.
 	 */
 	public void setUp() {
-		generator = new GeneratorContext(pythonInterface);
+		generator = new GeneratorContext(GeneratedProgrammingLanguage.PYTHON, new GeneratorPython(pythonInterface));
+		
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
@@ -208,7 +228,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			generatedScript.ifPresentOrElse(script -> {
 					String scriptFilepathPrefix = preferenceSupplier.scriptGenerationFolder();
 					try {
-						Optional<String> generatedScriptFilepath = generateTo(script, scriptFilepathPrefix);
+						Optional<String> generatedScriptFilepath = generateTo("script", script, scriptFilepathPrefix, "py");
 						firePropertyChange(GENERATED_SCRIPT_FILEPATH_PROPERTY, null, generatedScriptFilepath);
 					} catch(NoConfigSelectedException e) {
 						LOG.error(e);
@@ -218,8 +238,70 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				});
 			
 		});
+		
+		generator.addPropertyChangeListener("Values saved", evt-> {
+			@SuppressWarnings("unchecked")
+			Optional<String> generatedScript = (Optional<String>) evt.getNewValue();
+			generatedScript.ifPresentOrElse(script -> {
+				String scriptFilePathPrefix = preferenceSupplier.dataFileFolder();
+				Optional<String> generatedScriptFilepath;
+				try {
+					generatedScriptFilepath = generateTo("data exchange", script, scriptFilePathPrefix, "json");
+					firePropertyChange(GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY, null, generatedScriptFilepath);	
+				} catch (NoConfigSelectedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
+		}, () -> {
+			firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+		});
+			});
+		
+		generator.addPropertyChangeListener("data files", evt-> {
+			firePropertyChange("data files", null, evt.getNewValue());			
+			});
+		
+		generator.addPropertyChangeListener("file content", evt-> {
+			ParametersConverter dataFile = (ParametersConverter)evt.getNewValue();
+			try {
+				Config config = getConfig()
+						.orElseThrow(() -> new NoConfigSelectedException("No Configuration Selected"));
+				String configStoredInJson = dataFile.getConfigContent();
+				String actualConfigcontent = new String(Files.readAllBytes(Paths.get(preferenceSupplier.scriptGeneratorConfigFolders() + config.getName() + ".py")));
+				if (configStoredInJson.equals(actualConfigcontent)) {
+					List<Map<String, String>> mappedParamToValue = (List<Map<String, String>>)dataFile.getParameterValues(); 
+					ArrayList<Map<ActionParameter, String>> newMappedParamToValue = new ArrayList<Map<ActionParameter, String>>();
+					
+					for (Map<String, String> map: mappedParamToValue) {
+						Map<ActionParameter, String> tempMap = new HashMap<ActionParameter, String>();
+						for (Map.Entry<String, String> entry: map.entrySet()) {
+							tempMap.put(new ActionParameter(entry.getKey()), entry.getValue());
+						}
+						newMappedParamToValue.add(tempMap);
+					}
+					this.scriptGeneratorTable.addMultipleActions(newMappedParamToValue);
+					this.currentlyLoadedDataFile = dataFile;
+				} else {
+					firePropertyChange("Config not matched", null, "configuration does not match");
+				}
+			} catch (NoConfigSelectedException | IOException e) {
+				LOG.error(e.getMessage());
+			}
+			
+			
+		});
+		
+		generator.addPropertyChangeListener("unsupported version", evt-> {
+			firePropertyChange("unsupported version", null, evt.getNewValue());			
+			});
+		
+			
 		configLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(configLoader.getParameters());
+			// new configuration selected so no data file is loaded
+			currentlyLoadedDataFile = null;
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
 			// The table has changed so update the validity checks
@@ -230,7 +312,23 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			}
 		});
 		
+		this.scriptGeneratorTable.addPropertyChangeListener("empty actions", evt -> {
+			// if user deletes all the actions that was loaded from a data file set currenlty
+			// loaded data file to be null
+			this.currentlyLoadedDataFile = null;
+		});
+		
 		setActionParameters(configLoader.getParameters());
+		
+		generator.addGenerator(GeneratedDataExchangeFormat.JSON, new GeneratorJson());
+		
+		generator.AddListenerToGenerator(VALIDITY_ERROR_MESSAGE_PROPERTY, GeneratedProgrammingLanguage.PYTHON);
+		generator.AddListenerToGenerator(PARAM_VALIDITY_PROPERTY, GeneratedProgrammingLanguage.PYTHON);
+		generator.AddListenerToGenerator(GENERATED_SCRIPT_PROPERTY, GeneratedProgrammingLanguage.PYTHON);
+		generator.AddListenerToGenerator("Values saved", GeneratedDataExchangeFormat.JSON);
+		generator.AddListenerToGenerator("data files", GeneratedDataExchangeFormat.JSON);
+		generator.AddListenerToGenerator("file content", GeneratedDataExchangeFormat.JSON);
+		generator.AddListenerToGenerator("unsupported version", GeneratedDataExchangeFormat.JSON);
 	}
 	
 	/**
@@ -454,11 +552,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		Config config = getConfig()
 			.orElseThrow(() -> new NoConfigSelectedException("Tried to refresh parameter validity with no config selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable, config);
-			generator.refreshValidityErrors(scriptGeneratorTable, config);
+			generator.doRunstrategy(AlgorithmType.PARAMETERS_VALIDITY_CHECK, null, scriptGeneratorTable, config, GeneratedProgrammingLanguage.PYTHON);
+			generator.doRunstrategy(AlgorithmType.VALIDITY_ERROR_CHECK, null, scriptGeneratorTable, config, GeneratedProgrammingLanguage.PYTHON);
 			languageSupported = true;
 			threadError = false;
-		} catch(UnsupportedLanguageException e) {
+		} catch(UnsupportedTypeException e) {
 			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
 			LOG.error(e);
 			languageSupported = false;
@@ -474,16 +572,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * 
 	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
 	 * @throws IOException If we fail to create and write to a file.
-	 * @throws UnsupportedLanguageException If the language we are trying to generate a script in is unsupported.
+	 * @throws UnsupportedTypeException If the language we are trying to generate a script in is unsupported.
 	 * @throws NoConfigSelectedException If there is no config selected to refresh checking against.
 	 */
 	public void refreshGeneratedScript() throws InvalidParamsException,
-			UnsupportedLanguageException, NoConfigSelectedException {
+			UnsupportedTypeException, NoConfigSelectedException {
 		Config config = getConfig()
 				.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"));
 		try {
 			if(areParamsValid()) {
-				generator.refreshGeneratedScript(scriptGeneratorTable, config);
+				generator.doRunstrategy(AlgorithmType.GENERATE_PYTHON, currentlyLoadedDataFile, scriptGeneratorTable, config, GeneratedProgrammingLanguage.PYTHON);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
@@ -504,12 +602,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws InvalidParamsException If the parameters are invalid a script cannot be generated.
 	 * @throws IOException If we fail to create and write to a file.
 	 */
-	public Optional<String> generateTo(String generatedScript, String filepathPrefix) throws NoConfigSelectedException {
+	public Optional<String> generateTo(String type, String generatedScript, String filepathPrefix, String fileExtension) throws NoConfigSelectedException {
 		try {
-			File scriptFile = generateScriptFile(filepathPrefix);
+			File scriptFile = generateScriptFile(filepathPrefix, fileExtension);
 			return writeScriptToFile(generatedScript, scriptFile);
 		} catch(IOException e) {
-			LOG.error("Failed to write generated script to file");
+			LOG.error("Failed to write " + type +  " file");
 			LOG.catching(e);
 			return Optional.empty();
 		}
@@ -523,7 +621,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws IOException When we cannot create the file
 	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	private File generateScriptFile(String filepathPrefix) throws IOException, NoConfigSelectedException {
+	private File generateScriptFile(String filepathPrefix, String fileTypeExtension) throws IOException, NoConfigSelectedException {
 		String configName = getConfig()
 			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
@@ -533,9 +631,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		File file;
 		do {
 			if (version == 0) {
-				filepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
+				filepath = String.format("%s%s-%s.%s", filepathPrefix, configName, timestamp, fileTypeExtension);
 			} else {
-				filepath = String.format("%s%s-%s(%s).py", filepathPrefix, configName, timestamp, version);
+				filepath = String.format("%s%s-%s(%s).%s", filepathPrefix, configName, timestamp, version, fileTypeExtension);
 			}
 			file = new File(filepath);
 			file.getParentFile().mkdirs();
@@ -559,6 +657,66 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		} catch(IOException e) {
 			return Optional.empty();
 		}
+	}
+	
+	/**
+	 * Loads file names for user to display
+	 * 
+	 * @throws InvalidParamsException
+	 * @throws UnsupportedTypeException
+	 */
+	public void loadFileNames() throws FileNotFoundException{
+		try {
+			Config config = getConfig()
+			.orElseThrow(() -> new NoConfigSelectedException("Tried to load data file without selecting config first"));
+			generator.doRunstrategy(AlgorithmType.LOAD_FILENAMES, scriptGeneratorTable, GeneratedDataExchangeFormat.JSON, config.getName());
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
+		} catch (UnsupportedTypeException | NoConfigSelectedException e) {
+			LOG.error(e);
+			e.printStackTrace();
+		} 
+	}
+	
+	/**
+	 * Save parameter Values
+	 * @throws InvalidParamsException parameters are invalid
+	 * @throws UnsupportedTypeException Invalid Language
+	 */
+	public void saveParameterValues() throws InvalidParamsException,
+	UnsupportedTypeException {
+
+		try {
+			Config config = getConfig()
+					.orElseThrow(() -> new NoConfigSelectedException("Tried to load data file without selecting config first"));
+			generator.doRunstrategy(AlgorithmType.GENERATE_JSON, scriptGeneratorTable, GeneratedDataExchangeFormat.JSON, config.getName());
+		} catch (InterruptedException | ExecutionException e) {
+			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+			LOG.error(e);
+			threadError = true;
+		} catch (NoConfigSelectedException e) {
+			// TODO Auto-generated catch block
+			LOG.error(e.getMessage());
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			LOG.error(e);
+		}
+	
+	}
+	
+	/**
+	 * Gets the content of the selected file by the user
+	 * @param filename name of the file to get content from
+	 */
+	public void getContent(String filename) {
+		try {
+			generator.doRunstrategy(AlgorithmType.GET_CONTENT, filename, GeneratedDataExchangeFormat.JSON);
+		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+			LOG.error(e);
+		}
+	
 	}
 	
 	/**

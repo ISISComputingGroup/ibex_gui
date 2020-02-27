@@ -6,4 +6,7 @@ def runscript():
     config = DoRun()
     {% for action in script_generator_actions -%}
     config.run(**{{ action }})
-    {% endfor -%}
+    {% endfor %}
+
+
+value = {{ hexed_value }}

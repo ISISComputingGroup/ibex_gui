@@ -17,7 +17,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  * @author James King
  *
  */
-public class GeneratorPython extends AbstractGenerator {
+public class GeneratorPython extends AbstractProgrammingLanguageGenerator {
 	
 	private final PythonInterface pythonInterface;
 	
@@ -30,6 +30,7 @@ public class GeneratorPython extends AbstractGenerator {
 	 * @param pythonInterface The py4j python interface to use to communicate with python.
 	 */
 	public GeneratorPython(PythonInterface pythonInterface) {
+	
 		this.pythonInterface = pythonInterface;
 		this.pythonInterface.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
@@ -40,26 +41,9 @@ public class GeneratorPython extends AbstractGenerator {
 		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+	
 	}
 
-	/**
-	 * Refresh the generated python script property.
-	 * 
-	 * @param scriptGenContent The script generator content to produce the script from.
-	 * @param config The instrument config to generate the script with.
-	 * @throws ExecutionException A failure to execute the py4j call.
-	 * @throws InterruptedException The Py4J call was interrupted.
-	 */
-	@Override
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		try {
-			pythonInterface.refreshGeneratedScript(scriptGenContent, config);
-		} catch(PythonNotReadyException e) {
-			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
-			LOG.error(e);
-		}
-	}
-	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
 	 * 
@@ -94,5 +78,24 @@ public class GeneratorPython extends AbstractGenerator {
 			LOG.error(e);
 		}
 	}
-	
+
+	/**
+	 * Method to generate python script
+	 * @param scriptGenContent The script generator content to produce the script from
+	 * @param currentlyLoadedDataFile data file that is currently loaded onto the script generator
+	 * @param config The instrument config to generate the script with.
+	 * @throws ExecutionException A failure to execute the py4j call.
+	 * @throws InterruptedException The Py4J call was interrupted.
+	 */
+	public void generate(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile, Config config)
+			throws InterruptedException, ExecutionException {
+		try {
+			pythonInterface.refreshGeneratedScript(scriptGenContent, currentlyLoadedDataFile, config);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
+		
+	}
+
 }

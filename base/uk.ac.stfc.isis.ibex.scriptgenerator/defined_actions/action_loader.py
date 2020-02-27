@@ -9,6 +9,7 @@ import argparse
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from genie_python import utilities
 import importlib.machinery
 import importlib.util
 
@@ -134,7 +135,7 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
@@ -145,8 +146,11 @@ class Generator(object):
             config_file_path = "{}.py".format(config.getName())
             config_template = self.env.get_template(config_file_path)
             try:
+                val = str(utilities.compress_and_hex(jsonString))
+                if not jsonString:
+                    val = "None"
                 rendered_template = self.template.render(inserted_config=config_template,
-                    script_generator_actions=list_of_actions)
+                    script_generator_actions=list_of_actions, hexed_value=val)
             except Exception:
                 rendered_template = None
             return rendered_template
@@ -222,14 +226,14 @@ class ConfigWrapper(object):
                 self.convert_list_of_actions_to_python(list_of_actions), config),
             gateway._gateway_client)
 
-    def generate(self, list_of_actions, config: Config) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, config: Config) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and configuration
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), config)
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString, config)
 
     def isPythonReady(self) -> bool:
         """

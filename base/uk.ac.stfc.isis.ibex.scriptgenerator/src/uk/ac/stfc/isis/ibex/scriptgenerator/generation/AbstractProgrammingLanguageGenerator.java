@@ -19,8 +19,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  * @author James King
  *
  */
-public abstract class AbstractGenerator extends ModelObject {
-	
+public abstract class AbstractProgrammingLanguageGenerator extends ModelObject implements Strategy {
+
 	/**
 	 * The property to fire a change of when the validity error messages (Map<Integer, String>)
 	 *  have been retrieved. This will get caught by the GeneratorContext and dealt with up the chain.
@@ -43,16 +43,6 @@ public abstract class AbstractGenerator extends ModelObject {
 	protected static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
-	 * Refresh the generated script property with a script (String).
-	 * 
-	 * @param scriptGenContent The script generator content to produce the script from.
-	 * @param config The instrument config to generate the script with.
-	 * @throws ExecutionException A failure to execute the call to generate a script
-	 * @throws InterruptedException The call to generate a script was interrupted
-	 */
-	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
-	
-	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
@@ -72,4 +62,10 @@ public abstract class AbstractGenerator extends ModelObject {
 	 */
 	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException;
 	
+	/**
+	 * This specific generate method is only required by classes inherited from AbstractDataExchangeFileGenerator
+	 */
+	public void generate(List<ScriptGeneratorAction> scriptGenContent, String configName) throws InterruptedException, ExecutionException {
+		throw new UnsupportedOperationException();
+	}
 }

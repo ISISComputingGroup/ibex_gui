@@ -2,6 +2,8 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -28,14 +30,16 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedTypeException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.DataFileSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import org.eclipse.jface.window.Window;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
@@ -109,6 +113,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
 	
 	/**
+	 * The property to listen for changes in Generator containing the generated parameter values data 
+	 */
+	private static final String GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY = "generated data exchange filepath";
+	
+	/**
 	 * A property to listen to for when actions change in the model.
 	 */
 	private static final String ACTIONS_PROPERTY = "actions";
@@ -130,6 +139,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
+	private final String CONFIG_NOT_MATCHED_ERROR = "Configuration that was used to generate the selected data "
+			+ "file is not the same as Coniguration used to load it";
+	
 	/**
 	 * The reference to the singleton model that the ViewModel is to use.
 	 */
@@ -150,6 +162,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The current generate script button in the view.
 	 */
 	private Button btnGenerateScript;
+	
+	/**
+	 * The current Save Parameters button in the view
+	 */
+	private Button btnSaveParam;
 	
 	/**
 	 * A constructor that sets up the script generator model and 
@@ -325,7 +342,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
 		};
 	
 	/**
@@ -337,7 +354,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			DISPLAY.asyncExec(() -> {
 				optionalScriptFilePath.ifPresentOrElse(
 						scriptFilePath -> {
-							openFileDialog(scriptFilePath);
+							openFileDialog("Script Generated", "Script", scriptFilePath);
 						},
 						() -> {
 							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -345,7 +362,54 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				);
 			});
 		};
-
+		
+	
+	/**
+	 * Listen for generated scripts and display the correct dialog (error or success and open file).
+	 */
+	private PropertyChangeListener generatedDataExchangeFileListener = evt -> {
+			@SuppressWarnings("unchecked")
+			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
+			DISPLAY.asyncExec(() -> {
+				optionalScriptFilePath.ifPresentOrElse(
+						scriptFilePath -> {
+							openFileDialog("Data File Generated", "Data file", scriptFilePath);
+						},
+						() -> {
+							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate data file");
+						}
+				);
+			});
+		};
+		
+		/**
+		 * Listen for all the data files that has been read and is ready to be displayed to the user for selection.
+		 */
+		private PropertyChangeListener loadDataFileListener = evt -> {
+			@SuppressWarnings("unchecked")
+			DataFileSelectionDialog dialog = new DataFileSelectionDialog(Display.getDefault().getActiveShell(),
+					"list of files", (List<String>)evt.getNewValue());
+			if (dialog.open() == Window.OK) {
+				String selectedFile = dialog.selectedFile();
+				scriptGeneratorModel.getContent(selectedFile);
+			}
+			
+		};
+		
+		/**
+		 * Listen if the data file that user tried is load is of the correct version.
+		 */
+		 private PropertyChangeListener unsupportedFileVersionListener = evt->{
+				
+				@SuppressWarnings("unchecked")
+				ArrayList<String> val =(ArrayList<String>)evt.getNewValue();
+				String error = String.format("File version not supported: \n\n"
+						+ "Selected file version: %s\nSupported file version: %s", val.get(0),
+						val.get(1));
+				MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", error);
+		 };
+				
+		
 	/**
 	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
 	 *  update the view table.
@@ -354,10 +418,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		this.viewTable = viewTable;
 		this.btnGetValidityErrors = btnGetValidityErrors;
 		this.btnGenerateScript = btnGenerateScript;
+		this.btnSaveParam = btnSaveParam;
 		// Remove listeners so as not to bind them twice
 		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
@@ -366,11 +431,29 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// Listen for generated script refreshes
 		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
+		
+		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY, generatedDataExchangeFileListener);
+		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY, generatedDataExchangeFileListener);
+		
+		this.scriptGeneratorModel.removePropertyChangeListener("data files", loadDataFileListener);
+		this.scriptGeneratorModel.addPropertyChangeListener("data files", loadDataFileListener);
+		
+		this.scriptGeneratorModel.removePropertyChangeListener("unsupported version",unsupportedFileVersionListener);
+		this.scriptGeneratorModel.addPropertyChangeListener("unsupported version", unsupportedFileVersionListener);
+		
+		this.scriptGeneratorModel.removePropertyChangeListener("Config not matched", evt->{
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", CONFIG_NOT_MATCHED_ERROR);
+		});
+		
+		this.scriptGeneratorModel.addPropertyChangeListener("Config not matched", evt->{
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", CONFIG_NOT_MATCHED_ERROR);
+		});
+	
 	}
 	
-	private void openFileDialog(String filePath) {
+	private void openFileDialog(String title, String type, String filePath) {
 		FileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-				"Script Generated", "Script generated at: ", filePath);
+				title, type + " generated at: ", filePath);
 	}
 	
 	/**
@@ -379,8 +462,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * 
 	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The button to manipulate.
+	 * @param btnGenerateScript Generate Script button's visibility to manipulate
+	 * @param btnSaveParam Save Parameter button's visibility to manipulate
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		DISPLAY.asyncExec(() -> {
 			if(!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
@@ -391,6 +476,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			}
 			if(!btnGenerateScript.isDisposed()) {
 				setButtonGenerateStyle(btnGenerateScript);
+				setButtonGenerateStyle(btnSaveParam);
 			}
 		});
 	}
@@ -618,7 +704,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     /**
-     * Attach a property listener on aciton parameters to update the table columns when changed.
+     * Attach a property listener on action parameters to update the table columns when changed.
      * 
      * @param viewTable The table to update the columns of.
      */
@@ -659,7 +745,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		} catch (InvalidParamsException e) {
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
 					"Cannot generate script. Parameters are invalid.");
-		} catch (UnsupportedLanguageException e) {
+		} catch (UnsupportedTypeException e) {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
@@ -692,5 +778,40 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void reloadActions() {
 		scriptGeneratorModel.reloadActions();
 	}
+	
+	/**
+	 * Save Parameter Values to a file.
+	 */
+	public void saveParameterValues() {
+	
+		try {
+			scriptGeneratorModel.saveParameterValues();
+		} catch (UnsupportedTypeException e) {
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
+					"Cannot generate script. Language to generate in is unsupported.");
+			LOG.error(e);
+		} catch (InvalidParamsException e) {
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
+					"Cannot generate script. Parameters are invalid.");
+			LOG.error(e);
+		}
+	
+	}
+	
+	/**
+	 * Load parameter Values for saved data files
+	 */
+	public void loadParameterValues() {
+		try {
+			scriptGeneratorModel.loadFileNames();
+		} catch (FileNotFoundException e) {
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", "C:/DataFile folder where parameters values will be saved"
+					+ " not found");
+			LOG.error(e);
+		}
+
+	}
+
+
 	
 }

@@ -30,10 +30,11 @@ public interface ConfigWrapper {
 	 * Generate a script from a list of script generator actions for the given action definition.
 	 * 
 	 * @param scriptGenContent The list of actions to generate a script for.
+	 * @param jsonString the actual JSON string to save to genearted script
 	 * @param config The action definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	public String generate(List<Map<String, String>> scriptGenContent, Config config);
+	public String generate(List<Map<String, String>> scriptGenContent, String jsonString, Config config);
 	
 	/**
 	 * Get a mapping of validity errors of the scriptGenContent against the config.

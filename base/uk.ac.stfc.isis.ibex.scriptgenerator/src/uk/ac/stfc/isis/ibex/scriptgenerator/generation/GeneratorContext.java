@@ -1,17 +1,23 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
+import org.apache.logging.log4j.Logger;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedProgrammingLanguage;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.AbstractGenerator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.AbstractProgrammingLanguageGenerator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedTypeException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -22,62 +28,52 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  *
  */
 public class GeneratorContext extends ModelObject {
-	
-	/**
-	 * The property to listen for changes in a Generator containing the mapping Map<Integer, String> of
-	 *  validity checks for each row of the script generator.
-	 */
-	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-	
-	/**
-	 * The property to listen for changes in a Generator containing whether or not all
-	 *  script generator contents are valid or not (bool).
-	 */
-	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-	/**
-	 * The property to listen for changes in a Generator containing the generated script (String).
-	 */
-	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	
 	/**
 	 * A mapping from the type of generated language to it's generator.
 	 */
-	private Map<GeneratedLanguage, AbstractGenerator> generatorStrategies = new HashMap<>();
+	private Map<GenerationType, Strategy> generatorStrategies = new HashMap<>();
 	
 	
 	/**
-	 * Add a generator to use (will replace the languages generator with a new one if it matches).
-	 * Listen to changes in the generators validity checking and script generation.
-	 * 
-	 * @param generatedLanguage The language the new generator uses.
-	 * @param generator The generator to use.
+	 * Add listener to the generators present in this context
+	 * @param propertyName property to listen to
+	 * @param type is it a programming language generator or data exchange format file generator?
 	 */
-	@SuppressWarnings("unchecked")
-	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
-		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
-		});
-		generatorStrategies.put(generatedLanguage, generator);
+	public void AddListenerToGenerator(String propertyName, GenerationType type) {
+		try {
+			if (type.getType() == GenerationType.PROGRAMMING_LANGUAGE) {
+				AbstractProgrammingLanguageGenerator generator = (AbstractProgrammingLanguageGenerator)getGenerator(type);
+				generator.addPropertyChangeListener(propertyName, evt -> {
+					firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
+					});
+				
+			} else if (type.getType() == GenerationType.DATA_EXCHANGE_FORMAT) {
+				AbstractDataExchangeFileGenerator generator = (AbstractDataExchangeFileGenerator)getGenerator(type);
+				generator.addPropertyChangeListener(propertyName, evt -> {
+					firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
+					});
+			}
+		} catch (UnsupportedTypeException e) {
+			// TODO Auto-generated catch block
+			LOG.error(e);
+			e.printStackTrace();
+		}
+		
 	}
-	
+
 	
 	/**
 	 * Get a generator for the specified generator language. Throws exception if not supported
 	 * 
 	 * @param generatedLanguage The language to generate or check validity with.
 	 * @return The generator to carry out the generation/check validity with.
-	 * @throws UnsupportedLanguageException If the language has no supported generator throw this.
+	 * @throws UnsupportedTypeException If the language has no supported generator throw this.
 	 */
-	private AbstractGenerator getGenerator(GeneratedLanguage generatedLanguage) throws UnsupportedLanguageException {
+	private Strategy getGenerator(GenerationType generatedLanguage) throws UnsupportedTypeException {
 		return Optional.ofNullable(generatorStrategies.get(generatedLanguage))
-				.orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
+				.orElseThrow(() -> new UnsupportedTypeException(generatedLanguage.getType() + " " + generatedLanguage + " not supported"));
 	}
 	
 	/**
@@ -85,102 +81,100 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param pythonInterface The python interface to set up the python generator with.
 	 */
-	public GeneratorContext(PythonInterface pythonInterface) {
-		putGenerator(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
+	public GeneratorContext(GeneratedProgrammingLanguage language, Strategy strategy) {
+		generatorStrategies.put(language, strategy);
 	}
 	
 	/**
-	 * Refresh the generated script in the passed generatedLanguage from the actionsTable passed.
-	 * The generated script may not be refreshed if the parameters are invalid. 
-	 * The parameter validity property will change and alert listeners at this point.
-	 * 
-	 * @param actionsTable The script generator contents to generate the script from.
-	 * @param config The instrument config to generate the script from.
-	 * @param generatedLanguage The language to generate the script in.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
+	 * Run strategy for generating script, performing validity check and validity error check
+	 * @param algorithm types of algorithm to run the strategy with
+	 * @param actionsTable The script generator contents to generate the script from
+	 * @param config the instrument config to generate the script from
+	 * @param langauge type of generator use, each language has their own generator 
+	 * @throws UnsupportedTypeException
+	 * @throws InterruptedException
+	 * @throws ExecutionException
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshGeneratedScript(actionsTable.getActions(), config);
+	public void doRunstrategy(AlgorithmType algorithm, ParametersConverter currentlyLoadedDataFile, ActionsTable actionsTable, Config config, GeneratedProgrammingLanguage langauge)
+			throws UnsupportedTypeException, InterruptedException, ExecutionException {
+		AbstractProgrammingLanguageGenerator generator = (AbstractProgrammingLanguageGenerator)getGenerator(langauge);
+		switch(algorithm) {
+		  case GENERATE_PYTHON:
+			generator.generate(actionsTable.getActions(), currentlyLoadedDataFile, config);
+			break;
+		  case PARAMETERS_VALIDITY_CHECK:
+			generator.refreshAreParamsValid(actionsTable.getActions(), config);
+			break;
+		  case VALIDITY_ERROR_CHECK:
+			generator.refreshValidityErrors(actionsTable.getActions(), config);
+			break;
+		default:
+			LOG.error(" %s does not exist for %s", algorithm.getName(), langauge.toString());
+			break;
+			
+		}
+	
 	}
 	
 	/**
-	 * Refresh the generated script in the default language (Python).
-	 * 
-	 * @param actionsTable The script generator contents to generate the script from.
-	 * @param config The instrument config to generate the script from.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
+	 * Run Strategy for Generating Data Exchange File format and loading filenames
+	 * @param algorithm type of algorithm to use
+	 * @param actionsTable content to save 
+	 * @param fileFormat type of generator to use
+	 * @throws UnsupportedTypeException unsupported generator type
+	 * @throws FileNotFoundException when folder where data file is saved is not available
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, Config config) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshGeneratedScript(actionsTable, config, GeneratedLanguage.PYTHON);
-	}
-	
-	/**
-	 * Check if the contents of the script generator (actionsTable) 
-	 *  are valid against a generator (generatedLanguage) and refresh the property.
-	 * 
-	 * @param actionsTable The contents of the script generator to validate.
-	 * @param config The instrument config to validate the script against.
-	 * @param generatedLanguage The language that the script will be generated in.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
-	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshAreParamsValid(actionsTable.getActions(), config);
-	}
-	
-	/**
-	 * Check if the contents of the script generator (actionsTable) 
-	 *  are valid against the default language generator (Python) and refresh the property.
-	 * 
-	 * @param actionsTable The contents of the script generator to validate.
-	 * @param config The instrument config to validate the script against.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
-	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, Config config) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshAreParamsValid(actionsTable, config, GeneratedLanguage.PYTHON);
-	}
-	
-	/**
-	 * Refresh the validity errors returned when checking validity.
-	 * 
-	 * @param actionsTable The contents of the script generator to check for validity errors with.
-	 * @param config The instrument config to validate the script against.
-	 * @param generatedLanguage The language that the script will be generated in.
-	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
-	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, Config config, GeneratedLanguage generatedLanguage) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshValidityErrors(actionsTable.getActions(), config);
+	public void doRunstrategy(AlgorithmType algorithm, ActionsTable actionsTable, GeneratedDataExchangeFormat format, String configName)
+	throws InterruptedException, ExecutionException, UnsupportedTypeException, FileNotFoundException {
+		
+		AbstractDataExchangeFileGenerator generator = (AbstractDataExchangeFileGenerator)getGenerator(format);
+		switch(algorithm) {
+		case GENERATE_JSON:
+			generator.generate(actionsTable.getActions(), configName);
+			break;
+		case LOAD_FILENAMES:
+			generator.getListOfAvailableDataFiles();
+			break;
+		default:
+			LOG.error("%s does not exist for %s", algorithm.getName(), format.toString());
+			break;
+		
+		}
 	}
 
 	/**
-	 * Refresh the validity errors returned when checking the validity in the default language (Python).
-	 * 
-	 * @param actionsTable The contents of the script generator to check for validity errors with.
-	 * @param config The instrument config to validate the script against.
-	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
-	 * @throws ExecutionException A failure to execute the call to generate.
-	 * @throws InterruptedException The call to generate was interrupted.
+	 * Run Strategy for Reading content of Data Exchange file
+	 * @param algorith type of algorithm to run
+	 * @param filename to read the content from
+	 * @param format type of generate
+	 * @throws FileNotFoundException 
+	 * @throws JsonIOException 
+	 * @throws JsonSyntaxException 
 	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, Config config) 
-			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshValidityErrors(actionsTable, config, GeneratedLanguage.PYTHON);
+	public void doRunstrategy(AlgorithmType algorithm, String filename, GeneratedDataExchangeFormat format) 
+			throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+		try {
+			if (algorithm == AlgorithmType.GET_CONTENT) {
+				AbstractDataExchangeFileGenerator generator = (AbstractDataExchangeFileGenerator)getGenerator(format);
+				generator.getContent(filename);
+			} else {
+				LOG.error("%s does not exist for %s", algorithm.getName(), format.toString());
+			}
+		} catch (UnsupportedTypeException e) {
+			// TODO Auto-generated catch block
+			LOG.error(e);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Add generator
+	 * @param type that corresponds to type of generator to use i.e. PROGRAMMING LANGUAGE or DATA EXCHANGE FORMAT
+	 * @param generator type of generator to add
+	 */
+	public void addGenerator(GenerationType type, Strategy generator) {
+		generatorStrategies.put(type, generator);
 	}
 
 }

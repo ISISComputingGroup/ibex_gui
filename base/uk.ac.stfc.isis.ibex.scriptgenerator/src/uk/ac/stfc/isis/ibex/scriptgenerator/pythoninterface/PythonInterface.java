@@ -23,9 +23,12 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
+import com.google.gson.Gson;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.ParametersConverter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -406,12 +409,17 @@ public class PythonInterface extends ModelObject {
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config)
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile, Config config)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if(pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return configWrapper.generate(convertScriptGenContentToPython(scriptGenContent), config);
+					String jsonString = "";
+					if (currentlyLoadedDataFile != null) {
+						Gson gson = new Gson();
+						jsonString = gson.toJson(currentlyLoadedDataFile);
+					}
+					return configWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonString, config);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);

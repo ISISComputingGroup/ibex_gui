@@ -308,7 +308,7 @@ public class ScriptGeneratorView {
 		        // Composite for generate buttons
 		        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
 		        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        GridLayout gbgLayout = new GridLayout(1, false);
+		        GridLayout gbgLayout = new GridLayout(3, false);
 		        gbgLayout.marginHeight = 10;
 		        gbgLayout.marginWidth = 10;
 		        generateButtonsGrp.setLayout(gbgLayout);
@@ -319,9 +319,18 @@ public class ScriptGeneratorView {
 		        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
 		        
-		        		
+		       	
+		       	final Button saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+		       	saveExperimentalParametersButton.setText("Save Parameters");
+		       	saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		       	saveExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.saveParameterValues());
+		       	
+		       	final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+		       	loadExperimentalParametersButton.setText("Load data");
+		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		       	loadExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
-		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText);
+		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton);
 				
 			} else {
 				
@@ -401,10 +410,10 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, config selector and validity check models to their views.
 	 */
-	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {		
+	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button btnSaveParameters) {		
 		scriptGeneratorViewModel.bindConfigLoader(configSelector, helpText);
 
-		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
+		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters);
 	}
 	
 
