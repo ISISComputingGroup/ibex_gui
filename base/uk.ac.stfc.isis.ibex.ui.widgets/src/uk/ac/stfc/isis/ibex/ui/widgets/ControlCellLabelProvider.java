@@ -48,7 +48,7 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 * 
 	 * @param attributeMaps A map of the attributes that this cell will observe.
 	 */
-	protected ControlCellLabelProvider(IObservableMap attributeMaps) {
+	protected ControlCellLabelProvider(IObservableMap<TRow, ?> attributeMaps) {
 		super(attributeMaps);
 	}
 	
