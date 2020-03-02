@@ -22,21 +22,7 @@
   </macros>
   <name></name>
   <rules />
-  <scripts>
-    <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-      <scriptName>EmbeddedScript</scriptName>
-      <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if ( PVUtil.getSeverityString(pvs[0]) == -1 ):  # Disconnected
-	PVUtil.writePV("loc://motor_0101_connected", 0)
-	ConsoleUtil.writeInfo("Main: Set local pv to 0")
-else:
-	PVUtil.writePV("loc://motor_0101_connected", 1)
-	ConsoleUtil.writeInfo("Main: Set local pv to 1")]]></scriptText>
-      <pv trig="true">$(PV_ROOT)0101</pv>
-      <pv trig="false">sim://noise</pv>
-    </path>
-  </scripts>
+  <scripts />
   <show_close_button>true</show_close_button>
   <show_edit_range>true</show_edit_range>
   <show_grid>true</show_grid>
@@ -65,41 +51,25 @@ else:
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>71</height>
+    <height>70</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MTR>0101</MTR>
     </macros>
     <name>Linking Container</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>70</width>
     <wuid>19b4166d:1702efd9e91:-7fd9</wuid>
     <x>78</x>
     <y>36</y>
@@ -128,31 +98,15 @@ else:
       <MTR>0102</MTR>
     </macros>
     <name>Linking Container_1</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -185,31 +139,15 @@ else:
       <MTR>0103</MTR>
     </macros>
     <name>Linking Container_2</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -242,31 +180,15 @@ else:
       <MTR>0104</MTR>
     </macros>
     <name>Linking Container_3</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -299,31 +221,15 @@ else:
       <MTR>0105</MTR>
     </macros>
     <name>Linking Container_4</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -356,31 +262,15 @@ else:
       <MTR>0106</MTR>
     </macros>
     <name>Linking Container_5</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -413,31 +303,15 @@ else:
       <MTR>0107</MTR>
     </macros>
     <name>Linking Container_6</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -470,31 +344,15 @@ else:
       <MTR>0108</MTR>
     </macros>
     <name>Linking Container_7</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -527,31 +385,15 @@ else:
       <MTR>0201</MTR>
     </macros>
     <name>Linking Container_8</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -584,31 +426,15 @@ else:
       <MTR>0202</MTR>
     </macros>
     <name>Linking Container_9</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -641,31 +467,15 @@ else:
       <MTR>0203</MTR>
     </macros>
     <name>Linking Container_10</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -698,31 +508,15 @@ else:
       <MTR>0204</MTR>
     </macros>
     <name>Linking Container_11</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -755,31 +549,15 @@ else:
       <MTR>0205</MTR>
     </macros>
     <name>Linking Container_12</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -812,31 +590,15 @@ else:
       <MTR>0206</MTR>
     </macros>
     <name>Linking Container_13</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -869,31 +631,15 @@ else:
       <MTR>0207</MTR>
     </macros>
     <name>Linking Container_14</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -926,31 +672,15 @@ else:
       <MTR>0208</MTR>
     </macros>
     <name>Linking Container_15</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -983,31 +713,15 @@ else:
       <MTR>0301</MTR>
     </macros>
     <name>Linking Container_16</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1040,31 +754,15 @@ else:
       <MTR>0302</MTR>
     </macros>
     <name>Linking Container_17</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1097,31 +795,15 @@ else:
       <MTR>0303</MTR>
     </macros>
     <name>Linking Container_18</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1154,31 +836,15 @@ else:
       <MTR>0304</MTR>
     </macros>
     <name>Linking Container_19</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1211,31 +877,15 @@ else:
       <MTR>0305</MTR>
     </macros>
     <name>Linking Container_20</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1268,31 +918,15 @@ else:
       <MTR>0306</MTR>
     </macros>
     <name>Linking Container_21</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1325,31 +959,15 @@ else:
       <MTR>0307</MTR>
     </macros>
     <name>Linking Container_22</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1382,31 +1000,15 @@ else:
       <MTR>0308</MTR>
     </macros>
     <name>Linking Container_23</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1439,31 +1041,15 @@ else:
       <MTR>0401</MTR>
     </macros>
     <name>Linking Container_24</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1496,31 +1082,15 @@ else:
       <MTR>0402</MTR>
     </macros>
     <name>Linking Container_25</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1553,31 +1123,15 @@ else:
       <MTR>0403</MTR>
     </macros>
     <name>Linking Container_26</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1610,31 +1164,15 @@ else:
       <MTR>0404</MTR>
     </macros>
     <name>Linking Container_27</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1667,31 +1205,15 @@ else:
       <MTR>0405</MTR>
     </macros>
     <name>Linking Container_28</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1724,31 +1246,15 @@ else:
       <MTR>0406</MTR>
     </macros>
     <name>Linking Container_29</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1781,31 +1287,15 @@ else:
       <MTR>0407</MTR>
     </macros>
     <name>Linking Container_30</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1838,31 +1328,15 @@ else:
       <MTR>0408</MTR>
     </macros>
     <name>Linking Container_31</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1895,31 +1369,15 @@ else:
       <MTR>0501</MTR>
     </macros>
     <name>Linking Container_32</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -1952,31 +1410,15 @@ else:
       <MTR>0502</MTR>
     </macros>
     <name>Linking Container_33</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2009,31 +1451,15 @@ else:
       <MTR>0503</MTR>
     </macros>
     <name>Linking Container_34</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2066,31 +1492,15 @@ else:
       <MTR>0504</MTR>
     </macros>
     <name>Linking Container_35</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2123,31 +1533,15 @@ else:
       <MTR>0505</MTR>
     </macros>
     <name>Linking Container_36</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2180,31 +1574,15 @@ else:
       <MTR>0506</MTR>
     </macros>
     <name>Linking Container_37</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2237,31 +1615,15 @@ else:
       <MTR>0507</MTR>
     </macros>
     <name>Linking Container_38</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2294,31 +1656,15 @@ else:
       <MTR>0508</MTR>
     </macros>
     <name>Linking Container_39</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2351,31 +1697,15 @@ else:
       <MTR>0601</MTR>
     </macros>
     <name>Linking Container_40</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2408,31 +1738,15 @@ else:
       <MTR>0602</MTR>
     </macros>
     <name>Linking Container_41</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2465,31 +1779,15 @@ else:
       <MTR>0603</MTR>
     </macros>
     <name>Linking Container_42</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2522,31 +1820,15 @@ else:
       <MTR>0604</MTR>
     </macros>
     <name>Linking Container_43</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2579,31 +1861,15 @@ else:
       <MTR>0605</MTR>
     </macros>
     <name>Linking Container_44</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2636,31 +1902,15 @@ else:
       <MTR>0606</MTR>
     </macros>
     <name>Linking Container_45</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2693,31 +1943,15 @@ else:
       <MTR>0607</MTR>
     </macros>
     <name>Linking Container_46</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2750,31 +1984,15 @@ else:
       <MTR>0608</MTR>
     </macros>
     <name>Linking Container_47</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2807,31 +2025,15 @@ else:
       <MTR>0701</MTR>
     </macros>
     <name>Linking Container_48</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2864,31 +2066,15 @@ else:
       <MTR>0702</MTR>
     </macros>
     <name>Linking Container_49</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2921,31 +2107,15 @@ else:
       <MTR>0703</MTR>
     </macros>
     <name>Linking Container_50</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -2978,31 +2148,15 @@ else:
       <MTR>0704</MTR>
     </macros>
     <name>Linking Container_51</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3035,31 +2189,15 @@ else:
       <MTR>0705</MTR>
     </macros>
     <name>Linking Container_52</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3092,31 +2230,15 @@ else:
       <MTR>0706</MTR>
     </macros>
     <name>Linking Container_53</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3149,31 +2271,15 @@ else:
       <MTR>0707</MTR>
     </macros>
     <name>Linking Container_54</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3206,31 +2312,15 @@ else:
       <MTR>0708</MTR>
     </macros>
     <name>Linking Container_55</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3263,31 +2353,15 @@ else:
       <MTR>0801</MTR>
     </macros>
     <name>Linking Container_56</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3320,31 +2394,15 @@ else:
       <MTR>0802</MTR>
     </macros>
     <name>Linking Container_57</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3377,31 +2435,15 @@ else:
       <MTR>0803</MTR>
     </macros>
     <name>Linking Container_58</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3434,31 +2476,15 @@ else:
       <MTR>0804</MTR>
     </macros>
     <name>Linking Container_59</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3491,31 +2517,15 @@ else:
       <MTR>0805</MTR>
     </macros>
     <name>Linking Container_60</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3548,31 +2558,15 @@ else:
       <MTR>0806</MTR>
     </macros>
     <name>Linking Container_61</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3605,31 +2599,15 @@ else:
       <MTR>0807</MTR>
     </macros>
     <name>Linking Container_62</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
@@ -3662,31 +2640,15 @@ else:
       <MTR>0808</MTR>
     </macros>
     <name>Linking Container_63</name>
-    <opi_file>single_motor_view_disconnected.opi</opi_file>
+    <opi_file>single_motor_standard_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
-        <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
-
-if (PVUtil.getLong(pvs[0]) == 1):
-	widget.setPropertyValue("opi_file", "single_motor_standard_view.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to standard view")
-else:
-	widget.setPropertyValue("opi_file", "single_motor_view_disconnected.opi", True)
-	ConsoleUtil.writeInfo("Sub: Set opi to disconnected view")
-
-
-]]></scriptText>
-        <pv trig="true">loc://motor_0101_connected(0)</pv>
-      </path>
-    </scripts>
+    <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>

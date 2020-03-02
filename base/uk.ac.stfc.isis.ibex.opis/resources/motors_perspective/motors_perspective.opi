@@ -50,24 +50,24 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>590</height>
+    <height>583</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Linking Container</name>
     <opi_file>table_of_motors.opi</opi_file>
-    <resize_behaviour>0</resize_behaviour>
+    <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>590</width>
+    <width>583</width>
     <wuid>-1669e5af:170829a6fda:-6deb</wuid>
     <x>6</x>
     <y>0</y>
@@ -111,6 +111,8 @@
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 from org.csstudio.opibuilder.scriptUtil import DataUtil
 
+DEFAULT_MOTOR = "MOT:MTR0101"
+
 # Get the macro for the widget that has just been clicked.
 new_macro = PVUtil.getString(pvArray[0])
 ConsoleUtil.writeInfo("Linking container script triggered:" + new_macro)
@@ -133,97 +135,5 @@ widget.setPropertyValue("opi_file", widget.getPropertyValue("opi_file"), True)]]
     <wuid>-1669e5af:170829a6fda:-50b8</wuid>
     <x>630</x>
     <y>0</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <format_type>0</format_type>
-    <height>20</height>
-    <horizontal_alignment>0</horizontal_alignment>
-    <name>Text Update</name>
-    <precision>0</precision>
-    <precision_from_pv>true</precision_from_pv>
-    <pv_name>loc://motor_details_macro</pv_name>
-    <pv_value />
-    <rotation_angle>0.0</rotation_angle>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_units>true</show_units>
-    <text>######</text>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>false</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Text Update</widget_type>
-    <width>100</width>
-    <wrap_words>false</wrap_words>
-    <wuid>-1669e5af:170829a6fda:-4612</wuid>
-    <x>780</x>
-    <y>312</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <auto_size>false</auto_size>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <height>20</height>
-    <horizontal_alignment>1</horizontal_alignment>
-    <name>Label</name>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <text>Motor_details_macro:</text>
-    <tooltip></tooltip>
-    <transparent>true</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Label</widget_type>
-    <width>133</width>
-    <wrap_words>false</wrap_words>
-    <wuid>-1669e5af:170829a6fda:-460e</wuid>
-    <x>636</x>
-    <y>312</y>
   </widget>
 </display>
