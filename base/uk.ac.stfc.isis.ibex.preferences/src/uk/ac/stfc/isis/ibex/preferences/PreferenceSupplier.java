@@ -331,7 +331,8 @@ public class PreferenceSupplier {
 	}
 	
 	
-	/** Get whether to hide the script gen script definition error table.
+	/** 
+	 * Get whether to hide the script gen script definition error table.
 	 * 
 	 * @return true if we should hide the table, false if not.
 	 */

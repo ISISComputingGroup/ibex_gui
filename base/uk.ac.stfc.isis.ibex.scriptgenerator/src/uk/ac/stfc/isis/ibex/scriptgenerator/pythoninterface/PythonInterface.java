@@ -305,15 +305,13 @@ public class PythonInterface extends ModelObject {
 		
 		this.scriptDefinitionsWrapper = (ScriptDefinitionsWrapper) clientServer
 				.getPythonServerEntryPoint(new Class[] {ScriptDefinitionsWrapper.class});
-		boolean val;
+		
 		while (true) {
 			try {
-				val = this.scriptDefinitionsWrapper.isPythonReady();
+				this.scriptDefinitionsWrapper.isPythonReady();
 				handlePythonReadinessChange(true);
 				break;
 			} catch (Py4JException e) {
-				int b = 100;
-				b = 10;
 				// Waiting until Python is ready (no Py4JException)
 			}
 		}
