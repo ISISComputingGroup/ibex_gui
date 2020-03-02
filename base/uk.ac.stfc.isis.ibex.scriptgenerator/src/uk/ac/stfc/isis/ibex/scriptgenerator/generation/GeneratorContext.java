@@ -14,10 +14,14 @@ import com.google.gson.JsonSyntaxException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedProgrammingLanguage;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.AbstractProgrammingLanguageGenerator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedTypeException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -95,18 +99,18 @@ public class GeneratorContext extends ModelObject {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void doRunstrategy(AlgorithmType algorithm, ParametersConverter currentlyLoadedDataFile, ActionsTable actionsTable, Config config, GeneratedProgrammingLanguage langauge)
+	public void doRunstrategy(AlgorithmType algorithm, ParametersConverter currentlyLoadedDataFile, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinitionName, GeneratedProgrammingLanguage langauge)
 			throws UnsupportedTypeException, InterruptedException, ExecutionException {
 		AbstractProgrammingLanguageGenerator generator = (AbstractProgrammingLanguageGenerator)getGenerator(langauge);
 		switch(algorithm) {
 		  case GENERATE_PYTHON:
-			generator.generate(actionsTable.getActions(), currentlyLoadedDataFile, config);
+			generator.generate(actionsTable.getActions(), currentlyLoadedDataFile, scriptDefinitionName);
 			break;
 		  case PARAMETERS_VALIDITY_CHECK:
-			generator.refreshAreParamsValid(actionsTable.getActions(), config);
+			generator.refreshAreParamsValid(actionsTable.getActions(), scriptDefinitionName);
 			break;
 		  case VALIDITY_ERROR_CHECK:
-			generator.refreshValidityErrors(actionsTable.getActions(), config);
+			generator.refreshValidityErrors(actionsTable.getActions(), scriptDefinitionName);
 			break;
 		default:
 			LOG.error(" %s does not exist for %s", algorithm.getName(), langauge.toString());
@@ -140,6 +144,7 @@ public class GeneratorContext extends ModelObject {
 			break;
 		
 		}
+
 	}
 
 	/**

@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -53,7 +54,7 @@ public class GeneratorJson extends AbstractDataExchangeFileGenerator {
 	private void generateJson(List<Map<String, String>> scriptGenContent, String configContent, String configName) {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		String version = Platform.getProduct().getDefiningBundle().getVersion().toString();
-		String configFilePath = preferenceSupplier.scriptGeneratorConfigFolders() + configName + ".py";
+		String configFilePath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + configName + ".py";
 		String json = gson.toJson(new ParametersConverter(CURRENT_VERSION, scriptGenContent, configContent, "",
 				getCurrentDate(), getCurrentTime(), configFilePath, "", version));
 		
@@ -100,7 +101,7 @@ public class GeneratorJson extends AbstractDataExchangeFileGenerator {
 	@Override
 	public void generate(List<ScriptGeneratorAction> scriptGenContent, String configName) throws InterruptedException, ExecutionException {
 		try {
-			String content = new String(Files.readAllBytes(Paths.get(preferenceSupplier.scriptGeneratorConfigFolders() + configName + ".py")));
+			String content = new String(Files.readAllBytes(Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + configName + ".py")));
 			generateJson(scriptGenContent.stream()
 					.map(action -> action.getAllActionParametersAsString()).collect(Collectors.toList()), content.toString(), configName);
 		} catch (IOException e) {
@@ -134,6 +135,14 @@ public class GeneratorJson extends AbstractDataExchangeFileGenerator {
 			LOG.error(e + ": Json version number is null");
 			firePropertyChange("unsupported version", null, new ArrayList<String>(Arrays.asList("not supported", CURRENT_VERSION)));
 		}
+	}
+
+
+	@Override
+	public void generate(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile,
+			ScriptDefinitionWrapper scriptDefinitionWrapper) throws InterruptedException, ExecutionException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

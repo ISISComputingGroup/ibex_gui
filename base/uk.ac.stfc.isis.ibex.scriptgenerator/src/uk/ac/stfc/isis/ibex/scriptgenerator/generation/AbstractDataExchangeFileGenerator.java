@@ -11,7 +11,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 
@@ -26,7 +26,7 @@ public abstract class AbstractDataExchangeFileGenerator extends ModelObject impl
 	 * Following operation only supported in AbstractProgrammingLanguageGenerator
 	 */
 	@Override
-	public void generate(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile, Config config) throws InterruptedException, ExecutionException {
+	public void generate(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile, ScriptDefinitionWrapper scriptGeneratorDefinition) throws InterruptedException, ExecutionException {
 		throw new UnsupportedOperationException();
 		
 	}

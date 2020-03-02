@@ -3,7 +3,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -24,7 +24,7 @@ public interface Strategy {
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
 	 void generate(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile,
-			 Config config) throws InterruptedException, ExecutionException;
+			 ScriptDefinitionWrapper scriptDefinitionWrapper) throws InterruptedException, ExecutionException;
 	 /**
 	  * two types of strategy: programming language and data exchange format
 	  * @return

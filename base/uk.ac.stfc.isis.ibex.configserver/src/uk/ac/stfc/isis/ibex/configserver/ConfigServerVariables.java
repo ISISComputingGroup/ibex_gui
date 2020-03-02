@@ -143,7 +143,7 @@ public class ConfigServerVariables extends Closer {
         serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
                 converters.toServerStatus());
         currentConfig =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
+                InstrumentUtils.convert("currentConfig", readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
         blankConfig =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
         componentDetails =

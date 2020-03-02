@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.workbench,
  py4j-java;bundle-version="0.10.8",
  uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.preferences
+ uk.ac.stfc.isis.ibex.preferences,
+ uk.ac.stfc.isis.ibex.scriptgenerator
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
