@@ -139,6 +139,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private GeneratorContext generator;
 
 	/**
+	 * The time to wait before timing out from trying to connect to the manual.
+	 */
+	private static final int URL_TIMEOUT = 3;
+
+	/**
 	 * A property to fire a change of when there is an error generating a script.
 	 */
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
@@ -265,6 +270,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	            URL possibleUrl = new URL(url);
 	            
 	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
+	            connection.setConnectTimeout(URL_TIMEOUT);
 	            connection.setRequestMethod("GET");
 	            connection.connect();
 	            int responseCode = connection.getResponseCode();
