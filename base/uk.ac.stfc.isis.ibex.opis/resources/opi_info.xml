@@ -526,6 +526,16 @@
             <description>The second level card number (e.g. 2, optional).</description>
             <default>2</default>
           </macro>
+          <macro>
+            <name>PRESSURE_NUM1</name>
+            <description>The first pressure card number (e.g. 1, optional).</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>PRESSURE_NUM2</name>
+            <description>The second pressure card number (e.g. 2, optional).</description>
+            <default>2</default>
+          </macro>
         </macros>
         <categories>
           <category>Temperature controllers</category>
@@ -779,6 +789,24 @@
             <name>LAKESHORE218</name>
             <description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>
             <default>LKSH218_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Lakeshore 372</key>
+      <value>
+        <type>LAKESHORE</type>
+        <path>lakeshore372.opi</path>
+        <description>The OPI for the Lakeshore 372 temperature controller.</description>
+        <macros>
+          <macro>
+            <name>LAKESHORE372</name>
+            <description>The Lakeshore 372 PV prefix (e.g. LKSH372_01).</description>
+            <default>LKSH372_01</default>
           </macro>
         </macros>
         <categories>
@@ -2206,6 +2234,24 @@
       </value>
     </entry>
     <entry>
+      <key>Muon Jaws</key>
+      <value>
+      	<type>JAWS</type>
+      	<path>MuonJaws.opi</path>
+      	<description>The OPI for the Muon Jaws</description>
+        <categories>
+            <category>Jaws and slits</category>
+        </categories>
+        <macros>
+            <macro>
+              <name>MUONJAWS</name>
+              <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
+              <default>MUONJAWS_01</default>
+            </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Zero field magnetometer</key>
       <value>
         <type>ZERO_FIELD</type>
@@ -2219,7 +2265,7 @@
             <name>ZFMAGFLD</name>
             <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
             <default>ZFMAGFLD_01</default>
-            </macro>
+           </macro>
         </macros>
       </value>
     </entry>

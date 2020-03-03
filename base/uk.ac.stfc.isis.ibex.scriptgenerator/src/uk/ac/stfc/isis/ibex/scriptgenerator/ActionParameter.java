@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public class ActionParameter {
 
-	private String name;
+	private final String name;
 	
 	/**
 	 * This class holds the name about an action parameter.
@@ -50,10 +50,11 @@ public class ActionParameter {
 	 */
 	@Override
 	public boolean equals(Object o) {
+		if (o == this) return true;
 		if (!(o instanceof ActionParameter)) return false;	
 		
 		ActionParameter actionParameter = (ActionParameter) o;
-		return this.getName().equals(actionParameter.getName());
+		return Objects.equals(this.getName(), actionParameter.getName());
 		
 	}
 	

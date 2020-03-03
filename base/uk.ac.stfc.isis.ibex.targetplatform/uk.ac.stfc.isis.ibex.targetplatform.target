@@ -28,10 +28,6 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.py4j.feature.feature.group" version="0.10.8.1-bnd-BaEoUg"/>
-<repository location="http://eclipse.py4j.org/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.13.0.v20170609-0928"/>
 <unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.201711130301"/>
 <unit id="org.eclipse.gef.cloudio.user.feature.group" version="5.0.2.201711130301"/>
@@ -131,6 +127,10 @@
         <unit id="org.python.pydev.feature.feature.group" version="5.9.2.201708151115"/>
         <unit id="org.python.pydev.feature.source.feature.group" version="5.9.2.201708151115"/>
     </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://eclipse.py4j.org/"/>
+		<unit id="org.py4j.feature.feature.group" version="0.10.9.bnd-SP8nOw"/>
+	</location>
 </locations>
 <environment>
 <os>win32</os>

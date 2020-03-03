@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.Map;
+
 /**
  * A Banner Message that has been received from NICOS. This message should be
  * the first sent and details various things about the instance of NICOS that we
@@ -30,7 +32,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 public class ReceiveBannerMessage {
     private String custom_path;
     private String nicos_root;
-    private String rsakey;
+    private Map<String, String> rsakey;
     private String daemon_version;
     private String pw_hashing;
     private String serializer;

@@ -15,3 +15,9 @@ base/uk.ac.stfc.isis.ibex.opis/check_OPI_format_logs
 build/jdk
 build/jdk.zip
 *.idea
+*Python3*
+built_script_gen/
+built_client/
+build/Output
+.vscode
+__pycache__

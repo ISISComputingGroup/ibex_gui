@@ -1,9 +1,11 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
@@ -14,8 +16,25 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
  */
 public class ActionsTable extends ModelObject {
 
+	/**
+	 * The action parameters (columns) of the table that all actions in the table conform to.
+	 */
 	private List<ActionParameter> actionParameters;
-	private ArrayList<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	
+	/**
+	 * The actions (rows) of the table that have values for the action parameters.
+	 */
+	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	
+	/**
+	 * The property to fire a change for if the actions in the table change.
+	 */
+	private static final String ACTIONS_PROPERTY = "actions";
+	
+	/**
+	 * The property of an action to listen to for changes.
+	 */
+	private static final String VALUE_PROPERTY = "value";
 	
 	/**
 	 * 
@@ -28,7 +47,7 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * The actions table holds each action and its parameter values in an ordered list.
 	 * @param actionParameters
-	 * 			The parameters taken from the config to use in this table.
+	 * 			The parameters taken from the script definition to use in this table.
 	 */
 	public ActionsTable(List<ActionParameter> actionParameters) {
 		setActionParameters(actionParameters);
@@ -50,6 +69,26 @@ public class ActionsTable extends ModelObject {
 	public List<ActionParameter> getActionParameters() {
 		return actionParameters;
 	}
+	
+	/**
+	 * Create a new script generator action.
+	 * 
+	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
+	 * @return the action.
+	 */
+	private ScriptGeneratorAction createAction(Map<ActionParameter, String> paremetersMap) {
+		// Ensure is not shallow copy
+		Map<ActionParameter, String> newParamsMap = new HashMap<ActionParameter, String>();
+		for (Map.Entry<ActionParameter, String> entry: paremetersMap.entrySet()) {
+			newParamsMap.put(entry.getKey(), entry.getValue());
+		}
+		// Create action and attach listeners
+		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap);
+		newAction.addPropertyChangeListener(VALUE_PROPERTY, evt -> {
+			firePropertyChange(ACTIONS_PROPERTY, null, actions);
+		});
+		return newAction;
+	}
 
 	/**
 	 * Adds a new action with default parameters to the list of actions.
@@ -61,9 +100,11 @@ public class ActionsTable extends ModelObject {
 			parametersMap.put(actionParameter, actionParameter.getName() + Integer.toString(actions.size()));
 		}
 		
-		var newAction = new ScriptGeneratorAction(parametersMap);
+		var newAction = createAction(parametersMap);
 		
-		firePropertyChange("actions", actions, actions.add(newAction));
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		newList.add(newAction);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
@@ -73,7 +114,9 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void deleteAction(int index) {
 		if (isValidIndex(index)) {
-			firePropertyChange("actions", actions, actions.remove(index));
+			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+			newList.remove(index);
+			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 		}
 	}
 
@@ -85,14 +128,14 @@ public class ActionsTable extends ModelObject {
 	public void duplicateAction(int index) {
 		if (isValidIndex(index)) {
 			var actionToDuplicate = actions.get(index);
-			var newAction = new ScriptGeneratorAction(actionToDuplicate);
-			var newActions = new ArrayList<ScriptGeneratorAction>();
+			var newAction = createAction(actionToDuplicate.getAllActionParameters());
+			final var newActions = new ArrayList<ScriptGeneratorAction>();
 			
 			newActions.addAll(actions);
 			
 			newActions.add(index + 1, newAction);
 			
-			firePropertyChange("actions", actions, this.actions = newActions);
+			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
 		}
 	}
 
@@ -105,7 +148,7 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void moveAction(int oldIndex, int newIndex) {
 		if (isValidIndex(oldIndex)) {
-			var newActions = new ArrayList<ScriptGeneratorAction>();
+			final var newActions = new ArrayList<ScriptGeneratorAction>();
 			
 			newActions.addAll(actions);
 			
@@ -117,7 +160,7 @@ public class ActionsTable extends ModelObject {
 			
 			Collections.swap(newActions, oldIndex, newIndex);
 		
-			firePropertyChange("actions", actions, actions = newActions);
+			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
 		}
 	}
 	
@@ -125,7 +168,7 @@ public class ActionsTable extends ModelObject {
 	 * Clears the list of actions.
 	 */
 	public void clearActions() {
-		firePropertyChange("actions", actions, actions = new ArrayList<ScriptGeneratorAction>());
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
 	}
 	/**
 	 * Checks if the supplied index is a valid position in the table.
@@ -136,5 +179,45 @@ public class ActionsTable extends ModelObject {
 	 */
 	private Boolean isValidIndex(int index) {
 		return index >= 0 && index <= this.actions.size();
+	}
+
+	/**
+	 * Set the validity errors for each action based on the hashmap.
+	 * 
+	 * @param validityErrors The hashmap to set validity errors based on.
+	 */
+	public void setValidityErrors(Map<Integer, String> validityErrors) {
+		for(int i = 0; i< actions.size(); i++) {
+			if(validityErrors.containsKey(i)) {
+				actions.get(i).setInvalid(validityErrors.get(i));
+			} else {
+				actions.get(i).setValid();
+			}
+		}
+	}
+	
+	/**
+	 * Get strings of validity errors.
+	 * 
+	 * @return The strings of validity error lines to display.
+	 */
+	public ArrayList<String> getInvalidityErrorLines() {
+		var errors = new ArrayList<String>();
+		for (int i = 0; i < actions.size(); i++) {
+			ScriptGeneratorAction action = actions.get(i);
+			if (!action.isValid()) {
+				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
+				
+				errors.addAll(Arrays.asList(errorString.split("\n")));
+			}
+		}
+		return errors;
+	}
+
+	/**
+	 * Reload the actions by firing a property change.
+	 */
+	public void reloadActions() {
+		firePropertyChange(ACTIONS_PROPERTY, null, actions);
 	}
 }

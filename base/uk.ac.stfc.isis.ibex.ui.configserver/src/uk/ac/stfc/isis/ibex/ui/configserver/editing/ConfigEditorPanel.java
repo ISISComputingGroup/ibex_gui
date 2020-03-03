@@ -158,4 +158,5 @@ public class ConfigEditorPanel extends Composite {
     public void selectBlocksTab() {
         editorTabs.setSelection(blocksTab);
     }
+
 }

@@ -19,11 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
+import uk.ac.stfc.isis.ibex.dashboard.DashboardPv;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -36,9 +39,9 @@ public class BannerModel extends Closer {
 	private final UpdatedValue<String> instrumentName;
 	private final InstrumentState instrumentState;
 	private final BannerText bannerText;
-	private final UpdatedValue<String> runNumber;
-	private final UpdatedValue<Boolean> simulationMode;
-	private final ShutterState shutterState;
+	
+	private final Map<DashboardPv, TextUpdatedObservableAdapter> labelAdapters = new EnumMap<>(DashboardPv.class);
+	private final Map<DashboardPv, TextUpdatedObservableAdapter> valueAdapters = new EnumMap<>(DashboardPv.class);
 	
 	/**
 	 * Constructor for the banner model.
@@ -46,12 +49,13 @@ public class BannerModel extends Closer {
 	 */
 	public BannerModel(DashboardObservables observables) {
 		instrumentName = Instrument.getInstance().name();
-		instrumentState = registerForClose(new InstrumentState(observables.dae.runState));
+		instrumentState = registerForClose(new InstrumentState(observables.runState));
 		bannerText = new BannerText(instrumentName, instrumentState.text());
 		
-		runNumber = registerForClose(new TextUpdatedObservableAdapter(observables.dae.runNumber));
-		simulationMode = registerForClose(new UpdatedObservableAdapter<Boolean>(observables.dae.simulationMode));
-		shutterState = registerForClose(new ShutterState(observables.shutter));
+		for (DashboardPv pv : DashboardPv.values()) {
+			labelAdapters.put(pv, registerForClose(new TextUpdatedObservableAdapter(observables.getLabelObservable(pv))));
+			valueAdapters.put(pv, registerForClose(new TextUpdatedObservableAdapter(observables.getValueObservable(pv))));
+		}
 	}
 	
 	/**
@@ -87,26 +91,18 @@ public class BannerModel extends Closer {
 	}
 	
 	/**
-	 * Gets the run number as a string.
-	 * @return an updated value wrapping the run number string
+	 * Gets the label of a specified dashboard field, as a string.
+	 * @return an updated value wrapping the label
 	 */
-	public UpdatedValue<String> runNumber() {
-		return runNumber;
+	public UpdatedValue<String> dashboardLabel(DashboardPv pv) {
+		return labelAdapters.get(pv);
 	}
 	
 	/**
-	 * Gets the shutter status of the current instrument as a string.
-	 * @return an updated value wrapping the shutter status string
+	 * Gets the value of a specified dashboard field, as a string.
+	 * @return an updated value wrapping the value
 	 */
-	public UpdatedValue<String> shutter() {
-		return shutterState.text();
-	}
-	
-	/**
-	 * Whether the DAE is in simulation mode or not.
-	 * @return Updated value where true means the DAE is in simulation mode and false means it is not in simulation mode.
-	 */
-	public UpdatedValue<Boolean> daeSimMode() {
-		return simulationMode;
+	public UpdatedValue<String> dashboardValue(DashboardPv pv) {
+		return valueAdapters.get(pv);
 	}
 }

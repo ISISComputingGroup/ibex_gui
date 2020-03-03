@@ -42,7 +42,7 @@ public abstract class DataboundCellLabelProvider<TRow> extends SortableObservabl
      *
      * @param attributeMap the attribute map
      */
-	public DataboundCellLabelProvider(IObservableMap attributeMap) {
+	public DataboundCellLabelProvider(IObservableMap<TRow, ?> attributeMap) {
 		super(attributeMap);
 	}
 
