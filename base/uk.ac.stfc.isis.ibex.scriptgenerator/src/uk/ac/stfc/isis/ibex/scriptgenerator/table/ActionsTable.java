@@ -47,7 +47,7 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * The actions table holds each action and its parameter values in an ordered list.
 	 * @param actionParameters
-	 * 			The parameters taken from the config to use in this table.
+	 * 			The parameters taken from the script definition to use in this table.
 	 */
 	public ActionsTable(List<ActionParameter> actionParameters) {
 		setActionParameters(actionParameters);
@@ -212,5 +212,12 @@ public class ActionsTable extends ModelObject {
 			}
 		}
 		return errors;
+	}
+
+	/**
+	 * Reload the actions by firing a property change.
+	 */
+	public void reloadActions() {
+		firePropertyChange(ACTIONS_PROPERTY, null, actions);
 	}
 }

@@ -70,7 +70,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	/**
-	 * Updates the table columns after a config change.
+	 * Updates the table columns after a script definition change.
 	 */
 	@Override
 	public void updateTableColumns() {
