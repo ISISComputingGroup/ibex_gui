@@ -170,7 +170,8 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	
 	/**
 	 * Gets the check box listener update flag mapped to the given model, wrapped
-	 * in an Optional.
+	 * in an Optional. A side effect of this method is that flag corresponding 
+	 * to the given model is set to false.
 	 * @param model the model on the same table row as the check box.
 	 * @return a boolean wrapped in an Optional, or an empty Optional if there is 
 	 * no mapping for the given model.
