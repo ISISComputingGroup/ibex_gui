@@ -87,7 +87,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param stateProperties The properties that this label provider should be observing.
 	 * @param table The data bound table that owns this label provider.
 	 */
-	public CheckboxLabelProvider(IObservableMap stateProperties, DataboundTable<T> table) {
+	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties, DataboundTable<T> table) {
 		super(stateProperties);
 		this.databoundTable = table;
 	}
