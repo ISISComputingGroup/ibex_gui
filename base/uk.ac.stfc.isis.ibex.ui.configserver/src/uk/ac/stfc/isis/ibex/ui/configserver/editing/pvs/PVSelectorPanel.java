@@ -23,8 +23,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -161,6 +161,10 @@ public class PVSelectorPanel extends Composite {
 		
 		filterFactory = new PVFilterFactory(config.getAddedIocs());
 		
+        // Get the filter values to use on loading the dialog
+        pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
+        interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
+		
 		//respond to changes in combo box
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -181,10 +185,6 @@ public class PVSelectorPanel extends Composite {
 				changeInterestFilter(interestFilter);
 			}
 		});
-		
-        // Get the filter values to use on loading the dialog
-        pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
-        interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
 		
 		//Set up the binding here
 		bindingContext = new DataBindingContext();		

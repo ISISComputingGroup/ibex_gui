@@ -25,7 +25,6 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -37,6 +36,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -57,37 +57,51 @@ public class ScriptGeneratorView {
 	
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
-	private DataBindingContext bindingContext;
 	
 	private static final Display DISPLAY = Display.getDefault();
 
 	/**
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
-	private static final Color clearColor = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-	
-	/**
-	 * The UI table of script generator contents.
-	 */
-	private ActionsViewTable table;
-	
-	/**
-	 * The drop down box to manipulate which config is being used and load ActionParameters accordingly.
-	 */
-	private ComboViewer configSelector;
+	private static final Color CLEAR_COLOUR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	/**
 	 * The ViewModel the View is updated by.
 	 */
 	private ScriptGeneratorViewModel scriptGeneratorViewModel;
+
+	/**
+	 * The main parent for UI elements
+	 */
+	private Composite mainParent;
 	
 	/**
-	 * The string to display if there is no configs to select.
+	 * The string to display if there is no script defininitions to select.
 	 */
-	private static final String NO_CONFIGS_MESSAGE = String.format("\u26A0 Warning: Could not load any configs from %s"
+	private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = String.format("\u26A0 Warning: Could not load any script definitions from %s"
 			+ System.getProperty("line.separator")
 			+ "Have they been located in the correct place or is this not your preferred location?", 
-			preferences.scriptGeneratorConfigFolders());
+			preferences.scriptGeneratorScriptDefinitionFolders());
+	
+	/**
+	 * The string to display if python is loading.
+	 */
+	private static final String LOADING_MESSAGE = "Loading...";
+	
+	/**
+	 * The string to display if python is loading.
+	 */
+	private static final String RELOADING_MESSAGE = "Reloading...";
+	
+	/**
+	 * Denotes whether script definitions have been loaded once.
+	 */
+	private boolean scriptDefinitionsLoadedOnce = false;
+	
+	/**
+	 * A property to listen for when python becomes ready or not ready.
+	 */
+	private static final String PYTHON_READINESS_PROPERTY = "python ready";
 	
 	/**
 	 * Create a button to manipulate the rows of the script generator table and
@@ -123,178 +137,248 @@ public class ScriptGeneratorView {
 		parent.setLayoutData(gdQueueContainer);
 		parent.setLayout(new GridLayout(1, false));
 		
-		if(scriptGeneratorViewModel.configsLoaded()) {
-			
-			// A composite to contain the elements at the top of the script generator
-			Composite topBarComposite = new Composite(parent, SWT.NONE);
-			topBarComposite.setLayout(new GridLayout(6, false));
-			topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			// Composite to contain help strings from configs
-	        Composite configComposite = new Composite(topBarComposite, SWT.NONE);
-	        configComposite.setLayout(new GridLayout(5, false));
-	        configComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
-	        
-	        // The label for the config selector drop down
- 			Label configSelectorLabel = new Label(configComposite, SWT.NONE);
- 			configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
- 			configSelectorLabel.setText("Config:");
- 	
- 			// Drop-down box to select between configs.
- 			configSelector = setUpConfigSelector(configComposite);
- 			
- 			// Separate help and selector
- 			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
-	        
- 			// Label for config help
-	        Label helpLabel = new Label(configComposite, SWT.NONE);
-			helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			helpLabel.setText("Config Help: ");
-			
-			// Display help for the config
-			Text helpText = new Text(configComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-			var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
-			helpTextDataLayout.widthHint = 400;
-			helpTextDataLayout.heightHint = 100;
-			helpText.setLayoutData(helpTextDataLayout);
-			helpText.setBackground(clearColor);
-			// Display the correct starting text
-			scriptGeneratorViewModel.getConfig().ifPresentOrElse(
-						config -> {
-							Optional.ofNullable(config.getHelp()).ifPresentOrElse(
-								helpString -> helpText.setText(helpString),
-								() -> helpText.setText("")
-							);
-						},
-						() -> helpText.setText("")
-					);
-			
-			// The composite to contain the button to check validity
-			Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-			validityComposite.setLayout(new GridLayout(1, false));
-			validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			
-			// Button to check validity errors
-			final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
-	        btnGetValidityErrors.setText("Get Validity Errors");
-	        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-	        btnGetValidityErrors.addListener(SWT.Selection, e -> {
-	        	scriptGeneratorViewModel.displayValidityErrors();
-	        });
-	        
-	        
-	        Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
-	        
-	        if(!configLoadErrors.isEmpty()) {
-		        setUpConfigLoadErrorTable(parent, configLoadErrors); 			    
-	        }
-	        
-	        // The composite to contain the UI table
-	        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
-	        tableContainerComposite.setLayout(new GridLayout(2, false));
-	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			
-	        // The UI table
-			table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
-			table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        
-			// Composite for move action up/down buttons
-			Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
-		    moveComposite.setLayout(new GridLayout(1, false));
-		    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-	        
-		    // Make buttons to move an action up and down the list
-	        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-	        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
-	        
-	        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-	        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
-	        
-	        // Composite for laying out new/delete/duplicate action buttons
-	        Composite actionsControlsGrp = new Composite(parent, SWT.NONE);
-	        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout ssgLayout = new GridLayout(3, false);
-	        ssgLayout.marginHeight = 10;
-	        ssgLayout.marginWidth = 10;
-	        actionsControlsGrp.setLayout(ssgLayout);
-			        
-	        // Make buttons for insert new/delete/duplicate actions
-	        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnInsertAction.setText("Add Action");
-	        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
-	        
-	        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnDeleteAction.setText("Delete Action");
-	        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
+		mainParent = parent;
+		
+		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+			boolean ready = (boolean) evt.getNewValue();
+			if (ready) {
+				scriptGeneratorViewModel.reloadScriptDefinitions();
+				displayLoaded();
+			} else {
+				displayLoading();
+			}
+		});
+		
+		scriptGeneratorViewModel.setUpModel();
+	}
 	
-	        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnDuplicateAction.setText("Duplicate Action");
-	        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
-	        
-	        // Composite for generate buttons
-	        Composite generateButtonsGrp = new Composite(parent, SWT.NONE);
-	        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout gbgLayout = new GridLayout(1, false);
-	        gbgLayout.marginHeight = 10;
-	        gbgLayout.marginWidth = 10;
-	        generateButtonsGrp.setLayout(gbgLayout);
-	        
-	        // Button to generate a script
-	        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-	        generateScriptButton.setText("Generate Script");
-	        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
-	        
-	        		
-	        // Bind the context and the validity checking listeners
-	        bind(btnGetValidityErrors, generateScriptButton, helpText);
-			
-	        scriptGeneratorViewModel.addEmptyAction();
-		} else {
-			
-			Label warningMessage = new Label(parent, SWT.NONE);
-			warningMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-			// Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
-			FontData[] fD = warningMessage.getFont().getFontData();
-			fD[0].setHeight(16);
-			warningMessage.setFont(new Font(Display.getDefault(), fD[0]));
-			warningMessage.setText(NO_CONFIGS_MESSAGE);
-			warningMessage.pack();
-			
-			Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
-	        
-	        if(!configLoadErrors.isEmpty()) {
-		        setUpConfigLoadErrorTable(parent, configLoadErrors); 			    
-	        }
-			
+	/**
+	 * Destroy all child elements of the mainParent.
+	 */
+	private void destroyUIContents() {
+		for (Control child : mainParent.getChildren()) {
+			child.dispose();
 		}
 	}
 	
 	/**
-	 * Set up a composite and table to display config load errors.
+	 * Display loading.
 	 */
-	private void setUpConfigLoadErrorTable(Composite parent, Map<String, String> configLoadErrors) {
-		if(!preferences.hideScriptGenConfigErrorTable()) {
-			// A composite to contain the config load errors
-			Composite configErrorComposite = new Composite(parent, SWT.NONE);
-			configErrorComposite.setLayout(new GridLayout(1, false));
-			configErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	private void displayLoading() {
+		DISPLAY.asyncExec(() -> {
+			destroyUIContents();
+			Label loadingMessage = new Label(mainParent, SWT.NONE);
+			loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+			// Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
+			FontData[] fD = loadingMessage.getFont().getFontData();
+			fD[0].setHeight(16);
+			loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
+			if(scriptDefinitionsLoadedOnce) {
+				loadingMessage.setText(RELOADING_MESSAGE);
+			} else {
+				loadingMessage.setText(LOADING_MESSAGE);
+			}
 			
-			// A table to display the config load errors
+			mainParent.layout();
+		});
+	}
+	
+	/**
+	 * Display when loaded.
+	 */
+	private void displayLoaded() {
+		DISPLAY.asyncExec(() -> {
+			scriptDefinitionsLoadedOnce = true;
+			destroyUIContents();
+			if (scriptGeneratorViewModel.scriptDefinitionsAvailable()) {
+				
+				// A composite to contain the elements at the top of the script generator
+				Composite topBarComposite = new Composite(mainParent, SWT.NONE);
+				topBarComposite.setLayout(new GridLayout(6, false));
+				topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				
+				// Composite to contain help strings from script definitions
+		        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
+		        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
+		        scriptDefinitionComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+		        
+		        // The label for the script definition selector drop down
+	 			Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
+	 			scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+	 			scriptDefinitionSelectorLabel.setText("Script Definition:");
+	 	
+	 			// Drop-down box to select between script definitions.
+	 			ComboViewer scriptDefinitionSelector = setUpScriptDefinitionSelector(scriptDefinitionComposite);
+	 			
+	 			// Separate help and selector
+	 			new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
+		        
+	 			// Label for script definition help
+		        Label helpLabel = new Label(scriptDefinitionComposite, SWT.NONE);
+				helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				helpLabel.setText("Help: ");
+				
+				// Display help for the script definition
+				Text helpText = new Text(scriptDefinitionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+				var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
+				helpTextDataLayout.widthHint = 400;
+				helpTextDataLayout.heightHint = 100;
+				helpText.setLayoutData(helpTextDataLayout);
+				helpText.setBackground(CLEAR_COLOUR);
+				// Display the correct starting text
+				scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
+							scriptDefinition -> {
+								Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
+									helpString -> helpText.setText(helpString),
+									() -> helpText.setText("")
+								);
+							},
+							() -> helpText.setText("")
+						);
+				
+	            // Composite for the Open Manual button
+	            Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
+	            manualButtonComposite.setLayout(new GridLayout(1, false));
+	            manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+
+	            // Button to open the user manual in a button
+	            final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
+	            manualButton.setEnabled(false);
+	            manualButton.setText("Open Manual");
+	            manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				
+				// The composite to contain the button to check validity
+				Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
+				validityComposite.setLayout(new GridLayout(1, false));
+				validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				
+				// Button to check validity errors
+				final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
+		        btnGetValidityErrors.setText("Get Validity Errors");
+		        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		        btnGetValidityErrors.addListener(SWT.Selection, e -> {
+		        	scriptGeneratorViewModel.displayValidityErrors();
+		        });
+		        
+		        
+		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
+		        
+		        if (!scriptDefinitionLoadErrors.isEmpty()) {
+			        setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors); 			    
+		        }
+		        
+		        // The composite to contain the UI table
+		        Composite tableContainerComposite = new Composite(mainParent, SWT.NONE);
+		        tableContainerComposite.setLayout(new GridLayout(2, false));
+		        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				
+		        // The UI table
+				ActionsViewTable table = 
+						new ActionsViewTable(tableContainerComposite,
+								SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION,
+								scriptGeneratorViewModel);
+				table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+				scriptGeneratorViewModel.reloadActions();
+		        
+				// Composite for move action up/down buttons
+				Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
+			    moveComposite.setLayout(new GridLayout(1, false));
+			    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		        
+			    // Make buttons to move an action up and down the list
+		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+		        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
+		        
+		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+		        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
+		        
+		        // Composite for laying out new/delete/duplicate action buttons
+		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
+		        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		        GridLayout ssgLayout = new GridLayout(3, false);
+		        ssgLayout.marginHeight = 10;
+		        ssgLayout.marginWidth = 10;
+		        actionsControlsGrp.setLayout(ssgLayout);
+				        
+		        // Make buttons for insert new/delete/duplicate actions
+		        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnInsertAction.setText("Add Action");
+		        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
+		        
+		        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnDeleteAction.setText("Delete Action");
+		        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
+		
+		        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnDuplicateAction.setText("Duplicate Action");
+		        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
+		        
+		        // Composite for generate buttons
+		        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
+		        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		        GridLayout gbgLayout = new GridLayout(1, false);
+		        gbgLayout.marginHeight = 10;
+		        gbgLayout.marginWidth = 10;
+		        generateButtonsGrp.setLayout(gbgLayout);
+		        
+		        // Button to generate a script
+		        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+		        generateScriptButton.setText("Generate Script");
+		        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
+		        
+		        		
+		        // Bind the context and the validity checking listeners
+		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, manualButton);
+				
+			} else {
+				
+				Label warningMessage = new Label(mainParent, SWT.NONE);
+				warningMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+				// Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
+				FontData[] fD = warningMessage.getFont().getFontData();
+				fD[0].setHeight(16);
+				warningMessage.setFont(new Font(Display.getDefault(), fD[0]));
+				warningMessage.setText(NO_SCRIPT_DEFINITIONS_MESSAGE);
+				warningMessage.pack();
+				
+				Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
+		        
+		        if (!scriptDefinitionLoadErrors.isEmpty()) {
+			        setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors); 			    
+		        }
+				
+			}
+			mainParent.layout();
+		});
+	}
+	
+	
+	/**
+	 * Set up a composite and table to display script definition load errors.
+	 */
+	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
+		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
+			// A composite to contain the script definition load errors
+			Composite scriptDefinitionErrorComposite = new Composite(parent, SWT.NONE);
+			scriptDefinitionErrorComposite.setLayout(new GridLayout(1, false));
+			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			// A table to display the script definition load errors
 			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
-			Table table = new Table(configErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+			Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		    table.setHeaderVisible(true);
-		    String[] titles = { "Config", "Error" };
+		    String[] titles = {"Script Definition", "Error"};
 		    
 		    for (int i = 0; i < titles.length; i++) {
 		    	TableColumn column = new TableColumn(table, SWT.NULL);
 		    	column.setText(titles[i]);
 		    }
 		    
-		    for(Map.Entry<String, String> loadError : configLoadErrors.entrySet()) {
+		    for (Map.Entry<String, String> loadError : scriptDefinitionLoadErrors.entrySet()) {
 		    	TableItem item = new TableItem(table, SWT.NULL);
 		    	item.setText(0, loadError.getKey());
 		    	item.setText(1, loadError.getValue());
@@ -307,33 +391,32 @@ public class ScriptGeneratorView {
 	}
 	
 	/**
-	 * Creates a new combo box and configures sets its input to the config loader.
+	 * Creates a new combo box and configures sets its input to the script definition loader.
 	 * @param globalSettingsComposite
 	 * 			The composite to draw the box in
-	 * @return configSelector
-	 * 			Combo box with available configurations
+	 * @return Combo box with available script definitions
 	 */
-	private ComboViewer setUpConfigSelector(Composite globalSettingsComposite) {
-		configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+	private ComboViewer setUpScriptDefinitionSelector(Composite globalSettingsComposite) {
+		ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
 
-		configSelector.setContentProvider(ArrayContentProvider.getInstance());
-		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
-		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigs());
-		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get()));
+		scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
+		scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
+		scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
+		scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
 		
-		return configSelector;
+		return scriptDefinitionSelector;
 	}
 	
 	/**
-	 * Binds the Script Generator Table, config selector and validity check models to their views.
+	 * Binds the Script Generator Table, script definition selector and validity check models to their views.
 	 */
-	private void bind(Button btnGetValidityErrors, Button btnGenerateScript, Text helpText) {
-		bindingContext = new DataBindingContext();
-		
-		scriptGeneratorViewModel.bindConfigLoader(bindingContext, configSelector, helpText);
+	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
+		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
+		
+		scriptGeneratorViewModel.bindManualButton(manualButton);
 	}
 	
 
