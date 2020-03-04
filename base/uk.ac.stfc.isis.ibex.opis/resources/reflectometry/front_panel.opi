@@ -1563,7 +1563,7 @@
               <pv trig="true">$(PV_ROOT)PARAM_INFO</pv>
               <pv trig="true">$(PV_ROOT)DRIVER_INFO</pv>
               <pv trig="true">$(PV_ROOT)ALIGN_INFO</pv>
-              <pv trig="true">$(PV_ROOT)VALUE_INFO</pv>
+              <pv trig="true">$(PV_ROOT)CONST_INFO</pv>
             </path>
           </scripts>
           <show_scrollbar>true</show_scrollbar>
