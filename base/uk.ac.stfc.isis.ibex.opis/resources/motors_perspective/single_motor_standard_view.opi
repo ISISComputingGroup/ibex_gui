@@ -39,7 +39,7 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="true">
+    <actions hook="true" hook_all="false">
       <action type="WRITE_PV">
         <pv_name>loc://motor_details_macro</pv_name>
         <value>MOT:MTR$(MTR)</value>

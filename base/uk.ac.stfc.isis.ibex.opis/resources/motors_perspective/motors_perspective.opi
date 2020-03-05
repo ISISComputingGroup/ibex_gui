@@ -115,7 +115,7 @@ DEFAULT_MOTOR = "MOT:MTR0101"
 
 # Get the macro for the widget that has just been clicked.
 new_macro = PVUtil.getString(pvArray[0])
-ConsoleUtil.writeInfo("Linking container script triggered:" + new_macro)
+#ConsoleUtil.writeInfo("Linking container script triggered:" + new_macro)
 
 # Input the macro (overwrite) into the widget.
 macroInput = DataUtil.createMacrosInput(True)

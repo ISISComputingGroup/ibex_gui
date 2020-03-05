@@ -51,7 +51,7 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>70</height>
+    <height>71</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MTR>0101</MTR>
@@ -69,7 +69,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>70</width>
+    <width>71</width>
     <wuid>19b4166d:1702efd9e91:-7fd9</wuid>
     <x>78</x>
     <y>36</y>
