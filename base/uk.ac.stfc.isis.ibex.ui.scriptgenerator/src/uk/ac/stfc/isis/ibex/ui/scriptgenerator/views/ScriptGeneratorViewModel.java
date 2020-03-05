@@ -30,11 +30,11 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
@@ -125,9 +125,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
 	
 	/**
-	 * A property that is changed when configs are switched.
+	 * A property that is changed when script definitions are switched.
 	 */
-	private static final String CONFIG_SWITCH_PROPERTY = "config";
+	private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "script definition";
 	
 	/**
 	 * A property to notify listeners when python becomes ready or not ready.
@@ -173,7 +173,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Set up the model. Allows us to attach listeners for the view first.
 	 */
 	public void setUpModel() {
-		scriptGeneratorModel.createConfigLoader();
+		scriptGeneratorModel.createScriptDefinitionLoader();
 		scriptGeneratorModel.setUp();
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
@@ -211,12 +211,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Check if there are any configs loaded.
+	 * Check if there are any script definitions loaded.
 	 * 
-	 * @return true if there is at least one config loaded, false if not.
+	 * @return true if there is at least one script definition loaded, false if not.
 	 */
-	public boolean configsAvailable() {
-		return this.scriptGeneratorModel.getConfigLoader().configsAvailable();
+	public boolean scriptDefinitionsAvailable() {
+		return this.scriptGeneratorModel.getScriptDefinitionLoader().scriptDefinitionAvailable();
 	}
 	
 	
@@ -305,42 +305,42 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	/**
-	 * Get a list of available configs.
+	 * Get a list of available script definitions.
 	 * 
-	 * @return A list of available configs.
+	 * @return A list of available script definitions.
 	 */
-	protected List<String> getAvailableConfigsNames() {
-		return scriptGeneratorModel.getAvailableConfigs()
+	protected List<String> getAvailableScriptDefinitionsNames() {
+		return scriptGeneratorModel.getAvailableScriptDefinitions()
 				.stream()
-				.map(config -> config.getName())
+				.map(scriptDefinition -> scriptDefinition.getName())
 				.collect(Collectors.toList());
 	}
 	
 	/**
-	 * Gets all actions that could not be loaded and the reason.
+	 * Gets all script definitions that could not be loaded and the reason.
 	 * 
-	 * @return A map of config load errors with keys as the name of the config
+	 * @return A map of script definition load errors with keys as the name of the scriptDefinition
 	 *  and the value as the reason it could not be loaded
 	 */
-	protected Map<String, String> getConfigLoadErrors() {
-		return scriptGeneratorModel.getConfigLoadErrors();
+	protected Map<String, String> getScriptDefinitionLoadErrors() {
+		return scriptGeneratorModel.getScriptDefinitionLoadErrors();
 	}
 	
 	/**
-	 * Create and get the label provider for the config selector.
+	 * Create and get the label provider for the scriptDefinition selector.
 	 * 
 	 * @return The label provider.
 	 */
-	protected LabelProvider getConfigSelectorLabelProvider() {
+	protected LabelProvider getScriptDefinitionSelectorLabelProvider() {
 		return new LabelProvider() {
 		    /**
-		     * Use getName method on python Config class to get labels.
+		     * Use getName method on python ScriptGeneratorWrapper class to get labels.
 		     */
 			@Override
 		    public String getText(Object element) {
-		        if (element instanceof Config) {
-		        	Config actionWrapper = (Config) element;
-		            return actionWrapper.getName();
+		        if (element instanceof ScriptDefinitionWrapper) {
+		        	ScriptDefinitionWrapper scriptDefinitionWrapper = (ScriptDefinitionWrapper) element;
+		            return scriptDefinitionWrapper.getName();
 		        }
 		        return super.getText(element);
 		    }
@@ -420,16 +420,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 	}
 	
-	private PropertyChangeListener configSwitchHelpListener = new PropertyChangeListener() {
+	private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			// Display the new config help string
+			// Display the new script definition help string
 			if (!helpText.isDisposed()) {
-				Optional<Config> optionalConfig = getConfig();
-				optionalConfig.ifPresentOrElse(
-						realConfig -> {
-							displayHelpString(realConfig, helpText);
+				Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
+				optionalScriptDefinition.ifPresentOrElse(
+						realScriptDefinition -> {
+							displayHelpString(realScriptDefinition, helpText);
 						},
 						() -> {
 							helpText.setText("");
@@ -443,46 +443,46 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private Text helpText;
 	
-	private ISelectionChangedListener configSwitchListener = new ISelectionChangedListener() {
+	private ISelectionChangedListener scriptDefinitionSwitchListener = new ISelectionChangedListener() {
 		
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
-			String selectedConfigName;
+			String selectedScriptDefinitionName;
 			if (!event.getSelection().isEmpty()) {
-				selectedConfigName = (String) event.getStructuredSelection().getFirstElement();
-				scriptGeneratorModel.getConfigLoader().getLastSelectedConfigName()
-					.ifPresentOrElse(lastSelectedConfigName -> {
-						if (!selectedConfigName.equals(lastSelectedConfigName)) {
-							scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName);
+				selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
+				scriptGeneratorModel.getScriptDefinitionLoader().getLastSelectedScriptDefinitionName()
+					.ifPresentOrElse(lastSelectedScriptDefinitionName -> {
+						if (!selectedScriptDefinitionName.equals(lastSelectedScriptDefinitionName)) {
+							scriptGeneratorModel.getScriptDefinitionLoader().setScriptDefinition(selectedScriptDefinitionName);
 						}
-					}, () -> scriptGeneratorModel.getConfigLoader().setConfig(selectedConfigName));
+					}, () -> scriptGeneratorModel.getScriptDefinitionLoader().setScriptDefinition(selectedScriptDefinitionName));
 			}
 		}
 	};
 
 	/**
-	 * Bind the config loader to the context.
+	 * Bind the script definition loader to the context.
 	 * 
-	 * @param configSelector The config selector ui element to bind.
+	 * @param scriptDefinitionSelector The script definition selector ui element to bind.
 	 * @param helpText The UI element to display help string text in.
 	 */
-	protected void bindConfigLoader(ComboViewer configSelector, Text helpText) {
-		// Switch the composite value when config switched
-		configSelector.removeSelectionChangedListener(configSwitchListener);
-		configSelector.addSelectionChangedListener(configSwitchListener);
-		// Display new help when config switch or make invisible if not help available
+	protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText) {
+		// Switch the composite value when script definition switched
+		scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
+		scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
+		// Display new help when script definition switch or make invisible if not help available
 		this.helpText = helpText;
-		scriptGeneratorModel.getConfigLoader().addPropertyChangeListener(CONFIG_SWITCH_PROPERTY, configSwitchHelpListener);
+		scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
 	}
 	
 	/**
 	 * Display help string to the user if present, else clear the help string UI display.
 	 * 
-	 * @param config The config to get the help string from
+	 * @param scriptDefinition The script definition to get the help string from
 	 * @param helpText The text UI element to display the help string in.
 	 */
-	private void displayHelpString(Config config, Text helpText) {
-		Optional.ofNullable(config.getHelp()).ifPresentOrElse(
+	private void displayHelpString(ScriptDefinitionWrapper scriptDefinition, Text helpText) {
+		Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
 				helpString -> {
 					helpText.setText(helpString);
 				},
@@ -516,6 +516,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void setupLinkButton(Button linkButton, Optional<URL> target) {
         target.ifPresent(url -> {
             linkButton.setEnabled(true);
+            linkButton.setToolTipText(url.toString());
             linkButton.addListener(SWT.Selection, e -> {
                 try {
                     IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
@@ -528,7 +529,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
 	/**
-	 * Get the first i lines of invalidity errors for the current configuration and parameters.
+	 * Get the first i lines of invalidity errors for the current script definition and parameters.
 	 * 
 	 * @param i The number of lines to receive.
 	 * @return Invalidity errors.
@@ -698,27 +699,27 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
-		} catch (NoConfigSelectedException e) {
+		} catch (NoScriptDefinitionSelectedException e) {
 			LOG.error(e);
-			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No config selection", 
-					"Cannot generate script. No config has been selected");
+			MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+					"Cannot generate script. No script definition has been selected");
 		}
     }
 
     /**
-     * Get the current selected config.
+     * Get the current selected script definition.
      * 
-     * @return The selected config.
+     * @return The selected script definition.
      */
-	public Optional<Config> getConfig() {
-		return scriptGeneratorModel.getConfig();
+	public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
+		return scriptGeneratorModel.getScriptDefinition();
 	}
 
 	/**
-	 * Reload the available configs.
+	 * Reload the available script definition.
 	 */
-	public void reloadConfigs() {
-		scriptGeneratorModel.reloadConfigs();
+	public void reloadScriptDefinitions() {
+		scriptGeneratorModel.reloadScriptDefinitions();
 	}
 
 	/**

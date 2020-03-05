@@ -76,12 +76,12 @@ public class ScriptGeneratorView {
 	private Composite mainParent;
 	
 	/**
-	 * The string to display if there is no configs to select.
+	 * The string to display if there is no script defininitions to select.
 	 */
-	private static final String NO_CONFIGS_MESSAGE = String.format("\u26A0 Warning: Could not load any configs from %s"
+	private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = String.format("\u26A0 Warning: Could not load any script definitions from %s"
 			+ System.getProperty("line.separator")
 			+ "Have they been located in the correct place or is this not your preferred location?", 
-			preferences.scriptGeneratorConfigFolders());
+			preferences.scriptGeneratorScriptDefinitionFolders());
 	
 	/**
 	 * The string to display if python is loading.
@@ -94,9 +94,9 @@ public class ScriptGeneratorView {
 	private static final String RELOADING_MESSAGE = "Reloading...";
 	
 	/**
-	 * Denotes whether configs have been loaded once.
+	 * Denotes whether script definitions have been loaded once.
 	 */
-	private boolean configsLoadedOnce = false;
+	private boolean scriptDefinitionsLoadedOnce = false;
 	
 	/**
 	 * A property to listen for when python becomes ready or not ready.
@@ -142,7 +142,7 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
 			if (ready) {
-				scriptGeneratorViewModel.reloadConfigs();
+				scriptGeneratorViewModel.reloadScriptDefinitions();
 				displayLoaded();
 			} else {
 				displayLoading();
@@ -173,7 +173,7 @@ public class ScriptGeneratorView {
 			FontData[] fD = loadingMessage.getFont().getFontData();
 			fD[0].setHeight(16);
 			loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-			if(configsLoadedOnce) {
+			if(scriptDefinitionsLoadedOnce) {
 				loadingMessage.setText(RELOADING_MESSAGE);
 			} else {
 				loadingMessage.setText(LOADING_MESSAGE);
@@ -188,47 +188,47 @@ public class ScriptGeneratorView {
 	 */
 	private void displayLoaded() {
 		DISPLAY.asyncExec(() -> {
-			configsLoadedOnce = true;
+			scriptDefinitionsLoadedOnce = true;
 			destroyUIContents();
-			if (scriptGeneratorViewModel.configsAvailable()) {
+			if (scriptGeneratorViewModel.scriptDefinitionsAvailable()) {
 				
 				// A composite to contain the elements at the top of the script generator
 				Composite topBarComposite = new Composite(mainParent, SWT.NONE);
 				topBarComposite.setLayout(new GridLayout(6, false));
 				topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				
-				// Composite to contain help strings from configs
-		        Composite configComposite = new Composite(topBarComposite, SWT.NONE);
-		        configComposite.setLayout(new GridLayout(5, false));
-		        configComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+				// Composite to contain help strings from script definitions
+		        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
+		        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
+		        scriptDefinitionComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 		        
-		        // The label for the config selector drop down
-	 			Label configSelectorLabel = new Label(configComposite, SWT.NONE);
-	 			configSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-	 			configSelectorLabel.setText("Config:");
+		        // The label for the script definition selector drop down
+	 			Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
+	 			scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+	 			scriptDefinitionSelectorLabel.setText("Script Definition:");
 	 	
-	 			// Drop-down box to select between configs.
-	 			ComboViewer configSelector = setUpConfigSelector(configComposite);
+	 			// Drop-down box to select between script definitions.
+	 			ComboViewer scriptDefinitionSelector = setUpScriptDefinitionSelector(scriptDefinitionComposite);
 	 			
 	 			// Separate help and selector
-	 			new Label(configComposite, SWT.SEPARATOR | SWT.VERTICAL);
+	 			new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
 		        
-	 			// Label for config help
-		        Label helpLabel = new Label(configComposite, SWT.NONE);
+	 			// Label for script definition help
+		        Label helpLabel = new Label(scriptDefinitionComposite, SWT.NONE);
 				helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				helpLabel.setText("Config Help: ");
+				helpLabel.setText("Help: ");
 				
-				// Display help for the config
-				Text helpText = new Text(configComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+				// Display help for the script definition
+				Text helpText = new Text(scriptDefinitionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 				var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
 				helpTextDataLayout.widthHint = 400;
 				helpTextDataLayout.heightHint = 100;
 				helpText.setLayoutData(helpTextDataLayout);
 				helpText.setBackground(CLEAR_COLOUR);
 				// Display the correct starting text
-				scriptGeneratorViewModel.getConfig().ifPresentOrElse(
-							config -> {
-								Optional.ofNullable(config.getHelp()).ifPresentOrElse(
+				scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
+							scriptDefinition -> {
+								Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
 									helpString -> helpText.setText(helpString),
 									() -> helpText.setText("")
 								);
@@ -261,10 +261,10 @@ public class ScriptGeneratorView {
 		        });
 		        
 		        
-		        Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
+		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        
-		        if (!configLoadErrors.isEmpty()) {
-			        setUpConfigLoadErrorTable(mainParent, configLoadErrors); 			    
+		        if (!scriptDefinitionLoadErrors.isEmpty()) {
+			        setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors); 			    
 		        }
 		        
 		        // The composite to contain the UI table
@@ -332,7 +332,7 @@ public class ScriptGeneratorView {
 		        
 		        		
 		        // Bind the context and the validity checking listeners
-		        bind(configSelector, table, btnGetValidityErrors, generateScriptButton, helpText, manualButton);
+		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, manualButton);
 				
 			} else {
 				
@@ -342,13 +342,13 @@ public class ScriptGeneratorView {
 				FontData[] fD = warningMessage.getFont().getFontData();
 				fD[0].setHeight(16);
 				warningMessage.setFont(new Font(Display.getDefault(), fD[0]));
-				warningMessage.setText(NO_CONFIGS_MESSAGE);
+				warningMessage.setText(NO_SCRIPT_DEFINITIONS_MESSAGE);
 				warningMessage.pack();
 				
-				Map<String, String> configLoadErrors = scriptGeneratorViewModel.getConfigLoadErrors();
+				Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        
-		        if (!configLoadErrors.isEmpty()) {
-			        setUpConfigLoadErrorTable(mainParent, configLoadErrors); 			    
+		        if (!scriptDefinitionLoadErrors.isEmpty()) {
+			        setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors); 			    
 		        }
 				
 			}
@@ -358,27 +358,27 @@ public class ScriptGeneratorView {
 	
 	
 	/**
-	 * Set up a composite and table to display config load errors.
+	 * Set up a composite and table to display script definition load errors.
 	 */
-	private void setUpConfigLoadErrorTable(Composite parent, Map<String, String> configLoadErrors) {
-		if (!preferences.hideScriptGenConfigErrorTable()) {
-			// A composite to contain the config load errors
-			Composite configErrorComposite = new Composite(parent, SWT.NONE);
-			configErrorComposite.setLayout(new GridLayout(1, false));
-			configErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
+		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
+			// A composite to contain the script definition load errors
+			Composite scriptDefinitionErrorComposite = new Composite(parent, SWT.NONE);
+			scriptDefinitionErrorComposite.setLayout(new GridLayout(1, false));
+			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			
-			// A table to display the config load errors
+			// A table to display the script definition load errors
 			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
-			Table table = new Table(configErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+			Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		    table.setHeaderVisible(true);
-		    String[] titles = {"Config", "Error"};
+		    String[] titles = {"Script Definition", "Error"};
 		    
 		    for (int i = 0; i < titles.length; i++) {
 		    	TableColumn column = new TableColumn(table, SWT.NULL);
 		    	column.setText(titles[i]);
 		    }
 		    
-		    for (Map.Entry<String, String> loadError : configLoadErrors.entrySet()) {
+		    for (Map.Entry<String, String> loadError : scriptDefinitionLoadErrors.entrySet()) {
 		    	TableItem item = new TableItem(table, SWT.NULL);
 		    	item.setText(0, loadError.getKey());
 		    	item.setText(1, loadError.getValue());
@@ -391,29 +391,28 @@ public class ScriptGeneratorView {
 	}
 	
 	/**
-	 * Creates a new combo box and configures sets its input to the config loader.
+	 * Creates a new combo box and configures sets its input to the script definition loader.
 	 * @param globalSettingsComposite
 	 * 			The composite to draw the box in
-	 * @return configSelector
-	 * 			Combo box with available configurations
+	 * @return Combo box with available script definitions
 	 */
-	private ComboViewer setUpConfigSelector(Composite globalSettingsComposite) {
-		ComboViewer configSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+	private ComboViewer setUpScriptDefinitionSelector(Composite globalSettingsComposite) {
+		ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
 
-		configSelector.setContentProvider(ArrayContentProvider.getInstance());
-		configSelector.setLabelProvider(scriptGeneratorViewModel.getConfigSelectorLabelProvider());
-		configSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		configSelector.setInput(scriptGeneratorViewModel.getAvailableConfigsNames());
-		configSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getConfig().get().getName()));
+		scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
+		scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
+		scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
+		scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
 		
-		return configSelector;
+		return scriptDefinitionSelector;
 	}
 	
 	/**
-	 * Binds the Script Generator Table, config selector and validity check models to their views.
+	 * Binds the Script Generator Table, script definition selector and validity check models to their views.
 	 */
-	private void bind(ComboViewer configSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
-		scriptGeneratorViewModel.bindConfigLoader(configSelector, helpText);
+	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
+		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
 		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
 		

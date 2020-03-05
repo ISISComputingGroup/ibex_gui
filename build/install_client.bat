@@ -14,9 +14,10 @@ REM Copy the Client files across
 set APPSDIR=C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client_E4
 mkdir %CLIENTDIR%
-xcopy /q /s /e /h %BASEDIR%Client %CLIENTDIR%
-if %errorlevel% neq 0 (
-    @echo ERROR copying IBEX CLIENT
+robocopy "%BASEDIR%Client" "%CLIENTDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
+set errcode=%errorlevel%
+if %errcode% GEQ 4 (
+    @echo ERROR %errcode% in robocopy copying ibex client
 	goto FINISH
 )
 
@@ -24,8 +25,9 @@ REM Copy EPICS_UTILS across
 @echo %TIME% epics utils install started
 set UTILSDIR=%APPSDIR%\EPICS_UTILS
 mkdir %UTILSDIR%
-xcopy /q /s /e /h \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS %UTILSDIR%
-if %errorlevel% neq 0 (
+robocopy "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS" "%UTILSDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
+set errcode=%errorlevel%
+if %errcode% GEQ 4 (
     @echo ERROR copying EPICS UTILS
 	goto FINISH
 )

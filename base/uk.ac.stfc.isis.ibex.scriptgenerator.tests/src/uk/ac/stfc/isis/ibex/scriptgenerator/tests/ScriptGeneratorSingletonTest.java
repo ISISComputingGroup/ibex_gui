@@ -18,10 +18,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.NoConfigSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ConfigLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
@@ -31,19 +31,19 @@ public class ScriptGeneratorSingletonTest {
 	HashMap<Integer, String> validityErrors;
 	ActionsTable mockActionsTable;
 	PythonInterface mockPythonInterface;
-	ConfigLoader mockConfigLoader;
+	ScriptDefinitionLoader mockConfigLoader;
 	
 	ScriptGeneratorSingleton mockModel;
 	String scriptLines;
 	String timestamp;
-	Config mockConfig;
+	ScriptDefinitionWrapper mockConfig;
 	String configName;
 	String filepathPrefix;
 	
 	@Before
 	public void setUp() {
 		mockPythonInterface = mock(PythonInterface.class);
-		mockConfigLoader = mock(ConfigLoader.class);
+		mockConfigLoader = mock(ScriptDefinitionLoader.class);
 		mockActionsTable = mock(ActionsTable.class);
 		model = new ScriptGeneratorSingleton(mockPythonInterface, mockConfigLoader, mockActionsTable);
 		
@@ -51,7 +51,7 @@ public class ScriptGeneratorSingletonTest {
 		mockModel = mock(ScriptGeneratorSingleton.class);
 		scriptLines = "test\ntest2";
 		timestamp = "timestamp";
-		mockConfig = mock(Config.class);
+		mockConfig = mock(ScriptDefinitionWrapper.class);
 		configName = "config";
 		
 		filepathPrefix = (System.getProperty("user.dir") + "\\test_script_gen_handler_scripts\\");
@@ -61,7 +61,7 @@ public class ScriptGeneratorSingletonTest {
 		
 		// Mock out some methods to test real calls to others
 		when(mockModel.getTimestamp()).thenReturn(timestamp);
-		when(mockModel.getConfig()).thenReturn(Optional.of(mockConfig));
+		when(mockModel.getScriptDefinition()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
 		try {
 			when(mockModel.generateScriptFileName(filepathPrefix)).thenCallRealMethod();
@@ -163,7 +163,7 @@ public class ScriptGeneratorSingletonTest {
 					newFilepath, equalTo(expectedNewFilepath));
 			assertThat("Should generate filepath with the config name, a timestamp and 1 as a version",
 					newNewFilepath, equalTo(expectedNewNewFilepath));
-		} catch(NoConfigSelectedException e) {
+		} catch(NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
