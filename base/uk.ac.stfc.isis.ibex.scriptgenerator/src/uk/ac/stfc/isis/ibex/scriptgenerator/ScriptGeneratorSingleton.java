@@ -311,8 +311,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
      * 
      * @return The script definition loader
      */
-    public ConfigLoader getConfigLoader() {
-        return configLoader;
+    public ScriptDefinitionLoader getScriptDefinitionLoader() {
+        return scriptDefinitionLoader;
     }
     
     /**
@@ -572,9 +572,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The filename to prepend a path to write the script to.
 	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	public String generateScriptFileName(String filepathPrefix) throws NoConfigSelectedException {
-		String configName = getConfig()
-			.orElseThrow(() -> new NoConfigSelectedException("Tried to generate a script with no config selected to generate it with"))
+	public String generateScriptFileName(String filepathPrefix) throws NoScriptDefinitionSelectedException {
+		String configName = getScriptDefinition()
+			.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
 		String timestamp = getTimestamp();
 		int version = 0;

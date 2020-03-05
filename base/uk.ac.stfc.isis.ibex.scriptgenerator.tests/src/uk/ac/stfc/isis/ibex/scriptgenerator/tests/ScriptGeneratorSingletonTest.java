@@ -65,7 +65,7 @@ public class ScriptGeneratorSingletonTest {
 		when(mockConfig.getName()).thenReturn(configName);
 		try {
 			when(mockModel.generateScriptFileName(filepathPrefix)).thenCallRealMethod();
-		} catch (NoConfigSelectedException e) {
+		} catch (NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
 	}
