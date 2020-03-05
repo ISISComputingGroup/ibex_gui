@@ -237,7 +237,7 @@
         
         <!-- 
 			Tests disabled as they use JAXB which doesn't work correctly under surefire. 
-			See https://github.com/ISISComputingGroup/IBEX/issues/4759
+			See https://github.com/ISISComputingGroup/IBEX/issues/5239
 		
 			<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 			<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
