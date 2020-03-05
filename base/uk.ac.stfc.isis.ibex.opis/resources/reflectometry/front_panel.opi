@@ -316,7 +316,7 @@
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </tab_4_foreground_color>
       <tab_4_icon_path></tab_4_icon_path>
-      <tab_4_title>Instrument Values</tab_4_title>
+      <tab_4_title>Beamline Constants</tab_4_title>
       <tab_count>5</tab_count>
       <tooltip></tooltip>
       <visible>true</visible>
@@ -4917,7 +4917,7 @@
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Instrument Values</name>
+        <name>Beamline Constants</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -5004,7 +5004,7 @@
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Value name:</text>
+          <text>Name:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
