@@ -68,6 +68,7 @@
         <scriptName>switch_table_mode</scriptName>
         <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
 
+# Standard and advanced widths will change depending on OPI alterations.
 WIDGET_OFFSET = 28
 STD_TABLE_WIDTH = 583
 ADV_TABLE_WIDTH = 823
