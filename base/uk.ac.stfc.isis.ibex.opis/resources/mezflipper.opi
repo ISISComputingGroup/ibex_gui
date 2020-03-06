@@ -133,7 +133,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>241</height>
+    <height>157</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -329,7 +329,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>10544351:170a0dd0e54:-7fac</wuid>
       <x>6</x>
-      <y>48</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -381,7 +381,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>10544351:170a0dd0e54:-7fab</wuid>
       <x>102</x>
-      <y>48</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -422,7 +422,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>2f70796b:15b334751c5:-74f4</wuid>
       <x>6</x>
-      <y>72</y>
+      <y>66</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -474,7 +474,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>-6392638:16079499dc3:-7bb9</wuid>
       <x>102</x>
-      <y>72</y>
+      <y>66</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -531,7 +531,7 @@ $(pv_value)</tooltip>
       <width>139</width>
       <wuid>-6392638:16079499dc3:-7b8e</wuid>
       <x>276</x>
-      <y>72</y>
+      <y>66</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -572,7 +572,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>-322ba335:170a5a5e4a8:-7fdf</wuid>
       <x>6</x>
-      <y>102</y>
+      <y>96</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -624,7 +624,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>-322ba335:170a5a5e4a8:-7fd5</wuid>
       <x>102</x>
-      <y>102</y>
+      <y>96</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
