@@ -2299,5 +2299,23 @@
         <macros />
       </value>
     </entry>
+    <entry>
+      <key>Anton Paar DMA4500M</key>
+      <value>
+        <type>DENSITY_METER</type>
+        <path>dma4500m.opi</path>
+        <description>OPI for the Anton Paar DMA4500M density meter</description>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>DMA4500M</name>
+            <description>The DMA4500M PV prefix (e.g. DMA4500M_01)</description>
+            <default>DMA4500M_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
