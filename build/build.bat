@@ -7,6 +7,10 @@ if %errcode% GEQ 4 (
 	exit /b %errcode%
 )
 
+call copy_in_maven.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
+set "PATH=%PATH%;%~dp0maven\bin"
+
 SET "JAVA_HOME=%~dp0\jdk"
 
 if "%PYTHON3%" == "" (
