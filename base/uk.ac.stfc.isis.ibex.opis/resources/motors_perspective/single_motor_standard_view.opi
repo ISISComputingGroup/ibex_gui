@@ -44,7 +44,7 @@
         <pv_name>loc://motor_details_macro</pv_name>
         <value>MOT:MTR$(MTR)</value>
         <timeout>10</timeout>
-        <confirm_message>MOT:MTR$(MTR)</confirm_message>
+        <confirm_message></confirm_message>
         <description></description>
       </action>
     </actions>
