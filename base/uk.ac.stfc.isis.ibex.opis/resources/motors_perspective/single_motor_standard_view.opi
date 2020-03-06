@@ -545,7 +545,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip></tooltip>
+      <tooltip>Movement in the negative direction.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image</widget_type>
@@ -610,7 +610,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <stretch_to_fit>false</stretch_to_fit>
-      <tooltip></tooltip>
+      <tooltip>Movement in the positive direction.</tooltip>
       <transparency>true</transparency>
       <visible>true</visible>
       <widget_type>Image</widget_type>

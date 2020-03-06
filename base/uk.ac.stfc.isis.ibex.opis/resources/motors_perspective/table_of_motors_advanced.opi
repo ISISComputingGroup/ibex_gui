@@ -57,7 +57,7 @@
       <MTR>0101</MTR>
     </macros>
     <name>Linking Container</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -69,7 +69,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>19b4166d:1702efd9e91:-7fd9</wuid>
     <x>78</x>
     <y>36</y>
@@ -98,7 +98,7 @@
       <MTR>0102</MTR>
     </macros>
     <name>Linking Container_1</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -110,7 +110,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fe0</wuid>
     <x>159</x>
     <y>36</y>
@@ -139,7 +139,7 @@
       <MTR>0103</MTR>
     </macros>
     <name>Linking Container_2</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -151,7 +151,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fd7</wuid>
     <x>240</x>
     <y>36</y>
@@ -180,7 +180,7 @@
       <MTR>0104</MTR>
     </macros>
     <name>Linking Container_3</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -192,7 +192,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fc8</wuid>
     <x>321</x>
     <y>36</y>
@@ -221,7 +221,7 @@
       <MTR>0105</MTR>
     </macros>
     <name>Linking Container_4</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -233,7 +233,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fbd</wuid>
     <x>402</x>
     <y>36</y>
@@ -262,7 +262,7 @@
       <MTR>0106</MTR>
     </macros>
     <name>Linking Container_5</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -274,7 +274,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fb2</wuid>
     <x>483</x>
     <y>36</y>
@@ -303,7 +303,7 @@
       <MTR>0107</MTR>
     </macros>
     <name>Linking Container_6</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -315,7 +315,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7fa7</wuid>
     <x>564</x>
     <y>36</y>
@@ -344,7 +344,7 @@
       <MTR>0108</MTR>
     </macros>
     <name>Linking Container_7</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -356,7 +356,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f9c</wuid>
     <x>645</x>
     <y>36</y>
@@ -385,7 +385,7 @@
       <MTR>0201</MTR>
     </macros>
     <name>Linking Container_8</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -397,7 +397,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f61</wuid>
     <x>78</x>
     <y>120</y>
@@ -426,7 +426,7 @@
       <MTR>0202</MTR>
     </macros>
     <name>Linking Container_9</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -438,7 +438,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f5c</wuid>
     <x>159</x>
     <y>120</y>
@@ -467,7 +467,7 @@
       <MTR>0203</MTR>
     </macros>
     <name>Linking Container_10</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -479,7 +479,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f57</wuid>
     <x>240</x>
     <y>120</y>
@@ -508,7 +508,7 @@
       <MTR>0204</MTR>
     </macros>
     <name>Linking Container_11</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -520,7 +520,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f52</wuid>
     <x>321</x>
     <y>120</y>
@@ -549,7 +549,7 @@
       <MTR>0205</MTR>
     </macros>
     <name>Linking Container_12</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -561,7 +561,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f4d</wuid>
     <x>402</x>
     <y>120</y>
@@ -590,7 +590,7 @@
       <MTR>0206</MTR>
     </macros>
     <name>Linking Container_13</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -602,7 +602,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f48</wuid>
     <x>483</x>
     <y>120</y>
@@ -631,7 +631,7 @@
       <MTR>0207</MTR>
     </macros>
     <name>Linking Container_14</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -643,7 +643,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f43</wuid>
     <x>564</x>
     <y>120</y>
@@ -672,7 +672,7 @@
       <MTR>0208</MTR>
     </macros>
     <name>Linking Container_15</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -684,7 +684,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f3e</wuid>
     <x>645</x>
     <y>120</y>
@@ -713,7 +713,7 @@
       <MTR>0301</MTR>
     </macros>
     <name>Linking Container_16</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -725,7 +725,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f27</wuid>
     <x>78</x>
     <y>204</y>
@@ -754,7 +754,7 @@
       <MTR>0302</MTR>
     </macros>
     <name>Linking Container_17</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -766,7 +766,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f22</wuid>
     <x>159</x>
     <y>204</y>
@@ -795,7 +795,7 @@
       <MTR>0303</MTR>
     </macros>
     <name>Linking Container_18</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -807,7 +807,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f1d</wuid>
     <x>240</x>
     <y>204</y>
@@ -836,7 +836,7 @@
       <MTR>0304</MTR>
     </macros>
     <name>Linking Container_19</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -848,7 +848,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f18</wuid>
     <x>321</x>
     <y>204</y>
@@ -877,7 +877,7 @@
       <MTR>0305</MTR>
     </macros>
     <name>Linking Container_20</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -889,7 +889,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f13</wuid>
     <x>402</x>
     <y>204</y>
@@ -918,7 +918,7 @@
       <MTR>0306</MTR>
     </macros>
     <name>Linking Container_21</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -930,7 +930,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f0e</wuid>
     <x>483</x>
     <y>204</y>
@@ -959,7 +959,7 @@
       <MTR>0307</MTR>
     </macros>
     <name>Linking Container_22</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -971,7 +971,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f09</wuid>
     <x>564</x>
     <y>204</y>
@@ -1000,7 +1000,7 @@
       <MTR>0308</MTR>
     </macros>
     <name>Linking Container_23</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1012,7 +1012,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7f04</wuid>
     <x>645</x>
     <y>204</y>
@@ -1041,7 +1041,7 @@
       <MTR>0401</MTR>
     </macros>
     <name>Linking Container_24</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1053,7 +1053,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7eed</wuid>
     <x>78</x>
     <y>288</y>
@@ -1082,7 +1082,7 @@
       <MTR>0402</MTR>
     </macros>
     <name>Linking Container_25</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1094,7 +1094,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ee8</wuid>
     <x>159</x>
     <y>288</y>
@@ -1123,7 +1123,7 @@
       <MTR>0403</MTR>
     </macros>
     <name>Linking Container_26</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1135,7 +1135,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ee3</wuid>
     <x>240</x>
     <y>288</y>
@@ -1164,7 +1164,7 @@
       <MTR>0404</MTR>
     </macros>
     <name>Linking Container_27</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1176,7 +1176,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ede</wuid>
     <x>321</x>
     <y>288</y>
@@ -1205,7 +1205,7 @@
       <MTR>0405</MTR>
     </macros>
     <name>Linking Container_28</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1217,7 +1217,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ed9</wuid>
     <x>402</x>
     <y>288</y>
@@ -1246,7 +1246,7 @@
       <MTR>0406</MTR>
     </macros>
     <name>Linking Container_29</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1258,7 +1258,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ed4</wuid>
     <x>483</x>
     <y>288</y>
@@ -1287,7 +1287,7 @@
       <MTR>0407</MTR>
     </macros>
     <name>Linking Container_30</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1299,7 +1299,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ecf</wuid>
     <x>564</x>
     <y>288</y>
@@ -1328,7 +1328,7 @@
       <MTR>0408</MTR>
     </macros>
     <name>Linking Container_31</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1340,7 +1340,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7eca</wuid>
     <x>645</x>
     <y>288</y>
@@ -1369,7 +1369,7 @@
       <MTR>0501</MTR>
     </macros>
     <name>Linking Container_32</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1381,7 +1381,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e61</wuid>
     <x>78</x>
     <y>372</y>
@@ -1410,7 +1410,7 @@
       <MTR>0502</MTR>
     </macros>
     <name>Linking Container_33</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1422,7 +1422,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e5c</wuid>
     <x>159</x>
     <y>372</y>
@@ -1451,7 +1451,7 @@
       <MTR>0503</MTR>
     </macros>
     <name>Linking Container_34</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1463,7 +1463,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-5908</wuid>
     <x>240</x>
     <y>372</y>
@@ -1492,7 +1492,7 @@
       <MTR>0504</MTR>
     </macros>
     <name>Linking Container_35</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1504,7 +1504,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e52</wuid>
     <x>321</x>
     <y>372</y>
@@ -1533,7 +1533,7 @@
       <MTR>0505</MTR>
     </macros>
     <name>Linking Container_36</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1545,7 +1545,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e4d</wuid>
     <x>402</x>
     <y>372</y>
@@ -1574,7 +1574,7 @@
       <MTR>0506</MTR>
     </macros>
     <name>Linking Container_37</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1586,7 +1586,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e48</wuid>
     <x>483</x>
     <y>372</y>
@@ -1615,7 +1615,7 @@
       <MTR>0507</MTR>
     </macros>
     <name>Linking Container_38</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1627,7 +1627,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e43</wuid>
     <x>564</x>
     <y>372</y>
@@ -1656,7 +1656,7 @@
       <MTR>0508</MTR>
     </macros>
     <name>Linking Container_39</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1668,7 +1668,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e3e</wuid>
     <x>645</x>
     <y>372</y>
@@ -1697,7 +1697,7 @@
       <MTR>0601</MTR>
     </macros>
     <name>Linking Container_40</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1709,7 +1709,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e39</wuid>
     <x>78</x>
     <y>456</y>
@@ -1738,7 +1738,7 @@
       <MTR>0602</MTR>
     </macros>
     <name>Linking Container_41</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1750,7 +1750,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e34</wuid>
     <x>159</x>
     <y>456</y>
@@ -1779,7 +1779,7 @@
       <MTR>0603</MTR>
     </macros>
     <name>Linking Container_42</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1791,7 +1791,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e2f</wuid>
     <x>240</x>
     <y>456</y>
@@ -1820,7 +1820,7 @@
       <MTR>0604</MTR>
     </macros>
     <name>Linking Container_43</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1832,7 +1832,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e2a</wuid>
     <x>321</x>
     <y>456</y>
@@ -1861,7 +1861,7 @@
       <MTR>0605</MTR>
     </macros>
     <name>Linking Container_44</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1873,7 +1873,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e25</wuid>
     <x>402</x>
     <y>456</y>
@@ -1902,7 +1902,7 @@
       <MTR>0606</MTR>
     </macros>
     <name>Linking Container_45</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1914,7 +1914,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e20</wuid>
     <x>483</x>
     <y>456</y>
@@ -1943,7 +1943,7 @@
       <MTR>0607</MTR>
     </macros>
     <name>Linking Container_46</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1955,7 +1955,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e1b</wuid>
     <x>564</x>
     <y>456</y>
@@ -1984,7 +1984,7 @@
       <MTR>0608</MTR>
     </macros>
     <name>Linking Container_47</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -1996,7 +1996,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e16</wuid>
     <x>645</x>
     <y>456</y>
@@ -2025,7 +2025,7 @@
       <MTR>0701</MTR>
     </macros>
     <name>Linking Container_48</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2037,7 +2037,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e11</wuid>
     <x>78</x>
     <y>540</y>
@@ -2066,7 +2066,7 @@
       <MTR>0702</MTR>
     </macros>
     <name>Linking Container_49</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2078,7 +2078,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e0c</wuid>
     <x>159</x>
     <y>540</y>
@@ -2107,7 +2107,7 @@
       <MTR>0703</MTR>
     </macros>
     <name>Linking Container_50</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2119,7 +2119,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e07</wuid>
     <x>240</x>
     <y>540</y>
@@ -2148,7 +2148,7 @@
       <MTR>0704</MTR>
     </macros>
     <name>Linking Container_51</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2160,7 +2160,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7e02</wuid>
     <x>321</x>
     <y>540</y>
@@ -2189,7 +2189,7 @@
       <MTR>0705</MTR>
     </macros>
     <name>Linking Container_52</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2201,7 +2201,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dfd</wuid>
     <x>402</x>
     <y>540</y>
@@ -2230,7 +2230,7 @@
       <MTR>0706</MTR>
     </macros>
     <name>Linking Container_53</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2242,7 +2242,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7df8</wuid>
     <x>483</x>
     <y>540</y>
@@ -2271,7 +2271,7 @@
       <MTR>0707</MTR>
     </macros>
     <name>Linking Container_54</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2283,7 +2283,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7df3</wuid>
     <x>564</x>
     <y>540</y>
@@ -2312,7 +2312,7 @@
       <MTR>0708</MTR>
     </macros>
     <name>Linking Container_55</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2324,7 +2324,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dee</wuid>
     <x>645</x>
     <y>540</y>
@@ -2353,7 +2353,7 @@
       <MTR>0801</MTR>
     </macros>
     <name>Linking Container_56</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2365,7 +2365,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7de9</wuid>
     <x>78</x>
     <y>624</y>
@@ -2394,7 +2394,7 @@
       <MTR>0802</MTR>
     </macros>
     <name>Linking Container_57</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2406,7 +2406,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7de4</wuid>
     <x>159</x>
     <y>624</y>
@@ -2435,7 +2435,7 @@
       <MTR>0803</MTR>
     </macros>
     <name>Linking Container_58</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2447,7 +2447,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7ddf</wuid>
     <x>240</x>
     <y>624</y>
@@ -2476,7 +2476,7 @@
       <MTR>0804</MTR>
     </macros>
     <name>Linking Container_59</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2488,7 +2488,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dda</wuid>
     <x>321</x>
     <y>624</y>
@@ -2517,7 +2517,7 @@
       <MTR>0805</MTR>
     </macros>
     <name>Linking Container_60</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2529,7 +2529,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dd5</wuid>
     <x>402</x>
     <y>624</y>
@@ -2558,7 +2558,7 @@
       <MTR>0806</MTR>
     </macros>
     <name>Linking Container_61</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2570,7 +2570,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dd0</wuid>
     <x>483</x>
     <y>624</y>
@@ -2599,7 +2599,7 @@
       <MTR>0807</MTR>
     </macros>
     <name>Linking Container_62</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2611,7 +2611,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dcb</wuid>
     <x>564</x>
     <y>624</y>
@@ -2640,7 +2640,7 @@
       <MTR>0808</MTR>
     </macros>
     <name>Linking Container_63</name>
-    <opi_file>single_motor_standard_view.opi</opi_file>
+    <opi_file>single_motor_advanced_view.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -2652,7 +2652,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>71</width>
+    <width>121</width>
     <wuid>-1669e5af:170829a6fda:-7dc6</wuid>
     <x>645</x>
     <y>624</y>
