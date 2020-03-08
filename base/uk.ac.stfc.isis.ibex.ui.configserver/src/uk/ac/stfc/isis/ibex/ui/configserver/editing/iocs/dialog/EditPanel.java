@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -183,7 +183,7 @@ public class EditPanel extends Composite {
                 BeanProperties.value("autostart").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.buttonSelection().observe(autoRestart),
                 BeanProperties.value("restart").observe(editableIoc));
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
+        bindingContext.bindValue(ViewerProperties.singleSelection().observe(simLevel),
                 BeanProperties.value("simLevel").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoStart),
                 BeanProperties.value("editable").observe(editableIoc));

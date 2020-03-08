@@ -51,7 +51,6 @@ public class IocPVDetailsPanel extends Composite {
 	private Text value;
 	private DataBindingContext bindingContext;
 	private IocAvailablePVsTable availablePVTable;
-	private UpdateValueStrategy strategy = new UpdateValueStrategy();
 	private Collection<AvailablePV> pvs;
 
     private static final int TABLE_HEIGHT = 100;
@@ -131,9 +130,11 @@ public class IocPVDetailsPanel extends Composite {
         setTextEnabled(ioc.isEditable());
 		
 		bindingContext = new DataBindingContext();
+		
+		UpdateValueStrategy<String,String> strategy = new UpdateValueStrategy<String, String>();
         strategy.setBeforeSetValidator(new PVNameValidator(ioc, pv, messageDisplayer));
 		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(pv), strategy, null); 
+		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name", String.class).observe(pv), strategy, null); 
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(pv));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("filter").observe(availablePVTable), 
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));

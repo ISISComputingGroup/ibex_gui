@@ -45,7 +45,7 @@ public class EditScriptDialog extends ScriptDialog {
 		errorLabel.setForeground(ERROR_COLOR);
 		
 		bindingContext.bindValue(WidgetProperties.visible().observe(errorLabel),
-				BeanProperties.value("updateButtonEnabled").observe(model), null, UIUtils.NOT_CONVERTER);
+				BeanProperties.value("updateButtonEnabled", Boolean.class).observe(model), null, UIUtils.NOT_CONVERTER);
 		
 		actionButton = createButton(parent, IDialogConstants.OK_ID, "Update", false);
 		actionButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.alarm", "icons/refresh.png"));

@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,6 +35,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
 /**
@@ -125,11 +127,11 @@ public class WritableComponentView extends Composite {
         bindingContext.bindValue(WidgetProperties.text().observe(text),
                 BeanProperties.value("value").observe(property.value()));
 
-        UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
+        UpdateValueStrategy<PvState, Color> borderStrategy = new UpdateValueStrategy<PvState, Color>();
         borderStrategy.setConverter(new PvStatusBorderColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(composite),
-                BeanProperties.value("pvState").observe(property.sourceReadableProperty()), null, borderStrategy);
+                BeanProperties.value("pvState", PvState.class).observe(property.sourceReadableProperty()), null, borderStrategy);
     }
 
     private void sendValue() {

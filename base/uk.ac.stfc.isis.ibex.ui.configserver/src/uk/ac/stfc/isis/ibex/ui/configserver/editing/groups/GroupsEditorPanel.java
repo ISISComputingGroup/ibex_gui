@@ -208,6 +208,7 @@ public class GroupsEditorPanel extends Composite {
         BlockServerNameValidator groupRules = Configurations.getInstance().variables().groupRules.getValue();
         final GroupNameValidator groupNamesValidator = new GroupNameValidator(
                 configurationViewModels.getConfigModel().getValue(), messageDisplayer, groupRules);
+        
         strategy.setBeforeSetValidator(groupNamesValidator);
         bindingContext.bindValue(
                 WidgetProperties.text(SWT.Modify).observe(name), ViewerProperties.singleSelection()

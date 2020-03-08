@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -115,9 +114,9 @@ public class BlockDetailsPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnPickPV),
                 BeanProperties.value("enabled").observe(viewModel));
 
-        bindingContext.bindValue(SWTObservables.observeText(name, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),
                 BeanProperties.value("name").observe(viewModel)); 
-        bindingContext.bindValue(SWTObservables.observeText(pvAddress, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress),
                 BeanProperties.value("pvAddress").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.buttonSelection().observe(local),
                 BeanProperties.value("local").observe(viewModel));
