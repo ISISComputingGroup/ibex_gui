@@ -20,9 +20,9 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -94,14 +94,14 @@ public class BlockLogSettingsPanel extends Composite {
     public void setModel(BlockLogSettingsViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnEnabled),
                 BeanProperties.value("enabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboType),
                 BeanProperties.value("enabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtSettings),
                 BeanProperties.value("enabled").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboType),
+        bindingContext.bindValue(WidgetProperties.comboSelection().observe(cmboType),
                 BeanProperties.value("comboText").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblSettings),

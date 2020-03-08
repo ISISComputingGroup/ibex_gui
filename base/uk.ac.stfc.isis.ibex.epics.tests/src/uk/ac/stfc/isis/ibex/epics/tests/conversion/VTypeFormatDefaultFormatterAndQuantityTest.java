@@ -77,7 +77,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -95,7 +95,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -113,7 +113,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Float(123.456);
+	Number number = Float.valueOf(123.456f);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -131,7 +131,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Float(123.456);
+	Number number = Float.valueOf(123.456f);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -149,7 +149,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Long(123456);
+	Number number = Long.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -167,7 +167,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Long(123456);
+	Number number = Long.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -185,7 +185,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Integer(123456);
+	Number number = Integer.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -203,7 +203,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Integer(123456);
+	Number number = Integer.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -221,7 +221,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Short((short) 123);
+	Number number = Short.valueOf((short) 123);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -239,7 +239,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Short((short) 123);
+	Number number = Short.valueOf((short) 123);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -257,7 +257,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Byte((byte) 123.456);
+	Number number = Byte.valueOf((byte) 123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -275,7 +275,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Byte((byte) 123.456);
+	Number number = Byte.valueOf((byte) 123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -324,7 +324,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VFloat, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Float number = new Float(123.456);
+	Float number = Float.valueOf(123.456f);
 
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
@@ -342,7 +342,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VFloat, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Float number = new Float(123.456);
+	Float number = Float.valueOf(123.456f);
 
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
@@ -359,7 +359,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VLong, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Long number = new Long(123456);
+	Long number = Long.valueOf(123456);
 
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
@@ -376,7 +376,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VLong, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Long number = new Long(123456);
+	Long number = Long.valueOf(123456);
 
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
@@ -393,7 +393,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VInt, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Integer number = new Integer(123456);
+	Integer number = Integer.valueOf(123456);
 
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
@@ -411,7 +411,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VInt, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Integer number = new Integer(123456);
+	Integer number = Integer.valueOf(123456);
 
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
@@ -428,7 +428,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VShort, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Short number = new Short((short) 123);
+	Short number = Short.valueOf((short) 123);
 
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
@@ -446,7 +446,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VShort, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Short number = new Short((short) 123);
+	Short number = Short.valueOf((short) 123);
 
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
@@ -463,7 +463,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VByte, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Byte number = new Byte((byte) 123.456);
+	Byte number = Byte.valueOf((byte) 123.456);
 
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
@@ -480,7 +480,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VByte, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Byte number = new Byte((byte) 123.456);
+	Byte number = Byte.valueOf((byte) 123.456);
 
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
@@ -525,7 +525,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VType, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
@@ -542,7 +542,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VType, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
@@ -999,7 +999,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1019,7 +1019,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1039,7 +1039,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Float(123.456);
+	Number number = Float.valueOf(123.456f);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1059,7 +1059,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Float(123.456);
+	Number number = Float.valueOf(123.456f);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1079,7 +1079,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Long(123456);
+	Number number = Long.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1099,7 +1099,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Long(123456);
+	Number number = Long.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1119,7 +1119,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Integer(123456);
+	Number number = Integer.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1139,7 +1139,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Integer(123456);
+	Number number = Integer.valueOf(123456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1159,7 +1159,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Short((short) 123);
+	Number number = Short.valueOf((short) 123);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1179,7 +1179,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Short((short) 123);
+	Number number = Short.valueOf((short) 123);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1199,7 +1199,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Byte((byte) 123.456);
+	Number number = Byte.valueOf((byte) 123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1219,7 +1219,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Byte((byte) 123.456);
+	Number number = Byte.valueOf((byte) 123.456);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1274,7 +1274,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Float number = new Float(123.456);
+	Float number = Float.valueOf(123.456f);
 
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
@@ -1294,7 +1294,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Float number = new Float(123.456);
+	Float number = Float.valueOf(123.456f);
 
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
@@ -1314,7 +1314,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Long number = new Long(123456);
+	Long number = Long.valueOf(123456);
 
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
@@ -1334,7 +1334,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Long number = new Long(123456);
+	Long number = Long.valueOf(123456);
 
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
@@ -1354,7 +1354,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Integer number = new Integer(123456);
+	Integer number = Integer.valueOf(123456);
 
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
@@ -1374,7 +1374,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Integer number = new Integer(123456);
+	Integer number = Integer.valueOf(123456);
 
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
@@ -1394,7 +1394,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Short number = new Short((short) 123);
+	Short number = Short.valueOf((short) 123);
 
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
@@ -1414,7 +1414,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Short number = new Short((short) 123);
+	Short number = Short.valueOf((short) 123);
 
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
@@ -1434,7 +1434,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Byte number = new Byte((byte) 123.456);
+	Byte number = Byte.valueOf((byte) 123.456);
 
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
@@ -1454,7 +1454,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Byte number = new Byte((byte) 123.456);
+	Byte number = Byte.valueOf((byte) 123.456);
 
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
@@ -1505,7 +1505,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1525,7 +1525,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
+	Number number = Double.valueOf(123.456);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
