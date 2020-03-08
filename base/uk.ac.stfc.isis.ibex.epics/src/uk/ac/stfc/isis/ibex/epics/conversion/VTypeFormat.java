@@ -84,19 +84,6 @@ public final class VTypeFormat {
 	
 	/**
      * @param <R> conversion source object type
-     * @return a string of the number supplied with any associated units
-     */
-	public static <R extends VNumber> Converter<R, String> quantityWithUnits() {
-		return new Converter<R, String>() {
-			@Override
-			public String convert(R value) throws ConversionException {
-				return value.getFormat().format(value.getValue()) + " " + value.getUnits();
-			}
-		};
-	}
-	
-	/**
-     * @param <R> conversion source object type
      * @return a number formatted with the precision defined by the underlying
      *         PV
      */
@@ -108,7 +95,7 @@ public final class VTypeFormat {
 				Display display = ValueUtil.displayOf(val);
 				if (display != null) {
 					NumberFormat formatter = display.getFormat();
-					return new Double(formatter.format(value.getValue()));
+					return Double.valueOf(formatter.format(value.getValue()));
 				}
 				return value.getValue();
 			}

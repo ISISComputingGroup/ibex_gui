@@ -1985,41 +1985,4 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	// Assert
 	assertEquals(result, "[]");
     }
-
-    @Test
-    public void quantity_with_units() throws ConversionException {
-	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.quantityWithUnits();
-
-	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
-		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
-
-	VNumber value = ValueFactory.newVNumber(number, null, null, display);
-
-	// Act
-	String result = converter.convert(value);
-
-	// Assert
-	assertEquals(result, "123.456000 unit");
-    }
-
-    @Test
-    public void quantity_with_units_no_units_specified()
-	    throws ConversionException {
-	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.quantityWithUnits();
-
-	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
-		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = new Double(123.456);
-
-	VNumber value = ValueFactory.newVNumber(number, null, null, display);
-
-	// Act
-	String result = converter.convert(value);
-
-	// Assert
-	assertEquals(result, "123.456000 ");
-    }
 }
