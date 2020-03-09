@@ -22,8 +22,8 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -59,12 +59,12 @@ public class YesNoRadioButtons extends ModelObject {
         
         yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        bindingContext.bindValue(WidgetProperties.selection().observe(yesButton),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(yesButton),
                 BeanProperties.value("yesButtonSelected").observe(this));
         
         noButton.setText(falseText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        bindingContext.bindValue(WidgetProperties.selection().observe(noButton),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(noButton),
                 BeanProperties.value("noButtonSelected").observe(this));
 
         setSelected(true);
